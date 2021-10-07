@@ -1,0 +1,608 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2FD051678BE847C32FF93CD8 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */; };
+		ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503B1270DC3C7009D50CB /* AppDelegate.swift */; };
+		ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503B3270DC3C7009D50CB /* SceneDelegate.swift */; };
+		ADD503BC270DC3C7009D50CB /* Spika.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* Spika.xcdatamodeld */; };
+		ADD503BE270DC3CA009D50CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
+		ADD503C1270DC3CA009D50CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */; };
+		ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503CD270DD31D009D50CB /* UIView+Extensions.swift */; };
+		ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D0270DD57D009D50CB /* Coordinator.swift */; };
+		ADD503D3270DD5A4009D50CB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D2270DD5A3009D50CB /* AppCoordinator.swift */; };
+		ADD503D5270DD5F4009D50CB /* AppAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D4270DD5F4009D50CB /* AppAssembly.swift */; };
+		ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D6270DD65C009D50CB /* Assembler+Extensions.swift */; };
+		ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D9270DD6AD009D50CB /* Repository.swift */; };
+		ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DB270DD6DC009D50CB /* AppRepository.swift */; };
+		ADD503DF270DD733009D50CB /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DE270DD733009D50CB /* BaseView.swift */; };
+		ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E0270DD755009D50CB /* BaseViewModel.swift */; };
+		ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E2270DD7C7009D50CB /* BaseViewController.swift */; };
+		ADD503E5270DD823009D50CB /* RequestState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E4270DD823009D50CB /* RequestState.swift */; };
+		ADD503E8270DD87A009D50CB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E7270DD87A009D50CB /* Constants.swift */; };
+		ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503EA270DE28E009D50CB /* HomeViewController.swift */; };
+		ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503EC270DE2B9009D50CB /* HomeViewModel.swift */; };
+		ADD503F0270DE2DE009D50CB /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503EF270DE2DE009D50CB /* HomeView.swift */; };
+		ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F2270DE39A009D50CB /* NetworkService.swift */; };
+		ADD503F6270DF96F009D50CB /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F5270DF96F009D50CB /* Post.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		613C7266CE789CD1C2695243 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
+		ADD503AE270DC3C7009D50CB /* Spika.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spika.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADD503B1270DC3C7009D50CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		ADD503B3270DC3C7009D50CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		ADD503BB270DC3C7009D50CB /* Spika.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Spika.xcdatamodel; sourceTree = "<group>"; };
+		ADD503BD270DC3CA009D50CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ADD503C0270DC3CA009D50CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		ADD503C2270DC3CA009D50CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADD503CD270DD31D009D50CB /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		ADD503D0270DD57D009D50CB /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		ADD503D2270DD5A3009D50CB /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		ADD503D4270DD5F4009D50CB /* AppAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAssembly.swift; sourceTree = "<group>"; };
+		ADD503D6270DD65C009D50CB /* Assembler+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assembler+Extensions.swift"; sourceTree = "<group>"; };
+		ADD503D9270DD6AD009D50CB /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		ADD503DB270DD6DC009D50CB /* AppRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRepository.swift; sourceTree = "<group>"; };
+		ADD503DE270DD733009D50CB /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		ADD503E0270DD755009D50CB /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		ADD503E2270DD7C7009D50CB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		ADD503E4270DD823009D50CB /* RequestState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestState.swift; sourceTree = "<group>"; };
+		ADD503E7270DD87A009D50CB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		ADD503EA270DE28E009D50CB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		ADD503EC270DE2B9009D50CB /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		ADD503EF270DE2DE009D50CB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		ADD503F2270DE39A009D50CB /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		ADD503F5270DF96F009D50CB /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
+		FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ADD503AB270DC3C7009D50CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FD051678BE847C32FF93CD8 /* Pods_Spika.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0C14C2809CCE80218B71E8AE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ADD503A5270DC3C7009D50CB = {
+			isa = PBXGroup;
+			children = (
+				ADD503B0270DC3C7009D50CB /* Spika */,
+				ADD503AF270DC3C7009D50CB /* Products */,
+				CC12D1B198A94B9651C98AB6 /* Pods */,
+				0C14C2809CCE80218B71E8AE /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		ADD503AF270DC3C7009D50CB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503AE270DC3C7009D50CB /* Spika.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ADD503B0270DC3C7009D50CB /* Spika */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503C9270DD2D9009D50CB /* UIFlow */,
+				ADD503CB270DD2EF009D50CB /* Data */,
+				ADD503CA270DD2E9009D50CB /* Common */,
+				ADD503C8270DC42E009D50CB /* SupportingFiles */,
+				ADD503C2270DC3CA009D50CB /* Info.plist */,
+				ADD503BA270DC3C7009D50CB /* Spika.xcdatamodeld */,
+			);
+			path = Spika;
+			sourceTree = "<group>";
+		};
+		ADD503C8270DC42E009D50CB /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503B3270DC3C7009D50CB /* SceneDelegate.swift */,
+				ADD503B1270DC3C7009D50CB /* AppDelegate.swift */,
+				ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */,
+				ADD503BD270DC3CA009D50CB /* Assets.xcassets */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		ADD503C9270DD2D9009D50CB /* UIFlow */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503E9270DE278009D50CB /* Home */,
+			);
+			path = UIFlow;
+			sourceTree = "<group>";
+		};
+		ADD503CA270DD2E9009D50CB /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503E6270DD849009D50CB /* Views */,
+				ADD503DD270DD723009D50CB /* Base */,
+				ADD503CF270DD54D009D50CB /* Coordinator */,
+				ADD503CC270DD302009D50CB /* Extensions */,
+				ADD503E7270DD87A009D50CB /* Constants.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		ADD503CB270DD2EF009D50CB /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503D8270DD69C009D50CB /* Repository */,
+				ADD503F1270DE35F009D50CB /* Services */,
+				ADD503F4270DF958009D50CB /* Models */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		ADD503CC270DD302009D50CB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503CD270DD31D009D50CB /* UIView+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		ADD503CF270DD54D009D50CB /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503D0270DD57D009D50CB /* Coordinator.swift */,
+				ADD503D2270DD5A3009D50CB /* AppCoordinator.swift */,
+				ADD503D4270DD5F4009D50CB /* AppAssembly.swift */,
+				ADD503D6270DD65C009D50CB /* Assembler+Extensions.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		ADD503D8270DD69C009D50CB /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503D9270DD6AD009D50CB /* Repository.swift */,
+				ADD503DB270DD6DC009D50CB /* AppRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		ADD503DD270DD723009D50CB /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503DE270DD733009D50CB /* BaseView.swift */,
+				ADD503E0270DD755009D50CB /* BaseViewModel.swift */,
+				ADD503E2270DD7C7009D50CB /* BaseViewController.swift */,
+				ADD503E4270DD823009D50CB /* RequestState.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		ADD503E6270DD849009D50CB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		ADD503E9270DE278009D50CB /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503EA270DE28E009D50CB /* HomeViewController.swift */,
+				ADD503EC270DE2B9009D50CB /* HomeViewModel.swift */,
+				ADD503EE270DE2C7009D50CB /* View */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		ADD503EE270DE2C7009D50CB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503EF270DE2DE009D50CB /* HomeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ADD503F1270DE35F009D50CB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503F2270DE39A009D50CB /* NetworkService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		ADD503F4270DF958009D50CB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503F5270DF96F009D50CB /* Post.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CC12D1B198A94B9651C98AB6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */,
+				613C7266CE789CD1C2695243 /* Pods-Spika.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ADD503AD270DC3C7009D50CB /* Spika */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADD503C5270DC3CA009D50CB /* Build configuration list for PBXNativeTarget "Spika" */;
+			buildPhases = (
+				5B72ABBE607D05B66412FF90 /* [CP] Check Pods Manifest.lock */,
+				ADD503AA270DC3C7009D50CB /* Sources */,
+				ADD503AB270DC3C7009D50CB /* Frameworks */,
+				ADD503AC270DC3C7009D50CB /* Resources */,
+				EBFEFED5A25B5875D061A4F2 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Spika;
+			productName = Spika;
+			productReference = ADD503AE270DC3C7009D50CB /* Spika.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ADD503A6270DC3C7009D50CB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
+				TargetAttributes = {
+					ADD503AD270DC3C7009D50CB = {
+						CreatedOnToolsVersion = 13.0;
+					};
+				};
+			};
+			buildConfigurationList = ADD503A9270DC3C7009D50CB /* Build configuration list for PBXProject "Spika" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ADD503A5270DC3C7009D50CB;
+			productRefGroup = ADD503AF270DC3C7009D50CB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ADD503AD270DC3C7009D50CB /* Spika */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ADD503AC270DC3C7009D50CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADD503C1270DC3CA009D50CB /* LaunchScreen.storyboard in Resources */,
+				ADD503BE270DC3CA009D50CB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5B72ABBE607D05B66412FF90 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Spika-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EBFEFED5A25B5875D061A4F2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ADD503AA270DC3C7009D50CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
+				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
+				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
+				ADD503D3270DD5A4009D50CB /* AppCoordinator.swift in Sources */,
+				ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */,
+				ADD503BC270DC3C7009D50CB /* Spika.xcdatamodeld in Sources */,
+				ADD503E8270DD87A009D50CB /* Constants.swift in Sources */,
+				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
+				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
+				ADD503F0270DE2DE009D50CB /* HomeView.swift in Sources */,
+				ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */,
+				ADD503D5270DD5F4009D50CB /* AppAssembly.swift in Sources */,
+				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
+				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,
+				ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */,
+				ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */,
+				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
+				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
+				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
+				ADD503F6270DF96F009D50CB /* Post.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ADD503C0270DC3CA009D50CB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ADD503C3270DC3CA009D50CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		ADD503C4270DC3CA009D50CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ADD503C6270DC3CA009D50CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YU755VYJCP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Spika/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clover.studio.Spika;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ADD503C7270DC3CA009D50CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 613C7266CE789CD1C2695243 /* Pods-Spika.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YU755VYJCP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Spika/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clover.studio.Spika;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ADD503A9270DC3C7009D50CB /* Build configuration list for PBXProject "Spika" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADD503C3270DC3CA009D50CB /* Debug */,
+				ADD503C4270DC3CA009D50CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADD503C5270DC3CA009D50CB /* Build configuration list for PBXNativeTarget "Spika" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADD503C6270DC3CA009D50CB /* Debug */,
+				ADD503C7270DC3CA009D50CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		ADD503BA270DC3C7009D50CB /* Spika.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				ADD503BB270DC3C7009D50CB /* Spika.xcdatamodel */,
+			);
+			currentVersion = ADD503BB270DC3C7009D50CB /* Spika.xcdatamodel */;
+			path = Spika.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = ADD503A6270DC3C7009D50CB /* Project object */;
+}
