@@ -13,6 +13,7 @@ final class AppAssembly: Assembly {
     func assemble(container: Container) {
         self.assembleMainRepository(container)
         self.assembleHomeViewController(container)
+        self.assembleDetailsViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
@@ -28,12 +29,26 @@ final class AppAssembly: Assembly {
     
     private func assembleHomeViewController(_ container: Container) {
         container.register(HomeViewModel.self) { (resolver, coordinator: AppCoordinator) in
-            return HomeViewModel(repository: container.resolve(AppRepository.self)!, coordinator: coordinator)
+            let repository = container.resolve(AppRepository.self)!
+            return HomeViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
         container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator) in
             let controller = HomeViewController()
             controller.viewModel = container.resolve(HomeViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleDetailsViewController(_ container: Container) {
+        container.register(DetailsViewModel.self) { (resolver, coordinator: AppCoordinator, id: Int) in
+            let repository = container.resolve(AppRepository.self)!
+            return DetailsViewModel(repository: repository, coordinator: coordinator, id: id)
+        }.inObjectScope(.transient)
+        
+        container.register(DetailsViewController.self) { (resolver, coordinator: AppCoordinator, id: Int) in
+            let controller = DetailsViewController()
+            controller.viewModel = container.resolve(DetailsViewModel.self, arguments: coordinator, id)
             return controller
         }.inObjectScope(.transient)
     }

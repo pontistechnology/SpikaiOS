@@ -22,4 +22,8 @@ class HomeViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
+    func showDetailsScreen(id: Int) {
+        getAppCoordinator()?.presentDetailsScreen(id: id)
+    }
+    
 }

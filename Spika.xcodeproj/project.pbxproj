@@ -30,6 +30,9 @@
 		ADD503F0270DE2DE009D50CB /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503EF270DE2DE009D50CB /* HomeView.swift */; };
 		ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F2270DE39A009D50CB /* NetworkService.swift */; };
 		ADD503F6270DF96F009D50CB /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F5270DF96F009D50CB /* Post.swift */; };
+		ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FB27101B20009D50CB /* DetailsViewController.swift */; };
+		ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
+		ADD5040127101B69009D50CB /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040027101B69009D50CB /* DetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +61,9 @@
 		ADD503EF270DE2DE009D50CB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		ADD503F2270DE39A009D50CB /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		ADD503F5270DF96F009D50CB /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		ADD503FB27101B20009D50CB /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		ADD503FD27101B44009D50CB /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
+		ADD5040027101B69009D50CB /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
 		FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -127,6 +133,7 @@
 		ADD503C9270DD2D9009D50CB /* UIFlow */ = {
 			isa = PBXGroup;
 			children = (
+				ADD503FA27101B09009D50CB /* Details */,
 				ADD503E9270DE278009D50CB /* Home */,
 			);
 			path = UIFlow;
@@ -232,6 +239,24 @@
 				ADD503F5270DF96F009D50CB /* Post.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		ADD503FA27101B09009D50CB /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503FB27101B20009D50CB /* DetailsViewController.swift */,
+				ADD503FD27101B44009D50CB /* DetailsViewModel.swift */,
+				ADD503FF27101B58009D50CB /* View */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		ADD503FF27101B58009D50CB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ADD5040027101B69009D50CB /* DetailsView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		CC12D1B198A94B9651C98AB6 /* Pods */ = {
@@ -364,13 +389,16 @@
 				ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */,
 				ADD503BC270DC3C7009D50CB /* Spika.xcdatamodeld in Sources */,
 				ADD503E8270DD87A009D50CB /* Constants.swift in Sources */,
+				ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */,
 				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
 				ADD503F0270DE2DE009D50CB /* HomeView.swift in Sources */,
 				ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */,
+				ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */,
 				ADD503D5270DD5F4009D50CB /* AppAssembly.swift in Sources */,
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
 				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,
+				ADD5040127101B69009D50CB /* DetailsView.swift in Sources */,
 				ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */,
 				ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,

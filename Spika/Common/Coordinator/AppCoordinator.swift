@@ -28,4 +28,15 @@ class AppCoordinator: Coordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func presentDetailsScreen(id: Int) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(DetailsViewController.self, arguments: self, id)!
+        self.currentViewController = viewController
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func popTopViewController() {
+        self.navigationController.popViewController(animated: true)
+        self.currentViewController = self.navigationController.topViewController
+    }
+    
 }

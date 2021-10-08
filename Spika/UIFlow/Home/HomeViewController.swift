@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class HomeViewController: BaseViewController {
     
@@ -15,7 +16,17 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(homeView)
-        viewModel.getPosts()
+        setupBindings()
+        self.viewModel.getPosts()
+    }
+    
+    func setupBindings() {
+        let detailsTap = UITapGestureRecognizer(target: self, action: #selector(self.handleDetailsButtonTap(_:)))
+        homeView.detailsButton.addGestureRecognizer(detailsTap)
+    }
+    
+    @objc func handleDetailsButtonTap(_ sender: UITapGestureRecognizer? = nil) {
+        self.viewModel.showDetailsScreen(id: 3)
     }
     
 }

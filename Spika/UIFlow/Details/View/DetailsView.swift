@@ -1,15 +1,15 @@
 //
-//  HomeView.swift
+//  DetailsView.swift
 //  Spika
 //
-//  Created by Marko on 06.10.2021..
+//  Created by Marko on 08.10.2021..
 //
 
 import UIKit
 
-class HomeView: UIView, BaseView {
+class DetailsView: UIView, BaseView {
     
-    let detailsButton = UIButton()
+    let closeButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,17 +21,17 @@ class HomeView: UIView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(detailsButton)
+        addSubview(closeButton)
     }
     
     func styleSubviews() {
         backgroundColor = .white
         
-        detailsButton.setTitle("Details", for: .normal)
-        detailsButton.setTitleColor(UIColor.blue, for: .normal)
+        closeButton.setTitle("Exit", for: .normal)
+        closeButton.setTitleColor(UIColor.blue, for: .normal)
     }
     
     func positionSubviews() {
-        detailsButton.centerInSuperview()
+        closeButton.anchor(top: topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 20))
     }
 }
