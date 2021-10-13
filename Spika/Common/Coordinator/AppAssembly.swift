@@ -21,9 +21,17 @@ final class AppAssembly: Assembly {
         container.register(NetworkService.self) { r in
             return NetworkService()
         }.inObjectScope(.container)
+        
+        container.register(DatabaseService.self) { r in
+            let userEntityService = UserEntityService()
+            let chatEntityService = ChatEntityService()
+            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService)
+        }.inObjectScope(.container)
 
         container.register(AppRepository.self) { r in
-            return AppRepository(networkService: container.resolve(NetworkService.self)!)
+            let networkService = container.resolve(NetworkService.self)!
+            let databaseService = container.resolve(DatabaseService.self)!
+            return AppRepository(networkService: networkService, databaseService: databaseService)
         }.inObjectScope(.container)
     }
     

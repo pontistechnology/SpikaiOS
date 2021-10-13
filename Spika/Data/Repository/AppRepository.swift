@@ -11,9 +11,11 @@ import Combine
 class AppRepository: Repository {
     
     let networkService: NetworkService
+    let databaseService: DatabaseService
     
-    init(networkService: NetworkService) {
+    init(networkService: NetworkService, databaseService: DatabaseService) {
         self.networkService = networkService
+        self.databaseService = databaseService
     }
     
     func getPosts() -> AnyPublisher<[Post], Error> {

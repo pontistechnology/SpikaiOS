@@ -11,4 +11,9 @@ import Combine
 protocol Repository {
     // this is test endpoint, needs to be deleted in future
     func getPosts() -> AnyPublisher<[Post], Error>
+    func createChat(_ chat: Chat) -> Future<Chat, Error>
+    func getChats() -> Future<[Chat], Error>
+    func updateChat(_ chat: Chat) -> Future<Chat, Error>
+    func getUsers() -> Future<[User], Error>
+    func saveUser(_ user: User) -> Future<User, Error>
 }

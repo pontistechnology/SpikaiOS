@@ -10,7 +10,7 @@
 		2FD051678BE847C32FF93CD8 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */; };
 		ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503B1270DC3C7009D50CB /* AppDelegate.swift */; };
 		ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503B3270DC3C7009D50CB /* SceneDelegate.swift */; };
-		ADD503BC270DC3C7009D50CB /* Spika.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* Spika.xcdatamodeld */; };
+		ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */; };
 		ADD503BE270DC3CA009D50CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
 		ADD503C1270DC3CA009D50CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */; };
 		ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503CD270DD31D009D50CB /* UIView+Extensions.swift */; };
@@ -33,6 +33,15 @@
 		ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FB27101B20009D50CB /* DetailsViewController.swift */; };
 		ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
 		ADD5040127101B69009D50CB /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040027101B69009D50CB /* DetailsView.swift */; };
+		ADD504092716E9DD009D50CB /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD504082716E9DC009D50CB /* UserEntity.swift */; };
+		ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040A2716EB4B009D50CB /* UserEntityService.swift */; };
+		ADD5040D2716EC22009D50CB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040C2716EC22009D50CB /* User.swift */; };
+		ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040F27173FD9009D50CB /* DatabaseService.swift */; };
+		ADD50412271742C1009D50CB /* ChatEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD50411271742C1009D50CB /* ChatEntityService.swift */; };
+		ADD50414271742DE009D50CB /* ChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD50413271742DE009D50CB /* ChatEntity.swift */; };
+		ADD5041627174384009D50CB /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041527174384009D50CB /* Chat.swift */; };
+		ADD504182717481D009D50CB /* AppRepository+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD504172717481D009D50CB /* AppRepository+Chat.swift */; };
+		ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +73,15 @@
 		ADD503FB27101B20009D50CB /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		ADD503FD27101B44009D50CB /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		ADD5040027101B69009D50CB /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
+		ADD504082716E9DC009D50CB /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
+		ADD5040A2716EB4B009D50CB /* UserEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntityService.swift; sourceTree = "<group>"; };
+		ADD5040C2716EC22009D50CB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		ADD5040F27173FD9009D50CB /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		ADD50411271742C1009D50CB /* ChatEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatEntityService.swift; sourceTree = "<group>"; };
+		ADD50413271742DE009D50CB /* ChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatEntity.swift; sourceTree = "<group>"; };
+		ADD5041527174384009D50CB /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		ADD504172717481D009D50CB /* AppRepository+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Chat.swift"; sourceTree = "<group>"; };
+		ADD5041927174B82009D50CB /* AppRepository+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+User.swift"; sourceTree = "<group>"; };
 		C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
 		FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -114,7 +132,7 @@
 				ADD503CA270DD2E9009D50CB /* Common */,
 				ADD503C8270DC42E009D50CB /* SupportingFiles */,
 				ADD503C2270DC3CA009D50CB /* Info.plist */,
-				ADD503BA270DC3C7009D50CB /* Spika.xcdatamodeld */,
+				ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */,
 			);
 			path = Spika;
 			sourceTree = "<group>";
@@ -185,6 +203,8 @@
 			children = (
 				ADD503D9270DD6AD009D50CB /* Repository.swift */,
 				ADD503DB270DD6DC009D50CB /* AppRepository.swift */,
+				ADD504172717481D009D50CB /* AppRepository+Chat.swift */,
+				ADD5041927174B82009D50CB /* AppRepository+User.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -228,6 +248,7 @@
 		ADD503F1270DE35F009D50CB /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				ADD5040E27173FC2009D50CB /* Database */,
 				ADD503F2270DE39A009D50CB /* NetworkService.swift */,
 			);
 			path = Services;
@@ -236,7 +257,10 @@
 		ADD503F4270DF958009D50CB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				ADD504072716E9C7009D50CB /* DatabaseEntities */,
 				ADD503F5270DF96F009D50CB /* Post.swift */,
+				ADD5040C2716EC22009D50CB /* User.swift */,
+				ADD5041527174384009D50CB /* Chat.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -257,6 +281,25 @@
 				ADD5040027101B69009D50CB /* DetailsView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		ADD504072716E9C7009D50CB /* DatabaseEntities */ = {
+			isa = PBXGroup;
+			children = (
+				ADD504082716E9DC009D50CB /* UserEntity.swift */,
+				ADD50413271742DE009D50CB /* ChatEntity.swift */,
+			);
+			path = DatabaseEntities;
+			sourceTree = "<group>";
+		};
+		ADD5040E27173FC2009D50CB /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				ADD5040A2716EB4B009D50CB /* UserEntityService.swift */,
+				ADD5040F27173FD9009D50CB /* DatabaseService.swift */,
+				ADD50411271742C1009D50CB /* ChatEntityService.swift */,
+			);
+			path = Database;
 			sourceTree = "<group>";
 		};
 		CC12D1B198A94B9651C98AB6 /* Pods */ = {
@@ -382,15 +425,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADD5040D2716EC22009D50CB /* User.swift in Sources */,
 				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
 				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
 				ADD503D3270DD5A4009D50CB /* AppCoordinator.swift in Sources */,
 				ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */,
-				ADD503BC270DC3C7009D50CB /* Spika.xcdatamodeld in Sources */,
+				ADD50414271742DE009D50CB /* ChatEntity.swift in Sources */,
+				ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */,
 				ADD503E8270DD87A009D50CB /* Constants.swift in Sources */,
+				ADD504092716E9DD009D50CB /* UserEntity.swift in Sources */,
+				ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */,
 				ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */,
 				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
+				ADD5041627174384009D50CB /* Chat.swift in Sources */,
+				ADD50412271742C1009D50CB /* ChatEntityService.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
 				ADD503F0270DE2DE009D50CB /* HomeView.swift in Sources */,
 				ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */,
@@ -402,9 +451,12 @@
 				ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */,
 				ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
+				ADD504182717481D009D50CB /* AppRepository+Chat.swift in Sources */,
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
 				ADD503F6270DF96F009D50CB /* Post.swift in Sources */,
+				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
+				ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,13 +672,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		ADD503BA270DC3C7009D50CB /* Spika.xcdatamodeld */ = {
+		ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				ADD503BB270DC3C7009D50CB /* Spika.xcdatamodel */,
 			);
 			currentVersion = ADD503BB270DC3C7009D50CB /* Spika.xcdatamodel */;
-			path = Spika.xcdatamodeld;
+			path = CoreDatabase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
