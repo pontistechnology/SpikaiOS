@@ -25,7 +25,8 @@ final class AppAssembly: Assembly {
         container.register(DatabaseService.self) { r in
             let userEntityService = UserEntityService()
             let chatEntityService = ChatEntityService()
-            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService)
+            let messageEntityService = MessageEntityService()
+            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService)
         }.inObjectScope(.container)
 
         container.register(AppRepository.self) { r in

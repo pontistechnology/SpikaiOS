@@ -16,4 +16,8 @@ protocol Repository {
     func updateChat(_ chat: Chat) -> Future<Chat, Error>
     func getUsers() -> Future<[User], Error>
     func saveUser(_ user: User) -> Future<User, Error>
+    func addUserToChat(chat: Chat, user: User) -> Future<Chat, Error>
+    func getUsersForChat(chat: Chat) -> Future<[User], Error>
+    func saveMessage(_ message: Message) -> Future<Message, Error>
+    func getMessagesForChat(chat: Chat) -> Future<[Message], Error>
 }

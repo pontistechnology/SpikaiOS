@@ -22,10 +22,12 @@ enum DatabseError: Error {
 class DatabaseService {
     let userEntityService: UserEntityService
     let chatEntityService: ChatEntityService
+    let messageEntityService: MessageEntityService
     
-    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService) {
+    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService) {
         self.userEntityService = userEntityService
         self.chatEntityService = chatEntityService
+        self.messageEntityService = messageEntityService
     }
     
 }

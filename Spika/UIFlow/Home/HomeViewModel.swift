@@ -84,4 +84,52 @@ class HomeViewModel: BaseViewModel {
 
     }
     
+    func addUserToChat(chat: Chat, user: User) {
+        repository.addUserToChat(chat: chat, user: user).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get users: \(error)")
+            default: break
+            }
+        } receiveValue: { _ in
+            self.getChats()
+        }.store(in: &subscriptions)
+    }
+    
+    func getUsersForChat(chat: Chat) {
+        repository.getUsersForChat(chat: chat).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get users: \(error)")
+            default: break
+            }
+        } receiveValue: { users in
+            print(users)
+        }.store(in: &subscriptions)
+    }
+    
+    func saveMessage(message: Message) {
+        repository.saveMessage(message).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get message: \(error)")
+            default: break
+            }
+        } receiveValue: { message in
+            print(message)
+        }.store(in: &subscriptions)
+    }
+    
+    func getMessagesForChat(chat: Chat) {
+        repository.getMessagesForChat(chat: chat).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get messages: \(error)")
+            default: break
+            }
+        } receiveValue: { messages in
+            print(messages)
+        }.store(in: &subscriptions)
+    }
+    
 }

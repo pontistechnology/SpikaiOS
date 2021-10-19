@@ -20,4 +20,12 @@ extension AppRepository {
     func updateChat(_ chat: Chat) -> Future<Chat, Error> {
         return databaseService.chatEntityService.updateChat(chat)
     }
+    
+    func addUserToChat(chat: Chat, user: User) -> Future<Chat, Error> {
+        return databaseService.chatEntityService.addUserToChat(chat: chat, user: user)
+    }
+    
+    func getUsersForChat(chat: Chat) -> Future<[User], Error> {
+        return databaseService.chatEntityService.getUsersForChat(chat: chat)
+    }
 }
