@@ -27,4 +27,10 @@ struct Constants {
         static let messageEntity = "MessageEntity"
     }
     
+    struct Colors {
+        static let appBlueLight = "appBlueLight"
+        static let appBlue = "appBlue"
+        static let appGray = "appGray"
+    }
+    
 }

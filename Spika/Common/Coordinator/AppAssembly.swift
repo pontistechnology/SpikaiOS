@@ -14,10 +14,13 @@ final class AppAssembly: Assembly {
         self.assembleMainRepository(container)
         self.assembleHomeViewController(container)
         self.assembleDetailsViewController(container)
+        self.assembleContactsViewController(container)
+        self.assembleCallHistoryViewController(container)
+        self.assembleChatsViewController(container)
+        self.assembleSettingsViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
-
         container.register(NetworkService.self) { r in
             return NetworkService()
         }.inObjectScope(.container)
@@ -43,8 +46,60 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.transient)
         
         container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let controller = HomeViewController()
+            let controller = HomeViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
             controller.viewModel = container.resolve(HomeViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleContactsViewController(_ container: Container) {
+        container.register(ContactsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(AppRepository.self)!
+            return ContactsViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(ContactsViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = ContactsViewController()
+            controller.viewModel = container.resolve(ContactsViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleCallHistoryViewController(_ container: Container) {
+        container.register(CallHistoryViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(AppRepository.self)!
+            return CallHistoryViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(CallHistoryViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = CallHistoryViewController()
+            controller.viewModel = container.resolve(CallHistoryViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleChatsViewController(_ container: Container) {
+        container.register(ChatsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(AppRepository.self)!
+            return ChatsViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(ChatsViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = ChatsViewController()
+            controller.viewModel = container.resolve(ChatsViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleSettingsViewController(_ container: Container) {
+        container.register(SettingsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(AppRepository.self)!
+            return SettingsViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(SettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = SettingsViewController()
+            controller.viewModel = container.resolve(SettingsViewModel.self, argument: coordinator)
             return controller
         }.inObjectScope(.transient)
     }

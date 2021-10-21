@@ -6,51 +6,74 @@
 //
 
 import UIKit
-import Combine
 
-class HomeViewController: BaseViewController {
+class HomeViewController: UIPageViewController {
     
-    private let homeView = HomeView()
+    var homeTabBar: HomeTabBar!
     var viewModel: HomeViewModel!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView(homeView)
-        setupBindings()
-        //self.viewModel.getPosts()
-        self.viewModel.getChats()
-        //self.viewModel.getUsers()
+        configurePageViewController()
     }
     
-    func setupBindings() {
-        let detailsTap = UITapGestureRecognizer(target: self, action: #selector(self.handleDetailsButtonTap(_:)))
-        homeView.detailsButton.addGestureRecognizer(detailsTap)
+    func configurePageViewController() {
+        homeTabBar = HomeTabBar(tabBarItems: viewModel.getHomeTabBarItems())
         
-        viewModel.chatsSubject
-            .receive(on: DispatchQueue.main)
-            .sink { chats in
-                print(chats)
-            }.store(in: &subscriptions)
+        self.delegate = nil
+        self.delegate = self
+        self.dataSource = nil
+        self.dataSource = self
+        homeTabBar.delegate = self
+        
+        view.addSubview(homeTabBar)
+        homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        homeTabBar.constrainHeight(homeTabBar.tabBarHeight)
+        if let vc = homeTabBar.getViewController(index: 0) {
+            self.setViewControllers([vc], direction: .forward, animated: true)
+        }
     }
     
-    @objc func handleDetailsButtonTap(_ sender: UITapGestureRecognizer? = nil) {
-        //self.viewModel.showDetailsScreen(id: 3)
-//        viewModel.createChat(name: "first chat", type: "group", id: 1)
-//        viewModel.createChat(name: "second chat", type: "group", id: 2)
-//        viewModel.createChat(name: "third chat", type: "group", id: 3)
-        
-//        let user1 = User(loginName: "Marko", avatarUrl: nil, localName: "Marko", id: 1, blocked: false)
-//        viewModel.repository.saveUser(user1)
-//        viewModel.repository.saveUser(User(loginName: "Mirko", localName: "Mirko"))
-//        viewModel.repository.saveUser(User(loginName: "Ivan", localName: "Ivan"))
-        
-        let chat = Chat(name: "first chat", id: 1, type: "group")
+    private func switchToController(index: Int) {
+        if let vc = homeTabBar.getViewController(index: index) {
+            if index < homeTabBar.currentViewControllerIndex {
+                setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
+            } else {
+                setViewControllers([vc], direction: .forward, animated: true, completion: nil)
+            }
+        }
+    }
+    
+}
 
-//        let message = Message(chat: chat, user: user1, message: "SecondMEssage", id: 1)
-//        viewModel.saveMessage(message: message)
-//
-//        viewModel.getUsersForChat(chat: chat)
-        viewModel.getMessagesForChat(chat: chat)
+extension HomeViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        return homeTabBar.switchToPrevious(currentViewController: viewController)
     }
     
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        return homeTabBar.switchToNext(currentViewController: viewController)
+    }
+
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed {
+            if let vc = self.viewControllers?.first {
+                homeTabBar.selectViewController(vc)
+            }
+        }
+    }
+    
+}
+
+extension HomeViewController: HomeTabBarViewDelegate {
+    func tabSelected(_ tabBar: HomeTabBar, at index: Int) {
+        self.switchToController(index: index)
+    }
 }
