@@ -44,6 +44,7 @@
 		AD8192842722D5AF00D5BE48 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192752722D57300D5BE48 /* Montserrat-Light.ttf */; };
 		AD8192852722D5AF00D5BE48 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192772722D57400D5BE48 /* Montserrat-Medium.ttf */; };
 		AD8192872722D9BA00D5BE48 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */; };
+		AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192882722F5CD00D5BE48 /* ImageButton.swift */; };
 		ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */; };
 		ADB9D524271E83F3000793E2 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */; };
 		ADB9D527271E83F3000793E2 /* ChatEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51F271E83F3000793E2 /* ChatEntity+CoreDataClass.swift */; };
@@ -116,6 +117,7 @@
 		AD81927B2722D57400D5BE48 /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		AD81927C2722D57400D5BE48 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
+		AD8192882722F5CD00D5BE48 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				AD81926E2722D0A400D5BE48 /* SegmentedControl.swift */,
 				AD8192702722D3E900D5BE48 /* MainButton.swift */,
 				AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */,
+				AD8192882722F5CD00D5BE48 /* ImageButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 				ADB9D527271E83F3000793E2 /* ChatEntity+CoreDataClass.swift in Sources */,
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
 				ADD50450271E81BA009D50CB /* Message.swift in Sources */,
+				AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */,
 				AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */,
 				AD8192652721D57000D5BE48 /* SettingsView.swift in Sources */,
 				ADD503E8270DD87A009D50CB /* Constants.swift in Sources */,
