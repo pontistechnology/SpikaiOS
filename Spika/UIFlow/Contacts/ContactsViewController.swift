@@ -22,7 +22,7 @@ class ContactsViewController: BaseViewController {
     }
     
     func setupBindings() {
-        contactsView.detailsButton.publisher(for: .touchUpInside).sink { _ in
+        contactsView.detailsButton.tap().sink { _ in
             self.viewModel.showDetailsScreen(id: 3)
     //        viewModel.createChat(name: "first chat", type: "group", id: 1)
     //        let user1 = User(loginName: "Marko", avatarUrl: nil, localName: "Marko", id: 1, blocked: false)

@@ -45,6 +45,7 @@
 		AD8192852722D5AF00D5BE48 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192772722D57400D5BE48 /* Montserrat-Medium.ttf */; };
 		AD8192872722D9BA00D5BE48 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */; };
 		AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192882722F5CD00D5BE48 /* ImageButton.swift */; };
+		AD819290272305D900D5BE48 /* TapUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81928F272305D900D5BE48 /* TapUtils.swift */; };
 		ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */; };
 		ADB9D524271E83F3000793E2 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */; };
 		ADB9D527271E83F3000793E2 /* ChatEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51F271E83F3000793E2 /* ChatEntity+CoreDataClass.swift */; };
@@ -118,6 +119,7 @@
 		AD81927C2722D57400D5BE48 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		AD8192882722F5CD00D5BE48 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
+		AD81928F272305D900D5BE48 /* TapUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapUtils.swift; sourceTree = "<group>"; };
 		ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -290,6 +292,14 @@
 			path = Montserrat;
 			sourceTree = "<group>";
 		};
+		AD81928A2722FFD000D5BE48 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				AD81928F272305D900D5BE48 /* TapUtils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		ADD503A5270DC3C7009D50CB = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +362,7 @@
 				ADD503DD270DD723009D50CB /* Base */,
 				ADD503CF270DD54D009D50CB /* Coordinator */,
 				ADD503CC270DD302009D50CB /* Extensions */,
+				AD81928A2722FFD000D5BE48 /* Utils */,
 				AD8192722722D55100D5BE48 /* Fonts */,
 				ADD503E7270DD87A009D50CB /* Constants.swift */,
 			);
@@ -688,6 +699,7 @@
 				AD8192712722D3E900D5BE48 /* MainButton.swift in Sources */,
 				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,
 				AD81926F2722D0A400D5BE48 /* SegmentedControl.swift in Sources */,
+				AD819290272305D900D5BE48 /* TapUtils.swift in Sources */,
 				ADD5040127101B69009D50CB /* DetailsView.swift in Sources */,
 				ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */,
 				ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */,

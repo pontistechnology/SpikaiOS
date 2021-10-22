@@ -211,6 +211,10 @@ extension UIView {
         self.layer.mask = mask
     }
     
+    func tap() -> GesturePublisher {
+        .init(view: self)
+    }
+    
 }
 
 
