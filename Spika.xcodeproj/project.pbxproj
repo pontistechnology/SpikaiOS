@@ -32,6 +32,7 @@
 		AD8192692721D5BD00D5BE48 /* ChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192682721D5BD00D5BE48 /* ChatsViewModel.swift */; };
 		AD81926B2721D5DE00D5BE48 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81926A2721D5DE00D5BE48 /* SettingsViewModel.swift */; };
 		AD81926D2721E2E400D5BE48 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81926C2721E2E400D5BE48 /* UIControl+Combine.swift */; };
+		AD81926F2722D0A400D5BE48 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81926E2722D0A400D5BE48 /* SegmentedControl.swift */; };
 		ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */; };
 		ADB9D524271E83F3000793E2 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */; };
 		ADB9D527271E83F3000793E2 /* ChatEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51F271E83F3000793E2 /* ChatEntity+CoreDataClass.swift */; };
@@ -92,6 +93,7 @@
 		AD8192682721D5BD00D5BE48 /* ChatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewModel.swift; sourceTree = "<group>"; };
 		AD81926A2721D5DE00D5BE48 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		AD81926C2721E2E400D5BE48 /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
+		AD81926E2722D0A400D5BE48 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 		ADD503E6270DD849009D50CB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AD81926E2722D0A400D5BE48 /* SegmentedControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -620,6 +623,7 @@
 				AD81923A271E873200D5BE48 /* Reaction.swift in Sources */,
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
 				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,
+				AD81926F2722D0A400D5BE48 /* SegmentedControl.swift in Sources */,
 				ADD5040127101B69009D50CB /* DetailsView.swift in Sources */,
 				ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */,
 				ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */,

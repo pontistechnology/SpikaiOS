@@ -31,6 +31,7 @@ struct Constants {
         static let appBlueLight = "appBlueLight"
         static let appBlue = "appBlue"
         static let appGray = "appGray"
+        static let appLightGray = "appLightGray"
     }
     
 }
