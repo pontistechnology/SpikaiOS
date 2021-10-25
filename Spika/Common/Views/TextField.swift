@@ -9,7 +9,7 @@ import UIKit
 
 class TextField: UITextField {
     
-    private let padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    open var inset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     private let textPlaceholder: String
     
     init(textPlaceholder: String = "") {
@@ -35,15 +35,15 @@ class TextField: UITextField {
     
     
     override open func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
+        return bounds.inset(by: inset)
     }
 
     override open func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
+        return bounds.inset(by: inset)
     }
 
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
+        return bounds.inset(by: inset)
     }
     
 }
