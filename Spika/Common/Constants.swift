@@ -10,6 +10,7 @@ import Foundation
 struct Constants {
     struct Strings {
         static let appName = "Spika"
+        static let cancel = "Cancel"
     }
     
     struct Networking {
@@ -32,6 +33,8 @@ struct Constants {
         static let appBlue = "appBlue"
         static let appGray = "appGray"
         static let appLightGray = "appLightGray"
+        static let textTertiary = "textTertiary"
+        static let textPrimary = "textPrimary"
     }
     
 }

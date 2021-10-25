@@ -212,7 +212,8 @@ extension UIView {
     }
     
     func tap() -> GesturePublisher {
-        .init(view: self)
+        isUserInteractionEnabled = true
+        return .init(view: self)
     }
     
 }

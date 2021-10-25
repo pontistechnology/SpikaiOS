@@ -124,7 +124,7 @@ class HomeTabBar: UIView, BaseView {
 extension HomeTabBar: StackItemViewDelegate {
     
     func handleTap(_ view: StackItemView) {
-        self.tabs[self.currentViewControllerIndex].isSelected = false
+        self.tabs.forEach{$0.isSelected = false}
         view.isSelected = true
         delegate?.tabSelected(self, at: (view.item as! TabBarItem).position)
         self.currentViewControllerIndex = self.tabs.firstIndex(where: { $0 === view }) ?? 0
