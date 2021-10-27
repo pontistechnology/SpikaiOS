@@ -7,4 +7,8 @@ target 'Spika' do
 
   # Pods for Spika
   pod 'Swinject'
+
+  target 'AppTests' do
+      pod 'Swinject'
+  end
 end

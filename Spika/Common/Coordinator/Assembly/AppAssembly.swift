@@ -32,7 +32,7 @@ final class AppAssembly: Assembly {
             return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService)
         }.inObjectScope(.container)
 
-        container.register(AppRepository.self) { r in
+        container.register(Repository.self, name: RepositoryType.production.name) { r in
             let networkService = container.resolve(NetworkService.self)!
             let databaseService = container.resolve(DatabaseService.self)!
             return AppRepository(networkService: networkService, databaseService: databaseService)
@@ -41,7 +41,7 @@ final class AppAssembly: Assembly {
     
     private func assembleHomeViewController(_ container: Container) {
         container.register(HomeViewModel.self) { (resolver, coordinator: AppCoordinator) in
-            let repository = container.resolve(AppRepository.self)!
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return HomeViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
@@ -54,7 +54,7 @@ final class AppAssembly: Assembly {
     
     private func assembleContactsViewController(_ container: Container) {
         container.register(ContactsViewModel.self) { (resolver, coordinator: AppCoordinator) in
-            let repository = container.resolve(AppRepository.self)!
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return ContactsViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
@@ -67,7 +67,7 @@ final class AppAssembly: Assembly {
     
     private func assembleCallHistoryViewController(_ container: Container) {
         container.register(CallHistoryViewModel.self) { (resolver, coordinator: AppCoordinator) in
-            let repository = container.resolve(AppRepository.self)!
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return CallHistoryViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
@@ -80,7 +80,7 @@ final class AppAssembly: Assembly {
     
     private func assembleChatsViewController(_ container: Container) {
         container.register(ChatsViewModel.self) { (resolver, coordinator: AppCoordinator) in
-            let repository = container.resolve(AppRepository.self)!
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return ChatsViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
@@ -93,7 +93,7 @@ final class AppAssembly: Assembly {
     
     private func assembleSettingsViewController(_ container: Container) {
         container.register(SettingsViewModel.self) { (resolver, coordinator: AppCoordinator) in
-            let repository = container.resolve(AppRepository.self)!
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return SettingsViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
@@ -106,7 +106,7 @@ final class AppAssembly: Assembly {
     
     private func assembleDetailsViewController(_ container: Container) {
         container.register(DetailsViewModel.self) { (resolver, coordinator: AppCoordinator, id: Int) in
-            let repository = container.resolve(AppRepository.self)!
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return DetailsViewModel(repository: repository, coordinator: coordinator, id: id)
         }.inObjectScope(.transient)
         

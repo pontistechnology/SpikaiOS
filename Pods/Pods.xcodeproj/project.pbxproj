@@ -19,20 +19,23 @@
 		50D8FDFACCCC86734BAD3497379AD047 /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A4DAA76BE8F1E514D336388431C224 /* Assembly.swift */; };
 		51A0F1DE05ED849029E4B3A0F72BCE2A /* Swinject-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 89086DCE24A417EF0D48BDA68D333D8C /* Swinject-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		523A3A677CC4A8E0F7B1F0FD987113C1 /* Assembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E0D3A61D95664661A595974DEB023F /* Assembler.swift */; };
-		5DC4793B3504B9155F1C5E510229627E /* Pods-Spika-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FBCD6F3C487FB4C780F6E461794AA36 /* Pods-Spika-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B23F1A123EE0820F799E40E429564BC /* Pods-Spika-AppTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E71C0BDA1EC8C5548F018091D7CB0443 /* Pods-Spika-AppTests-dummy.m */; };
+		5DC4793B3504B9155F1C5E510229627E /* Pods-Spika-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDEEB83AF7C420CFD0369900F89E142 /* Pods-Spika-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D12F23258C26AC473283D6AE8ED080B /* InstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D61FDCC1A37DABC6532F8FB4CB8D43 /* InstanceWrapper.swift */; };
 		6D9128F05B46BA3BF6EEFF077A97D325 /* _Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA050F624BE659321EA42B90A781DC0 /* _Resolver.swift */; };
 		7567557F204208D14E0E3EE2ED8793B0 /* GraphIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EE97B7B2F80A849EE0FBBA25031129 /* GraphIdentifier.swift */; };
-		7CBAC9E74099687870B2266863C5A36D /* Pods-Spika-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B0946C5DEB0D8CD832CF6D3D24119548 /* Pods-Spika-dummy.m */; };
+		7CBAC9E74099687870B2266863C5A36D /* Pods-Spika-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2647FED16C750A06D26B4992575D475E /* Pods-Spika-dummy.m */; };
 		8435267CF53983688AE07DD7C2D259D4 /* Container.TypeForwarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C823C8E60C956CF9EA92868A3BD89DA0 /* Container.TypeForwarding.swift */; };
 		8D668566F7ADE83D955D129ADB6C94E3 /* ServiceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB8112D90444327849585ED3FA07AFF /* ServiceEntry.swift */; };
 		90BCFFF4845D1F4E511A85F8104B300A /* Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90F26846634F9E8B1141F178DF010A5 /* Behavior.swift */; };
+		A324300FB23612C9D5EF76402E4CE4B5 /* Pods-Spika-AppTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F27DB27448191F5C1610257C4F715C8 /* Pods-Spika-AppTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A744CA64EBB12821264DB6191C95B4F3 /* SynchronizedResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F820558A4A3CDCA1C8E132F9644224 /* SynchronizedResolver.swift */; };
 		AF63A3B3F7DA14A64FF1F9044C21DC3D /* DebugHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C978EB077E5FE411426E5798253F94D4 /* DebugHelper.swift */; };
 		B633EBD0F17BEF9D807375CC96D3D9F7 /* UnavailableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F4AC3431688388EB876C11FE9034A /* UnavailableItems.swift */; };
 		B74F1E7EFB704B24F49D47C9425D1C24 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402B936132AB4F73CFAFD5BD6C04FB02 /* Container.swift */; };
 		D36F4A2D482E588B4B964A72330132B3 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777549F8211BBDE23B5A316C906335B8 /* SpinLock.swift */; };
 		E15C977F2B755B985B0B33960571CF93 /* FunctionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AB5AA0A785CC5654B214425F506900 /* FunctionType.swift */; };
+		EA65B799D70B2B8FA54BD5BAC0F7A2E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		EA8D74093B82AB4B065DEFFC00B99739 /* ServiceEntry.TypeForwarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD3E46B08B43532597DFC9825A52BD4 /* ServiceEntry.TypeForwarding.swift */; };
 		EAF298BC9474DD646F03F0D2033781B9 /* Swinject.h in Headers */ = {isa = PBXBuildFile; fileRef = 2534A2332EC2928B34D1BF864B2BA341 /* Swinject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED519DE0CF7EAB38134E11B7F6C209E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
@@ -40,6 +43,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		730FBB28C10DD509C934FDEFFF512549 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 46065AF968A5A92D450BB21F7F24367D;
+			remoteInfo = Swinject;
+		};
 		EC6B6A707193B34040CB1B68BDD01902 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -51,49 +61,59 @@
 
 /* Begin PBXFileReference section */
 		01F820558A4A3CDCA1C8E132F9644224 /* SynchronizedResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SynchronizedResolver.swift; path = Sources/SynchronizedResolver.swift; sourceTree = "<group>"; };
+		06BA8196D61ABBBF4A4B5BB07EB619A3 /* Pods-Spika-AppTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Spika-AppTests.modulemap"; sourceTree = "<group>"; };
+		084C211AC99795180C503094DC9BB605 /* Pods-Spika-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Spika-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0CDEEB83AF7C420CFD0369900F89E142 /* Pods-Spika-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Spika-umbrella.h"; sourceTree = "<group>"; };
+		0F27DB27448191F5C1610257C4F715C8 /* Pods-Spika-AppTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Spika-AppTests-umbrella.h"; sourceTree = "<group>"; };
 		103F339676BDE62DF5DCF8F376D32380 /* Container.Arguments.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.Arguments.swift; path = Sources/Container.Arguments.swift; sourceTree = "<group>"; };
+		1C2596B7473D4E0CF9E33F793751808B /* Pods-Spika-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Spika-acknowledgements.plist"; sourceTree = "<group>"; };
 		22995AA48610556B9777665DDF3B8229 /* ObjectScope.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObjectScope.swift; path = Sources/ObjectScope.swift; sourceTree = "<group>"; };
 		2534A2332EC2928B34D1BF864B2BA341 /* Swinject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Swinject.h; path = Sources/Swinject.h; sourceTree = "<group>"; };
+		2647FED16C750A06D26B4992575D475E /* Pods-Spika-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Spika-dummy.m"; sourceTree = "<group>"; };
 		326F12E23C66E1CCCD220EAA5F8A2827 /* InstanceStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InstanceStorage.swift; path = Sources/InstanceStorage.swift; sourceTree = "<group>"; };
-		373B11FFBEFA351203C875EDA66806BE /* Pods-Spika-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Spika-acknowledgements.plist"; sourceTree = "<group>"; };
 		3BD3E46B08B43532597DFC9825A52BD4 /* ServiceEntry.TypeForwarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServiceEntry.TypeForwarding.swift; path = Sources/ServiceEntry.TypeForwarding.swift; sourceTree = "<group>"; };
 		402B936132AB4F73CFAFD5BD6C04FB02 /* Container.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.swift; path = Sources/Container.swift; sourceTree = "<group>"; };
 		41AB5AA0A785CC5654B214425F506900 /* FunctionType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunctionType.swift; path = Sources/FunctionType.swift; sourceTree = "<group>"; };
 		4BB8112D90444327849585ED3FA07AFF /* ServiceEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServiceEntry.swift; path = Sources/ServiceEntry.swift; sourceTree = "<group>"; };
 		59AA54FDF1E0B576C4FCFDF8F1906E13 /* Swinject-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Swinject-prefix.pch"; sourceTree = "<group>"; };
 		5D6DEE0A697C133636D2B1B9E23B8603 /* SynchronizedResolver.Arguments.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SynchronizedResolver.Arguments.swift; path = Sources/SynchronizedResolver.Arguments.swift; sourceTree = "<group>"; };
-		5FBCD6F3C487FB4C780F6E461794AA36 /* Pods-Spika-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Spika-umbrella.h"; sourceTree = "<group>"; };
+		638A96DE7AB572724E1E9558EB3FC7AD /* Pods-Spika-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Spika-AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		749F4AC3431688388EB876C11FE9034A /* UnavailableItems.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UnavailableItems.swift; path = Sources/UnavailableItems.swift; sourceTree = "<group>"; };
 		777549F8211BBDE23B5A316C906335B8 /* SpinLock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpinLock.swift; path = Sources/SpinLock.swift; sourceTree = "<group>"; };
 		77EE97B7B2F80A849EE0FBBA25031129 /* GraphIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GraphIdentifier.swift; path = Sources/GraphIdentifier.swift; sourceTree = "<group>"; };
 		7AB94F2399462C48C014C9477075457F /* Resolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Resolver.swift; path = Sources/Resolver.swift; sourceTree = "<group>"; };
+		7DF5B72A14931B0F033972BF2B51EA6F /* Pods-Spika-AppTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Spika-AppTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		80252351842E649105492E273B17B7E2 /* Pods-Spika-AppTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Spika-AppTests"; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84110A524FB66D87E75670267827BD8F /* ServiceKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServiceKey.swift; path = Sources/ServiceKey.swift; sourceTree = "<group>"; };
 		86A4DAA76BE8F1E514D336388431C224 /* Assembly.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Assembly.swift; path = Sources/Assembly.swift; sourceTree = "<group>"; };
 		88E0D3A61D95664661A595974DEB023F /* Assembler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Assembler.swift; path = Sources/Assembler.swift; sourceTree = "<group>"; };
 		89086DCE24A417EF0D48BDA68D333D8C /* Swinject-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Swinject-umbrella.h"; sourceTree = "<group>"; };
 		8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swinject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CEE7AE51679AE386ED87C30D1E0A822 /* Pods-Spika.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Spika.modulemap"; sourceTree = "<group>"; };
 		93D61FDCC1A37DABC6532F8FB4CB8D43 /* InstanceWrapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InstanceWrapper.swift; path = Sources/InstanceWrapper.swift; sourceTree = "<group>"; };
+		966B1F874DB45D938757664E552194EC /* Pods-Spika-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Spika-acknowledgements.markdown"; sourceTree = "<group>"; };
 		9AB5C574FAFEAD16EC369BE76BC8B08B /* Swinject-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Swinject-dummy.m"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A09968FBC4A289F8035D7176D2DE0F24 /* Swinject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Swinject.release.xcconfig; sourceTree = "<group>"; };
-		A2ECE5FBDDD4470509C92FBFE0807FA1 /* Pods-Spika-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Spika-Info.plist"; sourceTree = "<group>"; };
 		A4F6234A51DF4F20BB2A343E78B22E17 /* Container.Logging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.Logging.swift; path = Sources/Container.Logging.swift; sourceTree = "<group>"; };
-		A606DF158E5C8420317614ED6DEC84D6 /* Pods-Spika-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Spika-frameworks.sh"; sourceTree = "<group>"; };
+		A54354A5541B9A40477F0EECE98B4247 /* Pods-Spika-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Spika-Info.plist"; sourceTree = "<group>"; };
 		AFA050F624BE659321EA42B90A781DC0 /* _Resolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = _Resolver.swift; path = Sources/_Resolver.swift; sourceTree = "<group>"; };
-		B0946C5DEB0D8CD832CF6D3D24119548 /* Pods-Spika-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Spika-dummy.m"; sourceTree = "<group>"; };
-		BC91D76FB2B17C471437F2CF803C3161 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
-		C1F428718BFB7678C0E52C99B96297DD /* Pods-Spika.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Spika.modulemap"; sourceTree = "<group>"; };
 		C823C8E60C956CF9EA92868A3BD89DA0 /* Container.TypeForwarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.TypeForwarding.swift; path = Sources/Container.TypeForwarding.swift; sourceTree = "<group>"; };
 		C978EB077E5FE411426E5798253F94D4 /* DebugHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DebugHelper.swift; path = Sources/DebugHelper.swift; sourceTree = "<group>"; };
-		CFE2A0E1AFC9D8E81A458FDD149BBB86 /* Pods-Spika-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Spika-acknowledgements.markdown"; sourceTree = "<group>"; };
+		C9BFCA50DDB0E0E0F465E2F06D3676F6 /* Pods-Spika-AppTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Spika-AppTests-frameworks.sh"; sourceTree = "<group>"; };
 		D3F6286BD189090F8430A13015CA5B9E /* Swinject-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Swinject-Info.plist"; sourceTree = "<group>"; };
+		D41228AF177C846486EF64F6E1C44980 /* Pods-Spika-AppTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Spika-AppTests-Info.plist"; sourceTree = "<group>"; };
+		D42EF45A1D0F84B187F0AFC7D5024A98 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
 		D90F26846634F9E8B1141F178DF010A5 /* Behavior.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Behavior.swift; path = Sources/Behavior.swift; sourceTree = "<group>"; };
 		DAB5698E430A0A9CF5D471C3F9C0E954 /* Swinject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Swinject.debug.xcconfig; sourceTree = "<group>"; };
+		DD0A0F92B0DFAB5320CAF34AFA924152 /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
 		E326F238FD4878FF2ED3B5F67DAF329E /* Swinject.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Swinject.modulemap; sourceTree = "<group>"; };
+		E71C0BDA1EC8C5548F018091D7CB0443 /* Pods-Spika-AppTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Spika-AppTests-dummy.m"; sourceTree = "<group>"; };
 		E9180848AB90490086402F596C9F1521 /* Pods-Spika */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Spika"; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA814914917A982221FA933738043B86 /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
+		F2F050EEF195AF7C6EF43E35A1FB713B /* Pods-Spika-AppTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Spika-AppTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		FA62609A4B83BEE5CACF6B144B1245C6 /* ObjectScope.Standard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObjectScope.Standard.swift; path = Sources/ObjectScope.Standard.swift; sourceTree = "<group>"; };
+		FECFD28D0B8CC2B945304C22EC48CF20 /* Pods-Spika-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Spika-frameworks.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,26 +133,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB3E79A3ADB1199C1A86D2CC2A7C6436 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA65B799D70B2B8FA54BD5BAC0F7A2E6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0E7DD488BF8A69AF821C342F75A03FA7 /* Pods-Spika */ = {
-			isa = PBXGroup;
-			children = (
-				C1F428718BFB7678C0E52C99B96297DD /* Pods-Spika.modulemap */,
-				CFE2A0E1AFC9D8E81A458FDD149BBB86 /* Pods-Spika-acknowledgements.markdown */,
-				373B11FFBEFA351203C875EDA66806BE /* Pods-Spika-acknowledgements.plist */,
-				B0946C5DEB0D8CD832CF6D3D24119548 /* Pods-Spika-dummy.m */,
-				A606DF158E5C8420317614ED6DEC84D6 /* Pods-Spika-frameworks.sh */,
-				A2ECE5FBDDD4470509C92FBFE0807FA1 /* Pods-Spika-Info.plist */,
-				5FBCD6F3C487FB4C780F6E461794AA36 /* Pods-Spika-umbrella.h */,
-				EA814914917A982221FA933738043B86 /* Pods-Spika.debug.xcconfig */,
-				BC91D76FB2B17C471437F2CF803C3161 /* Pods-Spika.release.xcconfig */,
-			);
-			name = "Pods-Spika";
-			path = "Target Support Files/Pods-Spika";
-			sourceTree = "<group>";
-		};
 		134B6A36E2FE3B1321F9F07A8EE06CDB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,13 +152,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		17FF54ADA433ED8399D55B9AA1611B4D /* Products */ = {
+		552BA3FD61BEDD6B241AA69847AE0D23 /* Pods-Spika-AppTests */ = {
 			isa = PBXGroup;
 			children = (
-				E9180848AB90490086402F596C9F1521 /* Pods-Spika */,
-				8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject.framework */,
+				06BA8196D61ABBBF4A4B5BB07EB619A3 /* Pods-Spika-AppTests.modulemap */,
+				7DF5B72A14931B0F033972BF2B51EA6F /* Pods-Spika-AppTests-acknowledgements.markdown */,
+				F2F050EEF195AF7C6EF43E35A1FB713B /* Pods-Spika-AppTests-acknowledgements.plist */,
+				E71C0BDA1EC8C5548F018091D7CB0443 /* Pods-Spika-AppTests-dummy.m */,
+				C9BFCA50DDB0E0E0F465E2F06D3676F6 /* Pods-Spika-AppTests-frameworks.sh */,
+				D41228AF177C846486EF64F6E1C44980 /* Pods-Spika-AppTests-Info.plist */,
+				0F27DB27448191F5C1610257C4F715C8 /* Pods-Spika-AppTests-umbrella.h */,
+				084C211AC99795180C503094DC9BB605 /* Pods-Spika-AppTests.debug.xcconfig */,
+				638A96DE7AB572724E1E9558EB3FC7AD /* Pods-Spika-AppTests.release.xcconfig */,
 			);
-			name = Products;
+			name = "Pods-Spika-AppTests";
+			path = "Target Support Files/Pods-Spika-AppTests";
 			sourceTree = "<group>";
 		};
 		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
@@ -158,14 +177,50 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		5F21B6C7C4CA9A67D47F8EB7827B17F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E9180848AB90490086402F596C9F1521 /* Pods-Spika */,
+				80252351842E649105492E273B17B7E2 /* Pods-Spika-AppTests */,
+				8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B6957667C7BC058D5A3517BCC1EA1F94 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C727F8942F560EF1A0A482C6A5F35E0A /* Pods-Spika */,
+				552BA3FD61BEDD6B241AA69847AE0D23 /* Pods-Spika-AppTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		C727F8942F560EF1A0A482C6A5F35E0A /* Pods-Spika */ = {
+			isa = PBXGroup;
+			children = (
+				8CEE7AE51679AE386ED87C30D1E0A822 /* Pods-Spika.modulemap */,
+				966B1F874DB45D938757664E552194EC /* Pods-Spika-acknowledgements.markdown */,
+				1C2596B7473D4E0CF9E33F793751808B /* Pods-Spika-acknowledgements.plist */,
+				2647FED16C750A06D26B4992575D475E /* Pods-Spika-dummy.m */,
+				FECFD28D0B8CC2B945304C22EC48CF20 /* Pods-Spika-frameworks.sh */,
+				A54354A5541B9A40477F0EECE98B4247 /* Pods-Spika-Info.plist */,
+				0CDEEB83AF7C420CFD0369900F89E142 /* Pods-Spika-umbrella.h */,
+				DD0A0F92B0DFAB5320CAF34AFA924152 /* Pods-Spika.debug.xcconfig */,
+				D42EF45A1D0F84B187F0AFC7D5024A98 /* Pods-Spika.release.xcconfig */,
+			);
+			name = "Pods-Spika";
+			path = "Target Support Files/Pods-Spika";
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
 				134B6A36E2FE3B1321F9F07A8EE06CDB /* Pods */,
-				17FF54ADA433ED8399D55B9AA1611B4D /* Products */,
-				E88781A2818E86667A4959A80B914E4A /* Targets Support Files */,
+				5F21B6C7C4CA9A67D47F8EB7827B17F8 /* Products */,
+				B6957667C7BC058D5A3517BCC1EA1F94 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -190,14 +245,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/Swinject";
-			sourceTree = "<group>";
-		};
-		E88781A2818E86667A4959A80B914E4A /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				0E7DD488BF8A69AF821C342F75A03FA7 /* Pods-Spika */,
-			);
-			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		EE0CBF93A2BAE8DA8A608CF6B7FE24B3 /* Swinject */ = {
@@ -235,6 +282,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		4EF9FB0F08197AC8F1BF6548BA79E9BD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A324300FB23612C9D5EF76402E4CE4B5 /* Pods-Spika-AppTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		53B2592DB00EE6E80B12FA205706C624 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -292,6 +347,25 @@
 			productReference = E9180848AB90490086402F596C9F1521 /* Pods-Spika */;
 			productType = "com.apple.product-type.framework";
 		};
+		AE023A76FE5C2BFBBB2CC7C8588018DF /* Pods-Spika-AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83785AC3FACB01A84DD7CD4D8A244A74 /* Build configuration list for PBXNativeTarget "Pods-Spika-AppTests" */;
+			buildPhases = (
+				4EF9FB0F08197AC8F1BF6548BA79E9BD /* Headers */,
+				491C04FDD0F499A614112DE642A8999B /* Sources */,
+				BB3E79A3ADB1199C1A86D2CC2A7C6436 /* Frameworks */,
+				96D72F9EAF82028A05AD8417D7C41B04 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74C420FE37D0F100D8B2381528639E68 /* PBXTargetDependency */,
+			);
+			name = "Pods-Spika-AppTests";
+			productName = Pods_Spika_AppTests;
+			productReference = 80252351842E649105492E273B17B7E2 /* Pods-Spika-AppTests */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -310,11 +384,12 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 17FF54ADA433ED8399D55B9AA1611B4D /* Products */;
+			productRefGroup = 5F21B6C7C4CA9A67D47F8EB7827B17F8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				9AB80FEE1BFCEDDB7C04497EEBEBF8B0 /* Pods-Spika */,
+				AE023A76FE5C2BFBBB2CC7C8588018DF /* Pods-Spika-AppTests */,
 				46065AF968A5A92D450BB21F7F24367D /* Swinject */,
 			);
 		};
@@ -322,6 +397,13 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		24E264C98DD54D02B70EB652626EB4D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96D72F9EAF82028A05AD8417D7C41B04 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -343,6 +425,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CBAC9E74099687870B2266863C5A36D /* Pods-Spika-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491C04FDD0F499A614112DE642A8999B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B23F1A123EE0820F799E40E429564BC /* Pods-Spika-AppTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +475,12 @@
 			name = Swinject;
 			target = 46065AF968A5A92D450BB21F7F24367D /* Swinject */;
 			targetProxy = EC6B6A707193B34040CB1B68BDD01902 /* PBXContainerItemProxy */;
+		};
+		74C420FE37D0F100D8B2381528639E68 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Swinject;
+			target = 46065AF968A5A92D450BB21F7F24367D /* Swinject */;
+			targetProxy = 730FBB28C10DD509C934FDEFFF512549 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -457,7 +553,7 @@
 		};
 		59D27B3067FD1292952817391C5A39AF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC91D76FB2B17C471437F2CF803C3161 /* Pods-Spika.release.xcconfig */;
+			baseConfigurationReference = D42EF45A1D0F84B187F0AFC7D5024A98 /* Pods-Spika.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -492,6 +588,43 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		7657EEDD71222BA2A7CD389BE4C24B28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084C211AC99795180C503094DC9BB605 /* Pods-Spika-AppTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		8B5A46FF8D3C1289CDEE3BAFACABCD2A /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -624,9 +757,47 @@
 			};
 			name = Release;
 		};
+		F48B7E74E16EF5964DD035B8330F0EA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 638A96DE7AB572724E1E9558EB3FC7AD /* Pods-Spika-AppTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		FB9F0000AC95716FB314615D09B5397A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA814914917A982221FA933738043B86 /* Pods-Spika.debug.xcconfig */;
+			baseConfigurationReference = DD0A0F92B0DFAB5320CAF34AFA924152 /* Pods-Spika.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -678,6 +849,15 @@
 			buildConfigurations = (
 				FB9F0000AC95716FB314615D09B5397A /* Debug */,
 				59D27B3067FD1292952817391C5A39AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83785AC3FACB01A84DD7CD4D8A244A74 /* Build configuration list for PBXNativeTarget "Pods-Spika-AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7657EEDD71222BA2A7CD389BE4C24B28 /* Debug */,
+				F48B7E74E16EF5964DD035B8330F0EA4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,0 +1,6 @@
+framework module Pods_Spika_AppTests {
+  umbrella header "Pods-Spika-AppTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

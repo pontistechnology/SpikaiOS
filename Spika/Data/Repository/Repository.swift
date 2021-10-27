@@ -8,6 +8,19 @@
 import Foundation
 import Combine
 
+enum RepositoryType {
+    case production, test
+    
+    var name: String {
+        switch self {
+        case .production:
+            return "production"
+        case .test:
+            return "test"
+        }
+    }
+}
+
 protocol Repository {
     // this is test endpoint, needs to be deleted in future
     func getPosts() -> AnyPublisher<[Post], Error>

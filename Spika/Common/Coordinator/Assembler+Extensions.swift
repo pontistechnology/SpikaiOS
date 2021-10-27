@@ -12,7 +12,8 @@ extension Assembler {
     static let sharedAssembler: Assembler = {
         let container = Container()
         let assembler = Assembler([
-            AppAssembly()
+            AppAssembly(),
+            TestAssembly()
         ], container: container)
         return assembler
     }()

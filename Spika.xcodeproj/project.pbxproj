@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2FD051678BE847C32FF93CD8 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */; };
+		8C98C4F64745F15542536CE9 /* Pods_Spika_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */; };
 		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		AD81923A271E873200D5BE48 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819239271E873200D5BE48 /* Reaction.swift */; };
 		AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */; };
@@ -48,6 +49,12 @@
 		AD819290272305D900D5BE48 /* TapUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81928F272305D900D5BE48 /* TapUtils.swift */; };
 		AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFCF227296D5500736318 /* ErrorView.swift */; };
 		AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFCF42729828100736318 /* LogoImageView.swift */; };
+		AD9BFD01272985C400736318 /* AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD00272985C400736318 /* AppTests.swift */; };
+		AD9BFD172729894300736318 /* TestAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD13272987BE00736318 /* TestAssembly.swift */; };
+		AD9BFD182729898C00736318 /* TestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD092729867800736318 /* TestRepository.swift */; };
+		AD9BFD192729899000736318 /* TestRepository+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD0B272986B300736318 /* TestRepository+Chat.swift */; };
+		AD9BFD1A2729899300736318 /* TestRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD0D272986C400736318 /* TestRepository+User.swift */; };
+		AD9BFD1B2729899500736318 /* TestRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */; };
 		AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E38FC2725B2D900DC5D43 /* SearchBar.swift */; };
 		AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E38FE2726B2AA00DC5D43 /* TextField.swift */; };
 		AD9E39012726B85C00DC5D43 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E39002726B85C00DC5D43 /* TextFieldView.swift */; };
@@ -91,8 +98,21 @@
 		ADD50450271E81BA009D50CB /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5044F271E81BA009D50CB /* Message.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		AD9BFD02272985C400736318 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADD503A6270DC3C7009D50CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ADD503AD270DC3C7009D50CB;
+			remoteInfo = Spika;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0130303316D58D9DA3A15FB8 /* Pods-Spika-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.release.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.release.xcconfig"; sourceTree = "<group>"; };
+		4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		613C7266CE789CD1C2695243 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
+		6923B1B3DE1A3AEE3767CFAC /* Pods-Spika-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AD819237271E866100D5BE48 /* MessageEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntityService.swift; sourceTree = "<group>"; };
 		AD819239271E873200D5BE48 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
 		AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Messages.swift"; sourceTree = "<group>"; };
@@ -129,6 +149,13 @@
 		AD81928F272305D900D5BE48 /* TapUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapUtils.swift; sourceTree = "<group>"; };
 		AD9BFCF227296D5500736318 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		AD9BFCF42729828100736318 /* LogoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoImageView.swift; sourceTree = "<group>"; };
+		AD9BFCFE272985C400736318 /* AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD9BFD00272985C400736318 /* AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTests.swift; sourceTree = "<group>"; };
+		AD9BFD092729867800736318 /* TestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRepository.swift; sourceTree = "<group>"; };
+		AD9BFD0B272986B300736318 /* TestRepository+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Chat.swift"; sourceTree = "<group>"; };
+		AD9BFD0D272986C400736318 /* TestRepository+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+User.swift"; sourceTree = "<group>"; };
+		AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Messages.swift"; sourceTree = "<group>"; };
+		AD9BFD13272987BE00736318 /* TestAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAssembly.swift; sourceTree = "<group>"; };
 		AD9E38FC2725B2D900DC5D43 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		AD9E38FE2726B2AA00DC5D43 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		AD9E39002726B85C00DC5D43 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
@@ -181,6 +208,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AD9BFCFB272985C400736318 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C98C4F64745F15542536CE9 /* Pods_Spika_AppTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADD503AB270DC3C7009D50CB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */,
+				4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -314,10 +350,50 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		AD9BFCFF272985C400736318 /* AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD00272985C400736318 /* AppTests.swift */,
+			);
+			path = AppTests;
+			sourceTree = "<group>";
+		};
+		AD9BFD152729890100736318 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503DB270DD6DC009D50CB /* AppRepository.swift */,
+				ADD504172717481D009D50CB /* AppRepository+Chat.swift */,
+				ADD5041927174B82009D50CB /* AppRepository+User.swift */,
+				AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		AD9BFD162729891400736318 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD092729867800736318 /* TestRepository.swift */,
+				AD9BFD0B272986B300736318 /* TestRepository+Chat.swift */,
+				AD9BFD0D272986C400736318 /* TestRepository+User.swift */,
+				AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
+		AD9BFD1D27298A3700736318 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503D4270DD5F4009D50CB /* AppAssembly.swift */,
+				AD9BFD13272987BE00736318 /* TestAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
 		ADD503A5270DC3C7009D50CB = {
 			isa = PBXGroup;
 			children = (
 				ADD503B0270DC3C7009D50CB /* Spika */,
+				AD9BFCFF272985C400736318 /* AppTests */,
 				ADD503AF270DC3C7009D50CB /* Products */,
 				CC12D1B198A94B9651C98AB6 /* Pods */,
 				0C14C2809CCE80218B71E8AE /* Frameworks */,
@@ -328,6 +404,7 @@
 			isa = PBXGroup;
 			children = (
 				ADD503AE270DC3C7009D50CB /* Spika.app */,
+				AD9BFCFE272985C400736318 /* AppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -408,8 +485,8 @@
 			children = (
 				ADD503D0270DD57D009D50CB /* Coordinator.swift */,
 				ADD503D2270DD5A3009D50CB /* AppCoordinator.swift */,
-				ADD503D4270DD5F4009D50CB /* AppAssembly.swift */,
 				ADD503D6270DD65C009D50CB /* Assembler+Extensions.swift */,
+				AD9BFD1D27298A3700736318 /* Assembly */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -418,10 +495,8 @@
 			isa = PBXGroup;
 			children = (
 				ADD503D9270DD6AD009D50CB /* Repository.swift */,
-				ADD503DB270DD6DC009D50CB /* AppRepository.swift */,
-				ADD504172717481D009D50CB /* AppRepository+Chat.swift */,
-				ADD5041927174B82009D50CB /* AppRepository+User.swift */,
-				AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */,
+				AD9BFD152729890100736318 /* Main */,
+				AD9BFD162729891400736318 /* Test */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -544,6 +619,8 @@
 			children = (
 				C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */,
 				613C7266CE789CD1C2695243 /* Pods-Spika.release.xcconfig */,
+				6923B1B3DE1A3AEE3767CFAC /* Pods-Spika-AppTests.debug.xcconfig */,
+				0130303316D58D9DA3A15FB8 /* Pods-Spika-AppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -551,6 +628,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AD9BFCFD272985C400736318 /* AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD9BFD04272985C500736318 /* Build configuration list for PBXNativeTarget "AppTests" */;
+			buildPhases = (
+				825936471976C81D0F275BF7 /* [CP] Check Pods Manifest.lock */,
+				AD9BFCFA272985C400736318 /* Sources */,
+				AD9BFCFB272985C400736318 /* Frameworks */,
+				AD9BFCFC272985C400736318 /* Resources */,
+				BEF5C255436BD4913181390D /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD9BFD03272985C400736318 /* PBXTargetDependency */,
+			);
+			name = AppTests;
+			productName = AppTests;
+			productReference = AD9BFCFE272985C400736318 /* AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		ADD503AD270DC3C7009D50CB /* Spika */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADD503C5270DC3CA009D50CB /* Build configuration list for PBXNativeTarget "Spika" */;
@@ -580,6 +677,10 @@
 				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					AD9BFCFD272985C400736318 = {
+						CreatedOnToolsVersion = 13.0;
+						TestTargetID = ADD503AD270DC3C7009D50CB;
+					};
 					ADD503AD270DC3C7009D50CB = {
 						CreatedOnToolsVersion = 13.0;
 					};
@@ -599,11 +700,19 @@
 			projectRoot = "";
 			targets = (
 				ADD503AD270DC3C7009D50CB /* Spika */,
+				AD9BFCFD272985C400736318 /* AppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AD9BFCFC272985C400736318 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADD503AC270DC3C7009D50CB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -647,6 +756,45 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		825936471976C81D0F275BF7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Spika-AppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEF5C255436BD4913181390D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		EBFEFED5A25B5875D061A4F2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -667,6 +815,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AD9BFCFA272985C400736318 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD9BFD01272985C400736318 /* AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADD503AA270DC3C7009D50CB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -674,6 +830,7 @@
 				AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */,
 				AD81923C271E8AF400D5BE48 /* ReactionEntity+CoreDataProperties.swift in Sources */,
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
+				AD9BFD172729894300736318 /* TestAssembly.swift in Sources */,
 				AD81923E271E8AF400D5BE48 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				AD8192552721C00D00D5BE48 /* UIColor+Extensions.swift in Sources */,
 				AD81926B2721D5DE00D5BE48 /* SettingsViewModel.swift in Sources */,
@@ -689,6 +846,7 @@
 				AD9E39012726B85C00DC5D43 /* TextFieldView.swift in Sources */,
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
+				AD9BFD1B2729899500736318 /* TestRepository+Messages.swift in Sources */,
 				AD8192572721C2CE00D5BE48 /* HomeTabBar.swift in Sources */,
 				AD8192872722D9BA00D5BE48 /* SecondaryButton.swift in Sources */,
 				AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */,
@@ -732,6 +890,8 @@
 				ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */,
 				ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */,
 				AD8192592721D42700D5BE48 /* ContactsViewModel.swift in Sources */,
+				AD9BFD1A2729899300736318 /* TestRepository+User.swift in Sources */,
+				AD9BFD192729899000736318 /* TestRepository+Chat.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
 				ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */,
 				ADD504182717481D009D50CB /* AppRepository+Chat.swift in Sources */,
@@ -741,10 +901,19 @@
 				AD81925C2721D45100D5BE48 /* ContactsView.swift in Sources */,
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
 				ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */,
+				AD9BFD182729898C00736318 /* TestRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AD9BFD03272985C400736318 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ADD503AD270DC3C7009D50CB /* Spika */;
+			targetProxy = AD9BFD02272985C400736318 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */ = {
@@ -758,6 +927,54 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		AD9BFD05272985C500736318 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6923B1B3DE1A3AEE3767CFAC /* Pods-Spika-AppTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YU755VYJCP;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clover.studio.AppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spika.app/Spika";
+			};
+			name = Debug;
+		};
+		AD9BFD06272985C500736318 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0130303316D58D9DA3A15FB8 /* Pods-Spika-AppTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YU755VYJCP;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clover.studio.AppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spika.app/Spika";
+			};
+			name = Release;
+		};
 		ADD503C3270DC3CA009D50CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -935,6 +1152,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AD9BFD04272985C500736318 /* Build configuration list for PBXNativeTarget "AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD9BFD05272985C500736318 /* Debug */,
+				AD9BFD06272985C500736318 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ADD503A9270DC3C7009D50CB /* Build configuration list for PBXProject "Spika" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
