@@ -389,6 +389,26 @@
 			path = Assembly;
 			sourceTree = "<group>";
 		};
+		AD9BFD1E2729927300736318 /* MainFlow */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503FA27101B09009D50CB /* Details */,
+				ADD503E9270DE278009D50CB /* Home */,
+				AD8192412721738500D5BE48 /* Contacts */,
+				AD8192422721739300D5BE48 /* CallHistory */,
+				AD819243272173A300D5BE48 /* Chats */,
+				AD819244272173AB00D5BE48 /* Settings */,
+			);
+			path = MainFlow;
+			sourceTree = "<group>";
+		};
+		AD9BFD1F2729929600736318 /* LoginFlow */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LoginFlow;
+			sourceTree = "<group>";
+		};
 		ADD503A5270DC3C7009D50CB = {
 			isa = PBXGroup;
 			children = (
@@ -436,12 +456,8 @@
 		ADD503C9270DD2D9009D50CB /* UIFlow */ = {
 			isa = PBXGroup;
 			children = (
-				ADD503FA27101B09009D50CB /* Details */,
-				ADD503E9270DE278009D50CB /* Home */,
-				AD8192412721738500D5BE48 /* Contacts */,
-				AD8192422721739300D5BE48 /* CallHistory */,
-				AD819243272173A300D5BE48 /* Chats */,
-				AD819244272173AB00D5BE48 /* Settings */,
+				AD9BFD1F2729929600736318 /* LoginFlow */,
+				AD9BFD1E2729927300736318 /* MainFlow */,
 			);
 			path = UIFlow;
 			sourceTree = "<group>";
