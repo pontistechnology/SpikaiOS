@@ -47,6 +47,7 @@
 		AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192882722F5CD00D5BE48 /* ImageButton.swift */; };
 		AD819290272305D900D5BE48 /* TapUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81928F272305D900D5BE48 /* TapUtils.swift */; };
 		AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFCF227296D5500736318 /* ErrorView.swift */; };
+		AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFCF42729828100736318 /* LogoImageView.swift */; };
 		AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E38FC2725B2D900DC5D43 /* SearchBar.swift */; };
 		AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E38FE2726B2AA00DC5D43 /* TextField.swift */; };
 		AD9E39012726B85C00DC5D43 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E39002726B85C00DC5D43 /* TextFieldView.swift */; };
@@ -127,6 +128,7 @@
 		AD8192882722F5CD00D5BE48 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		AD81928F272305D900D5BE48 /* TapUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapUtils.swift; sourceTree = "<group>"; };
 		AD9BFCF227296D5500736318 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		AD9BFCF42729828100736318 /* LogoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoImageView.swift; sourceTree = "<group>"; };
 		AD9E38FC2725B2D900DC5D43 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		AD9E38FE2726B2AA00DC5D43 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		AD9E39002726B85C00DC5D43 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 				AD9E39022726C9B400DC5D43 /* MessageSenderView.swift */,
 				AD9E39042726CD2000DC5D43 /* MessageTextField.swift */,
 				AD9BFCF227296D5500736318 /* ErrorView.swift */,
+				AD9BFCF42729828100736318 /* LogoImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -681,6 +684,7 @@
 				ADB9D524271E83F3000793E2 /* UserEntity+CoreDataProperties.swift in Sources */,
 				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
 				AD81924A2721743900D5BE48 /* ChatsViewController.swift in Sources */,
+				AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */,
 				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
 				AD9E39012726B85C00DC5D43 /* TextFieldView.swift in Sources */,
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
