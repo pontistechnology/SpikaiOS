@@ -36,6 +36,8 @@ struct Constants {
         static let textTertiary = "textTertiary"
         static let textPrimary = "textPrimary"
         static let appMediumGray = "appMediumGray"
+        static let appRedLight = "appRedLight"
+        static let appRed = "appRed"
     }
     
 }
