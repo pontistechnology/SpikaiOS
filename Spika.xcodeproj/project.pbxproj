@@ -47,6 +47,8 @@
 		AD8192872722D9BA00D5BE48 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */; };
 		AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192882722F5CD00D5BE48 /* ImageButton.swift */; };
 		AD819290272305D900D5BE48 /* TapUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81928F272305D900D5BE48 /* TapUtils.swift */; };
+		AD9A68162739024B00BDC439 /* String+CryptoKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68152739024B00BDC439 /* String+CryptoKit.swift */; };
+		AD9A68182739084A00BDC439 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68172739084A00BDC439 /* ActionButton.swift */; };
 		AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFCF227296D5500736318 /* ErrorView.swift */; };
 		AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFCF42729828100736318 /* LogoImageView.swift */; };
 		AD9BFD01272985C400736318 /* AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD00272985C400736318 /* AppTests.swift */; };
@@ -55,6 +57,27 @@
 		AD9BFD192729899000736318 /* TestRepository+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD0B272986B300736318 /* TestRepository+Chat.swift */; };
 		AD9BFD1A2729899300736318 /* TestRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD0D272986C400736318 /* TestRepository+User.swift */; };
 		AD9BFD1B2729899500736318 /* TestRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */; };
+		AD9BFD222729950600736318 /* EnterNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD212729950600736318 /* EnterNumberViewController.swift */; };
+		AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD232729952B00736318 /* EnterNumberViewModel.swift */; };
+		AD9BFD272729955200736318 /* EnterNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD262729955200736318 /* EnterNumberView.swift */; };
+		AD9BFD29272995CA00736318 /* LoginAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD28272995CA00736318 /* LoginAssembly.swift */; };
+		AD9BFD2B27299F7B00736318 /* EnterNumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD2A27299F7B00736318 /* EnterNumberTextField.swift */; };
+		AD9BFD2E2729AB8F00736318 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = AD9BFD2D2729AB8E00736318 /* CountryCodes.json */; };
+		AD9BFD302729ABDB00736318 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD2F2729ABDB00736318 /* Country.swift */; };
+		AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD312729ACAB00736318 /* CountryPickerView.swift */; };
+		AD9BFD342729AE8300736318 /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD332729AE8300736318 /* CountryTableViewCell.swift */; };
+		AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD36272AB2F000736318 /* CountryPickerViewController.swift */; };
+		AD9BFD39272AB31300736318 /* CountryPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD38272AB31300736318 /* CountryPickerViewModel.swift */; };
+		AD9BFD3C272AC93400736318 /* CountryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD3B272AC93400736318 /* CountryUtils.swift */; };
+		AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */; };
+		AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */; };
+		AD9BFD46272AECFA00736318 /* VerifyCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD45272AECFA00736318 /* VerifyCodeRequest.swift */; };
+		AD9BFD49272B105800736318 /* VerifyCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD48272B105800736318 /* VerifyCodeViewController.swift */; };
+		AD9BFD4B272B107500736318 /* VerifyCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4A272B107500736318 /* VerifyCodeViewModel.swift */; };
+		AD9BFD4E272B10AF00736318 /* VerifyCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4D272B10AF00736318 /* VerifyCodeView.swift */; };
+		AD9BFD51272B17B100736318 /* VerificationTextFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD50272B17B100736318 /* VerificationTextFieldItem.swift */; };
+		AD9BFD53272B184E00736318 /* VerificationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD52272B184E00736318 /* VerificationTextField.swift */; };
+		AD9BFD55272B1A0200736318 /* VerificationTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD54272B1A0200736318 /* VerificationTextFieldView.swift */; };
 		AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E38FC2725B2D900DC5D43 /* SearchBar.swift */; };
 		AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E38FE2726B2AA00DC5D43 /* TextField.swift */; };
 		AD9E39012726B85C00DC5D43 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E39002726B85C00DC5D43 /* TextFieldView.swift */; };
@@ -147,6 +170,8 @@
 		AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		AD8192882722F5CD00D5BE48 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		AD81928F272305D900D5BE48 /* TapUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapUtils.swift; sourceTree = "<group>"; };
+		AD9A68152739024B00BDC439 /* String+CryptoKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+CryptoKit.swift"; sourceTree = "<group>"; };
+		AD9A68172739084A00BDC439 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		AD9BFCF227296D5500736318 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		AD9BFCF42729828100736318 /* LogoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoImageView.swift; sourceTree = "<group>"; };
 		AD9BFCFE272985C400736318 /* AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +181,27 @@
 		AD9BFD0D272986C400736318 /* TestRepository+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+User.swift"; sourceTree = "<group>"; };
 		AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Messages.swift"; sourceTree = "<group>"; };
 		AD9BFD13272987BE00736318 /* TestAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAssembly.swift; sourceTree = "<group>"; };
+		AD9BFD212729950600736318 /* EnterNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNumberViewController.swift; sourceTree = "<group>"; };
+		AD9BFD232729952B00736318 /* EnterNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNumberViewModel.swift; sourceTree = "<group>"; };
+		AD9BFD262729955200736318 /* EnterNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNumberView.swift; sourceTree = "<group>"; };
+		AD9BFD28272995CA00736318 /* LoginAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAssembly.swift; sourceTree = "<group>"; };
+		AD9BFD2A27299F7B00736318 /* EnterNumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNumberTextField.swift; sourceTree = "<group>"; };
+		AD9BFD2D2729AB8E00736318 /* CountryCodes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
+		AD9BFD2F2729ABDB00736318 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		AD9BFD312729ACAB00736318 /* CountryPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPickerView.swift; sourceTree = "<group>"; };
+		AD9BFD332729AE8300736318 /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
+		AD9BFD36272AB2F000736318 /* CountryPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPickerViewController.swift; sourceTree = "<group>"; };
+		AD9BFD38272AB31300736318 /* CountryPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPickerViewModel.swift; sourceTree = "<group>"; };
+		AD9BFD3B272AC93400736318 /* CountryUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryUtils.swift; sourceTree = "<group>"; };
+		AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponseModel.swift; sourceTree = "<group>"; };
+		AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestModel.swift; sourceTree = "<group>"; };
+		AD9BFD45272AECFA00736318 /* VerifyCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeRequest.swift; sourceTree = "<group>"; };
+		AD9BFD48272B105800736318 /* VerifyCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeViewController.swift; sourceTree = "<group>"; };
+		AD9BFD4A272B107500736318 /* VerifyCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeViewModel.swift; sourceTree = "<group>"; };
+		AD9BFD4D272B10AF00736318 /* VerifyCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeView.swift; sourceTree = "<group>"; };
+		AD9BFD50272B17B100736318 /* VerificationTextFieldItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationTextFieldItem.swift; sourceTree = "<group>"; };
+		AD9BFD52272B184E00736318 /* VerificationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationTextField.swift; sourceTree = "<group>"; };
+		AD9BFD54272B1A0200736318 /* VerificationTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationTextFieldView.swift; sourceTree = "<group>"; };
 		AD9E38FC2725B2D900DC5D43 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		AD9E38FE2726B2AA00DC5D43 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		AD9E39002726B85C00DC5D43 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
@@ -346,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				AD81928F272305D900D5BE48 /* TapUtils.swift */,
+				AD9BFD3B272AC93400736318 /* CountryUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -384,6 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				ADD503D4270DD5F4009D50CB /* AppAssembly.swift */,
+				AD9BFD28272995CA00736318 /* LoginAssembly.swift */,
 				AD9BFD13272987BE00736318 /* TestAssembly.swift */,
 			);
 			path = Assembly;
@@ -405,8 +453,105 @@
 		AD9BFD1F2729929600736318 /* LoginFlow */ = {
 			isa = PBXGroup;
 			children = (
+				AD9BFD20272994DE00736318 /* EnterNumber */,
+				AD9BFD47272B103E00736318 /* VerifyCode */,
+				AD9BFD35272AB2D700736318 /* CountryPicker */,
 			);
 			path = LoginFlow;
+			sourceTree = "<group>";
+		};
+		AD9BFD20272994DE00736318 /* EnterNumber */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD212729950600736318 /* EnterNumberViewController.swift */,
+				AD9BFD232729952B00736318 /* EnterNumberViewModel.swift */,
+				AD9BFD252729953E00736318 /* View */,
+			);
+			path = EnterNumber;
+			sourceTree = "<group>";
+		};
+		AD9BFD252729953E00736318 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD262729955200736318 /* EnterNumberView.swift */,
+				AD9BFD2A27299F7B00736318 /* EnterNumberTextField.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AD9BFD35272AB2D700736318 /* CountryPicker */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD36272AB2F000736318 /* CountryPickerViewController.swift */,
+				AD9BFD38272AB31300736318 /* CountryPickerViewModel.swift */,
+				AD9BFD2F2729ABDB00736318 /* Country.swift */,
+				AD9BFD3A272AB32000736318 /* View */,
+			);
+			path = CountryPicker;
+			sourceTree = "<group>";
+		};
+		AD9BFD3A272AB32000736318 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD2D2729AB8E00736318 /* CountryCodes.json */,
+				AD9BFD312729ACAB00736318 /* CountryPickerView.swift */,
+				AD9BFD332729AE8300736318 /* CountryTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AD9BFD3D272ADA9000736318 /* NetworkModel */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD3E272ADAA800736318 /* RequestModel */,
+				AD9BFD40272ADAB600736318 /* ResponseModel */,
+			);
+			path = NetworkModel;
+			sourceTree = "<group>";
+		};
+		AD9BFD3E272ADAA800736318 /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */,
+				AD9BFD45272AECFA00736318 /* VerifyCodeRequest.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		AD9BFD40272ADAB600736318 /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
+		AD9BFD47272B103E00736318 /* VerifyCode */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD48272B105800736318 /* VerifyCodeViewController.swift */,
+				AD9BFD4A272B107500736318 /* VerifyCodeViewModel.swift */,
+				AD9BFD4C272B108400736318 /* View */,
+			);
+			path = VerifyCode;
+			sourceTree = "<group>";
+		};
+		AD9BFD4C272B108400736318 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD4D272B10AF00736318 /* VerifyCodeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AD9BFD4F272B176800736318 /* VerificationTextFieldView */ = {
+			isa = PBXGroup;
+			children = (
+				AD9BFD50272B17B100736318 /* VerificationTextFieldItem.swift */,
+				AD9BFD52272B184E00736318 /* VerificationTextField.swift */,
+				AD9BFD54272B1A0200736318 /* VerificationTextFieldView.swift */,
+			);
+			path = VerificationTextFieldView;
 			sourceTree = "<group>";
 		};
 		ADD503A5270DC3C7009D50CB = {
@@ -492,6 +637,7 @@
 				ADD503CD270DD31D009D50CB /* UIView+Extensions.swift */,
 				AD8192542721C00D00D5BE48 /* UIColor+Extensions.swift */,
 				AD81926C2721E2E400D5BE48 /* UIControl+Combine.swift */,
+				AD9A68152739024B00BDC439 /* String+CryptoKit.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -531,6 +677,7 @@
 		ADD503E6270DD849009D50CB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AD9BFD4F272B176800736318 /* VerificationTextFieldView */,
 				AD81926E2722D0A400D5BE48 /* SegmentedControl.swift */,
 				AD8192702722D3E900D5BE48 /* MainButton.swift */,
 				AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */,
@@ -542,6 +689,7 @@
 				AD9E39042726CD2000DC5D43 /* MessageTextField.swift */,
 				AD9BFCF227296D5500736318 /* ErrorView.swift */,
 				AD9BFCF42729828100736318 /* LogoImageView.swift */,
+				AD9A68172739084A00BDC439 /* ActionButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -576,6 +724,7 @@
 		ADD503F4270DF958009D50CB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AD9BFD3D272ADA9000736318 /* NetworkModel */,
 				ADD504072716E9C7009D50CB /* DatabaseEntities */,
 				ADD503F5270DF96F009D50CB /* Post.swift */,
 				ADD5040C2716EC22009D50CB /* User.swift */,
@@ -744,6 +893,7 @@
 				AD8192822722D5AF00D5BE48 /* Montserrat-Thin.ttf in Resources */,
 				AD8192852722D5AF00D5BE48 /* Montserrat-Medium.ttf in Resources */,
 				AD81927F2722D5AF00D5BE48 /* Montserrat-SemiBold.ttf in Resources */,
+				AD9BFD2E2729AB8F00736318 /* CountryCodes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -844,19 +994,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */,
+				AD9BFD55272B1A0200736318 /* VerificationTextFieldView.swift in Sources */,
 				AD81923C271E8AF400D5BE48 /* ReactionEntity+CoreDataProperties.swift in Sources */,
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
 				AD9BFD172729894300736318 /* TestAssembly.swift in Sources */,
+				AD9BFD46272AECFA00736318 /* VerifyCodeRequest.swift in Sources */,
 				AD81923E271E8AF400D5BE48 /* MessageEntity+CoreDataProperties.swift in Sources */,
+				AD9BFD342729AE8300736318 /* CountryTableViewCell.swift in Sources */,
 				AD8192552721C00D00D5BE48 /* UIColor+Extensions.swift in Sources */,
 				AD81926B2721D5DE00D5BE48 /* SettingsViewModel.swift in Sources */,
+				AD9A68182739084A00BDC439 /* ActionButton.swift in Sources */,
 				AD8192612721D52200D5BE48 /* CallHistoryView.swift in Sources */,
 				AD81926D2721E2E400D5BE48 /* UIControl+Combine.swift in Sources */,
 				AD8192692721D5BD00D5BE48 /* ChatsViewModel.swift in Sources */,
+				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
 				ADD5040D2716EC22009D50CB /* User.swift in Sources */,
+				AD9BFD53272B184E00736318 /* VerificationTextField.swift in Sources */,
 				ADB9D524271E83F3000793E2 /* UserEntity+CoreDataProperties.swift in Sources */,
 				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
 				AD81924A2721743900D5BE48 /* ChatsViewController.swift in Sources */,
+				AD9BFD272729955200736318 /* EnterNumberView.swift in Sources */,
 				AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */,
 				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
 				AD9E39012726B85C00DC5D43 /* TextFieldView.swift in Sources */,
@@ -865,6 +1022,7 @@
 				AD9BFD1B2729899500736318 /* TestRepository+Messages.swift in Sources */,
 				AD8192572721C2CE00D5BE48 /* HomeTabBar.swift in Sources */,
 				AD8192872722D9BA00D5BE48 /* SecondaryButton.swift in Sources */,
+				AD9A68162739024B00BDC439 /* String+CryptoKit.swift in Sources */,
 				AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */,
 				ADD503D3270DD5A4009D50CB /* AppCoordinator.swift in Sources */,
 				AD8192672721D5A300D5BE48 /* CallHistoryViewModel.swift in Sources */,
@@ -873,8 +1031,10 @@
 				AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */,
 				AD9E39032726C9B400DC5D43 /* MessageSenderView.swift in Sources */,
 				ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */,
+				AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */,
 				ADB9D527271E83F3000793E2 /* ChatEntity+CoreDataClass.swift in Sources */,
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
+				AD9BFD4B272B107500736318 /* VerifyCodeViewModel.swift in Sources */,
 				ADD50450271E81BA009D50CB /* Message.swift in Sources */,
 				AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */,
 				AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */,
@@ -884,8 +1044,10 @@
 				AD8192632721D54A00D5BE48 /* ChatsView.swift in Sources */,
 				AD81924F2721A89A00D5BE48 /* TabBarItem.swift in Sources */,
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
+				AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */,
 				ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */,
 				AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */,
+				AD9BFD39272AB31300736318 /* CountryPickerViewModel.swift in Sources */,
 				ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */,
 				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
 				ADD5042E271E6C15009D50CB /* ChatEntityService.swift in Sources */,
@@ -895,25 +1057,35 @@
 				AD8192532721A92700D5BE48 /* StackItemView.swift in Sources */,
 				ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */,
 				ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */,
+				AD9BFD2B27299F7B00736318 /* EnterNumberTextField.swift in Sources */,
+				AD9BFD222729950600736318 /* EnterNumberViewController.swift in Sources */,
 				ADD503D5270DD5F4009D50CB /* AppAssembly.swift in Sources */,
 				AD81923A271E873200D5BE48 /* Reaction.swift in Sources */,
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
+				AD9BFD29272995CA00736318 /* LoginAssembly.swift in Sources */,
+				AD9BFD3C272AC93400736318 /* CountryUtils.swift in Sources */,
 				AD8192712722D3E900D5BE48 /* MainButton.swift in Sources */,
 				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,
 				AD81926F2722D0A400D5BE48 /* SegmentedControl.swift in Sources */,
+				AD9BFD4E272B10AF00736318 /* VerifyCodeView.swift in Sources */,
 				AD819290272305D900D5BE48 /* TapUtils.swift in Sources */,
 				ADD5040127101B69009D50CB /* DetailsView.swift in Sources */,
+				AD9BFD302729ABDB00736318 /* Country.swift in Sources */,
+				AD9BFD51272B17B100736318 /* VerificationTextFieldItem.swift in Sources */,
 				ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */,
 				ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */,
 				AD8192592721D42700D5BE48 /* ContactsViewModel.swift in Sources */,
 				AD9BFD1A2729899300736318 /* TestRepository+User.swift in Sources */,
+				AD9BFD49272B105800736318 /* VerifyCodeViewController.swift in Sources */,
 				AD9BFD192729899000736318 /* TestRepository+Chat.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
+				AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */,
 				ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */,
 				ADD504182717481D009D50CB /* AppRepository+Chat.swift in Sources */,
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
 				ADD503F6270DF96F009D50CB /* Post.swift in Sources */,
+				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,
 				AD81925C2721D45100D5BE48 /* ContactsView.swift in Sources */,
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
 				ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */,

@@ -76,7 +76,7 @@ class SearchBar: UIView, BaseView {
             
             searchView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: cancelButton.leadingAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0))
         } else {
-            searchView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 16))
+            searchView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0))
         }
         
         searchImage.anchor(leading: searchView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15), size: CGSize(width: 18, height: 18))
@@ -119,7 +119,6 @@ class SearchBar: UIView, BaseView {
     func clearTextField() {
         self.searchTextField.text = ""
         self.deleteImage.isHidden = true
-        self.searchTextField.endEditing(true)
         delegate?.searchBar(self, valueDidChange: "")
     }
 }

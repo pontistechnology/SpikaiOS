@@ -23,15 +23,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spika" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ViP-ZS-iUq">
-                                <rect key="frame" x="153" y="405" width="108" height="86"/>
+                                <rect key="frame" x="153" y="425" width="108" height="46.5"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat SemiBold" pointSize="38"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="bGh-ee-fnX">
-                                <rect key="frame" x="149" y="281" width="116" height="116"/>
+                                <rect key="frame" x="149" y="301" width="116" height="116"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="116" id="PIV-tl-vTn"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="116" id="QWr-hl-dvf"/>
                                     <constraint firstAttribute="width" constant="116" id="smo-WF-Wyq"/>
                                 </constraints>
                             </imageView>
@@ -40,9 +40,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ViP-ZS-iUq" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="5V1-p4-0jZ"/>
-                            <constraint firstItem="ViP-ZS-iUq" firstAttribute="top" secondItem="bGh-ee-fnX" secondAttribute="bottom" constant="8" id="7Th-4p-qaA"/>
-                            <constraint firstItem="bGh-ee-fnX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="237" id="9gn-Vq-nWD"/>
-                            <constraint firstItem="bGh-ee-fnX" firstAttribute="centerX" secondItem="ViP-ZS-iUq" secondAttribute="centerX" id="L0K-NM-Z5J"/>
+                            <constraint firstItem="ViP-ZS-iUq" firstAttribute="top" secondItem="bGh-ee-fnX" secondAttribute="bottom" constant="8" id="AdC-jN-EK1"/>
+                            <constraint firstItem="bGh-ee-fnX" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="L0K-NM-Z5J"/>
                             <constraint firstItem="ViP-ZS-iUq" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="x1D-pe-6u3"/>
                         </constraints>
                     </view>

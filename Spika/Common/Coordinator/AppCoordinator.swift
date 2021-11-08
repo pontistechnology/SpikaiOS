@@ -19,7 +19,25 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        presentHomeScreen()
+        presentEnterNumberScreen()
+        //presentVerifyCodeScreen(deviceId: "111111")
+    }
+    
+    func presentEnterNumberScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(EnterNumberViewController.self, argument: self)!
+        self.currentViewController = viewController
+        self.navigationController.setViewControllers([currentViewController!], animated: true)
+    }
+    
+    func presentVerifyCodeScreen(number: String, deviceId: String, countryCode: String) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(VerifyCodeViewController.self, arguments: self, number, deviceId, countryCode)!
+        self.currentViewController = viewController
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentCountryPicker(delegate: CountryPickerViewDelegate) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(CountryPickerViewController.self, arguments: self, delegate)!
+        self.currentViewController?.present(viewController, animated: true)
     }
     
     func presentHomeScreen() {

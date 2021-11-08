@@ -13,6 +13,7 @@ extension Assembler {
         let container = Container()
         let assembler = Assembler([
             AppAssembly(),
+            LoginAssembly(),
             TestAssembly()
         ], container: container)
         return assembler

@@ -24,4 +24,9 @@ class MainButton: UIButton {
         titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
     }
     
+    func setEnabled(_ enabled: Bool) {
+        self.isEnabled = enabled
+        backgroundColor = enabled ? UIColor(named: Constants.Colors.appBlue) : UIColor(named: Constants.Colors.appBlue)?.withAlphaComponent(0.5)
+    }
+    
 }
