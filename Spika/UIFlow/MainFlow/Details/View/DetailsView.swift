@@ -25,7 +25,7 @@ class DetailsView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .white
+        backgroundColor = .white // TODO: change
         
         closeButton.setTitle("Exit", for: .normal)
         closeButton.setTitleColor(UIColor.blue, for: .normal)

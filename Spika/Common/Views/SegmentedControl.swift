@@ -27,9 +27,9 @@ class SegmentedControl: UISegmentedControl {
     func setupControl() {
         selectedSegmentIndex = 0
         backgroundColor = UIColor.clear
-        selectedSegmentTintColor = UIColor(named: Constants.Colors.appBlueLight)
+        selectedSegmentTintColor = .appBlueLight
          
-        SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: Constants.Colors.appBlue)!, NSAttributedString.Key.font: UIFont(name: "Montserrat-SemiBold", size: 14)!], for: .selected)
+        SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.green, NSAttributedString.Key.font: UIFont(name: "Montserrat-SemiBold", size: 14)!], for: .selected)
          
         SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Montserrat-SemiBold", size: 14)!], for: .normal)
         

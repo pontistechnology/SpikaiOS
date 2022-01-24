@@ -20,7 +20,8 @@ class AppCoordinator: Coordinator {
     
     func start() {
         presentEnterNumberScreen()
-        //presentVerifyCodeScreen(deviceId: "111111")
+//        presentVerifyCodeScreen(number: "123456", deviceId: "111111", countryCode: "BA")
+//        presentHomeScreen()
     }
     
     func presentEnterNumberScreen() {

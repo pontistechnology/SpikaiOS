@@ -15,7 +15,7 @@ enum Section {
 class CountryPickerView: UIView, BaseView {
     
     let cancelButton = ActionButton()
-    let searchBar = SearchBar(placeholder: "Find country...")
+    let searchBar = SearchBar(placeholder: "Search")
     let allCountriesLabel = UILabel()
     let countriesTableView = UITableView()
     
@@ -45,7 +45,7 @@ class CountryPickerView: UIView, BaseView {
         
         allCountriesLabel.text = "ALL COUNTRIES"
         allCountriesLabel.font = UIFont(name: "Montserrat-Regular", size: 9)
-        allCountriesLabel.textColor = UIColor(named: Constants.Colors.appGray)
+        allCountriesLabel.textColor = .textTertiary
         
         countriesTableView.backgroundColor = .clear
         countriesTableView.rowHeight = CountryTableViewCell.rowHeight

@@ -40,7 +40,7 @@ class VerifyCodeView: UIView, BaseView {
     
     func styleSubviews() {
         titleLabel.font = UIFont(name: "Montserrat-Medium", size: 14)
-        titleLabel.text = "We sent you verification code on +385998851598"
+        titleLabel.text = "We sent you verification code on __________"
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 2
         

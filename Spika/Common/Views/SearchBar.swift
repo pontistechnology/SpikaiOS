@@ -49,21 +49,21 @@ class SearchBar: UIView, BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .white
+        backgroundColor = .clear
         
         deleteImage.isHidden = true
         
-        searchTextField.textColor = UIColor(named: Constants.Colors.textPrimary)
+        searchTextField.textColor = .textPrimaryAndWhite
         searchTextField.font = UIFont(name: "Montserrat-Medium", size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: Constants.Colors.textTertiary)!])
+                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary!])
         
-        searchView.backgroundColor = UIColor(named: Constants.Colors.appLightGray)
+        searchView.backgroundColor = .chatBackgroundAndDarkBackground2
         searchView.layer.cornerRadius = 10
         searchView.clipsToBounds = true
         
         cancelButton.setTitle(Constants.Strings.cancel, for: .normal)
-        cancelButton.setTitleColor(UIColor(named: Constants.Colors.appBlue), for: .normal)
+        cancelButton.setTitleColor(.primaryColor, for: .normal)
         cancelButton.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
     }
     

@@ -17,9 +17,9 @@ class StackItemView: UIView, BaseView {
     var imageView = UIImageView()
     var highlightsView = UIView()
     
-    private let higlightBGColor = UIColor(named: Constants.Colors.appBlueLight)
-    private let selectedImageColor = UIColor(named: Constants.Colors.appBlue)
-    private let defualtImageColor = UIColor(named: Constants.Colors.appGray)
+    private let higlightBGColor = UIColor.appBlueLight
+    private let selectedImageColor = UIColor.primaryColor
+    private let defualtImageColor = UIColor.navigation
     
     static var newInstance: StackItemView {
         return StackItemView()

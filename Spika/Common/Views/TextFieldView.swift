@@ -35,7 +35,7 @@ class TextFieldView: UIView, BaseView {
     func styleSubviews() {
         titleLabel.font = UIFont(name: "Montserrat-Medium", size: 12)
         titleLabel.text = title
-        titleLabel.textColor = UIColor(named: Constants.Colors.textTertiary)
+        titleLabel.textColor = .textTertiary
         
         textField.placeholder = placeholder
     }

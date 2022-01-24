@@ -20,7 +20,7 @@ open class VerificationTextField: UITextField {
         textAlignment = .center
         autocapitalizationType = .none
         font = UIFont(name: "Montserrat-Medium", size: 26)
-        textColor = UIColor(named: Constants.Colors.textPrimary)
+        textColor = .textPrimary
     }
     
     required public init?(coder: NSCoder) {

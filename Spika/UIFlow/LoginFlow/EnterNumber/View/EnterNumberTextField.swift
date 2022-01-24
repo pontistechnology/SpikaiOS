@@ -27,7 +27,7 @@ class EnterNumberTextField: UIView, BaseView {
     
     init(placeholder: String = "",
          title: String = "",
-         countryNumber: String = CountryHelper.shared.getCountry(code: Locale.current.regionCode)?.phoneCode ?? "385") {
+         countryNumber: String = CountryHelper.shared.getCountry(code: Locale.current.regionCode)?.phoneCode ?? "+385") {
         self.title = title
         self.placeholder = placeholder
         self.countryNumber = countryNumber
@@ -49,43 +49,45 @@ class EnterNumberTextField: UIView, BaseView {
     }
     
     func styleSubviews() {
-        titleLabel.font = UIFont(name: "Montserrat-Medium", size: 12)
-        titleLabel.text = title
-        titleLabel.textColor = UIColor(named: Constants.Colors.textTertiary)
         
-        countryNumberLabel.textColor = UIColor(named: Constants.Colors.textBlue)
+        titleLabel.font = UIFont(name: "Montserrat-Medium", size: 14)
+        titleLabel.text = title
+        titleLabel.textColor = .textTertiary
+        
+        countryNumberLabel.textColor = .primaryColor
+        countryNumberLabel.textAlignment = .center
         countryNumberLabel.font = UIFont(name: "Montserrat-Medium", size: 14)
         countryNumberLabel.text = countryNumber
         
-        lineBreakView.backgroundColor = UIColor(named: Constants.Colors.appGray)
+        lineBreakView.backgroundColor = .textTertiary
         
-        textField.keyboardType = .asciiCapableNumberPad
+        textField.keyboardType = .phonePad
         textField.placeholder = placeholder
-        textField.textColor = UIColor(named: Constants.Colors.textPrimary)
+        textField.textColor = .textPrimaryAndWhite
         textField.font = UIFont(name: "Montserrat-Medium", size: 14)
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: Constants.Colors.textTertiary)!])
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary!])
         
+        numberView.backgroundColor = .whiteAndDarkBackground2
         numberView.layer.borderWidth = 1
-        numberView.layer.borderColor = UIColor(named: Constants.Colors.appMediumGray)?.cgColor
+        numberView.layer.borderColor = UIColor.textTertiaryAndDarkBackground2!.cgColor
         numberView.layer.cornerRadius = 10
     }
     
     func positionSubviews() {
         titleLabel.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor)
-        titleLabel.constrainHeight(15)
         
-        numberView.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0))
+        numberView.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0))
         numberView.constrainHeight(50)
         
-        countryNumberLabel.anchor(leading: numberView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24))
-        countryNumberLabel.constrainWidth(35)
+        countryNumberLabel.anchor(leading: numberView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0))
+        countryNumberLabel.constrainWidth(45)
         countryNumberLabel.centerY(inView: numberView)
         
-        lineBreakView.anchor(leading: countryNumberLabel.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24), size: CGSize(width: 1, height: 30))
+        lineBreakView.anchor(leading: countryNumberLabel.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0), size: CGSize(width: 1, height: 30)) //right
         lineBreakView.centerY(inView: numberView)
         
-        textField.anchor(leading: lineBreakView.trailingAnchor, trailing: numberView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24))
+        textField.anchor(leading: lineBreakView.trailingAnchor, trailing: numberView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0))
         textField.centerY(inView: numberView)
         
         self.constrainHeight(83)

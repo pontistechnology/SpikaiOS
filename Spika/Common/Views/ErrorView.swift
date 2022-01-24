@@ -33,9 +33,9 @@ class ErrorView: UIView, BaseView {
     
     func styleSubviews() {
         self.layer.cornerRadius = 10
-        self.backgroundColor = UIColor(named: Constants.Colors.appRedLight)
+        self.backgroundColor = UIColor(named: "errorRedLight")
         
-        errorLabel.textColor = UIColor(named: Constants.Colors.appRed)
+        errorLabel.textColor = .appRed
         errorLabel.numberOfLines = 1
         errorLabel.font = UIFont(name: "Montserrat-Medium", size: 13)
         errorLabel.text = message

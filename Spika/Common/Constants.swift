@@ -30,19 +30,6 @@ struct Constants {
         static let messageEntity = "MessageEntity"
     }
     
-    struct Colors {
-        static let appBlueLight = "appBlueLight"
-        static let appBlue = "appBlue"
-        static let appGray = "appGray"
-        static let appLightGray = "appLightGray"
-        static let textTertiary = "textTertiary"
-        static let textPrimary = "textPrimary"
-        static let textBlue = "textBlue"
-        static let appMediumGray = "appMediumGray"
-        static let appRedLight = "appRedLight"
-        static let appRed = "appRed"
-    }
-    
     struct UserDefaults {
         static let userId = "userId"
         static let userPhoneNumber = "userPhoneNumber"

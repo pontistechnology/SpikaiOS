@@ -9,6 +9,7 @@ import UIKit
 
 class CountryTableViewCell: UITableViewCell, BaseView {
     
+    let countryImage = UIImageView()
     let countryNameLabel = UILabel()
     let countryCodeLabel = UILabel()
     
@@ -16,6 +17,7 @@ class CountryTableViewCell: UITableViewCell, BaseView {
     static let rowHeight: CGFloat = 50.0
     
     func addSubviews() {
+        addSubview(countryImage)
         addSubview(countryCodeLabel)
         addSubview(countryNameLabel)
     }
@@ -26,17 +28,20 @@ class CountryTableViewCell: UITableViewCell, BaseView {
         countryNameLabel.font = UIFont(name: "Montserrat-Regular", size: 14)
         
         countryCodeLabel.font = UIFont(name: "Montserrat-Regular", size: 12)
-        countryCodeLabel.textColor = UIColor(named: Constants.Colors.appGray)
+        countryCodeLabel.textColor = .textTertiary
         countryCodeLabel.textAlignment = .right
         
     }
     
     func positionSubviews() {
+        countryImage.anchor(leading: leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 30, height: 25))
+        countryImage.centerY(inView: self)
+        
         countryCodeLabel.anchor(trailing: trailingAnchor)
         countryCodeLabel.constrainWidth(50)
         countryCodeLabel.centerY(inView: self)
         
-        countryNameLabel.anchor(leading: leadingAnchor, trailing: countryCodeLabel.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        countryNameLabel.anchor(leading: countryImage.trailingAnchor, trailing: countryCodeLabel.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         countryNameLabel.centerY(inView: self)
     }
     
@@ -44,5 +49,6 @@ class CountryTableViewCell: UITableViewCell, BaseView {
         setupView()
         countryCodeLabel.text = country.phoneCode
         countryNameLabel.text = country.name
+        countryImage.image = country.flag
     }
 }
