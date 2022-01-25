@@ -10,7 +10,8 @@ import UIKit
 class EnterNumberView: UIView, BaseView {
     
     let logoImage = LogoImageView()
-    let titleLabel = UILabel()
+    let titleLabel = CustomLabel(text: "Enter your phone number to start using Spika",
+                                 fontName: .MontserratMedium, alignment: .center)
     let enterNumberTextField = EnterNumberTextField(placeholder: "Eg. 98726123", title: "Phone number")
     let nextButton = MainButton()
     
@@ -31,9 +32,6 @@ class EnterNumberView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        titleLabel.font = UIFont(name: "Montserrat-Medium", size: 14)
-        titleLabel.text = "Enter your phone number to start using Spika"
-        titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 2
         
         nextButton.setTitle("Next", for: .normal)

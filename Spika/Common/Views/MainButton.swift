@@ -21,12 +21,12 @@ class MainButton: UIButton {
     private func setupButton() {
         backgroundColor = .primaryColor
         layer.cornerRadius = 10
-        titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 16)
+        titleLabel?.customFont(name: .MontserratSemiBold, size: 16)
     }
     
     func setEnabled(_ enabled: Bool) {
         self.isEnabled = enabled
-        backgroundColor = enabled ? .primaryColor : .primaryColor!.withAlphaComponent(0.5)
+        backgroundColor = enabled ? .primaryColor : .primaryColor.withAlphaComponent(0.5)
     }
     
 }

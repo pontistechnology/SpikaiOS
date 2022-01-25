@@ -23,14 +23,15 @@ class TextField: UITextField {
     }
     
     private func setupButton() {
+        backgroundColor = .whiteAndDarkBackground2
         layer.borderWidth = 1
-        layer.borderColor = UIColor.borderColor!.cgColor
+        layer.borderColor = UIColor.textTertiaryAndDarkBackground2.cgColor
         layer.cornerRadius = 10
         
-        textColor = .textPrimary
-        font = UIFont(name: "Montserrat-Medium", size: 14)
+        textColor = .textPrimaryAndWhite
+        self.customFont(name: .MontserratMedium, size: 14)
         attributedPlaceholder = NSAttributedString(string: textPlaceholder,
-                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary!])
+                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
     }
     
     

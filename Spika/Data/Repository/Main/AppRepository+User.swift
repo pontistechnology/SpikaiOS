@@ -12,7 +12,7 @@ import CryptoKit
 extension AppRepository {
     
     func authenticateUser(telephoneNumber: String, deviceId: String, countryCode: String) -> AnyPublisher<AuthResponseModel, Error> {
-        print(telephoneNumber.getSHA256())
+        print("Phone number SHA256: ", telephoneNumber.getSHA256())
         let resources = Resources<AuthResponseModel, AuthRequestModel>(
             path: Constants.Endpoints.authenticateUser,
             requestType: .POST,
@@ -42,8 +42,8 @@ extension AppRepository {
         let defaults = UserDefaults.standard
         defaults.set(user.id, forKey: Constants.UserDefaults.userId)
         defaults.set(user.telephoneNumber, forKey: Constants.UserDefaults.userPhoneNumber)
-        defaults.set(device.deviceId, forKey: Constants.UserDefaults.deviceId)
-        defaults.set(device.token, forKey: Constants.UserDefaults.token)
+        defaults.set(device.id, forKey: Constants.UserDefaults.deviceId)
+//        defaults.set(device.token, forKey: Constants.UserDefaults.token)
     }
     
     func getUsers() -> Future<[User], Error> {

@@ -14,10 +14,11 @@ protocol EnterNumberTextFieldDelegate: AnyObject {
 
 class EnterNumberTextField: UIView, BaseView {
     
-    let titleLabel = UILabel()
+    let titleLabel = CustomLabel(text: "", textColor: .textTertiary,
+                                 fontName: .MontserratMedium)
     var textField = UITextField()
     let numberView = UIView()
-    let countryNumberLabel = UILabel()
+    let countryNumberLabel = CustomLabel(text: "", textColor: .primaryColor, fontName: .MontserratMedium, alignment: .center)
     let lineBreakView = UIView()
     
     private let placeholder: String
@@ -50,13 +51,8 @@ class EnterNumberTextField: UIView, BaseView {
     
     func styleSubviews() {
         
-        titleLabel.font = UIFont(name: "Montserrat-Medium", size: 14)
         titleLabel.text = title
-        titleLabel.textColor = .textTertiary
-        
-        countryNumberLabel.textColor = .primaryColor
-        countryNumberLabel.textAlignment = .center
-        countryNumberLabel.font = UIFont(name: "Montserrat-Medium", size: 14)
+            
         countryNumberLabel.text = countryNumber
         
         lineBreakView.backgroundColor = .textTertiary
@@ -64,13 +60,13 @@ class EnterNumberTextField: UIView, BaseView {
         textField.keyboardType = .phonePad
         textField.placeholder = placeholder
         textField.textColor = .textPrimaryAndWhite
-        textField.font = UIFont(name: "Montserrat-Medium", size: 14)
+        textField.customFont(name: .MontserratMedium)
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary!])
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
         
         numberView.backgroundColor = .whiteAndDarkBackground2
         numberView.layer.borderWidth = 1
-        numberView.layer.borderColor = UIColor.textTertiaryAndDarkBackground2!.cgColor
+        numberView.layer.borderColor = UIColor.textTertiaryAndDarkBackground2.cgColor
         numberView.layer.cornerRadius = 10
     }
     

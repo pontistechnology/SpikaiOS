@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		2FD051678BE847C32FF93CD8 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */; };
 		8C98C4F64745F15542536CE9 /* Pods_Spika_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */; };
+		93708E14279F871400F81095 /* EnterUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E13279F871300F81095 /* EnterUsernameViewController.swift */; };
+		93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E15279F872500F81095 /* EnterUsernameViewModel.swift */; };
+		93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E18279F873D00F81095 /* EnterUsernameView.swift */; };
+		93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E1A279F95DB00F81095 /* CustomLabel.swift */; };
+		93708E1D279F992500F81095 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E1C279F992500F81095 /* UILabel+Extensions.swift */; };
 		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		AD81923A271E873200D5BE48 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819239271E873200D5BE48 /* Reaction.swift */; };
 		AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */; };
@@ -136,6 +141,11 @@
 		4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		613C7266CE789CD1C2695243 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
 		6923B1B3DE1A3AEE3767CFAC /* Pods-Spika-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		93708E13279F871300F81095 /* EnterUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewController.swift; sourceTree = "<group>"; };
+		93708E15279F872500F81095 /* EnterUsernameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewModel.swift; sourceTree = "<group>"; };
+		93708E18279F873D00F81095 /* EnterUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameView.swift; sourceTree = "<group>"; };
+		93708E1A279F95DB00F81095 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		93708E1C279F992500F81095 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		AD819237271E866100D5BE48 /* MessageEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntityService.swift; sourceTree = "<group>"; };
 		AD819239271E873200D5BE48 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
 		AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Messages.swift"; sourceTree = "<group>"; };
@@ -280,6 +290,24 @@
 				4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		93708E12279F86B400F81095 /* EnterUsername */ = {
+			isa = PBXGroup;
+			children = (
+				93708E17279F872C00F81095 /* View */,
+				93708E13279F871300F81095 /* EnterUsernameViewController.swift */,
+				93708E15279F872500F81095 /* EnterUsernameViewModel.swift */,
+			);
+			path = EnterUsername;
+			sourceTree = "<group>";
+		};
+		93708E17279F872C00F81095 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				93708E18279F873D00F81095 /* EnterUsernameView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		AD8192412721738500D5BE48 /* Contacts */ = {
@@ -453,9 +481,10 @@
 		AD9BFD1F2729929600736318 /* LoginFlow */ = {
 			isa = PBXGroup;
 			children = (
-				AD9BFD20272994DE00736318 /* EnterNumber */,
-				AD9BFD47272B103E00736318 /* VerifyCode */,
 				AD9BFD35272AB2D700736318 /* CountryPicker */,
+				AD9BFD20272994DE00736318 /* EnterNumber */,
+				93708E12279F86B400F81095 /* EnterUsername */,
+				AD9BFD47272B103E00736318 /* VerifyCode */,
 			);
 			path = LoginFlow;
 			sourceTree = "<group>";
@@ -638,6 +667,7 @@
 				AD8192542721C00D00D5BE48 /* UIColor+Extensions.swift */,
 				AD81926C2721E2E400D5BE48 /* UIControl+Combine.swift */,
 				AD9A68152739024B00BDC439 /* String+CryptoKit.swift */,
+				93708E1C279F992500F81095 /* UILabel+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -690,6 +720,7 @@
 				AD9BFCF227296D5500736318 /* ErrorView.swift */,
 				AD9BFCF42729828100736318 /* LogoImageView.swift */,
 				AD9A68172739084A00BDC439 /* ActionButton.swift */,
+				93708E1A279F95DB00F81095 /* CustomLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -994,6 +1025,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */,
+				93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */,
 				AD9BFD55272B1A0200736318 /* VerificationTextFieldView.swift in Sources */,
 				AD81923C271E8AF400D5BE48 /* ReactionEntity+CoreDataProperties.swift in Sources */,
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
@@ -1019,6 +1051,7 @@
 				AD9E39012726B85C00DC5D43 /* TextFieldView.swift in Sources */,
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
+				93708E1D279F992500F81095 /* UILabel+Extensions.swift in Sources */,
 				AD9BFD1B2729899500736318 /* TestRepository+Messages.swift in Sources */,
 				AD8192572721C2CE00D5BE48 /* HomeTabBar.swift in Sources */,
 				AD8192872722D9BA00D5BE48 /* SecondaryButton.swift in Sources */,
@@ -1038,6 +1071,7 @@
 				ADD50450271E81BA009D50CB /* Message.swift in Sources */,
 				AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */,
 				AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */,
+				93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */,
 				AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */,
 				AD8192652721D57000D5BE48 /* SettingsView.swift in Sources */,
 				ADD503E8270DD87A009D50CB /* Constants.swift in Sources */,
@@ -1050,6 +1084,8 @@
 				AD9BFD39272AB31300736318 /* CountryPickerViewModel.swift in Sources */,
 				ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */,
 				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
+				93708E14279F871400F81095 /* EnterUsernameViewController.swift in Sources */,
+				93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */,
 				ADD5042E271E6C15009D50CB /* ChatEntityService.swift in Sources */,
 				ADD5041627174384009D50CB /* Chat.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,

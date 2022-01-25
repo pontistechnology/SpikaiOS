@@ -9,7 +9,7 @@ import UIKit
 
 class TextFieldView: UIView, BaseView {
     
-    let titleLabel = UILabel()
+    let titleLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary, fontName: .MontserratMedium)
     var textField = TextField()
     
     let placeholder: String
@@ -33,9 +33,7 @@ class TextFieldView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        titleLabel.font = UIFont(name: "Montserrat-Medium", size: 12)
         titleLabel.text = title
-        titleLabel.textColor = .textTertiary
         
         textField.placeholder = placeholder
     }

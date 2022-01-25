@@ -22,6 +22,7 @@ class AppCoordinator: Coordinator {
         presentEnterNumberScreen()
 //        presentVerifyCodeScreen(number: "123456", deviceId: "111111", countryCode: "BA")
 //        presentHomeScreen()
+//        presentEnterUsernameScreen()
     }
     
     func presentEnterNumberScreen() {
@@ -39,6 +40,12 @@ class AppCoordinator: Coordinator {
     func presentCountryPicker(delegate: CountryPickerViewDelegate) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(CountryPickerViewController.self, arguments: self, delegate)!
         self.currentViewController?.present(viewController, animated: true)
+    }
+    
+    func presentEnterUsernameScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(EnterUsernameViewController.self, argument: self)!
+        self.currentViewController = viewController
+        self.navigationController.setViewControllers([viewController], animated: true)
     }
     
     func presentHomeScreen() {

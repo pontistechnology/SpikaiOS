@@ -44,7 +44,7 @@ class CountryPickerView: UIView, BaseView {
         cancelButton.setTitle("Cancel", for: .normal)
         
         allCountriesLabel.text = "ALL COUNTRIES"
-        allCountriesLabel.font = UIFont(name: "Montserrat-Regular", size: 9)
+        allCountriesLabel.customFont(name: .MontserratRegular, size: 9)
         allCountriesLabel.textColor = .textTertiary
         
         countriesTableView.backgroundColor = .clear

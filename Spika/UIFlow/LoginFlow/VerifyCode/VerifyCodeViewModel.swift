@@ -32,7 +32,10 @@ class VerifyCodeViewModel: BaseViewModel {
             default: break
             }
         } receiveValue: { [weak self] authModel in
-            self?.repository.saveUserInfo(user: authModel.user, device: authModel.device)
+            guard let user = authModel.data?.user,
+                  let device = authModel.data?.device
+            else { return }
+            self?.repository.saveUserInfo(user: user, device: device)
         }.store(in: &subscriptions)
 
     }

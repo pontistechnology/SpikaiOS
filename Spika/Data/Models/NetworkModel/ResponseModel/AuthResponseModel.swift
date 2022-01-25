@@ -7,29 +7,39 @@
 
 import Foundation
 
+// MARK: - AuthResponseModel
 struct AuthResponseModel: Codable {
-    let newUser: Bool?
-    let user: AppUser
-    let device: Device
+    let status: String?
+    let data: UserData?
+    let error: String?
 }
 
-struct AppUser: Codable {
-    let id: Int
-    let telephoneNumber: String
-    let createdAt: String?
-    let modifiedAt: String?
+// MARK: - DataClass
+struct UserData: Codable {
+    let isNewUser: Bool?
+    let user: AppUser?
+    let device: Device?
 }
 
+// MARK: - Device
 struct Device: Codable {
-    let id: Int
+    let id: Int?
     let userId: Int?
-    let deviceId: String?
-    let type: String?
-    let osName: String?
-    let appVersion: String?
     let token: String?
-    let pushToken: String?
     let tokenExpiredAt: String?
+    let osName: String?
+    let osVersion: Int?
+    let appVersion: Int?
+    let pushToken: String?
+}
+
+// MARK: - User
+struct AppUser: Codable {
+    let id: Int?
+    let displayName: String?
+    let avatarUrl: String?
+    let telephoneNumber: String?
+    let telephoneNumberHashed: String?
+    let emailAddress: String?
     let createdAt: String?
-    let modifiedAt: String?
 }

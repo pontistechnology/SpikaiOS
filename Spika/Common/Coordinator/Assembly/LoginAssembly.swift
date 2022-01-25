@@ -13,6 +13,7 @@ class LoginAssembly: Assembly {
         assembleEnterNumberViewController(container)
         assembleCountryPickerViewController(container)
         assembleVerifyCodeViewController(container)
+        assembleEnterUsernameViewController(container)
     }
     
     private func assembleEnterNumberViewController(_ container: Container) {
@@ -24,6 +25,19 @@ class LoginAssembly: Assembly {
         container.register(EnterNumberViewController.self) { (resolver, coordinator: AppCoordinator) in
             let controller = EnterNumberViewController()
             controller.viewModel = container.resolve(EnterNumberViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleEnterUsernameViewController(_ container: Container) {
+        container.register(EnterUsernameViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return EnterUsernameViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(EnterUsernameViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = EnterUsernameViewController()
+            controller.viewModel = container.resolve(EnterUsernameViewModel.self, argument: coordinator)
             return controller
         }.inObjectScope(.transient)
     }

@@ -12,12 +12,14 @@ class EnterNumberViewModel: BaseViewModel {
     
     func authenticateWithNumber(number: String, deviceId: String, countryCode: String) {
         repository.authenticateUser(telephoneNumber: number, deviceId: deviceId, countryCode: countryCode).sink { completion in
+            print("completition:", completion)
             switch completion {
             case let .failure(error):
                 print("Could not auth user: \(error)")
             default: break
             }
         } receiveValue: { [weak self] authResponse in
+            print("AUTH Response: ", authResponse)
             self?.presentVerifyCodeScreen(number: number, deviceId: deviceId, countryCode: countryCode)
         }.store(in: &subscriptions)
 

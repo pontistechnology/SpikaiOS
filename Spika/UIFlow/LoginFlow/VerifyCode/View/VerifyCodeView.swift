@@ -10,10 +10,10 @@ import UIKit
 class VerifyCodeView: UIView, BaseView {
     
     let logoImage = LogoImageView()
-    let titleLabel = UILabel()
+    let titleLabel = CustomLabel(text: "We sent you verification code on __________", fontName: .MontserratMedium, alignment: .center)
     let verificationTextFieldView = VerificationTextFieldView(length: 6)
     let nextButton = MainButton()
-    let timeLabel = UILabel()
+    let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)
     let resendCodeButton = ActionButton()
     var timer: Timer?
     var timeCounter: Int = 120
@@ -39,9 +39,7 @@ class VerifyCodeView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        titleLabel.font = UIFont(name: "Montserrat-Medium", size: 14)
-        titleLabel.text = "We sent you verification code on __________"
-        titleLabel.textAlignment = .center
+        
         titleLabel.numberOfLines = 2
         
         verificationTextFieldView.delegate = self
@@ -50,10 +48,6 @@ class VerifyCodeView: UIView, BaseView {
         nextButton.setEnabled(false)
         
         resendCodeButton.setTitle("Resend code", for: .normal)
-        
-        
-        timeLabel.text = "02:00"
-        timeLabel.font = UIFont(name: "Montserrat-Medium", size: 14)
     }
     
     func positionSubviews() {
@@ -84,6 +78,7 @@ class VerifyCodeView: UIView, BaseView {
     }
     
     @objc func fireTimer(timer: Timer) {
+        // TODO: fix
         timeCounter -= 1
         let mins: String = timeCounter > 59 ? "01:" : "00"
         var seconds: String = timeCounter > 59 ? "\(timeCounter - 60)" : "\(timeCounter)"
