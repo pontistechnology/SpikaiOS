@@ -25,7 +25,7 @@ class BaseViewController: UIViewController {
     }
     
     func setupView(_ view: UIView) {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .whiteAndDarkBackground
         self.view.addSubview(view)
         view.fillSuperviewSafeAreaLayoutGuide()
     }

@@ -32,11 +32,11 @@ class ImageButton: UIView, BaseView {
     }
     
     func styleSubviews() {
-        backgroundView.backgroundColor = UIColor(named: Constants.Colors.appBlueLight)
+        backgroundView.backgroundColor = .appBlueLight
         backgroundView.layer.cornerRadius = size.height / 2
         backgroundView.clipsToBounds = true
         
-        imageView.image = image.withRenderingMode(.alwaysOriginal).withTintColor(UIColor(named: Constants.Colors.appBlue)!)
+        imageView.image = image.withRenderingMode(.alwaysOriginal).withTintColor(.primaryColor)
     }
     
     func positionSubviews() {

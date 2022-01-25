@@ -18,10 +18,10 @@ class SecondaryButton: UIButton {
     }
     
     private func setupButton() {
-        setTitleColor(UIColor(named: Constants.Colors.appBlue), for: .normal)
+        setTitleColor(.primaryColor, for: .normal)
         layer.cornerRadius = 10
-        titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 14)
-        layer.borderColor = UIColor(named: Constants.Colors.appBlue)!.cgColor
+        titleLabel?.customFont(name: .MontserratSemiBold, size: 14)
+        layer.borderColor = UIColor.primaryColor.cgColor
         layer.borderWidth = 1
     }
 }
