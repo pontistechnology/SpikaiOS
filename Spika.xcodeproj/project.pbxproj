@@ -260,6 +260,7 @@
 		ADD5042D271E6C15009D50CB /* ChatEntityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatEntityService.swift; sourceTree = "<group>"; };
 		ADD5044F271E81BA009D50CB /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
+		EACC42E127A2B89C00EA0DD2 /* Spika.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spika.entitlements; sourceTree = "<group>"; };
 		FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -606,6 +607,7 @@
 		ADD503B0270DC3C7009D50CB /* Spika */ = {
 			isa = PBXGroup;
 			children = (
+				EACC42E127A2B89C00EA0DD2 /* Spika.entitlements */,
 				ADD503C9270DD2D9009D50CB /* UIFlow */,
 				ADD503CB270DD2EF009D50CB /* Data */,
 				ADD503CA270DD2E9009D50CB /* Common */,
@@ -1321,6 +1323,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6TL325MDWU;
@@ -1336,7 +1339,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clover.studio.Spika;
+				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1350,6 +1353,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6TL325MDWU;
@@ -1365,7 +1369,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clover.studio.Spika;
+				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
