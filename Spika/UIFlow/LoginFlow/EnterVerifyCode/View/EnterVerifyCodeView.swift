@@ -1,5 +1,5 @@
 //
-//  VerifyCodeView.swift
+//  EnterVerifyCodeView.swift
 //  Spika
 //
 //  Created by Marko on 28.10.2021..
@@ -7,14 +7,16 @@
 
 import UIKit
 
-class VerifyCodeView: UIView, BaseView {
+class EnterVerifyCodeView: UIView, BaseView {
     
-    let logoImage = LogoImageView()
+    let logoImageView = LogoImageView()
     let titleLabel = CustomLabel(text: "We sent you verification code on __________", fontName: .MontserratMedium, alignment: .center)
     let verificationTextFieldView = VerificationTextFieldView(length: 6)
     let nextButton = MainButton()
     let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)
     let resendCodeButton = ActionButton()
+    let errorMessageLabel = CustomLabel(text: "The code is incorrect!", textSize: 14, textColor: .appRed, fontName: .MontserratMedium, alignment: .center)
+    let apiStatusImageView = UIImageView()
     var timer: Timer?
     var timeCounter: Int = 120
     
@@ -30,12 +32,14 @@ class VerifyCodeView: UIView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(logoImage)
+        addSubview(logoImageView)
         addSubview(titleLabel)
+        addSubview(errorMessageLabel)
         addSubview(verificationTextFieldView)
         addSubview(nextButton)
         addSubview(timeLabel)
         addSubview(resendCodeButton)
+        addSubview(apiStatusImageView)
     }
     
     func styleSubviews() {
@@ -48,13 +52,26 @@ class VerifyCodeView: UIView, BaseView {
         nextButton.setEnabled(false)
         
         resendCodeButton.setTitle("Resend code", for: .normal)
+        
+        apiStatusImageView.image = UIImage(named: "logo")
+        apiStatusImageView.isHidden = true
+        errorMessageLabel.isHidden  = true
     }
     
     func positionSubviews() {
-        logoImage.anchor(top: topAnchor, padding: UIEdgeInsets(top: 40, left: 0, bottom: 24, right: 0), size: CGSize(width: 72, height: 72))
-        logoImage.centerX(inView: self)
         
-        titleLabel.anchor(top: logoImage.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 24, left: 70, bottom: 50, right: 70))
+        apiStatusImageView.centerXToSuperview()
+        apiStatusImageView.centerYToSuperview(offset: -100)
+        apiStatusImageView.constrainHeight(170)
+        apiStatusImageView.constrainWidth(170)
+        
+        logoImageView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 40, left: 0, bottom: 24, right: 0), size: CGSize(width: 72, height: 72))
+        logoImageView.centerX(inView: self)
+        
+        titleLabel.anchor(top: logoImageView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 24, left: 70, bottom: 50, right: 70))
+        
+        errorMessageLabel.anchor(top: titleLabel.bottomAnchor, padding: UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0))
+        errorMessageLabel.centerXToSuperview()
         
         timeLabel.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 50, left: 30, bottom: 16, right: 30))
         timeLabel.constrainWidth(100)
@@ -70,6 +87,15 @@ class VerifyCodeView: UIView, BaseView {
         nextButton.constrainHeight(50)
     }
     
+    func showApiStatusImageView(_ present: Bool, isFinished: Bool) {
+        for view in self.subviews {
+            view.isHidden = present
+        }
+        apiStatusImageView.image = isFinished ? UIImage(named: "logoAndCheck") : UIImage(named: "logo")
+        apiStatusImageView.isHidden = !present
+        errorMessageLabel.isHidden = present
+    }
+    
     func setupTimer() {
         timeCounter = 120
         timer?.invalidate()
@@ -78,8 +104,9 @@ class VerifyCodeView: UIView, BaseView {
     }
     
     @objc func fireTimer(timer: Timer) {
-        // TODO: fix
+        // TODO: fix :
         timeCounter -= 1
+    
         let mins: String = timeCounter > 59 ? "01:" : "00"
         var seconds: String = timeCounter > 59 ? "\(timeCounter - 60)" : "\(timeCounter)"
         if (timeCounter > 59 && timeCounter - 60 < 10) { seconds = "0\(seconds)" }
@@ -93,7 +120,7 @@ class VerifyCodeView: UIView, BaseView {
     
 }
 
-extension VerifyCodeView: VerificationTextFieldViewDelegate {
+extension EnterVerifyCodeView: VerificationTextFieldViewDelegate {
     func verificationTextFieldView(_ verificationTextFieldView: VerificationTextFieldView, valueDidChange code: String) -> Bool {
         
         nextButton.setEnabled(code.count == verificationTextFieldView.length)

@@ -20,6 +20,7 @@ class EnterUsernameView: UIView, BaseView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        setupBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -53,5 +54,22 @@ class EnterUsernameView: UIView, BaseView {
         nextButton.anchor(top: usernameTextfield.bottomAnchor, leading: usernameTextfield.leadingAnchor, trailing: usernameTextfield.trailingAnchor, padding: UIEdgeInsets(top: 14, left: 0, bottom: 0, right: 0))
         nextButton.constrainHeight(50)
     }
+    
+    func setupBindings() {
+        usernameTextfield.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if let value = textField.text,
+           !value.isEmpty {
+            nextButton.setEnabled(true)
+        } else {
+            nextButton.setEnabled(false)
+        }
+    }
+    
+}
+
+extension EnterUsernameView: UITextViewDelegate {
     
 }

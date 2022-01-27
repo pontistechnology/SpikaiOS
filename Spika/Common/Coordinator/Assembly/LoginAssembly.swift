@@ -12,7 +12,7 @@ class LoginAssembly: Assembly {
     func assemble(container: Container) {
         assembleEnterNumberViewController(container)
         assembleCountryPickerViewController(container)
-        assembleVerifyCodeViewController(container)
+        assembleEnterVerifyCodeViewController(container)
         assembleEnterUsernameViewController(container)
     }
     
@@ -42,15 +42,15 @@ class LoginAssembly: Assembly {
         }.inObjectScope(.transient)
     }
     
-    private func assembleVerifyCodeViewController(_ container: Container) {
-        container.register(VerifyCodeViewModel.self) { (resolver, coordinator: AppCoordinator, number: String, deviceId: String, countryCode: String) in
+    private func assembleEnterVerifyCodeViewController(_ container: Container) {
+        container.register(EnterVerifyCodeViewModel.self) { (resolver, coordinator: AppCoordinator, number: String, deviceId: String) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return VerifyCodeViewModel(repository: repository, coordinator: coordinator, deviceId: deviceId, phoneNumber: number, countryCode: countryCode)
+            return EnterVerifyCodeViewModel(repository: repository, coordinator: coordinator, deviceId: deviceId, phoneNumber: number)
         }.inObjectScope(.transient)
         
-        container.register(VerifyCodeViewController.self) { (resolver, coordinator: AppCoordinator, number: String, deviceId: String, countryCode: String) in
-            let controller = VerifyCodeViewController()
-            controller.viewModel = container.resolve(VerifyCodeViewModel.self, arguments: coordinator, number, deviceId, countryCode)
+        container.register(EnterVerifyCodeViewController.self) { (resolver, coordinator: AppCoordinator, number: String, deviceId: String) in
+            let controller = EnterVerifyCodeViewController()
+            controller.viewModel = container.resolve(EnterVerifyCodeViewModel.self, arguments: coordinator, number, deviceId)
             return controller
         }.inObjectScope(.transient)
     }

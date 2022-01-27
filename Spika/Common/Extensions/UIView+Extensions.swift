@@ -158,17 +158,17 @@ extension UIView {
         }
     }
     
-    open func centerXToSuperview() {
+    open func centerXToSuperview(offset: CGFloat = 0) {
         translatesAutoresizingMaskIntoConstraints = false
         if let superviewCenterXAnchor = superview?.centerXAnchor {
-            centerXAnchor.constraint(equalTo: superviewCenterXAnchor).isActive = true
+            centerXAnchor.constraint(equalTo: superviewCenterXAnchor, constant: offset).isActive = true
         }
     }
     
-    open func centerYToSuperview() {
+    open func centerYToSuperview(offset: CGFloat = 0) {
         translatesAutoresizingMaskIntoConstraints = false
         if let superviewCenterYAnchor = superview?.centerYAnchor {
-            centerYAnchor.constraint(equalTo: superviewCenterYAnchor).isActive = true
+            centerYAnchor.constraint(equalTo: superviewCenterYAnchor, constant: offset).isActive = true
         }
     }
     

@@ -27,7 +27,7 @@ protocol Repository {
     func createChat(_ chat: Chat) -> Future<Chat, Error>
     func getChats() -> Future<[Chat], Error>
     func updateChat(_ chat: Chat) -> Future<Chat, Error>
-    func authenticateUser(telephoneNumber: String, deviceId: String, countryCode: String) -> AnyPublisher<AuthResponseModel, Error>
+    func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
     func verifyCode(code: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
     func saveUserInfo(user: AppUser, device: Device)
     func getUsers() -> Future<[User], Error>

@@ -10,17 +10,16 @@ import Combine
 
 class EnterNumberViewModel: BaseViewModel {
     
-    func authenticateWithNumber(number: String, deviceId: String, countryCode: String) {
-        repository.authenticateUser(telephoneNumber: number, deviceId: deviceId, countryCode: countryCode).sink { completion in
-            print("completition:", completion)
+    func authenticateWithNumber(number: String, deviceId: String) {
+        repository.authenticateUser(telephoneNumber: number, deviceId: deviceId).sink { completion in
             switch completion {
             case let .failure(error):
                 print("Could not auth user: \(error)")
             default: break
             }
         } receiveValue: { [weak self] authResponse in
-            print("AUTH Response: ", authResponse)
-            self?.presentVerifyCodeScreen(number: number, deviceId: deviceId, countryCode: countryCode)
+//            print("AUTH Response: ", authResponse)
+            self?.presentVerifyCodeScreen(number: number, deviceId: deviceId)
         }.store(in: &subscriptions)
 
     }
@@ -29,8 +28,8 @@ class EnterNumberViewModel: BaseViewModel {
         getAppCoordinator()?.presentCountryPicker(delegate: delegate)
     }
     
-    func presentVerifyCodeScreen(number: String, deviceId: String, countryCode: String) {
-        getAppCoordinator()?.presentVerifyCodeScreen(number: number, deviceId: deviceId, countryCode: countryCode)
+    func presentVerifyCodeScreen(number: String, deviceId: String) {
+        getAppCoordinator()?.presentVerifyCodeScreen(number: number, deviceId: deviceId)
     }
     
 }

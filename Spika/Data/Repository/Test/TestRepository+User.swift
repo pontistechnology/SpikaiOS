@@ -10,7 +10,7 @@ import Combine
 
 extension TestRepository {
     
-    func authenticateUser(telephoneNumber: String, deviceId: String, countryCode: String) -> AnyPublisher<AuthResponseModel, Error> {
+    func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
         return Fail<AuthResponseModel, Error>(error: NetworkError.badURL)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()

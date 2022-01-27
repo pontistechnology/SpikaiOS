@@ -77,9 +77,9 @@
 		AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */; };
 		AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */; };
 		AD9BFD46272AECFA00736318 /* VerifyCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD45272AECFA00736318 /* VerifyCodeRequest.swift */; };
-		AD9BFD49272B105800736318 /* VerifyCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD48272B105800736318 /* VerifyCodeViewController.swift */; };
-		AD9BFD4B272B107500736318 /* VerifyCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4A272B107500736318 /* VerifyCodeViewModel.swift */; };
-		AD9BFD4E272B10AF00736318 /* VerifyCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4D272B10AF00736318 /* VerifyCodeView.swift */; };
+		AD9BFD49272B105800736318 /* EnterVerifyCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD48272B105800736318 /* EnterVerifyCodeViewController.swift */; };
+		AD9BFD4B272B107500736318 /* EnterVerifyCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4A272B107500736318 /* EnterVerifyCodeViewModel.swift */; };
+		AD9BFD4E272B10AF00736318 /* EnterVerifyCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4D272B10AF00736318 /* EnterVerifyCodeView.swift */; };
 		AD9BFD51272B17B100736318 /* VerificationTextFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD50272B17B100736318 /* VerificationTextFieldItem.swift */; };
 		AD9BFD53272B184E00736318 /* VerificationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD52272B184E00736318 /* VerificationTextField.swift */; };
 		AD9BFD55272B1A0200736318 /* VerificationTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD54272B1A0200736318 /* VerificationTextFieldView.swift */; };
@@ -206,9 +206,9 @@
 		AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponseModel.swift; sourceTree = "<group>"; };
 		AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestModel.swift; sourceTree = "<group>"; };
 		AD9BFD45272AECFA00736318 /* VerifyCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeRequest.swift; sourceTree = "<group>"; };
-		AD9BFD48272B105800736318 /* VerifyCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeViewController.swift; sourceTree = "<group>"; };
-		AD9BFD4A272B107500736318 /* VerifyCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeViewModel.swift; sourceTree = "<group>"; };
-		AD9BFD4D272B10AF00736318 /* VerifyCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeView.swift; sourceTree = "<group>"; };
+		AD9BFD48272B105800736318 /* EnterVerifyCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterVerifyCodeViewController.swift; sourceTree = "<group>"; };
+		AD9BFD4A272B107500736318 /* EnterVerifyCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterVerifyCodeViewModel.swift; sourceTree = "<group>"; };
+		AD9BFD4D272B10AF00736318 /* EnterVerifyCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterVerifyCodeView.swift; sourceTree = "<group>"; };
 		AD9BFD50272B17B100736318 /* VerificationTextFieldItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationTextFieldItem.swift; sourceTree = "<group>"; };
 		AD9BFD52272B184E00736318 /* VerificationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationTextField.swift; sourceTree = "<group>"; };
 		AD9BFD54272B1A0200736318 /* VerificationTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationTextFieldView.swift; sourceTree = "<group>"; };
@@ -484,7 +484,7 @@
 				AD9BFD35272AB2D700736318 /* CountryPicker */,
 				AD9BFD20272994DE00736318 /* EnterNumber */,
 				93708E12279F86B400F81095 /* EnterUsername */,
-				AD9BFD47272B103E00736318 /* VerifyCode */,
+				AD9BFD47272B103E00736318 /* EnterVerifyCode */,
 			);
 			path = LoginFlow;
 			sourceTree = "<group>";
@@ -555,20 +555,20 @@
 			path = ResponseModel;
 			sourceTree = "<group>";
 		};
-		AD9BFD47272B103E00736318 /* VerifyCode */ = {
+		AD9BFD47272B103E00736318 /* EnterVerifyCode */ = {
 			isa = PBXGroup;
 			children = (
-				AD9BFD48272B105800736318 /* VerifyCodeViewController.swift */,
-				AD9BFD4A272B107500736318 /* VerifyCodeViewModel.swift */,
+				AD9BFD48272B105800736318 /* EnterVerifyCodeViewController.swift */,
+				AD9BFD4A272B107500736318 /* EnterVerifyCodeViewModel.swift */,
 				AD9BFD4C272B108400736318 /* View */,
 			);
-			path = VerifyCode;
+			path = EnterVerifyCode;
 			sourceTree = "<group>";
 		};
 		AD9BFD4C272B108400736318 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AD9BFD4D272B10AF00736318 /* VerifyCodeView.swift */,
+				AD9BFD4D272B10AF00736318 /* EnterVerifyCodeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1067,7 +1067,7 @@
 				AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */,
 				ADB9D527271E83F3000793E2 /* ChatEntity+CoreDataClass.swift in Sources */,
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
-				AD9BFD4B272B107500736318 /* VerifyCodeViewModel.swift in Sources */,
+				AD9BFD4B272B107500736318 /* EnterVerifyCodeViewModel.swift in Sources */,
 				ADD50450271E81BA009D50CB /* Message.swift in Sources */,
 				AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */,
 				AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */,
@@ -1103,7 +1103,7 @@
 				AD8192712722D3E900D5BE48 /* MainButton.swift in Sources */,
 				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,
 				AD81926F2722D0A400D5BE48 /* SegmentedControl.swift in Sources */,
-				AD9BFD4E272B10AF00736318 /* VerifyCodeView.swift in Sources */,
+				AD9BFD4E272B10AF00736318 /* EnterVerifyCodeView.swift in Sources */,
 				AD819290272305D900D5BE48 /* TapUtils.swift in Sources */,
 				ADD5040127101B69009D50CB /* DetailsView.swift in Sources */,
 				AD9BFD302729ABDB00736318 /* Country.swift in Sources */,
@@ -1112,7 +1112,7 @@
 				ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */,
 				AD8192592721D42700D5BE48 /* ContactsViewModel.swift in Sources */,
 				AD9BFD1A2729899300736318 /* TestRepository+User.swift in Sources */,
-				AD9BFD49272B105800736318 /* VerifyCodeViewController.swift in Sources */,
+				AD9BFD49272B105800736318 /* EnterVerifyCodeViewController.swift in Sources */,
 				AD9BFD192729899000736318 /* TestRepository+Chat.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
 				AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */,
@@ -1323,7 +1323,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YU755VYJCP;
+				DEVELOPMENT_TEAM = 6TL325MDWU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1352,7 +1352,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YU755VYJCP;
+				DEVELOPMENT_TEAM = 6TL325MDWU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

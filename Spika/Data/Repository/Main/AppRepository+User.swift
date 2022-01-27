@@ -11,7 +11,7 @@ import CryptoKit
 
 extension AppRepository {
     
-    func authenticateUser(telephoneNumber: String, deviceId: String, countryCode: String) -> AnyPublisher<AuthResponseModel, Error> {
+    func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
         print("Phone number SHA256: ", telephoneNumber.getSHA256())
         let resources = Resources<AuthResponseModel, AuthRequestModel>(
             path: Constants.Endpoints.authenticateUser,
@@ -19,8 +19,7 @@ extension AppRepository {
             bodyParameters: AuthRequestModel(
                 telephoneNumber: telephoneNumber,
                 telephoneNumberHashed: telephoneNumber.getSHA256(),
-                deviceId: deviceId,
-                countryCode: countryCode),
+                deviceId: deviceId),
             httpHeaderFields: nil,
             queryParameters: nil
         )
@@ -35,6 +34,7 @@ extension AppRepository {
             httpHeaderFields: nil,
             queryParameters: nil
         )
+        print("resources are: ", resources)
         return networkService.performRequest(resources: resources)
     }
     

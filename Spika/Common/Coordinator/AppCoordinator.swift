@@ -19,8 +19,8 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        presentEnterNumberScreen()
-//        presentVerifyCodeScreen(number: "123456", deviceId: "111111", countryCode: "BA")
+//        presentEnterNumberScreen()
+        presentVerifyCodeScreen(number: "123456", deviceId: "111111")
 //        presentHomeScreen()
 //        presentEnterUsernameScreen()
     }
@@ -31,8 +31,8 @@ class AppCoordinator: Coordinator {
         self.navigationController.setViewControllers([currentViewController!], animated: true)
     }
     
-    func presentVerifyCodeScreen(number: String, deviceId: String, countryCode: String) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(VerifyCodeViewController.self, arguments: self, number, deviceId, countryCode)!
+    func presentVerifyCodeScreen(number: String, deviceId: String) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(EnterVerifyCodeViewController.self, arguments: self, number, deviceId)!
         self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }

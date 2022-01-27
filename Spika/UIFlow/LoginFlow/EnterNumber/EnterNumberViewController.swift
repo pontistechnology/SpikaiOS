@@ -16,7 +16,6 @@ class EnterNumberViewController: BaseViewController {
         super.viewDidLoad()
         setupView(enterNumberView)
         setupBindings()
-        print(UIDevice.current.identifierForVendor!.uuidString)
     }
     
     func setupBindings() {
@@ -26,11 +25,9 @@ class EnterNumberViewController: BaseViewController {
         
         enterNumberView.nextButton.tap().sink { _ in
             guard let fullNumber = self.enterNumberView.getFullNumber() else { return }
-            guard let countryCode = self.enterNumberView.getCountryCode(removePlus: true) else { return }
             self.viewModel.authenticateWithNumber(
                 number: fullNumber,
-                deviceId: UUID().uuidString,
-                countryCode: countryCode)
+                deviceId: UUID().uuidString)
         }.store(in: &subscriptions)
     }
 }
