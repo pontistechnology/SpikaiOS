@@ -36,7 +36,7 @@ class ImageButton: UIView, BaseView {
         backgroundView.layer.cornerRadius = size.height / 2
         backgroundView.clipsToBounds = true
         
-        imageView.image = image.withRenderingMode(.alwaysOriginal).withTintColor(.primaryColor)
+        imageView.image = image.withRenderingMode(.alwaysOriginal)
     }
     
     func positionSubviews() {

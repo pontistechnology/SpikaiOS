@@ -10,12 +10,11 @@ import UIKit
 
 class EnterUsernameView: UIView, BaseView {
     
-    private let logoImage = LogoImageView()
-    private let errorView = ErrorView(message: "Enter the username!")
-    private let testImage = ImageButton(image: UIImage(named: "logo")!, size: CGSize(width: 100, height: 100))
+    let errorView = ErrorView(message: "Username already taken!")
+    let profilePictureView = ImageViewWithIcon(image: UIImage(named: "logo")!, size: CGSize(width: 100, height: 100))
     private let usernameLabel = CustomLabel(text: "Username", textColor: .textTertiary, fontName: .MontserratMedium)
-    private let usernameTextfield = TextField(textPlaceholder: "Enter username")
-    private let nextButton = MainButton()
+    let usernameTextfield = TextField(textPlaceholder: "Enter username")
+    let nextButton = MainButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,7 +28,7 @@ class EnterUsernameView: UIView, BaseView {
     
     func addSubviews() {
         addSubview(errorView)
-        addSubview(testImage)
+        addSubview(profilePictureView)
         addSubview(usernameLabel)
         addSubview(usernameTextfield)
         addSubview(nextButton)
@@ -43,10 +42,10 @@ class EnterUsernameView: UIView, BaseView {
     func positionSubviews() {
         errorView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 16, left: 20, bottom: 0, right: 20))
         
-        testImage.anchor(top: topAnchor, padding: UIEdgeInsets(top: 75, left: 0, bottom: 0, right: 0))
-        testImage.centerXToSuperview()
+        profilePictureView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 75, left: 0, bottom: 0, right: 0))
+        profilePictureView.centerXToSuperview()
         
-        usernameLabel.anchor(top: testImage.bottomAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 30, left: 30, bottom: 0, right: 0))
+        usernameLabel.anchor(top: profilePictureView.bottomAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 30, left: 30, bottom: 0, right: 0))
         
         usernameTextfield.anchor(top: usernameLabel.bottomAnchor, leading: usernameLabel.leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 30))
         usernameTextfield.constrainHeight(50)
@@ -60,16 +59,8 @@ class EnterUsernameView: UIView, BaseView {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        if let value = textField.text,
-           !value.isEmpty {
-            nextButton.setEnabled(true)
-        } else {
-            nextButton.setEnabled(false)
+        if let value = textField.text {
+            nextButton.setEnabled(!value.isEmpty)
         }
     }
-    
-}
-
-extension EnterUsernameView: UITextViewDelegate {
-    
 }
