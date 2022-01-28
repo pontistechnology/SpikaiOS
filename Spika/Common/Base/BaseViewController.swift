@@ -29,4 +29,21 @@ class BaseViewController: UIViewController {
         self.view.addSubview(view)
         view.fillSuperviewSafeAreaLayoutGuide()
     }
+    
+    func showLoading() {
+        for view in view.subviews {
+            view.isHidden = true
+        }
+        
+        let test = UIImageView()
+        test.image = UIImage(named: "logoAndCheck")
+        view.addSubview(test)
+        view.centerXToSuperview()
+        view.centerYToSuperview(offset: -100)
+        view.constrainHeight(170)
+        view.constrainWidth(170)
+//        apiStatusImageView.image = isFinished ? UIImage(named: "logoAndCheck") : UIImage(named: "logo")
+//        apiStatusImageView.isHidden = !present
+//        errorMessageLabel.isHidden = present
+    }
 }

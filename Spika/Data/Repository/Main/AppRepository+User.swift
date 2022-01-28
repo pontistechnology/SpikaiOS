@@ -20,7 +20,7 @@ extension AppRepository {
                 telephoneNumber: telephoneNumber,
                 telephoneNumberHashed: telephoneNumber.getSHA256(),
                 deviceId: deviceId),
-            httpHeaderFields: nil,
+            httpHeaderFields: ["accesstoken" : "ne treba"],
             queryParameters: nil
         )
         return networkService.performRequest(resources: resources)

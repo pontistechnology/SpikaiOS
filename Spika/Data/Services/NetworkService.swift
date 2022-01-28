@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 enum RequestType: String {
     case GET, PUT, POST, DELETE
@@ -56,10 +57,17 @@ class NetworkService {
         if let headerFields = resources.httpHeaderFields {
             request.allHTTPHeaderFields = headerFields
         }
-
+        
         request.httpMethod = resources.requestType.rawValue
-        request.addValue("application/json", forHTTPHeaderField:
-                      "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("ios", forHTTPHeaderField: "os-name")
+        request.addValue(UIDevice.current.systemVersion, forHTTPHeaderField: "os-version")
+        request.addValue(UIDevice.current.name, forHTTPHeaderField: "device-name")
+        request.addValue((Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown", forHTTPHeaderField: "app-version")
+        request.addValue(Locale.current.languageCode ?? "unknown", forHTTPHeaderField: "language")
+        
+        print("request je:", request.allHTTPHeaderFields)
+        
         return URLSession.shared.dataTaskPublisher(for: request)
                     .map(\.data)
                     .decode(type: T.self, decoder: JSONDecoder())
