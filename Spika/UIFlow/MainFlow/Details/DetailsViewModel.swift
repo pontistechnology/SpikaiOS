@@ -16,8 +16,4 @@ class DetailsViewModel: BaseViewModel {
         super.init(repository: repository, coordinator: coordinator)
     }
     
-    func closeDetialsScreen() {
-        getAppCoordinator()?.popTopViewController()
-    }
-    
 }

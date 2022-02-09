@@ -44,7 +44,7 @@ class ImageButton: UIView, BaseView {
         backgroundView.anchor(size: size)
         
         imageView.centerInSuperview()
-        imageView.anchor(size: CGSize(width: size.width * 0.4, height: size.height * 0.4))
+        imageView.anchor(size: CGSize(width: size.width * 0.6, height: size.height * 0.6))
     }
     
 }

@@ -9,6 +9,16 @@
 /* Begin PBXBuildFile section */
 		2FD051678BE847C32FF93CD8 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */; };
 		8C98C4F64745F15542536CE9 /* Pods_Spika_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */; };
+		930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BB27A9FB180064BED1 /* UserRequestModel.swift */; };
+		930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BD27A9FCE30064BED1 /* UserResponseModel.swift */; };
+		930290C027A9FDBE0064BED1 /* CommonModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BF27A9FDBE0064BED1 /* CommonModels.swift */; };
+		930290C227AC96040064BED1 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C127AC96040064BED1 /* ContactsTableViewCell.swift */; };
+		930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C327ACA2E90064BED1 /* ContactsTableView.swift */; };
+		930EE59B27A937ED00143B48 /* UploadFileRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadFileRequestModel.swift */; };
+		930EE59D27A938B800143B48 /* UploadFileResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59C27A938B800143B48 /* UploadFileResponseModel.swift */; };
+		9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6827B3702000FA0EB1 /* DetailsView.swift */; };
+		9323EC6B27B3E8D500FA0EB1 /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6A27B3E8D500FA0EB1 /* NavView.swift */; };
+		9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */; };
 		93708E14279F871400F81095 /* EnterUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E13279F871300F81095 /* EnterUsernameViewController.swift */; };
 		93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E15279F872500F81095 /* EnterUsernameViewModel.swift */; };
 		93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E18279F873D00F81095 /* EnterUsernameView.swift */; };
@@ -77,7 +87,7 @@
 		AD9BFD3C272AC93400736318 /* CountryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD3B272AC93400736318 /* CountryUtils.swift */; };
 		AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */; };
 		AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */; };
-		AD9BFD46272AECFA00736318 /* VerifyCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD45272AECFA00736318 /* VerifyCodeRequest.swift */; };
+		AD9BFD46272AECFA00736318 /* VerifyCodeRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD45272AECFA00736318 /* VerifyCodeRequestModel.swift */; };
 		AD9BFD49272B105800736318 /* EnterVerifyCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD48272B105800736318 /* EnterVerifyCodeViewController.swift */; };
 		AD9BFD4B272B107500736318 /* EnterVerifyCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4A272B107500736318 /* EnterVerifyCodeViewModel.swift */; };
 		AD9BFD4E272B10AF00736318 /* EnterVerifyCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4D272B10AF00736318 /* EnterVerifyCodeView.swift */; };
@@ -116,7 +126,7 @@
 		ADD503F6270DF96F009D50CB /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F5270DF96F009D50CB /* Post.swift */; };
 		ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FB27101B20009D50CB /* DetailsViewController.swift */; };
 		ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
-		ADD5040127101B69009D50CB /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040027101B69009D50CB /* DetailsView.swift */; };
+		ADD5040127101B69009D50CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040027101B69009D50CB /* ContentView.swift */; };
 		ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040A2716EB4B009D50CB /* UserEntityService.swift */; };
 		ADD5040D2716EC22009D50CB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040C2716EC22009D50CB /* User.swift */; };
 		ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040F27173FD9009D50CB /* DatabaseService.swift */; };
@@ -142,6 +152,16 @@
 		4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		613C7266CE789CD1C2695243 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
 		6923B1B3DE1A3AEE3767CFAC /* Pods-Spika-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		930290BB27A9FB180064BED1 /* UserRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestModel.swift; sourceTree = "<group>"; };
+		930290BD27A9FCE30064BED1 /* UserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseModel.swift; sourceTree = "<group>"; };
+		930290BF27A9FDBE0064BED1 /* CommonModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModels.swift; sourceTree = "<group>"; };
+		930290C127AC96040064BED1 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
+		930290C327ACA2E90064BED1 /* ContactsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableView.swift; sourceTree = "<group>"; };
+		930EE59A27A937ED00143B48 /* UploadFileRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileRequestModel.swift; sourceTree = "<group>"; };
+		930EE59C27A938B800143B48 /* UploadFileResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadFileResponseModel.swift; sourceTree = "<group>"; };
+		9323EC6827B3702000FA0EB1 /* DetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
+		9323EC6A27B3E8D500FA0EB1 /* NavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavView.swift; sourceTree = "<group>"; };
+		9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchView.swift; sourceTree = "<group>"; };
 		93708E13279F871300F81095 /* EnterUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewController.swift; sourceTree = "<group>"; };
 		93708E15279F872500F81095 /* EnterUsernameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewModel.swift; sourceTree = "<group>"; };
 		93708E18279F873D00F81095 /* EnterUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameView.swift; sourceTree = "<group>"; };
@@ -207,7 +227,7 @@
 		AD9BFD3B272AC93400736318 /* CountryUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryUtils.swift; sourceTree = "<group>"; };
 		AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponseModel.swift; sourceTree = "<group>"; };
 		AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestModel.swift; sourceTree = "<group>"; };
-		AD9BFD45272AECFA00736318 /* VerifyCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeRequest.swift; sourceTree = "<group>"; };
+		AD9BFD45272AECFA00736318 /* VerifyCodeRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeRequestModel.swift; sourceTree = "<group>"; };
 		AD9BFD48272B105800736318 /* EnterVerifyCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterVerifyCodeViewController.swift; sourceTree = "<group>"; };
 		AD9BFD4A272B107500736318 /* EnterVerifyCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterVerifyCodeViewModel.swift; sourceTree = "<group>"; };
 		AD9BFD4D272B10AF00736318 /* EnterVerifyCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterVerifyCodeView.swift; sourceTree = "<group>"; };
@@ -252,7 +272,7 @@
 		ADD503F5270DF96F009D50CB /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		ADD503FB27101B20009D50CB /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		ADD503FD27101B44009D50CB /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
-		ADD5040027101B69009D50CB /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
+		ADD5040027101B69009D50CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		ADD5040A2716EB4B009D50CB /* UserEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntityService.swift; sourceTree = "<group>"; };
 		ADD5040C2716EC22009D50CB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		ADD5040F27173FD9009D50CB /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
@@ -545,7 +565,9 @@
 			isa = PBXGroup;
 			children = (
 				AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */,
-				AD9BFD45272AECFA00736318 /* VerifyCodeRequest.swift */,
+				AD9BFD45272AECFA00736318 /* VerifyCodeRequestModel.swift */,
+				930EE59A27A937ED00143B48 /* UploadFileRequestModel.swift */,
+				930290BB27A9FB180064BED1 /* UserRequestModel.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -554,6 +576,9 @@
 			isa = PBXGroup;
 			children = (
 				AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */,
+				930EE59C27A938B800143B48 /* UploadFileResponseModel.swift */,
+				930290BD27A9FCE30064BED1 /* UserResponseModel.swift */,
+				930290BF27A9FDBE0064BED1 /* CommonModels.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -711,6 +736,8 @@
 		ADD503E6270DD849009D50CB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				930290C127AC96040064BED1 /* ContactsTableViewCell.swift */,
+				930290C327ACA2E90064BED1 /* ContactsTableView.swift */,
 				AD9BFD4F272B176800736318 /* VerificationTextFieldView */,
 				AD81926E2722D0A400D5BE48 /* SegmentedControl.swift */,
 				AD8192702722D3E900D5BE48 /* MainButton.swift */,
@@ -784,7 +811,10 @@
 		ADD503FF27101B58009D50CB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				ADD5040027101B69009D50CB /* DetailsView.swift */,
+				ADD5040027101B69009D50CB /* ContentView.swift */,
+				9323EC6827B3702000FA0EB1 /* DetailsView.swift */,
+				9323EC6A27B3E8D500FA0EB1 /* NavView.swift */,
+				9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1029,13 +1059,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */,
 				AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */,
 				93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */,
 				AD9BFD55272B1A0200736318 /* VerificationTextFieldView.swift in Sources */,
 				AD81923C271E8AF400D5BE48 /* ReactionEntity+CoreDataProperties.swift in Sources */,
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
 				AD9BFD172729894300736318 /* TestAssembly.swift in Sources */,
-				AD9BFD46272AECFA00736318 /* VerifyCodeRequest.swift in Sources */,
+				930EE59B27A937ED00143B48 /* UploadFileRequestModel.swift in Sources */,
+				AD9BFD46272AECFA00736318 /* VerifyCodeRequestModel.swift in Sources */,
 				AD81923E271E8AF400D5BE48 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				AD9BFD342729AE8300736318 /* CountryTableViewCell.swift in Sources */,
 				AD8192552721C00D00D5BE48 /* UIColor+Extensions.swift in Sources */,
@@ -1044,12 +1076,14 @@
 				AD8192612721D52200D5BE48 /* CallHistoryView.swift in Sources */,
 				AD81926D2721E2E400D5BE48 /* UIControl+Combine.swift in Sources */,
 				AD8192692721D5BD00D5BE48 /* ChatsViewModel.swift in Sources */,
+				9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
 				ADD5040D2716EC22009D50CB /* User.swift in Sources */,
 				AD9BFD53272B184E00736318 /* VerificationTextField.swift in Sources */,
 				ADB9D524271E83F3000793E2 /* UserEntity+CoreDataProperties.swift in Sources */,
 				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
 				AD81924A2721743900D5BE48 /* ChatsViewController.swift in Sources */,
+				930290C227AC96040064BED1 /* ContactsTableViewCell.swift in Sources */,
 				AD9BFD272729955200736318 /* EnterNumberView.swift in Sources */,
 				AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */,
 				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
@@ -1070,11 +1104,13 @@
 				AD9E39032726C9B400DC5D43 /* MessageSenderView.swift in Sources */,
 				ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */,
 				AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */,
+				930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */,
 				ADB9D527271E83F3000793E2 /* ChatEntity+CoreDataClass.swift in Sources */,
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
 				AD9BFD4B272B107500736318 /* EnterVerifyCodeViewModel.swift in Sources */,
 				ADD50450271E81BA009D50CB /* Message.swift in Sources */,
 				AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */,
+				9323EC6B27B3E8D500FA0EB1 /* NavView.swift in Sources */,
 				AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */,
 				93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */,
 				AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */,
@@ -1084,7 +1120,9 @@
 				AD81924F2721A89A00D5BE48 /* TabBarItem.swift in Sources */,
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
 				AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */,
+				930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */,
 				ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */,
+				930290C027A9FDBE0064BED1 /* CommonModels.swift in Sources */,
 				AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */,
 				AD9BFD39272AB31300736318 /* CountryPickerViewModel.swift in Sources */,
 				ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */,
@@ -1100,18 +1138,20 @@
 				ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */,
 				AD9BFD2B27299F7B00736318 /* EnterNumberTextField.swift in Sources */,
 				AD9BFD222729950600736318 /* EnterNumberViewController.swift in Sources */,
+				930EE59D27A938B800143B48 /* UploadFileResponseModel.swift in Sources */,
 				ADD503D5270DD5F4009D50CB /* AppAssembly.swift in Sources */,
 				AD81923A271E873200D5BE48 /* Reaction.swift in Sources */,
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
 				AD9BFD29272995CA00736318 /* LoginAssembly.swift in Sources */,
 				93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */,
+				930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */,
 				AD9BFD3C272AC93400736318 /* CountryUtils.swift in Sources */,
 				AD8192712722D3E900D5BE48 /* MainButton.swift in Sources */,
 				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,
 				AD81926F2722D0A400D5BE48 /* SegmentedControl.swift in Sources */,
 				AD9BFD4E272B10AF00736318 /* EnterVerifyCodeView.swift in Sources */,
 				AD819290272305D900D5BE48 /* TapUtils.swift in Sources */,
-				ADD5040127101B69009D50CB /* DetailsView.swift in Sources */,
+				ADD5040127101B69009D50CB /* ContentView.swift in Sources */,
 				AD9BFD302729ABDB00736318 /* Country.swift in Sources */,
 				AD9BFD51272B17B100736318 /* VerificationTextFieldItem.swift in Sources */,
 				ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */,
@@ -1331,7 +1371,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1363,7 +1403,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -10,12 +10,12 @@ import Foundation
 // MARK: - AuthResponseModel
 struct AuthResponseModel: Codable {
     let status: String?
-    let data: UserData?
+    let data: AuthData?
     let error: String?
 }
 
 // MARK: - DataClass
-struct UserData: Codable {
+struct AuthData: Codable {
     let isNewUser: Bool?
     let user: AppUser?
     let device: Device?
@@ -31,15 +31,4 @@ struct Device: Codable {
     let osVersion: Int?
     let appVersion: Int?
     let pushToken: String?
-}
-
-// MARK: - User
-struct AppUser: Codable {
-    let id: Int?
-    let displayName: String?
-    let avatarUrl: String?
-    let telephoneNumber: String?
-    let telephoneNumberHashed: String?
-    let emailAddress: String?
-    let createdAt: String?
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct VerifyCodeRequest: Codable {
+struct VerifyCodeRequestModel: Codable {
     let code: String
     let deviceId: String
 }

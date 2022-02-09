@@ -9,8 +9,10 @@ import UIKit
 
 class ContactsView: UIView, BaseView {
     
-    let titleLabel = UILabel()
+    let titleLabel = CustomLabel(text: "Contacts", textSize: 28, textColor: .textPrimaryAndWhite, fontName: .MontserratRegular)
     let detailsButton = UIButton()
+    let searchBar = SearchBar(placeholder: "Search for contact,message, file...")
+    let tableView = ContactsTableView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,21 +25,23 @@ class ContactsView: UIView, BaseView {
     
     func addSubviews() {
         addSubview(titleLabel)
+        addSubview(searchBar)
         addSubview(detailsButton)
+        addSubview(tableView)
     }
     
     func styleSubviews() {
-        titleLabel.text = "Contacts"
         
         detailsButton.setTitle("Details", for: .normal)
         detailsButton.setTitleColor(UIColor.systemTeal, for: .normal)
     }
     
     func positionSubviews() {
-        titleLabel.centerInSuperview()
+        titleLabel.anchor(top: topAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 12, left: 20, bottom: 0, right: 0))
         
-        detailsButton.anchor(top: topAnchor, padding: UIEdgeInsets(top: 90, left: 0, bottom: 0, right: 0))
-        detailsButton.centerX(inView: self)
+        searchBar.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 24, left: 20, bottom: 0, right: 20))
+            
+        tableView.anchor(top: searchBar.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 90, right: 0))
     }
     
 }

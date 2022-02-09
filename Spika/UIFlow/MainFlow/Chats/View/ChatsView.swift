@@ -31,5 +31,4 @@ class ChatsView: UIView, BaseView {
     func positionSubviews() {
         titleLabel.centerInSuperview()
     }
-    
 }

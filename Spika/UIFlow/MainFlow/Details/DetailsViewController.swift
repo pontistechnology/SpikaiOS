@@ -18,14 +18,14 @@ class DetailsViewController: BaseViewController {
         setupBindings()
     }
     
-    private func setupBindings() {
-        let closeTap = UITapGestureRecognizer(target: self, action: #selector(self.handleCloseButtonTap(_:)))
-        detailsView.closeButton.addGestureRecognizer(closeTap)
+    override func viewDidAppear(_ animated: Bool) {
+        
     }
     
-    @objc func handleCloseButtonTap(_ sender: UITapGestureRecognizer? = nil) {
-        self.viewModel.closeDetialsScreen()
+    private func setupBindings() {
+       
     }
+    
     
     deinit {
         print("DetailsViewController deinit")

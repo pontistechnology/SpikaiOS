@@ -24,13 +24,20 @@ class EnterUsernameViewController: BaseViewController {
     }
     
     func setupActionSheet() {
-        actionSheet.addAction(UIAlertAction(title: "Take a photo", style: .default, handler: { _ in
-            // camera
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Choose from gallery", style: .default, handler: { _ in
+        actionSheet.addAction(UIAlertAction(title: "Take a photo", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.imagePicker.sourceType = .camera
+            self.imagePicker.cameraCaptureMode = .photo
+            self.imagePicker.cameraDevice = .front
             self.present(self.imagePicker, animated: true, completion: nil)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Remove photo", style: .destructive, handler: { _ in
+        actionSheet.addAction(UIAlertAction(title: "Choose from gallery", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Remove photo", style: .destructive, handler: { [weak self] _ in
+            guard let self = self else { return }
             self.image = nil
             self.enterUsernameView.profilePictureView.deleteMainImage()
         }))
@@ -45,7 +52,10 @@ class EnterUsernameViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         enterUsernameView.nextButton.tap().sink { [weak self] _ in
-            self?.viewModel.updateUsername(username: self?.enterUsernameView.usernameTextfield.text ?? " change")
+           
+            self?.viewModel.uploadPhoto(image: self!.image!)
+//            self?.viewModel.updateUsername(username: self?.enterUsernameView.usernameTextfield.text ?? "unknown")
+            
         }.store(in: &subscriptions)
         
         viewModel.isUsernameWrong.sink { [weak self] isUsernameWrong in
@@ -62,7 +72,6 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
     func setupImagePicker() {
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

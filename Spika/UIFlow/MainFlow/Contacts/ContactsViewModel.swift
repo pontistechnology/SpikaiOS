@@ -11,6 +11,13 @@ import Combine
 class ContactsViewModel: BaseViewModel {
     
     let chatsSubject = CurrentValueSubject<[Chat], Never>([])
+    lazy var namesPublisher   = CurrentValueSubject<[String], Never>([])
+    lazy var lettersPublisher = CurrentValueSubject<[String], Never>([])
+    
+    
+    override init(repository: Repository, coordinator: Coordinator) {
+        super.init(repository: repository, coordinator: coordinator)
+    }
     
     func getPosts() {
         self.repository.getPosts().sink { completion in
@@ -131,4 +138,19 @@ class ContactsViewModel: BaseViewModel {
             print(messages)
         }.store(in: &subscriptions)
     }
+    
+    func testtest(_ name: String) {
+        var names = namesPublisher.value
+        var letters = lettersPublisher.value
+        names.append(name)
+        names.sort()
+        let firstChar = String(name.prefix(1))
+        if !letters.contains(firstChar) {
+            letters.append(firstChar)
+            letters.sort()
+        }
+        namesPublisher.send(names)
+        lettersPublisher.send(letters)
+    }
+    
 }

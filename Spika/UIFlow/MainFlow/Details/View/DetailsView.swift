@@ -9,7 +9,10 @@ import UIKit
 
 class DetailsView: UIView, BaseView {
     
-    let closeButton = UIButton()
+    
+    let scrollview = UIScrollView()
+    
+    let contentView = ContentView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,17 +24,20 @@ class DetailsView: UIView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(closeButton)
+        addSubview(scrollview)
+        scrollview.addSubview(contentView)
     }
     
     func styleSubviews() {
-        backgroundColor = .white // TODO: change
-        
-        closeButton.setTitle("Exit", for: .normal)
-        closeButton.setTitleColor(UIColor.blue, for: .normal)
     }
     
     func positionSubviews() {
-        closeButton.anchor(top: topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 20))
+        
+        scrollview.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        
+        
+        contentView.anchor(top: scrollview.topAnchor, leading: scrollview.leadingAnchor, bottom: scrollview.bottomAnchor, trailing: scrollview.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        contentView.constrainHeight(860)
+        contentView.widthAnchor.constraint(equalTo: scrollview.widthAnchor).isActive = true
     }
 }

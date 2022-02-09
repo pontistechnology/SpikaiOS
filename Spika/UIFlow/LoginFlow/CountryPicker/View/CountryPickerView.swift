@@ -16,7 +16,7 @@ class CountryPickerView: UIView, BaseView {
     
     let cancelButton = ActionButton()
     let searchBar = SearchBar(placeholder: "Search")
-    let allCountriesLabel = UILabel()
+    let allCountriesLabel = CustomLabel(text: "ALL COUNTRIES", textSize: 9, textColor: .textTertiary, fontName: .MontserratRegular)
     let countriesTableView = UITableView()
     
     private let countries: [Country] = CountryHelper.shared.getCountries()
@@ -42,10 +42,6 @@ class CountryPickerView: UIView, BaseView {
     
     func styleSubviews() {
         cancelButton.setTitle("Cancel", for: .normal)
-        
-        allCountriesLabel.text = "ALL COUNTRIES"
-        allCountriesLabel.customFont(name: .MontserratRegular, size: 9)
-        allCountriesLabel.textColor = .textTertiary
         
         countriesTableView.backgroundColor = .clear
         countriesTableView.rowHeight = CountryTableViewCell.rowHeight

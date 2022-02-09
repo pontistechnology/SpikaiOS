@@ -21,6 +21,7 @@ open class VerificationTextField: UITextField {
         autocapitalizationType = .none
         self.customFont(name: .MontserratMedium, size: 26)
         textColor = .textPrimary
+        textContentType = .oneTimeCode
     }
     
     required public init?(coder: NSCoder) {

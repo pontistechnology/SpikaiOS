@@ -20,21 +20,30 @@ extension AppRepository {
                 telephoneNumber: telephoneNumber,
                 telephoneNumberHashed: telephoneNumber.getSHA256(),
                 deviceId: deviceId),
-            httpHeaderFields: ["accesstoken" : "ne treba"],
+            httpHeaderFields: nil,
             queryParameters: nil
         )
         return networkService.performRequest(resources: resources)
     }
     
     func verifyCode(code: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
-        let resources = Resources<AuthResponseModel, VerifyCodeRequest>(
+        let resources = Resources<AuthResponseModel, VerifyCodeRequestModel>(
             path: Constants.Endpoints.verifyCode,
             requestType: .POST,
-            bodyParameters: VerifyCodeRequest(code: code, deviceId: deviceId),
+            bodyParameters: VerifyCodeRequestModel(code: code, deviceId: deviceId),
             httpHeaderFields: nil,
             queryParameters: nil
         )
         print("resources are: ", resources)
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func updateUsername(username: String) -> AnyPublisher<UserResponseModel, Error>{
+        let resources = Resources<UserResponseModel, UserRequestModel>(
+            path: Constants.Endpoints.userInfo,
+            requestType: .PUT,
+            bodyParameters: UserRequestModel(displayName: username),
+            httpHeaderFields: ["accesstoken" : "5BfRl2zv0GZehWA7"])
         return networkService.performRequest(resources: resources)
     }
     
@@ -43,7 +52,6 @@ extension AppRepository {
         defaults.set(user.id, forKey: Constants.UserDefaults.userId)
         defaults.set(user.telephoneNumber, forKey: Constants.UserDefaults.userPhoneNumber)
         defaults.set(device.id, forKey: Constants.UserDefaults.deviceId)
-//        defaults.set(device.token, forKey: Constants.UserDefaults.token)
     }
     
     func getUsers() -> Future<[User], Error> {
@@ -54,4 +62,14 @@ extension AppRepository {
         return databaseService.userEntityService.saveUser(user)
     }
     
+    func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
+        let resources = Resources<UploadFileResponseModel, UploadFileRequestModel>(
+            path: Constants.Endpoints.uploadFiles,
+            requestType: .POST,
+            bodyParameters: UploadFileRequestModel(chunk: chunk,
+                                                   offset: offset, total: total, size: size, mimeType: mimeType, fileName: fileName, clientId: clientId, type: type, fileHash: fileHash, relationId: nil),
+            httpHeaderFields: ["accesstoken" : "5BfRl2zv0GZehWA7"]) //access token
+        
+        return networkService.performRequest(resources: resources)
+    }
 }

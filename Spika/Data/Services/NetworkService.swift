@@ -66,7 +66,11 @@ class NetworkService {
         request.addValue((Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown", forHTTPHeaderField: "app-version")
         request.addValue(Locale.current.languageCode ?? "unknown", forHTTPHeaderField: "language")
         
-        print("request je:", request.allHTTPHeaderFields)
+//        URLSession.shared.dataTaskPublisher(for: request).sink { error in
+//            print("Errorrrrrrr")
+//        } receiveValue: { (data: Data, response: URLResponse) in
+//            print("recieveValue: " , data, response)
+//        }
         
         return URLSession.shared.dataTaskPublisher(for: request)
                     .map(\.data)

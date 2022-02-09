@@ -44,4 +44,18 @@ extension TestRepository {
     func getUsersForChat(chat: Chat) -> Future<[User], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
+    
+    func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
+        // TODO: - add tests
+        return Fail<UploadFileResponseModel, Error>(error: NetworkError.badURL)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func updateUsername(username: String) -> AnyPublisher<UserResponseModel, Error> {
+        // TODO: - add tests
+        return Fail<UserResponseModel, Error>(error: NetworkError.badURL)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 }

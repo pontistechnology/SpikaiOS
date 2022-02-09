@@ -21,6 +21,8 @@ struct Constants {
         static let getPosts = "posts"
         static let authenticateUser = "api/messenger/auth"
         static let verifyCode = "api/messenger/auth/verify"
+        static let uploadFiles = "api/upload/files"
+        static let userInfo = "api/messenger/me"
     }
     
     struct Database {
