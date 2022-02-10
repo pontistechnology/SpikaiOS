@@ -14,7 +14,9 @@ class EnterUsernameViewModel: BaseViewModel {
     
     let isUsernameWrong = CurrentValueSubject<Bool, Never>(true)
     
+    
     func updateUsername(username: String) {
+        networkRequestState.send(.started)
         repository.updateUsername(username: username).sink { completion in
             switch completion {
             case let .failure(error):
@@ -30,12 +32,13 @@ class EnterUsernameViewModel: BaseViewModel {
     
     func uploadPhoto(image: UIImage) {
         
-        let data = image.pngData()
+        let data = image.jpegData(compressionQuality: 0.9)
         
         let dataLen: Int = data!.count
-        let chunkSize: Int = ((1024) * 4) // MB
+        let chunkSize: Int = ((1024) * 4)
         let fullChunks = Int(dataLen / chunkSize)
         let totalChunks: Int = fullChunks + (dataLen % 1024 != 0 ? 1 : 0)
+        print("there will be total chunks: ", totalChunks)
         
         for chunkCounter in 0..<totalChunks {
           var chunk:Data
@@ -49,7 +52,9 @@ class EnterUsernameViewModel: BaseViewModel {
           chunk = data!.subdata(in: range)
 
             
-        repository.uploadFile(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/png", fileName: "profilePhoto", clientId: "testtfrefst", type: "avatar", fileHash: "fsasafrdfsa".getMD5(), relationId: 1)
+        repository.uploadFile(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "profilePhoto", clientId: "coki003", type: "avatar",
+//                              fileHash: "12".getMD5(),
+                              relationId: 1)
                 .sink { completion in
                 switch completion {
                 case let .failure(bhhh):
@@ -58,7 +63,8 @@ class EnterUsernameViewModel: BaseViewModel {
                     break
                 }
             } receiveValue: { response in
-                print("Response Upload File: ", response.data?.uploadedChunks?.count)
+//                print("Response Upload File: ", response.data?.uploadedChunks?.count)
+                print("response: ", response)
             }.store(in: &subscriptions)
 
         }

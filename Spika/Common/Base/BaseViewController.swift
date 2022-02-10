@@ -11,6 +11,7 @@ import Combine
 class BaseViewController: UIViewController {
     
     var subscriptions = Set<AnyCancellable>()
+    let activityIndicator = UIActivityIndicatorView()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -22,6 +23,7 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     func setupView(_ view: UIView) {
@@ -30,20 +32,26 @@ class BaseViewController: UIViewController {
         view.fillSuperviewSafeAreaLayoutGuide()
     }
     
-    func showLoading() {
-        for view in view.subviews {
-            view.isHidden = true
-        }
-        
-        let test = UIImageView()
-        test.image = UIImage(named: "logoAndCheck")
-        view.addSubview(test)
-        view.centerXToSuperview()
-        view.centerYToSuperview(offset: -100)
-        view.constrainHeight(170)
-        view.constrainWidth(170)
-//        apiStatusImageView.image = isFinished ? UIImage(named: "logoAndCheck") : UIImage(named: "logo")
-//        apiStatusImageView.isHidden = !present
-//        errorMessageLabel.isHidden = present
+    private func showLoading() {
+        view.addSubview(activityIndicator)
+        activityIndicator.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        activityIndicator.backgroundColor = .darkGray.withAlphaComponent(0.5)
+        activityIndicator.startAnimating()
+    }
+    
+    private func hideLoading() {
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
+    }
+    
+    func sink(networkRequestState publisher: CurrentValueSubject<RequestState, Never>) {
+        publisher.sink { state in
+            switch state {
+            case .finished:
+                self.hideLoading()
+            case .started:
+                self.showLoading()
+            }
+        }.store(in: &subscriptions)
     }
 }

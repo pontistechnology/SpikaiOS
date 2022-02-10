@@ -52,9 +52,11 @@ class EnterUsernameViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         enterUsernameView.nextButton.tap().sink { [weak self] _ in
-           
-            self?.viewModel.uploadPhoto(image: self!.image!)
-//            self?.viewModel.updateUsername(username: self?.enterUsernameView.usernameTextfield.text ?? "unknown")
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//                self?.hideLoading()
+//            }
+//            self?.viewModel.uploadPhoto(image: self!.image!)
+            self?.viewModel.updateUsername(username: self?.enterUsernameView.usernameTextfield.text ?? "unknown")
             
         }.store(in: &subscriptions)
         
@@ -62,7 +64,7 @@ class EnterUsernameViewController: BaseViewController {
             self?.enterUsernameView.errorView.isHidden = isUsernameWrong
         }.store(in: &subscriptions)
         
-        
+        sink(networkRequestState: viewModel.networkRequestState)
     
     }
 }
@@ -77,8 +79,10 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             image = pickedImage
+            print("slika: ", info)
             enterUsernameView.profilePictureView.showImage(pickedImage)
         }
+        
         dismiss(animated: true, completion: nil)
     }
     

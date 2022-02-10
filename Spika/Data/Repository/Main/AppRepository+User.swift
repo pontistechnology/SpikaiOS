@@ -62,12 +62,16 @@ extension AppRepository {
         return databaseService.userEntityService.saveUser(user)
     }
     
-    func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
+    func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String,
+//                    fileHash: String,
+                    relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
         let resources = Resources<UploadFileResponseModel, UploadFileRequestModel>(
             path: Constants.Endpoints.uploadFiles,
             requestType: .POST,
             bodyParameters: UploadFileRequestModel(chunk: chunk,
-                                                   offset: offset, total: total, size: size, mimeType: mimeType, fileName: fileName, clientId: clientId, type: type, fileHash: fileHash, relationId: nil),
+                                                   offset: offset, total: total, size: size, mimeType: mimeType, fileName: fileName, clientId: clientId, type: type,
+//                                                   fileHash: fileHash,
+                                                   relationId: relationId),
             httpHeaderFields: ["accesstoken" : "5BfRl2zv0GZehWA7"]) //access token
         
         return networkService.performRequest(resources: resources)

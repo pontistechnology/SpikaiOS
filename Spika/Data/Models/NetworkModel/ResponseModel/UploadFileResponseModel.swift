@@ -13,10 +13,14 @@ struct FileData: Codable {
 
 // MARK: - File
 struct File: Codable {
-    let id: Int
-    let fileName: String
-    let size: Int
-    let mimeType: String
-    let type: String
-    let relationId: Int
+    let id: Int?
+    let type: String?
+    let relationId: Int?
+    let path: String?
+    let mimeType: String?
+    let fileName: String?
+    let size: Int?
+    let clientId: String?
+    let createdAt: String?
+    let modifiedAt: String?
 }

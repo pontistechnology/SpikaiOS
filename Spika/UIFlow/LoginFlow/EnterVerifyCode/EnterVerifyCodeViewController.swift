@@ -22,7 +22,6 @@ class EnterVerifyCodeViewController: BaseViewController {
         enterVerifyCodeView.nextButton.tap().sink { _ in
             print("VerifyCode Next tap: ")
 //            self.enterVerifyCodeView.showApiStatusImageView(true, isFinished: false)
-            self.showLoading()
             self.viewModel.verifyCode(code: self.enterVerifyCodeView.verificationTextFieldView.code)
         }.store(in: &subscriptions)
         

@@ -12,6 +12,7 @@ class BaseViewModel {
     let coordinator: Coordinator
     let repository: Repository
     var subscriptions = Set<AnyCancellable>()
+    let networkRequestState = CurrentValueSubject<RequestState, Never>(.finished)
     
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
