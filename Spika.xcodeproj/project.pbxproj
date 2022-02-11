@@ -315,6 +315,44 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		933BE85727B6595F0099BA9E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				AD819245272173F500D5BE48 /* ContactsViewController.swift */,
+				AD8192582721D42700D5BE48 /* ContactsViewModel.swift */,
+				AD81925A2721D43700D5BE48 /* View */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		933BE85827B6596E0099BA9E /* SharedMediaLinksDocs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SharedMediaLinksDocs;
+			sourceTree = "<group>";
+		};
+		933BE85927B65A070099BA9E /* ChatSearch */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChatSearch;
+			sourceTree = "<group>";
+		};
+		933BE85A27B65A4E0099BA9E /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
+		933BE85B27B65A580099BA9E /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
 		93708E12279F86B400F81095 /* EnterUsername */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,9 +374,12 @@
 		AD8192412721738500D5BE48 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				AD819245272173F500D5BE48 /* ContactsViewController.swift */,
-				AD8192582721D42700D5BE48 /* ContactsViewModel.swift */,
-				AD81925A2721D43700D5BE48 /* View */,
+				933BE85B27B65A580099BA9E /* Favorites */,
+				933BE85A27B65A4E0099BA9E /* Notes */,
+				933BE85927B65A070099BA9E /* ChatSearch */,
+				ADD503FA27101B09009D50CB /* Details */,
+				933BE85827B6596E0099BA9E /* SharedMediaLinksDocs */,
+				933BE85727B6595F0099BA9E /* Main */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -491,7 +532,6 @@
 		AD9BFD1E2729927300736318 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
-				ADD503FA27101B09009D50CB /* Details */,
 				ADD503E9270DE278009D50CB /* Home */,
 				AD8192412721738500D5BE48 /* Contacts */,
 				AD8192422721739300D5BE48 /* CallHistory */,
