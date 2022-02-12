@@ -14,7 +14,6 @@ class EnterVerifyCodeViewModel: BaseViewModel {
     let phoneNumber: String
     
     let resendSubject = CurrentValueSubject<Bool, Never>(false)
-    let isApiFinishedSuccessfullySubject = CurrentValueSubject<Bool, Never>(false)
     
     init(repository: Repository, coordinator: Coordinator, deviceId: String, phoneNumber: String) {
         self.deviceId = deviceId
@@ -23,31 +22,29 @@ class EnterVerifyCodeViewModel: BaseViewModel {
     }
     
     func verifyCode(code: String) {
-        repository.verifyCode(code: code, deviceId: deviceId).sink { completion in
+        networkRequestState.send(.started)
+        repository.verifyCode(code: code, deviceId: deviceId).sink { [weak self] completion in
+            self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
                 print("Could not auth user: \(error)")
-                self.isApiFinishedSuccessfullySubject.value = false
-                
             default: break
             }
         } receiveValue: { [weak self] authModel in
             print("VerifyCodeVM", authModel)
-            if authModel.status == "fail" {
-                self?.isApiFinishedSuccessfullySubject.value = false
-            } else {
-                self?.isApiFinishedSuccessfullySubject.value = true
-            }
             guard let user = authModel.data?.user,
                   let device = authModel.data?.device
             else { return }
             self?.repository.saveUserInfo(user: user, device: device)
+            self?.presentEnterUsernameScreen()
         }.store(in: &subscriptions)
 
     }
     
     func resendCode() {
-        repository.authenticateUser(telephoneNumber: phoneNumber, deviceId: deviceId).sink { completion in
+        networkRequestState.send(.started)
+        repository.authenticateUser(telephoneNumber: phoneNumber, deviceId: deviceId).sink { [weak self] completion in
+            self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
                 print("Could not auth user: \(error)")
@@ -56,6 +53,10 @@ class EnterVerifyCodeViewModel: BaseViewModel {
         } receiveValue: { [weak self] authResponse in
             self?.resendSubject.value = true
         }.store(in: &subscriptions)
+    }
+    
+    func presentEnterUsernameScreen() {
+        getAppCoordinator()?.presentEnterUsernameScreen()
     }
     
 }

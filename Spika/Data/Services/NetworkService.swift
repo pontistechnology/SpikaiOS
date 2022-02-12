@@ -14,7 +14,7 @@ enum RequestType: String {
 }
 
 enum NetworkError: Error {
-    case badURL, requestFailed, fileTooLarge, unknown
+    case badURL, requestFailed, fileTooLarge, unknown, noAccessToken
 
     var description : String {
         switch self {
@@ -22,6 +22,7 @@ enum NetworkError: Error {
         case .requestFailed: return "Request Failed."
         case .fileTooLarge: return "File too large."
         case .unknown: return "Unknown error."
+        case .noAccessToken: return "No access token."
         }
   }
 }
@@ -66,11 +67,7 @@ class NetworkService {
         request.addValue((Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown", forHTTPHeaderField: "app-version")
         request.addValue(Locale.current.languageCode ?? "unknown", forHTTPHeaderField: "language")
         
-//        URLSession.shared.dataTaskPublisher(for: request).sink { error in
-//            print("Errorrrrrrr")
-//        } receiveValue: { (data: Data, response: URLResponse) in
-//            print("recieveValue: " , data, response)
-//        }
+
         
         return URLSession.shared.dataTaskPublisher(for: request)
                     .map(\.data)

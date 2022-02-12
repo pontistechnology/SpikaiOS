@@ -23,7 +23,25 @@ class DetailsViewController: BaseViewController {
     }
     
     private func setupBindings() {
-       
+        detailsView.contentView.sharedMediaOptionButton.tap().sink { [weak self] _ in
+            self?.viewModel.presentSharedScreen()
+        }.store(in: &subscriptions)
+        
+        detailsView.contentView.chatSearchOptionButton.tap().sink { [weak self] _ in
+            self?.viewModel.presentChatSearchScreen()
+        }.store(in: &subscriptions)
+        
+        detailsView.contentView.favoriteMessagesOptionButton.tap().sink { [weak self] _ in
+            self?.viewModel.presentFavoritesScreen()
+        }.store(in: &subscriptions)
+        
+        detailsView.contentView.notesOptionButton.tap().sink { [weak self] _ in
+            self?.viewModel.presentNotesScreen()
+        }.store(in: &subscriptions)
+        
+        detailsView.contentView.callHistoryOptionButton.tap().sink { [weak self] _ in
+            self?.viewModel.presentCallHistoryScreen()
+        }.store(in: &subscriptions)
     }
     
     

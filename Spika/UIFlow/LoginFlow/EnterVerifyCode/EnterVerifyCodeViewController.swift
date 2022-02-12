@@ -35,17 +35,9 @@ class EnterVerifyCodeViewController: BaseViewController {
             }
         }.store(in: &subscriptions)
         
-        viewModel.isApiFinishedSuccessfullySubject.dropFirst()
-            .sink { apiFinishedSuccessfully in
-            if apiFinishedSuccessfully {
-//                self.enterVerifyCodeView.showApiStatusImageView(true, isFinished: true)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.viewModel.getAppCoordinator()?.presentEnterUsernameScreen()
-                }
-            } else {
-//                self.enterVerifyCodeView.showApiStatusImageView(false, isFinished: false)
-            }
-        }.store(in: &subscriptions)
+        sink(networkRequestState: viewModel.networkRequestState)
+        
+        
         
         
     }

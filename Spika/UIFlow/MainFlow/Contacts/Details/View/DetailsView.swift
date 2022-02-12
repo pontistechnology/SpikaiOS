@@ -7,10 +7,7 @@
 
 import UIKit
 
-class DetailsView: UIView, BaseView {
-    
-    
-    let scrollview = UIScrollView()
+class DetailsView: UIScrollView, BaseView {
     
     let contentView = ContentView()
     
@@ -24,8 +21,7 @@ class DetailsView: UIView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(scrollview)
-        scrollview.addSubview(contentView)
+        addSubview(contentView)
     }
     
     func styleSubviews() {
@@ -33,11 +29,8 @@ class DetailsView: UIView, BaseView {
     
     func positionSubviews() {
         
-        scrollview.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-        
-        
-        contentView.anchor(top: scrollview.topAnchor, leading: scrollview.leadingAnchor, bottom: scrollview.bottomAnchor, trailing: scrollview.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        contentView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         contentView.constrainHeight(860)
-        contentView.widthAnchor.constraint(equalTo: scrollview.widthAnchor).isActive = true
+        contentView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
     }
 }

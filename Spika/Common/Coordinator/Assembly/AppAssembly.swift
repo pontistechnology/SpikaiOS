@@ -13,7 +13,6 @@ final class AppAssembly: Assembly {
     func assemble(container: Container) {
         self.assembleMainRepository(container)
         self.assembleHomeViewController(container)
-        self.assembleDetailsViewController(container)
         self.assembleContactsViewController(container)
         self.assembleCallHistoryViewController(container)
         self.assembleChatsViewController(container)
@@ -64,7 +63,7 @@ final class AppAssembly: Assembly {
             return controller
         }.inObjectScope(.transient)
     }
-    
+
     private func assembleCallHistoryViewController(_ container: Container) {
         container.register(CallHistoryViewModel.self) { (resolver, coordinator: AppCoordinator) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
@@ -104,17 +103,19 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.transient)
     }
     
-    private func assembleDetailsViewController(_ container: Container) {
-        container.register(DetailsViewModel.self) { (resolver, coordinator: AppCoordinator, id: Int) in
-            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return DetailsViewModel(repository: repository, coordinator: coordinator, id: id)
-        }.inObjectScope(.transient)
-        
-        container.register(DetailsViewController.self) { (resolver, coordinator: AppCoordinator, id: Int) in
-            let controller = DetailsViewController()
-            controller.viewModel = container.resolve(DetailsViewModel.self, arguments: coordinator, id)
-            return controller
-        }.inObjectScope(.transient)
-    }
     
+    //      select _____ command option E and change name
+    //
+    //    private func assemble_____ViewController(_ container: Container) {
+    //        container.register(_____ViewModel.self) { (resolver, coordinator: AppCoordinator) in
+    //            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+    //            return _____ViewModel(repository: repository, coordinator: coordinator)
+    //        }.inObjectScope(.transient)
+    //
+    //        container.register(_____ViewController.self) { (resolver, coordinator: AppCoordinator) in
+    //            let controller = _____ViewController()
+    //            controller.viewModel = container.resolve(_____ViewModel.self, argument: coordinator)
+    //            return controller
+    //        }.inObjectScope(.transient)
+    //    }
 }

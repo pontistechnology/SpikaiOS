@@ -16,4 +16,23 @@ class DetailsViewModel: BaseViewModel {
         super.init(repository: repository, coordinator: coordinator)
     }
     
+    func presentSharedScreen() {
+        getAppCoordinator()?.presentSharedScreen()
+    }
+    
+    func presentChatSearchScreen() {
+        getAppCoordinator()?.presentChatSearchScreen()
+    }
+    
+    func presentFavoritesScreen() {
+        getAppCoordinator()?.presentFavoritesScreen()
+    }
+    
+    func presentNotesScreen() {
+        getAppCoordinator()?.presentNotesScreen()
+    }
+    
+    func presentCallHistoryScreen() {
+        getAppCoordinator()?.presentCallHistoryScreen()
+    }
 }

@@ -19,10 +19,10 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-//        presentEnterNumberScreen()
+        presentEnterNumberScreen()
 //        presentVerifyCodeScreen(number: "123456", deviceId: "111111")
 //        presentHomeScreen()
-        presentEnterUsernameScreen()
+//        presentEnterUsernameScreen()
     }
     
     func presentEnterNumberScreen() {
@@ -65,6 +65,36 @@ class AppCoordinator: Coordinator {
     
     func presentDetailsScreen(id: Int) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(DetailsViewController.self, arguments: self, id)!
+        self.currentViewController = viewController
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentSharedScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(SharedViewController.self, argument: self)!
+        self.currentViewController = viewController
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentFavoritesScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(FavoritesViewController.self, argument: self)!
+        self.currentViewController = viewController
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentNotesScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(NotesViewController.self, argument: self)!
+        self.currentViewController = viewController
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentChatSearchScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(ChatSearchViewController.self, argument: self)!
+        self.currentViewController = viewController
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentCallHistoryScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(CallHistoryViewController.self, argument: self)!
         self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }

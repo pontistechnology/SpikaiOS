@@ -17,7 +17,8 @@ class EnterUsernameViewModel: BaseViewModel {
     
     func updateUsername(username: String) {
         networkRequestState.send(.started)
-        repository.updateUsername(username: username).sink { completion in
+        repository.updateUsername(username: username).sink { [weak self] completion in
+            self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
                 print("updateUsername error: ", error)
@@ -51,11 +52,12 @@ class EnterUsernameViewModel: BaseViewModel {
           let range:Range<Data.Index> = chunkBase..<(chunkBase + diff)
           chunk = data!.subdata(in: range)
 
-            
+        networkRequestState.send(.started)
         repository.uploadFile(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "profilePhoto", clientId: "coki003", type: "avatar",
 //                              fileHash: "12".getMD5(),
                               relationId: 1)
-                .sink { completion in
+                .sink { [weak self] completion in
+                self?.networkRequestState.send(.finished)
                 switch completion {
                 case let .failure(bhhh):
                     print("error", bhhh)

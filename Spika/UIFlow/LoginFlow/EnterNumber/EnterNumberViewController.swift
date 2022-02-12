@@ -29,6 +29,8 @@ class EnterNumberViewController: BaseViewController {
                 number: fullNumber,
                 deviceId: UUID().uuidString)
         }.store(in: &subscriptions)
+        
+        sink(networkRequestState: viewModel.networkRequestState)
     }
 }
 
