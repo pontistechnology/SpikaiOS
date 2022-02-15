@@ -38,6 +38,12 @@
 		93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E1A279F95DB00F81095 /* CustomLabel.swift */; };
 		93708E1D279F992500F81095 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E1C279F992500F81095 /* UILabel+Extensions.swift */; };
 		93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */; };
+		93D86DB627BA9E5E00F275B0 /* MediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DB527BA9E5E00F275B0 /* MediaView.swift */; };
+		93D86DB827BAA15900F275B0 /* DocsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DB727BAA15900F275B0 /* DocsView.swift */; };
+		93D86DBC27BAA17E00F275B0 /* LinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DBB27BAA17E00F275B0 /* LinksView.swift */; };
+		93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DBF27BAB49D00F275B0 /* DocsTableViewCell.swift */; };
+		93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */; };
+		93D86DC427BAEEA000F275B0 /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DC327BAEEA000F275B0 /* MediaCollectionViewCell.swift */; };
 		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		AD81923A271E873200D5BE48 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819239271E873200D5BE48 /* Reaction.swift */; };
 		AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */; };
@@ -194,6 +200,12 @@
 		93708E1A279F95DB00F81095 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		93708E1C279F992500F81095 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewWithIcon.swift; sourceTree = "<group>"; };
+		93D86DB527BA9E5E00F275B0 /* MediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaView.swift; sourceTree = "<group>"; };
+		93D86DB727BAA15900F275B0 /* DocsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocsView.swift; sourceTree = "<group>"; };
+		93D86DBB27BAA17E00F275B0 /* LinksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksView.swift; sourceTree = "<group>"; };
+		93D86DBF27BAB49D00F275B0 /* DocsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocsTableViewCell.swift; sourceTree = "<group>"; };
+		93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksTableViewCell.swift; sourceTree = "<group>"; };
+		93D86DC327BAEEA000F275B0 /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		AD819237271E866100D5BE48 /* MessageEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntityService.swift; sourceTree = "<group>"; };
 		AD819239271E873200D5BE48 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
 		AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Messages.swift"; sourceTree = "<group>"; };
@@ -395,6 +407,10 @@
 			isa = PBXGroup;
 			children = (
 				933BE86127B65C9C0099BA9E /* SharedView.swift */,
+				93D86DB527BA9E5E00F275B0 /* MediaView.swift */,
+				93D86DB727BAA15900F275B0 /* DocsView.swift */,
+				93D86DBB27BAA17E00F275B0 /* LinksView.swift */,
+				93D86DC327BAEEA000F275B0 /* MediaCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -439,6 +455,16 @@
 				93708E18279F873D00F81095 /* EnterUsernameView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		93D86DBE27BAB47700F275B0 /* UITableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				930290C127AC96040064BED1 /* ContactsTableViewCell.swift */,
+				93D86DBF27BAB49D00F275B0 /* DocsTableViewCell.swift */,
+				93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */,
+			);
+			path = UITableViewCells;
 			sourceTree = "<group>";
 		};
 		AD8192412721738500D5BE48 /* Contacts */ = {
@@ -847,7 +873,7 @@
 		ADD503E6270DD849009D50CB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				930290C127AC96040064BED1 /* ContactsTableViewCell.swift */,
+				93D86DBE27BAB47700F275B0 /* UITableViewCells */,
 				930290C327ACA2E90064BED1 /* ContactsTableView.swift */,
 				AD9BFD4F272B176800736318 /* VerificationTextFieldView */,
 				AD81926E2722D0A400D5BE48 /* SegmentedControl.swift */,
@@ -1177,11 +1203,13 @@
 				AD81923C271E8AF400D5BE48 /* ReactionEntity+CoreDataProperties.swift in Sources */,
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
 				933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */,
+				93D86DB627BA9E5E00F275B0 /* MediaView.swift in Sources */,
 				AD9BFD172729894300736318 /* TestAssembly.swift in Sources */,
 				930EE59B27A937ED00143B48 /* UploadFileRequestModel.swift in Sources */,
 				AD9BFD46272AECFA00736318 /* VerifyCodeRequestModel.swift in Sources */,
 				AD81923E271E8AF400D5BE48 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				AD9BFD342729AE8300736318 /* CountryTableViewCell.swift in Sources */,
+				93D86DB827BAA15900F275B0 /* DocsView.swift in Sources */,
 				AD8192552721C00D00D5BE48 /* UIColor+Extensions.swift in Sources */,
 				AD81926B2721D5DE00D5BE48 /* SettingsViewModel.swift in Sources */,
 				AD9A68182739084A00BDC439 /* ActionButton.swift in Sources */,
@@ -1194,10 +1222,12 @@
 				933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
 				ADD5040D2716EC22009D50CB /* User.swift in Sources */,
+				93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */,
 				AD9BFD53272B184E00736318 /* VerificationTextField.swift in Sources */,
 				ADB9D524271E83F3000793E2 /* UserEntity+CoreDataProperties.swift in Sources */,
 				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
 				AD81924A2721743900D5BE48 /* ChatsViewController.swift in Sources */,
+				93D86DC427BAEEA000F275B0 /* MediaCollectionViewCell.swift in Sources */,
 				930290C227AC96040064BED1 /* ContactsTableViewCell.swift in Sources */,
 				933BE86E27B677BC0099BA9E /* FavoritesViewController.swift in Sources */,
 				AD9BFD272729955200736318 /* EnterNumberView.swift in Sources */,
@@ -1207,6 +1237,7 @@
 				AD9E39012726B85C00DC5D43 /* TextFieldView.swift in Sources */,
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
+				93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */,
 				93708E1D279F992500F81095 /* UILabel+Extensions.swift in Sources */,
 				AD9BFD1B2729899500736318 /* TestRepository+Messages.swift in Sources */,
 				AD8192572721C2CE00D5BE48 /* HomeTabBar.swift in Sources */,
@@ -1283,6 +1314,7 @@
 				933BE87327B677F10099BA9E /* NotesViewModel.swift in Sources */,
 				AD9BFD49272B105800736318 /* EnterVerifyCodeViewController.swift in Sources */,
 				AD9BFD192729899000736318 /* TestRepository+Chat.swift in Sources */,
+				93D86DBC27BAA17E00F275B0 /* LinksView.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
 				AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */,
 				ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */,

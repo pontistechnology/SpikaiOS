@@ -19,7 +19,6 @@ class ContactsViewController: BaseViewController {
         setupBindings()
         
         self.viewModel.getChats()
-        title = "Contacts"
     }
     
     var testC = 0

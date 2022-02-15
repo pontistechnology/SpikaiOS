@@ -30,11 +30,7 @@ class SwitchView: UIView, BaseView {
     
     func styleSubviews() {
         label.text = text
-        
-      
-        stateSwitch.thumbTintColor = .primaryColor
-        
-        
+        stateSwitch.onTintColor = .appBlueLight
     }
     
     func positionSubviews() {

@@ -19,9 +19,11 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        presentEnterNumberScreen()
+//        presentEnterNumberScreen()
 //        presentVerifyCodeScreen(number: "123456", deviceId: "111111")
 //        presentHomeScreen()
+        presentDetailsScreen(id: 3)
+//        presentSharedScreen()
 //        presentEnterUsernameScreen()
     }
     

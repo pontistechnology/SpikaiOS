@@ -18,7 +18,7 @@ class BaseViewController: UIViewController {
         navigationController?.navigationBar.barStyle = .default
         navigationController?.setNavigationBarHidden(false, animated: animated)
         UITextField.appearance().tintColor = UIColor.systemTeal
-        
+        navigationItem.backButtonTitle = " "
     }
     
     override func viewDidLoad() {

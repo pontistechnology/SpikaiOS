@@ -16,6 +16,7 @@ class NotesViewController: BaseViewController {
         super.viewDidLoad()
         setupView(notesView)
         setupBindings()
+        navigationItem.title = "Notes"
     }
     
     func setupBindings() {

@@ -16,6 +16,7 @@ class FavoritesViewController: BaseViewController {
         super.viewDidLoad()
         setupView(favoritesView)
         setupBindings()
+        navigationItem.title = "Favorites"
     }
     
     func setupBindings() {
