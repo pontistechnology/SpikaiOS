@@ -16,6 +16,10 @@ class DetailsViewModel: BaseViewModel {
         super.init(repository: repository, coordinator: coordinator)
     }
     
+    func presentVideoCallScreen(url: URL) {
+        getAppCoordinator()?.presentVideoCallScreen(url: url)
+    }
+    
     func presentSharedScreen() {
         getAppCoordinator()?.presentSharedScreen()
     }

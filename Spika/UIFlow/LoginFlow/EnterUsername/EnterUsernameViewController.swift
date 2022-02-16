@@ -52,8 +52,8 @@ class EnterUsernameViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         enterUsernameView.nextButton.tap().sink { [weak self] _ in
-//            self?.viewModel.uploadPhoto(image: self!.image!)
-            self?.viewModel.updateUsername(username: self?.enterUsernameView.usernameTextfield.text ?? "unknown")
+            self?.viewModel.uploadPhoto(image: self!.image!)
+//            self?.viewModel.updateUsername(username: self?.enterUsernameView.usernameTextfield.text ?? "unknown")
             
         }.store(in: &subscriptions)
         
@@ -80,6 +80,16 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
             enterUsernameView.profilePictureView.showImage(pickedImage)
         }
         
+        if let file = info[UIImagePickerController.InfoKey.imageURL] as? URL {
+            do {
+                let imageData = try Data(contentsOf:file)
+                let hash = imageData.getSHA256()
+                print("SAD: ", hash)
+            } catch {
+                print(error)
+            }
+        }
+    
         dismiss(animated: true, completion: nil)
     }
     

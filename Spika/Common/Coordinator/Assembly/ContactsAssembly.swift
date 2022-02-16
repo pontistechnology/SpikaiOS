@@ -15,6 +15,7 @@ class ContactsAssembly: Assembly {
         assembleChatSearchViewController(container)
         assembleNotesViewController(container)
         assembleFavoritesViewController(container)
+        assembleVideoCallViewController(container)
     }
     
     private func assembleDetailsViewController(_ container: Container) {
@@ -78,6 +79,19 @@ class ContactsAssembly: Assembly {
         container.register(ChatSearchViewController.self) { (resolver, coordinator: AppCoordinator) in
             let controller = ChatSearchViewController()
             controller.viewModel = container.resolve(ChatSearchViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleVideoCallViewController(_ container: Container) {
+        container.register(VideoCallViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return VideoCallViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+
+        container.register(VideoCallViewController.self) { (resolver, coordinator: AppCoordinator, url: URL) in
+            let controller = VideoCallViewController(url: url)
+            controller.viewModel = container.resolve(VideoCallViewModel.self, argument: coordinator)
             return controller
         }.inObjectScope(.transient)
     }

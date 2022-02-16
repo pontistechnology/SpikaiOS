@@ -35,8 +35,4 @@ class MediaView: UIView, BaseView {
     func positionSubviews() {
         collectionView.fillSuperview()
     }
-    
-
-    
-
 }

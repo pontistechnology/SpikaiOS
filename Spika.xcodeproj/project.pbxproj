@@ -44,6 +44,9 @@
 		93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DBF27BAB49D00F275B0 /* DocsTableViewCell.swift */; };
 		93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */; };
 		93D86DC427BAEEA000F275B0 /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DC327BAEEA000F275B0 /* MediaCollectionViewCell.swift */; };
+		93DE585827BC7B6600C45EB4 /* VideoCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */; };
+		93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */; };
+		93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */; };
 		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		AD81923A271E873200D5BE48 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819239271E873200D5BE48 /* Reaction.swift */; };
 		AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */; };
@@ -206,6 +209,9 @@
 		93D86DBF27BAB49D00F275B0 /* DocsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocsTableViewCell.swift; sourceTree = "<group>"; };
 		93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksTableViewCell.swift; sourceTree = "<group>"; };
 		93D86DC327BAEEA000F275B0 /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
+		93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewController.swift; sourceTree = "<group>"; };
+		93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewModel.swift; sourceTree = "<group>"; };
+		93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallView.swift; sourceTree = "<group>"; };
 		AD819237271E866100D5BE48 /* MessageEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntityService.swift; sourceTree = "<group>"; };
 		AD819239271E873200D5BE48 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
 		AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Messages.swift"; sourceTree = "<group>"; };
@@ -467,6 +473,32 @@
 			path = UITableViewCells;
 			sourceTree = "<group>";
 		};
+		93DE585527BC7A9800C45EB4 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				93DE585627BC7AA100C45EB4 /* VideoCall */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		93DE585627BC7AA100C45EB4 /* VideoCall */ = {
+			isa = PBXGroup;
+			children = (
+				93DE585B27BC7B7600C45EB4 /* View */,
+				93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */,
+				93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */,
+			);
+			path = VideoCall;
+			sourceTree = "<group>";
+		};
+		93DE585B27BC7B7600C45EB4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		AD8192412721738500D5BE48 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,6 +661,7 @@
 		AD9BFD1E2729927300736318 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
+				93DE585527BC7A9800C45EB4 /* Common */,
 				ADD503E9270DE278009D50CB /* Home */,
 				AD8192412721738500D5BE48 /* Contacts */,
 				AD8192422721739300D5BE48 /* CallHistory */,
@@ -1206,6 +1239,7 @@
 				93D86DB627BA9E5E00F275B0 /* MediaView.swift in Sources */,
 				AD9BFD172729894300736318 /* TestAssembly.swift in Sources */,
 				930EE59B27A937ED00143B48 /* UploadFileRequestModel.swift in Sources */,
+				93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */,
 				AD9BFD46272AECFA00736318 /* VerifyCodeRequestModel.swift in Sources */,
 				AD81923E271E8AF400D5BE48 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				AD9BFD342729AE8300736318 /* CountryTableViewCell.swift in Sources */,
@@ -1239,6 +1273,7 @@
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
 				93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */,
 				93708E1D279F992500F81095 /* UILabel+Extensions.swift in Sources */,
+				93DE585827BC7B6600C45EB4 /* VideoCallViewController.swift in Sources */,
 				AD9BFD1B2729899500736318 /* TestRepository+Messages.swift in Sources */,
 				AD8192572721C2CE00D5BE48 /* HomeTabBar.swift in Sources */,
 				AD8192872722D9BA00D5BE48 /* SecondaryButton.swift in Sources */,
@@ -1259,6 +1294,7 @@
 				ADD50450271E81BA009D50CB /* Message.swift in Sources */,
 				AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */,
 				9323EC6B27B3E8D500FA0EB1 /* NavView.swift in Sources */,
+				93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */,
 				AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */,
 				93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */,
 				AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */,

@@ -33,13 +33,18 @@ class EnterUsernameViewModel: BaseViewModel {
     
     func uploadPhoto(image: UIImage) {
         
-        let data = image.jpegData(compressionQuality: 0.9)
+//        let data = image.jpegData(compressionQuality: 0.9)
+        let data = image.pngData()
+        
+        image.cgImage?.dataProvider?.data
         
         let dataLen: Int = data!.count
         let chunkSize: Int = ((1024) * 4)
         let fullChunks = Int(dataLen / chunkSize)
         let totalChunks: Int = fullChunks + (dataLen % 1024 != 0 ? 1 : 0)
         print("there will be total chunks: ", totalChunks)
+        
+        print("data hash: ", data)
         
         for chunkCounter in 0..<totalChunks {
           var chunk:Data
@@ -48,7 +53,7 @@ class EnterUsernameViewModel: BaseViewModel {
           if(chunkCounter == totalChunks - 1) {
             diff = dataLen - chunkBase
           }
-
+            
           let range:Range<Data.Index> = chunkBase..<(chunkBase + diff)
           chunk = data!.subdata(in: range)
 

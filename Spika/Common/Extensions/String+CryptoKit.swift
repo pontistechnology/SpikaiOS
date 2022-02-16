@@ -25,3 +25,11 @@ extension String {
     }
     
 }
+
+extension Data {
+    
+    func getSHA256() -> String {
+        return SHA256.hash(data: self).compactMap { String(format: "%02x", $0)}.joined()
+    }
+    
+}

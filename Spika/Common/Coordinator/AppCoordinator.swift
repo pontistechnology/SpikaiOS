@@ -106,4 +106,9 @@ class AppCoordinator: Coordinator {
         self.currentViewController = self.navigationController.topViewController
     }
     
+    func presentVideoCallScreen(url: URL) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(VideoCallViewController.self, arguments: self, url)!
+        currentViewController?.present(viewController, animated: true, completion: nil)
+    }
+    
 }
