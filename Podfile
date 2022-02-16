@@ -7,6 +7,7 @@ target 'Spika' do
 
   # Pods for Spika
   pod 'Swinject'
+  pod 'PhoneNumberKit', '~> 3.3'
 
   target 'AppTests' do
       pod 'Swinject'

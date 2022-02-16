@@ -153,4 +153,34 @@ class ContactsViewModel: BaseViewModel {
         lettersPublisher.send(letters)
     }
     
+    func getContacts() {
+        ContactsUtils.getContacts().sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get contacts: \(error)")
+            default: break
+            }
+        } receiveValue: { contacts in
+            print(contacts)
+            var contacts = contacts
+            for (index, contact) in contacts.enumerated() {
+                contacts[index] = contact.getSHA256()
+            }
+            print(contacts)
+            self.postContacts(hashes: contacts)
+        }.store(in: &subscriptions)
+    }
+    
+    func postContacts(hashes: [String]) {
+        repository.postContacts(hashes: hashes).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("post contacts error: ", error)
+            default:
+                break
+            }
+        } receiveValue: { response in
+            print("Success: ", response)
+        }.store(in: &subscriptions)
+    }
 }

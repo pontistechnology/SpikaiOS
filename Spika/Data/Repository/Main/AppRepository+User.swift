@@ -88,4 +88,13 @@ extension AppRepository {
         
         return networkService.performRequest(resources: resources)
     }
+    
+    func postContacts(hashes: [String]) -> AnyPublisher<[String: String], Error> {
+        let resources = Resources<[String: String], [String]>(
+            path: Constants.Endpoints.contacts,
+            requestType: .POST,
+            bodyParameters: hashes,
+            httpHeaderFields: ["accesstoken" : "5BfRl2zv0GZehWA7"])
+        return networkService.performRequest(resources: resources)
+    }
 }

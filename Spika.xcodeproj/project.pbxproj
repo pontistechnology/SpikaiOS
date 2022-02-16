@@ -157,6 +157,9 @@
 		ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
 		ADD5042E271E6C15009D50CB /* ChatEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5042D271E6C15009D50CB /* ChatEntityService.swift */; };
 		ADD50450271E81BA009D50CB /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5044F271E81BA009D50CB /* Message.swift */; };
+		EA9D14DB27BA540A0070BE2B /* ContactsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DA27BA540A0070BE2B /* ContactsUtils.swift */; };
+		EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */; };
+		EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -326,6 +329,9 @@
 		ADD5042D271E6C15009D50CB /* ChatEntityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatEntityService.swift; sourceTree = "<group>"; };
 		ADD5044F271E81BA009D50CB /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
+		EA9D14DA27BA540A0070BE2B /* ContactsUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsUtils.swift; sourceTree = "<group>"; };
+		EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsRequestModel.swift; sourceTree = "<group>"; };
+		EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsResponseModel.swift; sourceTree = "<group>"; };
 		EACC42E127A2B89C00EA0DD2 /* Spika.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spika.entitlements; sourceTree = "<group>"; };
 		FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -613,6 +619,7 @@
 			children = (
 				AD81928F272305D900D5BE48 /* TapUtils.swift */,
 				AD9BFD3B272AC93400736318 /* CountryUtils.swift */,
+				EA9D14DA27BA540A0070BE2B /* ContactsUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -735,6 +742,7 @@
 			isa = PBXGroup;
 			children = (
 				AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */,
+				EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */,
 				AD9BFD45272AECFA00736318 /* VerifyCodeRequestModel.swift */,
 				930EE59A27A937ED00143B48 /* UploadFileRequestModel.swift */,
 				930290BB27A9FB180064BED1 /* UserRequestModel.swift */,
@@ -746,6 +754,7 @@
 			isa = PBXGroup;
 			children = (
 				AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */,
+				EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */,
 				930EE59C27A938B800143B48 /* UploadFileResponseModel.swift */,
 				930290BD27A9FCE30064BED1 /* UserResponseModel.swift */,
 				930290BF27A9FDBE0064BED1 /* CommonModels.swift */,
@@ -1284,6 +1293,7 @@
 				ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */,
 				AD9E39052726CD2000DC5D43 /* MessageTextField.swift in Sources */,
 				AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */,
+				EA9D14DB27BA540A0070BE2B /* ContactsUtils.swift in Sources */,
 				AD9E39032726C9B400DC5D43 /* MessageSenderView.swift in Sources */,
 				ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */,
 				AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */,
@@ -1354,11 +1364,13 @@
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
 				AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */,
 				ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */,
+				EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */,
 				ADD504182717481D009D50CB /* AppRepository+Chat.swift in Sources */,
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
 				ADD503F6270DF96F009D50CB /* Post.swift in Sources */,
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,
+				EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */,
 				AD81925C2721D45100D5BE48 /* ContactsView.swift in Sources */,
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
 				ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */,

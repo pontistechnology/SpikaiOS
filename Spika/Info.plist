@@ -6,6 +6,8 @@
 	<string>Can we use your microphone?</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Can we use your camera?</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Can we use your contacts?</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Black.ttf</string>

@@ -79,6 +79,7 @@ class ContactsViewController: BaseViewController {
 
         }.store(in: &subscriptions)
         
+        viewModel.getContacts()
     }
     
 }

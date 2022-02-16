@@ -23,6 +23,7 @@ struct Constants {
         static let verifyCode = "api/messenger/auth/verify"
         static let uploadFiles = "api/upload/files"
         static let userInfo = "api/messenger/me"
+        static let contacts = "api/messenger/contacts"
     }
     
     struct Database {

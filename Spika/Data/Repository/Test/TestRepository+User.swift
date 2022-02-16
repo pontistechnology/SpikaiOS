@@ -60,4 +60,10 @@ extension TestRepository {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
+    
+    func postContacts(hashes: [String]) -> AnyPublisher<[String:String], Error> {
+        return Fail<[String:String], Error>(error: NetworkError.badURL)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 }
