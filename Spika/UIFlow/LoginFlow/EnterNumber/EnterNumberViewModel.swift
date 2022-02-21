@@ -21,7 +21,7 @@ class EnterNumberViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] authResponse in
 //            print("AUTH Response: ", authResponse)
-            self?.presentVerifyCodeScreen(number: number, deviceId: deviceId)
+            self?.presentEnterVerifyCodeScreen(number: number, deviceId: deviceId)
         }.store(in: &subscriptions)
 
     }
@@ -30,8 +30,8 @@ class EnterNumberViewModel: BaseViewModel {
         getAppCoordinator()?.presentCountryPicker(delegate: delegate)
     }
     
-    func presentVerifyCodeScreen(number: String, deviceId: String) {
-        getAppCoordinator()?.presentVerifyCodeScreen(number: number, deviceId: deviceId)
+    func presentEnterVerifyCodeScreen(number: String, deviceId: String) {
+        getAppCoordinator()?.presentEnterVerifyCodeScreen(number: number, deviceId: deviceId)
     }
     
 }

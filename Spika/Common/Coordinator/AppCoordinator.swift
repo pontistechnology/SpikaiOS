@@ -27,9 +27,10 @@ class AppCoordinator: Coordinator {
 //        }
         
 //        presentEnterNumberScreen()
-        presentHomeScreen()
+//        presentEnterVerifyCodeScreen(number: "fsa", deviceId: "s")
+//        presentHomeScreen()
 //        presentDetailsScreen(id: 3)
-//        presentEnterUsernameScreen()
+        presentEnterUsernameScreen()
     }
     
     // MARK: LOGIN FLOW
@@ -39,7 +40,7 @@ class AppCoordinator: Coordinator {
         self.navigationController.setViewControllers([currentViewController!], animated: true)
     }
     
-    func presentVerifyCodeScreen(number: String, deviceId: String) {
+    func presentEnterVerifyCodeScreen(number: String, deviceId: String) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(EnterVerifyCodeViewController.self, arguments: self, number, deviceId)!
         self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
