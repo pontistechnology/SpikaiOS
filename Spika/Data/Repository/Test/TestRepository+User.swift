@@ -59,9 +59,16 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
-    func postContacts(hashes: [String]) -> AnyPublisher<[String:String], Error> {
-        return Fail<[String:String], Error>(error: NetworkError.badURL)
+    func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error> {
+        return Fail<ContactsResponseModel, Error>(error: NetworkError.badURL)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
+    
+    func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error> {
+        return Fail<ContactsResponseModel, Error>(error: NetworkError.badURL)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
 }

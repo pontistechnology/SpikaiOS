@@ -72,6 +72,7 @@ extension AppRepository {
     func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String,
                     fileHash: String,
                     relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
+
         guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
         else {return Fail<UploadFileResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -86,12 +87,34 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func postContacts(hashes: [String]) -> AnyPublisher<[String: String], Error> {
-        let resources = Resources<[String: String], [String]>(
+    func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error> {
+        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        else { return Fail<ContactsResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let contacts = ContactsRequestModel(contacts: hashes)
+        let resources = Resources<ContactsResponseModel, ContactsRequestModel>(
             path: Constants.Endpoints.contacts,
             requestType: .POST,
-            bodyParameters: hashes,
-            httpHeaderFields: ["accesstoken" : "5BfRl2zv0GZehWA7"])
+            bodyParameters: contacts,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error> {
+        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        else { return Fail<ContactsResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let resources = Resources<ContactsResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.contacts,
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken],
+            queryParameters: ["page": String(page)]
+        )
         return networkService.performRequest(resources: resources)
     }
 }

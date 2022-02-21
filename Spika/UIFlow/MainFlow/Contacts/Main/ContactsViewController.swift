@@ -80,6 +80,7 @@ class ContactsViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         viewModel.getContacts()
+        viewModel.getOnlineContacts(page: 1)
     }
     
 }

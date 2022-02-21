@@ -38,5 +38,6 @@ protocol Repository {
     func getMessagesForChat(chat: Chat) -> Future<[Message], Error>
     func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error>
     func updateUsername(username: String) -> AnyPublisher<UserResponseModel, Error>
-    func postContacts(hashes: [String]) -> AnyPublisher<[String:String], Error>
+    func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error>
+    func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>
 }
