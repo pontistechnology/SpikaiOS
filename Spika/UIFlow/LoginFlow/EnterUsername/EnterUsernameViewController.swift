@@ -52,8 +52,8 @@ class EnterUsernameViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         enterUsernameView.nextButton.tap().sink { [weak self] _ in
-            self?.viewModel.uploadPhoto(image: self!.image!)
-//            self?.viewModel.updateUsername(username: self?.enterUsernameView.usernameTextfield.text ?? "unknown")
+//            self?.viewModel.uploadPhoto(image: self!.image!)
+            self?.viewModel.updateUsername(username: self?.enterUsernameView.usernameTextfield.text ?? "unknown")
             
         }.store(in: &subscriptions)
         

@@ -183,4 +183,26 @@ class ContactsViewModel: BaseViewModel {
             print("Success: ", response)
         }.store(in: &subscriptions)
     }
+    
+    func getOnlineContacts(page: Int) {
+        repository.getContacts(page: page).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("get contacts error: ", error)
+            default:
+                break
+            }
+        } receiveValue: { response in
+            print("Success: ", response)
+            self.test(response: response)
+        }.store(in: &subscriptions)
+    }
+    
+    func test(response: ContactsResponseModel) {
+        if let list = response.data?.list {
+            for user in list {
+                testtest(user.displayName ?? "undefined")
+            }
+        }
+    }
 }

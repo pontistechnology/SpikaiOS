@@ -40,5 +40,6 @@ protocol Repository {
 //                    fileHash: String,
                     relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error>
     func updateUsername(username: String) -> AnyPublisher<UserResponseModel, Error>
-    func postContacts(hashes: [String]) -> AnyPublisher<[String:String], Error>
+    func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error>
+    func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>
 }
