@@ -17,4 +17,8 @@ class SettingsViewController: BaseViewController {
         setupView(settingsView)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
 }

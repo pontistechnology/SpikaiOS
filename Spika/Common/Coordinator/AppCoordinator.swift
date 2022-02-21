@@ -12,10 +12,11 @@ class AppCoordinator: Coordinator {
     
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
-    var currentViewController: UIViewController?
+//    var currentViewController: UIViewController?
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        navigationController.navigationBar.backgroundColor = .brown
     }
     
     func start() {
@@ -36,32 +37,32 @@ class AppCoordinator: Coordinator {
     // MARK: LOGIN FLOW
     func presentEnterNumberScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(EnterNumberViewController.self, argument: self)!
-        self.currentViewController = viewController
-        self.navigationController.setViewControllers([currentViewController!], animated: true)
+//        self.currentViewController = viewController
+        self.navigationController.setViewControllers([viewController], animated: true)
     }
     
     func presentEnterVerifyCodeScreen(number: String, deviceId: String) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(EnterVerifyCodeViewController.self, arguments: self, number, deviceId)!
-        self.currentViewController = viewController
+//        self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func presentCountryPicker(delegate: CountryPickerViewDelegate) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(CountryPickerViewController.self, arguments: self, delegate)!
-        self.currentViewController?.present(viewController, animated: true)
+        self.navigationController.present(viewController, animated: true)
     }
     
     func presentEnterUsernameScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(EnterUsernameViewController.self, argument: self)!
-        self.currentViewController = viewController
+//        self.currentViewController = viewController
         self.navigationController.setViewControllers([viewController], animated: true)
     }
     
     // MARK: MAIN FLOW
     func presentHomeScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
-        self.currentViewController = viewController
-        self.navigationController.setViewControllers([currentViewController!], animated: true)
+//        self.currentViewController = viewController
+        self.navigationController.setViewControllers([viewController], animated: true)
     }
     
     func getHomeTabBarItems() -> [TabBarItem] {
@@ -75,53 +76,53 @@ class AppCoordinator: Coordinator {
     
     func presentDetailsScreen(id: Int) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(DetailsViewController.self, arguments: self, id)!
-        self.currentViewController = viewController
+//        self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func presentSharedScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(SharedViewController.self, argument: self)!
-        self.currentViewController = viewController
+//        self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func presentFavoritesScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(FavoritesViewController.self, argument: self)!
-        self.currentViewController = viewController
+//        self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func presentNotesScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(NotesViewController.self, argument: self)!
-        self.currentViewController = viewController
+//        self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func presentChatSearchScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(ChatSearchViewController.self, argument: self)!
-        self.currentViewController = viewController
+//        self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func presentCallHistoryScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(CallHistoryViewController.self, argument: self)!
-        self.currentViewController = viewController
+//        self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func popTopViewController() {
         self.navigationController.popViewController(animated: true)
-        self.currentViewController = self.navigationController.topViewController
+//        self.currentViewController = self.navigationController.topViewController
     }
     
     func presentVideoCallScreen(url: URL) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(VideoCallViewController.self, arguments: self, url)!
-        currentViewController?.present(viewController, animated: true, completion: nil)
+        navigationController.present(viewController, animated: true, completion: nil)
     }
     
     func presentNewChatScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(NewChatViewController.self, argument: self)!
-        currentViewController?.present(viewController, animated: true, completion: nil)
+        navigationController.present(viewController, animated: true, completion: nil)
     }
     
 }

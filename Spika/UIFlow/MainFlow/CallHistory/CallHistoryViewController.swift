@@ -17,4 +17,8 @@ class CallHistoryViewController: BaseViewController {
         setupView(callHistoryView)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
 }

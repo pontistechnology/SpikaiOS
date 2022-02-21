@@ -21,6 +21,10 @@ class ContactsViewController: BaseViewController {
         self.viewModel.getChats()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     var testC = 0
     
     func setupBindings() {
