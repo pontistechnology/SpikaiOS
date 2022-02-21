@@ -21,12 +21,12 @@ class SharedViewController: BaseViewController {
     }
     
     func setupBindings() {
-        sharedView.mediaView.collectionView.delegate = self
-        sharedView.mediaView.collectionView.dataSource = self
-        sharedView.docsView.tableView.delegate = self
-        sharedView.docsView.tableView.dataSource = self
-        sharedView.linksView.tableView.delegate = self
-        sharedView.linksView.tableView.dataSource = self
+        sharedView.mediaCollectionView.delegate = self
+        sharedView.mediaCollectionView.dataSource = self
+        sharedView.docsTableView.delegate = self
+        sharedView.docsTableView.dataSource = self
+        sharedView.linksTableView.delegate = self
+        sharedView.linksTableView.dataSource = self
     }
 }
 

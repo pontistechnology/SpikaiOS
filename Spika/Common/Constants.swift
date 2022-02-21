@@ -37,7 +37,7 @@ struct Constants {
         static let userId = "userId"
         static let userPhoneNumber = "userPhoneNumber"
         static let deviceId = "deviceId"
-        static let token = "token"
+        static let accessToken = "accessToken"
     }
     
 }

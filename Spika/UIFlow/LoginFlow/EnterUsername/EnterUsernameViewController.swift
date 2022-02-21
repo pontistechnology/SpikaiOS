@@ -13,7 +13,7 @@ class EnterUsernameViewController: BaseViewController {
     var viewModel: EnterUsernameViewModel!
     private let imagePicker = UIImagePickerController()
     let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    var image: UIImage?
+    var fileData: Data?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,7 @@ class EnterUsernameViewController: BaseViewController {
         }))
         actionSheet.addAction(UIAlertAction(title: "Remove photo", style: .destructive, handler: { [weak self] _ in
             guard let self = self else { return }
-            self.image = nil
+            self.fileData = nil
             self.enterUsernameView.profilePictureView.deleteMainImage()
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -52,7 +52,10 @@ class EnterUsernameViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         enterUsernameView.nextButton.tap().sink { [weak self] _ in
-            self?.viewModel.uploadPhoto(image: self!.image!)
+            guard let fileData = self?.fileData else {
+                return
+            }
+            self?.viewModel.uploadPhoto(data: fileData)
 //            self?.viewModel.updateUsername(username: self?.enterUsernameView.usernameTextfield.text ?? "unknown")
             
         }.store(in: &subscriptions)
@@ -75,16 +78,14 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            image = pickedImage
-            print("slika: ", info)
             enterUsernameView.profilePictureView.showImage(pickedImage)
         }
         
         if let file = info[UIImagePickerController.InfoKey.imageURL] as? URL {
             do {
-                let imageData = try Data(contentsOf:file)
-                let hash = imageData.getSHA256()
-                print("SAD: ", hash)
+                let imageData = try Data(contentsOf: file)
+                fileData = imageData
+                print("VC hash: ", imageData.getSHA256())
             } catch {
                 print(error)
             }

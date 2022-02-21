@@ -45,9 +45,7 @@ extension TestRepository {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String,
-//                    fileHash: String,
-                    relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
+    func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
         // TODO: - add tests
         return Fail<UploadFileResponseModel, Error>(error: NetworkError.badURL)
             .receive(on: DispatchQueue.main)

@@ -26,25 +26,21 @@ class EnterUsernameViewModel: BaseViewModel {
                 break
             }
         } receiveValue: { response in
-            print("Uspjesno: ", response.data?.user.displayName)
+//            print("Uspjesno: ", response.data?.user.displayName)
         }.store(in: &subscriptions)
 
     }
     
-    func uploadPhoto(image: UIImage) {
+    func uploadPhoto(data: Data) {
         
-//        let data = image.jpegData(compressionQuality: 0.9)
-        let data = image.pngData()
-        
-        image.cgImage?.dataProvider?.data
-        
-        let dataLen: Int = data!.count
+        let dataLen: Int = data.count
         let chunkSize: Int = ((1024) * 4)
         let fullChunks = Int(dataLen / chunkSize)
         let totalChunks: Int = fullChunks + (dataLen % 1024 != 0 ? 1 : 0)
         print("there will be total chunks: ", totalChunks)
         
-        print("data hash: ", data)
+        let fileHash = data.getSHA256()
+        print("data hash viewmodel: ", fileHash)
         
         for chunkCounter in 0..<totalChunks {
           var chunk:Data
@@ -55,12 +51,10 @@ class EnterUsernameViewModel: BaseViewModel {
           }
             
           let range:Range<Data.Index> = chunkBase..<(chunkBase + diff)
-          chunk = data!.subdata(in: range)
+          chunk = data.subdata(in: range)
 
         networkRequestState.send(.started)
-        repository.uploadFile(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "profilePhoto", clientId: "coki003", type: "avatar",
-//                              fileHash: "12".getMD5(),
-                              relationId: 1)
+        repository.uploadFile(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "profilePhoto", clientId: "coki010", type: "avatar", fileHash: fileHash, relationId: 1)
                 .sink { [weak self] completion in
                 self?.networkRequestState.send(.finished)
                 switch completion {

@@ -31,7 +31,7 @@ class ContactsView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        
+        backgroundColor = .red
         detailsButton.setTitle("Details", for: .normal)
         detailsButton.setTitleColor(UIColor.systemTeal, for: .normal)
     }
@@ -41,7 +41,7 @@ class ContactsView: UIView, BaseView {
         
         searchBar.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 24, left: 20, bottom: 0, right: 20))
             
-        tableView.anchor(top: searchBar.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 90, right: 0))
+        tableView.anchor(top: searchBar.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: HomeTabBar.tabBarHeight, right: 0))
     }
     
 }

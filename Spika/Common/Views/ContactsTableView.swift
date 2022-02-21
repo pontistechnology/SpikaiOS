@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class ContactsTableView: UITableView {
+    
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         setupTV()
@@ -20,5 +21,6 @@ class ContactsTableView: UITableView {
     
     func setupTV() {
         register(ContactsTableViewCell.self, forCellReuseIdentifier: ContactsTableViewCell.reuseIdentifier)
+        rowHeight = 64
     }
 }

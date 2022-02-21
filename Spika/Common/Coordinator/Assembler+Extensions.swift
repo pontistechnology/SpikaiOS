@@ -15,7 +15,8 @@ extension Assembler {
             AppAssembly(),
             LoginAssembly(),
             TestAssembly(),
-            ContactsAssembly()
+            ContactsAssembly(),
+            ChatsAssembly()
         ], container: container)
         return assembler
     }()

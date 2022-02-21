@@ -19,14 +19,20 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
+        UserDefaults.standard.set("5BfRl2zv0GZehWA7", forKey: Constants.UserDefaults.accessToken)
+//        if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken) {
+//            presentHomeScreen()
+//        } else {
+//            presentEnterNumberScreen()
+//        }
+        
 //        presentEnterNumberScreen()
-//        presentVerifyCodeScreen(number: "123456", deviceId: "111111")
-//        presentHomeScreen()
-        presentDetailsScreen(id: 3)
-//        presentSharedScreen()
+        presentHomeScreen()
+//        presentDetailsScreen(id: 3)
 //        presentEnterUsernameScreen()
     }
     
+    // MARK: LOGIN FLOW
     func presentEnterNumberScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(EnterNumberViewController.self, argument: self)!
         self.currentViewController = viewController
@@ -50,6 +56,7 @@ class AppCoordinator: Coordinator {
         self.navigationController.setViewControllers([viewController], animated: true)
     }
     
+    // MARK: MAIN FLOW
     func presentHomeScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
         self.currentViewController = viewController
@@ -60,7 +67,7 @@ class AppCoordinator: Coordinator {
         return [
             TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(ContactsViewController.self, argument: self)!, title: "Contacts", image: "contacts", position: 0, isSelected: true),
             TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(CallHistoryViewController.self, argument: self)!, title: "Call History", image: "callHistory", position: 1, isSelected: false),
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(ChatsViewController.self, argument: self)!, title: "Chats", image: "chats", position: 2, isSelected: false),
+            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(AllChatsViewController.self, argument: self)!, title: "Chats", image: "chats", position: 2, isSelected: false),
             TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(SettingsViewController.self, argument: self)!, title: "Settings", image: "settings", position: 3, isSelected: false)
         ]
     }
@@ -108,6 +115,11 @@ class AppCoordinator: Coordinator {
     
     func presentVideoCallScreen(url: URL) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(VideoCallViewController.self, arguments: self, url)!
+        currentViewController?.present(viewController, animated: true, completion: nil)
+    }
+    
+    func presentNewChatScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(NewChatViewController.self, argument: self)!
         currentViewController?.present(viewController, animated: true, completion: nil)
     }
     

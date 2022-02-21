@@ -40,7 +40,7 @@ extension AppRepository {
     
     func updateUsername(username: String) -> AnyPublisher<UserResponseModel, Error>{
         
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.token)
+        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
         else {return Fail<UserResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -58,7 +58,7 @@ extension AppRepository {
         defaults.set(user.id, forKey: Constants.UserDefaults.userId)
         defaults.set(user.telephoneNumber, forKey: Constants.UserDefaults.userPhoneNumber)
         defaults.set(device.id, forKey: Constants.UserDefaults.deviceId)
-        defaults.set(device.token, forKey: Constants.UserDefaults.token)
+        defaults.set(device.token, forKey: Constants.UserDefaults.accessToken)
     }
     
     func getUsers() -> Future<[User], Error> {
@@ -70,9 +70,9 @@ extension AppRepository {
     }
     
     func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String,
-//                    fileHash: String,
+                    fileHash: String,
                     relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.token)
+        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
         else {return Fail<UploadFileResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -80,10 +80,7 @@ extension AppRepository {
         let resources = Resources<UploadFileResponseModel, UploadFileRequestModel>(
             path: Constants.Endpoints.uploadFiles,
             requestType: .POST,
-            bodyParameters: UploadFileRequestModel(chunk: chunk,
-                                                   offset: offset, total: total, size: size, mimeType: mimeType, fileName: fileName, clientId: clientId, type: type,
-//                                                   fileHash: fileHash,
-                                                   relationId: relationId),
+            bodyParameters: UploadFileRequestModel(chunk: chunk, offset: offset, total: total, size: size, mimeType: mimeType, fileName: fileName, clientId: clientId, type: type, fileHash: fileHash, relationId: relationId),
             httpHeaderFields: ["accesstoken" : accessToken]) //access token
         
         return networkService.performRequest(resources: resources)
