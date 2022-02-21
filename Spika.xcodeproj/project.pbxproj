@@ -53,6 +53,7 @@
 		93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6F127C2C1E500432CFA /* ChatsAssembly.swift */; };
 		93E4F6F427C30DBE00432CFA /* SelectedMembersCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6F327C30DBE00432CFA /* SelectedMembersCollectionView.swift */; };
 		93E4F6F627C30E8700432CFA /* SelectedMembersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6F527C30E8700432CFA /* SelectedMembersCollectionViewCell.swift */; };
+		93E4F6F827C3A4B100432CFA /* AllChatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6F727C3A4B100432CFA /* AllChatsTableViewCell.swift */; };
 		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		AD81923A271E873200D5BE48 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819239271E873200D5BE48 /* Reaction.swift */; };
 		AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */; };
@@ -227,6 +228,7 @@
 		93E4F6F127C2C1E500432CFA /* ChatsAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatsAssembly.swift; sourceTree = "<group>"; };
 		93E4F6F327C30DBE00432CFA /* SelectedMembersCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMembersCollectionView.swift; sourceTree = "<group>"; };
 		93E4F6F527C30E8700432CFA /* SelectedMembersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMembersCollectionViewCell.swift; sourceTree = "<group>"; };
+		93E4F6F727C3A4B100432CFA /* AllChatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatsTableViewCell.swift; sourceTree = "<group>"; };
 		AD819237271E866100D5BE48 /* MessageEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntityService.swift; sourceTree = "<group>"; };
 		AD819239271E873200D5BE48 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
 		AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Messages.swift"; sourceTree = "<group>"; };
@@ -619,6 +621,7 @@
 			isa = PBXGroup;
 			children = (
 				AD8192622721D54A00D5BE48 /* AllChatsView.swift */,
+				93E4F6F727C3A4B100432CFA /* AllChatsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1315,6 +1318,7 @@
 				AD81924A2721743900D5BE48 /* AllChatsViewController.swift in Sources */,
 				93D86DC427BAEEA000F275B0 /* MediaCollectionViewCell.swift in Sources */,
 				930290C227AC96040064BED1 /* ContactsTableViewCell.swift in Sources */,
+				93E4F6F827C3A4B100432CFA /* AllChatsTableViewCell.swift in Sources */,
 				933BE86E27B677BC0099BA9E /* FavoritesViewController.swift in Sources */,
 				AD9BFD272729955200736318 /* EnterNumberView.swift in Sources */,
 				933BE86A27B671B30099BA9E /* NotesView.swift in Sources */,
