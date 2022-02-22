@@ -35,7 +35,32 @@ class AllChatsViewController: BaseViewController {
 }
 
 extension AllChatsViewController: UITableViewDelegate {
+    private func handleMarkAsFavourite() {
+        print("Marked as favourite")
+    }
+
+    private func handleMarkAsUnread() {
+        print("Marked as unread")
+    }
+
+    private func handleMoveToTrash() {
+        print("Moved to trash")
+    }
+
+    private func handleMoveToArchive() {
+        print("Moved to archive")
+    }
     
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: "Favorite") { (action, view, completionHandler) in
+                self.handleMarkAsFavourite()
+                completionHandler(true)
+            }
+        action.backgroundColor = .systemBlue
+        
+        return UISwipeActionsConfiguration(actions: [action])
+        
+    }
 }
 
 extension AllChatsViewController: UITableViewDataSource {
