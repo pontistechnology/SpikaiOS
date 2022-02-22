@@ -61,6 +61,10 @@ extension AllChatsViewController: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [action])
         
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.presentCurrentChatScreen()
+    }
 }
 
 extension AllChatsViewController: UITableViewDataSource {
@@ -73,6 +77,4 @@ extension AllChatsViewController: UITableViewDataSource {
 //        cell?.configureCell(image: UIImage(systemName: "heart")!, name: "\(indexPath)", desc: "nista")
         return cell ?? UITableViewCell()
     }
-    
-    
 }

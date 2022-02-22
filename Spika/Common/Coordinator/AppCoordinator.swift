@@ -125,4 +125,9 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewController, animated: true, completion: nil)
     }
     
+    func presentCurrentChatScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, argument: self)!
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
 }
