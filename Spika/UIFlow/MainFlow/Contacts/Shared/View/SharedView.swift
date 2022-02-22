@@ -12,9 +12,9 @@ class SharedView: UIView, BaseView {
     
     let testLabel = CustomLabel(text: "shared")
     let segmentedControl = SegmentedControl(items: ["Media", "Links", "Docs"])
-    let mediaView = MediaView()
-    let docsView = DocsView()
-    let linksView = LinksView()
+    let mediaCollectionView = MediaCollectionView()
+    let docsTableView = DocsTableView()
+    let linksTableView = LinksTableView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,9 +29,9 @@ class SharedView: UIView, BaseView {
     func addSubviews() {
         addSubview(testLabel)
         addSubview(segmentedControl)
-        addSubview(mediaView)
-        addSubview(docsView)
-        addSubview(linksView)
+        addSubview(mediaCollectionView)
+        addSubview(docsTableView)
+        addSubview(linksTableView)
     }
     
     func styleSubviews() {
@@ -40,9 +40,9 @@ class SharedView: UIView, BaseView {
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textPrimary], for: .normal)
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.primaryColor], for: .selected)
         
-        mediaView.isHidden = segmentedControl.selectedSegmentIndex != 0
-        linksView.isHidden = segmentedControl.selectedSegmentIndex != 1
-        docsView.isHidden  = segmentedControl.selectedSegmentIndex != 2
+        mediaCollectionView.isHidden = segmentedControl.selectedSegmentIndex != 0
+        linksTableView.isHidden = segmentedControl.selectedSegmentIndex != 1
+        docsTableView.isHidden  = segmentedControl.selectedSegmentIndex != 2
     }
     
     func positionSubviews() {
@@ -52,11 +52,11 @@ class SharedView: UIView, BaseView {
         segmentedControl.constrainWidth(240)
         segmentedControl.constrainHeight(40)
         
-        mediaView.anchor(top: segmentedControl.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 12, right: 20))
+        mediaCollectionView.anchor(top: segmentedControl.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 12, right: 20))
         
-        docsView.anchor(top: segmentedControl.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 12, right: 20))
+        docsTableView.anchor(top: segmentedControl.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 12, right: 20))
         
-        linksView.anchor(top: segmentedControl.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 12, right: 20))
+        linksTableView.anchor(top: segmentedControl.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 12, right: 20))
     }
     
     func setupBindings() {
@@ -64,15 +64,15 @@ class SharedView: UIView, BaseView {
     }
     
     @objc func valueChanged() {
-        mediaView.isHidden = segmentedControl.selectedSegmentIndex != 0
-        linksView.isHidden = segmentedControl.selectedSegmentIndex != 1
-        docsView.isHidden  = segmentedControl.selectedSegmentIndex != 2
+        mediaCollectionView.isHidden = segmentedControl.selectedSegmentIndex != 0
+        linksTableView.isHidden = segmentedControl.selectedSegmentIndex != 1
+        docsTableView.isHidden  = segmentedControl.selectedSegmentIndex != 2
         
         switch segmentedControl.selectedSegmentIndex {
         case 1:
-            linksView.tableView.reloadData()
+            linksTableView.reloadData()
         case 2:
-            docsView.tableView.reloadData()
+            docsTableView.reloadData()
         default:
             break
         }

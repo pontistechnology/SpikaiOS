@@ -18,7 +18,7 @@ class HomeTabBar: UIView, BaseView {
     private let topBorderView  = UIView()
     var tabBarItems: [TabBarItem]
     var currentViewControllerIndex: Int = 0
-    let tabBarHeight: CGFloat = 65.0
+    static let tabBarHeight: CGFloat = 65.0
     
     weak var delegate: HomeTabBarViewDelegate?
     
@@ -72,10 +72,10 @@ class HomeTabBar: UIView, BaseView {
     
     func positionSubviews() {
         tabContainer.anchor(leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
-        tabContainer.constrainHeight(tabBarHeight)
+        tabContainer.constrainHeight(HomeTabBar.tabBarHeight)
         
         tabStackView.anchor(leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 35, bottom: 10, right: 35))
-        tabStackView.constrainHeight(tabBarHeight - 15)
+        tabStackView.constrainHeight(HomeTabBar.tabBarHeight - 15)
         tabStackView.centerY(inView: tabContainer)
         
         topBorderView.anchor(leading: tabContainer.leadingAnchor, bottom: tabContainer.topAnchor, trailing: tabContainer.trailingAnchor)

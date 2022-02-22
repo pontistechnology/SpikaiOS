@@ -15,7 +15,7 @@ final class AppAssembly: Assembly {
         self.assembleHomeViewController(container)
         self.assembleContactsViewController(container)
         self.assembleCallHistoryViewController(container)
-        self.assembleChatsViewController(container)
+        self.assembleAllChatsViewController(container)
         self.assembleSettingsViewController(container)
     }
     
@@ -77,15 +77,15 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.transient)
     }
     
-    private func assembleChatsViewController(_ container: Container) {
-        container.register(ChatsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+    private func assembleAllChatsViewController(_ container: Container) {
+        container.register(AllChatsViewModel.self) { (resolver, coordinator: AppCoordinator) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return ChatsViewModel(repository: repository, coordinator: coordinator)
+            return AllChatsViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
-        container.register(ChatsViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let controller = ChatsViewController()
-            controller.viewModel = container.resolve(ChatsViewModel.self, argument: coordinator)
+        container.register(AllChatsViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = AllChatsViewController()
+            controller.viewModel = container.resolve(AllChatsViewModel.self, argument: coordinator)
             return controller
         }.inObjectScope(.transient)
     }

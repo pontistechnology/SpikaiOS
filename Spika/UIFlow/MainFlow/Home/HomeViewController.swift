@@ -34,7 +34,7 @@ class HomeViewController: UIPageViewController {
         
         view.addSubview(homeTabBar)
         homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
-        homeTabBar.constrainHeight(homeTabBar.tabBarHeight)
+        homeTabBar.constrainHeight(HomeTabBar.tabBarHeight)
         if let vc = homeTabBar.getViewController(index: 0) {
             self.setViewControllers([vc], direction: .forward, animated: true)
         }

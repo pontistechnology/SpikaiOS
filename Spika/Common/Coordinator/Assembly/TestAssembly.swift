@@ -59,9 +59,9 @@ class TestAssembly: Assembly {
     }
     
     private func assembleChatsViewModel(_ container: Container) {
-        container.register(ChatsViewModel.self) { (resolver, coordinator: AppCoordinator, repositoryType: RepositoryType) in
+        container.register(AllChatsViewModel.self) { (resolver, coordinator: AppCoordinator, repositoryType: RepositoryType) in
             let repository = container.resolve(Repository.self, name: repositoryType.name)!
-            return ChatsViewModel(repository: repository, coordinator: coordinator)
+            return AllChatsViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
     }
     
