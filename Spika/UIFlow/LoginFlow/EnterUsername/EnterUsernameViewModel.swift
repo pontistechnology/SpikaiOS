@@ -31,6 +31,10 @@ class EnterUsernameViewModel: BaseViewModel {
 
     }
     
+    func testUploadWhole(data: Data) {
+        repository.uploadWholeFile(data: data)
+    }
+    
     func uploadPhoto(data: Data) {
         
         let dataLen: Int = data.count
@@ -54,7 +58,7 @@ class EnterUsernameViewModel: BaseViewModel {
           chunk = data.subdata(in: range)
 
         networkRequestState.send(.started)
-        repository.uploadFile(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "profilePhoto", clientId: "coki010", type: "avatar", fileHash: fileHash, relationId: 1)
+        repository.uploadFile(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "profilePhoto", clientId: "coki011", type: "avatar", fileHash: fileHash, relationId: 1)
                 .sink { [weak self] completion in
                 self?.networkRequestState.send(.finished)
                 switch completion {

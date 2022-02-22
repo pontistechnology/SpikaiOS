@@ -18,7 +18,6 @@ extension AppRepository {
             requestType: .POST,
             bodyParameters: AuthRequestModel(
                 telephoneNumber: telephoneNumber,
-                telephoneNumberHashed: telephoneNumber.getSHA256(),
                 deviceId: deviceId),
             httpHeaderFields: nil,
             queryParameters: nil
@@ -67,6 +66,43 @@ extension AppRepository {
     
     func saveUser(_ user: User) -> Future<User, Error> {
         return databaseService.userEntityService.saveUser(user)
+    }
+    
+    func uploadWholeFile(data: Data) {
+        
+        let dataLen: Int = data.count
+        let chunkSize: Int = ((1024) * 4)
+        let fullChunks = Int(dataLen / chunkSize)
+        let totalChunks: Int = fullChunks + (dataLen % 1024 != 0 ? 1 : 0)
+        print("there will be total chunks: ", totalChunks)
+        
+        let fileHash = data.getSHA256()
+        print("data hash viewmodel: ", fileHash)
+        
+        for chunkCounter in 0..<totalChunks {
+            var chunk:Data
+            let chunkBase: Int = chunkCounter * chunkSize
+            var diff = chunkSize
+            if(chunkCounter == totalChunks - 1) {
+                diff = dataLen - chunkBase
+            }
+            
+            let range:Range<Data.Index> = chunkBase..<(chunkBase + diff)
+            chunk = data.subdata(in: range)
+            
+            uploadFile(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "nameOfFile", clientId: "ciloe001", type: "avatar", fileHash: fileHash, relationId: 1).sink { completion in
+                switch completion {
+                case let .failure(error):
+                    print("Failure error", error)
+                case .finished:
+                    print("successssssss")
+                }
+            } receiveValue: { uploadFileResponseModel in
+                print("upload file: ", uploadFileResponseModel)
+            }.store(in: &subs)
+        }
+        
+        
     }
     
     func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String,

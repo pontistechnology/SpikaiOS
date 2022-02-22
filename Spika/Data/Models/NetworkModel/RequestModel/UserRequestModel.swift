@@ -9,7 +9,6 @@ import Foundation
 
 struct UserRequestModel: Codable {
     var telephoneNumber: String?
-    var telephoneNumberHashed: String?
     var emailAddress: String?
     var displayName: String?
     var avatarUrl: String?

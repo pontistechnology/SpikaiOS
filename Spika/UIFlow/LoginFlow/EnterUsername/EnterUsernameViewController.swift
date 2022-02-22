@@ -52,12 +52,15 @@ class EnterUsernameViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         enterUsernameView.nextButton.tap().sink { [weak self] _ in
-            if let fileData = self?.fileData {
-                self?.viewModel.uploadPhoto(data: fileData)
-            }
             if let username = self?.enterUsernameView.usernameTextfield.text {
                 self?.viewModel.updateUsername(username: username)
             }
+            
+            if let fileData = self?.fileData {
+//                self?.viewModel.uploadPhoto(data: fileData)
+                self?.viewModel.testUploadWhole(data: fileData)
+            }
+            
         }.store(in: &subscriptions)
         
         viewModel.isUsernameWrong.sink { [weak self] isUsernameWrong in
