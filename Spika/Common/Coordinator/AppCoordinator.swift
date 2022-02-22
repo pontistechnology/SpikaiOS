@@ -20,7 +20,7 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-//        UserDefaults.standard.set("5BfRl2zv0GZehWA7", forKey: Constants.UserDefaults.accessToken)
+        UserDefaults.standard.set("5BfRl2zv0GZehWA7", forKey: Constants.UserDefaults.accessToken)
         if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken) {
             presentHomeScreen()
         } else {

@@ -39,18 +39,6 @@ extension NewChatViewController: UITableViewDelegate {
     private func printSwipe() {
         print("Swipe.")
     }
-
-    private func handleMarkAsUnread() {
-        print("Marked as unread")
-    }
-
-    private func handleMoveToTrash() {
-        print("Moved to trash")
-    }
-
-    private func handleMoveToArchive() {
-        print("Moved to archive")
-    }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let firstLeft = UIContextualAction(style: .normal, title: "First left") { (action, view, completionHandler) in

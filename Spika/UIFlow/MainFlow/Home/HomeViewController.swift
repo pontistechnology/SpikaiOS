@@ -25,11 +25,7 @@ class HomeViewController: UIPageViewController {
     
     func configurePageViewController() {
         homeTabBar = HomeTabBar(tabBarItems: viewModel.getHomeTabBarItems())
-        
-        self.delegate = nil
-        self.delegate = self
-        self.dataSource = nil
-        self.dataSource = self
+    
         homeTabBar.delegate = self
         
         view.addSubview(homeTabBar)
@@ -46,26 +42,6 @@ class HomeViewController: UIPageViewController {
                 setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
             } else {
                 setViewControllers([vc], direction: .forward, animated: true, completion: nil)
-            }
-        }
-    }
-    
-}
-
-extension HomeViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        return homeTabBar.switchToPrevious(currentViewController: viewController)
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        return homeTabBar.switchToNext(currentViewController: viewController)
-    }
-
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if completed {
-            if let vc = self.viewControllers?.first {
-                homeTabBar.selectViewController(vc)
             }
         }
     }
