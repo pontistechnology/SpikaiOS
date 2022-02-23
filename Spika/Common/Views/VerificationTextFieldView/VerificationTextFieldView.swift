@@ -118,6 +118,8 @@ extension VerificationTextFieldView: UITextFieldDelegate, VerificationTextFieldD
                 _ = stackView.arrangedSubviews[index + 1].becomeFirstResponder()
             }
         }
+        
+        
 
         return false
     }

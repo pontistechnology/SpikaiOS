@@ -10,7 +10,7 @@ import UIKit
 class EnterVerifyCodeView: UIView, BaseView {
     
     let logoImageView = LogoImageView()
-    let titleLabel = CustomLabel(text: "We sent you verification code on __________", fontName: .MontserratMedium, alignment: .center)
+    let titleLabel = CustomLabel(text: "We sent you verification code.", fontName: .MontserratMedium, alignment: .center)
     let verificationTextFieldView = VerificationTextFieldView(length: 6)
     let nextButton = MainButton()
     let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)

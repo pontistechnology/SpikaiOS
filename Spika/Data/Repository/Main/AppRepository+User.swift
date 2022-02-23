@@ -18,6 +18,7 @@ extension AppRepository {
             requestType: .POST,
             bodyParameters: AuthRequestModel(
                 telephoneNumber: telephoneNumber,
+                telephoneNumberHashed: telephoneNumber.getSHA256(),
                 deviceId: deviceId),
             httpHeaderFields: nil,
             queryParameters: nil
@@ -94,6 +95,7 @@ extension AppRepository {
                 switch completion {
                 case let .failure(error):
                     print("Failure error", error)
+                    currentValueTest.send(completion: .failure(NetworkError.unknown))
                 case .finished:
                     break
                 }

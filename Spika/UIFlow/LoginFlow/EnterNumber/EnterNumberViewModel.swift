@@ -20,7 +20,7 @@ class EnterNumberViewModel: BaseViewModel {
             default: break
             }
         } receiveValue: { [weak self] authResponse in
-//            print("AUTH Response: ", authResponse)
+            print("AUTH Response: ", authResponse)
             self?.presentEnterVerifyCodeScreen(number: number, deviceId: deviceId)
         }.store(in: &subscriptions)
 

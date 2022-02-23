@@ -20,19 +20,11 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-//        UserDefaults.standard.set("5BfRl2zv0GZehWA7", forKey: Constants.UserDefaults.accessToken)
         if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken) {
-//            presentHomeScreen()
-            presentEnterUsernameScreen()
+            presentHomeScreen()
         } else {
             presentEnterNumberScreen()
         }
-        
-//        presentEnterNumberScreen()
-//        presentEnterVerifyCodeScreen(number: "fsa", deviceId: "s")
-//        presentHomeScreen()
-//        presentDetailsScreen(id: 3)
-//        presentEnterUsernameScreen()
     }
     
     // MARK: LOGIN FLOW

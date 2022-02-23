@@ -15,7 +15,12 @@ class EnterVerifyCodeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(enterVerifyCodeView)
+        setupUI()
         setupBindings()
+    }
+    
+    func setupUI() {
+        enterVerifyCodeView.titleLabel.text = "We sent you verification code on \(viewModel.phoneNumber)."
     }
     
     func setupBindings() {
@@ -36,10 +41,5 @@ class EnterVerifyCodeViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         sink(networkRequestState: viewModel.networkRequestState)
-        
-        
-        
-        
     }
-    
 }

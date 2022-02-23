@@ -18,8 +18,14 @@ class EnterUsernameViewModel: BaseViewModel {
         networkRequestState.send(.started)
         
         if let imageFileData = imageFileData {
-            repository.uploadWholeFile(data: imageFileData).sink { completion in
-                
+            repository.uploadWholeFile(data: imageFileData).sink { [weak self] completion in
+                switch completion {
+                case let .failure(error):
+                    self?.networkRequestState.send(.finished)
+                    print("UploadWholeFile error:", error)
+                default:
+                    break
+                }
             } receiveValue: { [weak self] lastChunkResponse in
                 self?.updateInfo(username: username, avatarUrl: lastChunkResponse.data?.file?.path)
             }.store(in: &subscriptions)

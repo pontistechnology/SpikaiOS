@@ -9,5 +9,7 @@ import Foundation
 
 struct AuthRequestModel: Codable {
     let telephoneNumber: String
+    let telephoneNumberHashed: String
     let deviceId: String
+    
 }
