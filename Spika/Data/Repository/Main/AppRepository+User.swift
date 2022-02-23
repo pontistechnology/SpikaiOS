@@ -68,7 +68,7 @@ extension AppRepository {
         return databaseService.userEntityService.saveUser(user)
     }
     
-    func uploadWholeFile(data: Data) -> PassthroughSubject<UploadChunkResponseModel?, Error> {
+    func uploadWholeFile(data: Data) -> PassthroughSubject<UploadChunkResponseModel, Error> {
         
         let dataLen: Int = data.count
         let chunkSize: Int = ((1024) * 4)
@@ -77,7 +77,7 @@ extension AppRepository {
         let fileHash = data.getSHA256()
         let clientId = UUID().uuidString
         
-        let currentValueTest = PassthroughSubject<UploadChunkResponseModel?, Error>()
+        let currentValueTest = PassthroughSubject<UploadChunkResponseModel, Error>()
     
         for chunkCounter in 0..<totalChunks {
             var chunk:Data

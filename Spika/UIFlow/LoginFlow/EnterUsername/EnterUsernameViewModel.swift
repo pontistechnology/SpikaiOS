@@ -21,7 +21,7 @@ class EnterUsernameViewModel: BaseViewModel {
             repository.uploadWholeFile(data: imageFileData).sink { completion in
                 
             } receiveValue: { [weak self] lastChunkResponse in
-                self?.updateInfo(username: username, avatarUrl: lastChunkResponse?.data?.file?.path)
+                self?.updateInfo(username: username, avatarUrl: lastChunkResponse.data?.file?.path)
             }.store(in: &subscriptions)
         } else {
             self.updateInfo(username: username)
