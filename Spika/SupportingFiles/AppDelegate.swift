@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         print("Saved things: ", UserDefaults.standard.dictionaryRepresentation())
+        print("UUID is: ", UUID().uuidString)
         
         return true
     }

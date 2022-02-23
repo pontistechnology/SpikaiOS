@@ -68,16 +68,14 @@ extension AppRepository {
         return databaseService.userEntityService.saveUser(user)
     }
     
-    func uploadWholeFile(data: Data) {
+    func uploadWholeFile(data: Data) -> Int {
         
         let dataLen: Int = data.count
         let chunkSize: Int = ((1024) * 4)
         let fullChunks = Int(dataLen / chunkSize)
         let totalChunks: Int = fullChunks + (dataLen % 1024 != 0 ? 1 : 0)
-        print("there will be total chunks: ", totalChunks)
-        
         let fileHash = data.getSHA256()
-        print("data hash viewmodel: ", fileHash)
+        let clientId = UUID().uuidString
         
         for chunkCounter in 0..<totalChunks {
             var chunk:Data
@@ -90,7 +88,7 @@ extension AppRepository {
             let range:Range<Data.Index> = chunkBase..<(chunkBase + diff)
             chunk = data.subdata(in: range)
             
-            uploadFile(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "nameOfFile", clientId: "ciloe001", type: "avatar", fileHash: fileHash, relationId: 1).sink { completion in
+            uploadChunk(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "nameOfFile", clientId: clientId, type: "avatar", fileHash: fileHash, relationId: 1).sink { completion in
                 switch completion {
                 case let .failure(error):
                     print("Failure error", error)
@@ -102,12 +100,10 @@ extension AppRepository {
             }.store(in: &subs)
         }
         
-        
+        return 4242
     }
     
-    func uploadFile(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String,
-                    fileHash: String,
-                    relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
+    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
 
         guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
         else {return Fail<UploadFileResponseModel, Error>(error: NetworkError.noAccessToken)
