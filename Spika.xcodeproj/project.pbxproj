@@ -14,8 +14,8 @@
 		930290C027A9FDBE0064BED1 /* CommonModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BF27A9FDBE0064BED1 /* CommonModels.swift */; };
 		930290C227AC96040064BED1 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C127AC96040064BED1 /* ContactsTableViewCell.swift */; };
 		930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C327ACA2E90064BED1 /* ContactsTableView.swift */; };
-		930EE59B27A937ED00143B48 /* UploadFileRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadFileRequestModel.swift */; };
-		930EE59D27A938B800143B48 /* UploadFileResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59C27A938B800143B48 /* UploadFileResponseModel.swift */; };
+		930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
+		930EE59D27A938B800143B48 /* UploadChunkResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */; };
 		9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6827B3702000FA0EB1 /* DetailsView.swift */; };
 		9323EC6B27B3E8D500FA0EB1 /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6A27B3E8D500FA0EB1 /* NavView.swift */; };
 		9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */; };
@@ -192,8 +192,8 @@
 		930290BF27A9FDBE0064BED1 /* CommonModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModels.swift; sourceTree = "<group>"; };
 		930290C127AC96040064BED1 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
 		930290C327ACA2E90064BED1 /* ContactsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableView.swift; sourceTree = "<group>"; };
-		930EE59A27A937ED00143B48 /* UploadFileRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileRequestModel.swift; sourceTree = "<group>"; };
-		930EE59C27A938B800143B48 /* UploadFileResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadFileResponseModel.swift; sourceTree = "<group>"; };
+		930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadChunkRequestModel.swift; sourceTree = "<group>"; };
+		930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadChunkResponseModel.swift; sourceTree = "<group>"; };
 		9323EC6827B3702000FA0EB1 /* DetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		9323EC6A27B3E8D500FA0EB1 /* NavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavView.swift; sourceTree = "<group>"; };
 		9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchView.swift; sourceTree = "<group>"; };
@@ -814,7 +814,7 @@
 				AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */,
 				EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */,
 				AD9BFD45272AECFA00736318 /* VerifyCodeRequestModel.swift */,
-				930EE59A27A937ED00143B48 /* UploadFileRequestModel.swift */,
+				930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */,
 				930290BB27A9FB180064BED1 /* UserRequestModel.swift */,
 			);
 			path = RequestModel;
@@ -825,7 +825,7 @@
 			children = (
 				AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */,
 				EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */,
-				930EE59C27A938B800143B48 /* UploadFileResponseModel.swift */,
+				930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */,
 				930290BD27A9FCE30064BED1 /* UserResponseModel.swift */,
 				930290BF27A9FDBE0064BED1 /* CommonModels.swift */,
 			);
@@ -1317,7 +1317,7 @@
 				933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */,
 				93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */,
 				AD9BFD172729894300736318 /* TestAssembly.swift in Sources */,
-				930EE59B27A937ED00143B48 /* UploadFileRequestModel.swift in Sources */,
+				930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */,
 				93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */,
 				AD9BFD46272AECFA00736318 /* VerifyCodeRequestModel.swift in Sources */,
 				AD81923E271E8AF400D5BE48 /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -1413,7 +1413,7 @@
 				ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */,
 				AD9BFD2B27299F7B00736318 /* EnterNumberTextField.swift in Sources */,
 				AD9BFD222729950600736318 /* EnterNumberViewController.swift in Sources */,
-				930EE59D27A938B800143B48 /* UploadFileResponseModel.swift in Sources */,
+				930EE59D27A938B800143B48 /* UploadChunkResponseModel.swift in Sources */,
 				ADD503D5270DD5F4009D50CB /* AppAssembly.swift in Sources */,
 				AD81923A271E873200D5BE48 /* Reaction.swift in Sources */,
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,

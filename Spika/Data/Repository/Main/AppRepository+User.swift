@@ -37,7 +37,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func updateUsername(username: String) -> AnyPublisher<UserResponseModel, Error>{
+    func updateUser(username: String?, avatarURL: String?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>{
         
         guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
         else {return Fail<UserResponseModel, Error>(error: NetworkError.noAccessToken)
@@ -47,7 +47,7 @@ extension AppRepository {
         let resources = Resources<UserResponseModel, UserRequestModel>(
             path: Constants.Endpoints.userInfo,
             requestType: .PUT,
-            bodyParameters: UserRequestModel(displayName: username),
+            bodyParameters: UserRequestModel(telephoneNumber: telephoneNumber, emailAddress: email, displayName: username, avatarUrl: avatarURL),
             httpHeaderFields: ["accesstoken" : accessToken])
         return networkService.performRequest(resources: resources)
     }
@@ -68,7 +68,7 @@ extension AppRepository {
         return databaseService.userEntityService.saveUser(user)
     }
     
-    func uploadWholeFile(data: Data) -> CurrentValueSubject<Int, Never> {
+    func uploadWholeFile(data: Data) -> CurrentValueSubject<UploadChunkResponseModel?, Error> {
         
         let dataLen: Int = data.count
         let chunkSize: Int = ((1024) * 4)
@@ -77,9 +77,8 @@ extension AppRepository {
         let fileHash = data.getSHA256()
         let clientId = UUID().uuidString
         
-        let currentValueTest = CurrentValueSubject<Int, Never>(0)
-       
-        
+        let currentValueTest = CurrentValueSubject<UploadChunkResponseModel?, Error>(nil)
+    
         for chunkCounter in 0..<totalChunks {
             var chunk:Data
             let chunkBase: Int = chunkCounter * chunkSize
@@ -96,31 +95,29 @@ extension AppRepository {
                 case let .failure(error):
                     print("Failure error", error)
                 case .finished:
-                    print("successssssss")
+                    break
                 }
             } receiveValue: { uploadFileResponseModel in
-                print("upload file: ", uploadFileResponseModel)
-                currentValueTest.send(uploadFileResponseModel.data?.uploadedChunks?.count ?? 88888)
-                
+                if uploadFileResponseModel.data?.file != nil {
+                    currentValueTest.send(uploadFileResponseModel)                    
+                }
             }.store(in: &subs)
-            
-            
         }
         
         return currentValueTest
     }
     
-    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
+    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
 
         guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
-        else {return Fail<UploadFileResponseModel, Error>(error: NetworkError.noAccessToken)
+        else {return Fail<UploadChunkResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let resources = Resources<UploadFileResponseModel, UploadFileRequestModel>(
+        let resources = Resources<UploadChunkResponseModel, UploadChunkRequestModel>(
             path: Constants.Endpoints.uploadFiles,
             requestType: .POST,
-            bodyParameters: UploadFileRequestModel(chunk: chunk, offset: offset, total: total, size: size, mimeType: mimeType, fileName: fileName, clientId: clientId, type: type, fileHash: fileHash, relationId: relationId),
+            bodyParameters: UploadChunkRequestModel(chunk: chunk, offset: offset, total: total, size: size, mimeType: mimeType, fileName: fileName, clientId: clientId, type: type, fileHash: fileHash, relationId: relationId),
             httpHeaderFields: ["accesstoken" : accessToken]) //access token
         
         return networkService.performRequest(resources: resources)

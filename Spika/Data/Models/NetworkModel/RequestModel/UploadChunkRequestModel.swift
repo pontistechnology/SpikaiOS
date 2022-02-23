@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UploadFileRequestModel: Codable {
+struct UploadChunkRequestModel: Codable {
     let chunk: String
     let offset: Int
     let total: Int

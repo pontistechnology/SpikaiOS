@@ -12,8 +12,8 @@ class AppRepository: Repository {
 
     let networkService: NetworkService
     let databaseService: DatabaseService
-    
     var subs = Set<AnyCancellable>()
+    
     
     init(networkService: NetworkService, databaseService: DatabaseService) {
         self.networkService = networkService

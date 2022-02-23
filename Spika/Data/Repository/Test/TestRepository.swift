@@ -10,14 +10,9 @@ import Combine
 
 class TestRepository: Repository {
     
-    func uploadWholeFile(data: Data) -> CurrentValueSubject<Int, Never>{
-        let ea = CurrentValueSubject<Int, Never>(334244)
-        return ea
-    }
-    
-    
     let networkService: NetworkService
     let databaseService: DatabaseService
+    var subs = Set<AnyCancellable>()
     
     init(networkService: NetworkService, databaseService: DatabaseService) {
         self.networkService = networkService

@@ -1,4 +1,4 @@
-struct UploadFileResponseModel: Codable {
+struct UploadChunkResponseModel: Codable {
     let status: String?
     let data: FileData?
     let error: String?

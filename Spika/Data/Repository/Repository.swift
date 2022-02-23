@@ -22,6 +22,8 @@ enum RepositoryType {
 }
 
 protocol Repository {
+    
+    var subs: Set<AnyCancellable>{ get set}
     // this is test endpoint, needs to be deleted in future
     func getPosts() -> AnyPublisher<[Post], Error>
     func createChat(_ chat: Chat) -> Future<Chat, Error>
@@ -36,9 +38,9 @@ protocol Repository {
     func getUsersForChat(chat: Chat) -> Future<[User], Error>
     func saveMessage(_ message: Message) -> Future<Message, Error>
     func getMessagesForChat(chat: Chat) -> Future<[Message], Error>
-    func uploadWholeFile(data: Data) -> CurrentValueSubject<Int, Never>
-    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error>
-    func updateUsername(username: String) -> AnyPublisher<UserResponseModel, Error>
+    func uploadWholeFile(data: Data) -> CurrentValueSubject<UploadChunkResponseModel?, Error>
+    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error>
+    func updateUser(username: String?, avatarURL: String?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>
     func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error>
     func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>
 }

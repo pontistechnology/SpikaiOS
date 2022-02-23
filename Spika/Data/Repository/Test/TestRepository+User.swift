@@ -45,18 +45,18 @@ extension TestRepository {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func uploadWholeFile(data: Data) -> Int {
-        return 2
+    func uploadWholeFile(data: Data) -> CurrentValueSubject<UploadChunkResponseModel?, Error> {
+        return CurrentValueSubject<UploadChunkResponseModel?, Error>(nil)
     }
     
-    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {
+    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
         // TODO: - add tests
-        return Fail<UploadFileResponseModel, Error>(error: NetworkError.badURL)
+        return Fail<UploadChunkResponseModel, Error>(error: NetworkError.badURL)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
-    func updateUsername(username: String) -> AnyPublisher<UserResponseModel, Error> {
+    func updateUser(username: String?, avatarURL: String?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error> {
         // TODO: - add tests
         return Fail<UserResponseModel, Error>(error: NetworkError.badURL)
             .receive(on: DispatchQueue.main)
