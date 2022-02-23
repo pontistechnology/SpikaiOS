@@ -32,7 +32,12 @@ class EnterUsernameViewModel: BaseViewModel {
     }
     
     func testUploadWhole(data: Data) {
-        repository.uploadWholeFile(data: data)
+        repository.uploadWholeFile(data: data).sink { completion in
+            print(completion)
+        } receiveValue: { percent in
+            print("Percent is: ", percent)
+        }.store(in: &subscriptions)
+        
     }
     
     func uploadPhoto(data: Data) {

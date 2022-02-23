@@ -68,7 +68,7 @@ extension AppRepository {
         return databaseService.userEntityService.saveUser(user)
     }
     
-    func uploadWholeFile(data: Data) -> Int {
+    func uploadWholeFile(data: Data) -> CurrentValueSubject<Int, Never> {
         
         let dataLen: Int = data.count
         let chunkSize: Int = ((1024) * 4)
@@ -76,6 +76,9 @@ extension AppRepository {
         let totalChunks: Int = fullChunks + (dataLen % 1024 != 0 ? 1 : 0)
         let fileHash = data.getSHA256()
         let clientId = UUID().uuidString
+        
+        let currentValueTest = CurrentValueSubject<Int, Never>(0)
+       
         
         for chunkCounter in 0..<totalChunks {
             var chunk:Data
@@ -97,10 +100,14 @@ extension AppRepository {
                 }
             } receiveValue: { uploadFileResponseModel in
                 print("upload file: ", uploadFileResponseModel)
+                currentValueTest.send(uploadFileResponseModel.data?.uploadedChunks?.count ?? 88888)
+                
             }.store(in: &subs)
+            
+            
         }
         
-        return 4242
+        return currentValueTest
     }
     
     func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadFileResponseModel, Error> {

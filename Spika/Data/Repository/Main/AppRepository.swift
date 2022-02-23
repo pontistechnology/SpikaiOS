@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class AppRepository: Repository {
-    
+
     let networkService: NetworkService
     let databaseService: DatabaseService
     
