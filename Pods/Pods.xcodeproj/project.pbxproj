@@ -7,85 +7,91 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		017ABA819351778E519D886B77319A1F /* Container.Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAB9267C02844ADE7F2BA37E6A45596 /* Container.Logging.swift */; };
-		0253ED9BF01245EE84F9DB44990D37EF /* CountryCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91414B8277D9CC48C9FE98F31448D34 /* CountryCodePickerViewController.swift */; };
-		0506906BD7BD0C8F82DAB9D4D6C18E0D /* PhoneNumberParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61983D80110CE44D72B343DC6C2AE533 /* PhoneNumberParser.swift */; };
-		0D42C4672C24EBA187866A4E1B890D64 /* PartialFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFC622C2926D4D9E6962E09847E27B8 /* PartialFormatter.swift */; };
-		12C450ECA25524C764B2B6BC6EFB98F0 /* NSRegularExpression+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4E883D49C3C4B440F5804DFC31E7C /* NSRegularExpression+Swift.swift */; };
-		180A506E1ACE59ADB56B89A7FCBBDA72 /* Container.Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCBD57E1C0CA758D326968B9ED25883 /* Container.Arguments.swift */; };
-		18C34A50A7525157150D23E460B62D7F /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2153C720131B9AB4706916FDEFDCCC44 /* Resolver.swift */; };
-		24D37D65F3495023A8B09213DEF93D14 /* PhoneNumberKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805921DA823DFE707A30515166ADD7C5 /* PhoneNumberKit.swift */; };
-		28A4C74D9D98F597FF4A710552BBC4A2 /* Swinject-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3EB1E12E2B4772E17392D5E41D94DC /* Swinject-dummy.m */; };
-		2934A038E29FFC96AFD18CC732E40C33 /* ServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673B3889B0EF4D06FD27ADC3D56DB5B3 /* ServiceKey.swift */; };
-		296E8188D1778F05BA90764ECC5F10B7 /* ObjectScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E65C1932E1A2A1449D34D6C598DEEA /* ObjectScope.swift */; };
-		2CD15C0DB1932F5A8BB799A56B4AEBD1 /* Bundle+Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9423C46A9EAB234DCCECA46ED974CE /* Bundle+Resources.swift */; };
-		2D29C76470616DF85DD1A312FB39E40D /* ObjectScope.Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C541D642320415148E2E254E001ED0A /* ObjectScope.Standard.swift */; };
-		3545B54F1C1B5B3F08DD42E2C57DDDE4 /* MetadataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC12101D24F784465AC7BED90FC8E0A /* MetadataTypes.swift */; };
-		3BA15B69EBE236EE9D68AEB462AB36D6 /* SynchronizedResolver.Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = D184FE2A81015D4D0A49B98445E2EA73 /* SynchronizedResolver.Arguments.swift */; };
-		440D4BE19A630C2143A8CAE69F2ACB1E /* PhoneNumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DFFD0FC36445CE7D925EA9FF5A05160 /* PhoneNumberTextField.swift */; };
-		4F99F19F4FB3CC6D6EF8B4B2528FE5A1 /* RegexManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB6DEADDF490FBB1E40052A2B3F76CD /* RegexManager.swift */; };
-		4FABBE9B8E49D12CAEE918CBF6B6424C /* InstanceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348807F5B83954D2D98777BE3D2520B7 /* InstanceStorage.swift */; };
-		50D8FDFACCCC86734BAD3497379AD047 /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6901B23F2304B2566DBB41EF52A67F92 /* Assembly.swift */; };
-		51A0F1DE05ED849029E4B3A0F72BCE2A /* Swinject-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A69DA2A2EB92087C13364AD183DD3375 /* Swinject-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		523A3A677CC4A8E0F7B1F0FD987113C1 /* Assembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13913994B0E576D4875069557353B51 /* Assembler.swift */; };
-		687572891C8B87AFB7BC7258DAB07EF7 /* Pods-Spika-AppTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E71C0BDA1EC8C5548F018091D7CB0443 /* Pods-Spika-AppTests-dummy.m */; };
-		6C5C0E24078E9EF6987C573BC8587720 /* Pods-Spika-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDEEB83AF7C420CFD0369900F89E142 /* Pods-Spika-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6D12F23258C26AC473283D6AE8ED080B /* InstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF59D97DB5B8253FA8CF0CA2719722CF /* InstanceWrapper.swift */; };
-		6D9128F05B46BA3BF6EEFF077A97D325 /* _Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934204EC66625910465EF6DE46BA64F1 /* _Resolver.swift */; };
-		70DF1B2D98FEEF9A26245121C5560E69 /* MetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E391411D92C5C39955FCD868E0049F /* MetadataManager.swift */; };
-		71A8C2323ABCC02C94FB89FE2A26524C /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629BF7233A9D6DFEC29DEA4232E5AF9A /* Formatter.swift */; };
-		71ABFB51165F2478DCE241E875946FF7 /* MetadataParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6361F8417893F0214D3F88109D38B20E /* MetadataParsing.swift */; };
-		7567557F204208D14E0E3EE2ED8793B0 /* GraphIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F22FDE71E8BA3AEDAC70A3D8A17EFB /* GraphIdentifier.swift */; };
-		82E004F54FA15FC84DA87972A0778BF6 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 233227AB7DA52B013DC3F3A203E8D145 /* CoreTelephony.framework */; };
-		841B9FB2DA77A819E6C19513C42477F7 /* PhoneNumberKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DE5065B39FB2ECD360BF7F5C1E8DE24F /* PhoneNumberKit-dummy.m */; };
-		8435267CF53983688AE07DD7C2D259D4 /* Container.TypeForwarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D53618B4C2BF25BCD9AC01AC17143 /* Container.TypeForwarding.swift */; };
-		88C673A9DCDE5C76DFAD5B716C6164EA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167D028EF4A1EA71C721538F6DDB3F91 /* Foundation.framework */; };
-		8D668566F7ADE83D955D129ADB6C94E3 /* ServiceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53239A3D7FFC43EAE3545B0BE302CAB4 /* ServiceEntry.swift */; };
-		90BCFFF4845D1F4E511A85F8104B300A /* Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE14C3B1248CC1936BF83BA9C1275E01 /* Behavior.swift */; };
-		A119D0C02535167705A8E9260B9886BC /* Pods-Spika-AppTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F27DB27448191F5C1610257C4F715C8 /* Pods-Spika-AppTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A744CA64EBB12821264DB6191C95B4F3 /* SynchronizedResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AC7115BDBA29CDB3B50881BAFAF8FF /* SynchronizedResolver.swift */; };
-		AF63A3B3F7DA14A64FF1F9044C21DC3D /* DebugHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4156B607A0250258A9B945B867F275A6 /* DebugHelper.swift */; };
-		B633EBD0F17BEF9D807375CC96D3D9F7 /* UnavailableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A43F4E72A482794A586EF51C2FA21BE /* UnavailableItems.swift */; };
-		B74F1E7EFB704B24F49D47C9425D1C24 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D21293A0CC17465CFDDE6DA908956A9 /* Container.swift */; };
-		C181AFB8EDFB25D36645F44471682347 /* PhoneNumberKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0013BC4D2018DD4C3B8651067C875E4E /* PhoneNumberKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C5EE7E089E4DED1D5663B63FEDAED17D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167D028EF4A1EA71C721538F6DDB3F91 /* Foundation.framework */; };
-		CB746A5C13F08F015FFA96495FB9D941 /* PhoneNumberMetadata.json in Resources */ = {isa = PBXBuildFile; fileRef = 69DFFAD893D1C6D976E721CA5F023FFB /* PhoneNumberMetadata.json */; };
-		D36F4A2D482E588B4B964A72330132B3 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759A690339232644C6ADF117A6B75155 /* SpinLock.swift */; };
-		DD713BA0506C91376F444A26F6B47524 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E4D186E08D8B7E86D31E2F3EE7030B /* PhoneNumber.swift */; };
-		E0DB90D67C22A3DF5322EFD592BA75EB /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411E3E930DAAA8E7196620C0BF5D41FE /* ParseManager.swift */; };
-		E15C977F2B755B985B0B33960571CF93 /* FunctionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF4532206131BA185C3D8A8AFB084BF /* FunctionType.swift */; };
-		E37B98141D5F4D6EBCA3EBA26B8DF059 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6089C3EA9BA1082C0E7D1BBFF5A989 /* Constants.swift */; };
-		EA8D74093B82AB4B065DEFFC00B99739 /* ServiceEntry.TypeForwarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F535B84B8396677F435B7BBAF5892D37 /* ServiceEntry.TypeForwarding.swift */; };
-		EAF298BC9474DD646F03F0D2033781B9 /* Swinject.h in Headers */ = {isa = PBXBuildFile; fileRef = 04BE8B85FC50D6917DE991EC8531FE37 /* Swinject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F439ACFF27C9FF3533B69C4B20895E86 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167D028EF4A1EA71C721538F6DDB3F91 /* Foundation.framework */; };
-		F5A7B2641482BD64B5194F7E53F0FEAE /* PhoneNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385AC192F777F3D83C4EEDADE62530B5 /* PhoneNumberFormatter.swift */; };
-		F87C106C2D13B2849A64E825F6231B0B /* Pods-Spika-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2647FED16C750A06D26B4992575D475E /* Pods-Spika-dummy.m */; };
+		017ABA819351778E519D886B77319A1F /* Container.Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8E5A9EE11BE2A935EE0FFAC88B0841 /* Container.Logging.swift */; };
+		0758BEFF6CB8E7AB2C06C2B20A7C3A16 /* NBMetadataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E72F16F540753AFDCA068281AE1D5B2 /* NBMetadataHelper.m */; };
+		104A1DBB6131F4AE65A79A63A1DC219B /* NBPhoneNumberDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 423F27A189C096D6D9C74A35F1F42C20 /* NBPhoneNumberDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		180A506E1ACE59ADB56B89A7FCBBDA72 /* Container.Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = A208D06C07CB168F68454F1A54EC7D1F /* Container.Arguments.swift */; };
+		1895B25DC5C769996335497531B3C736 /* Pods-Spika-AppTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E71C0BDA1EC8C5548F018091D7CB0443 /* Pods-Spika-AppTests-dummy.m */; };
+		18C34A50A7525157150D23E460B62D7F /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FFF5F6FBAC0D941852D7F05E9FB3F9 /* Resolver.swift */; };
+		22339F3AD62A2DE532959A501858D958 /* libPhoneNumber-iOS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D4835AF35F0FF67F2DA44B5FB7F50E93 /* libPhoneNumber-iOS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2443BEF798FE81D92E433F678E681BDF /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B9232FEC734358E550D3D6BABAF6D9 /* NSArray+NBAdditions.m */; };
+		28A4C74D9D98F597FF4A710552BBC4A2 /* Swinject-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D696848CC5556C711564174819E93BA /* Swinject-dummy.m */; };
+		2934A038E29FFC96AFD18CC732E40C33 /* ServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950643E412B3F3010F5352C57A441E04 /* ServiceKey.swift */; };
+		296E8188D1778F05BA90764ECC5F10B7 /* ObjectScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A089872A28B1B2D187F8E9AAE46392C /* ObjectScope.swift */; };
+		2986BCA10C4468D0DFBBD1FCAA21A801 /* NBPhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B0B19763D0C6186A6D1EEBE055C631 /* NBPhoneNumber.m */; };
+		29971BAA92C19630AAB4EAA9186E87B5 /* NBPhoneNumberUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A062F99ACCE79A5780576501C0DE385 /* NBPhoneNumberUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2C5325FA1EEC2F947955983FDB5563FE /* Pods-Spika-AppTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F27DB27448191F5C1610257C4F715C8 /* Pods-Spika-AppTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2D29C76470616DF85DD1A312FB39E40D /* ObjectScope.Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED1BEFA14DED08B62C0C9FD939E541 /* ObjectScope.Standard.swift */; };
+		2F0F46C1FE2BE972D9723E8ACF3F22C1 /* NBNumberFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 10655F5DA53343D494D260E803B0362C /* NBNumberFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		305A5737FD697DC2A0E0D13704F185CA /* NBRegExMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8927C6AC4C027304B6F489604C21E32C /* NBRegExMatcher.m */; };
+		3BA15B69EBE236EE9D68AEB462AB36D6 /* SynchronizedResolver.Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8F0DDB28BF4B10ED8F9C6163A2EAFA /* SynchronizedResolver.Arguments.swift */; };
+		3C2BFF0186B55421E9DF11EFD44309B7 /* NBPhoneNumberDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = 64EC615FD7858B14C776C397F7D43F4C /* NBPhoneNumberDefines.m */; };
+		3D9B3FD5F78E8D91F382927A3214730D /* Pods-Spika-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CDEEB83AF7C420CFD0369900F89E142 /* Pods-Spika-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3FFBAA4A4F8CE0B478E4FC86B79D32D3 /* NBMetadataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 694CA5D5EDBE9DAD25CAE6FC81D6C779 /* NBMetadataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4229459AE4D394067A20A8A90011D778 /* NBRegularExpressionCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EAF1D5B4ED8D29D00E6E9C85EF837EF /* NBRegularExpressionCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		48F9D44078B9DED1D40CE924A8BEE890 /* NBAsYouTypeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBC0B348694BDABF797EC92BA96F812 /* NBAsYouTypeFormatter.m */; };
+		4D8544EFD209FE7E7F70339F2EC99F87 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167D028EF4A1EA71C721538F6DDB3F91 /* Foundation.framework */; };
+		4FABBE9B8E49D12CAEE918CBF6B6424C /* InstanceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F662EC0CA22D693C88A052657FEAE81E /* InstanceStorage.swift */; };
+		4FE634699465F56434243B6D79D7CC5F /* NBPhoneNumberUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 574BA2FACF4465A27FEC8ED1C451BA8F /* NBPhoneNumberUtil.m */; };
+		50D8FDFACCCC86734BAD3497379AD047 /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D55BDB938F34E212223B4BD92FAD1A /* Assembly.swift */; };
+		517684499DC0F3051407636E2E599257 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167D028EF4A1EA71C721538F6DDB3F91 /* Foundation.framework */; };
+		51A0F1DE05ED849029E4B3A0F72BCE2A /* Swinject-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BBF97812F60F8484D2201D09123F60 /* Swinject-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		523A3A677CC4A8E0F7B1F0FD987113C1 /* Assembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D23F3CFD764643D9191937BD81A2E4 /* Assembler.swift */; };
+		5B7BDA18773B9419F8DB23C557C76D6D /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 233227AB7DA52B013DC3F3A203E8D145 /* CoreTelephony.framework */; };
+		692CB99E1010EF3023896AFA870850CA /* NBPhoneNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 5278FEE4473EB749DBDDB5F446912D94 /* NBPhoneNumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6D12F23258C26AC473283D6AE8ED080B /* InstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305F13F2FBFDFC07EE77D9820B1D1DD6 /* InstanceWrapper.swift */; };
+		6D9128F05B46BA3BF6EEFF077A97D325 /* _Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24788EEAA674B2432A514A6C334A362 /* _Resolver.swift */; };
+		7567557F204208D14E0E3EE2ED8793B0 /* GraphIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485CBB40D8734C7B3A534A47542FAD2 /* GraphIdentifier.swift */; };
+		8435267CF53983688AE07DD7C2D259D4 /* Container.TypeForwarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC8D7B7391C4E8D799AC3B671E5BC7A /* Container.TypeForwarding.swift */; };
+		883FD457FD723812842B630794B9CAB7 /* NBAsYouTypeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = A7746ADFF2D3D7C2B55D0EFB20F02C3D /* NBAsYouTypeFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8D668566F7ADE83D955D129ADB6C94E3 /* ServiceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9452AE1FF5DBE255921A48F7C972784B /* ServiceEntry.swift */; };
+		90BCFFF4845D1F4E511A85F8104B300A /* Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A1879E272B788B084F430CA444F2CC /* Behavior.swift */; };
+		912EB936A71D4522F5A45FCFFFF91F53 /* NBRegExMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 921E2AFFFF9918B49237B9CB49C51FBA /* NBRegExMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		936519098988CEBA735635CC2DCCDC89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167D028EF4A1EA71C721538F6DDB3F91 /* Foundation.framework */; };
+		98085DCE4400E25D23FB52705EBDAE10 /* libPhoneNumber-iOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F5FC4744FED2B1F47E8141355D97B667 /* libPhoneNumber-iOS-dummy.m */; };
+		9CA7E7C770766355950EF43710DF3315 /* NBPhoneNumberDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = E1639249A129712CFE27BE5AE6FA10BE /* NBPhoneNumberDesc.m */; };
+		A2666723A6C1FAC18DB2BBD8612E2016 /* NBGeneratedPhoneNumberMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = EC698B7798721AF8BDC6D0FA98D5FF57 /* NBGeneratedPhoneNumberMetaData.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		A744CA64EBB12821264DB6191C95B4F3 /* SynchronizedResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B672FF92D7A2C82D458D4FA8FBF62A /* SynchronizedResolver.swift */; };
+		AF63A3B3F7DA14A64FF1F9044C21DC3D /* DebugHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CCB3C87B7DAEE4D046A10328120BD4 /* DebugHelper.swift */; };
+		B4157D075790145F0535B24796D0AECB /* NBPhoneMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = A348411DA8C25C5C4B66F55E3EC7EB4A /* NBPhoneMetaData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B46E0373E4317E532835E71CA0E209D8 /* NBNumberFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = B609E90F61F297EA61F65E723FF1059E /* NBNumberFormat.m */; };
+		B633EBD0F17BEF9D807375CC96D3D9F7 /* UnavailableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0665A3D83AD8337D87909286DF2E311F /* UnavailableItems.swift */; };
+		B74F1E7EFB704B24F49D47C9425D1C24 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4713F2CC1FBAA0DEEB31B58569F74F /* Container.swift */; };
+		BB71EF452EF3533ED35B127CB149BBEC /* NSArray+NBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 05F3262DCF95E37F20DCDF5A0D758302 /* NSArray+NBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1F8D4F90D3970A119F82E38EE8926D4 /* NBRegularExpressionCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BB5466A44126149E1ABDB9E86D0F96 /* NBRegularExpressionCache.m */; };
+		CADC8F89D49801FBFC55D5E16A20D947 /* Pods-Spika-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2647FED16C750A06D26B4992575D475E /* Pods-Spika-dummy.m */; };
+		D36F4A2D482E588B4B964A72330132B3 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3F0EAC31A3E9B50623D4821EE26761 /* SpinLock.swift */; };
+		E15C977F2B755B985B0B33960571CF93 /* FunctionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0662E94F660054CC5DDB4C8C89BD0F /* FunctionType.swift */; };
+		E2A4A3D101E28C0833980458F225D897 /* NBPhoneNumberDesc.h in Headers */ = {isa = PBXBuildFile; fileRef = 32D999A1D5979A931A99F2F1B9EAB3C0 /* NBPhoneNumberDesc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E6E586D484C87895F85CF80BAF3FE111 /* NBPhoneMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A20D799EA09F4953063ED7376FE95AC /* NBPhoneMetaData.m */; };
+		EA8D74093B82AB4B065DEFFC00B99739 /* ServiceEntry.TypeForwarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BE3DA8802F45CA48112D40871198FC /* ServiceEntry.TypeForwarding.swift */; };
+		EAF298BC9474DD646F03F0D2033781B9 /* Swinject.h in Headers */ = {isa = PBXBuildFile; fileRef = 94297F2C65FAD9A6552FA4F45CA2D771 /* Swinject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFC664175C2154DC19054C3AEB1D9B99 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167D028EF4A1EA71C721538F6DDB3F91 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		04612FDD671B8FB7D6725E8B4B5C0216 /* PBXContainerItemProxy */ = {
+		AF3E63EA431DEB7566330362F7123AD7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C942A9CCE5CF382E8053D9757DA6249D;
-			remoteInfo = PhoneNumberKit;
+			remoteGlobalIDString = BECD36891A8DC297700F9296F5634B97;
+			remoteInfo = "libPhoneNumber-iOS";
 		};
-		0B95B5FEDAC9CA38A6A4AF575612A9A8 /* PBXContainerItemProxy */ = {
+		B4E77C79AA7F032314888CF6342B2B62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 46065AF968A5A92D450BB21F7F24367D;
 			remoteInfo = Swinject;
 		};
-		3BAB3FBF03A687F1A15071A07813F25D /* PBXContainerItemProxy */ = {
+		C786AE1A2E57856844569A783981F366 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C942A9CCE5CF382E8053D9757DA6249D;
-			remoteInfo = PhoneNumberKit;
+			remoteGlobalIDString = BECD36891A8DC297700F9296F5634B97;
+			remoteInfo = "libPhoneNumber-iOS";
 		};
-		ABB81503F4F200EFA6D3A93AD99A22CD /* PBXContainerItemProxy */ = {
+		EEB20B5B137D510B5F10B2AA3CC9B5E4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -95,95 +101,100 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0013BC4D2018DD4C3B8651067C875E4E /* PhoneNumberKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PhoneNumberKit-umbrella.h"; sourceTree = "<group>"; };
-		0367A82AA3FE85FC503AFA3281E38AA1 /* PhoneNumberKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PhoneNumberKit.debug.xcconfig; sourceTree = "<group>"; };
-		04BE8B85FC50D6917DE991EC8531FE37 /* Swinject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Swinject.h; path = Sources/Swinject.h; sourceTree = "<group>"; };
+		01CD906FD9BF52ED137F721A3347BE5E /* Swinject.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Swinject.modulemap; sourceTree = "<group>"; };
+		05F3262DCF95E37F20DCDF5A0D758302 /* NSArray+NBAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+NBAdditions.h"; path = "libPhoneNumber/NSArray+NBAdditions.h"; sourceTree = "<group>"; };
+		0665A3D83AD8337D87909286DF2E311F /* UnavailableItems.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UnavailableItems.swift; path = Sources/UnavailableItems.swift; sourceTree = "<group>"; };
 		06BA8196D61ABBBF4A4B5BB07EB619A3 /* Pods-Spika-AppTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Spika-AppTests.modulemap"; sourceTree = "<group>"; };
-		082851F331023A1BE2E974F76CAC811E /* Swinject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Swinject.debug.xcconfig; sourceTree = "<group>"; };
 		084C211AC99795180C503094DC9BB605 /* Pods-Spika-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Spika-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0CDEEB83AF7C420CFD0369900F89E142 /* Pods-Spika-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Spika-umbrella.h"; sourceTree = "<group>"; };
+		0E3C21BBE6B27062F2972150FF88352E /* libPhoneNumber-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "libPhoneNumber-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		0F27DB27448191F5C1610257C4F715C8 /* Pods-Spika-AppTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Spika-AppTests-umbrella.h"; sourceTree = "<group>"; };
+		10655F5DA53343D494D260E803B0362C /* NBNumberFormat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBNumberFormat.h; path = libPhoneNumber/NBNumberFormat.h; sourceTree = "<group>"; };
+		13A1879E272B788B084F430CA444F2CC /* Behavior.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Behavior.swift; path = Sources/Behavior.swift; sourceTree = "<group>"; };
+		1485CBB40D8734C7B3A534A47542FAD2 /* GraphIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GraphIdentifier.swift; path = Sources/GraphIdentifier.swift; sourceTree = "<group>"; };
 		167D028EF4A1EA71C721538F6DDB3F91 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		1C2596B7473D4E0CF9E33F793751808B /* Pods-Spika-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Spika-acknowledgements.plist"; sourceTree = "<group>"; };
-		2153C720131B9AB4706916FDEFDCCC44 /* Resolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Resolver.swift; path = Sources/Resolver.swift; sourceTree = "<group>"; };
+		1F8F0DDB28BF4B10ED8F9C6163A2EAFA /* SynchronizedResolver.Arguments.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SynchronizedResolver.Arguments.swift; path = Sources/SynchronizedResolver.Arguments.swift; sourceTree = "<group>"; };
 		233227AB7DA52B013DC3F3A203E8D145 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
-		24AC7115BDBA29CDB3B50881BAFAF8FF /* SynchronizedResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SynchronizedResolver.swift; path = Sources/SynchronizedResolver.swift; sourceTree = "<group>"; };
 		2647FED16C750A06D26B4992575D475E /* Pods-Spika-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Spika-dummy.m"; sourceTree = "<group>"; };
-		2EB6DEADDF490FBB1E40052A2B3F76CD /* RegexManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RegexManager.swift; path = PhoneNumberKit/RegexManager.swift; sourceTree = "<group>"; };
-		348807F5B83954D2D98777BE3D2520B7 /* InstanceStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InstanceStorage.swift; path = Sources/InstanceStorage.swift; sourceTree = "<group>"; };
-		385AC192F777F3D83C4EEDADE62530B5 /* PhoneNumberFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumberFormatter.swift; path = PhoneNumberKit/PhoneNumberFormatter.swift; sourceTree = "<group>"; };
-		3BAB9267C02844ADE7F2BA37E6A45596 /* Container.Logging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.Logging.swift; path = Sources/Container.Logging.swift; sourceTree = "<group>"; };
-		3D21293A0CC17465CFDDE6DA908956A9 /* Container.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.swift; path = Sources/Container.swift; sourceTree = "<group>"; };
-		3DFFD0FC36445CE7D925EA9FF5A05160 /* PhoneNumberTextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumberTextField.swift; path = PhoneNumberKit/UI/PhoneNumberTextField.swift; sourceTree = "<group>"; };
-		411E3E930DAAA8E7196620C0BF5D41FE /* ParseManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParseManager.swift; path = PhoneNumberKit/ParseManager.swift; sourceTree = "<group>"; };
-		4156B607A0250258A9B945B867F275A6 /* DebugHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DebugHelper.swift; path = Sources/DebugHelper.swift; sourceTree = "<group>"; };
-		48E4D186E08D8B7E86D31E2F3EE7030B /* PhoneNumber.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumber.swift; path = PhoneNumberKit/PhoneNumber.swift; sourceTree = "<group>"; };
-		49E39FE03E4D60C9B447D72B3B727413 /* Swinject-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Swinject-Info.plist"; sourceTree = "<group>"; };
-		4BE4E883D49C3C4B440F5804DFC31E7C /* NSRegularExpression+Swift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSRegularExpression+Swift.swift"; path = "PhoneNumberKit/NSRegularExpression+Swift.swift"; sourceTree = "<group>"; };
-		53239A3D7FFC43EAE3545B0BE302CAB4 /* ServiceEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServiceEntry.swift; path = Sources/ServiceEntry.swift; sourceTree = "<group>"; };
-		5A43F4E72A482794A586EF51C2FA21BE /* UnavailableItems.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UnavailableItems.swift; path = Sources/UnavailableItems.swift; sourceTree = "<group>"; };
-		5A6089C3EA9BA1082C0E7D1BBFF5A989 /* Constants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = PhoneNumberKit/Constants.swift; sourceTree = "<group>"; };
-		5EF4532206131BA185C3D8A8AFB084BF /* FunctionType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunctionType.swift; path = Sources/FunctionType.swift; sourceTree = "<group>"; };
-		5FCBD57E1C0CA758D326968B9ED25883 /* Container.Arguments.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.Arguments.swift; path = Sources/Container.Arguments.swift; sourceTree = "<group>"; };
-		61983D80110CE44D72B343DC6C2AE533 /* PhoneNumberParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumberParser.swift; path = PhoneNumberKit/PhoneNumberParser.swift; sourceTree = "<group>"; };
-		629BF7233A9D6DFEC29DEA4232E5AF9A /* Formatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Formatter.swift; path = PhoneNumberKit/Formatter.swift; sourceTree = "<group>"; };
-		6361F8417893F0214D3F88109D38B20E /* MetadataParsing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MetadataParsing.swift; path = PhoneNumberKit/MetadataParsing.swift; sourceTree = "<group>"; };
+		2705EA8CD47D4FCD1E994C8F1DBCB670 /* libPhoneNumber-iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "libPhoneNumber-iOS.modulemap"; sourceTree = "<group>"; };
+		2C47C6A24FB7B83CE569790B19FBAB24 /* libPhoneNumber-iOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "libPhoneNumber-iOS-Info.plist"; sourceTree = "<group>"; };
+		305F13F2FBFDFC07EE77D9820B1D1DD6 /* InstanceWrapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InstanceWrapper.swift; path = Sources/InstanceWrapper.swift; sourceTree = "<group>"; };
+		32D999A1D5979A931A99F2F1B9EAB3C0 /* NBPhoneNumberDesc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBPhoneNumberDesc.h; path = libPhoneNumber/NBPhoneNumberDesc.h; sourceTree = "<group>"; };
+		33D55BDB938F34E212223B4BD92FAD1A /* Assembly.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Assembly.swift; path = Sources/Assembly.swift; sourceTree = "<group>"; };
+		38042E0B82DAFAF5062AD34F8D53AEB2 /* Swinject-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Swinject-Info.plist"; sourceTree = "<group>"; };
+		39ED1BEFA14DED08B62C0C9FD939E541 /* ObjectScope.Standard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObjectScope.Standard.swift; path = Sources/ObjectScope.Standard.swift; sourceTree = "<group>"; };
+		3EAF1D5B4ED8D29D00E6E9C85EF837EF /* NBRegularExpressionCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBRegularExpressionCache.h; path = libPhoneNumber/Internal/NBRegularExpressionCache.h; sourceTree = "<group>"; };
+		421ABAD2F376C4185F388A387E2E4655 /* libPhoneNumber-iOS */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "libPhoneNumber-iOS"; path = libPhoneNumber_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		423F27A189C096D6D9C74A35F1F42C20 /* NBPhoneNumberDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBPhoneNumberDefines.h; path = libPhoneNumber/NBPhoneNumberDefines.h; sourceTree = "<group>"; };
+		42B9232FEC734358E550D3D6BABAF6D9 /* NSArray+NBAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+NBAdditions.m"; path = "libPhoneNumber/NSArray+NBAdditions.m"; sourceTree = "<group>"; };
+		49A64251F6E39EC4197616EEBB88C765 /* libPhoneNumber-iOS-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "libPhoneNumber-iOS-prefix.pch"; sourceTree = "<group>"; };
+		49D23F3CFD764643D9191937BD81A2E4 /* Assembler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Assembler.swift; path = Sources/Assembler.swift; sourceTree = "<group>"; };
+		4A062F99ACCE79A5780576501C0DE385 /* NBPhoneNumberUtil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBPhoneNumberUtil.h; path = libPhoneNumber/NBPhoneNumberUtil.h; sourceTree = "<group>"; };
+		4D696848CC5556C711564174819E93BA /* Swinject-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Swinject-dummy.m"; sourceTree = "<group>"; };
+		5005E556E7DC8D8AA701395477C28007 /* Swinject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Swinject.release.xcconfig; sourceTree = "<group>"; };
+		5278FEE4473EB749DBDDB5F446912D94 /* NBPhoneNumber.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBPhoneNumber.h; path = libPhoneNumber/NBPhoneNumber.h; sourceTree = "<group>"; };
+		574BA2FACF4465A27FEC8ED1C451BA8F /* NBPhoneNumberUtil.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumberUtil.m; path = libPhoneNumber/NBPhoneNumberUtil.m; sourceTree = "<group>"; };
 		638A96DE7AB572724E1E9558EB3FC7AD /* Pods-Spika-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Spika-AppTests.release.xcconfig"; sourceTree = "<group>"; };
-		65E391411D92C5C39955FCD868E0049F /* MetadataManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MetadataManager.swift; path = PhoneNumberKit/MetadataManager.swift; sourceTree = "<group>"; };
-		673B3889B0EF4D06FD27ADC3D56DB5B3 /* ServiceKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServiceKey.swift; path = Sources/ServiceKey.swift; sourceTree = "<group>"; };
-		6901B23F2304B2566DBB41EF52A67F92 /* Assembly.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Assembly.swift; path = Sources/Assembly.swift; sourceTree = "<group>"; };
-		69681285C13FB58876DD5727BCB2DC85 /* PhoneNumberKit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PhoneNumberKit; path = PhoneNumberKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		69DFFAD893D1C6D976E721CA5F023FFB /* PhoneNumberMetadata.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = PhoneNumberMetadata.json; path = PhoneNumberKit/Resources/PhoneNumberMetadata.json; sourceTree = "<group>"; };
-		6C61C7F3C4A6BF46C0238B21B7E70A99 /* PhoneNumberKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PhoneNumberKit.release.xcconfig; sourceTree = "<group>"; };
-		6D9423C46A9EAB234DCCECA46ED974CE /* Bundle+Resources.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Bundle+Resources.swift"; path = "PhoneNumberKit/Bundle+Resources.swift"; sourceTree = "<group>"; };
-		759A690339232644C6ADF117A6B75155 /* SpinLock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpinLock.swift; path = Sources/SpinLock.swift; sourceTree = "<group>"; };
+		64EC615FD7858B14C776C397F7D43F4C /* NBPhoneNumberDefines.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumberDefines.m; path = libPhoneNumber/NBPhoneNumberDefines.m; sourceTree = "<group>"; };
+		694CA5D5EDBE9DAD25CAE6FC81D6C779 /* NBMetadataHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBMetadataHelper.h; path = libPhoneNumber/NBMetadataHelper.h; sourceTree = "<group>"; };
+		6A089872A28B1B2D187F8E9AAE46392C /* ObjectScope.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObjectScope.swift; path = Sources/ObjectScope.swift; sourceTree = "<group>"; };
+		6A20D799EA09F4953063ED7376FE95AC /* NBPhoneMetaData.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NBPhoneMetaData.m; path = libPhoneNumber/NBPhoneMetaData.m; sourceTree = "<group>"; };
 		7DF5B72A14931B0F033972BF2B51EA6F /* Pods-Spika-AppTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Spika-AppTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7E72F16F540753AFDCA068281AE1D5B2 /* NBMetadataHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NBMetadataHelper.m; path = libPhoneNumber/NBMetadataHelper.m; sourceTree = "<group>"; };
 		80252351842E649105492E273B17B7E2 /* Pods-Spika-AppTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Spika-AppTests"; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		805921DA823DFE707A30515166ADD7C5 /* PhoneNumberKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhoneNumberKit.swift; path = PhoneNumberKit/PhoneNumberKit.swift; sourceTree = "<group>"; };
-		8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swinject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82BB5466A44126149E1ABDB9E86D0F96 /* NBRegularExpressionCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NBRegularExpressionCache.m; path = libPhoneNumber/Internal/NBRegularExpressionCache.m; sourceTree = "<group>"; };
+		8927C6AC4C027304B6F489604C21E32C /* NBRegExMatcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NBRegExMatcher.m; path = libPhoneNumber/Internal/NBRegExMatcher.m; sourceTree = "<group>"; };
+		8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Swinject; path = Swinject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CEE7AE51679AE386ED87C30D1E0A822 /* Pods-Spika.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Spika.modulemap"; sourceTree = "<group>"; };
-		934204EC66625910465EF6DE46BA64F1 /* _Resolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = _Resolver.swift; path = Sources/_Resolver.swift; sourceTree = "<group>"; };
+		921E2AFFFF9918B49237B9CB49C51FBA /* NBRegExMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBRegExMatcher.h; path = libPhoneNumber/Internal/NBRegExMatcher.h; sourceTree = "<group>"; };
+		94297F2C65FAD9A6552FA4F45CA2D771 /* Swinject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Swinject.h; path = Sources/Swinject.h; sourceTree = "<group>"; };
+		9452AE1FF5DBE255921A48F7C972784B /* ServiceEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServiceEntry.swift; path = Sources/ServiceEntry.swift; sourceTree = "<group>"; };
+		950643E412B3F3010F5352C57A441E04 /* ServiceKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServiceKey.swift; path = Sources/ServiceKey.swift; sourceTree = "<group>"; };
 		966B1F874DB45D938757664E552194EC /* Pods-Spika-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Spika-acknowledgements.markdown"; sourceTree = "<group>"; };
-		9C541D642320415148E2E254E001ED0A /* ObjectScope.Standard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObjectScope.Standard.swift; path = Sources/ObjectScope.Standard.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9EC12101D24F784465AC7BED90FC8E0A /* MetadataTypes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MetadataTypes.swift; path = PhoneNumberKit/MetadataTypes.swift; sourceTree = "<group>"; };
-		9F674CA143463326CD2725AD5ED55545 /* PhoneNumberKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "PhoneNumberKit-Info.plist"; sourceTree = "<group>"; };
-		A13913994B0E576D4875069557353B51 /* Assembler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Assembler.swift; path = Sources/Assembler.swift; sourceTree = "<group>"; };
-		A3394CEA68D915A4AD34AA186DEB2BC0 /* Swinject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Swinject.release.xcconfig; sourceTree = "<group>"; };
+		9BA5F9252B4B5E199916753F6FF0B0C2 /* Swinject-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Swinject-prefix.pch"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9FC8D7B7391C4E8D799AC3B671E5BC7A /* Container.TypeForwarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.TypeForwarding.swift; path = Sources/Container.TypeForwarding.swift; sourceTree = "<group>"; };
+		A0FFF5F6FBAC0D941852D7F05E9FB3F9 /* Resolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Resolver.swift; path = Sources/Resolver.swift; sourceTree = "<group>"; };
+		A208D06C07CB168F68454F1A54EC7D1F /* Container.Arguments.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.Arguments.swift; path = Sources/Container.Arguments.swift; sourceTree = "<group>"; };
+		A348411DA8C25C5C4B66F55E3EC7EB4A /* NBPhoneMetaData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBPhoneMetaData.h; path = libPhoneNumber/NBPhoneMetaData.h; sourceTree = "<group>"; };
 		A54354A5541B9A40477F0EECE98B4247 /* Pods-Spika-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Spika-Info.plist"; sourceTree = "<group>"; };
-		A69DA2A2EB92087C13364AD183DD3375 /* Swinject-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Swinject-umbrella.h"; sourceTree = "<group>"; };
-		A91414B8277D9CC48C9FE98F31448D34 /* CountryCodePickerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CountryCodePickerViewController.swift; path = PhoneNumberKit/UI/CountryCodePickerViewController.swift; sourceTree = "<group>"; };
-		AF50E1B9D22D6805C0774E6C635ABF7B /* Swinject-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Swinject-prefix.pch"; sourceTree = "<group>"; };
-		B3F22FDE71E8BA3AEDAC70A3D8A17EFB /* GraphIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GraphIdentifier.swift; path = Sources/GraphIdentifier.swift; sourceTree = "<group>"; };
-		BF59D97DB5B8253FA8CF0CA2719722CF /* InstanceWrapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InstanceWrapper.swift; path = Sources/InstanceWrapper.swift; sourceTree = "<group>"; };
+		A7746ADFF2D3D7C2B55D0EFB20F02C3D /* NBAsYouTypeFormatter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBAsYouTypeFormatter.h; path = libPhoneNumber/NBAsYouTypeFormatter.h; sourceTree = "<group>"; };
+		B4B0B19763D0C6186A6D1EEBE055C631 /* NBPhoneNumber.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumber.m; path = libPhoneNumber/NBPhoneNumber.m; sourceTree = "<group>"; };
+		B609E90F61F297EA61F65E723FF1059E /* NBNumberFormat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NBNumberFormat.m; path = libPhoneNumber/NBNumberFormat.m; sourceTree = "<group>"; };
+		BE8E5A9EE11BE2A935EE0FFAC88B0841 /* Container.Logging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.Logging.swift; path = Sources/Container.Logging.swift; sourceTree = "<group>"; };
+		C5B672FF92D7A2C82D458D4FA8FBF62A /* SynchronizedResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SynchronizedResolver.swift; path = Sources/SynchronizedResolver.swift; sourceTree = "<group>"; };
+		C8CCB3C87B7DAEE4D046A10328120BD4 /* DebugHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DebugHelper.swift; path = Sources/DebugHelper.swift; sourceTree = "<group>"; };
 		C9BFCA50DDB0E0E0F465E2F06D3676F6 /* Pods-Spika-AppTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Spika-AppTests-frameworks.sh"; sourceTree = "<group>"; };
-		D184FE2A81015D4D0A49B98445E2EA73 /* SynchronizedResolver.Arguments.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SynchronizedResolver.Arguments.swift; path = Sources/SynchronizedResolver.Arguments.swift; sourceTree = "<group>"; };
+		D1BE3DA8802F45CA48112D40871198FC /* ServiceEntry.TypeForwarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServiceEntry.TypeForwarding.swift; path = Sources/ServiceEntry.TypeForwarding.swift; sourceTree = "<group>"; };
 		D41228AF177C846486EF64F6E1C44980 /* Pods-Spika-AppTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Spika-AppTests-Info.plist"; sourceTree = "<group>"; };
 		D42EF45A1D0F84B187F0AFC7D5024A98 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
-		DA0D53618B4C2BF25BCD9AC01AC17143 /* Container.TypeForwarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.TypeForwarding.swift; path = Sources/Container.TypeForwarding.swift; sourceTree = "<group>"; };
-		DB834BF34B5E5D32214D928A78B41B39 /* PhoneNumberKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PhoneNumberKit-prefix.pch"; sourceTree = "<group>"; };
+		D4835AF35F0FF67F2DA44B5FB7F50E93 /* libPhoneNumber-iOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "libPhoneNumber-iOS-umbrella.h"; sourceTree = "<group>"; };
 		DD0A0F92B0DFAB5320CAF34AFA924152 /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
-		DE5065B39FB2ECD360BF7F5C1E8DE24F /* PhoneNumberKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PhoneNumberKit-dummy.m"; sourceTree = "<group>"; };
-		DEFC622C2926D4D9E6962E09847E27B8 /* PartialFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PartialFormatter.swift; path = PhoneNumberKit/PartialFormatter.swift; sourceTree = "<group>"; };
+		DE3F0EAC31A3E9B50623D4821EE26761 /* SpinLock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpinLock.swift; path = Sources/SpinLock.swift; sourceTree = "<group>"; };
+		DE4713F2CC1FBAA0DEEB31B58569F74F /* Container.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.swift; path = Sources/Container.swift; sourceTree = "<group>"; };
+		E1639249A129712CFE27BE5AE6FA10BE /* NBPhoneNumberDesc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumberDesc.m; path = libPhoneNumber/NBPhoneNumberDesc.m; sourceTree = "<group>"; };
+		E24788EEAA674B2432A514A6C334A362 /* _Resolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = _Resolver.swift; path = Sources/_Resolver.swift; sourceTree = "<group>"; };
+		E3BBF97812F60F8484D2201D09123F60 /* Swinject-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Swinject-umbrella.h"; sourceTree = "<group>"; };
 		E71C0BDA1EC8C5548F018091D7CB0443 /* Pods-Spika-AppTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Spika-AppTests-dummy.m"; sourceTree = "<group>"; };
 		E9180848AB90490086402F596C9F1521 /* Pods-Spika */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Spika"; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E9F00194D8E488032F3A1C5E2AF19C86 /* Swinject.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Swinject.modulemap; sourceTree = "<group>"; };
-		EAEC12593F84B8A4388F259E4403AE73 /* PhoneNumberKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = PhoneNumberKit.modulemap; sourceTree = "<group>"; };
-		EE14C3B1248CC1936BF83BA9C1275E01 /* Behavior.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Behavior.swift; path = Sources/Behavior.swift; sourceTree = "<group>"; };
+		EC698B7798721AF8BDC6D0FA98D5FF57 /* NBGeneratedPhoneNumberMetaData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NBGeneratedPhoneNumberMetaData.h; path = libPhoneNumber/NBGeneratedPhoneNumberMetaData.h; sourceTree = "<group>"; };
+		EDBC0B348694BDABF797EC92BA96F812 /* NBAsYouTypeFormatter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NBAsYouTypeFormatter.m; path = libPhoneNumber/NBAsYouTypeFormatter.m; sourceTree = "<group>"; };
+		F22D345F6777A85173F660A59FAEEDF9 /* libPhoneNumber-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "libPhoneNumber-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		F2F050EEF195AF7C6EF43E35A1FB713B /* Pods-Spika-AppTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Spika-AppTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		F535B84B8396677F435B7BBAF5892D37 /* ServiceEntry.TypeForwarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServiceEntry.TypeForwarding.swift; path = Sources/ServiceEntry.TypeForwarding.swift; sourceTree = "<group>"; };
-		F9E65C1932E1A2A1449D34D6C598DEEA /* ObjectScope.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObjectScope.swift; path = Sources/ObjectScope.swift; sourceTree = "<group>"; };
-		FC3EB1E12E2B4772E17392D5E41D94DC /* Swinject-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Swinject-dummy.m"; sourceTree = "<group>"; };
+		F5FC4744FED2B1F47E8141355D97B667 /* libPhoneNumber-iOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "libPhoneNumber-iOS-dummy.m"; sourceTree = "<group>"; };
+		F662EC0CA22D693C88A052657FEAE81E /* InstanceStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InstanceStorage.swift; path = Sources/InstanceStorage.swift; sourceTree = "<group>"; };
+		F7D700AD9BC0259C207E1E982C2FAFED /* Swinject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Swinject.debug.xcconfig; sourceTree = "<group>"; };
 		FECFD28D0B8CC2B945304C22EC48CF20 /* Pods-Spika-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Spika-frameworks.sh"; sourceTree = "<group>"; };
+		FF0662E94F660054CC5DDB4C8C89BD0F /* FunctionType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunctionType.swift; path = Sources/FunctionType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1A77A298F352C12B4679E052C9E5F084 /* Frameworks */ = {
+		376B0EC41FF9CDADB1B64E9C36AC0F45 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82E004F54FA15FC84DA87972A0778BF6 /* CoreTelephony.framework in Frameworks */,
-				88C673A9DCDE5C76DFAD5B716C6164EA /* Foundation.framework in Frameworks */,
+				4D8544EFD209FE7E7F70339F2EC99F87 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,19 +206,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8D22B010D8276CCC3158290A62F2E064 /* Frameworks */ = {
+		9E88406632929AF9AA3654120BD6DF54 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5EE7E089E4DED1D5663B63FEDAED17D /* Foundation.framework in Frameworks */,
+				936519098988CEBA735635CC2DCCDC89 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CDF7C8D37D018755186271137682787E /* Frameworks */ = {
+		ABE50D26994B504E792990E6F09053F6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F439ACFF27C9FF3533B69C4B20895E86 /* Foundation.framework in Frameworks */,
+				5B7BDA18773B9419F8DB23C557C76D6D /* CoreTelephony.framework in Frameworks */,
+				517684499DC0F3051407636E2E599257 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,28 +234,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2F6DA913D5200DE95D1A98BED185A193 /* UIKit */ = {
+		4A8F913DF36911BE0761B11E28A79729 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A91414B8277D9CC48C9FE98F31448D34 /* CountryCodePickerViewController.swift */,
-				3DFFD0FC36445CE7D925EA9FF5A05160 /* PhoneNumberTextField.swift */,
+				6CB7497A2A8CE3443DD4D46C021EA23D /* libPhoneNumber-iOS */,
+				60369C11499BF3A5A105A40FE825BCA9 /* Swinject */,
 			);
-			name = UIKit;
-			sourceTree = "<group>";
-		};
-		4DF2D7E610962E7B5E838D27E13B879A /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				E9F00194D8E488032F3A1C5E2AF19C86 /* Swinject.modulemap */,
-				FC3EB1E12E2B4772E17392D5E41D94DC /* Swinject-dummy.m */,
-				49E39FE03E4D60C9B447D72B3B727413 /* Swinject-Info.plist */,
-				AF50E1B9D22D6805C0774E6C635ABF7B /* Swinject-prefix.pch */,
-				A69DA2A2EB92087C13364AD183DD3375 /* Swinject-umbrella.h */,
-				082851F331023A1BE2E974F76CAC811E /* Swinject.debug.xcconfig */,
-				A3394CEA68D915A4AD34AA186DEB2BC0 /* Swinject.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/Swinject";
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		552BA3FD61BEDD6B241AA69847AE0D23 /* Pods-Spika-AppTests */ = {
@@ -263,70 +260,95 @@
 			path = "Target Support Files/Pods-Spika-AppTests";
 			sourceTree = "<group>";
 		};
-		64A98E58739A39B1F7A10AF889E64C19 /* Swinject */ = {
+		60369C11499BF3A5A105A40FE825BCA9 /* Swinject */ = {
 			isa = PBXGroup;
 			children = (
-				934204EC66625910465EF6DE46BA64F1 /* _Resolver.swift */,
-				A13913994B0E576D4875069557353B51 /* Assembler.swift */,
-				6901B23F2304B2566DBB41EF52A67F92 /* Assembly.swift */,
-				EE14C3B1248CC1936BF83BA9C1275E01 /* Behavior.swift */,
-				3D21293A0CC17465CFDDE6DA908956A9 /* Container.swift */,
-				5FCBD57E1C0CA758D326968B9ED25883 /* Container.Arguments.swift */,
-				3BAB9267C02844ADE7F2BA37E6A45596 /* Container.Logging.swift */,
-				DA0D53618B4C2BF25BCD9AC01AC17143 /* Container.TypeForwarding.swift */,
-				4156B607A0250258A9B945B867F275A6 /* DebugHelper.swift */,
-				5EF4532206131BA185C3D8A8AFB084BF /* FunctionType.swift */,
-				B3F22FDE71E8BA3AEDAC70A3D8A17EFB /* GraphIdentifier.swift */,
-				348807F5B83954D2D98777BE3D2520B7 /* InstanceStorage.swift */,
-				BF59D97DB5B8253FA8CF0CA2719722CF /* InstanceWrapper.swift */,
-				F9E65C1932E1A2A1449D34D6C598DEEA /* ObjectScope.swift */,
-				9C541D642320415148E2E254E001ED0A /* ObjectScope.Standard.swift */,
-				2153C720131B9AB4706916FDEFDCCC44 /* Resolver.swift */,
-				53239A3D7FFC43EAE3545B0BE302CAB4 /* ServiceEntry.swift */,
-				F535B84B8396677F435B7BBAF5892D37 /* ServiceEntry.TypeForwarding.swift */,
-				673B3889B0EF4D06FD27ADC3D56DB5B3 /* ServiceKey.swift */,
-				759A690339232644C6ADF117A6B75155 /* SpinLock.swift */,
-				04BE8B85FC50D6917DE991EC8531FE37 /* Swinject.h */,
-				24AC7115BDBA29CDB3B50881BAFAF8FF /* SynchronizedResolver.swift */,
-				D184FE2A81015D4D0A49B98445E2EA73 /* SynchronizedResolver.Arguments.swift */,
-				5A43F4E72A482794A586EF51C2FA21BE /* UnavailableItems.swift */,
-				4DF2D7E610962E7B5E838D27E13B879A /* Support Files */,
+				E24788EEAA674B2432A514A6C334A362 /* _Resolver.swift */,
+				49D23F3CFD764643D9191937BD81A2E4 /* Assembler.swift */,
+				33D55BDB938F34E212223B4BD92FAD1A /* Assembly.swift */,
+				13A1879E272B788B084F430CA444F2CC /* Behavior.swift */,
+				DE4713F2CC1FBAA0DEEB31B58569F74F /* Container.swift */,
+				A208D06C07CB168F68454F1A54EC7D1F /* Container.Arguments.swift */,
+				BE8E5A9EE11BE2A935EE0FFAC88B0841 /* Container.Logging.swift */,
+				9FC8D7B7391C4E8D799AC3B671E5BC7A /* Container.TypeForwarding.swift */,
+				C8CCB3C87B7DAEE4D046A10328120BD4 /* DebugHelper.swift */,
+				FF0662E94F660054CC5DDB4C8C89BD0F /* FunctionType.swift */,
+				1485CBB40D8734C7B3A534A47542FAD2 /* GraphIdentifier.swift */,
+				F662EC0CA22D693C88A052657FEAE81E /* InstanceStorage.swift */,
+				305F13F2FBFDFC07EE77D9820B1D1DD6 /* InstanceWrapper.swift */,
+				6A089872A28B1B2D187F8E9AAE46392C /* ObjectScope.swift */,
+				39ED1BEFA14DED08B62C0C9FD939E541 /* ObjectScope.Standard.swift */,
+				A0FFF5F6FBAC0D941852D7F05E9FB3F9 /* Resolver.swift */,
+				9452AE1FF5DBE255921A48F7C972784B /* ServiceEntry.swift */,
+				D1BE3DA8802F45CA48112D40871198FC /* ServiceEntry.TypeForwarding.swift */,
+				950643E412B3F3010F5352C57A441E04 /* ServiceKey.swift */,
+				DE3F0EAC31A3E9B50623D4821EE26761 /* SpinLock.swift */,
+				94297F2C65FAD9A6552FA4F45CA2D771 /* Swinject.h */,
+				C5B672FF92D7A2C82D458D4FA8FBF62A /* SynchronizedResolver.swift */,
+				1F8F0DDB28BF4B10ED8F9C6163A2EAFA /* SynchronizedResolver.Arguments.swift */,
+				0665A3D83AD8337D87909286DF2E311F /* UnavailableItems.swift */,
+				73BD849CD6327432A1D0B7505285EC55 /* Support Files */,
 			);
+			name = Swinject;
 			path = Swinject;
 			sourceTree = "<group>";
 		};
-		7E148ED40F463FF7FBAF03DE8688403D /* Products */ = {
+		6CB7497A2A8CE3443DD4D46C021EA23D /* libPhoneNumber-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				69681285C13FB58876DD5727BCB2DC85 /* PhoneNumberKit */,
-				E9180848AB90490086402F596C9F1521 /* Pods-Spika */,
-				80252351842E649105492E273B17B7E2 /* Pods-Spika-AppTests */,
-				8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject.framework */,
+				A7746ADFF2D3D7C2B55D0EFB20F02C3D /* NBAsYouTypeFormatter.h */,
+				EDBC0B348694BDABF797EC92BA96F812 /* NBAsYouTypeFormatter.m */,
+				EC698B7798721AF8BDC6D0FA98D5FF57 /* NBGeneratedPhoneNumberMetaData.h */,
+				694CA5D5EDBE9DAD25CAE6FC81D6C779 /* NBMetadataHelper.h */,
+				7E72F16F540753AFDCA068281AE1D5B2 /* NBMetadataHelper.m */,
+				10655F5DA53343D494D260E803B0362C /* NBNumberFormat.h */,
+				B609E90F61F297EA61F65E723FF1059E /* NBNumberFormat.m */,
+				A348411DA8C25C5C4B66F55E3EC7EB4A /* NBPhoneMetaData.h */,
+				6A20D799EA09F4953063ED7376FE95AC /* NBPhoneMetaData.m */,
+				5278FEE4473EB749DBDDB5F446912D94 /* NBPhoneNumber.h */,
+				B4B0B19763D0C6186A6D1EEBE055C631 /* NBPhoneNumber.m */,
+				423F27A189C096D6D9C74A35F1F42C20 /* NBPhoneNumberDefines.h */,
+				64EC615FD7858B14C776C397F7D43F4C /* NBPhoneNumberDefines.m */,
+				32D999A1D5979A931A99F2F1B9EAB3C0 /* NBPhoneNumberDesc.h */,
+				E1639249A129712CFE27BE5AE6FA10BE /* NBPhoneNumberDesc.m */,
+				4A062F99ACCE79A5780576501C0DE385 /* NBPhoneNumberUtil.h */,
+				574BA2FACF4465A27FEC8ED1C451BA8F /* NBPhoneNumberUtil.m */,
+				921E2AFFFF9918B49237B9CB49C51FBA /* NBRegExMatcher.h */,
+				8927C6AC4C027304B6F489604C21E32C /* NBRegExMatcher.m */,
+				3EAF1D5B4ED8D29D00E6E9C85EF837EF /* NBRegularExpressionCache.h */,
+				82BB5466A44126149E1ABDB9E86D0F96 /* NBRegularExpressionCache.m */,
+				05F3262DCF95E37F20DCDF5A0D758302 /* NSArray+NBAdditions.h */,
+				42B9232FEC734358E550D3D6BABAF6D9 /* NSArray+NBAdditions.m */,
+				C1EFEC5F6F92C9700ABB5C076264D6F4 /* Support Files */,
 			);
-			name = Products;
+			name = "libPhoneNumber-iOS";
+			path = "libPhoneNumber-iOS";
 			sourceTree = "<group>";
 		};
-		7F4F3148BB7CEE8AF7FA7D923CE7CED5 /* Resources */ = {
+		73BD849CD6327432A1D0B7505285EC55 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				69DFFAD893D1C6D976E721CA5F023FFB /* PhoneNumberMetadata.json */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		87D892B4D089C62DFBAE29FB05365C33 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				EAEC12593F84B8A4388F259E4403AE73 /* PhoneNumberKit.modulemap */,
-				DE5065B39FB2ECD360BF7F5C1E8DE24F /* PhoneNumberKit-dummy.m */,
-				9F674CA143463326CD2725AD5ED55545 /* PhoneNumberKit-Info.plist */,
-				DB834BF34B5E5D32214D928A78B41B39 /* PhoneNumberKit-prefix.pch */,
-				0013BC4D2018DD4C3B8651067C875E4E /* PhoneNumberKit-umbrella.h */,
-				0367A82AA3FE85FC503AFA3281E38AA1 /* PhoneNumberKit.debug.xcconfig */,
-				6C61C7F3C4A6BF46C0238B21B7E70A99 /* PhoneNumberKit.release.xcconfig */,
+				01CD906FD9BF52ED137F721A3347BE5E /* Swinject.modulemap */,
+				4D696848CC5556C711564174819E93BA /* Swinject-dummy.m */,
+				38042E0B82DAFAF5062AD34F8D53AEB2 /* Swinject-Info.plist */,
+				9BA5F9252B4B5E199916753F6FF0B0C2 /* Swinject-prefix.pch */,
+				E3BBF97812F60F8484D2201D09123F60 /* Swinject-umbrella.h */,
+				F7D700AD9BC0259C207E1E982C2FAFED /* Swinject.debug.xcconfig */,
+				5005E556E7DC8D8AA701395477C28007 /* Swinject.release.xcconfig */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/PhoneNumberKit";
+			path = "../Target Support Files/Swinject";
+			sourceTree = "<group>";
+		};
+		74362042D491E3B014779CD9F8F6F208 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				421ABAD2F376C4185F388A387E2E4655 /* libPhoneNumber-iOS */,
+				E9180848AB90490086402F596C9F1521 /* Pods-Spika */,
+				80252351842E649105492E273B17B7E2 /* Pods-Spika-AppTests */,
+				8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		9A948D16075C872653952B4F51BB4414 /* iOS */ = {
@@ -347,6 +369,21 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
+		C1EFEC5F6F92C9700ABB5C076264D6F4 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				2705EA8CD47D4FCD1E994C8F1DBCB670 /* libPhoneNumber-iOS.modulemap */,
+				F5FC4744FED2B1F47E8141355D97B667 /* libPhoneNumber-iOS-dummy.m */,
+				2C47C6A24FB7B83CE569790B19FBAB24 /* libPhoneNumber-iOS-Info.plist */,
+				49A64251F6E39EC4197616EEBB88C765 /* libPhoneNumber-iOS-prefix.pch */,
+				D4835AF35F0FF67F2DA44B5FB7F50E93 /* libPhoneNumber-iOS-umbrella.h */,
+				0E3C21BBE6B27062F2972150FF88352E /* libPhoneNumber-iOS.debug.xcconfig */,
+				F22D345F6777A85173F660A59FAEEDF9 /* libPhoneNumber-iOS.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/libPhoneNumber-iOS";
+			sourceTree = "<group>";
+		};
 		C727F8942F560EF1A0A482C6A5F35E0A /* Pods-Spika */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,82 +401,33 @@
 			path = "Target Support Files/Pods-Spika";
 			sourceTree = "<group>";
 		};
-		CA31F5A6A07825C2AC467599FE4AFEC1 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F1D06E3D0111A4702013C0041A3F661A /* PhoneNumberKit */,
-				64A98E58739A39B1F7A10AF889E64C19 /* Swinject */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */,
-				CA31F5A6A07825C2AC467599FE4AFEC1 /* Pods */,
-				7E148ED40F463FF7FBAF03DE8688403D /* Products */,
+				4A8F913DF36911BE0761B11E28A79729 /* Pods */,
+				74362042D491E3B014779CD9F8F6F208 /* Products */,
 				B6957667C7BC058D5A3517BCC1EA1F94 /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		DB05324837E88276040188A9B7B8CD1E /* PhoneNumberKitCore */ = {
-			isa = PBXGroup;
-			children = (
-				6D9423C46A9EAB234DCCECA46ED974CE /* Bundle+Resources.swift */,
-				5A6089C3EA9BA1082C0E7D1BBFF5A989 /* Constants.swift */,
-				629BF7233A9D6DFEC29DEA4232E5AF9A /* Formatter.swift */,
-				65E391411D92C5C39955FCD868E0049F /* MetadataManager.swift */,
-				6361F8417893F0214D3F88109D38B20E /* MetadataParsing.swift */,
-				9EC12101D24F784465AC7BED90FC8E0A /* MetadataTypes.swift */,
-				4BE4E883D49C3C4B440F5804DFC31E7C /* NSRegularExpression+Swift.swift */,
-				411E3E930DAAA8E7196620C0BF5D41FE /* ParseManager.swift */,
-				DEFC622C2926D4D9E6962E09847E27B8 /* PartialFormatter.swift */,
-				48E4D186E08D8B7E86D31E2F3EE7030B /* PhoneNumber.swift */,
-				385AC192F777F3D83C4EEDADE62530B5 /* PhoneNumberFormatter.swift */,
-				805921DA823DFE707A30515166ADD7C5 /* PhoneNumberKit.swift */,
-				61983D80110CE44D72B343DC6C2AE533 /* PhoneNumberParser.swift */,
-				2EB6DEADDF490FBB1E40052A2B3F76CD /* RegexManager.swift */,
-				7F4F3148BB7CEE8AF7FA7D923CE7CED5 /* Resources */,
-			);
-			name = PhoneNumberKitCore;
-			sourceTree = "<group>";
-		};
-		F1D06E3D0111A4702013C0041A3F661A /* PhoneNumberKit */ = {
-			isa = PBXGroup;
-			children = (
-				DB05324837E88276040188A9B7B8CD1E /* PhoneNumberKitCore */,
-				87D892B4D089C62DFBAE29FB05365C33 /* Support Files */,
-				2F6DA913D5200DE95D1A98BED185A193 /* UIKit */,
-			);
-			path = PhoneNumberKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		1E6443BC7DE9B2DF5F21FFF4EA34C603 /* Headers */ = {
+		081A737E3C9C7530B1042C1C53A96F34 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C5C0E24078E9EF6987C573BC8587720 /* Pods-Spika-umbrella.h in Headers */,
+				2C5325FA1EEC2F947955983FDB5563FE /* Pods-Spika-AppTests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		265BDC58597D52DEE9DA4538A4F96209 /* Headers */ = {
+		3FA69F8CECD7CDE63123A5A2CFA47BD5 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A119D0C02535167705A8E9260B9886BC /* Pods-Spika-AppTests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		28E73DEB6349E958FF5101C0D7C7A8DB /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C181AFB8EDFB25D36645F44471682347 /* PhoneNumberKit-umbrella.h in Headers */,
+				3D9B3FD5F78E8D91F382927A3214730D /* Pods-Spika-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +437,26 @@
 			files = (
 				EAF298BC9474DD646F03F0D2033781B9 /* Swinject.h in Headers */,
 				51A0F1DE05ED849029E4B3A0F72BCE2A /* Swinject-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C7EF83061CFADC0349C5DDDCD721159 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22339F3AD62A2DE532959A501858D958 /* libPhoneNumber-iOS-umbrella.h in Headers */,
+				883FD457FD723812842B630794B9CAB7 /* NBAsYouTypeFormatter.h in Headers */,
+				A2666723A6C1FAC18DB2BBD8612E2016 /* NBGeneratedPhoneNumberMetaData.h in Headers */,
+				3FFBAA4A4F8CE0B478E4FC86B79D32D3 /* NBMetadataHelper.h in Headers */,
+				2F0F46C1FE2BE972D9723E8ACF3F22C1 /* NBNumberFormat.h in Headers */,
+				B4157D075790145F0535B24796D0AECB /* NBPhoneMetaData.h in Headers */,
+				692CB99E1010EF3023896AFA870850CA /* NBPhoneNumber.h in Headers */,
+				104A1DBB6131F4AE65A79A63A1DC219B /* NBPhoneNumberDefines.h in Headers */,
+				E2A4A3D101E28C0833980458F225D897 /* NBPhoneNumberDesc.h in Headers */,
+				29971BAA92C19630AAB4EAA9186E87B5 /* NBPhoneNumberUtil.h in Headers */,
+				912EB936A71D4522F5A45FCFFFF91F53 /* NBRegExMatcher.h in Headers */,
+				4229459AE4D394067A20A8A90011D778 /* NBRegularExpressionCache.h in Headers */,
+				BB71EF452EF3533ED35B127CB149BBEC /* NSArray+NBAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,23 +478,23 @@
 			);
 			name = Swinject;
 			productName = Swinject;
-			productReference = 8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject.framework */;
+			productReference = 8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject */;
 			productType = "com.apple.product-type.framework";
 		};
 		9AB80FEE1BFCEDDB7C04497EEBEBF8B0 /* Pods-Spika */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 11E303CA28D029DD0F16C8EC1EE89335 /* Build configuration list for PBXNativeTarget "Pods-Spika" */;
+			buildConfigurationList = DE0C5CFE0A132A37F667D24AC2D8AEEC /* Build configuration list for PBXNativeTarget "Pods-Spika" */;
 			buildPhases = (
-				1E6443BC7DE9B2DF5F21FFF4EA34C603 /* Headers */,
-				1DD7E7CFFB2229173D98F56E01855205 /* Sources */,
-				CDF7C8D37D018755186271137682787E /* Frameworks */,
-				690998CA2A5FB5A4F4142F1007C438E3 /* Resources */,
+				3FA69F8CECD7CDE63123A5A2CFA47BD5 /* Headers */,
+				CCBB10290420D3E5832C579B1186A46C /* Sources */,
+				376B0EC41FF9CDADB1B64E9C36AC0F45 /* Frameworks */,
+				4003C6386C3D3BA74FB308E6499D6F19 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				61A5FD95D5C8B350C815C0F654DC31DA /* PBXTargetDependency */,
-				C2F0A4873EBE1B7138EFD10A63B3B146 /* PBXTargetDependency */,
+				565694C211B3C6B5DFD961FCDF9447C2 /* PBXTargetDependency */,
+				49C196AC8D06A5471F15B4B9DB3CFC7D /* PBXTargetDependency */,
 			);
 			name = "Pods-Spika";
 			productName = Pods_Spika;
@@ -495,40 +503,40 @@
 		};
 		AE023A76FE5C2BFBBB2CC7C8588018DF /* Pods-Spika-AppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FA3F5E9655C8223DDB58B2FE132E6747 /* Build configuration list for PBXNativeTarget "Pods-Spika-AppTests" */;
+			buildConfigurationList = 9FA730F18E71FA3B1525E0C2168AEAAD /* Build configuration list for PBXNativeTarget "Pods-Spika-AppTests" */;
 			buildPhases = (
-				265BDC58597D52DEE9DA4538A4F96209 /* Headers */,
-				19C3EA3F9C18910565B82FF565F4B510 /* Sources */,
-				8D22B010D8276CCC3158290A62F2E064 /* Frameworks */,
-				139C05F0A0DDDFF06517F9FDE710761C /* Resources */,
+				081A737E3C9C7530B1042C1C53A96F34 /* Headers */,
+				15F24723D81A2FA3F2F5C3AEC0571D16 /* Sources */,
+				9E88406632929AF9AA3654120BD6DF54 /* Frameworks */,
+				61B11981BD4BCC209317307BCCBD0792 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6D68EF6F0E5E654C0F8C17E748AB56DB /* PBXTargetDependency */,
-				B4288888DDE020103FE168B1D9D36E23 /* PBXTargetDependency */,
+				7D4F57B51F1470A405220ED3D1763CBD /* PBXTargetDependency */,
+				90A58F130AD3BBE18E313ACA86944B5C /* PBXTargetDependency */,
 			);
 			name = "Pods-Spika-AppTests";
 			productName = Pods_Spika_AppTests;
 			productReference = 80252351842E649105492E273B17B7E2 /* Pods-Spika-AppTests */;
 			productType = "com.apple.product-type.framework";
 		};
-		C942A9CCE5CF382E8053D9757DA6249D /* PhoneNumberKit */ = {
+		BECD36891A8DC297700F9296F5634B97 /* libPhoneNumber-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 23E7AF7CAAD17D39292345B1A4156798 /* Build configuration list for PBXNativeTarget "PhoneNumberKit" */;
+			buildConfigurationList = 1EA5984350529FC9329927C019BBB2D2 /* Build configuration list for PBXNativeTarget "libPhoneNumber-iOS" */;
 			buildPhases = (
-				28E73DEB6349E958FF5101C0D7C7A8DB /* Headers */,
-				30C46A359B29F0784EBB7581D2D59A0F /* Sources */,
-				1A77A298F352C12B4679E052C9E5F084 /* Frameworks */,
-				F3F8A4BCEA591CF5ECBAE964CCDCFFBC /* Resources */,
+				7C7EF83061CFADC0349C5DDDCD721159 /* Headers */,
+				9014B9E19212BB58B126A7E478A5B170 /* Sources */,
+				ABE50D26994B504E792990E6F09053F6 /* Frameworks */,
+				3B3E9EB9E4C24AC703640B866210F6BA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = PhoneNumberKit;
-			productName = PhoneNumberKit;
-			productReference = 69681285C13FB58876DD5727BCB2DC85 /* PhoneNumberKit */;
+			name = "libPhoneNumber-iOS";
+			productName = libPhoneNumber_iOS;
+			productReference = 421ABAD2F376C4185F388A387E2E4655 /* libPhoneNumber-iOS */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -549,11 +557,11 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 7E148ED40F463FF7FBAF03DE8688403D /* Products */;
+			productRefGroup = 74362042D491E3B014779CD9F8F6F208 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C942A9CCE5CF382E8053D9757DA6249D /* PhoneNumberKit */,
+				BECD36891A8DC297700F9296F5634B97 /* libPhoneNumber-iOS */,
 				9AB80FEE1BFCEDDB7C04497EEBEBF8B0 /* Pods-Spika */,
 				AE023A76FE5C2BFBBB2CC7C8588018DF /* Pods-Spika-AppTests */,
 				46065AF968A5A92D450BB21F7F24367D /* Swinject */,
@@ -562,14 +570,21 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		139C05F0A0DDDFF06517F9FDE710761C /* Resources */ = {
+		3B3E9EB9E4C24AC703640B866210F6BA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		690998CA2A5FB5A4F4142F1007C438E3 /* Resources */ = {
+		4003C6386C3D3BA74FB308E6499D6F19 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61B11981BD4BCC209317307BCCBD0792 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -583,54 +598,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F3F8A4BCEA591CF5ECBAE964CCDCFFBC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CB746A5C13F08F015FFA96495FB9D941 /* PhoneNumberMetadata.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		19C3EA3F9C18910565B82FF565F4B510 /* Sources */ = {
+		15F24723D81A2FA3F2F5C3AEC0571D16 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				687572891C8B87AFB7BC7258DAB07EF7 /* Pods-Spika-AppTests-dummy.m in Sources */,
+				1895B25DC5C769996335497531B3C736 /* Pods-Spika-AppTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1DD7E7CFFB2229173D98F56E01855205 /* Sources */ = {
+		9014B9E19212BB58B126A7E478A5B170 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F87C106C2D13B2849A64E825F6231B0B /* Pods-Spika-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		30C46A359B29F0784EBB7581D2D59A0F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2CD15C0DB1932F5A8BB799A56B4AEBD1 /* Bundle+Resources.swift in Sources */,
-				E37B98141D5F4D6EBCA3EBA26B8DF059 /* Constants.swift in Sources */,
-				0253ED9BF01245EE84F9DB44990D37EF /* CountryCodePickerViewController.swift in Sources */,
-				71A8C2323ABCC02C94FB89FE2A26524C /* Formatter.swift in Sources */,
-				70DF1B2D98FEEF9A26245121C5560E69 /* MetadataManager.swift in Sources */,
-				71ABFB51165F2478DCE241E875946FF7 /* MetadataParsing.swift in Sources */,
-				3545B54F1C1B5B3F08DD42E2C57DDDE4 /* MetadataTypes.swift in Sources */,
-				12C450ECA25524C764B2B6BC6EFB98F0 /* NSRegularExpression+Swift.swift in Sources */,
-				E0DB90D67C22A3DF5322EFD592BA75EB /* ParseManager.swift in Sources */,
-				0D42C4672C24EBA187866A4E1B890D64 /* PartialFormatter.swift in Sources */,
-				DD713BA0506C91376F444A26F6B47524 /* PhoneNumber.swift in Sources */,
-				F5A7B2641482BD64B5194F7E53F0FEAE /* PhoneNumberFormatter.swift in Sources */,
-				24D37D65F3495023A8B09213DEF93D14 /* PhoneNumberKit.swift in Sources */,
-				841B9FB2DA77A819E6C19513C42477F7 /* PhoneNumberKit-dummy.m in Sources */,
-				0506906BD7BD0C8F82DAB9D4D6C18E0D /* PhoneNumberParser.swift in Sources */,
-				440D4BE19A630C2143A8CAE69F2ACB1E /* PhoneNumberTextField.swift in Sources */,
-				4F99F19F4FB3CC6D6EF8B4B2528FE5A1 /* RegexManager.swift in Sources */,
+				98085DCE4400E25D23FB52705EBDAE10 /* libPhoneNumber-iOS-dummy.m in Sources */,
+				48F9D44078B9DED1D40CE924A8BEE890 /* NBAsYouTypeFormatter.m in Sources */,
+				0758BEFF6CB8E7AB2C06C2B20A7C3A16 /* NBMetadataHelper.m in Sources */,
+				B46E0373E4317E532835E71CA0E209D8 /* NBNumberFormat.m in Sources */,
+				E6E586D484C87895F85CF80BAF3FE111 /* NBPhoneMetaData.m in Sources */,
+				2986BCA10C4468D0DFBBD1FCAA21A801 /* NBPhoneNumber.m in Sources */,
+				3C2BFF0186B55421E9DF11EFD44309B7 /* NBPhoneNumberDefines.m in Sources */,
+				9CA7E7C770766355950EF43710DF3315 /* NBPhoneNumberDesc.m in Sources */,
+				4FE634699465F56434243B6D79D7CC5F /* NBPhoneNumberUtil.m in Sources */,
+				305A5737FD697DC2A0E0D13704F185CA /* NBRegExMatcher.m in Sources */,
+				C1F8D4F90D3970A119F82E38EE8926D4 /* NBRegularExpressionCache.m in Sources */,
+				2443BEF798FE81D92E433F678E681BDF /* NSArray+NBAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,107 +659,44 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CCBB10290420D3E5832C579B1186A46C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CADC8F89D49801FBFC55D5E16A20D947 /* Pods-Spika-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		61A5FD95D5C8B350C815C0F654DC31DA /* PBXTargetDependency */ = {
+		49C196AC8D06A5471F15B4B9DB3CFC7D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = PhoneNumberKit;
-			target = C942A9CCE5CF382E8053D9757DA6249D /* PhoneNumberKit */;
-			targetProxy = 3BAB3FBF03A687F1A15071A07813F25D /* PBXContainerItemProxy */;
+			name = "libPhoneNumber-iOS";
+			target = BECD36891A8DC297700F9296F5634B97 /* libPhoneNumber-iOS */;
+			targetProxy = C786AE1A2E57856844569A783981F366 /* PBXContainerItemProxy */;
 		};
-		6D68EF6F0E5E654C0F8C17E748AB56DB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PhoneNumberKit;
-			target = C942A9CCE5CF382E8053D9757DA6249D /* PhoneNumberKit */;
-			targetProxy = 04612FDD671B8FB7D6725E8B4B5C0216 /* PBXContainerItemProxy */;
-		};
-		B4288888DDE020103FE168B1D9D36E23 /* PBXTargetDependency */ = {
+		565694C211B3C6B5DFD961FCDF9447C2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Swinject;
 			target = 46065AF968A5A92D450BB21F7F24367D /* Swinject */;
-			targetProxy = ABB81503F4F200EFA6D3A93AD99A22CD /* PBXContainerItemProxy */;
+			targetProxy = EEB20B5B137D510B5F10B2AA3CC9B5E4 /* PBXContainerItemProxy */;
 		};
-		C2F0A4873EBE1B7138EFD10A63B3B146 /* PBXTargetDependency */ = {
+		7D4F57B51F1470A405220ED3D1763CBD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Swinject;
 			target = 46065AF968A5A92D450BB21F7F24367D /* Swinject */;
-			targetProxy = 0B95B5FEDAC9CA38A6A4AF575612A9A8 /* PBXContainerItemProxy */;
+			targetProxy = B4E77C79AA7F032314888CF6342B2B62 /* PBXContainerItemProxy */;
+		};
+		90A58F130AD3BBE18E313ACA86944B5C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libPhoneNumber-iOS";
+			target = BECD36891A8DC297700F9296F5634B97 /* libPhoneNumber-iOS */;
+			targetProxy = AF3E63EA431DEB7566330362F7123AD7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		16AC9EB91CCECCD51674900FD4E29BB7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 084C211AC99795180C503094DC9BB605 /* Pods-Spika-AppTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		31958D1C5561C747953B0D16A86CEB8D /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C61C7F3C4A6BF46C0238B21B7E70A99 /* PhoneNumberKit.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/PhoneNumberKit/PhoneNumberKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/PhoneNumberKit/PhoneNumberKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/PhoneNumberKit/PhoneNumberKit.modulemap";
-				PRODUCT_MODULE_NAME = PhoneNumberKit;
-				PRODUCT_NAME = PhoneNumberKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		4BC7450F9457737EE3E637BA155B56F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -832,7 +763,45 @@
 			};
 			name = Debug;
 		};
-		4DA5D7FB589ED833E7A16DF48AEC3030 /* Release */ = {
+		59AB0FA3FB4DE1B273C3082710812CA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D42EF45A1D0F84B187F0AFC7D5024A98 /* Pods-Spika.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Spika/Pods-Spika-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Spika/Pods-Spika.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		614A1182AF74864903C875D2E2877602 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 638A96DE7AB572724E1E9558EB3FC7AD /* Pods-Spika-AppTests.release.xcconfig */;
 			buildSettings = {
@@ -870,10 +839,12 @@
 			};
 			name = Release;
 		};
-		66EB0A0F4F6B20D5E91821C0C9E87372 /* Debug */ = {
+		8272BE43BC618E9F4DCBF2E12F4C826E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0367A82AA3FE85FC503AFA3281E38AA1 /* PhoneNumberKit.debug.xcconfig */;
+			baseConfigurationReference = 084C211AC99795180C503094DC9BB605 /* Pods-Spika-AppTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -882,21 +853,23 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/PhoneNumberKit/PhoneNumberKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/PhoneNumberKit/PhoneNumberKit-Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MODULEMAP_FILE = "Target Support Files/PhoneNumberKit/PhoneNumberKit.modulemap";
-				PRODUCT_MODULE_NAME = PhoneNumberKit;
-				PRODUCT_NAME = PhoneNumberKit;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -965,7 +938,76 @@
 			};
 			name = Release;
 		};
-		C2A5EE6170C52E0D15A59B619731462C /* Debug */ = {
+		A44C66155D7A0FDBA64B15593B39C402 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F22D345F6777A85173F660A59FAEEDF9 /* libPhoneNumber-iOS.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/libPhoneNumber-iOS/libPhoneNumber-iOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/libPhoneNumber-iOS/libPhoneNumber-iOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/libPhoneNumber-iOS/libPhoneNumber-iOS.modulemap";
+				PRODUCT_MODULE_NAME = libPhoneNumber_iOS;
+				PRODUCT_NAME = libPhoneNumber_iOS;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C90FA2021E880B2AB42F54346DAC4A9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F7D700AD9BC0259C207E1E982C2FAFED /* Swinject.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Swinject/Swinject-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Swinject/Swinject-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/Swinject/Swinject.modulemap";
+				PRODUCT_MODULE_NAME = Swinject;
+				PRODUCT_NAME = Swinject;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E4F792F9DF62F8FDBFD7A98367BAD2C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DD0A0F92B0DFAB5320CAF34AFA924152 /* Pods-Spika.debug.xcconfig */;
 			buildSettings = {
@@ -1002,9 +1044,9 @@
 			};
 			name = Debug;
 		};
-		C90FA2021E880B2AB42F54346DAC4A9F /* Debug */ = {
+		EF8E26F317D7F52E1DE1B96D760351D7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 082851F331023A1BE2E974F76CAC811E /* Swinject.debug.xcconfig */;
+			baseConfigurationReference = 5005E556E7DC8D8AA701395477C28007 /* Swinject.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1017,7 +1059,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Swinject/Swinject-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Swinject/Swinject-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1026,6 +1068,41 @@
 				MODULEMAP_FILE = "Target Support Files/Swinject/Swinject.modulemap";
 				PRODUCT_MODULE_NAME = Swinject;
 				PRODUCT_NAME = Swinject;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		F008BA17D38EC535867F86E46312D603 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0E3C21BBE6B27062F2972150FF88352E /* libPhoneNumber-iOS.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/libPhoneNumber-iOS/libPhoneNumber-iOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/libPhoneNumber-iOS/libPhoneNumber-iOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/libPhoneNumber-iOS/libPhoneNumber-iOS.modulemap";
+				PRODUCT_MODULE_NAME = libPhoneNumber_iOS;
+				PRODUCT_NAME = libPhoneNumber_iOS;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
@@ -1036,96 +1113,14 @@
 			};
 			name = Debug;
 		};
-		E999002D67359DDFA34DD7ABC8C04406 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D42EF45A1D0F84B187F0AFC7D5024A98 /* Pods-Spika.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Spika/Pods-Spika-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Spika/Pods-Spika.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		EF8E26F317D7F52E1DE1B96D760351D7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3394CEA68D915A4AD34AA186DEB2BC0 /* Swinject.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/Swinject/Swinject-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Swinject/Swinject-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/Swinject/Swinject.modulemap";
-				PRODUCT_MODULE_NAME = Swinject;
-				PRODUCT_NAME = Swinject;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		11E303CA28D029DD0F16C8EC1EE89335 /* Build configuration list for PBXNativeTarget "Pods-Spika" */ = {
+		1EA5984350529FC9329927C019BBB2D2 /* Build configuration list for PBXNativeTarget "libPhoneNumber-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2A5EE6170C52E0D15A59B619731462C /* Debug */,
-				E999002D67359DDFA34DD7ABC8C04406 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		23E7AF7CAAD17D39292345B1A4156798 /* Build configuration list for PBXNativeTarget "PhoneNumberKit" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				66EB0A0F4F6B20D5E91821C0C9E87372 /* Debug */,
-				31958D1C5561C747953B0D16A86CEB8D /* Release */,
+				F008BA17D38EC535867F86E46312D603 /* Debug */,
+				A44C66155D7A0FDBA64B15593B39C402 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1139,20 +1134,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		9FA730F18E71FA3B1525E0C2168AEAAD /* Build configuration list for PBXNativeTarget "Pods-Spika-AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8272BE43BC618E9F4DCBF2E12F4C826E /* Debug */,
+				614A1182AF74864903C875D2E2877602 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE0C5CFE0A132A37F667D24AC2D8AEEC /* Build configuration list for PBXNativeTarget "Pods-Spika" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4F792F9DF62F8FDBFD7A98367BAD2C6 /* Debug */,
+				59AB0FA3FB4DE1B273C3082710812CA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DECF1828D9E2F514E5102832FC7C084E /* Build configuration list for PBXNativeTarget "Swinject" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C90FA2021E880B2AB42F54346DAC4A9F /* Debug */,
 				EF8E26F317D7F52E1DE1B96D760351D7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FA3F5E9655C8223DDB58B2FE132E6747 /* Build configuration list for PBXNativeTarget "Pods-Spika-AppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				16AC9EB91CCECCD51674900FD4E29BB7 /* Debug */,
-				4DA5D7FB589ED833E7A16DF48AEC3030 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

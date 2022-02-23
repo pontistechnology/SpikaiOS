@@ -1,25 +1,20 @@
 PODS:
-  - PhoneNumberKit (3.3.3):
-    - PhoneNumberKit/PhoneNumberKitCore (= 3.3.3)
-    - PhoneNumberKit/UIKit (= 3.3.3)
-  - PhoneNumberKit/PhoneNumberKitCore (3.3.3)
-  - PhoneNumberKit/UIKit (3.3.3):
-    - PhoneNumberKit/PhoneNumberKitCore
+  - libPhoneNumber-iOS (0.9.15)
   - Swinject (2.7.1)
 
 DEPENDENCIES:
-  - PhoneNumberKit (~> 3.3)
+  - libPhoneNumber-iOS (~> 0.8)
   - Swinject
 
 SPEC REPOS:
   trunk:
-    - PhoneNumberKit
+    - libPhoneNumber-iOS
     - Swinject
 
 SPEC CHECKSUMS:
-  PhoneNumberKit: 4ce83273551c4d2ae10b7361162f4283dd02835f
+  libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
-PODFILE CHECKSUM: 04b6ebb0898d8b32d1e8f2dfced792e507018b25
+PODFILE CHECKSUM: 78119e40d01b888806c961d9465fb66f3717a907
 
 COCOAPODS: 1.11.2
