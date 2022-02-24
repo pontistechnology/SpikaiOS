@@ -16,7 +16,6 @@ class EnterVerifyCodeView: UIView, BaseView {
     let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)
     let resendCodeButton = ActionButton()
     let errorMessageLabel = CustomLabel(text: "The code is incorrect!", textSize: 14, textColor: .appRed, fontName: .MontserratMedium, alignment: .center)
-    let apiStatusImageView = UIImageView()
     var timer: Timer?
     var timeCounter: Int = 120
     
@@ -39,7 +38,6 @@ class EnterVerifyCodeView: UIView, BaseView {
         addSubview(nextButton)
         addSubview(timeLabel)
         addSubview(resendCodeButton)
-        addSubview(apiStatusImageView)
     }
     
     func styleSubviews() {
@@ -53,17 +51,10 @@ class EnterVerifyCodeView: UIView, BaseView {
         
         resendCodeButton.setTitle("Resend code", for: .normal)
         
-        apiStatusImageView.image = UIImage(named: "logo")
-        apiStatusImageView.isHidden = true
         errorMessageLabel.isHidden  = true
     }
     
     func positionSubviews() {
-        
-        apiStatusImageView.centerXToSuperview()
-        apiStatusImageView.centerYToSuperview(offset: -100)
-        apiStatusImageView.constrainHeight(170)
-        apiStatusImageView.constrainWidth(170)
         
         logoImageView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 40, left: 0, bottom: 24, right: 0), size: CGSize(width: 72, height: 72))
         logoImageView.centerX(inView: self)
@@ -87,15 +78,6 @@ class EnterVerifyCodeView: UIView, BaseView {
         nextButton.constrainHeight(50)
     }
     
-    func showApiStatusImageView(_ present: Bool, isFinished: Bool) {
-        for view in self.subviews {
-            view.isHidden = present
-        }
-        apiStatusImageView.image = isFinished ? UIImage(named: "logoAndCheck") : UIImage(named: "logo")
-        apiStatusImageView.isHidden = !present
-        errorMessageLabel.isHidden = present
-    }
-    
     func setupTimer() {
         timeCounter = 120
         timer?.invalidate()
@@ -112,9 +94,9 @@ class EnterVerifyCodeView: UIView, BaseView {
         
         if timeCounter <= 0 {
             timer.invalidate()
+            PopUpManager.shared.presentAlert(errorMessage: "Time expired. You will be returned.") // TODO: change
         }
     }
-    
 }
 
 extension EnterVerifyCodeView: VerificationTextFieldViewDelegate {
@@ -123,6 +105,4 @@ extension EnterVerifyCodeView: VerificationTextFieldViewDelegate {
         nextButton.setEnabled(code.count == verificationTextFieldView.length)
         return true
     }
-    
-    
 }

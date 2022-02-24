@@ -10,7 +10,6 @@ import UIKit
 
 class EnterUsernameView: UIView, BaseView {
     
-    let errorView = ErrorView(message: "Username already taken!")
     let profilePictureView = ImageViewWithIcon(image: UIImage(named: "logo")!, size: CGSize(width: 100, height: 100))
     private let usernameLabel = CustomLabel(text: "Username", textColor: .textTertiary, fontName: .MontserratMedium)
     let usernameTextfield = TextField(textPlaceholder: "Enter username")
@@ -27,7 +26,6 @@ class EnterUsernameView: UIView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(errorView)
         addSubview(profilePictureView)
         addSubview(usernameLabel)
         addSubview(usernameTextfield)
@@ -40,7 +38,6 @@ class EnterUsernameView: UIView, BaseView {
     }
     
     func positionSubviews() {
-        errorView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 16, left: 20, bottom: 0, right: 20))
         
         profilePictureView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 75, left: 0, bottom: 0, right: 0))
         profilePictureView.centerXToSuperview()

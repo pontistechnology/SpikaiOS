@@ -12,8 +12,6 @@ import CryptoKit
 
 class EnterUsernameViewModel: BaseViewModel {
     
-    let isUsernameWrong = CurrentValueSubject<Bool, Never>(true)
-    
     func updateUser(username: String, imageFileData: Data?) {
         networkRequestState.send(.started)
         
@@ -22,7 +20,7 @@ class EnterUsernameViewModel: BaseViewModel {
                 switch completion {
                 case let .failure(error):
                     self?.networkRequestState.send(.finished)
-                    print("UploadWholeFile error:", error)
+                    PopUpManager.shared.presentAlert(errorMessage: "Error with file upload: \(error)")
                 default:
                     break
                 }
@@ -40,7 +38,7 @@ class EnterUsernameViewModel: BaseViewModel {
             self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
-                print("updateUsername error: ", error)
+                PopUpManager.shared.presentAlert(errorMessage: "Username error: \(error)")
             case .finished:
                 self?.presentHomeScreen()
             }

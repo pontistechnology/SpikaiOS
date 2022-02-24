@@ -23,13 +23,13 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     func setupView(_ view: UIView) {
         self.view.backgroundColor = .whiteAndDarkBackground
         self.view.addSubview(view)
         view.fillSuperviewSafeAreaLayoutGuide()
+        hideKeyboardWhenTappedAround()
     }
     
     private func showLoading() {
@@ -53,5 +53,17 @@ class BaseViewController: UIViewController {
                 self.showLoading()
             }
         }.store(in: &subscriptions)
+    }
+}
+
+extension BaseViewController {
+    func hideKeyboardWhenTappedAround() {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            tap.cancelsTouchesInView = false
+            view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

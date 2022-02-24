@@ -16,7 +16,7 @@ class EnterNumberViewModel: BaseViewModel {
             self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
-                print("Could not auth user: \(error)")
+                PopUpManager.shared.presentAlert(errorMessage: "Could not auth user: \(error)")
             default: break
             }
         } receiveValue: { [weak self] authResponse in

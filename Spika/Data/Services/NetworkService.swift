@@ -14,7 +14,7 @@ enum RequestType: String {
 }
 
 enum NetworkError: Error {
-    case badURL, requestFailed, fileTooLarge, unknown, noAccessToken
+    case badURL, requestFailed, fileTooLarge, unknown, noAccessToken, chunkUploadFail
 
     var description : String {
         switch self {
@@ -23,6 +23,7 @@ enum NetworkError: Error {
         case .fileTooLarge: return "File too large."
         case .unknown: return "Unknown error."
         case .noAccessToken: return "No access token."
+        case .chunkUploadFail: return "Chunk upload failed"
         }
   }
 }

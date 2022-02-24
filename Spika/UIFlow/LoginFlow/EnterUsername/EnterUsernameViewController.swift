@@ -45,6 +45,7 @@ class EnterUsernameViewController: BaseViewController {
     }
     
     func setupBindings() {
+        sink(networkRequestState: viewModel.networkRequestState)
         
         enterUsernameView.profilePictureView.tap().sink { [weak self] _ in
             guard let self = self else { return }
@@ -56,13 +57,6 @@ class EnterUsernameViewController: BaseViewController {
                 self?.viewModel.updateUser(username: username, imageFileData: self?.fileData)
             }
         }.store(in: &subscriptions)
-        
-        viewModel.isUsernameWrong.sink { [weak self] isUsernameWrong in
-            self?.enterUsernameView.errorView.isHidden = isUsernameWrong
-        }.store(in: &subscriptions)
-        
-        sink(networkRequestState: viewModel.networkRequestState)
-    
     }
 }
 
@@ -82,12 +76,10 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
             do {
                 let imageData = try Data(contentsOf: file)
                 fileData = imageData
-                print("VC hash: ", imageData.getSHA256())
             } catch {
-                print(error)
+                PopUpManager.shared.presentAlert(errorMessage: "Error with image: \(error)")
             }
         }
-    
         dismiss(animated: true, completion: nil)
     }
     

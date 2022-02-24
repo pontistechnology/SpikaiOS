@@ -88,6 +88,7 @@ class AlertViewController: BaseViewController {
         UIView.animate(withDuration: 1, delay: 0) {
             self.alertView?.containerView.transform = CGAffineTransform(translationX: 0, y: -200)
             self.alertView?.containerView.alpha = 0
+            self.alertView?.backgroundColor = .clear
         } completion: { status in
             self.delegate?.alertViewController(self, needDismiss: true)
         }
@@ -100,10 +101,8 @@ class AlertViewController: BaseViewController {
         
         if sender.state == .began {
             startPosition = alertView.containerView.center.y
-            print("pocelo na ", startPosition)
         } else if sender.state == .ended {
             endPosition = alertView.containerView.center.y
-            print("zavrsilo na ", endPosition)
             
             guard let startPosition = startPosition,
                   let endPosition = endPosition
@@ -115,6 +114,7 @@ class AlertViewController: BaseViewController {
                 UIView.animate(withDuration: 1, delay: 0) {
                     self.alertView?.containerView.transform = CGAffineTransform(translationX: 0, y: -200)
                     self.alertView?.containerView.alpha = 0
+                    self.alertView?.backgroundColor = .clear
                 } completion: { status in
                     self.delegate?.alertViewController(self, needDismiss: true)
                 }

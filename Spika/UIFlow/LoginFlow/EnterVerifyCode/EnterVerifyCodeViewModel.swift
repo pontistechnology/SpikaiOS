@@ -27,14 +27,18 @@ class EnterVerifyCodeViewModel: BaseViewModel {
             self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
-                print("Could not auth user: \(error)")
+                PopUpManager.shared.presentAlert(errorMessage: "Could not auth user: \(error)")
             default: break
             }
         } receiveValue: { [weak self] authModel in
-            print("VerifyCodeVM", authModel)
+            print("auth model verify code : ", authModel)
             guard let user = authModel.data?.user,
                   let device = authModel.data?.device
-            else { return }
+            else {
+                PopUpManager.shared.presentAlert(errorMessage: "No user or device response.")
+                return
+                
+            }
             self?.repository.saveUserInfo(user: user, device: device)
             self?.presentEnterUsernameScreen()
         }.store(in: &subscriptions)
@@ -47,7 +51,7 @@ class EnterVerifyCodeViewModel: BaseViewModel {
             self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
-                print("Could not auth user: \(error)")
+                PopUpManager.shared.presentAlert(errorMessage: "Could not auth user: \(error)")
             default: break
             }
         } receiveValue: { [weak self] authResponse in

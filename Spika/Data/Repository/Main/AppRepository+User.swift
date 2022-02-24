@@ -78,7 +78,7 @@ extension AppRepository {
         let fileHash = data.getSHA256()
         let clientId = UUID().uuidString
         
-        let currentValueTest = PassthroughSubject<UploadChunkResponseModel, Error>()
+        let lastChunkPublisher = PassthroughSubject<UploadChunkResponseModel, Error>()
     
         for chunkCounter in 0..<totalChunks {
             var chunk:Data
@@ -95,18 +95,18 @@ extension AppRepository {
                 switch completion {
                 case let .failure(error):
                     print("Failure error", error)
-                    currentValueTest.send(completion: .failure(NetworkError.unknown))
+                    lastChunkPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
                 case .finished:
                     break
                 }
             } receiveValue: { uploadFileResponseModel in
                 if uploadFileResponseModel.data?.file != nil {
-                    currentValueTest.send(uploadFileResponseModel)                    
+                    lastChunkPublisher.send(uploadFileResponseModel)
                 }
             }.store(in: &subs)
         }
         
-        return currentValueTest
+        return lastChunkPublisher
     }
     
     func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
