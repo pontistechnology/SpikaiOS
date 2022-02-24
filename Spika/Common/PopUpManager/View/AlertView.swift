@@ -87,6 +87,8 @@ class AlertView: UIView, BaseView {
     }
     
     func styleSubviews() {
+        
+        backgroundColor = .gray.withAlphaComponent(0.5)
     
         guard let alertViewState = alertViewState else { return }
 
@@ -95,19 +97,13 @@ class AlertView: UIView, BaseView {
         case .justMessage:
             containerView.backgroundColor = .errorRedLight
             errorImageView.image = UIImage(named: "error")
-            backgroundColor = .gray.withAlphaComponent(0.5)
             
         case .noButtons:
             containerView.backgroundColor = .errorRedLight
             
         default:
-            backgroundColor = UIColor(red: 14.0 / 255.0, green: 14.0 / 255.0, blue: 22.0 / 255.0, alpha: 0.7)
             containerView.backgroundColor =
             UIColor(red: 50.0 / 255.0, green: 49.0 / 255.0, blue: 49.0 / 255.0, alpha: 1)
-
-        
-            titleLabel.textAlignment = .center
-            messageLabel.textAlignment = .center
             
             buttonsStackView.axis = .horizontal
             buttonsStackView.spacing = 0
@@ -124,7 +120,6 @@ class AlertView: UIView, BaseView {
             
 //            secondButton.layer.borderWidth = 1
             secondButton.layer.borderColor = UIColor(red: 98.0 / 255.0, green: 97.0 / 255.0, blue: 97.0 / 255.0, alpha: 1).cgColor
-//            secondButton.backgroundColor = UIColor(red: 0.9, green: 0.28, blue: 0.2, alpha: 0.4)
             secondButton.backgroundColor = UIColor(red: 50.0 / 255.0, green: 49.0 / 255.0, blue: 49.0 / 255.0, alpha: 1)
             secondButton.setTitleColor(UIColor(red: 0.0 / 255.0, green: 182.0 / 255.0, blue: 207.0 / 255.0, alpha: 1), for: .normal)
         
@@ -148,7 +143,7 @@ class AlertView: UIView, BaseView {
             messageLabel.centerYToSuperview()
             
         case .noButtons:
-            containerView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 26, bottom: 0, right: 24))
+            containerView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 60, left: 26, bottom: 0, right: 24))
             containerView.constrainHeight(90)
             
             labelWithIcon.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))

@@ -120,7 +120,7 @@ class AlertViewController: BaseViewController {
                 }
             } else {
                 UIView.animate(withDuration: 1, delay: 0) {
-                    self.alertView?.containerView.center.y = 60
+                    self.alertView?.containerView.center.y = 60 + (self.alertView?.containerView.frame.height ?? 100) / 2
                 }
             }
         }
