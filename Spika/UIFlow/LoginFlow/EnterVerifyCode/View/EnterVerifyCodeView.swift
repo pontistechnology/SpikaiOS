@@ -104,17 +104,14 @@ class EnterVerifyCodeView: UIView, BaseView {
     }
     
     @objc func fireTimer(timer: Timer) {
-        // TODO: fix :
         timeCounter -= 1
-    
-        let mins: String = timeCounter > 59 ? "01:" : "00"
-        var seconds: String = timeCounter > 59 ? "\(timeCounter - 60)" : "\(timeCounter)"
-        if (timeCounter > 59 && timeCounter - 60 < 10) { seconds = "0\(seconds)" }
-        if timeCounter == 0 {
+        let minutes = timeCounter/60
+        let seconds = timeCounter%60
+        
+        timeLabel.text = (minutes < 10 ? "0" : "") + "\(minutes):" + (seconds < 10 ? "0" : "") + "\(seconds)"
+        
+        if timeCounter <= 0 {
             timer.invalidate()
-            timeLabel.text = "00:00"
-        } else {
-            timeLabel.text = "\(mins)\(seconds)"
         }
     }
     

@@ -32,6 +32,9 @@
 		933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */; };
 		933BE87727B6796B0099BA9E /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* NotesViewController.swift */; };
 		933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87827B67A280099BA9E /* ChatSearchViewController.swift */; };
+		9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367455B27C71D0100F43CCD /* PopUpManager.swift */; };
+		9367455E27C71D1300F43CCD /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367455D27C71D1300F43CCD /* AlertViewController.swift */; };
+		9367456127C71D3700F43CCD /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367456027C71D3700F43CCD /* AlertView.swift */; };
 		93708E14279F871400F81095 /* EnterUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E13279F871300F81095 /* EnterUsernameViewController.swift */; };
 		93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E15279F872500F81095 /* EnterUsernameViewModel.swift */; };
 		93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E18279F873D00F81095 /* EnterUsernameView.swift */; };
@@ -210,6 +213,9 @@
 		933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewModel.swift; sourceTree = "<group>"; };
 		933BE87627B6796A0099BA9E /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		933BE87827B67A280099BA9E /* ChatSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewController.swift; sourceTree = "<group>"; };
+		9367455B27C71D0100F43CCD /* PopUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpManager.swift; sourceTree = "<group>"; };
+		9367455D27C71D1300F43CCD /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		9367456027C71D3700F43CCD /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		93708E13279F871300F81095 /* EnterUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewController.swift; sourceTree = "<group>"; };
 		93708E15279F872500F81095 /* EnterUsernameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameViewModel.swift; sourceTree = "<group>"; };
 		93708E18279F873D00F81095 /* EnterUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameView.swift; sourceTree = "<group>"; };
@@ -467,6 +473,24 @@
 			isa = PBXGroup;
 			children = (
 				933BE86B27B677920099BA9E /* FavoritesView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9367455A27C71CE500F43CCD /* PopUpManager */ = {
+			isa = PBXGroup;
+			children = (
+				9367455F27C71D2500F43CCD /* View */,
+				9367455B27C71D0100F43CCD /* PopUpManager.swift */,
+				9367455D27C71D1300F43CCD /* AlertViewController.swift */,
+			);
+			path = PopUpManager;
+			sourceTree = "<group>";
+		};
+		9367455F27C71D2500F43CCD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9367456027C71D3700F43CCD /* AlertView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -917,6 +941,7 @@
 		ADD503CA270DD2E9009D50CB /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				9367455A27C71CE500F43CCD /* PopUpManager */,
 				ADD503E6270DD849009D50CB /* Views */,
 				ADD503DD270DD723009D50CB /* Base */,
 				ADD503CF270DD54D009D50CB /* Coordinator */,
@@ -1381,6 +1406,7 @@
 				AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */,
 				9323EC6B27B3E8D500FA0EB1 /* NavView.swift in Sources */,
 				93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */,
+				9367455E27C71D1300F43CCD /* AlertViewController.swift in Sources */,
 				AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */,
 				93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */,
 				AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */,
@@ -1417,6 +1443,7 @@
 				ADD503D5270DD5F4009D50CB /* AppAssembly.swift in Sources */,
 				AD81923A271E873200D5BE48 /* Reaction.swift in Sources */,
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
+				9367456127C71D3700F43CCD /* AlertView.swift in Sources */,
 				AD9BFD29272995CA00736318 /* LoginAssembly.swift in Sources */,
 				93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */,
 				933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */,
@@ -1451,6 +1478,7 @@
 				ADD503F6270DF96F009D50CB /* Post.swift in Sources */,
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,
 				EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */,
+				9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */,
 				AD81925C2721D45100D5BE48 /* ContactsView.swift in Sources */,
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
 				ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */,

@@ -4,7 +4,8 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:clover.studio</string>
+		<string>applinks: clover.st</string>
+		<string>applinks: radili.com</string>
 	</array>
 </dict>
 </plist>
