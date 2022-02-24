@@ -23,6 +23,11 @@ class EnterVerifyCodeViewController: BaseViewController {
         enterVerifyCodeView.titleLabel.text = "We sent you verification code on \(viewModel.phoneNumber)."
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        enterVerifyCodeView.timer?.invalidate()
+        enterVerifyCodeView.timer = nil
+    }
+    
     func setupBindings() {
         enterVerifyCodeView.nextButton.tap().sink { _ in
             print("VerifyCode Next tap: ")

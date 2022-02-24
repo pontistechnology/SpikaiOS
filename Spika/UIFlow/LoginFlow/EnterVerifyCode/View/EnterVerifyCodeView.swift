@@ -26,6 +26,12 @@ class EnterVerifyCodeView: UIView, BaseView {
         setupTimer()
     }
     
+    deinit {
+        timer?.invalidate()
+        timer = nil
+        print("timer invalidation")
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
