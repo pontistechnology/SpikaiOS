@@ -25,7 +25,8 @@ class AppCoordinator: Coordinator {
         #endif
         
         if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken) {
-            presentHomeScreen()
+//            presentHomeScreen()
+            presentCurrentChatScreen()
         } else {
             presentEnterNumberScreen()
         }

@@ -11,6 +11,7 @@ class CurrentChatView: UIView, BaseView {
     
     let titleLabel = UILabel()
     let messageSenderView = MessageSenderView()
+    let messageTestView = MessageViewTest()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,6 +25,7 @@ class CurrentChatView: UIView, BaseView {
     func addSubviews() {
         addSubview(titleLabel)
         addSubview(messageSenderView)
+        addSubview(messageTestView)
     }
     
     func styleSubviews() {
@@ -32,6 +34,8 @@ class CurrentChatView: UIView, BaseView {
     
     func positionSubviews() {
         titleLabel.centerInSuperview()
+        
+        messageTestView.anchor(leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 500, right: 0))
         
         messageSenderView.anchor(leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         messageSenderView.constrainHeight(60)

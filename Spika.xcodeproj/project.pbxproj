@@ -40,6 +40,8 @@
 		93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E18279F873D00F81095 /* EnterUsernameView.swift */; };
 		93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E1A279F95DB00F81095 /* CustomLabel.swift */; };
 		93708E1D279F992500F81095 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E1C279F992500F81095 /* UILabel+Extensions.swift */; };
+		9396AE1327CBAC410041B4A6 /* MessageViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AE1227CBAC410041B4A6 /* MessageViewTest.swift */; };
+		9396AE1527CBBABE0041B4A6 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */; };
 		93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */; };
 		93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */; };
 		93D86DB827BAA15900F275B0 /* DocsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DB727BAA15900F275B0 /* DocsTableView.swift */; };
@@ -221,6 +223,8 @@
 		93708E18279F873D00F81095 /* EnterUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterUsernameView.swift; sourceTree = "<group>"; };
 		93708E1A279F95DB00F81095 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		93708E1C279F992500F81095 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
+		9396AE1227CBAC410041B4A6 /* MessageViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewTest.swift; sourceTree = "<group>"; };
+		9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewWithIcon.swift; sourceTree = "<group>"; };
 		93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionView.swift; sourceTree = "<group>"; };
 		93D86DB727BAA15900F275B0 /* DocsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocsTableView.swift; sourceTree = "<group>"; };
@@ -593,6 +597,7 @@
 			isa = PBXGroup;
 			children = (
 				93E4F70027C468BB00432CFA /* CurrentChatView.swift */,
+				9396AE1227CBAC410041B4A6 /* MessageViewTest.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -971,6 +976,7 @@
 				AD81926C2721E2E400D5BE48 /* UIControl+Combine.swift */,
 				AD9A68152739024B00BDC439 /* String+CryptoKit.swift */,
 				93708E1C279F992500F81095 /* UILabel+Extensions.swift */,
+				9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1437,6 +1443,7 @@
 				AD8192532721A92700D5BE48 /* StackItemView.swift in Sources */,
 				ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */,
 				ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */,
+				9396AE1327CBAC410041B4A6 /* MessageViewTest.swift in Sources */,
 				AD9BFD2B27299F7B00736318 /* EnterNumberTextField.swift in Sources */,
 				AD9BFD222729950600736318 /* EnterNumberViewController.swift in Sources */,
 				930EE59D27A938B800143B48 /* UploadChunkResponseModel.swift in Sources */,
@@ -1459,6 +1466,7 @@
 				ADD5040127101B69009D50CB /* ContentView.swift in Sources */,
 				AD9BFD302729ABDB00736318 /* Country.swift in Sources */,
 				AD9BFD51272B17B100736318 /* VerificationTextFieldItem.swift in Sources */,
+				9396AE1527CBBABE0041B4A6 /* UITextView+Extensions.swift in Sources */,
 				ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */,
 				ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */,
 				AD8192592721D42700D5BE48 /* ContactsViewModel.swift in Sources */,
