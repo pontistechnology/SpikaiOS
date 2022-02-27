@@ -19,11 +19,10 @@ extension UITextView {
             layoutManager.lineFragmentRect(
                 forGlyphAt: index, effectiveRange: &lineRange
             )
-            
-            print(layoutManager.lineFragmentRect(
-                forGlyphAt: index, effectiveRange: &lineRange
-            ))
             index = NSMaxRange(lineRange)
+            numberOfLines += 1
+        }
+        if String(self.text.last ?? "_") == "\n" {
             numberOfLines += 1
         }
         return numberOfLines

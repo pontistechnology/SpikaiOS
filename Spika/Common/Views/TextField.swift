@@ -34,7 +34,6 @@ class TextField: UITextField {
                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
     }
     
-    
     override open func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: inset)
     }
