@@ -18,15 +18,15 @@ class PopUpManager {
     
     func presentAlert(withTitle title: String,
                       message: String,
-                      firstButtonText: String,
+                      rightButtonText: String,
                       completion1: @escaping () -> (),
-                      secondButtonText: String,
+                      leftButtonText: String,
                       completion2: @escaping () -> ()) {
         
         firstButtonCompletion  = completion1
         secondButtonCompletion = completion2
         
-        let alertViewController = AlertViewController(title: title, message: message, firstButtonText: firstButtonText, secondButtonText: secondButtonText)
+        let alertViewController = AlertViewController(title: title, message: message, rightButtonText: rightButtonText, leftButtonText: leftButtonText)
         setupAlertWindow(with: alertViewController)
     }
     
@@ -37,11 +37,6 @@ class PopUpManager {
         
         let alertViewController = AlertViewController(title: title, message: message, firstButtonText: firstButtonText)
         firstButtonCompletion  = completion1
-        setupAlertWindow(with: alertViewController)
-    }
-    
-    func presentAlert(title: String, message: String?) {
-        let alertViewController = AlertViewController(title: title, message: message)
         setupAlertWindow(with: alertViewController)
     }
     

@@ -59,6 +59,10 @@ class DetailsViewController: BaseViewController {
             
             self?.viewModel.presentVideoCallScreen(url: url)
         }.store(in: &subscriptions)
+        
+        detailsView.contentView.messageButton.tap().sink { _ in
+            self.viewModel.presentCurrentChatScreen()
+        }.store(in: &subscriptions)
     }
     
     

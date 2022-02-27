@@ -20,22 +20,14 @@ class AlertViewController: BaseViewController {
     var startPosition: CGFloat?
     var endPosition: CGFloat?
     
-    init(title: String, message: String, firstButtonText: String, secondButtonText: String) {
+    init(title: String, message: String, rightButtonText: String, leftButtonText: String) {
         super.init(nibName: nil, bundle: nil)
-        alertView = AlertView(title: title, message: message, firstButtonText: firstButtonText, secondButtonText: secondButtonText)
+        alertView = AlertView(title: title, message: message, rightButtonText: rightButtonText, leftButtonText: leftButtonText)
     }
     
     init(title: String, message: String, firstButtonText: String) {
         super.init(nibName: nil, bundle: nil)
         alertView = AlertView(title: title, message: message, firstButtonText: firstButtonText)
-    }
-    
-    init(title: String, message: String?) {
-        super.init(nibName: nil, bundle: nil)
-        alertView = AlertView(title: title, message: message)
-        
-        addGestures()
-        
     }
     
     init(message: String) {

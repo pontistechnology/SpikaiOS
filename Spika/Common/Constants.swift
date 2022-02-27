@@ -38,6 +38,10 @@ struct Constants {
         static let userPhoneNumber = "userPhoneNumber"
         static let deviceId = "deviceId"
         static let accessToken = "accessToken"
+        
+//        struct settings {
+//            static let autoDownload = "autodownload"
+//        }
     }
     
 }

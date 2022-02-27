@@ -52,6 +52,9 @@ class MessageSenderView: UIView, BaseView {
     }
     
     func styleSubviews() {
+        
+        backgroundColor = .gray
+        
         plusButton.setImage(UIImage(named: "plus"), for: .normal)
         sendButton.setImage(UIImage(named: "send"), for: .normal)
         emojiButton.setImage(UIImage(named: "smile"), for: .normal)
@@ -64,7 +67,6 @@ class MessageSenderView: UIView, BaseView {
     }
     
     func positionSubviews() {
-        self.constrainHeight(60)
         
         plusButton.anchor(leading: leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20), size: CGSize(width: 16, height: 16))
         plusButton.centerY(inView: self)

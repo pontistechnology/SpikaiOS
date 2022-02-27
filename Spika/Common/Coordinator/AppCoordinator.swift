@@ -20,6 +20,10 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
+        #if DEBUG
+        UserDefaults.standard.set("5BfRl2zv0GZehWA7", forKey: Constants.UserDefaults.accessToken)
+        #endif
+        
         if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken) {
             presentHomeScreen()
         } else {
@@ -103,8 +107,8 @@ class AppCoordinator: Coordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func popTopViewController() {
-        self.navigationController.popViewController(animated: true)
+    func popTopViewController(animated: Bool = true) {
+        self.navigationController.popViewController(animated: animated)
 //        self.currentViewController = self.navigationController.topViewController
     }
     
@@ -118,9 +122,9 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewController, animated: true, completion: nil)
     }
     
-    func presentCurrentChatScreen() {
+    func presentCurrentChatScreen(animated: Bool = true) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, argument: self)!
-        navigationController.pushViewController(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: animated)
     }
     
 }

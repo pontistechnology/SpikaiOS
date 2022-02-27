@@ -39,4 +39,9 @@ class DetailsViewModel: BaseViewModel {
     func presentCallHistoryScreen() {
         getAppCoordinator()?.presentCallHistoryScreen()
     }
+    
+    func presentCurrentChatScreen() {
+        getAppCoordinator()?.popTopViewController(animated: false)
+        getAppCoordinator()?.presentCurrentChatScreen(animated: false)
+    }
 }
