@@ -119,9 +119,9 @@ class MessageInputView: UIView, BaseView {
         }.store(in: &subscriptions)
 
         sendButton.tap().sink { _ in
+            self.delegate?.messageInputView(self, didPressSend: self.messageTextView.text)
             self.messageTextView.text = ""
             self.textViewDidChange(self.messageTextView)
-            self.delegate?.messageInputView(self, didPressSend: "tik tok")
         }.store(in: &subscriptions)
         
         microphoneButton.tap().sink { _ in

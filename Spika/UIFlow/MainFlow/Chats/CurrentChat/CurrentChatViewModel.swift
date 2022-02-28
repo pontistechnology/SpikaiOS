@@ -9,4 +9,6 @@ import Foundation
 
 class CurrentChatViewModel: BaseViewModel {
     
+    var messages: [String] = ["moze", "druga", "treca", "cetvrta", "peta"]
+    
 }

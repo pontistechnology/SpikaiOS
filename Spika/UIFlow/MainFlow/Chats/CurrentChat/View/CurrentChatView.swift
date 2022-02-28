@@ -9,7 +9,7 @@ import UIKit
 
 class CurrentChatView: UIView, BaseView {
     
-    let titleLabel = UILabel()
+    let messagesTableView = UITableView()
     let messageInputView = MessageInputView()
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
@@ -25,16 +25,17 @@ class CurrentChatView: UIView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(titleLabel)
+        addSubview(messagesTableView)
         addSubview(messageInputView)
     }
     
     func styleSubviews() {
-        titleLabel.text = "Current Chat View"
+        messagesTableView.backgroundColor = .blue
+        messagesTableView.separatorStyle  = .none
     }
     
-    func positionSubviews() {
-        titleLabel.centerInSuperview()
+    func positionSubviews() {        
+        messagesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: messageInputView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 8, left:8, bottom: 8, right: 8))
         
         messageInputView.anchor(leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         messageInputViewBottomConstraint = messageInputView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
@@ -42,6 +43,7 @@ class CurrentChatView: UIView, BaseView {
     }
     
     func setupBindings() {
+        messagesTableView.register(MessageTableViewCell.self, forCellReuseIdentifier: MessageTableViewCell.reuseIdentifier)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
