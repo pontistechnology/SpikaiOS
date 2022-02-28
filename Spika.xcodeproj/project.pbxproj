@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2FD051678BE847C32FF93CD8 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */; };
-		8C98C4F64745F15542536CE9 /* Pods_Spika_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */; };
+		6E1AA22EBF32F5F6B1E36042 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5B9AC9482808B0DB202E82 /* Pods_Spika.framework */; };
 		930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BB27A9FB180064BED1 /* UserRequestModel.swift */; };
 		930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BD27A9FCE30064BED1 /* UserResponseModel.swift */; };
 		930290C027A9FDBE0064BED1 /* CommonModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BF27A9FDBE0064BED1 /* CommonModels.swift */; };
@@ -173,6 +172,8 @@
 		EA9D14DB27BA540A0070BE2B /* ContactsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DA27BA540A0070BE2B /* ContactsUtils.swift */; };
 		EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */; };
 		EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */; };
+		EAA6A39F27CCF30C00B7E01F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAA6A39E27CCF30C00B7E01F /* GoogleService-Info.plist */; };
+		ECFEE2B1CA4F9001F7F12BC3 /* Pods_Spika_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,10 +187,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0130303316D58D9DA3A15FB8 /* Pods-Spika-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.release.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.release.xcconfig"; sourceTree = "<group>"; };
-		4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		613C7266CE789CD1C2695243 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
-		6923B1B3DE1A3AEE3767CFAC /* Pods-Spika-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		05AE93FDC8E4FE6FD37B579F /* Pods-Spika-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
+		400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
+		583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		930290BB27A9FB180064BED1 /* UserRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestModel.swift; sourceTree = "<group>"; };
 		930290BD27A9FCE30064BED1 /* UserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseModel.swift; sourceTree = "<group>"; };
 		930290BF27A9FDBE0064BED1 /* CommonModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModels.swift; sourceTree = "<group>"; };
@@ -354,12 +355,13 @@
 		ADD5041927174B82009D50CB /* AppRepository+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+User.swift"; sourceTree = "<group>"; };
 		ADD5042D271E6C15009D50CB /* ChatEntityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatEntityService.swift; sourceTree = "<group>"; };
 		ADD5044F271E81BA009D50CB /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
+		B8CA5DFA6002C6B3AF963036 /* Pods-Spika-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.release.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.release.xcconfig"; sourceTree = "<group>"; };
+		BA5B9AC9482808B0DB202E82 /* Pods_Spika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA9D14DA27BA540A0070BE2B /* ContactsUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsUtils.swift; sourceTree = "<group>"; };
 		EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsRequestModel.swift; sourceTree = "<group>"; };
 		EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsResponseModel.swift; sourceTree = "<group>"; };
+		EAA6A39E27CCF30C00B7E01F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EACC42E127A2B89C00EA0DD2 /* Spika.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spika.entitlements; sourceTree = "<group>"; };
-		FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,7 +369,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C98C4F64745F15542536CE9 /* Pods_Spika_AppTests.framework in Frameworks */,
+				ECFEE2B1CA4F9001F7F12BC3 /* Pods_Spika_AppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,22 +377,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FD051678BE847C32FF93CD8 /* Pods_Spika.framework in Frameworks */,
+				6E1AA22EBF32F5F6B1E36042 /* Pods_Spika.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C14C2809CCE80218B71E8AE /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				FB43B3654866C1BE59F49F04 /* Pods_Spika.framework */,
-				4F2EA56D0E7EEE58D2C45D9E /* Pods_Spika_AppTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		933BE85727B6595F0099BA9E /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -892,7 +885,7 @@
 				AD9BFCFF272985C400736318 /* AppTests */,
 				ADD503AF270DC3C7009D50CB /* Products */,
 				CC12D1B198A94B9651C98AB6 /* Pods */,
-				0C14C2809CCE80218B71E8AE /* Frameworks */,
+				E2C678E9AAA86BDAFF0B632C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -908,6 +901,7 @@
 		ADD503B0270DC3C7009D50CB /* Spika */ = {
 			isa = PBXGroup;
 			children = (
+				EAA6A39E27CCF30C00B7E01F /* GoogleService-Info.plist */,
 				EACC42E127A2B89C00EA0DD2 /* Spika.entitlements */,
 				ADD503C9270DD2D9009D50CB /* UIFlow */,
 				ADD503CB270DD2EF009D50CB /* Data */,
@@ -1122,12 +1116,21 @@
 		CC12D1B198A94B9651C98AB6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */,
-				613C7266CE789CD1C2695243 /* Pods-Spika.release.xcconfig */,
-				6923B1B3DE1A3AEE3767CFAC /* Pods-Spika-AppTests.debug.xcconfig */,
-				0130303316D58D9DA3A15FB8 /* Pods-Spika-AppTests.release.xcconfig */,
+				400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */,
+				334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */,
+				05AE93FDC8E4FE6FD37B579F /* Pods-Spika-AppTests.debug.xcconfig */,
+				B8CA5DFA6002C6B3AF963036 /* Pods-Spika-AppTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E2C678E9AAA86BDAFF0B632C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA5B9AC9482808B0DB202E82 /* Pods_Spika.framework */,
+				583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1137,11 +1140,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD9BFD04272985C500736318 /* Build configuration list for PBXNativeTarget "AppTests" */;
 			buildPhases = (
-				825936471976C81D0F275BF7 /* [CP] Check Pods Manifest.lock */,
+				879BAC72B2FC25D8B4F06F19 /* [CP] Check Pods Manifest.lock */,
 				AD9BFCFA272985C400736318 /* Sources */,
 				AD9BFCFB272985C400736318 /* Frameworks */,
 				AD9BFCFC272985C400736318 /* Resources */,
-				BEF5C255436BD4913181390D /* [CP] Embed Pods Frameworks */,
+				99075DE5C890A9A9676D87F9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1157,11 +1160,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADD503C5270DC3CA009D50CB /* Build configuration list for PBXNativeTarget "Spika" */;
 			buildPhases = (
-				5B72ABBE607D05B66412FF90 /* [CP] Check Pods Manifest.lock */,
+				85136E67FAFA6A131C920030 /* [CP] Check Pods Manifest.lock */,
 				ADD503AA270DC3C7009D50CB /* Sources */,
 				ADD503AB270DC3C7009D50CB /* Frameworks */,
 				ADD503AC270DC3C7009D50CB /* Resources */,
-				EBFEFED5A25B5875D061A4F2 /* [CP] Embed Pods Frameworks */,
+				EAA6A3A127CCF88C00B7E01F /* ShellScript */,
+				31BA492FD2CFFE591818CB3B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1222,6 +1226,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAA6A39F27CCF30C00B7E01F /* GoogleService-Info.plist in Resources */,
 				AD8192842722D5AF00D5BE48 /* Montserrat-Light.ttf in Resources */,
 				AD81927E2722D5AF00D5BE48 /* Montserrat-Regular.ttf in Resources */,
 				AD8192802722D5AF00D5BE48 /* Montserrat-ExtraBold.ttf in Resources */,
@@ -1240,7 +1245,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5B72ABBE607D05B66412FF90 /* [CP] Check Pods Manifest.lock */ = {
+		31BA492FD2CFFE591818CB3B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		85136E67FAFA6A131C920030 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1262,7 +1284,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		825936471976C81D0F275BF7 /* [CP] Check Pods Manifest.lock */ = {
+		879BAC72B2FC25D8B4F06F19 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1284,7 +1306,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BEF5C255436BD4913181390D /* [CP] Embed Pods Frameworks */ = {
+		99075DE5C890A9A9676D87F9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1301,22 +1323,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EBFEFED5A25B5875D061A4F2 /* [CP] Embed Pods Frameworks */ = {
+		EAA6A3A127CCF88C00B7E01F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}\n",
+				"$(SRCROOT)/$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)\n",
+			);
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1511,7 +1535,7 @@
 /* Begin XCBuildConfiguration section */
 		AD9BFD05272985C500736318 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6923B1B3DE1A3AEE3767CFAC /* Pods-Spika-AppTests.debug.xcconfig */;
+			baseConfigurationReference = 05AE93FDC8E4FE6FD37B579F /* Pods-Spika-AppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1535,7 +1559,7 @@
 		};
 		AD9BFD06272985C500736318 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0130303316D58D9DA3A15FB8 /* Pods-Spika-AppTests.release.xcconfig */;
+			baseConfigurationReference = B8CA5DFA6002C6B3AF963036 /* Pods-Spika-AppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1675,7 +1699,7 @@
 		};
 		ADD503C6270DC3CA009D50CB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C5A7F9DD9602FAA138643FBF /* Pods-Spika.debug.xcconfig */;
+			baseConfigurationReference = 400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1683,6 +1707,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/Info.plist;
@@ -1707,7 +1732,7 @@
 		};
 		ADD503C7270DC3CA009D50CB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 613C7266CE789CD1C2695243 /* Pods-Spika.release.xcconfig */;
+			baseConfigurationReference = 334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1715,6 +1740,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/Info.plist;

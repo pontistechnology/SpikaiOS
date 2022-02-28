@@ -9,6 +9,8 @@ target 'Spika' do
   pod 'Swinject'
   pod 'libPhoneNumber-iOS', '~> 0.8'
   pod 'Kingfisher', '~> 7.0'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
 
   target 'AppTests' do
       pod 'Swinject'

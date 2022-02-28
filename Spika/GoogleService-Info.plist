@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>545730644006-cpr9og9jj9vta36tqtboij6jj1r4qj10.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.545730644006-cpr9og9jj9vta36tqtboij6jj1r4qj10</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBxpSTAIA6QMehCBOTqg2U1wIVNqwJNuEU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>545730644006</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>studio.clover.Spika</string>
+	<key>PROJECT_ID</key>
+	<string>spika-ultimate</string>
+	<key>STORAGE_BUCKET</key>
+	<string>spika-ultimate.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:545730644006:ios:cb42ef07dcd282c20d3ee7</string>
+</dict>
+</plist>
