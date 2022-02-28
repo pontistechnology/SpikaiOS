@@ -20,10 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AVCaptureDevice.requestAccess(for: .audio) { haveMicAccess in
                     print("Access to Microphone: \(haveMicAccess)")
         }
-        
-        print("Saved things: ", UserDefaults.standard.dictionaryRepresentation())
-        print("UUID is: ", UUID().uuidString)
-        
+                
         return true
     }
 

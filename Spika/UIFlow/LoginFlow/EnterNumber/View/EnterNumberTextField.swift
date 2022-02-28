@@ -91,7 +91,7 @@ class EnterNumberTextField: UIView, BaseView {
     }
     
     private func setupBindings() {
-        textField.addTarget(self, action: #selector(MessageSenderView.textFieldDidChange(_:)), for: .editingChanged)
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {

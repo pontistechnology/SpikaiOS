@@ -1,5 +1,5 @@
 //
-//  MessageViewTest.swift
+//  MessageInputView.swift
 //  Spika
 //
 //  Created by Nikola Barbarić on 27.02.2022..
@@ -9,15 +9,15 @@ import Foundation
 import UIKit
 import Combine
 
-protocol MessageViewDelegate: AnyObject {
-    func messageSenderView(_ messageSenderVeiw: MessageSenderView, didPressSend message: String?)
-    func messageSenderView(didPressCameraButton messageSenderVeiw: MessageSenderView)
-    func messageSenderView(didPressMicrophoneButton messageSenderVeiw: MessageSenderView)
-    func messageSenderView(didPressPlusButton messageSenderVeiw: MessageSenderView)
-    func messageSenderView(didPressEmojiButton messageSenderVeiw: MessageSenderView)
+protocol MessageInputViewDelegate: AnyObject {
+    func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String?)
+    func messageInputView(didPressCameraButton messageVeiw: MessageInputView)
+    func messageInputView(didPressMicrophoneButton messageVeiw: MessageInputView)
+    func messageInputView(didPressPlusButton messageVeiw: MessageInputView)
+    func messageInputView(didPressEmojiButton messageVeiw: MessageInputView)
 }
 
-class MessageViewTest: UIView, BaseView {
+class MessageInputView: UIView, BaseView {
     
     private let plusButton = UIButton()
     private let closeButton = UIButton()
@@ -28,11 +28,12 @@ class MessageViewTest: UIView, BaseView {
     private let messageTextView = UITextView()
     
     private var messageTextViewHeightConstraint = NSLayoutConstraint()
+    private var messageTextViewTrailingConstraint = NSLayoutConstraint()
     private var heightConstraint = NSLayoutConstraint()
     
-    private var rightConstraint = NSLayoutConstraint()
-    weak var delegate: MessageViewDelegate?
+    weak var delegate: MessageInputViewDelegate?
     private var subscriptions = Set<AnyCancellable>()
+    private var wasMessageTextViewEmpty = true
     
     
     override init(frame: CGRect) {
@@ -59,9 +60,10 @@ class MessageViewTest: UIView, BaseView {
         backgroundColor = .gray
         
         messageTextView.textContainerInset.left = 10
-        messageTextView.textContainerInset.right = 50
+        messageTextView.textContainerInset.right = 36
         messageTextView.layer.cornerRadius = 10
         messageTextView.clipsToBounds = true
+        messageTextView.customFont(name: .MontserratMedium)
         
         plusButton.setImage(UIImage(named: "plus"), for: .normal)
         sendButton.setImage(UIImage(named: "send"), for: .normal)
@@ -69,6 +71,9 @@ class MessageViewTest: UIView, BaseView {
         closeButton.setImage(UIImage(named: "close"), for: .normal)
         cameraButton.setImage(UIImage(named: "camera"), for: .normal)
         microphoneButton.setImage(UIImage(named: "microphone"), for: .normal)
+        
+        self.closeButton.alpha = 0
+        self.sendButton.alpha = 0
     }
     
     func positionSubviews() {
@@ -86,25 +91,77 @@ class MessageViewTest: UIView, BaseView {
         
         cameraButton.anchor(bottom: microphoneButton.bottomAnchor ,trailing: microphoneButton.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20), size: CGSize(width: 20, height: 20))
         
-        messageTextView.anchor(leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 56, bottom: 12, right: 95))
+        emojiButton.anchor(bottom: messageTextView.bottomAnchor, trailing: messageTextView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 13), size: CGSize(width: 20, height: 20))
+        
+        messageTextView.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 56, bottom: 12, right: 0))
         messageTextViewHeightConstraint = messageTextView.heightAnchor.constraint(equalToConstant: 32)
+        messageTextViewTrailingConstraint = messageTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -95)
         messageTextViewHeightConstraint.isActive = true
+        messageTextViewTrailingConstraint.isActive = true
     }
     
     func setupBindings() {
         messageTextView.delegate = self
         
+        plusButton.tap().sink { _ in
+            self.delegate?.messageInputView(didPressPlusButton: self)
+        }.store(in: &subscriptions)
+        
+        closeButton.tap().sink { _ in
+            self.messageTextView.text = ""
+            self.textViewDidChange(self.messageTextView)
+            self.messageTextView.resignFirstResponder()
+        }.store(in: &subscriptions)
+        
+        emojiButton.tap().sink { _ in
+            self.delegate?.messageInputView(didPressEmojiButton: self)
+            
+        }.store(in: &subscriptions)
+
+        sendButton.tap().sink { _ in
+            self.messageTextView.text = ""
+            self.textViewDidChange(self.messageTextView)
+            self.delegate?.messageInputView(self, didPressSend: "tik tok")
+        }.store(in: &subscriptions)
+        
+        microphoneButton.tap().sink { _ in
+            self.delegate?.messageInputView(didPressMicrophoneButton: self)
+        }.store(in: &subscriptions)
+        
+        cameraButton.tap().sink { _ in
+            self.delegate?.messageInputView(didPressCameraButton: self)
+        }.store(in: &subscriptions)
     }
     
-    
+    func animateMessageView(isEmpty: Bool) {
+        self.messageTextViewTrailingConstraint.constant = isEmpty ? -95 : -60
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3) {
+                self.plusButton.alpha = isEmpty ? 1 : 0
+                self.closeButton.alpha = isEmpty ? 0 : 1
+                self.sendButton.alpha = isEmpty ? 0 : 1
+                self.cameraButton.alpha = isEmpty ? 1 : 0
+                self.microphoneButton.alpha = isEmpty ? 1 : 0
+                
+                self.layoutIfNeeded()
+            }
+        }
+    }
 }
 
-extension MessageViewTest: UITextViewDelegate {
+extension MessageInputView: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         
-        var heightOfTextView: CGFloat = 32
+        if textView.text.count == 0 {
+            self.animateMessageView(isEmpty: true)
+            wasMessageTextViewEmpty = true
+        } else if wasMessageTextViewEmpty {
+            self.animateMessageView(isEmpty: false)
+            wasMessageTextViewEmpty = false
+        }
         
+        var heightOfTextView: CGFloat = 32
         let numberOfLines = textView.numberOfLines()
         
         switch numberOfLines {
