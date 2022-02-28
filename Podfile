@@ -8,6 +8,7 @@ target 'Spika' do
   # Pods for Spika
   pod 'Swinject'
   pod 'libPhoneNumber-iOS', '~> 0.8'
+  pod 'Kingfisher', '~> 7.0'
 
   target 'AppTests' do
       pod 'Swinject'

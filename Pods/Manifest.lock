@@ -1,20 +1,24 @@
 PODS:
+  - Kingfisher (7.1.2)
   - libPhoneNumber-iOS (0.9.15)
   - Swinject (2.7.1)
 
 DEPENDENCIES:
+  - Kingfisher (~> 7.0)
   - libPhoneNumber-iOS (~> 0.8)
   - Swinject
 
 SPEC REPOS:
   trunk:
+    - Kingfisher
     - libPhoneNumber-iOS
     - Swinject
 
 SPEC CHECKSUMS:
+  Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
-PODFILE CHECKSUM: 78119e40d01b888806c961d9465fb66f3717a907
+PODFILE CHECKSUM: c47c1aed8a8e845b032e020d2147ded01889e910
 
 COCOAPODS: 1.11.2
