@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class ContactsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "ContactsTableViewCell"
@@ -48,6 +49,18 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         leftImageView.image = image
         nameLabel.text = name
         descriptionLabel.text = desc
+    }
+    
+    func configureCell(_ model: AppUser) {
+        nameLabel.text = model.displayName
+        descriptionLabel.text = model.telephoneNumber
+        
+        let url = URL(string: model.avatarUrl ?? "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
+        leftImageView.kf.setImage(with: url)
+        
+//        leftImageView.kf.setImage(with: model.avatarUrl) { nj, nju in
+//            print("kurcina")
+//        }
     }
     
     override func prepareForReuse() {

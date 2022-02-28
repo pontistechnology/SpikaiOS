@@ -13,7 +13,7 @@ class ContactsViewModel: BaseViewModel {
     let chatsSubject = CurrentValueSubject<[Chat], Never>([])
     lazy var namesPublisher   = CurrentValueSubject<[String], Never>([])
     lazy var lettersPublisher = CurrentValueSubject<[String], Never>([])
-    
+    lazy var models = CurrentValueSubject<[AppUser], Never>([])
     
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
@@ -153,6 +153,18 @@ class ContactsViewModel: BaseViewModel {
         lettersPublisher.send(letters)
     }
     
+    func testLetter (_ model: AppUser) {
+        if let firstChar = model.displayName?.prefix(1) {
+            var letters = lettersPublisher.value
+            let firstChar = firstChar
+            if !letters.contains(String(firstChar)) {
+                letters.append(String(firstChar))
+                letters.sort()
+            }
+            lettersPublisher.send(letters)
+        }
+    }
+    
     func getContacts() {
         ContactsUtils.getContacts().sink { completion in
             switch completion {
@@ -168,6 +180,7 @@ class ContactsViewModel: BaseViewModel {
             }
             print(contacts)
             self.postContacts(hashes: contacts)
+            
         }.store(in: &subscriptions)
     }
     
@@ -195,14 +208,27 @@ class ContactsViewModel: BaseViewModel {
         } receiveValue: { response in
             print("Success: ", response)
             self.test(response: response)
+            
+            if let list = response.data?.list {
+               
+//                models.send(completion: list)
+            }
+            
         }.store(in: &subscriptions)
     }
     
     func test(response: ContactsResponseModel) {
         if let list = response.data?.list {
+            var appUsers = Array<AppUser>()
             for user in list {
                 testtest(user.displayName ?? "undefined")
+                
+                let appUser = AppUser(id: 2, displayName: user.displayName, avatarUrl: user.avatarUrl, telephoneNumber: "kurcina", telephoneNumberHashed: "", emailAddress: "", createdAt: 0)
+                appUsers.append(appUser)
+                
             }
+            
+            models.send(appUsers)
         }
     }
 }
