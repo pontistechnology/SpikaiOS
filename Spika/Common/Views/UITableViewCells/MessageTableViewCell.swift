@@ -56,7 +56,7 @@ class MessageTableViewCell: UITableViewCell, BaseView {
         replyView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 10, bottom: 0, right: 10))
         replyView.constrainHeight(54)
         
-        messageLabel.anchor(top: replyView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        messageLabel.anchor(leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
     }
     
     func updateCell(text: String) {
@@ -69,5 +69,9 @@ class MessageTableViewCell: UITableViewCell, BaseView {
         containerViewWidthConstraint.constant = messageSize.width + 20
         containerViewHeightConstraint.constant = messageSize.height + 20 + 54 + 10
         
+    }
+    
+    func hideReply() {
+        replyView.removeFromSuperview()
     }
 }

@@ -53,6 +53,8 @@
 		93DE585827BC7B6600C45EB4 /* VideoCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */; };
 		93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */; };
 		93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */; };
+		93E48EB027CEA6C3003B4188 /* MessageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E48EAF27CEA6C3003B4188 /* MessageTest.swift */; };
+		93E48EB227CEA97F003B4188 /* ReplyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E48EB127CEA97F003B4188 /* ReplyMessageView.swift */; };
 		93E4F6EB27C2BB6D00432CFA /* NewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6EA27C2BB6D00432CFA /* NewChatViewController.swift */; };
 		93E4F6ED27C2BB8100432CFA /* NewChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6EC27C2BB8100432CFA /* NewChatViewModel.swift */; };
 		93E4F6F027C2BB9700432CFA /* NewChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6EF27C2BB9700432CFA /* NewChatView.swift */; };
@@ -238,6 +240,8 @@
 		93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewController.swift; sourceTree = "<group>"; };
 		93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewModel.swift; sourceTree = "<group>"; };
 		93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallView.swift; sourceTree = "<group>"; };
+		93E48EAF27CEA6C3003B4188 /* MessageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTest.swift; sourceTree = "<group>"; };
+		93E48EB127CEA97F003B4188 /* ReplyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyMessageView.swift; sourceTree = "<group>"; };
 		93E4F6EA27C2BB6D00432CFA /* NewChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewController.swift; sourceTree = "<group>"; };
 		93E4F6EC27C2BB8100432CFA /* NewChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewModel.swift; sourceTree = "<group>"; };
 		93E4F6EF27C2BB9700432CFA /* NewChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatView.swift; sourceTree = "<group>"; };
@@ -1027,6 +1031,7 @@
 				AD9BFCF42729828100736318 /* LogoImageView.swift */,
 				AD9A68172739084A00BDC439 /* ActionButton.swift */,
 				93708E1A279F95DB00F81095 /* CustomLabel.swift */,
+				93E48EB127CEA97F003B4188 /* ReplyMessageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1068,6 +1073,7 @@
 				ADD5041527174384009D50CB /* Chat.swift */,
 				ADD5044F271E81BA009D50CB /* Message.swift */,
 				AD819239271E873200D5BE48 /* Reaction.swift */,
+				93E48EAF27CEA6C3003B4188 /* MessageTest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1370,6 +1376,7 @@
 				AD81923C271E8AF400D5BE48 /* ReactionEntity+CoreDataProperties.swift in Sources */,
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
 				933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */,
+				93E48EB227CEA97F003B4188 /* ReplyMessageView.swift in Sources */,
 				93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */,
 				AD9BFD172729894300736318 /* TestAssembly.swift in Sources */,
 				930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */,
@@ -1506,6 +1513,7 @@
 				EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */,
 				ADD504182717481D009D50CB /* AppRepository+Chat.swift in Sources */,
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
+				93E48EB027CEA6C3003B4188 /* MessageTest.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
 				ADD503F6270DF96F009D50CB /* Post.swift in Sources */,
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,

@@ -24,37 +24,12 @@ class ContactsViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-    
-    var testC = 0
-    
+        
     func setupBindings() {
         contactsView.tableView.dataSource = self
         contactsView.tableView.delegate   = self
         
         viewModel.testtest("mia s")
-        contactsView.titleLabel.tap().sink { tap in
-            print("tap")
-            
-            switch self.testC {
-            case 0:
-                self.viewModel.testtest("jozo")
-            case 1:
-                self.viewModel.testtest("ana")
-            case 2:
-                self.viewModel.testtest("marko")
-            case 3:
-                self.viewModel.testtest("aine")
-            case 4:
-                self.viewModel.testtest("papa")
-            case 5:
-                self.viewModel.testtest("roki")
-            case 6:
-                self.viewModel.testtest("roberrt")
-            default:
-                self.viewModel.testtest("tin")
-            }
-            self.testC += 1
-        }.store(in: &subscriptions)
         
         contactsView.detailsButton.tap().sink { _ in
             self.viewModel.showDetailsScreen(id: 3)

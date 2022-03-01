@@ -26,6 +26,8 @@ class MessageInputView: UIView, BaseView {
     private let microphoneButton = UIButton()
     private let emojiButton = UIButton()
     private let messageTextView = UITextView()
+    private var replyView: ReplyMessageView?
+    private var closeReplyViewButton = UIButton()
     
     private var messageTextViewHeightConstraint = NSLayoutConstraint()
     private var messageTextViewTrailingConstraint = NSLayoutConstraint()
@@ -71,6 +73,7 @@ class MessageInputView: UIView, BaseView {
         closeButton.setImage(UIImage(named: "close"), for: .normal)
         cameraButton.setImage(UIImage(named: "camera"), for: .normal)
         microphoneButton.setImage(UIImage(named: "microphone"), for: .normal)
+        closeReplyViewButton.setImage(UIImage(named: "close"), for: .normal)
         
         self.closeButton.alpha = 0
         self.sendButton.alpha = 0
@@ -115,7 +118,6 @@ class MessageInputView: UIView, BaseView {
         
         emojiButton.tap().sink { _ in
             self.delegate?.messageInputView(didPressEmojiButton: self)
-            
         }.store(in: &subscriptions)
 
         sendButton.tap().sink { _ in
@@ -130,6 +132,10 @@ class MessageInputView: UIView, BaseView {
         
         cameraButton.tap().sink { _ in
             self.delegate?.messageInputView(didPressCameraButton: self)
+        }.store(in: &subscriptions)
+        
+        closeReplyViewButton.tap().sink { _ in
+            self.hideReplyView()
         }.store(in: &subscriptions)
     }
     
@@ -150,6 +156,33 @@ class MessageInputView: UIView, BaseView {
                 
                 self.layoutIfNeeded()
             }
+        }
+    }
+    
+    func showReplyView(view: ReplyMessageView) {
+        if replyView == nil {
+            replyView = view
+            heightConstraint.constant += 60
+            
+            addSubview(replyView!)
+            addSubview(closeReplyViewButton)
+            replyView?.anchor(top: topAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 8, left: 20, bottom: 0, right: 0))
+            replyView?.constrainHeight(54)
+            replyView?.constrainWidth(140)
+            
+            closeReplyViewButton.anchor(top: topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 15), size: CGSize(width: 24, height: 24))
+        } else {
+            hideReplyView()
+            showReplyView(view: view)
+        }
+    }
+    
+    func hideReplyView() {
+        if replyView != nil {
+            replyView?.removeFromSuperview()
+            closeReplyViewButton.removeFromSuperview()
+            replyView = nil
+            heightConstraint.constant -= 60
         }
     }
 }
@@ -178,7 +211,8 @@ extension MessageInputView: UITextViewDelegate {
             heightOfTextView = 32 + 5 * (textView.font?.lineHeight ?? 0)
         }
         
-        heightConstraint.constant = heightOfTextView + 24
+        heightConstraint.constant = heightOfTextView + 24 + (replyView != nil ? 60 : 0)
+        
         messageTextViewHeightConstraint.constant = heightOfTextView
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.3) {

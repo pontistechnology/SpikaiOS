@@ -63,6 +63,14 @@ extension CurrentChatViewController: UITableViewDelegate {
         let messageSize = viewModel.messages[indexPath.row].idealSizeForMessage(font: font, maximumWidth: 256)
         return messageSize.height + 40 + 54
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let cell = tableView.cellForRow(at: indexPath) as? MessageTableViewCell
+        cell?.hideReply()
+        
+        currentChatView.messageInputView.showReplyView(view: ReplyMessageView(senderName: "Matej Vida", message: cell?.messageLabel.text ?? "te"))
+    }
 }
 
 extension CurrentChatViewController: UITableViewDataSource {
