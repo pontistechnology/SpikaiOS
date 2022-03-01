@@ -120,8 +120,6 @@ class MessageInputView: UIView, BaseView {
 
         sendButton.tap().sink { _ in
             self.delegate?.messageInputView(self, didPressSend: self.messageTextView.text)
-            self.messageTextView.text = ""
-            self.textViewDidChange(self.messageTextView)
         }.store(in: &subscriptions)
         
         microphoneButton.tap().sink { _ in
@@ -131,6 +129,11 @@ class MessageInputView: UIView, BaseView {
         cameraButton.tap().sink { _ in
             self.delegate?.messageInputView(didPressCameraButton: self)
         }.store(in: &subscriptions)
+    }
+    
+    func clearTextField() {
+        messageTextView.text = ""
+        textViewDidChange(self.messageTextView)
     }
     
     func animateMessageView(isEmpty: Bool) {

@@ -33,6 +33,7 @@ extension CurrentChatViewController: MessageInputViewDelegate {
             return
         }
         viewModel.messages.append(message)
+        currentChatView.messageInputView.clearTextField()
         currentChatView.messagesTableView.reloadData()
         currentChatView.messagesTableView.scrollToRow(at: IndexPath(row: viewModel.messages.count - 1, section: 0), at: .none, animated: true)
     }
