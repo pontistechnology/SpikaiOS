@@ -8,7 +8,7 @@
 import Foundation
 
 struct Reaction: Codable {
-    var createdAt: String?
+    var createdAt: Int?
     var id: Int64
     var modifiedAt: String?
     var type: String?

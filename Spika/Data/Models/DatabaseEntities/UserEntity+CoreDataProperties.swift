@@ -18,11 +18,11 @@ extension UserEntity {
 
     @NSManaged public var avatarUrl: String?
     @NSManaged public var blocked: Bool
-    @NSManaged public var createdAt: String?
+    @NSManaged public var createdAt: Int64
     @NSManaged public var id: Int64
     @NSManaged public var localName: String?
     @NSManaged public var loginName: String?
-    @NSManaged public var modifiedAt: String?
+    @NSManaged public var modifiedAt: Int64
     @NSManaged public var nickName: String?
     @NSManaged public var chats: Set<ChatEntity>?
     @NSManaged public var messages: Set<MessageEntity>?
@@ -42,8 +42,8 @@ extension UserEntity {
         self.avatarUrl = user.avatarUrl
         self.localName = user.localName
         self.blocked = user.blocked
-        self.createdAt = user.createdAt
-        self.modifiedAt = user.modifiedAt
+        self.createdAt = Int64(user.createdAt ?? 0)
+        self.modifiedAt = Int64(user.modifiedAt ?? 0)
         
     }
 

@@ -13,8 +13,8 @@ struct User: Codable {
     public var avatarUrl: String?
     public var localName: String?
     public var blocked: Bool
-    public var createdAt: String?
-    public var modifiedAt: String?
+    public var createdAt: Int?
+    public var modifiedAt: Int?
     
     init(loginName: String, avatarUrl: String? = nil, localName: String, id: Int? = nil, blocked: Bool = false) {
         self.id = id
@@ -32,7 +32,7 @@ struct User: Codable {
         self.avatarUrl = entity.avatarUrl
         self.localName = entity.localName
         self.blocked = entity.blocked
-        self.createdAt = entity.createdAt
-        self.modifiedAt = entity.modifiedAt
+        self.createdAt = Int(entity.createdAt)
+        self.modifiedAt = Int(entity.modifiedAt)
     }
 }

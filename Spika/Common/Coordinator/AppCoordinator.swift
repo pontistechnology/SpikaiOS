@@ -21,7 +21,7 @@ class AppCoordinator: Coordinator {
     
     func start() {
         #if DEBUG
-        UserDefaults.standard.set("5BfRl2zv0GZehWA7", forKey: Constants.UserDefaults.accessToken)
+//        UserDefaults.standard.set("5BfRl2zv0GZehWA7", forKey: Constants.UserDefaults.accessToken)
         #endif
         
         if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken) {

@@ -8,14 +8,14 @@
 import Foundation
 
 public struct Message: Codable {
-    var createdAt: String?
+    var createdAt: Int?
     var fileMimeType: String?
     var filePath: String?
     var fromDeviceType: String?
     var id: Int64
     var message: String?
     var messageType: String?
-    var modifiedAt: String?
+    var modifiedAt: Int?
     var replyMessageId: Int64?
     var state: String?
     var toDeviceType: String?
@@ -46,7 +46,7 @@ public struct Message: Codable {
         if let dbChat = entity.chat {
             self.chat = Chat(entity: dbChat)
         }
-        self.createdAt = entity.createdAt
-        self.modifiedAt = entity.modifiedAt
+        self.createdAt = Int(entity.createdAt)
+        self.modifiedAt = Int(entity.modifiedAt)
     }
 }

@@ -15,8 +15,8 @@ struct Chat: Codable {
     public var typing: String?
     public var muted: Bool
     public var pinned: Bool
-    public var createdAt: String?
-    public var modifiedAt: String?
+    public var createdAt: Int?
+    public var modifiedAt: Int?
     
     init(name: String, groupUrl: String? = nil, pinned: Bool = false, id: Int? = nil, muted: Bool = false, type: String) {
         self.id = Int64(id ?? -1)
@@ -38,7 +38,7 @@ struct Chat: Codable {
         self.typing = entity.typing
         self.muted = entity.muted
         self.pinned = entity.pinned
-        self.createdAt = entity.createdAt
-        self.modifiedAt = entity.modifiedAt
+        self.createdAt = Int(entity.createdAt)
+        self.modifiedAt = Int(entity.modifiedAt)
     }
 }

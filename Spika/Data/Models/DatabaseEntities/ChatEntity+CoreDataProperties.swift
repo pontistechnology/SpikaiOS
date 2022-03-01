@@ -16,10 +16,10 @@ extension ChatEntity {
         return NSFetchRequest<ChatEntity>(entityName: "ChatEntity")
     }
 
-    @NSManaged public var createdAt: String?
+    @NSManaged public var createdAt: Int64
     @NSManaged public var groupUrl: String?
     @NSManaged public var id: Int64
-    @NSManaged public var modifiedAt: String?
+    @NSManaged public var modifiedAt: Int64
     @NSManaged public var muted: Bool
     @NSManaged public var name: String?
     @NSManaged public var pinned: Bool
@@ -44,8 +44,8 @@ extension ChatEntity {
         self.typing = chat.typing
         self.muted = chat.muted
         self.pinned = chat.pinned
-        self.createdAt = chat.createdAt
-        self.modifiedAt = chat.modifiedAt
+        self.createdAt = Int64(chat.createdAt ?? 0)
+        self.modifiedAt = Int64(chat.modifiedAt ?? 0)
     }
 
 }

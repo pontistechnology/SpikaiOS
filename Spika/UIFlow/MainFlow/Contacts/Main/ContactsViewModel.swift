@@ -155,7 +155,10 @@ class ContactsViewModel: BaseViewModel {
     
     func testLetter (_ model: AppUser) {
         if let firstChar = model.displayName?.prefix(1) {
+            
+            var names = models.value
             var letters = lettersPublisher.value
+            
             let firstChar = firstChar
             if !letters.contains(String(firstChar)) {
                 letters.append(String(firstChar))
@@ -223,12 +226,15 @@ class ContactsViewModel: BaseViewModel {
             for user in list {
                 testtest(user.displayName ?? "undefined")
                 
-                let appUser = AppUser(id: 2, displayName: user.displayName, avatarUrl: user.avatarUrl, telephoneNumber: "kurcina", telephoneNumberHashed: "", emailAddress: "", createdAt: 0)
+                let appUser = AppUser(id: 2, displayName: user.displayName, avatarUrl: user.avatarUrl, telephoneNumber: user.telephoneNumber, telephoneNumberHashed: "", emailAddress: "", createdAt: 0)
                 appUsers.append(appUser)
                 
             }
             
+//            appUsers.sort()
+            
             models.send(appUsers)
+//            testLetter(<#T##model: AppUser##AppUser#>)
         }
     }
 }

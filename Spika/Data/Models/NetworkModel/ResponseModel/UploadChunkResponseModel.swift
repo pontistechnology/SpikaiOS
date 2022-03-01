@@ -21,6 +21,6 @@ struct File: Codable {
     let fileName: String?
     let size: Int?
     let clientId: String?
-    let createdAt: Int?
+    let createdAt: String?
     let modifiedAt: String?
 }

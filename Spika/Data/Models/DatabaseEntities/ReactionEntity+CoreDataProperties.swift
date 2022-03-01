@@ -16,7 +16,7 @@ extension ReactionEntity {
         return NSFetchRequest<ReactionEntity>(entityName: "ReactionEntity")
     }
 
-    @NSManaged public var createdAt: String?
+    @NSManaged public var createdAt: Int64
     @NSManaged public var id: Int64
     @NSManaged public var modifiedAt: String?
     @NSManaged public var type: String?
