@@ -13,6 +13,7 @@ class MessageTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier = "MessageTableViewCell"
     
     private let containerView = UIView()
+    private let replyView = UIView()
     
     private var containerViewWidthConstraint = NSLayoutConstraint()
     private var containerViewHeightConstraint = NSLayoutConstraint()
@@ -30,6 +31,7 @@ class MessageTableViewCell: UITableViewCell, BaseView {
     
     func addSubviews() {
         addSubview(containerView)
+        containerView.addSubview(replyView)
         containerView.addSubview(messageLabel)
     }
     
@@ -37,6 +39,8 @@ class MessageTableViewCell: UITableViewCell, BaseView {
         containerView.backgroundColor = UIColor(hexString: "C8EBFE") // TODO: ask nika for color
         containerView.layer.cornerRadius = 10
         containerView.layer.masksToBounds = true
+        
+        replyView.backgroundColor = .chatBackground
         
         messageLabel.numberOfLines = 0
     }
@@ -49,7 +53,10 @@ class MessageTableViewCell: UITableViewCell, BaseView {
         containerViewWidthConstraint.isActive = true
         containerViewHeightConstraint.isActive = true
         
-        messageLabel.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        replyView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 10, bottom: 0, right: 10))
+        replyView.constrainHeight(54)
+        
+        messageLabel.anchor(top: replyView.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
     }
     
     func updateCell(text: String) {
@@ -60,6 +67,7 @@ class MessageTableViewCell: UITableViewCell, BaseView {
         
         messageLabel.text = text
         containerViewWidthConstraint.constant = messageSize.width + 20
-        containerViewHeightConstraint.constant = messageSize.height + 20
+        containerViewHeightConstraint.constant = messageSize.height + 20 + 54 + 10
+        
     }
 }

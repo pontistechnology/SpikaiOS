@@ -61,7 +61,7 @@ extension CurrentChatViewController: UITableViewDelegate {
             return 0
         }
         let messageSize = viewModel.messages[indexPath.row].idealSizeForMessage(font: font, maximumWidth: 256)
-        return messageSize.height + 40
+        return messageSize.height + 40 + 54
     }
 }
 

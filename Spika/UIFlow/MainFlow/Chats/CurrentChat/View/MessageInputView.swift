@@ -119,7 +119,9 @@ class MessageInputView: UIView, BaseView {
         }.store(in: &subscriptions)
 
         sendButton.tap().sink { _ in
-            self.delegate?.messageInputView(self, didPressSend: self.messageTextView.text)
+            let text = self.messageTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !text.isEmpty else { return }
+            self.delegate?.messageInputView(self, didPressSend: text)
         }.store(in: &subscriptions)
         
         microphoneButton.tap().sink { _ in
