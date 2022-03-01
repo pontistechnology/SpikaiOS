@@ -83,6 +83,11 @@ class ContactsViewController: BaseViewController {
 
         }.store(in: &subscriptions)
         
+        viewModel.models.receive(on: DispatchQueue.main).sink { names in
+            self.contactsView.tableView.reloadData()
+
+        }.store(in: &subscriptions)
+        
         viewModel.getContacts()
         viewModel.getOnlineContacts(page: 1)
     }
@@ -100,21 +105,30 @@ extension ContactsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         viewModel.lettersPublisher.value[section].uppercased()
+//        return "KITA"
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         viewModel.lettersPublisher.value.count
+//        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.namesPublisher.value.filter{$0.starts(with: viewModel.lettersPublisher.value[section])}.count
+        viewModel.models.value.filter{$0.displayName!.starts(with: viewModel.models.value[section].displayName!)}.count
+//        return viewModel.models.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
-        cell?.configureCell(image: UIImage(named: "matejVida")!, name:
-                                viewModel.namesPublisher.value.filter{ $0.starts(with: viewModel.lettersPublisher.value[indexPath.section])}[indexPath.row], desc: "test")
-//                                viewModel.namesPublisher.value[indexPath.row], desc: "test34")
+//        cell?.configureCell(image: UIImage(named: "matejVida")!, name:
+//                                viewModel.namesPublisher.value.filter{ $0.starts(with: viewModel.lettersPublisher.value[indexPath.section])}[indexPath.row], desc: "test")
+////                                viewModel.namesPublisher.value[indexPath.row], desc: "test34")
+//        
+//        cell?.configureCell(viewModel.models.value[indexPath.item])
+        
+        cell?.configureCell(viewModel.models.value.filter{
+            $0.displayName!.starts(with: viewModel.models.value[indexPath.section].displayName!)}[indexPath.row])
+        
         return cell ?? UITableViewCell()
     }
     

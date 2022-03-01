@@ -24,10 +24,10 @@ class EnterNumberViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         enterNumberView.nextButton.tap().sink { _ in
-            guard let fullNumber = self.enterNumberView.getFullNumber() else { return }
+            guard let fullNumber = self.enterNumberView.getFullNumber(), let uuid = UIDevice.current.identifierForVendor?.uuidString else { return }
             self.viewModel.authenticateWithNumber(
                 number: fullNumber,
-                deviceId: UUID().uuidString)
+                deviceId: uuid)
         }.store(in: &subscriptions)
         
         enterNumberView.logoImage.tap().sink { _ in

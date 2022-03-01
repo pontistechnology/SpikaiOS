@@ -26,7 +26,7 @@ struct Device: Codable {
     let id: Int?
     let userId: Int?
     let token: String?
-    let tokenExpiredAt: String?
+    let tokenExpiredAt: Int?
     let osName: String?
     let osVersion: Int?
     let appVersion: Int?

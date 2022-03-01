@@ -16,14 +16,14 @@ extension MessageEntity {
         return NSFetchRequest<MessageEntity>(entityName: "MessageEntity")
     }
 
-    @NSManaged public var createdAt: String?
+    @NSManaged public var createdAt: Int64
     @NSManaged public var fileMimeType: String?
     @NSManaged public var filePath: String?
     @NSManaged public var fromDeviceType: String?
     @NSManaged public var id: Int64
     @NSManaged public var message: String?
     @NSManaged public var messageType: String?
-    @NSManaged public var modifiedAt: String?
+    @NSManaged public var modifiedAt: Int64
     @NSManaged public var replyMessageId: Int64
     @NSManaged public var state: String?
     @NSManaged public var toDeviceType: String?
@@ -49,8 +49,8 @@ extension MessageEntity {
         self.replyMessageId = message.replyMessageId ?? -1
         self.state = message.state
         self.toDeviceType = message.toDeviceType
-        self.createdAt = message.createdAt
-        self.modifiedAt = message.modifiedAt
+        self.createdAt = Int64(message.createdAt ?? 0)
+        self.modifiedAt = Int64(message.modifiedAt ?? 0)
         self.chat = chat
         self.user = user
         

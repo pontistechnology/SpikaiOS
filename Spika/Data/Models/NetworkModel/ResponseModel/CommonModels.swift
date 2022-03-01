@@ -15,5 +15,5 @@ struct AppUser: Codable {
     let telephoneNumber: String?
     let telephoneNumberHashed: String?
     let emailAddress: String?
-    let createdAt: String?
+    let createdAt: Int?
 }
