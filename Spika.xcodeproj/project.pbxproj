@@ -595,7 +595,6 @@
 			isa = PBXGroup;
 			children = (
 				93E4F70027C468BB00432CFA /* CurrentChatView.swift */,
-				9396AE1227CBAC410041B4A6 /* MessageInputView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1016,6 +1015,7 @@
 		ADD503E6270DD849009D50CB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9396AE1227CBAC410041B4A6 /* MessageInputView.swift */,
 				93D86DBE27BAB47700F275B0 /* UITableViewCells */,
 				930290C327ACA2E90064BED1 /* ContactsTableView.swift */,
 				AD9BFD4F272B176800736318 /* VerificationTextFieldView */,

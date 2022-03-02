@@ -8,5 +8,15 @@
 import Foundation
 
 struct MessageTest: Codable {
-    let message: String
+    let messageType: MessageType
+    let textOfMessage: String?
+    let replyMessageId: Int?
+    let senderName: String
+}
+
+enum MessageType: String, Codable {
+    case text
+    case photo
+    case video
+    case voice
 }

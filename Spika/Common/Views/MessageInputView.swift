@@ -10,7 +10,8 @@ import UIKit
 import Combine
 
 protocol MessageInputViewDelegate: AnyObject {
-    func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String?)
+    func messageInputView(_ messageView: MessageInputView, didPressSend message: String)
+    func messageInputView(_ messageView: MessageInputView, didPressSend message: String, id: Int)
     func messageInputView(didPressCameraButton messageVeiw: MessageInputView)
     func messageInputView(didPressMicrophoneButton messageVeiw: MessageInputView)
     func messageInputView(didPressPlusButton messageVeiw: MessageInputView)
@@ -27,7 +28,8 @@ class MessageInputView: UIView, BaseView {
     private let emojiButton = UIButton()
     private let messageTextView = UITextView()
     private var replyView: ReplyMessageView?
-    private var closeReplyViewButton = UIButton()
+    private var replyViewId: Int?
+    private let closeReplyViewButton = UIButton()
     
     private var messageTextViewHeightConstraint = NSLayoutConstraint()
     private var messageTextViewTrailingConstraint = NSLayoutConstraint()
@@ -123,7 +125,11 @@ class MessageInputView: UIView, BaseView {
         sendButton.tap().sink { _ in
             let text = self.messageTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty else { return }
-            self.delegate?.messageInputView(self, didPressSend: text)
+            if let replyViewId = self.replyViewId {
+                self.delegate?.messageInputView(self, didPressSend: text, id: replyViewId)
+            } else {
+                self.delegate?.messageInputView(self, didPressSend: text)
+            }
         }.store(in: &subscriptions)
         
         microphoneButton.tap().sink { _ in
@@ -159,29 +165,29 @@ class MessageInputView: UIView, BaseView {
         }
     }
     
-    func showReplyView(view: ReplyMessageView) {
-        if replyView == nil {
+    func showReplyView(view: ReplyMessageView, id: Int) {
+        if replyView == nil && replyViewId == nil {
             replyView = view
+            replyViewId = id
             heightConstraint.constant += 60
             
             addSubview(replyView!)
             addSubview(closeReplyViewButton)
             replyView?.anchor(top: topAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 8, left: 20, bottom: 0, right: 0))
-            replyView?.constrainHeight(54)
-            replyView?.constrainWidth(140)
             
             closeReplyViewButton.anchor(top: topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 15), size: CGSize(width: 24, height: 24))
         } else {
             hideReplyView()
-            showReplyView(view: view)
+            showReplyView(view: view, id: id)
         }
     }
     
     func hideReplyView() {
-        if replyView != nil {
+        if replyView != nil && replyViewId != nil {
             replyView?.removeFromSuperview()
             closeReplyViewButton.removeFromSuperview()
             replyView = nil
+            replyViewId = nil
             heightConstraint.constant -= 60
         }
     }
