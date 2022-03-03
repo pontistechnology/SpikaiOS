@@ -29,8 +29,8 @@ class ContactsViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
-    func showDetailsScreen(id: Int) {
-        getAppCoordinator()?.presentDetailsScreen(id: id)
+    func showDetailsScreen(user: AppUser) {
+        getAppCoordinator()?.presentDetailsScreen(user: user)
     }
     
     func getChats() {

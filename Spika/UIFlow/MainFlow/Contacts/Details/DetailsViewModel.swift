@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import Combine
 
 class DetailsViewModel: BaseViewModel {
     
-    let id: Int
+    let user: AppUser
+    let userSubject: CurrentValueSubject<AppUser, Never>
     
-    init(repository: Repository, coordinator: Coordinator, id: Int) {
-        self.id = id
+    init(repository: Repository, coordinator: Coordinator, user: AppUser) {
+        self.user = user
+        self.userSubject = CurrentValueSubject<AppUser, Never>(user)
         super.init(repository: repository, coordinator: coordinator)
     }
     

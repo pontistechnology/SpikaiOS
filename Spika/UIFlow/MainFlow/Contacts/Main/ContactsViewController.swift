@@ -89,9 +89,8 @@ extension ContactsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("t: ", indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
-        if let userId = viewModel.contactsSubject.value[indexPath.section][indexPath.row].id {
-            viewModel.showDetailsScreen(id: userId)
-        }
+        let user = viewModel.contactsSubject.value[indexPath.section][indexPath.row]
+        viewModel.showDetailsScreen(user: user)
     }
 }
 

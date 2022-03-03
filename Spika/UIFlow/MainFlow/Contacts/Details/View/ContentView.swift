@@ -63,7 +63,8 @@ class ContentView: UIView, BaseView {
     func styleSubviews() {
         
         profilePhoto.image = UIImage(named: "matejVida")
-        profilePhoto.layer.cornerRadius = 24
+        profilePhoto.layer.cornerRadius = 50
+        profilePhoto.contentMode = .scaleAspectFill
         profilePhoto.clipsToBounds = true
         
         optionButtonsStackView.axis = .vertical
