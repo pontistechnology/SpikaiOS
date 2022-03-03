@@ -79,9 +79,14 @@ extension CurrentChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let cell = tableView.cellForRow(at: indexPath) as? MessageTableViewCell
-        print("replyId is: ", cell?.replyId)
-    }
+        
+        guard let replyId = cell?.replyId else {
+            return
+        }
+//        tableView.scrollToRow(at: IndexPath(row: replyId, section: indexPath.section), at: .middle, animated: true)
+        tableView.selectRow(at: IndexPath(row: replyId, section: indexPath.section), animated: true, scrollPosition: .middle)
     
+    }
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
             self.currentChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.testMessages[indexPath.row]), id: indexPath.row)

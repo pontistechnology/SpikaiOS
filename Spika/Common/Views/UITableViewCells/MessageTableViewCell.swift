@@ -85,7 +85,7 @@ class MessageTableViewCell: UITableViewCell, BaseView {
             return
         }
         
-        replyId = replyMessage.replyMessageId
+        replyId = message.replyMessageId
         let messageSize = message.textOfMessage!.idealSizeForMessage(font: font, maximumWidth: 256)
         messageLabel.text = message.textOfMessage
         
@@ -99,10 +99,10 @@ class MessageTableViewCell: UITableViewCell, BaseView {
     }
     
     override func prepareForReuse() {
-        print("neke stvari:", replyId, replyView)
-        super.prepareForReuse()
         replyView?.removeFromSuperview()
         replyView = nil
+        replyId = nil
         messageLabel.text = ""
+        super.prepareForReuse()
     }
 }

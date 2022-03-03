@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "Ellipse 139.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "Ellipse 139@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Ellipse 139@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "send icon.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
