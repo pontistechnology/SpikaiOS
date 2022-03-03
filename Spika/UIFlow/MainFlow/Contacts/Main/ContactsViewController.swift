@@ -30,6 +30,7 @@ class ContactsViewController: BaseViewController {
     func setupBindings() {
         contactsView.tableView.dataSource = self
         contactsView.tableView.delegate   = self
+        contactsView.searchBar.delegate = self
         
         //TODO: delete this cooments
 //        contactsView.detailsButton.tap().sink { _ in
@@ -56,6 +57,8 @@ class ContactsViewController: BaseViewController {
         
         viewModel.getContacts()
         viewModel.getOnlineContacts(page: 1)
+        
+        
     }
     
 }
@@ -91,6 +94,18 @@ extension ContactsViewController: UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         let user = viewModel.contactsSubject.value[indexPath.section][indexPath.row]
         viewModel.showDetailsScreen(user: user)
+    }
+}
+
+extension ContactsViewController: SearchBarDelegate {
+    func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
+        if let value = value {
+            viewModel.filterContactsUI(filter: value)
+        }
+    }
+    
+    func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
+        viewModel.filterContactsUI(filter: "")
     }
 }
 

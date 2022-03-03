@@ -12,6 +12,7 @@ class ContactsViewModel: BaseViewModel {
     
     let chatsSubject = CurrentValueSubject<[Chat], Never>([])
     let contactsSubject = CurrentValueSubject<[[AppUser]], Never>([])
+    var users = Array<AppUser>()
     
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
@@ -179,27 +180,37 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { response in
             print("Success: ", response)
-            self.updateContactsUI(response: response)
+            if let list = response.data?.list {
+                self.users = list
+                self.updateContactsUI(list: list)
+            }
             
         }.store(in: &subscriptions)
     }
     
-    func updateContactsUI(response: ContactsResponseModel) {
-        if let list = response.data?.list {
-
+    func updateContactsUI(list: [AppUser]) {
             //TODO: check if sort needed
 //            list.sort()
-            
-            var tableAppUsers = Array<Array<AppUser>>()
-            for appUser in list {
-                if let char1 = appUser.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
-                    tableAppUsers[tableAppUsers.count - 1].append(appUser)
-                } else {
-                    tableAppUsers.append([appUser])
-                }
+          
+        var tableAppUsers = Array<Array<AppUser>>()
+        for appUser in list {
+            if let char1 = appUser.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
+                tableAppUsers[tableAppUsers.count - 1].append(appUser)
+            } else {
+                tableAppUsers.append([appUser])
             }
-            
-            contactsSubject.send(tableAppUsers)
+        }
+        
+        contactsSubject.send(tableAppUsers)
+        
+    }
+    
+    func filterContactsUI(filter: String) {
+        if filter.isEmpty {
+            updateContactsUI(list: users)
+        } else {
+            let filteredContacts = users.filter{ $0.displayName!.contains(filter) }
+            updateContactsUI(list: filteredContacts)
         }
     }
 }
