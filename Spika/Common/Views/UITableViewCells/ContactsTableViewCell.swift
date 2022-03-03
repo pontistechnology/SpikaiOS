@@ -33,6 +33,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     func styleSubviews() {
         leftImageView.clipsToBounds = true
         leftImageView.layer.cornerRadius = 21
+        leftImageView.contentMode = .scaleAspectFill
         nameLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 1
     }
