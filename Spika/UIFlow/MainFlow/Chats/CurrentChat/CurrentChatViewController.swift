@@ -69,11 +69,26 @@ extension CurrentChatViewController: MessageInputViewDelegate {
 
 extension CurrentChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let font = UIFont(name: CustomFontName.MontserratMedium.rawValue, size: 14) else {
-            return 0
+        let message = viewModel.testMessages[indexPath.row]
+        switch message.messageType {
+            
+        case .text:
+            guard let font = MessageTableViewCell.defaultTextFont,
+                  let textOfMessage = message.textOfMessage else {
+                print("GUARD: Font or TextOfMessage is missing.")
+                return 0
+            }
+            let messageSize = textOfMessage.idealSizeForMessage(font: font, maximumWidth: MessageTableViewCell.textMaximumWidth)
+            return messageSize.height + MessageTableViewCell.seenViewHeight + MessageTableViewCell.textPadding +
+            (message.replyMessageId != nil ? ReplyMessageView.replyMessageViewHeight + MessageTableViewCell.replyViewPadding : 0)
+        case .photo, .video:
+            // TODO: add landscape
+            return MessageTableViewCell.portraitMediaHeight + MessageTableViewCell.seenViewHeight + (message.replyMessageId != nil ? ReplyMessageView.replyMessageViewHeight + MessageTableViewCell.replyViewPadding : 0)
+        case .voice:
+            return VoiceMessageView.voiceMessageHeight + MessageTableViewCell.seenViewHeight + (message.replyMessageId != nil
+                         ? ReplyMessageView.replyMessageViewHeight + MessageTableViewCell.replyViewPadding
+                         : 0)
         }
-        let messageSize = viewModel.testMessages[indexPath.row].textOfMessage!.idealSizeForMessage(font: font, maximumWidth: 256)
-        return messageSize.height + 40 + (viewModel.testMessages[indexPath.row].replyMessageId != nil ? ReplyMessageView.replyMessageViewHeight + 10 : 0)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -83,7 +98,6 @@ extension CurrentChatViewController: UITableViewDelegate {
         guard let replyId = cell?.replyId else {
             return
         }
-//        tableView.scrollToRow(at: IndexPath(row: replyId, section: indexPath.section), at: .middle, animated: true)
         tableView.selectRow(at: IndexPath(row: replyId, section: indexPath.section), animated: true, scrollPosition: .middle)
     
     }
@@ -107,17 +121,11 @@ extension CurrentChatViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseIdentifier, for: indexPath) as? MessageTableViewCell
         
         if let replyId = viewModel.testMessages[indexPath.row].replyMessageId {
-            cell?.updateCell(message: viewModel.testMessages[indexPath.row], replyMessage: viewModel.testMessages[replyId])
-            cell?.delegate = self
+//            cell?.updateCell(message: viewModel.testMessages[indexPath.row], replyMessage: viewModel.testMessages[replyId])
+            cell?.testUpdate(message: viewModel.testMessages[indexPath.row], replyMessage: viewModel.testMessages[replyId])
         } else {
-            cell?.updateCell(message: viewModel.testMessages[indexPath.row])
+            cell?.testUpdate(message: viewModel.testMessages[indexPath.row])
         }
         return cell ?? UITableViewCell()
-    }
-}
-
-extension CurrentChatViewController: MessageTableViewCellDelegate {
-    func messageTableViewCell(didPressOnReplyView: Bool) {
-        print("prinaj")
     }
 }

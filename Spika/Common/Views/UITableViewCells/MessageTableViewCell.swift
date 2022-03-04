@@ -9,29 +9,33 @@ import Foundation
 import Combine
 import UIKit
 
-protocol MessageTableViewCellDelegate: AnyObject {
-    func messageTableViewCell(didPressOnReplyView: Bool)
-}
-
 class MessageTableViewCell: UITableViewCell, BaseView {
     
     static let reuseIdentifier = "MessageTableViewCell"
+    static let seenViewHeight  = 20.0
+    static let textPadding = 20.0
+    static let textMaximumWidth  = 256.0
+    static let portraitMediaHeight = 240.0
+    static let landscapeMediaHeight = 140.0
+    static let replyViewPadding = 20.0
+    static let defaultTextFont = UIFont(name: CustomFontName.MontserratMedium.rawValue, size: 14)
     
     private let containerView = UIView()
     private var replyView: ReplyMessageView?
+    private var seenImageView = UIImageView(image: UIImage(named: "seen"))
     
     private var containerViewWidthConstraint = NSLayoutConstraint()
     private var containerViewHeightConstraint = NSLayoutConstraint()
     
-    var messageLabel = CustomLabel(text: " ")
+    let messageLabel = CustomLabel(text: " ")
+    let mediaImageView = UIImageView(image: UIImage(named: "leaf"))
+    let voiceMessageView = VoiceMessageView(duration: 123)
+    
     var replyId: Int?
-    weak var delegate: MessageTableViewCellDelegate?
-    var subs = Set<AnyCancellable>()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
-        setupBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -40,66 +44,131 @@ class MessageTableViewCell: UITableViewCell, BaseView {
     
     func addSubviews() {
         addSubview(containerView)
-        containerView.addSubview(messageLabel)
+        addSubview(seenImageView)
     }
     
     func styleSubviews() {
+//        clipsToBounds = true
+//        backgroundColor = .purple
         containerView.backgroundColor = UIColor(hexString: "C8EBFE") // TODO: ask nika for color
         containerView.layer.cornerRadius = 10
         containerView.layer.masksToBounds = true
         
         messageLabel.numberOfLines = 0
+    
     }
         
     func positionSubviews() {
         
         containerView.anchor(top: topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
-        containerViewWidthConstraint = containerView.widthAnchor.constraint(equalToConstant: 20)
-        containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: 20)
+        containerViewWidthConstraint = containerView.widthAnchor.constraint(equalToConstant: 0)
+        containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: 0)
         containerViewWidthConstraint.isActive = true
         containerViewHeightConstraint.isActive = true
         
-        messageLabel.anchor(leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        seenImageView.anchor(top: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 0), size: CGSize(width: 16, height: 16))
     }
     
-    func setupBindings() {
-        replyView?.tap().sink(receiveValue: { _ in
-            print("kliknuoooo")
-        }).store(in: &subs)
+    private func updateContainerViewDimensions(width: CGFloat, height: CGFloat) {
+        containerViewWidthConstraint.constant = width > 276 ? 276 : width
+        containerViewHeightConstraint.constant = height
     }
     
-    func updateCell(message: MessageTest) {
-        
-        guard let font = UIFont(name: CustomFontName.MontserratMedium.rawValue, size: 14) else {
+    private func addMessageLabel() {
+        containerView.addSubview(messageLabel)
+        messageLabel.anchor(leading: containerView.leadingAnchor,
+                            bottom: containerView.bottomAnchor,
+                            trailing: containerView.trailingAnchor,
+                            padding: UIEdgeInsets(top: 0,
+                                                  left: MessageTableViewCell.textPadding / 2,
+                                                  bottom: MessageTableViewCell.textPadding / 2,
+                                                  right: MessageTableViewCell.textPadding / 2))
+    }
+    
+    private func addMediaView() {
+        containerView.addSubview(mediaImageView)
+        mediaImageView.anchor(leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 2, bottom: 2, right: 2))
+        mediaImageView.constrainHeight(MessageTableViewCell.portraitMediaHeight)
+    }
+    
+    private func addVoiceMessageView() {
+        containerView.addSubview(voiceMessageView)
+        voiceMessageView.anchor(leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        voiceMessageView.constrainHeight(VoiceMessageView.voiceMessageHeight)
+    }
+    
+    private func addReplyView() {
+        guard let replyView = replyView else {
+            print("GUARD: ReplyView doesn't exist.")
             return
         }
-        let messageSize = message.textOfMessage!.idealSizeForMessage(font: font, maximumWidth: 256)
-        messageLabel.text = message.textOfMessage
-        
-        containerViewWidthConstraint.constant = messageSize.width + 20
-        containerViewHeightConstraint.constant = messageSize.height + 20
+        containerView.addSubview(replyView)
+        replyView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0))
     }
     
-    func updateCell(message: MessageTest, replyMessage: MessageTest) {
-        guard let font = UIFont(name: CustomFontName.MontserratMedium.rawValue, size: 14) else {
+    //TEST
+    func testUpdate(message: MessageTest, replyMessage: MessageTest? = nil) {
+        
+        guard let font = MessageTableViewCell.defaultTextFont else {
+            print("Font is missing.")
             return
         }
         
-        replyId = message.replyMessageId
-        let messageSize = message.textOfMessage!.idealSizeForMessage(font: font, maximumWidth: 256)
-        messageLabel.text = message.textOfMessage
+        switch message.messageType {
+        case .text:
+            guard let textOfMessage = message.textOfMessage else {
+                print("GUARD: TextOfMessage is missing.")
+                return
+            }
+            let messageSize = textOfMessage.idealSizeForMessage(font: font, maximumWidth: MessageTableViewCell.textMaximumWidth)
+            
+            if let replyMessage = replyMessage {
+                updateContainerViewDimensions(width: MessageTableViewCell.textPadding + (messageSize.width < ReplyMessageView.replyMessageViewWidth
+                                                                                         ? ReplyMessageView.replyMessageViewWidth
+                                                                                         : messageSize.width),
+                                              height: messageSize.height + MessageTableViewCell.textPadding / 2 + ReplyMessageView.replyMessageViewHeight + MessageTableViewCell.replyViewPadding)
+                replyId = message.replyMessageId
+                replyView = ReplyMessageView(message: replyMessage)
+                addReplyView()
+            } else {
+                updateContainerViewDimensions(width: messageSize.width + MessageTableViewCell.textPadding,
+                                              height: messageSize.height + MessageTableViewCell.textPadding)
+            }
         
-        containerViewWidthConstraint.constant = messageSize.width < ReplyMessageView.replyMessageViewWidth ? ReplyMessageView.replyMessageViewWidth + 20 : messageSize.width + 20
-        containerViewHeightConstraint.constant = messageSize.height + 20 + 54 + 10
-        
-        replyView = ReplyMessageView(message: replyMessage)
-        addSubview(replyView!)
-        replyView!.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, padding: UIEdgeInsets(top: 8, left: 10, bottom: 0, right: 0))
-        
+            messageLabel.text = textOfMessage
+            addMessageLabel()
+            
+        case .photo, .video:
+            if let replyMessage = replyMessage {
+                updateContainerViewDimensions(width: 160, height: MessageTableViewCell.portraitMediaHeight + ReplyMessageView.replyMessageViewHeight + MessageTableViewCell.replyViewPadding)
+                replyId = message.replyMessageId
+                replyView = ReplyMessageView(message: replyMessage)
+                addReplyView()
+            } else {
+                updateContainerViewDimensions(width: 160, height: 240)
+            }
+            
+            addMediaView()
+        case .voice:
+            
+            if let replyMessage = replyMessage {
+                updateContainerViewDimensions(width: 240, height: 50 + ReplyMessageView.replyMessageViewHeight + MessageTableViewCell.replyViewPadding)
+                replyId = message.replyMessageId
+                replyView = ReplyMessageView(message: replyMessage)
+                addReplyView()
+            } else {
+                updateContainerViewDimensions(width: 240, height: 50)
+            }
+            addVoiceMessageView()
+        }
     }
     
     override func prepareForReuse() {
         replyView?.removeFromSuperview()
+        mediaImageView.removeFromSuperview()
+        messageLabel.removeFromSuperview()
+        voiceMessageView.removeFromSuperview()
+        
         replyView = nil
         replyId = nil
         messageLabel.text = ""

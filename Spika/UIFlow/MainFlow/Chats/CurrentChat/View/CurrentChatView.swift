@@ -31,7 +31,7 @@ class CurrentChatView: UIView, BaseView {
     
     func styleSubviews() {
         messagesTableView.backgroundColor = .blue
-        messagesTableView.separatorStyle  = .none
+//        messagesTableView.separatorStyle  = .none
     }
     
     func positionSubviews() {        
