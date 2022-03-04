@@ -72,8 +72,8 @@ class AppCoordinator: Coordinator {
         ]
     }
     
-    func presentDetailsScreen(id: Int) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(DetailsViewController.self, arguments: self, id)!
+    func presentDetailsScreen(user: AppUser) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(DetailsViewController.self, arguments: self, user)!
 //        self.currentViewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }

@@ -63,6 +63,12 @@ class DetailsViewController: BaseViewController {
         detailsView.contentView.messageButton.tap().sink { _ in
             self.viewModel.presentCurrentChatScreen()
         }.store(in: &subscriptions)
+        
+        viewModel.userSubject.receive(on: DispatchQueue.main).sink { user in
+            self.detailsView.contentView.nameLabel.text = user.displayName
+            let url = URL(string: user.avatarUrl ?? "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
+            self.detailsView.contentView.profilePhoto.kf.setImage(with: url)
+        }.store(in: &subscriptions)
     }
     
     

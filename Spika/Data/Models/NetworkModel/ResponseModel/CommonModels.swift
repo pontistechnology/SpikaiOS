@@ -16,4 +16,18 @@ struct AppUser: Codable {
     let telephoneNumberHashed: String?
     let emailAddress: String?
     let createdAt: Int?
+    
+    
 }
+
+extension AppUser: Comparable {
+    static func < (lhs: AppUser, rhs: AppUser) -> Bool {
+        return lhs.displayName! < rhs.displayName!
+    }
+    
+    static func == (lhs: AppUser, rhs: AppUser) -> Bool {
+        return lhs.displayName! == rhs.displayName!
+    }
+}
+
+

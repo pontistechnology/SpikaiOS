@@ -11,9 +11,8 @@ import Combine
 class ContactsViewModel: BaseViewModel {
     
     let chatsSubject = CurrentValueSubject<[Chat], Never>([])
-    lazy var namesPublisher   = CurrentValueSubject<[String], Never>([])
-    lazy var lettersPublisher = CurrentValueSubject<[String], Never>([])
-    lazy var models = CurrentValueSubject<[AppUser], Never>([])
+    let contactsSubject = CurrentValueSubject<[[AppUser]], Never>([])
+    var users = Array<AppUser>()
     
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
@@ -31,8 +30,8 @@ class ContactsViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
-    func showDetailsScreen(id: Int) {
-        getAppCoordinator()?.presentDetailsScreen(id: id)
+    func showDetailsScreen(user: AppUser) {
+        getAppCoordinator()?.presentDetailsScreen(user: user)
     }
     
     func getChats() {
@@ -139,35 +138,6 @@ class ContactsViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
-    func testtest(_ name: String) {
-        var names = namesPublisher.value
-        var letters = lettersPublisher.value
-        names.append(name)
-        names.sort()
-        let firstChar = String(name.prefix(1))
-        if !letters.contains(firstChar) {
-            letters.append(firstChar)
-            letters.sort()
-        }
-        namesPublisher.send(names)
-        lettersPublisher.send(letters)
-    }
-    
-    func testLetter (_ model: AppUser) {
-        if let firstChar = model.displayName?.prefix(1) {
-            
-            var names = models.value
-            var letters = lettersPublisher.value
-            
-            let firstChar = firstChar
-            if !letters.contains(String(firstChar)) {
-                letters.append(String(firstChar))
-                letters.sort()
-            }
-            lettersPublisher.send(letters)
-        }
-    }
-    
     func getContacts() {
         ContactsUtils.getContacts().sink { completion in
             switch completion {
@@ -210,31 +180,37 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { response in
             print("Success: ", response)
-            self.test(response: response)
-            
             if let list = response.data?.list {
-               
-//                models.send(completion: list)
+                self.users = list
+                self.updateContactsUI(list: list)
             }
             
         }.store(in: &subscriptions)
     }
     
-    func test(response: ContactsResponseModel) {
-        if let list = response.data?.list {
-            var appUsers = Array<AppUser>()
-            for user in list {
-                testtest(user.displayName ?? "undefined")
-                
-                let appUser = AppUser(id: 2, displayName: user.displayName, avatarUrl: user.avatarUrl, telephoneNumber: user.telephoneNumber, telephoneNumberHashed: "", emailAddress: "", createdAt: 0)
-                appUsers.append(appUser)
-                
+    func updateContactsUI(list: [AppUser]) {
+            //TODO: check if sort needed
+//            list.sort()
+          
+        var tableAppUsers = Array<Array<AppUser>>()
+        for appUser in list {
+            if let char1 = appUser.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
+                tableAppUsers[tableAppUsers.count - 1].append(appUser)
+            } else {
+                tableAppUsers.append([appUser])
             }
-            
-//            appUsers.sort()
-            
-            models.send(appUsers)
-//            testLetter(<#T##model: AppUser##AppUser#>)
+        }
+        
+        contactsSubject.send(tableAppUsers)
+        
+    }
+    
+    func filterContactsUI(filter: String) {
+        if filter.isEmpty {
+            updateContactsUI(list: users)
+        } else {
+            let filteredContacts = users.filter{ $0.displayName!.contains(filter) }
+            updateContactsUI(list: filteredContacts)
         }
     }
 }
