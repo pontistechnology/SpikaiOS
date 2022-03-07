@@ -24,6 +24,7 @@ struct Constants {
         static let uploadFiles = "api/upload/files"
         static let userInfo = "api/messenger/me"
         static let contacts = "api/messenger/contacts"
+        static let createRoom = "api/messenger/rooms"
     }
     
     struct Database {

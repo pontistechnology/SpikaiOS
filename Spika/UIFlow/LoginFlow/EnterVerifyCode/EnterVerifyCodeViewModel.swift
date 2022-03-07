@@ -31,7 +31,6 @@ class EnterVerifyCodeViewModel: BaseViewModel {
             default: break
             }
         } receiveValue: { [weak self] authModel in
-            print("auth model verify code : ", authModel)
             guard let user = authModel.data?.user,
                   let device = authModel.data?.device
             else {

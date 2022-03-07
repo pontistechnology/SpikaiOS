@@ -16,8 +16,6 @@ struct AppUser: Codable {
     let telephoneNumberHashed: String?
     let emailAddress: String?
     let createdAt: Int?
-    
-    
 }
 
 extension AppUser: Comparable {

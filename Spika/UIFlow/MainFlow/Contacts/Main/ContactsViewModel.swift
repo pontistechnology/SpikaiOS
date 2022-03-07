@@ -1,4 +1,3 @@
-//
 //  ContactsViewModel.swift
 //  Spika
 //
@@ -209,7 +208,7 @@ class ContactsViewModel: BaseViewModel {
         if filter.isEmpty {
             updateContactsUI(list: users)
         } else {
-            let filteredContacts = users.filter{ $0.displayName!.contains(filter) }
+            let filteredContacts = users.filter{ $0.displayName!.lowercased().contains(filter.lowercased()) }
             updateContactsUI(list: filteredContacts)
         }
     }

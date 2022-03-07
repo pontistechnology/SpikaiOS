@@ -28,7 +28,7 @@ class AllChatsViewController: BaseViewController {
         allChatsView.allChatsTableView.dataSource = self
         
         allChatsView.pencilImageView.tap().sink { [weak self] _ in
-            self?.viewModel.presentNewChatScreen()
+            self?.viewModel.presentSelectUserScreen()
         }.store(in: &subscriptions)
     }
     

@@ -58,10 +58,6 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         
         let url = URL(string: model.avatarUrl ?? "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
         leftImageView.kf.setImage(with: url)
-        
-//        leftImageView.kf.setImage(with: model.avatarUrl) { nj, nju in
-//            print("kurcina")
-//        }
     }
     
     override func prepareForReuse() {

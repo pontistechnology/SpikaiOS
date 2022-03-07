@@ -51,6 +51,9 @@ class VoiceMessageView: UIView, BaseView {
     
     func positionSubviews() {
         
+        constrainWidth(240)
+        constrainHeight(50)
+        
         playButton.anchor(leading: leadingAnchor, padding: UIEdgeInsets(top: 0, left: 13, bottom: 0, right: 0), size: CGSize(width: 24, height: 24))
         playButton.centerYToSuperview()
         

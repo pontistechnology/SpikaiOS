@@ -12,11 +12,20 @@ struct MessageTest: Codable {
     let textOfMessage: String?
     let replyMessageId: Int?
     let senderName: String
+    let isMyMessage: Bool
 }
 
-enum MessageType: String, Codable {
+enum MessageType: Codable {
     case text
     case photo
     case video
     case voice
+}
+
+enum MessageState {
+    case sent
+    case delivered
+    case seen
+    case fail
+    case waiting
 }

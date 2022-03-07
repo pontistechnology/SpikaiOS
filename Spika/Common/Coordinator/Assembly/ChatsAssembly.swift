@@ -10,20 +10,21 @@ import Swinject
 
 class ChatsAssembly: Assembly {
     func assemble(container: Container) {
-        assembleNewChatViewController(container)
+        assembleSelectUserViewController(container)
         assembleCurrentChatViewController(container)
+        assembleNewGroupChatViewController(container)
     }
     
     
-    private func assembleNewChatViewController(_ container: Container) {
-        container.register(NewChatViewModel.self) { (resolver, coordinator: AppCoordinator) in
+    private func assembleSelectUserViewController(_ container: Container) {
+        container.register(SelectUsersViewModel.self) { (resolver, coordinator: AppCoordinator) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return NewChatViewModel(repository: repository, coordinator: coordinator)
+            return SelectUsersViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
-        container.register(NewChatViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let controller = NewChatViewController()
-            controller.viewModel = container.resolve(NewChatViewModel.self, argument: coordinator)
+        container.register(SelectUsersViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = SelectUsersViewController()
+            controller.viewModel = container.resolve(SelectUsersViewModel.self, argument: coordinator)
             return controller
         }.inObjectScope(.transient)
     }
@@ -37,6 +38,19 @@ class ChatsAssembly: Assembly {
         container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator) in
             let controller = CurrentChatViewController()
             controller.viewModel = container.resolve(CurrentChatViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleNewGroupChatViewController(_ container: Container) {
+        container.register(NewGroupChatViewModel.self) { (resolver, coordinator: AppCoordinator, selectedUser: [AppUser]) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return NewGroupChatViewModel(repository: repository, coordinator: coordinator, selectedUsers: selectedUser)
+        }.inObjectScope(.transient)
+
+        container.register(NewGroupChatViewController.self) { (resolver, coordinator: AppCoordinator, selectedUsers: [AppUser]) in
+            let controller = NewGroupChatViewController()
+            controller.viewModel = container.resolve(NewGroupChatViewModel.self, arguments: coordinator, selectedUsers)
             return controller
         }.inObjectScope(.transient)
     }

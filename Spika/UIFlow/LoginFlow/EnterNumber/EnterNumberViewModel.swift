@@ -17,11 +17,9 @@ class EnterNumberViewModel: BaseViewModel {
             switch completion {
             case let .failure(error):
                 PopUpManager.shared.presentAlert(errorMessage: "Could not auth user: \(error)")
-                print(error)
             default: break
             }
         } receiveValue: { [weak self] authResponse in
-            print("AUTH Response: ", authResponse)
             self?.presentEnterVerifyCodeScreen(number: number, deviceId: deviceId)
         }.store(in: &subscriptions)
 

@@ -30,7 +30,6 @@ class EnterVerifyCodeViewController: BaseViewController {
     
     func setupBindings() {
         enterVerifyCodeView.nextButton.tap().sink { _ in
-            print("VerifyCode Next tap: ")
             self.viewModel.verifyCode(code: self.enterVerifyCodeView.verificationTextFieldView.code)
         }.store(in: &subscriptions)
         

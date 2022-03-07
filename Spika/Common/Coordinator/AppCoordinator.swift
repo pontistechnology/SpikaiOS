@@ -118,14 +118,21 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewController, animated: true, completion: nil)
     }
     
-    func presentNewChatScreen() {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(NewChatViewController.self, argument: self)!
-        navigationController.present(viewController, animated: true, completion: nil)
+    func presentSelectUserScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(SelectUsersViewController.self, argument: self)!
+        let navC = UINavigationController(rootViewController: viewController)
+        navigationController.present(navC, animated: true, completion: nil)
     }
     
     func presentCurrentChatScreen(animated: Bool = true) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, argument: self)!
         navigationController.pushViewController(viewController, animated: animated)
+    }
+    
+    func presentNewGroupChatScreen(selectedMembers: [AppUser]) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroupChatViewController.self, arguments: self, selectedMembers)!
+        let selectUserVC = navigationController.presentedViewController as? UINavigationController
+        selectUserVC?.pushViewController(viewController, animated: true)
     }
     
 }

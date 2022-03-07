@@ -22,7 +22,7 @@ class MessageTableViewCell: UITableViewCell, BaseView {
     
     private let containerView = UIView()
     private var replyView: ReplyMessageView?
-    private var seenImageView = UIImageView(image: UIImage(named: "seen"))
+    private var messageStateView = MessageStateView(state: .waiting)
     
     private var containerViewWidthConstraint = NSLayoutConstraint()
     private var containerViewHeightConstraint = NSLayoutConstraint()
@@ -44,30 +44,32 @@ class MessageTableViewCell: UITableViewCell, BaseView {
     
     func addSubviews() {
         addSubview(containerView)
-        addSubview(seenImageView)
+        addSubview(messageStateView)
     }
     
     func styleSubviews() {
-//        clipsToBounds = true
-//        backgroundColor = .purple
+        
+        contentView.backgroundColor = .yellow
+        
         containerView.backgroundColor = UIColor(hexString: "C8EBFE") // TODO: ask nika for color
         containerView.layer.cornerRadius = 10
         containerView.layer.masksToBounds = true
         
         messageLabel.numberOfLines = 0
-    
     }
         
     func positionSubviews() {
         
         containerView.anchor(top: topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
-        containerViewWidthConstraint = containerView.widthAnchor.constraint(equalToConstant: 0)
-        containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: 0)
-        containerViewWidthConstraint.isActive = true
+        containerViewWidthConstraint  = containerView.widthAnchor.constraint(equalToConstant: 80)
+        containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: 80)
+        containerViewHeightConstraint.priority = .defaultLow
+        containerViewWidthConstraint.isActive  = true
         containerViewHeightConstraint.isActive = true
-        
-        seenImageView.anchor(top: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 0), size: CGSize(width: 16, height: 16))
+
+        messageStateView.anchor(top: containerView.bottomAnchor, bottom: bottomAnchor,  trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 0))
     }
+    
     
     private func updateContainerViewDimensions(width: CGFloat, height: CGFloat) {
         containerViewWidthConstraint.constant = width > 276 ? 276 : width
