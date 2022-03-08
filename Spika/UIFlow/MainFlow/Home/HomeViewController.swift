@@ -21,6 +21,7 @@ class HomeViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageViewController()
+//        homeTabBar.handleTap(homeTabBar.tabs[2])
     }
     
     func configurePageViewController() {

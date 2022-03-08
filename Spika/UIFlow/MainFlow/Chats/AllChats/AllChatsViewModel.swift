@@ -14,6 +14,6 @@ class AllChatsViewModel: BaseViewModel {
     }
     
     func presentCurrentChatScreen() {
-        getAppCoordinator()?.presentCurrentChatScreen()
+//        getAppCoordinator()?.presentCurrentChatScreen()
     }
 }

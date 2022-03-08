@@ -25,6 +25,8 @@ struct Constants {
         static let userInfo = "api/messenger/me"
         static let contacts = "api/messenger/contacts"
         static let createRoom = "api/messenger/rooms"
+        static let checkRoom = "api/messenger/rooms/users"
+        static let sendMessage = "api/messenger/messages"
     }
     
     struct Database {

@@ -19,10 +19,9 @@ struct RoomData: Codable {
 
 struct Room: Codable {
     let id: Int
+    let type: String
     let name: String
     let users: [RoomUser]
-    let avatarUrl: String
-    let type: String
     let createdAt: Int
 }
 

@@ -14,4 +14,16 @@ extension TestRepository {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
+    
+    func checkRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error> {
+        return Fail<CheckRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func createRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error> {
+        return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 }

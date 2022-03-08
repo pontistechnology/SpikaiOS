@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - User
 struct AppUser: Codable {
-    let id: Int?
+    let id: Int
     let displayName: String?
     let avatarUrl: String?
     let telephoneNumber: String?

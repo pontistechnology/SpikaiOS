@@ -61,7 +61,7 @@ class DetailsViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         detailsView.contentView.messageButton.tap().sink { _ in
-            self.viewModel.presentCurrentChatScreen()
+            self.viewModel.presentCurrentChatScreen(user: self.viewModel.user)
         }.store(in: &subscriptions)
         
         viewModel.userSubject.receive(on: DispatchQueue.main).sink { user in

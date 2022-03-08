@@ -18,6 +18,9 @@
 		931E23A927D2DCDA0065FFFC /* MessageStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23A827D2DCDA0065FFFC /* MessageStateView.swift */; };
 		931E23AC27D3172C0065FFFC /* MediaMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23AB27D3172C0065FFFC /* MediaMessageTableViewCell.swift */; };
 		931E23AE27D317390065FFFC /* VoiceMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23AD27D317390065FFFC /* VoiceMessageTableViewCell.swift */; };
+		93227E9627D6D99D002E3DED /* CheckRoomResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9527D6D99D002E3DED /* CheckRoomResponseModel.swift */; };
+		93227E9827D6ED70002E3DED /* SendMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9727D6ED70002E3DED /* SendMessageRequest.swift */; };
+		93227E9A27D6EE47002E3DED /* SendMessageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9927D6EE47002E3DED /* SendMessageResponse.swift */; };
 		9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6827B3702000FA0EB1 /* DetailsView.swift */; };
 		9323EC6B27B3E8D500FA0EB1 /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6A27B3E8D500FA0EB1 /* NavView.swift */; };
 		9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */; };
@@ -217,6 +220,9 @@
 		931E23A827D2DCDA0065FFFC /* MessageStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStateView.swift; sourceTree = "<group>"; };
 		931E23AB27D3172C0065FFFC /* MediaMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaMessageTableViewCell.swift; sourceTree = "<group>"; };
 		931E23AD27D317390065FFFC /* VoiceMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessageTableViewCell.swift; sourceTree = "<group>"; };
+		93227E9527D6D99D002E3DED /* CheckRoomResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomResponseModel.swift; sourceTree = "<group>"; };
+		93227E9727D6ED70002E3DED /* SendMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageRequest.swift; sourceTree = "<group>"; };
+		93227E9927D6EE47002E3DED /* SendMessageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageResponse.swift; sourceTree = "<group>"; };
 		9323EC6827B3702000FA0EB1 /* DetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		9323EC6A27B3E8D500FA0EB1 /* NavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavView.swift; sourceTree = "<group>"; };
 		9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchView.swift; sourceTree = "<group>"; };
@@ -899,6 +905,7 @@
 				930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */,
 				930290BB27A9FB180064BED1 /* UserRequestModel.swift */,
 				938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */,
+				93227E9727D6ED70002E3DED /* SendMessageRequest.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -912,6 +919,8 @@
 				930290BD27A9FCE30064BED1 /* UserResponseModel.swift */,
 				930290BF27A9FDBE0064BED1 /* CommonModels.swift */,
 				938D053727D5C05F002E5CE5 /* CreateRoomResponseModel.swift */,
+				93227E9527D6D99D002E3DED /* CheckRoomResponseModel.swift */,
+				93227E9927D6EE47002E3DED /* SendMessageResponse.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -1434,6 +1443,7 @@
 				AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */,
 				93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */,
 				AD9BFD55272B1A0200736318 /* VerificationTextFieldView.swift in Sources */,
+				93227E9827D6ED70002E3DED /* SendMessageRequest.swift in Sources */,
 				AD81923C271E8AF400D5BE48 /* ReactionEntity+CoreDataProperties.swift in Sources */,
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
 				937F48E827D3D66A005E19FB /* TextMessageTableViewCell.swift in Sources */,
@@ -1514,6 +1524,7 @@
 				AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */,
 				938D053627D5BFF8002E5CE5 /* CreateRoomRequestModel.swift in Sources */,
 				933BE85F27B65C6F0099BA9E /* SharedViewModel.swift in Sources */,
+				93227E9A27D6EE47002E3DED /* SendMessageResponse.swift in Sources */,
 				AD8192652721D57000D5BE48 /* SettingsView.swift in Sources */,
 				ADD503E8270DD87A009D50CB /* Constants.swift in Sources */,
 				AD8192632721D54A00D5BE48 /* AllChatsView.swift in Sources */,
@@ -1556,6 +1567,7 @@
 				93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */,
 				933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */,
 				930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */,
+				93227E9627D6D99D002E3DED /* CheckRoomResponseModel.swift in Sources */,
 				AD9BFD3C272AC93400736318 /* CountryUtils.swift in Sources */,
 				AD8192712722D3E900D5BE48 /* MainButton.swift in Sources */,
 				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,

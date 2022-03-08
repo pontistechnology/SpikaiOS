@@ -18,12 +18,20 @@ class CurrentChatViewController: BaseViewController {
         super.viewDidLoad()
         setupView(currentChatView)
         setupBindings()
+        viewModel.checkRoom(forUserId: viewModel.user.id)
     }
     
     func setupBindings() {
         currentChatView.messageInputView.delegate = self
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
+        
+        sink(networkRequestState: viewModel.networkRequestState)
+        
+        viewModel.testMessagesSubject.receive(on: DispatchQueue.main).sink { messages in
+            self.currentChatView.messagesTableView.reloadData()
+            self.currentChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.testMessagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
+        }.store(in: &subscriptions)
     }
 }
 
@@ -32,23 +40,22 @@ extension CurrentChatViewController: MessageInputViewDelegate {
     func messageInputView(_ messageView: MessageInputView, didPressSend message: String, id: Int) {
         print("send in ccVC with ID")
         
-        viewModel.testMessages.append(MessageTest(messageType: .text, textOfMessage: message, replyMessageId: id, senderName: "cova", isMyMessage: Bool.random()))
+//        viewModel.addMessage(message: MessageTest(messageType: .text, textOfMessage: message, replyMessageId: id, senderName: "cova", isMyMessage: Bool.random()))
+        
+        viewModel.sendMessage(text: message)
         
         currentChatView.messageInputView.clearTextField()
         currentChatView.messageInputView.hideReplyView()
-        currentChatView.messagesTableView.reloadData()
-        currentChatView.messagesTableView.scrollToRow(at: IndexPath(row: viewModel.testMessages.count - 1, section: 0), at: .none, animated: true)
     }
     
     func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String) {
         print("send in ccVC ")
         
-        viewModel.testMessages.append(MessageTest(messageType: .text, textOfMessage: message, replyMessageId: nil, senderName: "cova", isMyMessage: Bool.random()))
+        viewModel.sendMessage(text: message)
+//        viewModel.addMessage(message: MessageTest(messageType: .text, textOfMessage: message, replyMessageId: nil, senderName: "cova", isMyMessage: Bool.random()))
         
         currentChatView.messageInputView.clearTextField()
         currentChatView.messageInputView.hideReplyView()
-        currentChatView.messagesTableView.reloadData()
-        currentChatView.messagesTableView.scrollToRow(at: IndexPath(row: viewModel.testMessages.count - 1, section: 0), at: .none, animated: true)
     }
     
     func messageInputView(didPressCameraButton messageVeiw: MessageInputView) {
@@ -76,7 +83,7 @@ extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
-            self.currentChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.testMessages[indexPath.row]), id: indexPath.row)
+            self.currentChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.testMessagesSubject.value[indexPath.row]), id: indexPath.row)
                 completionHandler(true)
             }
         firstLeft.backgroundColor = .systemBlue
@@ -87,18 +94,18 @@ extension CurrentChatViewController: UITableViewDelegate {
 extension CurrentChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.testMessages.count
+        viewModel.testMessagesSubject.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let message = viewModel.testMessages[indexPath.row]
+        let message = viewModel.testMessagesSubject.value[indexPath.row]
         switch message.messageType {
         case .text:
             switch message.isMyMessage {
             case true:
                 if let replyId = message.replyMessageId {
                     let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myTextAndReply.rawValue, for: indexPath) as? TextMessageTableViewCell
-                    cell?.updateCell(message: message, replyMessageTest: viewModel.testMessages[replyId])
+                    cell?.updateCell(message: message, replyMessageTest: viewModel.testMessagesSubject.value[replyId])
                     return cell ?? UITableViewCell()
                 } else {
                     let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue, for: indexPath) as? TextMessageTableViewCell
@@ -108,7 +115,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             case false:
                 if let replyId = message.replyMessageId {
                     let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendTextAndReply.rawValue, for: indexPath) as? TextMessageTableViewCell
-                    cell?.updateCell(message: message, replyMessageTest: viewModel.testMessages[replyId])
+                    cell?.updateCell(message: message, replyMessageTest: viewModel.testMessagesSubject.value[replyId])
                     return cell ?? UITableViewCell()
                 } else {
                     let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue, for: indexPath) as? TextMessageTableViewCell
@@ -118,8 +125,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             }
             
         case .photo:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MediaMessageTableViewCell.reuseIdentifier, for: indexPath) as? MediaMessageTableViewCell
-            return cell ?? UITableViewCell()
+            return UITableViewCell()
         case .video:
             return UITableViewCell()
         case .voice:

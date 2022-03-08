@@ -16,4 +16,20 @@ extension AppRepository {
     func getMessagesForChat(chat: Chat) -> Future<[Message], Error> {
         return databaseService.messageEntityService.getMessagesForChat(chat: chat)
     }
+    
+    func sendTextMessage(message: MessageTest, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
+        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<SendMessageResponse, SendMessageRequest>(
+            path: Constants.Endpoints.sendMessage,
+            requestType: .POST,
+            bodyParameters: SendMessageRequest(roomId: roomId, type: "Text", message: message),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
 }

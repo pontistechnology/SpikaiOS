@@ -44,4 +44,7 @@ protocol Repository {
     func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error>
     func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>
     func createRoom(name: String, users: [AppUser]) -> AnyPublisher<CreateRoomResponseModel, Error>
+    func checkRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
+    func createRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error>
+    func sendTextMessage(message: MessageTest, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
 }
