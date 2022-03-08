@@ -26,6 +26,6 @@ struct Message2: Codable {
     let seenCount: Int
     let roomId: Int
     let type: String
-    let messageBody: MessageTest
+    let messageBody: MessageBody
     let createdAt: Int
 }

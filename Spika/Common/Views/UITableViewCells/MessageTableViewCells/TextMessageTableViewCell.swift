@@ -122,23 +122,23 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
         }
     }
     
-    func updateCell(message: MessageTest, replyMessageTest: MessageTest? = nil) {
+    func updateCell(message: Message2, replyMessageTest: Message2? = nil) {
         guard let currentReuseIdentifier = currentReuseIdentifier else {
             return
         }
-        messageLabel.text = message.textOfMessage
+        messageLabel.text = message.messageBody.text
         
         switch currentReuseIdentifier {
         case .myText:
             break
         case .myTextAndReply:
             
-            replyView.updateReplyView(message: replyMessageTest ?? message)
+//            replyView.updateReplyView(message: replyMessageTest ?? message)
             break
         case .friendText:
             break
         case .friendTextAndReply:
-            replyView.updateReplyView(message: replyMessageTest ?? message)
+//            replyView.updateReplyView(message: replyMessageTest ?? message)
             break
         }
         

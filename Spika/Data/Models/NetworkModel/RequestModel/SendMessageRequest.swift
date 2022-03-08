@@ -8,7 +8,11 @@
 import Foundation
 
 struct SendMessageRequest: Codable {
-    var roomId: Int
-    var type: String
-    var message: MessageTest
+    let roomId: Int
+    let type: String
+    let message: MessageBody
+}
+
+struct MessageBody: Codable {
+    let text: String
 }

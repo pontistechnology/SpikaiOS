@@ -18,7 +18,7 @@ class CurrentChatViewController: BaseViewController {
         super.viewDidLoad()
         setupView(currentChatView)
         setupBindings()
-        viewModel.checkRoom(forUserId: viewModel.user.id)
+        viewModel.checkRoom(forUserId: viewModel.friendUser.id)
     }
     
     func setupBindings() {
@@ -40,7 +40,7 @@ extension CurrentChatViewController: MessageInputViewDelegate {
     func messageInputView(_ messageView: MessageInputView, didPressSend message: String, id: Int) {
         print("send in ccVC with ID")
         
-//        viewModel.addMessage(message: MessageTest(messageType: .text, textOfMessage: message, replyMessageId: id, senderName: "cova", isMyMessage: Bool.random()))
+        //        viewModel.addMessage(message: MessageTest(messageType: .text, textOfMessage: message, replyMessageId: id, senderName: "cova", isMyMessage: Bool.random()))
         
         viewModel.sendMessage(text: message)
         
@@ -52,7 +52,7 @@ extension CurrentChatViewController: MessageInputViewDelegate {
         print("send in ccVC ")
         
         viewModel.sendMessage(text: message)
-//        viewModel.addMessage(message: MessageTest(messageType: .text, textOfMessage: message, replyMessageId: nil, senderName: "cova", isMyMessage: Bool.random()))
+        //        viewModel.addMessage(message: MessageTest(messageType: .text, textOfMessage: message, replyMessageId: nil, senderName: "cova", isMyMessage: Bool.random()))
         
         currentChatView.messageInputView.clearTextField()
         currentChatView.messageInputView.hideReplyView()
@@ -81,14 +81,14 @@ extension CurrentChatViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
-            self.currentChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.testMessagesSubject.value[indexPath.row]), id: indexPath.row)
-                completionHandler(true)
-            }
-        firstLeft.backgroundColor = .systemBlue
-        return UISwipeActionsConfiguration(actions: [firstLeft])
-    }
+    //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    //        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
+    //            self.currentChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.testMessagesSubject.value[indexPath.row]), id: indexPath.row)
+    //                completionHandler(true)
+    //            }
+    //        firstLeft.backgroundColor = .systemBlue
+    //        return UISwipeActionsConfiguration(actions: [firstLeft])
+    //    }
 }
 
 extension CurrentChatViewController: UITableViewDataSource {
@@ -98,38 +98,66 @@ extension CurrentChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let myUserId = viewModel.repository.getMyUserId()
         let message = viewModel.testMessagesSubject.value[indexPath.row]
-        switch message.messageType {
-        case .text:
-            switch message.isMyMessage {
-            case true:
-                if let replyId = message.replyMessageId {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myTextAndReply.rawValue, for: indexPath) as? TextMessageTableViewCell
-                    cell?.updateCell(message: message, replyMessageTest: viewModel.testMessagesSubject.value[replyId])
-                    return cell ?? UITableViewCell()
-                } else {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue, for: indexPath) as? TextMessageTableViewCell
-                    cell?.updateCell(message: message)
-                    return cell ?? UITableViewCell()
-                }
-            case false:
-                if let replyId = message.replyMessageId {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendTextAndReply.rawValue, for: indexPath) as? TextMessageTableViewCell
-                    cell?.updateCell(message: message, replyMessageTest: viewModel.testMessagesSubject.value[replyId])
-                    return cell ?? UITableViewCell()
-                } else {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue, for: indexPath) as? TextMessageTableViewCell
-                    cell?.updateCell(message: message)
-                    return cell ?? UITableViewCell()
-                }
-            }
+        
+        switch message.type {
+        case "text":
+            let identifier = (message.fromUserId == myUserId)
+            ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
+            : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
             
-        case .photo:
-            return UITableViewCell()
-        case .video:
-            return UITableViewCell()
-        case .voice:
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
+            cell?.updateCell(message: message)
+            return cell ?? UITableViewCell()
+        default:
             return UITableViewCell()
         }
     }
 }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //        Commented because there is no replyId on backend for now
+    //        switch message.messageType {
+    //        case .text:
+    //            break
+    
+    //
+    //            switch message.isMyMessage {
+    //            case true:
+    //                if let replyId = message.replyMessageId {
+    //                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myTextAndReply.rawValue, for: indexPath) as? TextMessageTableViewCell
+    //                    cell?.updateCell(message: message, replyMessageTest: viewModel.testMessagesSubject.value[replyId])
+    //                    return cell ?? UITableViewCell()
+    //                } else {
+    //                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue, for: indexPath) as? TextMessageTableViewCell
+    //                    cell?.updateCell(message: message)
+    //                    return cell ?? UITableViewCell()
+    //                }
+    //            case false:
+    //                if let replyId = message.replyMessageId {
+    //                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendTextAndReply.rawValue, for: indexPath) as? TextMessageTableViewCell
+    //                    cell?.updateCell(message: message, replyMessageTest: viewModel.testMessagesSubject.value[replyId])
+    //                    return cell ?? UITableViewCell()
+    //                } else {
+    //                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue, for: indexPath) as? TextMessageTableViewCell
+    //                    cell?.updateCell(message: message)
+    //                    return cell ?? UITableViewCell()
+    //                }
+    //            }
+    
+    //        case .photo:
+    //            return UITableViewCell()
+    //        case .video:
+    //            return UITableViewCell()
+    //        case .voice:
+    //            return UITableViewCell()
+    //        }
+    //    }

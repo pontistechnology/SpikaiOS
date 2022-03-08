@@ -24,7 +24,10 @@ extension TestRepository {
     
     func saveUserInfo(user: AppUser, device: Device) {
         print(user)
-        print(device)
+    }
+    
+    func getMyUserId() -> Int {
+        999
     }
     
     func getUsers() -> Future<[User], Error> {

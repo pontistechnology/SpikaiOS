@@ -10,21 +10,19 @@ import Combine
 
 class CurrentChatViewModel: BaseViewModel {
     
-    let user: AppUser
+    let friendUser: AppUser
     var room: Room?
-    let testMessagesSubject = CurrentValueSubject<[MessageTest], Never>([
-        MessageTest(messageType: .text, textOfMessage: "prva", replyMessageId: nil, senderName: "anto", isMyMessage: false),
-        MessageTest(messageType: .text, textOfMessage: "druga koja je malo duza hahfsajk fjksa nkjsanf kjsn jkfnsakj nfkjsan kjdn fkjnaskd njahah hah hah hahah ", replyMessageId: 0, senderName: "anto", isMyMessage: false),
-        MessageTest(messageType: .text, textOfMessage: "druga koja je malo duza hahfsajk fjksa nkjsanf kjsn jkfnsakj nfkjsan kjdn fkjnaskd njahah hah hah hahah ", replyMessageId: 0, senderName: "anto", isMyMessage: true)
+    let testMessagesSubject = CurrentValueSubject<[Message2], Never>([
+        Message2(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "neron"), createdAt: 23)
     ])
     
     
-    init(repository: Repository, coordinator: Coordinator, user: AppUser) {
-        self.user = user
+    init(repository: Repository, coordinator: Coordinator, friendUser: AppUser) {
+        self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
     }
 
-    func addMessage(message: MessageTest) {
+    func addMessage(message: Message2) {
         var value = testMessagesSubject.value
         value.append(message)
         testMessagesSubject.send(value)
@@ -47,7 +45,7 @@ class CurrentChatViewModel: BaseViewModel {
                 self.room = room
                 self.networkRequestState.send(.finished)
             } else {
-                self.createRoom(userId: self.user.id)
+                self.createRoom(userId: self.friendUser.id)
             }
         }.store(in: &subscriptions)
     }
@@ -69,11 +67,9 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func sendMessage(text: String) {
-        let message = MessageTest(messageType: .text, textOfMessage: text, replyMessageId: nil, senderName: "Nikola", isMyMessage: true)
+        guard let room = room else { return }
+        let message = MessageBody(text: text)
         
-        guard let room = room else {
-            return
-        }
         networkRequestState.send(.started)
         repository.sendTextMessage(message: message, roomId: room.id).sink { completion in
             self.networkRequestState.send(.finished)
@@ -86,11 +82,9 @@ class CurrentChatViewModel: BaseViewModel {
             }
         } receiveValue: { response in
             print(response)
-            guard let message = response.data?.message.messageBody else { return }
+            guard let message = response.data?.message else { return }
             self.addMessage(message: message)
         }.store(in: &subscriptions)
 
     }
-    
-    
 }

@@ -61,6 +61,10 @@ extension AppRepository {
         defaults.set(device.token, forKey: Constants.UserDefaults.accessToken)
     }
     
+    func getMyUserId() -> Int {
+        return UserDefaults.standard.integer(forKey: Constants.UserDefaults.userId)
+    }
+    
     func getUsers() -> Future<[User], Error> {
         return databaseService.userEntityService.getUsers()
     }

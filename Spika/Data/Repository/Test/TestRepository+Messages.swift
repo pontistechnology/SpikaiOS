@@ -17,7 +17,7 @@ extension TestRepository {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func sendTextMessage(message: MessageTest, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
        return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()

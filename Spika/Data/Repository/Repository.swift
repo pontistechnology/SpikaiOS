@@ -32,6 +32,7 @@ protocol Repository {
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
     func verifyCode(code: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
     func saveUserInfo(user: AppUser, device: Device)
+    func getMyUserId() -> Int
     func getUsers() -> Future<[User], Error>
     func saveUser(_ user: User) -> Future<User, Error>
     func addUserToChat(chat: Chat, user: User) -> Future<Chat, Error>
@@ -46,5 +47,5 @@ protocol Repository {
     func createRoom(name: String, users: [AppUser]) -> AnyPublisher<CreateRoomResponseModel, Error>
     func checkRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
     func createRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error>
-    func sendTextMessage(message: MessageTest, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
+    func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
 }
