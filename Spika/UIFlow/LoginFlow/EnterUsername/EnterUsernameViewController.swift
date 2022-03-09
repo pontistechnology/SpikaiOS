@@ -64,21 +64,13 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
     
     func setupImagePicker() {
         imagePicker.delegate = self
-        imagePicker.allowsEditing = false
+        imagePicker.allowsEditing = true
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             enterUsernameView.profilePictureView.showImage(pickedImage)
-        }
-        
-        if let file = info[UIImagePickerController.InfoKey.imageURL] as? URL {
-            do {
-                let imageData = try Data(contentsOf: file)
-                fileData = imageData
-            } catch {
-                PopUpManager.shared.presentAlert(errorMessage: "Error with image: \(error)")
-            }
+            fileData = pickedImage.pngData()
         }
         dismiss(animated: true, completion: nil)
     }

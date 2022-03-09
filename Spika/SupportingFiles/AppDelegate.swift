@@ -24,9 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
+        test()
         customization()
         
         return true
+    }
+    
+    func test() {
+        // only for debug, remove later
+        print("type is: ", MessageType(rawValue: "textf"))
     }
     
     func customization() {

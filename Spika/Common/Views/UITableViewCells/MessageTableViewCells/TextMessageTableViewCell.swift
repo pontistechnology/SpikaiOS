@@ -22,7 +22,7 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
     let containerView = UIView()
     let messageLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .logoBlue)
     let messageStateView = MessageStateView(state: .waiting)
-    let replyView = ReplyMessageView(message: MessageTest(messageType: .text, textOfMessage: "U cant see me", replyMessageId: nil, senderName: "Anamarija", isMyMessage: false))
+    let replyView = ReplyMessageView()
     let reactionImageView = UIImageView(image: UIImage(named: "reaction"))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

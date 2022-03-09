@@ -16,16 +16,3 @@ struct SendMessageResponse: Codable {
 struct SendMessageData: Codable {
     let message: Message2
 }
-
-struct Message2: Codable {
-    let id: Int
-    let fromUserId: Int
-    let fromDeviceId: Int
-    let totalDeviceCount: Int
-    let receivedCount: Int
-    let seenCount: Int
-    let roomId: Int
-    let type: String
-    let messageBody: MessageBody
-    let createdAt: Int
-}

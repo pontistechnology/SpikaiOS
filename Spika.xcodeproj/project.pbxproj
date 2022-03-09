@@ -68,7 +68,7 @@
 		93DE585827BC7B6600C45EB4 /* VideoCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */; };
 		93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */; };
 		93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */; };
-		93E48EB027CEA6C3003B4188 /* MessageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E48EAF27CEA6C3003B4188 /* MessageTest.swift */; };
+		93E48EB027CEA6C3003B4188 /* Message2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E48EAF27CEA6C3003B4188 /* Message2.swift */; };
 		93E48EB227CEA97F003B4188 /* ReplyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E48EB127CEA97F003B4188 /* ReplyMessageView.swift */; };
 		93E4F6EB27C2BB6D00432CFA /* SelectUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6EA27C2BB6D00432CFA /* SelectUsersViewController.swift */; };
 		93E4F6ED27C2BB8100432CFA /* SelectUsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6EC27C2BB8100432CFA /* SelectUsersViewModel.swift */; };
@@ -270,7 +270,7 @@
 		93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewController.swift; sourceTree = "<group>"; };
 		93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewModel.swift; sourceTree = "<group>"; };
 		93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallView.swift; sourceTree = "<group>"; };
-		93E48EAF27CEA6C3003B4188 /* MessageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTest.swift; sourceTree = "<group>"; };
+		93E48EAF27CEA6C3003B4188 /* Message2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message2.swift; sourceTree = "<group>"; };
 		93E48EB127CEA97F003B4188 /* ReplyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyMessageView.swift; sourceTree = "<group>"; };
 		93E4F6EA27C2BB6D00432CFA /* SelectUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUsersViewController.swift; sourceTree = "<group>"; };
 		93E4F6EC27C2BB8100432CFA /* SelectUsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUsersViewModel.swift; sourceTree = "<group>"; };
@@ -1142,7 +1142,7 @@
 				ADD5041527174384009D50CB /* Chat.swift */,
 				ADD5044F271E81BA009D50CB /* Message.swift */,
 				AD819239271E873200D5BE48 /* Reaction.swift */,
-				93E48EAF27CEA6C3003B4188 /* MessageTest.swift */,
+				93E48EAF27CEA6C3003B4188 /* Message2.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1597,7 +1597,7 @@
 				EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */,
 				ADD504182717481D009D50CB /* AppRepository+Chat.swift in Sources */,
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
-				93E48EB027CEA6C3003B4188 /* MessageTest.swift in Sources */,
+				93E48EB027CEA6C3003B4188 /* Message2.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
 				ADD503F6270DF96F009D50CB /* Post.swift in Sources */,
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,

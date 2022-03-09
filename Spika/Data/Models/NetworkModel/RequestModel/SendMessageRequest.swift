@@ -12,7 +12,3 @@ struct SendMessageRequest: Codable {
     let type: String
     let message: MessageBody
 }
-
-struct MessageBody: Codable {
-    let text: String
-}
