@@ -69,10 +69,22 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            enterUsernameView.profilePictureView.showImage(pickedImage)
-            fileData = pickedImage.pngData()
+            
+            let widhtInPixels  = pickedImage.size.width * UIScreen.main.scale
+            let heightInPixels = pickedImage.size.height * UIScreen.main.scale
+            
+            if widhtInPixels < 512 || heightInPixels < 512 {
+                PopUpManager.shared.presentAlert(errorMessage: "Please use better quality.")
+            } else if abs(widhtInPixels - heightInPixels) > 5 {
+                PopUpManager.shared.presentAlert(errorMessage: "Please select a square")
+            } else {
+                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
+                enterUsernameView.profilePictureView.showImage(resizedImage)
+                fileData = resizedImage.jpegData(compressionQuality: 1)
+            }
+            dismiss(animated: true, completion: nil)
         }
-        dismiss(animated: true, completion: nil)
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

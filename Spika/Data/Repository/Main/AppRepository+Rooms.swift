@@ -18,7 +18,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let userIds = users.map{$0.id ?? 1}
+        let userIds = users.map{$0.id}
         
         let resources = Resources<CreateRoomResponseModel, CreateRoomRequestModel>(
             path: Constants.Endpoints.createRoom,

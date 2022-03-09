@@ -45,7 +45,7 @@ class PopUpManager {
         setupAlertWindow(with: alertViewController)
     }
     
-    func setupAlertWindow(with viewController: AlertViewController) {
+    private func setupAlertWindow(with viewController: AlertViewController) {
         
         guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
         else { return }
@@ -59,7 +59,7 @@ class PopUpManager {
         self.alertWindow = alertWindow
     }
     
-    func dismissAlertWindow() {
+    private func dismissAlertWindow() {
         self.alertWindow = nil
     }
 }
