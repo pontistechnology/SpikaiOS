@@ -48,8 +48,8 @@ extension TestRepository {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func uploadWholeFile(data: Data) -> PassthroughSubject<UploadChunkResponseModel, Error> {
-        return PassthroughSubject<UploadChunkResponseModel, Error>()
+    func uploadWholeFile(data: Data) -> (publisher: PassthroughSubject<UploadChunkResponseModel, Error>, totalChunksNumber: Int) {
+        return (PassthroughSubject<UploadChunkResponseModel, Error>(), 0)
     }
     
     func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {

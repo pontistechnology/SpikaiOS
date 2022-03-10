@@ -12,6 +12,7 @@ class BaseViewController: UIViewController {
     
     var subscriptions = Set<AnyCancellable>()
     let activityIndicator = UIActivityIndicatorView()
+    let activityLabel = CustomLabel(text: "", textSize: 30, textColor: .white, fontName: .MontserratMedium, alignment: .center)
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -33,8 +34,16 @@ class BaseViewController: UIViewController {
     }
     
     private func showLoading() {
+        view.addSubview(activityLabel)
         view.addSubview(activityIndicator)
         activityIndicator.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        activityLabel.centerYToSuperview(offset: 30)
+        activityLabel.centerXToSuperview()
+        
+        activityLabel.layer.cornerRadius = 7
+        activityLabel.layer.masksToBounds = true
+        
+        activityLabel.backgroundColor = .textTertiaryAndDarkBackground2
         activityIndicator.backgroundColor = .darkGray.withAlphaComponent(0.5)
         activityIndicator.startAnimating()
     }
@@ -51,6 +60,8 @@ class BaseViewController: UIViewController {
                 self.hideLoading()
             case .started:
                 self.showLoading()
+            case .progress(let progress):
+                self.activityLabel.text = String(format: "%.2f", progress * 100) + " %"
             }
         }.store(in: &subscriptions)
     }

@@ -20,7 +20,8 @@ class AppCoordinator: Coordinator {
     
     func start() {
         if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken) {
-            presentHomeScreen()
+//            presentHomeScreen()
+            presentEnterUsernameScreen()
         } else {
             presentEnterNumberScreen()
         }

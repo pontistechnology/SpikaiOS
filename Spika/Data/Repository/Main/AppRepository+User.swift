@@ -73,7 +73,7 @@ extension AppRepository {
         return databaseService.userEntityService.saveUser(user)
     }
     
-    func uploadWholeFile(data: Data) -> PassthroughSubject<UploadChunkResponseModel, Error> {
+    func uploadWholeFile(data: Data) -> (publisher: PassthroughSubject<UploadChunkResponseModel, Error>, totalChunksNumber: Int) {
         
         let dataLen: Int = data.count
         let chunkSize: Int = ((1024) * 4)
@@ -82,7 +82,7 @@ extension AppRepository {
         let fileHash = data.getSHA256()
         let clientId = UUID().uuidString
         
-        let lastChunkPublisher = PassthroughSubject<UploadChunkResponseModel, Error>()
+        let chunkPublisher = PassthroughSubject<UploadChunkResponseModel, Error>()
     
         for chunkCounter in 0..<totalChunks {
             var chunk:Data
@@ -99,18 +99,20 @@ extension AppRepository {
                 switch completion {
                 case let .failure(error):
                     print("Failure error", error)
-                    lastChunkPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
+                    chunkPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
                 case .finished:
                     break
                 }
             } receiveValue: { uploadFileResponseModel in
-                if uploadFileResponseModel.data?.file != nil {
-                    lastChunkPublisher.send(uploadFileResponseModel)
-                }
+//                print("upload File repsone model: ", uploadFileResponseModel)
+                chunkPublisher.send(uploadFileResponseModel)
+//                if uploadFileResponseModel.data?.file != nil {
+//                    chunkPublisher.send(uploadFileResponseModel)
+//                }
             }.store(in: &subs)
         }
         
-        return lastChunkPublisher
+        return (chunkPublisher, totalChunks)
     }
     
     func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {

@@ -75,7 +75,7 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
             
             if widhtInPixels < 512 || heightInPixels < 512 {
                 PopUpManager.shared.presentAlert(errorMessage: "Please use better quality.")
-            } else if abs(widhtInPixels - heightInPixels) > 5 {
+            } else if abs(widhtInPixels - heightInPixels) > 20 {
                 PopUpManager.shared.presentAlert(errorMessage: "Please select a square")
             } else {
                 guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }

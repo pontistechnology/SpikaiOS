@@ -16,7 +16,10 @@ class EnterUsernameViewModel: BaseViewModel {
         networkRequestState.send(.started)
         
         if let imageFileData = imageFileData {
-            repository.uploadWholeFile(data: imageFileData).sink { [weak self] completion in
+            let tuple = repository.uploadWholeFile(data: imageFileData)
+            let totalNumberOfChunks = CGFloat(tuple.totalChunksNumber)
+            
+            tuple.publisher.sink { [weak self] completion in
                 switch completion {
                 case let .failure(error):
                     self?.networkRequestState.send(.finished)
@@ -24,8 +27,14 @@ class EnterUsernameViewModel: BaseViewModel {
                 default:
                     break
                 }
-            } receiveValue: { [weak self] lastChunkResponse in
-                self?.updateInfo(username: username, avatarUrl: lastChunkResponse.data?.file?.path)
+            } receiveValue: { [weak self] chunkResponse in
+                if let uploadedNumberOfChunks = chunkResponse.data?.uploadedChunks?.count {
+                    self?.networkRequestState.send(.progress(CGFloat(uploadedNumberOfChunks) / totalNumberOfChunks))
+                }
+                if let file = chunkResponse.data?.file {
+                    self?.updateInfo(username: username, avatarUrl: file.path)
+                }
+                
             }.store(in: &subscriptions)
         } else {
             self.updateInfo(username: username)
