@@ -56,12 +56,8 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         nameLabel.text = model.displayName
         descriptionLabel.text = model.telephoneNumber
         
-        let url = URL(string: model.avatarUrl ?? "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
+        let url = URL(string: model.getAvatarUrl() ?? "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
         leftImageView.kf.setImage(with: url)
-        
-//        leftImageView.kf.setImage(with: model.avatarUrl) { nj, nju in
-//            print("kurcina")
-//        }
     }
     
     override func prepareForReuse() {

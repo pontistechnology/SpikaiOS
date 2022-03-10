@@ -189,11 +189,17 @@ class ContactsViewModel: BaseViewModel {
     }
     
     func updateContactsUI(list: [AppUser]) {
-            //TODO: check if sort needed
-//            list.sort()
+        
+        //TODO: check if sort needed
+        var sortedList = list.sorted()
+        
+//        list.sorted(using: .localizedStandard)
+//        let appUser = AppUser(id: 100, displayName: "Tito", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
+//        sortedList.append(appUser)
+//        let sortedList = list.sort(using: .localizedStandard)
           
         var tableAppUsers = Array<Array<AppUser>>()
-        for appUser in list {
+        for appUser in sortedList {
             if let char1 = appUser.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
                 tableAppUsers[tableAppUsers.count - 1].append(appUser)
             } else {
@@ -209,7 +215,7 @@ class ContactsViewModel: BaseViewModel {
         if filter.isEmpty {
             updateContactsUI(list: users)
         } else {
-            let filteredContacts = users.filter{ $0.displayName!.contains(filter) }
+            let filteredContacts = users.filter{ $0.displayName!.localizedStandardContains(filter) }
             updateContactsUI(list: filteredContacts)
         }
     }

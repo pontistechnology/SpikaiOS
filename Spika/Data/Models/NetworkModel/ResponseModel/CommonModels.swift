@@ -17,7 +17,17 @@ struct AppUser: Codable {
     let emailAddress: String?
     let createdAt: Int?
     
-    
+    func getAvatarUrl() -> String? {
+        if let avatarUrl = avatarUrl {
+            if avatarUrl.starts(with: "http") {
+                return avatarUrl
+            } else {
+                return Constants.Networking.baseUrl + avatarUrl
+            }
+        } else {
+            return nil
+        }
+    }
 }
 
 extension AppUser: Comparable {
