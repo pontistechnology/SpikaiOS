@@ -34,6 +34,7 @@ protocol Repository {
     func saveUserInfo(user: AppUser, device: Device)
     func getUsers() -> Future<[User], Error>
     func saveUser(_ user: User) -> Future<User, Error>
+    func saveUsers(_ users: [User]) -> Future<[User], Error>
     func addUserToChat(chat: Chat, user: User) -> Future<Chat, Error>
     func getUsersForChat(chat: Chat) -> Future<[User], Error>
     func saveMessage(_ message: Message) -> Future<Message, Error>

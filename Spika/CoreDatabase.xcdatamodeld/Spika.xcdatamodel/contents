@@ -49,6 +49,11 @@
         <relationship name="chats" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ChatEntity" inverseName="users" inverseEntity="ChatEntity"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageEntity" inverseName="user" inverseEntity="MessageEntity"/>
         <relationship name="reactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReactionEntity" inverseName="user" inverseEntity="ReactionEntity"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <elements>
         <element name="ChatEntity" positionX="-53.8533935546875" positionY="-196.6009216308594" width="128" height="194"/>

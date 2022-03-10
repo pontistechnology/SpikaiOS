@@ -37,6 +37,10 @@ extension TestRepository {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
+    func saveUsers(_ user: [User]) -> Future<[User], Error> {
+        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+    }
+    
     func addUserToChat(chat: Chat, user: User) -> Future<Chat, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }

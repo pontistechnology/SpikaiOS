@@ -85,7 +85,24 @@ class ContactsViewModel: BaseViewModel {
             default: break
             }
         } receiveValue: { users in
-            print(users)
+            print("Read users from DB: \(users)")
+        }.store(in: &subscriptions)
+    }
+    
+    func saveUsers(_ users: [AppUser]) {
+        var dbUsers = [User]()
+        for user in users {
+            let dbUser = User(loginName: user.displayName!, avatarUrl: user.avatarUrl, localName: user.displayName!, id: user.id, blocked: false)
+            dbUsers.append(dbUser)
+        }
+        repository.saveUsers(dbUsers).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not save user: \(error)")
+            default: break
+            }
+        } receiveValue: { users in
+            print("Saved users to DB: \(users)")
         }.store(in: &subscriptions)
 
     }
@@ -182,9 +199,10 @@ class ContactsViewModel: BaseViewModel {
             print("Success: ", response)
             if let list = response.data?.list {
                 self.users = list
+                self.saveUsers(list)
+                
                 self.updateContactsUI(list: list)
             }
-            
         }.store(in: &subscriptions)
     }
     
@@ -218,5 +236,7 @@ class ContactsViewModel: BaseViewModel {
             let filteredContacts = users.filter{ $0.displayName!.localizedStandardContains(filter) }
             updateContactsUI(list: filteredContacts)
         }
+        
+        self.getUsers()
     }
 }

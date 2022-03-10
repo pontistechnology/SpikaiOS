@@ -45,6 +45,18 @@ class UserEntityService {
         }
     }
     
+    func saveUsers(_ users: [User]) -> Future<[User], Error> {
+        for user in users {
+            _ = UserEntity(insertInto: managedContext, user: user)
+        }
+        do {
+            try managedContext?.save()
+            return Future { promise in promise(.success(users))}
+        } catch let error as NSError {
+            return Future { promise in promise(.failure(error))}
+        }
+    }
+    
     func getChatsForUser(user: User) -> Future<[Chat], Error> {
         let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
         fetchRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")

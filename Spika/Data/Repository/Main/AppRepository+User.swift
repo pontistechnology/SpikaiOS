@@ -69,6 +69,10 @@ extension AppRepository {
         return databaseService.userEntityService.saveUser(user)
     }
     
+    func saveUsers(_ users: [User]) -> Future<[User], Error> {
+        return databaseService.userEntityService.saveUsers(users)
+    }
+    
     func uploadWholeFile(data: Data) -> PassthroughSubject<UploadChunkResponseModel, Error> {
         
         let dataLen: Int = data.count

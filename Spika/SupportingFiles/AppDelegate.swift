@@ -49,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: Constants.Database.databaseName)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
