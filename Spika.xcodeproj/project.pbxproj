@@ -56,6 +56,7 @@
 		9396AE1327CBAC410041B4A6 /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AE1227CBAC410041B4A6 /* MessageInputView.swift */; };
 		9396AE1527CBBABE0041B4A6 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */; };
 		93988D5F27D8701500DF6BF8 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
+		93B4A9EE27DB3AB000DC52F6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */; };
 		93B8916D27CD4536000F94B0 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916C27CD4536000F94B0 /* MessageTableViewCell.swift */; };
 		93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916E27CD578F000F94B0 /* Data+Extension.swift */; };
 		93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */; };
@@ -259,6 +260,7 @@
 		9396AE1227CBAC410041B4A6 /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
 		9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		93B8916C27CD4536000F94B0 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		93B8916E27CD578F000F94B0 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewWithIcon.swift; sourceTree = "<group>"; };
@@ -1104,6 +1106,7 @@
 				93E48EB127CEA97F003B4188 /* ReplyMessageView.swift */,
 				93D87CE827D1BF9C0087C9FD /* VoiceMessageView.swift */,
 				931E23A827D2DCDA0065FFFC /* MessageStateView.swift */,
+				93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1504,6 +1507,7 @@
 				93E4F6ED27C2BB8100432CFA /* SelectUsersViewModel.swift in Sources */,
 				ADD503D3270DD5A4009D50CB /* AppCoordinator.swift in Sources */,
 				AD8192672721D5A300D5BE48 /* CallHistoryViewModel.swift in Sources */,
+				93B4A9EE27DB3AB000DC52F6 /* CircularProgressBar.swift in Sources */,
 				ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */,
 				93D87CE927D1BF9C0087C9FD /* VoiceMessageView.swift in Sources */,
 				AD9E39052726CD2000DC5D43 /* MessageTextField.swift in Sources */,

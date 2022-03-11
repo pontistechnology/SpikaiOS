@@ -79,9 +79,9 @@ extension AppRepository {
         let chunkSize: Int = ((1024) * 4)
         let fullChunks = Int(dataLen / chunkSize)
         let totalChunks: Int = fullChunks + (dataLen % 1024 != 0 ? 1 : 0)
-        let fileHash = data.getSHA256()
         let clientId = UUID().uuidString
-        
+        var hasher = SHA256()
+        var hash: String?
         let chunkPublisher = PassthroughSubject<UploadChunkResponseModel, Error>()
     
         for chunkCounter in 0..<totalChunks {
@@ -95,7 +95,12 @@ extension AppRepository {
             let range:Range<Data.Index> = chunkBase..<(chunkBase + diff)
             chunk = data.subdata(in: range)
             
-            uploadChunk(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "nameOfFile", clientId: clientId, type: "avatar", fileHash: fileHash, relationId: 1).sink { completion in
+            hasher.update(data: chunk)
+            if chunkCounter == totalChunks - 1 {
+                hash = hasher.finalize().compactMap { String(format: "%02x", $0)}.joined()
+            }
+            
+            uploadChunk(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "nameOfFile", clientId: clientId, type: "avatar", fileHash: hash, relationId: 1).sink { completion in
                 switch completion {
                 case let .failure(error):
                     print("Failure error", error)
@@ -104,18 +109,14 @@ extension AppRepository {
                     break
                 }
             } receiveValue: { uploadFileResponseModel in
-//                print("upload File repsone model: ", uploadFileResponseModel)
                 chunkPublisher.send(uploadFileResponseModel)
-//                if uploadFileResponseModel.data?.file != nil {
-//                    chunkPublisher.send(uploadFileResponseModel)
-//                }
             }.store(in: &subs)
         }
         
         return (chunkPublisher, totalChunks)
     }
     
-    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
+    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String? = nil, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
 
         guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
         else {return Fail<UploadChunkResponseModel, Error>(error: NetworkError.noAccessToken)

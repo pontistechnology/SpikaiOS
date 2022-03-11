@@ -40,7 +40,7 @@ protocol Repository {
     func saveMessage(_ message: Message) -> Future<Message, Error>
     func getMessagesForChat(chat: Chat) -> Future<[Message], Error>
     func uploadWholeFile(data: Data) -> (publisher: PassthroughSubject<UploadChunkResponseModel, Error>, totalChunksNumber: Int)
-    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error>
+    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String?, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error>
     func updateUser(username: String?, avatarURL: String?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>
     func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error>
     func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>

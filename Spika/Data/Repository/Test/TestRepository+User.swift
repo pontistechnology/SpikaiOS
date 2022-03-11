@@ -52,7 +52,7 @@ extension TestRepository {
         return (PassthroughSubject<UploadChunkResponseModel, Error>(), 0)
     }
     
-    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
+    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String?, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
         // TODO: - add tests
         return Fail<UploadChunkResponseModel, Error>(error: NetworkError.badURL)
             .receive(on: DispatchQueue.main)

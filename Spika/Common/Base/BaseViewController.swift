@@ -11,6 +11,7 @@ import Combine
 class BaseViewController: UIViewController {
     
     var subscriptions = Set<AnyCancellable>()
+    let circularProgressBar = CircularProgressBar()
     let activityIndicator = UIActivityIndicatorView()
     let activityLabel = CustomLabel(text: "", textSize: 30, textColor: .white, fontName: .MontserratMedium, alignment: .center)
     
@@ -31,6 +32,12 @@ class BaseViewController: UIViewController {
         self.view.addSubview(view)
         view.fillSuperviewSafeAreaLayoutGuide()
         hideKeyboardWhenTappedAround()
+        testCircular()
+    }
+    
+    private func testCircular() {
+        view.addSubview(circularProgressBar)
+        circularProgressBar.centerInSuperview()
     }
     
     private func showLoading() {
@@ -62,6 +69,7 @@ class BaseViewController: UIViewController {
                 self.showLoading()
             case .progress(let progress):
                 self.activityLabel.text = String(format: "%.2f", progress * 100) + " %"
+                self.circularProgressBar.setProgress(to: progress)
             }
         }.store(in: &subscriptions)
     }

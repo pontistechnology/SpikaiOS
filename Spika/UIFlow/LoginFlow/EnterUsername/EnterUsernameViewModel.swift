@@ -28,6 +28,7 @@ class EnterUsernameViewModel: BaseViewModel {
                     break
                 }
             } receiveValue: { [weak self] chunkResponse in
+                print("chunkResponse: ", chunkResponse)
                 if let uploadedNumberOfChunks = chunkResponse.data?.uploadedChunks?.count {
                     self?.networkRequestState.send(.progress(CGFloat(uploadedNumberOfChunks) / totalNumberOfChunks))
                 }
@@ -47,11 +48,14 @@ class EnterUsernameViewModel: BaseViewModel {
             self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
+                print("ERROR: ", error)
                 PopUpManager.shared.presentAlert(errorMessage: "Username error: \(error)")
             case .finished:
                 self?.presentHomeScreen()
             }
-        } receiveValue: { _ in }.store(in: &subscriptions)
+        } receiveValue: { response in
+            print(response)
+        }.store(in: &subscriptions)
     }
     
     private func presentHomeScreen() {

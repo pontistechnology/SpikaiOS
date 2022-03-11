@@ -43,4 +43,8 @@ struct Constants {
         static let accessToken = "accessToken"
     }
     
+    struct CABasicAnimations {
+        static let circularProgressStroke = "circularProgressStroke"
+    }
+    
 }
