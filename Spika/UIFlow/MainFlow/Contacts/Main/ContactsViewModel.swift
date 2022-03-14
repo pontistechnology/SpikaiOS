@@ -198,20 +198,40 @@ class ContactsViewModel: BaseViewModel {
         } receiveValue: { response in
             print("Success: ", response)
             if let list = response.data?.list {
-                self.users = list
+                self.users.append(contentsOf: list)
+                
                 self.saveUsers(list)
                 
                 self.updateContactsUI(list: list)
             }
+            if let limit = response.data?.limit, let count = response.data?.count {
+                if page * limit < count {
+                    self.getOnlineContacts(page: page + 1)
+                }
+            }
+            
         }.store(in: &subscriptions)
     }
     
     func updateContactsUI(list: [AppUser]) {
         
-        //TODO: check if sort needed
-        var sortedList = list.sorted()
+        let appUser1 = AppUser(id: 100, displayName: "Ćap", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
+        let appUser2 = AppUser(id: 100, displayName: "Cup", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
+        let appUser3 = AppUser(id: 100, displayName: "Ćop", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
         
-//        list.sorted(using: .localizedStandard)
+        var testList = list
+        testList.append(appUser1)
+        testList.append(appUser2)
+        testList.append(appUser3)
+        
+        //TODO: check if sort needed
+        let sortedList = testList.sorted()
+        
+//        let sortedList = list.sorted(using: .localizedStandard)
+        
+//        var yuyu = ["blabla", "blublu"]
+//        var testList = yuyu.sort(using: .localizedStandard)
+        
 //        let appUser = AppUser(id: 100, displayName: "Tito", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
 //        sortedList.append(appUser)
 //        let sortedList = list.sort(using: .localizedStandard)
@@ -219,8 +239,12 @@ class ContactsViewModel: BaseViewModel {
         var tableAppUsers = Array<Array<AppUser>>()
         for appUser in sortedList {
             if let char1 = appUser.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
+                print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
                 tableAppUsers[tableAppUsers.count - 1].append(appUser)
             } else {
+                if let char1 = appUser.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1) {
+                    print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
+                }
                 tableAppUsers.append([appUser])
             }
         }

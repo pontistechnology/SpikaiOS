@@ -72,7 +72,11 @@ extension ContactsViewController: UITableViewDelegate {
 extension ContactsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        viewModel.contactsSubject.value[section].first?.displayName?.prefix(1).uppercased()
+        if let char = viewModel.contactsSubject.value[section].first?.displayName?.prefix(1) {
+            return char.localizedUppercase
+        } else {
+            return "@"
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

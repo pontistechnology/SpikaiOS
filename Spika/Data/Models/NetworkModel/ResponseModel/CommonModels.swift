@@ -30,13 +30,16 @@ struct AppUser: Codable {
     }
 }
 
+//String.Comparator.Compared
 extension AppUser: Comparable {
     static func < (lhs: AppUser, rhs: AppUser) -> Bool {
-        return lhs.displayName! < rhs.displayName!
+        return lhs.displayName!.localizedStandardCompare(rhs.displayName!) == .orderedAscending
+//        return lhs.displayName! < rhs.displayName!
     }
     
     static func == (lhs: AppUser, rhs: AppUser) -> Bool {
-        return lhs.displayName! == rhs.displayName!
+        return lhs.displayName!.localizedStandardCompare(rhs.displayName!) == .orderedSame
+//        return lhs.displayName! == rhs.displayName!
     }
 }
 

@@ -35,4 +35,16 @@ struct User: Codable {
         self.createdAt = Int(entity.createdAt)
         self.modifiedAt = Int(entity.modifiedAt)
     }
+    
+    func getAvatarUrl() -> String? {
+        if let avatarUrl = avatarUrl {
+            if avatarUrl.starts(with: "http") {
+                return avatarUrl
+            } else {
+                return Constants.Networking.baseUrl + avatarUrl
+            }
+        } else {
+            return nil
+        }
+    }
 }
