@@ -10,10 +10,14 @@ import UIKit
 
 class CircularProgressBar: UIView, BaseView {
     
-    let shapeLayer = CAShapeLayer()
-    private let width = 35.0
+    private let shapeLayer = CAShapeLayer()
+    private let width: CGFloat
+    private let lineWidth: CGFloat = 5.0
+    private let backgroundView = UIView()
+    private let containerView  = UIView()
     
-    init() {
+    init(spinnerWidth: CGFloat) {
+        self.width = spinnerWidth
         super.init(frame: .zero)
         setupView()
     }
@@ -23,51 +27,48 @@ class CircularProgressBar: UIView, BaseView {
     }
     
     func addSubviews() {
-        
+        addSubview(backgroundView)
+        backgroundView.addSubview(containerView)
     }
     
     func styleSubviews() {
-        backgroundColor = .systemRed
-        print("center prije: ", center)
+        backgroundView.backgroundColor = .darkGray.withAlphaComponent(0.5)
+        containerView.backgroundColor = .systemRed
+        
         let circularPath = UIBezierPath(arcCenter: CGPoint(x: width/2, y: width/2),
-                                        radius: 12,
+                                        radius: width/2 - lineWidth/2,
                                         startAngle: -.pi/2,
                                         endAngle: 2 * CGFloat.pi - .pi/2,
                                         clockwise: true)
-        
-//        let backgroundLayer = CAShapeLayer()
-//        backgroundLayer.path = circularPath.cgPath
-//        backgroundLayer.strokeColor = UIColor.textTertiary.cgColor
-//        backgroundLayer.fillColor = UIColor.clear.cgColor
-//        backgroundLayer.lineWidth = 10
-//        layer.addSublayer(backgroundLayer)
-        
+                
         shapeLayer.path = circularPath.cgPath
         shapeLayer.strokeColor = UIColor.primaryColor.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineWidth = 5
-        shapeLayer.strokeEnd = 0.1
+        shapeLayer.lineWidth = lineWidth
+        shapeLayer.strokeEnd = 0
         shapeLayer.lineCap = .round
-        layer.addSublayer(shapeLayer)
+        containerView.layer.addSublayer(shapeLayer)
     }
     
     func positionSubviews() {
-        constrainWidth(width)
-        constrainHeight(width)
-        print("center kasnije: ", center)
-//        animateProgress()
-    }
-    
-    func animateProgress() {
-        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        basicAnimation.toValue = 1
-        basicAnimation.duration = 2
-        basicAnimation.fillMode = .forwards
-        basicAnimation.isRemovedOnCompletion = false
-        shapeLayer.add(basicAnimation, forKey: Constants.CABasicAnimations.circularProgressStroke)
+        backgroundView.fillSuperview()
+        containerView.constrainWidth(width)
+        containerView.constrainHeight(width)
+        containerView.centerInSuperview()
     }
     
     func setProgress(to value: CGFloat) {
+        containerView.layer.removeAllAnimations()
         shapeLayer.strokeEnd = value
+    }
+    
+    func startSpinning() {
+        shapeLayer.strokeEnd = 0.75
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotationAnimation.fromValue = 0.0
+        rotationAnimation.toValue = Double.pi * 2
+        rotationAnimation.duration = 2
+        rotationAnimation.repeatCount = .infinity
+        containerView.layer.add(rotationAnimation, forKey: nil)
     }
 }

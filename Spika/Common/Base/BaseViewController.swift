@@ -11,9 +11,7 @@ import Combine
 class BaseViewController: UIViewController {
     
     var subscriptions = Set<AnyCancellable>()
-    let circularProgressBar = CircularProgressBar()
-    let activityIndicator = UIActivityIndicatorView()
-    let activityLabel = CustomLabel(text: "", textSize: 30, textColor: .white, fontName: .MontserratMedium, alignment: .center)
+    let circularProgressBar = CircularProgressBar(spinnerWidth: 24)
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,32 +30,25 @@ class BaseViewController: UIViewController {
         self.view.addSubview(view)
         view.fillSuperviewSafeAreaLayoutGuide()
         hideKeyboardWhenTappedAround()
-        testCircular()
     }
     
-    private func testCircular() {
-        view.addSubview(circularProgressBar)
-        circularProgressBar.centerInSuperview()
-    }
-    
-    private func showLoading() {
-        view.addSubview(activityLabel)
-        view.addSubview(activityIndicator)
-        activityIndicator.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-        activityLabel.centerYToSuperview(offset: 30)
-        activityLabel.centerXToSuperview()
+    private func showLoading(progress: CGFloat?) {
+        if let _ = circularProgressBar.superview {
+            print("jes")
+        } else {
+            view.addSubview(circularProgressBar)
+            circularProgressBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        }
         
-        activityLabel.layer.cornerRadius = 7
-        activityLabel.layer.masksToBounds = true
-        
-        activityLabel.backgroundColor = .textTertiaryAndDarkBackground2
-        activityIndicator.backgroundColor = .darkGray.withAlphaComponent(0.5)
-        activityIndicator.startAnimating()
+        if let progress = progress {
+            circularProgressBar.setProgress(to: progress)
+        } else {
+            circularProgressBar.startSpinning()
+        }
     }
     
     private func hideLoading() {
-        activityIndicator.stopAnimating()
-        activityIndicator.removeFromSuperview()
+        circularProgressBar.removeFromSuperview()
     }
     
     func sink(networkRequestState publisher: CurrentValueSubject<RequestState, Never>) {
@@ -65,11 +56,8 @@ class BaseViewController: UIViewController {
             switch state {
             case .finished:
                 self.hideLoading()
-            case .started:
-                self.showLoading()
-            case .progress(let progress):
-                self.activityLabel.text = String(format: "%.2f", progress * 100) + " %"
-                self.circularProgressBar.setProgress(to: progress)
+            case .started(let progress):
+                self.showLoading(progress: progress)
             }
         }.store(in: &subscriptions)
     }

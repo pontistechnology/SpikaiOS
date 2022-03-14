@@ -14,6 +14,7 @@ class EnterUsernameView: UIView, BaseView {
     private let usernameLabel = CustomLabel(text: "Username", textColor: .textTertiary, fontName: .MontserratMedium)
     let usernameTextfield = TextField(textPlaceholder: "Enter username")
     let nextButton = MainButton()
+    private let uploadProgressView = CircularProgressBar(spinnerWidth: 24)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

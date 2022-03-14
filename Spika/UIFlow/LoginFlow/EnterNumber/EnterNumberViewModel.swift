@@ -11,7 +11,7 @@ import Combine
 class EnterNumberViewModel: BaseViewModel {
     
     func authenticateWithNumber(number: String, deviceId: String) {
-        networkRequestState.send(.started)
+        networkRequestState.send(.started())
         repository.authenticateUser(telephoneNumber: number, deviceId: deviceId).sink { [weak self] completion in
             self?.networkRequestState.send(.finished)
             switch completion {

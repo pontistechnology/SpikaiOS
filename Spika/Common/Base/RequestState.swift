@@ -8,7 +8,6 @@
 import UIKit
 
 public enum RequestState {
-    case started
     case finished
-    case progress(CGFloat)
+    case started(CGFloat? = nil)
 }

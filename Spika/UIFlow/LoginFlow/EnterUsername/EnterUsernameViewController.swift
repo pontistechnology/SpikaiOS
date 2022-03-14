@@ -60,6 +60,20 @@ class EnterUsernameViewController: BaseViewController {
                 self?.viewModel.updateUser(username: username, imageFileData: self?.fileData)
             }
         }.store(in: &subscriptions)
+        
+        viewModel.uploadProgressPublisher.sink { completion in
+            switch completion {
+            case .finished:
+                break
+            case .failure(_):
+                self.fileData = nil
+                self.enterUsernameView.profilePictureView.deleteMainImage()
+                self.enterUsernameView.profilePictureView.hideUploadProgress()
+            }
+        } receiveValue: { progress in
+            self.enterUsernameView.profilePictureView.showUploadProgress(progress: progress)
+        }.store(in: &subscriptions)
+
     }
 }
 

@@ -12,9 +12,9 @@ import CryptoKit
 
 class EnterUsernameViewModel: BaseViewModel {
     
+    let uploadProgressPublisher = PassthroughSubject<CGFloat, Error>()
+    
     func updateUser(username: String, imageFileData: Data?) {
-        networkRequestState.send(.started)
-        
         if let imageFileData = imageFileData {
             let tuple = repository.uploadWholeFile(data: imageFileData)
             let totalNumberOfChunks = CGFloat(tuple.totalChunksNumber)
@@ -22,7 +22,7 @@ class EnterUsernameViewModel: BaseViewModel {
             tuple.publisher.sink { [weak self] completion in
                 switch completion {
                 case let .failure(error):
-                    self?.networkRequestState.send(.finished)
+                    self?.uploadProgressPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
                     PopUpManager.shared.presentAlert(errorMessage: "Error with file upload: \(error)")
                 default:
                     break
@@ -30,12 +30,11 @@ class EnterUsernameViewModel: BaseViewModel {
             } receiveValue: { [weak self] chunkResponse in
                 print("chunkResponse: ", chunkResponse)
                 if let uploadedNumberOfChunks = chunkResponse.data?.uploadedChunks?.count {
-                    self?.networkRequestState.send(.progress(CGFloat(uploadedNumberOfChunks) / totalNumberOfChunks))
+                    self?.uploadProgressPublisher.send(CGFloat(uploadedNumberOfChunks) / totalNumberOfChunks)
                 }
                 if let file = chunkResponse.data?.file {
                     self?.updateInfo(username: username, avatarUrl: file.path)
                 }
-                
             }.store(in: &subscriptions)
         } else {
             self.updateInfo(username: username)
@@ -43,7 +42,7 @@ class EnterUsernameViewModel: BaseViewModel {
     }
     
     private func updateInfo(username: String? = nil, avatarUrl: String? = nil) {
-        networkRequestState.send(.started)
+        networkRequestState.send(.started())
         repository.updateUser(username: username, avatarURL: avatarUrl, telephoneNumber: nil, email: nil).sink { [weak self] completion in
             self?.networkRequestState.send(.finished)
             switch completion {
@@ -54,6 +53,7 @@ class EnterUsernameViewModel: BaseViewModel {
                 self?.presentHomeScreen()
             }
         } receiveValue: { response in
+
             print(response)
         }.store(in: &subscriptions)
     }

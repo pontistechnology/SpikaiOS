@@ -29,7 +29,7 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func checkRoom(forUserId userId: Int)  {
-        networkRequestState.send(.started)
+        networkRequestState.send(.started())
         repository.checkRoom(forUserId: userId).sink { completion in
             switch completion {
             case .finished:
@@ -70,7 +70,7 @@ class CurrentChatViewModel: BaseViewModel {
         guard let room = room else { return }
         let message = MessageBody(text: text)
         
-        networkRequestState.send(.started)
+        networkRequestState.send(.started())
         repository.sendTextMessage(message: message, roomId: room.id).sink { completion in
             self.networkRequestState.send(.finished)
             switch completion {
