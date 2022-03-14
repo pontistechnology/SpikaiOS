@@ -11,7 +11,7 @@ import Combine
 class BaseViewController: UIViewController {
     
     var subscriptions = Set<AnyCancellable>()
-    let activityIndicator = UIActivityIndicatorView()
+    let circularProgressBar = CircularProgressBar(spinnerWidth: 24)
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,16 +32,23 @@ class BaseViewController: UIViewController {
         hideKeyboardWhenTappedAround()
     }
     
-    private func showLoading() {
-        view.addSubview(activityIndicator)
-        activityIndicator.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-        activityIndicator.backgroundColor = .darkGray.withAlphaComponent(0.5)
-        activityIndicator.startAnimating()
+    private func showLoading(progress: CGFloat?) {
+        if let _ = circularProgressBar.superview {
+            print("jes")
+        } else {
+            view.addSubview(circularProgressBar)
+            circularProgressBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        }
+        
+        if let progress = progress {
+            circularProgressBar.setProgress(to: progress)
+        } else {
+            circularProgressBar.startSpinning()
+        }
     }
     
     private func hideLoading() {
-        activityIndicator.stopAnimating()
-        activityIndicator.removeFromSuperview()
+        circularProgressBar.removeFromSuperview()
     }
     
     func sink(networkRequestState publisher: CurrentValueSubject<RequestState, Never>) {
@@ -49,8 +56,8 @@ class BaseViewController: UIViewController {
             switch state {
             case .finished:
                 self.hideLoading()
-            case .started:
-                self.showLoading()
+            case .started(let progress):
+                self.showLoading(progress: progress)
             }
         }.store(in: &subscriptions)
     }

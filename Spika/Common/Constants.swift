@@ -24,6 +24,9 @@ struct Constants {
         static let uploadFiles = "api/upload/files"
         static let userInfo = "api/messenger/me"
         static let contacts = "api/messenger/contacts"
+        static let createRoom = "api/messenger/rooms"
+        static let checkRoom = "api/messenger/rooms/users"
+        static let sendMessage = "api/messenger/messages"
     }
     
     struct Database {
@@ -38,10 +41,10 @@ struct Constants {
         static let userPhoneNumber = "userPhoneNumber"
         static let deviceId = "deviceId"
         static let accessToken = "accessToken"
-        
-//        struct settings {
-//            static let autoDownload = "autodownload"
-//        }
+    }
+    
+    struct CABasicAnimations {
+        static let circularProgressStroke = "circularProgressStroke"
     }
     
 }

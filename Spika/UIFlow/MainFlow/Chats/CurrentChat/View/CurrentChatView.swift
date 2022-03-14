@@ -31,7 +31,10 @@ class CurrentChatView: UIView, BaseView {
     
     func styleSubviews() {
         messagesTableView.backgroundColor = .blue
-        messagesTableView.separatorStyle  = .none
+//        messagesTableView.separatorStyle  = .none
+        messagesTableView.rowHeight = UITableView.automaticDimension
+        messagesTableView.estimatedRowHeight = 5
+        messagesTableView.reloadData()
     }
     
     func positionSubviews() {        
@@ -43,7 +46,15 @@ class CurrentChatView: UIView, BaseView {
     }
     
     func setupBindings() {
-        messagesTableView.register(MessageTableViewCell.self, forCellReuseIdentifier: MessageTableViewCell.reuseIdentifier)
+        messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue)
+        messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myTextAndReply.rawValue)
+        messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue)
+        messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendTextAndReply.rawValue)
+        
+        
+        messagesTableView.register(MediaMessageTableViewCell.self, forCellReuseIdentifier: MediaMessageTableViewCell.reuseIdentifier)
+        messagesTableView.register(VoiceMessageTableViewCell.self, forCellReuseIdentifier: VoiceMessageTableViewCell.reuseIdentifier)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }

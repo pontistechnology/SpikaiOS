@@ -16,7 +16,7 @@ struct UploadChunkRequestModel: Codable {
     let fileName: String
     let clientId: String
     let type: String
-    let fileHash: String
+    let fileHash: String?
     let relationId: Int
     
 }

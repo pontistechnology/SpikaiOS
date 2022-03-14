@@ -13,6 +13,7 @@ class ImageViewWithIcon: UIView, BaseView {
     private let mainImageView = UIImageView()
     private let plainImageView = UIImageView()
     private let cameraIcon = ImageButton(image: UIImage(named: "camera")!, size: CGSize(width: 28, height: 28))
+    private let uploadProgressView = CircularProgressBar(spinnerWidth: 24)
     
     private let image: UIImage
     private let size: CGSize
@@ -74,5 +75,21 @@ class ImageViewWithIcon: UIView, BaseView {
         mainImageView.image = image
         mainImageView.isHidden  = false
         cameraIcon.isHidden = false
+    }
+    
+    func showUploadProgress(progress: CGFloat) {
+        if let _ = uploadProgressView.superview {
+            
+        } else {
+            backgroundView.addSubview(uploadProgressView)
+            uploadProgressView.fillSuperview()            
+        }
+        uploadProgressView.setProgress(to: progress)
+        isUserInteractionEnabled = false
+    }
+    
+    func hideUploadProgress() {
+        uploadProgressView.removeFromSuperview()
+        isUserInteractionEnabled = true
     }
 }

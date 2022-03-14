@@ -12,20 +12,29 @@ import CryptoKit
 
 class EnterUsernameViewModel: BaseViewModel {
     
+    let uploadProgressPublisher = PassthroughSubject<CGFloat, Error>()
+    
     func updateUser(username: String, imageFileData: Data?) {
-        networkRequestState.send(.started)
-        
         if let imageFileData = imageFileData {
-            repository.uploadWholeFile(data: imageFileData).sink { [weak self] completion in
+            let tuple = repository.uploadWholeFile(data: imageFileData)
+            let totalNumberOfChunks = CGFloat(tuple.totalChunksNumber)
+            
+            tuple.publisher.sink { [weak self] completion in
                 switch completion {
                 case let .failure(error):
-                    self?.networkRequestState.send(.finished)
+                    self?.uploadProgressPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
                     PopUpManager.shared.presentAlert(errorMessage: "Error with file upload: \(error)")
                 default:
                     break
                 }
-            } receiveValue: { [weak self] lastChunkResponse in
-                self?.updateInfo(username: username, avatarUrl: lastChunkResponse.data?.file?.path)
+            } receiveValue: { [weak self] chunkResponse in
+                print("chunkResponse: ", chunkResponse)
+                if let uploadedNumberOfChunks = chunkResponse.data?.uploadedChunks?.count {
+                    self?.uploadProgressPublisher.send(CGFloat(uploadedNumberOfChunks) / totalNumberOfChunks)
+                }
+                if let file = chunkResponse.data?.file {
+                    self?.updateInfo(username: username, avatarUrl: file.path)
+                }
             }.store(in: &subscriptions)
         } else {
             self.updateInfo(username: username)
@@ -33,16 +42,20 @@ class EnterUsernameViewModel: BaseViewModel {
     }
     
     private func updateInfo(username: String? = nil, avatarUrl: String? = nil) {
-        networkRequestState.send(.started)
+        networkRequestState.send(.started())
         repository.updateUser(username: username, avatarURL: avatarUrl, telephoneNumber: nil, email: nil).sink { [weak self] completion in
             self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
+                print("ERROR: ", error)
                 PopUpManager.shared.presentAlert(errorMessage: "Username error: \(error)")
             case .finished:
                 self?.presentHomeScreen()
             }
-        } receiveValue: { _ in }.store(in: &subscriptions)
+        } receiveValue: { response in
+
+            print(response)
+        }.store(in: &subscriptions)
     }
     
     private func presentHomeScreen() {

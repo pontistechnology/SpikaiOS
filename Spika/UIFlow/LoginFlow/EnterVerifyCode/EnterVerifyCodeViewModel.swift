@@ -22,7 +22,7 @@ class EnterVerifyCodeViewModel: BaseViewModel {
     }
     
     func verifyCode(code: String) {
-        networkRequestState.send(.started)
+        networkRequestState.send(.started())
         repository.verifyCode(code: code, deviceId: deviceId).sink { [weak self] completion in
             self?.networkRequestState.send(.finished)
             switch completion {
@@ -31,7 +31,6 @@ class EnterVerifyCodeViewModel: BaseViewModel {
             default: break
             }
         } receiveValue: { [weak self] authModel in
-            print("auth model verify code : ", authModel)
             guard let user = authModel.data?.user,
                   let device = authModel.data?.device
             else {
@@ -46,7 +45,7 @@ class EnterVerifyCodeViewModel: BaseViewModel {
     }
     
     func resendCode() {
-        networkRequestState.send(.started)
+        networkRequestState.send(.started())
         repository.authenticateUser(telephoneNumber: phoneNumber, deviceId: deviceId).sink { [weak self] completion in
             self?.networkRequestState.send(.finished)
             switch completion {

@@ -11,17 +11,15 @@ import Combine
 class EnterNumberViewModel: BaseViewModel {
     
     func authenticateWithNumber(number: String, deviceId: String) {
-        networkRequestState.send(.started)
+        networkRequestState.send(.started())
         repository.authenticateUser(telephoneNumber: number, deviceId: deviceId).sink { [weak self] completion in
             self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
                 PopUpManager.shared.presentAlert(errorMessage: "Could not auth user: \(error)")
-                print(error)
             default: break
             }
         } receiveValue: { [weak self] authResponse in
-            print("AUTH Response: ", authResponse)
             self?.presentEnterVerifyCodeScreen(number: number, deviceId: deviceId)
         }.store(in: &subscriptions)
 

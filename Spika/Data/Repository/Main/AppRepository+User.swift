@@ -61,6 +61,10 @@ extension AppRepository {
         defaults.set(device.token, forKey: Constants.UserDefaults.accessToken)
     }
     
+    func getMyUserId() -> Int {
+        return UserDefaults.standard.integer(forKey: Constants.UserDefaults.userId)
+    }
+    
     func getUsers() -> Future<[User], Error> {
         return databaseService.userEntityService.getUsers()
     }
@@ -73,16 +77,16 @@ extension AppRepository {
         return databaseService.userEntityService.saveUsers(users)
     }
     
-    func uploadWholeFile(data: Data) -> PassthroughSubject<UploadChunkResponseModel, Error> {
+    func uploadWholeFile(data: Data) -> (publisher: PassthroughSubject<UploadChunkResponseModel, Error>, totalChunksNumber: Int) {
         
         let dataLen: Int = data.count
         let chunkSize: Int = ((1024) * 4)
         let fullChunks = Int(dataLen / chunkSize)
         let totalChunks: Int = fullChunks + (dataLen % 1024 != 0 ? 1 : 0)
-        let fileHash = data.getSHA256()
         let clientId = UUID().uuidString
-        
-        let lastChunkPublisher = PassthroughSubject<UploadChunkResponseModel, Error>()
+        var hasher = SHA256()
+        var hash: String?
+        let chunkPublisher = PassthroughSubject<UploadChunkResponseModel, Error>()
     
         for chunkCounter in 0..<totalChunks {
             var chunk:Data
@@ -95,25 +99,28 @@ extension AppRepository {
             let range:Range<Data.Index> = chunkBase..<(chunkBase + diff)
             chunk = data.subdata(in: range)
             
-            uploadChunk(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "nameOfFile", clientId: clientId, type: "avatar", fileHash: fileHash, relationId: 1).sink { completion in
+            hasher.update(data: chunk)
+            if chunkCounter == totalChunks - 1 {
+                hash = hasher.finalize().compactMap { String(format: "%02x", $0)}.joined()
+            }
+            
+            uploadChunk(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "nameOfFile", clientId: clientId, type: "avatar", fileHash: hash, relationId: 1).sink { completion in
                 switch completion {
                 case let .failure(error):
                     print("Failure error", error)
-                    lastChunkPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
+                    chunkPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
                 case .finished:
                     break
                 }
             } receiveValue: { uploadFileResponseModel in
-                if uploadFileResponseModel.data?.file != nil {
-                    lastChunkPublisher.send(uploadFileResponseModel)
-                }
+                chunkPublisher.send(uploadFileResponseModel)
             }.store(in: &subs)
         }
         
-        return lastChunkPublisher
+        return (chunkPublisher, totalChunks)
     }
     
-    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
+    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String? = nil, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
 
         guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
         else {return Fail<UploadChunkResponseModel, Error>(error: NetworkError.noAccessToken)

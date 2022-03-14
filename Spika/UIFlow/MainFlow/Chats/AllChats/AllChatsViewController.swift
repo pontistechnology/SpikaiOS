@@ -28,7 +28,7 @@ class AllChatsViewController: BaseViewController {
         allChatsView.allChatsTableView.dataSource = self
         
         allChatsView.pencilImageView.tap().sink { [weak self] _ in
-            self?.viewModel.presentNewChatScreen()
+            self?.viewModel.presentSelectUserScreen()
         }.store(in: &subscriptions)
     }
     
@@ -93,8 +93,8 @@ extension AllChatsViewController: UITableViewDataSource {
     }
 }
 
-extension AllChatsViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        true
-    }
-}
+//extension AllChatsViewController: UIGestureRecognizerDelegate {
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        true
+//    }
+//}

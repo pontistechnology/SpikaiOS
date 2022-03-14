@@ -1,4 +1,3 @@
-//
 //  ContactsViewModel.swift
 //  Spika
 //

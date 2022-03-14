@@ -14,7 +14,7 @@ protocol HomeTabBarViewDelegate: AnyObject {
 class HomeTabBar: UIView, BaseView {
     
     private let tabContainer = UIView()
-    private let tabStackView = UIStackView()
+    let tabStackView = UIStackView()
     private let topBorderView  = UIView()
     var tabBarItems: [TabBarItem]
     var currentViewControllerIndex: Int = 0

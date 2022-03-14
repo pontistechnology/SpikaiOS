@@ -24,10 +24,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        print("Saved things: ", UserDefaults.standard.dictionaryRepresentation())
-        print("UUID is: ", UIDevice.current.identifierForVendor!.uuidString)
+        test()
+        customization()
         
         return true
+    }
+    
+    func test() {
+        // only for debug, remove later
+        print("type is: ", MessageType(rawValue: "textf"))
+        
+    }
+    
+    func customization() {
+        guard let font =  UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14) else { return }
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+            [   NSAttributedString.Key.font : font,
+                NSAttributedString.Key.foregroundColor : UIColor.primaryColor
+        ], for: .normal)
+        
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+            [   NSAttributedString.Key.font : font,
+            ], for: .disabled)
     }
 
     // MARK: UISceneSession Lifecycle

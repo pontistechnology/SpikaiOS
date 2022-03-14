@@ -16,4 +16,11 @@ extension TestRepository {
     func getMessagesForChat(chat: Chat) -> Future<[Message], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
+    
+    func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
+       return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+    }
+        
 }

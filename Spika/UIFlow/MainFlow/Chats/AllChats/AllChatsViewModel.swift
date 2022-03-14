@@ -9,11 +9,11 @@ import Foundation
 
 class AllChatsViewModel: BaseViewModel {
     
-    func presentNewChatScreen() {
-        getAppCoordinator()?.presentNewChatScreen()
+    func presentSelectUserScreen() {
+        getAppCoordinator()?.presentSelectUserScreen()
     }
     
     func presentCurrentChatScreen() {
-        getAppCoordinator()?.presentCurrentChatScreen()
+//        getAppCoordinator()?.presentCurrentChatScreen()
     }
 }
