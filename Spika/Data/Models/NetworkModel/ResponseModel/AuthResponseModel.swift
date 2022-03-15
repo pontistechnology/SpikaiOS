@@ -17,7 +17,7 @@ struct AuthResponseModel: Codable {
 // MARK: - DataClass
 struct AuthData: Codable {
     let isNewUser: Bool?
-    let user: AppUser?
+    let user: User?
     let device: Device?
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Codable {
+struct LocalUser: Codable {
     public var id: Int?
     public var loginName: String?
     public var avatarUrl: String?
@@ -46,5 +46,15 @@ struct User: Codable {
         } else {
             return nil
         }
+    }
+}
+
+extension LocalUser: Comparable {
+    static func < (lhs: LocalUser, rhs: LocalUser) -> Bool {
+        return lhs.loginName!.localizedStandardCompare(rhs.loginName!) == .orderedAscending
+    }
+    
+    static func == (lhs: LocalUser, rhs: LocalUser) -> Bool {
+        return lhs.loginName!.localizedStandardCompare(rhs.loginName!) == .orderedSame
     }
 }

@@ -22,7 +22,7 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
-    func saveUserInfo(user: AppUser, device: Device) {
+    func saveUserInfo(user: User, device: Device) {
         print(user)
     }
     
@@ -30,25 +30,25 @@ extension TestRepository {
         999
     }
     
-    func getUsers() -> Future<[User], Error> {
-        let users = [User(loginName: "Ivan", localName: "Ivan"),
-                     User(loginName: "Luka", localName: "Luka")]
+    func getUsers() -> Future<[LocalUser], Error> {
+        let users = [LocalUser(loginName: "Ivan", localName: "Ivan"),
+                     LocalUser(loginName: "Luka", localName: "Luka")]
         return Future { promise in promise(.success(users))}
     }
     
-    func saveUser(_ user: User) -> Future<User, Error> {
+    func saveUser(_ user: LocalUser) -> Future<LocalUser, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func saveUsers(_ user: [User]) -> Future<[User], Error> {
+    func saveUsers(_ user: [LocalUser]) -> Future<[LocalUser], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func addUserToChat(chat: Chat, user: User) -> Future<Chat, Error> {
+    func addUserToChat(chat: Chat, user: LocalUser) -> Future<Chat, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func getUsersForChat(chat: Chat) -> Future<[User], Error> {
+    func getUsersForChat(chat: Chat) -> Future<[LocalUser], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     

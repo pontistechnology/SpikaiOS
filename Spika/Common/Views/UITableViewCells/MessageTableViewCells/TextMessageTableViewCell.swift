@@ -122,7 +122,7 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
         }
     }
     
-    func updateCell(message: Message2, replyMessageTest: Message2? = nil) {
+    func updateCell(message: Message, replyMessageTest: Message? = nil) {
         guard let currentReuseIdentifier = currentReuseIdentifier else {
             return
         }

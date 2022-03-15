@@ -52,9 +52,17 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         descriptionLabel.text = desc
     }
     
-    func configureCell(_ model: AppUser) {
+    func configureCell(_ model: User) {
         nameLabel.text = model.displayName
         descriptionLabel.text = model.telephoneNumber
+        
+        let url = URL(string: model.getAvatarUrl() ?? "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
+        leftImageView.kf.setImage(with: url)
+    }
+    
+    func configureCell(_ model: LocalUser) {
+        nameLabel.text = model.loginName
+        descriptionLabel.text = model.loginName
         
         let url = URL(string: model.getAvatarUrl() ?? "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
         leftImageView.kf.setImage(with: url)

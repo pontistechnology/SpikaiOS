@@ -28,7 +28,7 @@ extension UserEntity {
     @NSManaged public var messages: Set<MessageEntity>?
     @NSManaged public var reactions: Set<ReactionEntity>?
     
-    convenience init(insertInto context: NSManagedObjectContext?, user: User) {
+    convenience init(insertInto context: NSManagedObjectContext?, user: LocalUser) {
         guard let context = context,
             let entity = NSEntityDescription.entity(forEntityName: Constants.Database.userEntity, in: context)
         else {

@@ -45,7 +45,7 @@ class ChatEntityService {
         }
     }
     
-    func addUserToChat(chat: Chat, user: User) -> Future<Chat, Error> {
+    func addUserToChat(chat: Chat, user: LocalUser) -> Future<Chat, Error> {
         let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
         userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")
         let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
@@ -65,15 +65,15 @@ class ChatEntityService {
         }
     }
     
-    func getUsersForChat(chat: Chat) -> Future<[User], Error> {
+    func getUsersForChat(chat: Chat) -> Future<[LocalUser], Error> {
         let fetchRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
         fetchRequest.predicate = NSPredicate(format: "id = %@", "\(chat.id)")
         do {
             let dbChat = try managedContext?.fetch(fetchRequest).first
             if let dbChat = dbChat {
-                var users: [User] = []
+                var users: [LocalUser] = []
                 dbChat.users?.forEach{ dbUser in
-                    users.append(User(entity: dbUser))
+                    users.append(LocalUser(entity: dbUser))
                 }
                 return Future { promise in promise(.success(users))}
             } else {
@@ -85,7 +85,7 @@ class ChatEntityService {
         }
     }
     
-    func removeChatFromUser(user: User, chat: Chat) -> Future<User, Error> {
+    func removeChatFromUser(user: LocalUser, chat: Chat) -> Future<LocalUser, Error> {
         let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
         userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")
         let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)

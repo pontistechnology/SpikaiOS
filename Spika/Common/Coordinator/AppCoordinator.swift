@@ -63,7 +63,7 @@ class AppCoordinator: Coordinator {
         ]
     }
     
-    func presentDetailsScreen(user: AppUser) {
+    func presentDetailsScreen(user: LocalUser) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(DetailsViewController.self, arguments: self, user)!
         self.navigationController.pushViewController(viewController, animated: true)
     }
@@ -108,14 +108,14 @@ class AppCoordinator: Coordinator {
         navigationController.present(navC, animated: true, completion: nil)
     }
     
-    func presentCurrentChatScreen(user: AppUser) {
+    func presentCurrentChatScreen(user: User) {
         let homeViewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
         let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, user)!
         
         navigationController.setViewControllers([homeViewController, currentChatViewController], animated: true)
     }
     
-    func presentNewGroupChatScreen(selectedMembers: [AppUser]) {
+    func presentNewGroupChatScreen(selectedMembers: [User]) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroupChatViewController.self, arguments: self, selectedMembers)!
         let selectUserVC = navigationController.presentedViewController as? UINavigationController
         selectUserVC?.pushViewController(viewController, animated: true)

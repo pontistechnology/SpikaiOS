@@ -14,5 +14,5 @@ struct SendMessageResponse: Codable {
 }
 
 struct SendMessageData: Codable {
-    let message: Message2
+    let message: Message
 }

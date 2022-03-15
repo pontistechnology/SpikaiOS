@@ -16,7 +16,7 @@ struct ContactsResponseModel: Codable {
 
 // MARK: - DataClass
 struct ContactsData: Codable {
-    let list: [AppUser]?
+    let list: [User]?
     let limit: Int?
     let count: Int?
 }

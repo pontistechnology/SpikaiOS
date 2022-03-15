@@ -31,21 +31,21 @@ protocol Repository {
     func updateChat(_ chat: Chat) -> Future<Chat, Error>
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
     func verifyCode(code: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
-    func saveUserInfo(user: AppUser, device: Device)
+    func saveUserInfo(user: User, device: Device)
     func getMyUserId() -> Int
-    func getUsers() -> Future<[User], Error>
-    func saveUser(_ user: User) -> Future<User, Error>
-    func saveUsers(_ users: [User]) -> Future<[User], Error>
-    func addUserToChat(chat: Chat, user: User) -> Future<Chat, Error>
-    func getUsersForChat(chat: Chat) -> Future<[User], Error>
-    func saveMessage(_ message: Message) -> Future<Message, Error>
-    func getMessagesForChat(chat: Chat) -> Future<[Message], Error>
+    func getUsers() -> Future<[LocalUser], Error>
+    func saveUser(_ user: LocalUser) -> Future<LocalUser, Error>
+    func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error>
+    func addUserToChat(chat: Chat, user: LocalUser) -> Future<Chat, Error>
+    func getUsersForChat(chat: Chat) -> Future<[LocalUser], Error>
+    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error>
+    func getMessagesForChat(chat: Chat) -> Future<[LocalMessage], Error>
     func uploadWholeFile(data: Data) -> (publisher: PassthroughSubject<UploadChunkResponseModel, Error>, totalChunksNumber: Int)
     func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String?, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error>
     func updateUser(username: String?, avatarURL: String?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>
     func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error>
     func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>
-    func createRoom(name: String, users: [AppUser]) -> AnyPublisher<CreateRoomResponseModel, Error>
+    func createRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error>
     func checkRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
     func createRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error>
     func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>

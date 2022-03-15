@@ -9,11 +9,11 @@ import Foundation
 import Combine
 
 extension TestRepository {
-    func saveMessage(_ message: Message) -> Future<Message, Error> {
+    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func getMessagesForChat(chat: Chat) -> Future<[Message], Error> {
+    func getMessagesForChat(chat: Chat) -> Future<[LocalMessage], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     

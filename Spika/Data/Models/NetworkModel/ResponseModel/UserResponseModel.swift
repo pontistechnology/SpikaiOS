@@ -15,5 +15,5 @@ struct UserResponseModel: Codable {
 
 // MARK: - DataClass
 struct UserData: Codable {
-    let user: AppUser
+    let user: User
 }

@@ -12,6 +12,6 @@ struct Reaction: Codable {
     var id: Int64
     var modifiedAt: String?
     var type: String?
-    var message: Message?
-    var user: User?
+    var message: LocalMessage?
+    var user: LocalUser?
 }

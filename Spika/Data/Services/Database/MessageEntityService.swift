@@ -18,13 +18,13 @@ class MessageEntityService {
         return appDelegate.persistentContainer.viewContext
     }
     
-    func getMessages() -> Future<[Message], Error> {
+    func getMessages() -> Future<[LocalMessage], Error> {
         let fetchRequest = NSFetchRequest<MessageEntity>(entityName: Constants.Database.messageEntity)
         do {
             let objects = try managedContext?.fetch(fetchRequest)
             
             if let messageEntities = objects {
-                let messages = messageEntities.map{ return Message(entity: $0)}
+                let messages = messageEntities.map{ return LocalMessage(entity: $0)}
                 return Future { promise in promise(.success(messages))}
             } else {
                 return Future { promise in promise(.failure(DatabseError.requestFailed))}
@@ -35,14 +35,14 @@ class MessageEntityService {
         }
     }
     
-    func getMessagesForChat(chat: Chat) -> Future<[Message], Error> {
+    func getMessagesForChat(chat: Chat) -> Future<[LocalMessage], Error> {
         let fetchRequest = NSFetchRequest<MessageEntity>(entityName: Constants.Database.messageEntity)
         fetchRequest.predicate = NSPredicate(format: "chat.id = %@", "\(chat.id)")
         do {
             let objects = try managedContext?.fetch(fetchRequest)
             
             if let messageEntities = objects {
-                let messages = messageEntities.map{ return Message(entity: $0)}
+                let messages = messageEntities.map{ return LocalMessage(entity: $0)}
                 return Future { promise in promise(.success(messages))}
             } else {
                 return Future { promise in promise(.failure(DatabseError.requestFailed))}
@@ -53,7 +53,7 @@ class MessageEntityService {
         }
     }
     
-    func saveMessage(_ message: Message) -> Future<Message, Error> {
+    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
         let dbMessage = MessageEntity(insertInto: managedContext, message: message)
         let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
         userRequest.predicate = NSPredicate(format: "id = %@", "\(message.user?.id ?? -1)")
@@ -74,7 +74,7 @@ class MessageEntityService {
         }
     }
     
-    func updateMessage(_ message: Message) -> Future<Message, Error> {
+    func updateMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
         let fetchRequest = NSFetchRequest<MessageEntity>(entityName: Constants.Database.messageEntity)
         fetchRequest.predicate = NSPredicate(format: "id = %@", "\(message.id)")
         do {
@@ -103,7 +103,7 @@ class MessageEntityService {
         }
     }
     
-    func deleteMessage(_ message: Message) -> Future<Message, Error> {
+    func deleteMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
         let fetchRequest = NSFetchRequest<MessageEntity>(entityName: Constants.Database.messageEntity)
         fetchRequest.predicate = NSPredicate(format: "id = %@", "\(message.id)")
         do {

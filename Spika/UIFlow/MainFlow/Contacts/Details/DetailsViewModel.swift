@@ -10,12 +10,12 @@ import Combine
 
 class DetailsViewModel: BaseViewModel {
     
-    let user: AppUser
-    let userSubject: CurrentValueSubject<AppUser, Never>
+    let user: LocalUser
+    let userSubject: CurrentValueSubject<LocalUser, Never>
     
-    init(repository: Repository, coordinator: Coordinator, user: AppUser) {
+    init(repository: Repository, coordinator: Coordinator, user: LocalUser) {
         self.user = user
-        self.userSubject = CurrentValueSubject<AppUser, Never>(user)
+        self.userSubject = CurrentValueSubject<LocalUser, Never>(user)
         super.init(repository: repository, coordinator: coordinator)
     }
     
@@ -43,8 +43,8 @@ class DetailsViewModel: BaseViewModel {
         getAppCoordinator()?.presentCallHistoryScreen()
     }
     
-    func presentCurrentChatScreen(user: AppUser) {
+    func presentCurrentChatScreen(user: LocalUser) {
 //        getAppCoordinator()?.popTopViewController(animated: false)
-        getAppCoordinator()?.presentCurrentChatScreen(user: user)
+//        getAppCoordinator()?.presentCurrentChatScreen(user: user)
     }
 }
