@@ -35,7 +35,7 @@ class MessageEntityService {
         }
     }
     
-    func getMessagesForChat(chat: Chat) -> Future<[LocalMessage], Error> {
+    func getMessagesForChat(chat: LocalChat) -> Future<[LocalMessage], Error> {
         let fetchRequest = NSFetchRequest<MessageEntity>(entityName: Constants.Database.messageEntity)
         fetchRequest.predicate = NSPredicate(format: "chat.id = %@", "\(chat.id)")
         do {

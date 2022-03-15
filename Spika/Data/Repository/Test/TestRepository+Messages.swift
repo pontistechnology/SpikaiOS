@@ -13,7 +13,7 @@ extension TestRepository {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func getMessagesForChat(chat: Chat) -> Future<[LocalMessage], Error> {
+    func getMessagesForChat(chat: LocalChat) -> Future<[LocalMessage], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     

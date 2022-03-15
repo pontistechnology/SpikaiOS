@@ -19,11 +19,11 @@ public struct LocalMessage: Codable {
     var replyMessageId: Int64?
     var state: String?
     var toDeviceType: String?
-    var chat: Chat?
-    var reactions: [Reaction]?
+    var chat: LocalChat?
+    var reactions: [LocalReaction]?
     var user: LocalUser?
     
-    init(chat: Chat, user: LocalUser, message: String, id: Int) {
+    init(chat: LocalChat, user: LocalUser, message: String, id: Int) {
         self.id = Int64(id)
         self.chat = chat
         self.user = user
@@ -44,7 +44,7 @@ public struct LocalMessage: Codable {
             self.user = LocalUser(entity: dbUser)
         }
         if let dbChat = entity.chat {
-            self.chat = Chat(entity: dbChat)
+            self.chat = LocalChat(entity: dbChat)
         }
         self.createdAt = Int(entity.createdAt)
         self.modifiedAt = Int(entity.modifiedAt)

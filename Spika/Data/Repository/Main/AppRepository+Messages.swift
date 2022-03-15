@@ -13,7 +13,7 @@ extension AppRepository {
         return databaseService.messageEntityService.saveMessage(message)
     }
     
-    func getMessagesForChat(chat: Chat) -> Future<[LocalMessage], Error> {
+    func getMessagesForChat(chat: LocalChat) -> Future<[LocalMessage], Error> {
         return databaseService.messageEntityService.getMessagesForChat(chat: chat)
     }
     

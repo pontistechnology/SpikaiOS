@@ -70,7 +70,7 @@ extension ContactsViewController: UITableViewDelegate {
 extension ContactsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let char = viewModel.contactsSubject.value[section].first?.loginName?.prefix(1) {
+        if let char = viewModel.contactsSubject.value[section].first?.displayName?.prefix(1) {
             return char.localizedUppercase
         } else {
             return "@"

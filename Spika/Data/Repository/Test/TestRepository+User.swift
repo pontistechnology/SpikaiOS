@@ -31,8 +31,8 @@ extension TestRepository {
     }
     
     func getUsers() -> Future<[LocalUser], Error> {
-        let users = [LocalUser(loginName: "Ivan", localName: "Ivan"),
-                     LocalUser(loginName: "Luka", localName: "Luka")]
+        let users = [LocalUser(displayName: "Mirko", id: 1337),
+                     LocalUser(displayName: "Slavko", id: 1337)]
         return Future { promise in promise(.success(users))}
     }
     
@@ -44,11 +44,11 @@ extension TestRepository {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func addUserToChat(chat: Chat, user: LocalUser) -> Future<Chat, Error> {
+    func addUserToChat(chat: LocalChat, user: LocalUser) -> Future<LocalChat, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func getUsersForChat(chat: Chat) -> Future<[LocalUser], Error> {
+    func getUsersForChat(chat: LocalChat) -> Future<[LocalUser], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     

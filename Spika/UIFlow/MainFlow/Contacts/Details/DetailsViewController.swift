@@ -65,7 +65,7 @@ class DetailsViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         viewModel.userSubject.receive(on: DispatchQueue.main).sink { user in
-            self.detailsView.contentView.nameLabel.text = user.loginName
+            self.detailsView.contentView.nameLabel.text = user.displayName
             let url = URL(string: user.getAvatarUrl() ?? "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
             self.detailsView.contentView.profilePhoto.kf.setImage(with: url)
         }.store(in: &subscriptions)

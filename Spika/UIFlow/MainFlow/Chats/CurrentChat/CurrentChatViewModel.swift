@@ -10,14 +10,14 @@ import Combine
 
 class CurrentChatViewModel: BaseViewModel {
     
-    let friendUser: User
+    let friendUser: LocalUser
     var room: Room?
     let testMessagesSubject = CurrentValueSubject<[Message], Never>([
         Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "neron"), createdAt: 23)
     ])
     
     
-    init(repository: Repository, coordinator: Coordinator, friendUser: User) {
+    init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
     }

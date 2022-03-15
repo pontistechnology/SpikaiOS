@@ -108,7 +108,7 @@ class AppCoordinator: Coordinator {
         navigationController.present(navC, animated: true, completion: nil)
     }
     
-    func presentCurrentChatScreen(user: User) {
+    func presentCurrentChatScreen(user: LocalUser) {
         let homeViewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
         let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, user)!
         

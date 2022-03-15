@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Reaction: Codable {
+struct LocalReaction: Codable {
     var createdAt: Int?
     var id: Int64
     var modifiedAt: String?

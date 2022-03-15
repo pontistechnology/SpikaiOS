@@ -13,7 +13,7 @@ class ContactsViewModel: BaseViewModel {
     var users = Array<LocalUser>()
     
     // *** remains of test ***
-    let chatsSubject = CurrentValueSubject<[Chat], Never>([])
+    let chatsSubject = CurrentValueSubject<[LocalChat], Never>([])
     
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
@@ -40,7 +40,7 @@ class ContactsViewModel: BaseViewModel {
     func saveUsers(_ users: [User]) {
         var dbUsers = [LocalUser]()
         for user in users {
-            let dbUser = LocalUser(loginName: user.displayName!, avatarUrl: user.avatarUrl, localName: user.displayName!, id: user.id, blocked: false)
+            let dbUser = LocalUser(user: user)
             dbUsers.append(dbUser)
         }
         repository.saveUsers(dbUsers).sink { completion in
@@ -134,11 +134,11 @@ class ContactsViewModel: BaseViewModel {
           
         var tableAppUsers = Array<Array<LocalUser>>()
         for user in sortedList {
-            if let char1 = user.loginName?.prefix(1), let char2 = tableAppUsers.last?.last?.loginName?.prefix(1), char1 == char2 {
+            if let char1 = user.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
                 print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
                 tableAppUsers[tableAppUsers.count - 1].append(user)
             } else {
-                if let char1 = user.loginName?.prefix(1), let char2 = tableAppUsers.last?.last?.loginName?.prefix(1) {
+                if let char1 = user.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1) {
                     print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
                 }
                 tableAppUsers.append([user])
@@ -153,7 +153,7 @@ class ContactsViewModel: BaseViewModel {
         if filter.isEmpty {
             updateContactsUI(list: users)
         } else {
-            let filteredContacts = users.filter{ $0.loginName!.localizedStandardContains(filter) }
+            let filteredContacts = users.filter{ $0.displayName!.localizedStandardContains(filter) }
             updateContactsUI(list: filteredContacts)
         }
     }
@@ -186,7 +186,7 @@ class ContactsViewModel: BaseViewModel {
     }
     
     func createChat(name: String, type: String, id: Int) {
-        let chat = Chat(name: name, id: id, type: type)
+        let chat = LocalChat(name: name, id: id, type: type)
         repository.createChat(chat).sink { completion in
             switch completion {
             case let .failure(error):
@@ -202,7 +202,7 @@ class ContactsViewModel: BaseViewModel {
     }
     
     func updateChat(name: String, type: String, id: Int) {
-        let chat = Chat(name: name, id: id, type: type)
+        let chat = LocalChat(name: name, id: id, type: type)
         repository.updateChat(chat).sink { completion in
             switch completion {
             case let .failure(error):
@@ -215,7 +215,7 @@ class ContactsViewModel: BaseViewModel {
 
     }
     
-    func addUserToChat(chat: Chat, user: LocalUser) {
+    func addUserToChat(chat: LocalChat, user: LocalUser) {
         repository.addUserToChat(chat: chat, user: user).sink { completion in
             switch completion {
             case let .failure(error):
@@ -227,7 +227,7 @@ class ContactsViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
-    func getUsersForChat(chat: Chat) {
+    func getUsersForChat(chat: LocalChat) {
         repository.getUsersForChat(chat: chat).sink { completion in
             switch completion {
             case let .failure(error):
@@ -251,7 +251,7 @@ class ContactsViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
-    func getMessagesForChat(chat: Chat) {
+    func getMessagesForChat(chat: LocalChat) {
         repository.getMessagesForChat(chat: chat).sink { completion in
             switch completion {
             case let .failure(error):

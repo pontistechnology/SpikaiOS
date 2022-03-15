@@ -9,23 +9,23 @@ import Foundation
 import Combine
 
 extension AppRepository {
-    func createChat(_ chat: Chat) -> Future<Chat, Error> {
+    func createChat(_ chat: LocalChat) -> Future<LocalChat, Error> {
         return databaseService.chatEntityService.saveChat(chat)
     }
     
-    func getChats() -> Future<[Chat], Error> {
+    func getChats() -> Future<[LocalChat], Error> {
         return databaseService.chatEntityService.getChats()
     }
     
-    func updateChat(_ chat: Chat) -> Future<Chat, Error> {
+    func updateChat(_ chat: LocalChat) -> Future<LocalChat, Error> {
         return databaseService.chatEntityService.updateChat(chat)
     }
     
-    func addUserToChat(chat: Chat, user: LocalUser) -> Future<Chat, Error> {
+    func addUserToChat(chat: LocalChat, user: LocalUser) -> Future<LocalChat, Error> {
         return databaseService.chatEntityService.addUserToChat(chat: chat, user: user)
     }
     
-    func getUsersForChat(chat: Chat) -> Future<[LocalUser], Error> {
+    func getUsersForChat(chat: LocalChat) -> Future<[LocalUser], Error> {
         return databaseService.chatEntityService.getUsersForChat(chat: chat)
     }
 }
