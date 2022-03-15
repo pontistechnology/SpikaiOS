@@ -28,5 +28,5 @@ struct Room: Codable {
 struct RoomUser: Codable {
     let userId: Int
     let isAdmin: Bool
-    let user: AppUser
+    let user: User
 }

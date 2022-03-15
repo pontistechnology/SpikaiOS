@@ -30,12 +30,12 @@ class ChatsAssembly: Assembly {
     }
     
     private func assembleCurrentChatViewController(_ container: Container) {
-        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, user: AppUser) in
+        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, user: LocalUser) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return CurrentChatViewModel(repository: repository, coordinator: coordinator, friendUser: user)
         }.inObjectScope(.transient)
 
-        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, user: AppUser) in
+        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, user: LocalUser) in
             let controller = CurrentChatViewController()
             controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, user)
             return controller
@@ -43,12 +43,12 @@ class ChatsAssembly: Assembly {
     }
     
     private func assembleNewGroupChatViewController(_ container: Container) {
-        container.register(NewGroupChatViewModel.self) { (resolver, coordinator: AppCoordinator, selectedUser: [AppUser]) in
+        container.register(NewGroupChatViewModel.self) { (resolver, coordinator: AppCoordinator, selectedUser: [User]) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return NewGroupChatViewModel(repository: repository, coordinator: coordinator, selectedUsers: selectedUser)
         }.inObjectScope(.transient)
 
-        container.register(NewGroupChatViewController.self) { (resolver, coordinator: AppCoordinator, selectedUsers: [AppUser]) in
+        container.register(NewGroupChatViewController.self) { (resolver, coordinator: AppCoordinator, selectedUsers: [User]) in
             let controller = NewGroupChatViewController()
             controller.viewModel = container.resolve(NewGroupChatViewModel.self, arguments: coordinator, selectedUsers)
             return controller

@@ -15,20 +15,30 @@ extension UserEntity {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<UserEntity> {
         return NSFetchRequest<UserEntity>(entityName: "UserEntity")
     }
-
-    @NSManaged public var avatarUrl: String?
-    @NSManaged public var blocked: Bool
-    @NSManaged public var createdAt: Int64
-    @NSManaged public var id: Int64
-    @NSManaged public var localName: String?
-    @NSManaged public var loginName: String?
-    @NSManaged public var modifiedAt: Int64
-    @NSManaged public var nickName: String?
-    @NSManaged public var chats: Set<ChatEntity>?
-    @NSManaged public var messages: Set<MessageEntity>?
-    @NSManaged public var reactions: Set<ReactionEntity>?
     
-    convenience init(insertInto context: NSManagedObjectContext?, user: User) {
+    @NSManaged public var id: Int
+    @NSManaged public var displayName: String?
+    @NSManaged public var avatarUrl: String?
+    @NSManaged public var telephoneNumber: String?
+    @NSManaged public var emailAddress: String?
+    @NSManaged public var createdAt: Int
+    
+    @NSManaged public var givenName: String?
+    @NSManaged public var familyName: String?
+
+//    @NSManaged public var avatarUrl: String?
+//    @NSManaged public var blocked: Bool
+//    @NSManaged public var createdAt: Int64
+//    @NSManaged public var id: Int64
+//    @NSManaged public var localName: String?
+//    @NSManaged public var loginName: String?
+//    @NSManaged public var modifiedAt: Int64
+//    @NSManaged public var nickName: String?
+//    @NSManaged public var chats: Set<ChatEntity>?
+//    @NSManaged public var messages: Set<MessageEntity>?
+//    @NSManaged public var reactions: Set<ReactionEntity>?
+    
+    convenience init(insertInto context: NSManagedObjectContext?, user: LocalUser) {
         guard let context = context,
             let entity = NSEntityDescription.entity(forEntityName: Constants.Database.userEntity, in: context)
         else {
@@ -37,17 +47,16 @@ extension UserEntity {
         }
         self.init(entity: entity, insertInto: context)
         
-        self.id = Int64(user.id ?? -1)
-        self.loginName = user.loginName
+        self.id = user.id
+        self.displayName = user.displayName
         self.avatarUrl = user.avatarUrl
-        self.localName = user.localName
-        self.blocked = user.blocked
-        self.createdAt = Int64(user.createdAt ?? 0)
-        self.modifiedAt = Int64(user.modifiedAt ?? 0)
+        self.telephoneNumber = user.telephoneNumber
+        self.emailAddress = user.emailAddress
+        self.createdAt = user.createdAt!
         
+        self.givenName = user.givenName
+        self.familyName = user.familyName
     }
-
-
 }
 
 // MARK: Generated accessors for chats

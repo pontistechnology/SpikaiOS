@@ -19,12 +19,12 @@ class ContactsAssembly: Assembly {
     }
     
     private func assembleDetailsViewController(_ container: Container) {
-        container.register(DetailsViewModel.self) { (resolver, coordinator: AppCoordinator, user: AppUser) in
+        container.register(DetailsViewModel.self) { (resolver, coordinator: AppCoordinator, user: LocalUser) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return DetailsViewModel(repository: repository, coordinator: coordinator, user: user)
         }.inObjectScope(.transient)
         
-        container.register(DetailsViewController.self) { (resolver, coordinator: AppCoordinator, user: AppUser) in
+        container.register(DetailsViewController.self) { (resolver, coordinator: AppCoordinator, user: LocalUser) in
             let controller = DetailsViewController()
             controller.viewModel = container.resolve(DetailsViewModel.self, arguments: coordinator, user)
             return controller

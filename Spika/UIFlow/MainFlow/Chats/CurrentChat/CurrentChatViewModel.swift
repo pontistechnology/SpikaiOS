@@ -10,19 +10,19 @@ import Combine
 
 class CurrentChatViewModel: BaseViewModel {
     
-    let friendUser: AppUser
+    let friendUser: LocalUser
     var room: Room?
-    let testMessagesSubject = CurrentValueSubject<[Message2], Never>([
-        Message2(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "neron"), createdAt: 23)
+    let testMessagesSubject = CurrentValueSubject<[Message], Never>([
+        Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "neron"), createdAt: 23)
     ])
     
     
-    init(repository: Repository, coordinator: Coordinator, friendUser: AppUser) {
+    init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
     }
 
-    func addMessage(message: Message2) {
+    func addMessage(message: Message) {
         var value = testMessagesSubject.value
         value.append(message)
         testMessagesSubject.send(value)

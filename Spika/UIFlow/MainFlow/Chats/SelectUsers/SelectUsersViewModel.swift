@@ -10,9 +10,9 @@ import Combine
 
 class SelectUsersViewModel: BaseViewModel {
     
-    let contactsSubject = CurrentValueSubject<[[AppUser]], Never>([])
-    let selectedUsersSubject = CurrentValueSubject<[AppUser], Never>([])
-    var users : [AppUser] = []
+    let contactsSubject = CurrentValueSubject<[[User]], Never>([])
+    let selectedUsersSubject = CurrentValueSubject<[User], Never>([])
+    var users : [User] = []
     
     func getOnlineContacts(page: Int) {
         repository.getContacts(page: page).sink { completion in
@@ -32,9 +32,9 @@ class SelectUsersViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
-    func updateContactsUI(list: [AppUser]) {
+    func updateContactsUI(list: [User]) {
           
-        var tableAppUsers = Array<Array<AppUser>>()
+        var tableAppUsers = Array<Array<User>>()
         for appUser in list {
             if let char1 = appUser.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
                 tableAppUsers[tableAppUsers.count - 1].append(appUser)

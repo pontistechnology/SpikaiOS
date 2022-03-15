@@ -9,11 +9,11 @@ import Foundation
 import Combine
 
 extension AppRepository {
-    func saveMessage(_ message: Message) -> Future<Message, Error> {
+    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
         return databaseService.messageEntityService.saveMessage(message)
     }
     
-    func getMessagesForChat(chat: Chat) -> Future<[Message], Error> {
+    func getMessagesForChat(chat: LocalChat) -> Future<[LocalMessage], Error> {
         return databaseService.messageEntityService.getMessagesForChat(chat: chat)
     }
     

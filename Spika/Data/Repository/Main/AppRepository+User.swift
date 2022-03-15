@@ -53,7 +53,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func saveUserInfo(user: AppUser, device: Device) {
+    func saveUserInfo(user: User, device: Device) {
         let defaults = UserDefaults.standard
         defaults.set(user.id, forKey: Constants.UserDefaults.userId)
         defaults.set(user.telephoneNumber, forKey: Constants.UserDefaults.userPhoneNumber)
@@ -65,15 +65,15 @@ extension AppRepository {
         return UserDefaults.standard.integer(forKey: Constants.UserDefaults.userId)
     }
     
-    func getUsers() -> Future<[User], Error> {
+    func getUsers() -> Future<[LocalUser], Error> {
         return databaseService.userEntityService.getUsers()
     }
     
-    func saveUser(_ user: User) -> Future<User, Error> {
+    func saveUser(_ user: LocalUser) -> Future<LocalUser, Error> {
         return databaseService.userEntityService.saveUser(user)
     }
     
-    func saveUsers(_ users: [User]) -> Future<[User], Error> {
+    func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error> {
         return databaseService.userEntityService.saveUsers(users)
     }
     

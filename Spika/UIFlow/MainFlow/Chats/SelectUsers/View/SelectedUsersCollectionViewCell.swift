@@ -43,7 +43,7 @@ class SelectedUsersCollectionViewCell: UICollectionViewCell, BaseView {
         closeImageView.anchor(top: topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
     }
     
-    func updateCell(user: AppUser) {
+    func updateCell(user: User) {
         firstLetterLabel.text = user.displayName?.prefix(1).uppercased()
         let url = URL(string: //user.avatarUrl ?? avatarUrl is not working now
                       "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")

@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 extension TestRepository {
-    func createRoom(name: String, users: [AppUser]) -> AnyPublisher<CreateRoomResponseModel, Error> {
+    func createRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
         return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()

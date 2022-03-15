@@ -31,7 +31,7 @@ extension MessageEntity {
     @NSManaged public var reactions: NSSet?
     @NSManaged public var user: UserEntity?
     
-    public convenience init(insertInto context: NSManagedObjectContext?, message: Message) {
+    public convenience init(insertInto context: NSManagedObjectContext?, message: LocalMessage) {
         guard let context = context,
             let entity = NSEntityDescription.entity(forEntityName: Constants.Database.messageEntity, in: context)
         else {

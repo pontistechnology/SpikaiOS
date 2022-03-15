@@ -59,7 +59,7 @@ class ReplyMessageView: UIView, BaseView {
         messageLabel.anchor(top: senderNameLabel.bottomAnchor, leading: leftImageView.trailingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 10))
     }
     
-    func updateReplyView(message: Message2) {
+    func updateReplyView(message: Message) {
         senderNameLabel.text = "user with id: \(message.id)"
         
         guard let messageType = MessageType(rawValue: message.type) else { return }

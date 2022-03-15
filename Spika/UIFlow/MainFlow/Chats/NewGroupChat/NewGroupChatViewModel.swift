@@ -9,9 +9,9 @@ import Foundation
 
 class NewGroupChatViewModel: BaseViewModel {
     
-    var selectedUsers: [AppUser]
+    var selectedUsers: [User]
     
-    init(repository: Repository, coordinator: Coordinator, selectedUsers: [AppUser]) {
+    init(repository: Repository, coordinator: Coordinator, selectedUsers: [User]) {
         self.selectedUsers = selectedUsers
         super.init(repository: repository, coordinator: coordinator)
     }

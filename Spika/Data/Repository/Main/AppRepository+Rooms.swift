@@ -10,7 +10,7 @@ import Combine
 
 extension AppRepository {
     
-    func createRoom(name: String, users: [AppUser]) -> AnyPublisher<CreateRoomResponseModel, Error> {
+    func createRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
 
         guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
         else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)

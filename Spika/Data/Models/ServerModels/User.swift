@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - User
-struct AppUser: Codable {
+struct User: Codable {
     let id: Int
     let displayName: String?
     let avatarUrl: String?
@@ -30,16 +30,13 @@ struct AppUser: Codable {
     }
 }
 
-//String.Comparator.Compared
-extension AppUser: Comparable {
-    static func < (lhs: AppUser, rhs: AppUser) -> Bool {
+extension User: Comparable {
+    static func < (lhs: User, rhs: User) -> Bool {
         return lhs.displayName!.localizedStandardCompare(rhs.displayName!) == .orderedAscending
-//        return lhs.displayName! < rhs.displayName!
     }
     
-    static func == (lhs: AppUser, rhs: AppUser) -> Bool {
+    static func == (lhs: User, rhs: User) -> Bool {
         return lhs.displayName!.localizedStandardCompare(rhs.displayName!) == .orderedSame
-//        return lhs.displayName! == rhs.displayName!
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Chat: Codable {
+struct LocalChat: Codable {
     public var id: Int64
     public var name: String?
     public var groupUrl: String?

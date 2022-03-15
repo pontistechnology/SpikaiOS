@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Message: Codable {
+public struct LocalMessage: Codable {
     var createdAt: Int?
     var fileMimeType: String?
     var filePath: String?
@@ -19,11 +19,11 @@ public struct Message: Codable {
     var replyMessageId: Int64?
     var state: String?
     var toDeviceType: String?
-    var chat: Chat?
-    var reactions: [Reaction]?
-    var user: User?
+    var chat: LocalChat?
+    var reactions: [LocalReaction]?
+    var user: LocalUser?
     
-    init(chat: Chat, user: User, message: String, id: Int) {
+    init(chat: LocalChat, user: LocalUser, message: String, id: Int) {
         self.id = Int64(id)
         self.chat = chat
         self.user = user
@@ -41,10 +41,10 @@ public struct Message: Codable {
         self.state = entity.state
         self.toDeviceType = entity.toDeviceType
         if let dbUser = entity.user {
-            self.user = User(entity: dbUser)
+            self.user = LocalUser(entity: dbUser)
         }
         if let dbChat = entity.chat {
-            self.chat = Chat(entity: dbChat)
+            self.chat = LocalChat(entity: dbChat)
         }
         self.createdAt = Int(entity.createdAt)
         self.modifiedAt = Int(entity.modifiedAt)

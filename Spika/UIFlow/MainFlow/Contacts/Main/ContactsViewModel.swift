@@ -9,74 +9,21 @@ import Combine
 
 class ContactsViewModel: BaseViewModel {
     
-    let chatsSubject = CurrentValueSubject<[Chat], Never>([])
-    let contactsSubject = CurrentValueSubject<[[AppUser]], Never>([])
-    var users = Array<AppUser>()
+    let contactsSubject = CurrentValueSubject<[[LocalUser]], Never>([])
+    var users = Array<LocalUser>()
+    
+    // *** remains of test ***
+    let chatsSubject = CurrentValueSubject<[LocalChat], Never>([])
     
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
     }
     
-    func getPosts() {
-        self.repository.getPosts().sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get posts: \(error)")
-            default: break
-            }
-        } receiveValue: { posts in
-            print(posts)
-        }.store(in: &subscriptions)
-    }
-    
-    func showDetailsScreen(user: AppUser) {
+    func showDetailsScreen(user: LocalUser) {
         getAppCoordinator()?.presentDetailsScreen(user: user)
     }
     
-    func getChats() {
-        repository.getChats().sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get chats: \(error)")
-            default: break
-            }
-        } receiveValue: { [weak self] chats in
-            self?.chatsSubject.value = chats
-        }.store(in: &subscriptions)
-
-    }
-    
-    func createChat(name: String, type: String, id: Int) {
-        let chat = Chat(name: name, id: id, type: type)
-        repository.createChat(chat).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get chats: \(error)")
-            default: break
-            }
-        } receiveValue: { [weak self] chat in
-            var chats = self?.chatsSubject.value
-            chats?.append(chat)
-            self?.chatsSubject.value = chats ?? []
-        }.store(in: &subscriptions)
-
-    }
-    
-    func updateChat(name: String, type: String, id: Int) {
-        let chat = Chat(name: name, id: id, type: type)
-        repository.updateChat(chat).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get chats: \(error)")
-            default: break
-            }
-        } receiveValue: { chat in
-            print(chat)
-        }.store(in: &subscriptions)
-
-    }
-    
-    func getUsers() {
+    func getUsersAndUpdateUI() {
         repository.getUsers().sink { completion in
             switch completion {
             case let .failure(error):
@@ -85,13 +32,15 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { users in
             print("Read users from DB: \(users)")
+            self.users = users
+            self.updateContactsUI(list: users)
         }.store(in: &subscriptions)
     }
     
-    func saveUsers(_ users: [AppUser]) {
-        var dbUsers = [User]()
+    func saveUsers(_ users: [User]) {
+        var dbUsers = [LocalUser]()
         for user in users {
-            let dbUser = User(loginName: user.displayName!, avatarUrl: user.avatarUrl, localName: user.displayName!, id: user.id, blocked: false)
+            let dbUser = LocalUser(user: user)
             dbUsers.append(dbUser)
         }
         repository.saveUsers(dbUsers).sink { completion in
@@ -102,55 +51,6 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { users in
             print("Saved users to DB: \(users)")
-        }.store(in: &subscriptions)
-
-    }
-    
-    func addUserToChat(chat: Chat, user: User) {
-        repository.addUserToChat(chat: chat, user: user).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get users: \(error)")
-            default: break
-            }
-        } receiveValue: { _ in
-            self.getChats()
-        }.store(in: &subscriptions)
-    }
-    
-    func getUsersForChat(chat: Chat) {
-        repository.getUsersForChat(chat: chat).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get users: \(error)")
-            default: break
-            }
-        } receiveValue: { users in
-            print(users)
-        }.store(in: &subscriptions)
-    }
-    
-    func saveMessage(message: Message) {
-        repository.saveMessage(message).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get message: \(error)")
-            default: break
-            }
-        } receiveValue: { message in
-            print(message)
-        }.store(in: &subscriptions)
-    }
-    
-    func getMessagesForChat(chat: Chat) {
-        repository.getMessagesForChat(chat: chat).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get messages: \(error)")
-            default: break
-            }
-        } receiveValue: { messages in
-            print(messages)
         }.store(in: &subscriptions)
     }
     
@@ -173,6 +73,7 @@ class ContactsViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
+    /// TODO: add paging
     func postContacts(hashes: [String]) {
         repository.postContacts(hashes: hashes).sink { completion in
             switch completion {
@@ -197,34 +98,30 @@ class ContactsViewModel: BaseViewModel {
         } receiveValue: { response in
             print("Success: ", response)
             if let list = response.data?.list {
-                self.users.append(contentsOf: list)
-                
                 self.saveUsers(list)
-                
-                self.updateContactsUI(list: list)
             }
             if let limit = response.data?.limit, let count = response.data?.count {
                 if page * limit < count {
                     self.getOnlineContacts(page: page + 1)
+                } else {
+                    self.getUsersAndUpdateUI()
                 }
             }
-            
         }.store(in: &subscriptions)
     }
     
-    func updateContactsUI(list: [AppUser]) {
+    func updateContactsUI(list: [LocalUser]) {
         
-        let appUser1 = AppUser(id: 100, displayName: "Ćap", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
-        let appUser2 = AppUser(id: 100, displayName: "Cup", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
-        let appUser3 = AppUser(id: 100, displayName: "Ćop", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
-        
-        var testList = list
-        testList.append(appUser1)
-        testList.append(appUser2)
-        testList.append(appUser3)
+//        let appUser1 = AppUser(id: 100, displayName: "Ćap", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
+//        let appUser2 = AppUser(id: 100, displayName: "Cup", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
+//        let appUser3 = AppUser(id: 100, displayName: "Ćop", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
+//        var testList = list
+//        testList.append(appUser1)
+//        testList.append(appUser2)
+//        testList.append(appUser3)
         
         //TODO: check if sort needed
-        let sortedList = testList.sorted()
+        let sortedList = list.sorted()
         
 //        let sortedList = list.sorted(using: .localizedStandard)
         
@@ -235,16 +132,16 @@ class ContactsViewModel: BaseViewModel {
 //        sortedList.append(appUser)
 //        let sortedList = list.sort(using: .localizedStandard)
           
-        var tableAppUsers = Array<Array<AppUser>>()
-        for appUser in sortedList {
-            if let char1 = appUser.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
+        var tableAppUsers = Array<Array<LocalUser>>()
+        for user in sortedList {
+            if let char1 = user.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
                 print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
-                tableAppUsers[tableAppUsers.count - 1].append(appUser)
+                tableAppUsers[tableAppUsers.count - 1].append(user)
             } else {
-                if let char1 = appUser.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1) {
+                if let char1 = user.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1) {
                     print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
                 }
-                tableAppUsers.append([appUser])
+                tableAppUsers.append([user])
             }
         }
         
@@ -259,7 +156,110 @@ class ContactsViewModel: BaseViewModel {
             let filteredContacts = users.filter{ $0.displayName!.localizedStandardContains(filter) }
             updateContactsUI(list: filteredContacts)
         }
-        
-        self.getUsers()
+    }
+    
+    // *** some leftover code from first testing ***
+    
+    func getPosts() {
+        self.repository.getPosts().sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get posts: \(error)")
+            default: break
+            }
+        } receiveValue: { posts in
+            print(posts)
+        }.store(in: &subscriptions)
+    }
+    
+    func getChats() {
+        repository.getChats().sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get chats: \(error)")
+            default: break
+            }
+        } receiveValue: { [weak self] chats in
+            self?.chatsSubject.value = chats
+        }.store(in: &subscriptions)
+
+    }
+    
+    func createChat(name: String, type: String, id: Int) {
+        let chat = LocalChat(name: name, id: id, type: type)
+        repository.createChat(chat).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get chats: \(error)")
+            default: break
+            }
+        } receiveValue: { [weak self] chat in
+            var chats = self?.chatsSubject.value
+            chats?.append(chat)
+            self?.chatsSubject.value = chats ?? []
+        }.store(in: &subscriptions)
+
+    }
+    
+    func updateChat(name: String, type: String, id: Int) {
+        let chat = LocalChat(name: name, id: id, type: type)
+        repository.updateChat(chat).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get chats: \(error)")
+            default: break
+            }
+        } receiveValue: { chat in
+            print(chat)
+        }.store(in: &subscriptions)
+
+    }
+    
+    func addUserToChat(chat: LocalChat, user: LocalUser) {
+        repository.addUserToChat(chat: chat, user: user).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get users: \(error)")
+            default: break
+            }
+        } receiveValue: { _ in
+            self.getChats()
+        }.store(in: &subscriptions)
+    }
+    
+    func getUsersForChat(chat: LocalChat) {
+        repository.getUsersForChat(chat: chat).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get users: \(error)")
+            default: break
+            }
+        } receiveValue: { users in
+            print(users)
+        }.store(in: &subscriptions)
+    }
+    
+    func saveMessage(message: LocalMessage) {
+        repository.saveMessage(message).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get message: \(error)")
+            default: break
+            }
+        } receiveValue: { message in
+            print(message)
+        }.store(in: &subscriptions)
+    }
+    
+    func getMessagesForChat(chat: LocalChat) {
+        repository.getMessagesForChat(chat: chat).sink { completion in
+            switch completion {
+            case let .failure(error):
+                print("Could not get messages: \(error)")
+            default: break
+            }
+        } receiveValue: { messages in
+            print(messages)
+        }.store(in: &subscriptions)
     }
 }

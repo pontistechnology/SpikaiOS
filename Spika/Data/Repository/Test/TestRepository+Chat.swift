@@ -9,15 +9,15 @@ import Foundation
 import Combine
 
 extension TestRepository {
-    func createChat(_ chat: Chat) -> Future<Chat, Error> {
+    func createChat(_ chat: LocalChat) -> Future<LocalChat, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func getChats() -> Future<[Chat], Error> {
+    func getChats() -> Future<[LocalChat], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func updateChat(_ chat: Chat) -> Future<Chat, Error> {
+    func updateChat(_ chat: LocalChat) -> Future<LocalChat, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
 }

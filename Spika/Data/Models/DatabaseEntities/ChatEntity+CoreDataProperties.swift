@@ -28,7 +28,7 @@ extension ChatEntity {
     @NSManaged public var messages: Set<MessageEntity>?
     @NSManaged public var users: Set<UserEntity>?
     
-    convenience init(insertInto context: NSManagedObjectContext?, chat: Chat) {
+    convenience init(insertInto context: NSManagedObjectContext?, chat: LocalChat) {
         guard let context = context,
             let entity = NSEntityDescription.entity(forEntityName: Constants.Database.chatEntity, in: context)
         else {

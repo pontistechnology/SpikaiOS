@@ -60,12 +60,10 @@ class ContactsViewController: BaseViewController {
             self.contactsView.tableView.reloadData()
         }.store(in: &subscriptions)
         
+        viewModel.getUsersAndUpdateUI()
         viewModel.getContacts()
         viewModel.getOnlineContacts(page: 1)
-        
-        
     }
-    
 }
 
 extension ContactsViewController: UITableViewDelegate {
