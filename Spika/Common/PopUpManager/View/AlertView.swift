@@ -7,146 +7,247 @@
 
 import UIKit
 
+protocol AlertViewDelegate: AnyObject {
+    func alertView(_ alertView: AlertView, indexOfPressedVerticalButton value: Int)
+    func alertView(_ alertView: AlertView, needDismiss value: Bool)
+}
+
+enum AlertViewState {
+    case staticInfo
+    case justMessage
+    case justButtons
+    case titleAndButtons
+}
+
+enum StaticInfoAlert {
+    case copy
+    case forward
+    case favorite
+    
+    var description: String {
+        switch self {
+        case .copy:
+            return "Copied"
+        case .forward:
+            return "Forwarded"
+        case .favorite:
+            return "Added to favorite"
+        }
+    }
+}
+
 class AlertView: UIView, BaseView {
     
+    weak var delegate: AlertViewDelegate?
+    let alertViewState: AlertViewState
+    var startPosition: CGFloat?
+    var endPosition: CGFloat?
+    let staticChoice: StaticInfoAlert
+    
     let containerView = UIView()
-    let messageLabel = CustomLabel(text: "message message", textSize: 13, textColor: .appRed, fontName: .MontserratMedium)
-    let errorImageView = UIImageView()
-    
-    let titleLabel = UILabel()
+    let descriptionLabel = CustomLabel(text: "For copy and favorite", textSize: 11, textColor: .textSecondary, fontName: .MontserratMedium, alignment: .center)
+    let messageLabel = CustomLabel(text: "message message", textSize: 13, textColor: .appRed, fontName: .MontserratMedium, alignment: .center)
+    let imageView = UIImageView(image: UIImage(named: "error"))
+    let titleLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
     let buttonsStackView = UIStackView()
-    let firstButton = UIButton()
-    let secondButton = UIButton()
     
-    var alertViewState: AlertViewState?
-    
-    init(title: String, message: String, rightButtonText: String, leftButtonText: String) {
+    init(titleAndMessage: (title: String, message: String)?, orientation: NSLayoutConstraint.Axis, buttonTexts: [String]) {
+        
+        if let titleAndMessage = titleAndMessage {
+            alertViewState = .titleAndButtons
+            titleLabel.text = titleAndMessage.title
+            messageLabel.text = titleAndMessage.message
+        } else {
+            alertViewState = .justButtons
+        }
+        staticChoice = .copy
         super.init(frame: .zero)
-        alertViewState = .twoButtons
-        titleLabel.text = title
-        messageLabel.text = message
-        firstButton.setTitle(rightButtonText, for: .normal)
-        secondButton.setTitle(leftButtonText, for: .normal)
-        buttonsStackView.addArrangedSubview(secondButton)
-        buttonsStackView.addArrangedSubview(firstButton)
-        setupView()
-    }
-    
-    init(title: String, message: String, firstButtonText: String) {
-        super.init(frame: .zero)
-        alertViewState = .oneButton
-        titleLabel.text = title
-        messageLabel.text = message
-        firstButton.setTitle(firstButtonText, for: .normal)
-        buttonsStackView.addArrangedSubview(firstButton)
+        
+        for (i, text) in buttonTexts.enumerated() {
+            let button = UIButton()
+            button.constrainHeight(46)
+            button.setTitle(text, for: .normal)
+            button.addTarget(self, action: #selector(testis), for: .touchUpInside)
+            button.setTitleColor(i == buttonTexts.count - 1 ? .red : .primaryColor, for: .normal)
+            button.titleLabel?.customFont(name: i == buttonTexts.count - 1 ? .MontserratMedium : .MontserratSemiBold)
+            button.backgroundColor = .white
+            buttonsStackView.addArrangedSubview(button)
+        }
+        buttonsStackView.axis = orientation
         setupView()
     }
     
     init(message: String) {
-        super.init(frame: .zero)
         alertViewState = .justMessage
+        staticChoice   = .copy
+        super.init(frame: .zero)
+        
         messageLabel.text = message
         setupView()
+        addGestures()
+    }
+    
+    init(_ choice: StaticInfoAlert) {
+        alertViewState = .staticInfo
+        staticChoice = choice
+        super.init(frame: .zero)
+        setupView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.delegate?.alertView(self, needDismiss: true)
+        }
     }
     
     required init?(coder: NSCoder) {
+        alertViewState = .justMessage
+        staticChoice = .copy
         super.init(coder: coder)
     }
     
+    @objc func testis(_ button: UIButton) {
+        guard let index =  buttonsStackView.arrangedSubviews.firstIndex(of: button) else { return }
+        delegate?.alertView(self, indexOfPressedVerticalButton: index)
+    }
     
     func addSubviews() {
         
-        guard let alertViewState = alertViewState else { return }
-        
         switch(alertViewState) {
+            
+        case .justButtons:
+            containerView.addSubview(buttonsStackView)
             
         case .justMessage:
             containerView.addSubview(messageLabel)
-            containerView.addSubview(errorImageView)
+            containerView.addSubview(imageView)
             
-        default:
+        case .titleAndButtons:
             containerView.addSubview(titleLabel)
             containerView.addSubview(messageLabel)
             containerView.addSubview(buttonsStackView)
+        case .staticInfo:
+            containerView.addSubview(descriptionLabel)
+            containerView.addSubview(imageView)
         }
-        
         addSubview(containerView)
     }
     
     func styleSubviews() {
         
-        backgroundColor = .gray.withAlphaComponent(0.5)
+        backgroundColor = alertViewState == .justMessage ? .clear : .gray.withAlphaComponent(0.5)
         containerView.layer.cornerRadius = 10
         containerView.layer.masksToBounds = true
-    
-        guard let alertViewState = alertViewState else { return }
-
+        messageLabel.numberOfLines = 0
+        buttonsStackView.distribution = .fillEqually
+        
         switch(alertViewState) {
             
         case .justMessage:
             containerView.backgroundColor = .errorRedLight
-            errorImageView.image = UIImage(named: "error")
+            messageLabel.textAlignment = .natural
             
-        default:
+        case .titleAndButtons, .justButtons:
             containerView.backgroundColor = .whiteAndDarkBackground
-            
-            titleLabel.textAlignment = .center
-            
-            messageLabel.numberOfLines = 0
-            messageLabel.textColor = .textTertiary
-            messageLabel.textAlignment = .center
-            
-            buttonsStackView.axis = .horizontal
-            buttonsStackView.spacing = 0
-            buttonsStackView.distribution = .fillEqually
-        
-            buttonsStackView.layer.borderColor = UIColor.textTertiary.cgColor
-            buttonsStackView.layer.borderWidth = 0.5
-            
-            firstButton.setTitleColor(.primaryColor, for: .normal)
-            firstButton.titleLabel?.customFont(name: .MontserratSemiBold)
-            
-            secondButton.setTitleColor(.textTertiary, for: .normal)
-            secondButton.titleLabel?.customFont(name: .MontserratMedium)
-        
+            buttonsStackView.backgroundColor = .gray
+            buttonsStackView.spacing = 0.25
+            buttonsStackView.layer.borderWidth = 0.25
+            buttonsStackView.layer.borderColor = UIColor.gray.cgColor
+        case .staticInfo:
+            containerView.backgroundColor = .whiteAndDarkBackground
+            imageView.image = UIImage(named: "sent")
+            descriptionLabel.text = staticChoice.description
         }
-       }
+    }
     
     func positionSubviews() {
-        
-        guard let alertViewState = alertViewState else { return }
         
         switch(alertViewState) {
             
         case .justMessage:
             containerView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 60, left: 20, bottom: 0, right: 20))
-            containerView.constrainHeight(35)
             
-            errorImageView.anchor(leading: containerView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
-            errorImageView.centerYToSuperview()
+            imageView.anchor(leading: containerView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
+            imageView.centerYToSuperview()
             
-            messageLabel.anchor(leading: errorImageView.trailingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
-            messageLabel.centerYToSuperview()
+            messageLabel.anchor(top: containerView.topAnchor, leading: imageView.trailingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
             
-        case .oneButton, .twoButtons:
-            containerView.constrainHeight(134)
-            containerView.constrainWidth(210)
-            containerView.centerXToSuperview()
-            containerView.centerYToSuperview()
+        case .titleAndButtons:
+            containerView.centerInSuperview()
+            containerView.constrainWidth(212)
             
             titleLabel.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 16, left: 8, bottom: 0, right: 8))
             titleLabel.constrainHeight(20)
             
-            messageLabel.anchor(top: titleLabel.bottomAnchor, leading: containerView.leadingAnchor, bottom: buttonsStackView.topAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+            messageLabel.anchor(top: titleLabel.bottomAnchor, leading: containerView.leadingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
             
-            buttonsStackView.anchor(leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: -1, bottom: -1, right: -1))
-            buttonsStackView.constrainHeight(40)
+            buttonsStackView.anchor(top: messageLabel.bottomAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        
+        case .justButtons:
+            containerView.centerInSuperview()
+            containerView.constrainWidth(212)
+            
+            buttonsStackView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            
+        case .staticInfo:
+            containerView.centerInSuperview()
+            
+            imageView.anchor(top: containerView.topAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0), size: CGSize(width: 33, height: 33))
+            imageView.centerXToSuperview()
+            
+            descriptionLabel.anchor(top: imageView.bottomAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 16, bottom: 12, right: 16))
         }
     }
 }
 
-enum AlertViewState {
-    case justMessage
-    case oneButton
-    case twoButtons
+// MARK: - Dragging animation
+extension AlertView {
+    
+    func addGestures() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(draggedView(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(alertViewTapped))
+        containerView.addGestureRecognizer(panGesture)
+        addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func alertViewTapped() {
+        UIView.animate(withDuration: 1, delay: 0) {
+            self.containerView.transform = CGAffineTransform(translationX: 0, y: -200)
+            self.containerView.alpha = 0
+        } completion: { status in
+            self.delegate?.alertView(self, needDismiss: true)
+        }
+    }
+    
+    @objc func draggedView(_ sender: UIPanGestureRecognizer) {
+        
+        if sender.state == .began {
+            startPosition = containerView.center.y
+        } else if sender.state == .ended {
+            endPosition = containerView.center.y
+            
+            guard let startPosition = startPosition,
+                  let endPosition = endPosition
+            else {
+                return
+            }
+            
+            if endPosition-startPosition < -30.0 {
+                UIView.animate(withDuration: 1, delay: 0) {
+                    self.containerView.transform = CGAffineTransform(translationX: 0, y: -200)
+                    self.containerView.alpha = 0
+                    self.backgroundColor = .clear
+                } completion: { status in
+                    self.delegate?.alertView(self, needDismiss: true)
+                }
+            } else {
+                UIView.animate(withDuration: 1, delay: 0) {
+                    self.containerView.center.y = 60 + (self.containerView.frame.height) / 2
+                }
+            }
+        }
+        
+        let translation = sender.translation(in: self.superview)
+        containerView.center = CGPoint(x: containerView.center.x,
+                                       y: containerView.center.y  + translation.y)
+        sender.setTranslation(CGPoint.zero, in: self.superview)
+        
+    }
 }

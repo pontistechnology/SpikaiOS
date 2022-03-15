@@ -30,15 +30,6 @@ class EnterNumberViewController: BaseViewController {
                 deviceId: uuid)
         }.store(in: &subscriptions)
         
-        enterNumberView.logoImage.tap().sink { _ in
-
-            PopUpManager.shared.presentAlert(withTitle: "titlić", message: "mesage", rightButtonText: "desna", completion1: {
-                
-            }, leftButtonText: "lijeva") {
-                
-            }
-        }.store(in: &subscriptions)
-        
         sink(networkRequestState: viewModel.networkRequestState)
     }
 }
