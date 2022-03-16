@@ -57,8 +57,9 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.anchor(top: timeLabel.bottomAnchor, trailing: timeLabel.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
     }
     
-    func configureCell(image: UIImage, name: String, desc: String) {
-        leftImageView.image = image
+    func configureCell(avatarUrl: String, name: String, desc: String) {
+        let url = URL(string: avatarUrl)
+        leftImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "nose"))
         nameLabel.text = name
         descriptionLabel.text = desc
     }

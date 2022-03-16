@@ -1,5 +1,5 @@
 //
-//  CurrentChatView.swift
+//  CurrentPrivateChatView.swift
 //  Spika
 //
 //  Created by Nikola Barbarić on 22.02.2022..
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CurrentChatView: UIView, BaseView {
+class CurrentPrivateChatView: UIView, BaseView {
     
     let messagesTableView = UITableView()
     let messageInputView = MessageInputView()

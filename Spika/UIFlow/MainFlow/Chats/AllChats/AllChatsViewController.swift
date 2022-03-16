@@ -20,6 +20,7 @@ class AllChatsViewController: BaseViewController {
         super.viewDidLoad()
         setupView(allChatsView)
         setupBindings()
+        getAllRooms()
     }
     
     func setupBindings() {
@@ -30,11 +31,63 @@ class AllChatsViewController: BaseViewController {
         allChatsView.pencilImageView.tap().sink { [weak self] _ in
             self?.viewModel.presentSelectUserScreen()
         }.store(in: &subscriptions)
+        
+        viewModel.roomsPublisher.sink { rooms in
+            self.allChatsView.allChatsTableView.reloadData()
+        }.store(in: &subscriptions)
+    }
+    
+    func getAllRooms() {
+        viewModel.getAllRooms()
     }
     
 }
 
 extension AllChatsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let room = viewModel.roomsPublisher.value[indexPath.row]
+        if room.type == "private" {
+            // MARK: TODO: find localuser in db
+            
+            viewModel.presentCurrentPrivateChatScreen()
+        }
+    }
+}
+
+extension AllChatsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.roomsPublisher.value.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
+        let room = viewModel.roomsPublisher.value[indexPath.row]
+        
+typeTest: if room.type == "private" {
+            guard let friend = room.users.first (where: { user in
+                user.user.id != viewModel.getMyUserId()
+            }) else { break typeTest }
+            
+            cell?.configureCell(avatarUrl: room.avatarUrl, name: friend.user.displayName ?? "unknown name", desc: "private room, id: \(room.id)")
+        }
+        
+        return cell ?? UITableViewCell()
+    }
+}
+
+
+
+
+
+
+
+
+
+
+// MARK: UITableview swipe animations, ignore for now
+extension AllChatsViewController {
     
     private func printSwipe() {
         print("Swipe.")
@@ -74,27 +127,4 @@ extension AllChatsViewController: UITableViewDelegate {
         
         return UISwipeActionsConfiguration(actions: [secondRightAction, firstRightAction])
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.presentCurrentChatScreen()
-    }
 }
-
-extension AllChatsViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
-//        cell?.configureCell(image: UIImage(systemName: "heart")!, name: "\(indexPath)", desc: "nista")
-        return cell ?? UITableViewCell()
-    }
-}
-
-//extension AllChatsViewController: UIGestureRecognizerDelegate {
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        true
-//    }
-//}

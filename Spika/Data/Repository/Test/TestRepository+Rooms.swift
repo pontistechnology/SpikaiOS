@@ -26,4 +26,10 @@ extension TestRepository {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
+    
+    func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error> {
+        return Fail<GetAllRoomsResponseModel, Error>(error: NetworkError.noAccessToken)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 }

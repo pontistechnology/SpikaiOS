@@ -1,5 +1,5 @@
 //
-//  CurrentChatViewModel.swift
+//  CurrentPrivateChatViewModel.swift
 //  Spika
 //
 //  Created by Nikola Barbarić on 22.02.2022..
@@ -8,12 +8,16 @@
 import Foundation
 import Combine
 
-class CurrentChatViewModel: BaseViewModel {
+class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
     var room: Room?
-    let testMessagesSubject = CurrentValueSubject<[Message], Never>([
-        Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "neron"), createdAt: 23)
+    let messagesSubject = CurrentValueSubject<[Message], Never>([
+        Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "this is hardcoded message"), createdAt: 23)
+    ])
+    
+    let localMessagesSubject = CurrentValueSubject<[LocalMessage2], Never>([
+        
     ])
     
     
@@ -23,19 +27,19 @@ class CurrentChatViewModel: BaseViewModel {
     }
 
     func addMessage(message: Message) {
-        var value = testMessagesSubject.value
+        var value = messagesSubject.value
         value.append(message)
-        testMessagesSubject.send(value)
+        messagesSubject.send(value)
     }
     
-    func checkRoom(forUserId userId: Int)  {
+    func checkRoom()  {
         networkRequestState.send(.started())
-        repository.checkRoom(forUserId: userId).sink { completion in
+        repository.checkRoom(forUserId: friendUser.id).sink { completion in
             switch completion {
             case .finished:
                 print("check finished")
-            case .failure(_):
-                print("error")
+            case .failure(let error):
+                PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
                 self.networkRequestState.send(.finished)
             }
         } receiveValue: { response in
@@ -52,17 +56,16 @@ class CurrentChatViewModel: BaseViewModel {
     
     func createRoom(userId: Int) {
         repository.createRoom(userId: userId).sink { completion in
+            self.networkRequestState.send(.finished)
+            
             switch completion {
-                
             case .finished:
-                print("finished")
-                self.networkRequestState.send(.finished)
-            case .failure(_):
-                print("error")
-                self.networkRequestState.send(.finished)
+                print("private room created")
+            case .failure(let error):
+                PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
             }
         } receiveValue: { response in
-            print(response)
+            print("creating room response: ", response)
         }.store(in: &subscriptions)
     }
     

@@ -30,8 +30,7 @@ class PopUpManager {
         setupAlertWindow(with: alertViewController)
     }
     
-    func presentAlert(with titleAndMessage: (title: String, message: String)? = nil, orientation: NSLayoutConstraint.Axis,
-                      closures: [(String, () -> ())]) {
+    func presentAlert(with titleAndMessage: (title: String, message: String)? = nil, orientation: NSLayoutConstraint.Axis, closures: [(String, () -> ())]) {
         
         completions = closures.map{ $0.1 }
         

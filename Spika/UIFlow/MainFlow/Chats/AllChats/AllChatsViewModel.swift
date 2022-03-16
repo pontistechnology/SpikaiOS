@@ -6,14 +6,30 @@
 //
 
 import Foundation
+import Combine
 
 class AllChatsViewModel: BaseViewModel {
+    
+    let roomsPublisher = CurrentValueSubject<[Room], Never>([])
     
     func presentSelectUserScreen() {
         getAppCoordinator()?.presentSelectUserScreen()
     }
     
-    func presentCurrentChatScreen() {
-//        getAppCoordinator()?.presentCurrentChatScreen()
+    func presentCurrentPrivateChatScreen() {
+        getAppCoordinator()?.presentCurrentPrivateChatScreen(user: <#T##LocalUser#>)
+    }
+    
+    func getAllRooms() {
+        repository.getAllRooms().sink { completion in
+            print("get all rooms: ", completion)
+        } receiveValue: { response in
+            guard let rooms = response.data?.list else { return }
+            self.roomsPublisher.send(rooms)
+        }.store(in: &subscriptions)
+    }
+    
+    func getMyUserId() -> Int {
+        return repository.getMyUserId()
     }
 }
