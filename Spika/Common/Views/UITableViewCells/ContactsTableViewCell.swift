@@ -56,16 +56,16 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         nameLabel.text = model.displayName
         descriptionLabel.text = model.telephoneNumber
         
-        let url = URL(string: model.getAvatarUrl() ?? "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
-        leftImageView.kf.setImage(with: url)
+        let url = URL(string: model.getAvatarUrl() ?? "")
+        leftImageView.kf.setImage(with: url, placeholder: UIImage(named: "user_image"))
     }
     
     func configureCell(_ model: LocalUser) {
         nameLabel.text = model.displayName
         descriptionLabel.text = model.telephoneNumber
         
-        let url = URL(string: model.getAvatarUrl() ?? "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
-        leftImageView.kf.setImage(with: url)
+        let url = URL(string: model.getAvatarUrl() ?? "")
+        leftImageView.kf.setImage(with: url, placeholder: UIImage(named: "user_image"))
     }
     
     override func prepareForReuse() {
