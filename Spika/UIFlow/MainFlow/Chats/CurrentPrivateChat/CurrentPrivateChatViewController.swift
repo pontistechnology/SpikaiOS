@@ -13,12 +13,25 @@ class CurrentPrivateChatViewController: BaseViewController {
     
     private let currentPrivateChatView = CurrentPrivateChatView()
     var viewModel: CurrentPrivateChatViewModel!
+    let friendInfoView = ChatNavigationBarView()
+    var i = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        viewModel.test()
         setupView(currentPrivateChatView)
         setupBindings()
+        setupNavigationItems()
         checkRoom()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+//        navigationController?.navigationBar.backItem?.backButtonTitle = " viewwillapper"
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+//        navigationController?.navigationBar.backItem?.backButtonTitle = "timotej"
     }
     
     func setupBindings() {
@@ -32,6 +45,22 @@ class CurrentPrivateChatViewController: BaseViewController {
             self.currentPrivateChatView.messagesTableView.reloadData()
             self.currentPrivateChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.messagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
         }.store(in: &subscriptions)
+    }
+    
+    func setupNavigationItems() {
+        let videoCallButton = UIBarButtonItem(image: UIImage(named: "videoCall"), style: .plain, target: self, action: #selector(videoCallActionHandler))
+        let audioCallButton = UIBarButtonItem(image: UIImage(named: "phoneCall"), style: .plain, target: self, action: #selector(videoCallActionHandler))
+        
+        navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
+        navigationItem.leftItemsSupplementBackButton = true
+
+        friendInfoView.change(avatarUrl: viewModel.friendUser.avatarUrl, name: viewModel.friendUser.displayName, lastSeen: "yesterday")
+        let vtest = UIBarButtonItem(customView: friendInfoView)
+        navigationItem.leftBarButtonItem = vtest
+    }
+    
+    @objc func videoCallActionHandler() {
+        
     }
     
     func checkRoom() {
@@ -80,16 +109,10 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        friendInfoView.changeStatus(to: viewModel.messagesSubject.value[indexPath.row].messageBody.text)
+        i += 1
+        navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
     }
-    
-    //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    //        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
-    //            self.currentPrivateChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.messagesSubject.value[indexPath.row]), id: indexPath.row)
-    //                completionHandler(true)
-    //            }
-    //        firstLeft.backgroundColor = .systemBlue
-    //        return UISwipeActionsConfiguration(actions: [firstLeft])
-    //    }
 }
 
 extension CurrentPrivateChatViewController: UITableViewDataSource {
@@ -116,6 +139,26 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+// MARK: swipe gestures on cells
+extension CurrentPrivateChatViewController {
+    //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    //        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
+    //            self.currentPrivateChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.messagesSubject.value[indexPath.row]), id: indexPath.row)
+    //                completionHandler(true)
+    //            }
+    //        firstLeft.backgroundColor = .systemBlue
+    //        return UISwipeActionsConfiguration(actions: [firstLeft])
+    //    }
+}
     
     
     
@@ -123,8 +166,7 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
     
     
     
-    
-    
+// MARK: reply to message
     //        Commented because there is no replyId on backend for now
     //        switch message.messageType {
     //        case .text:

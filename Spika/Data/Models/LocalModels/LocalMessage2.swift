@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct LocalMessage2: Codable {
+public struct LocalMessage2 {
     var message: Message
     var localId: String
+    var status: MessageState
 }

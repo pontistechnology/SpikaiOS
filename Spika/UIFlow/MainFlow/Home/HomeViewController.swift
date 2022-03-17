@@ -22,7 +22,8 @@ class HomeViewController: UIPageViewController {
         super.viewDidLoad()
         configurePageViewController()
 //        homeTabBar.handleTap(homeTabBar.tabs[2])
-    }
+        title = " "
+       }
     
     func configurePageViewController() {
         homeTabBar = HomeTabBar(tabBarItems: viewModel.getHomeTabBarItems())

@@ -16,13 +16,23 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "this is hardcoded message"), createdAt: 23)
     ])
     
-    let localMessagesSubject = CurrentValueSubject<[LocalMessage2], Never>([
+    let allMessagesSubject = CurrentValueSubject<[LocalMessage2], Never>([
         
     ])
+    
+    func test(){
+        getAppCoordinator()?.test()
+    }
     
     
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
+        var array: [Message] = []
+        for i in 0...100000 {
+            array.append(Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "\(Int.random(in: 4...400)),  i: ~\(i)"), createdAt: 23))
+        }
+        messagesSubject.send(array)
+        
         super.init(repository: repository, coordinator: coordinator)
     }
 
@@ -43,7 +53,6 @@ class CurrentPrivateChatViewModel: BaseViewModel {
                 self.networkRequestState.send(.finished)
             }
         } receiveValue: { response in
-            print(response.data?.room.id)
             
             if let room = response.data?.room {
                 self.room = room
@@ -88,6 +97,5 @@ class CurrentPrivateChatViewModel: BaseViewModel {
             guard let message = response.data?.message else { return }
             self.addMessage(message: message)
         }.store(in: &subscriptions)
-
     }
 }

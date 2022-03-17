@@ -16,8 +16,7 @@ class AllChatsViewModel: BaseViewModel {
         getAppCoordinator()?.presentSelectUserScreen()
     }
     
-    func presentCurrentPrivateChatScreen() {
-        getAppCoordinator()?.presentCurrentPrivateChatScreen(user: <#T##LocalUser#>)
+    func  presentCurrentPrivateChatScreen() {
     }
     
     func getAllRooms() {
