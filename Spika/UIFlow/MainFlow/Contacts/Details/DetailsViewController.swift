@@ -18,7 +18,6 @@ class DetailsViewController: BaseViewController {
         super.viewDidLoad()
         setupView(detailsView)
         setupBindings()
-        navigationItem.title = "detailll"
     }
     
     override func viewDidAppear(_ animated: Bool) {

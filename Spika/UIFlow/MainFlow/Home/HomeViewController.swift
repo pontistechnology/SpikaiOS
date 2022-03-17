@@ -12,6 +12,8 @@ class HomeViewController: UIPageViewController {
     var homeTabBar: HomeTabBar!
     var viewModel: HomeViewModel!
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barStyle = .default
@@ -22,7 +24,6 @@ class HomeViewController: UIPageViewController {
         super.viewDidLoad()
         configurePageViewController()
 //        homeTabBar.handleTap(homeTabBar.tabs[2])
-        title = " "
        }
     
     func configurePageViewController() {

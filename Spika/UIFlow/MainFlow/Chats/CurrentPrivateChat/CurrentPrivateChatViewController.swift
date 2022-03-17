@@ -30,10 +30,6 @@ class CurrentPrivateChatViewController: BaseViewController {
 //        navigationController?.navigationBar.backItem?.backButtonTitle = " viewwillapper"
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-//        navigationController?.navigationBar.backItem?.backButtonTitle = "timotej"
-    }
-    
     func setupBindings() {
         currentPrivateChatView.messageInputView.delegate = self
         currentPrivateChatView.messagesTableView.delegate = self

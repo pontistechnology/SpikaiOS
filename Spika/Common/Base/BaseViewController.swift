@@ -13,6 +13,17 @@ class BaseViewController: UIViewController {
     var subscriptions = Set<AnyCancellable>()
     let circularProgressBar = CircularProgressBar(spinnerWidth: 24)
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        title = " k"
+    }
+    
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barStyle = .default
