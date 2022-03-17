@@ -18,7 +18,6 @@ class CurrentPrivateChatViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        viewModel.test()
         setupView(currentPrivateChatView)
         setupBindings()
         setupNavigationItems()
@@ -27,9 +26,12 @@ class CurrentPrivateChatViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
-//        navigationController?.navigationBar.backItem?.backButtonTitle = " viewwillapper"
     }
-    
+}
+
+// MARK: Functions
+
+extension CurrentPrivateChatViewController {
     func setupBindings() {
         currentPrivateChatView.messageInputView.delegate = self
         currentPrivateChatView.messagesTableView.delegate = self
@@ -43,26 +45,12 @@ class CurrentPrivateChatViewController: BaseViewController {
         }.store(in: &subscriptions)
     }
     
-    func setupNavigationItems() {
-        let videoCallButton = UIBarButtonItem(image: UIImage(named: "videoCall"), style: .plain, target: self, action: #selector(videoCallActionHandler))
-        let audioCallButton = UIBarButtonItem(image: UIImage(named: "phoneCall"), style: .plain, target: self, action: #selector(videoCallActionHandler))
-        
-        navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
-        navigationItem.leftItemsSupplementBackButton = true
-
-        friendInfoView.change(avatarUrl: viewModel.friendUser.avatarUrl, name: viewModel.friendUser.displayName, lastSeen: "yesterday")
-        let vtest = UIBarButtonItem(customView: friendInfoView)
-        navigationItem.leftBarButtonItem = vtest
-    }
-    
-    @objc func videoCallActionHandler() {
-        
-    }
-    
     func checkRoom() {
         viewModel.checkRoom()
     }
 }
+
+// MARK: MessageInputView actions
 
 extension CurrentPrivateChatViewController: MessageInputViewDelegate {
     
@@ -101,6 +89,8 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
     }
 }
 
+// MARK: UITableView
+
 extension CurrentPrivateChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -108,6 +98,7 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
         friendInfoView.changeStatus(to: viewModel.messagesSubject.value[indexPath.row].messageBody.text)
         i += 1
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
+        
     }
 }
 
@@ -136,15 +127,32 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
     }
 }
 
+// MARK: Navigation items setup
 
+extension CurrentPrivateChatViewController {
+    func setupNavigationItems() {
+        let videoCallButton = UIBarButtonItem(image: UIImage(named: "videoCall"), style: .plain, target: self, action: #selector(videoCallActionHandler))
+        let audioCallButton = UIBarButtonItem(image: UIImage(named: "phoneCall"), style: .plain, target: self, action: #selector(phoneCallActionHandler))
+        
+        navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
+        navigationItem.leftItemsSupplementBackButton = true
 
-
-
-
-
-
+        friendInfoView.change(avatarUrl: viewModel.friendUser.avatarUrl, name: viewModel.friendUser.displayName, lastSeen: "yesterday")
+        let vtest = UIBarButtonItem(customView: friendInfoView)
+        navigationItem.leftBarButtonItem = vtest
+    }
+    
+    @objc func videoCallActionHandler() {
+        
+    }
+    
+    @objc func phoneCallActionHandler() {
+        
+    }
+}
 
 // MARK: swipe gestures on cells
+
 extension CurrentPrivateChatViewController {
     //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     //        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
@@ -156,14 +164,9 @@ extension CurrentPrivateChatViewController {
     //    }
 }
     
-    
-    
-    
-    
-    
-    
 // MARK: reply to message
-    //        Commented because there is no replyId on backend for now
+//        Commented because there is no replyId on backend for now
+    
     //        switch message.messageType {
     //        case .text:
     //            break

@@ -15,10 +15,8 @@ class BaseViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        title = " k"
+        title = " "
     }
-    
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -29,7 +27,6 @@ class BaseViewController: UIViewController {
         navigationController?.navigationBar.barStyle = .default
         navigationController?.setNavigationBarHidden(false, animated: animated)
         UITextField.appearance().tintColor = UIColor.systemTeal
-        navigationItem.backButtonTitle = " "
     }
     
     override func viewDidLoad() {

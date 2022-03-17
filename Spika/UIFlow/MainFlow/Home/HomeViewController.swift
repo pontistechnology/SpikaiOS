@@ -12,7 +12,14 @@ class HomeViewController: UIPageViewController {
     var homeTabBar: HomeTabBar!
     var viewModel: HomeViewModel!
     
+    override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
+        super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
+        title = " "
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -20,11 +20,6 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         
     ])
     
-    func test(){
-        getAppCoordinator()?.test()
-    }
-    
-    
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
         var array: [Message] = []
