@@ -68,7 +68,6 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
     func messageInputView(_ messageView: MessageInputView, didPressSend message: String, id: Int) {
         print("send in ccVC with ID, this id is from array not message Id")
         
-//        viewModel.sendMessage(text: message)
         viewModel.trySendMessage(text: message)
         
         currentPrivateChatView.messageInputView.clearTextField()
@@ -78,7 +77,6 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
     func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String) {
         print("send in ccVC ")
         
-//        viewModel.sendMessage(text: message)
         viewModel.trySendMessage(text: message)
 
         currentPrivateChatView.messageInputView.clearTextField()
@@ -117,13 +115,11 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
 extension CurrentPrivateChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        viewModel.messagesSubject.value.count
         viewModel.allMessagesSubject.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myUserId = viewModel.repository.getMyUserId()
-//        let message = viewModel.messagesSubject.value[indexPath.row]
         let message = viewModel.allMessagesSubject.value[indexPath.row]
         
         switch message.message.type {

@@ -14,33 +14,23 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     var room: Room?
     static let testMessage = Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "this is hardcoded message"), createdAt: 23)
     
-//    let messagesSubject = CurrentValueSubject<[Message], Never>([
-//        testMessage
-//    ])
-    
     let allMessagesSubject = CurrentValueSubject<[LocalMessage2], Never>([
         LocalMessage2(message: testMessage, localId: "a", status: .sent)
     ])
     
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
-//        var array: [Message] = []
-//        for i in 0...100000 {
-//            array.append(Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "\(Int.random(in: 4...400)),  i: ~\(i)"), createdAt: 23))
-//        }
-//        messagesSubject.send(array)
+        var array: [LocalMessage2] = []
+        for i in 0...100000 {
+            let a = Message(id: 888, fromUserId: 888, fromDeviceId: 888, totalDeviceCount: 888, receivedCount: 888, seenCount: 888, roomId: 888, type: "text", messageBody: MessageBody(text: "\(Int.random(in: 4...400)),  i: ~\(i)"), createdAt: 23)
+            let lm = LocalMessage2(message: a, localId: "majmun", status: .fail)
+            array.append(lm)
+        }
+        allMessagesSubject.send(array)
         
         super.init(repository: repository, coordinator: coordinator)
     }
 
-    func addMessage(message: Message) {
-//        var value = messagesSubject.value
-//        value.append(message)
-//        messagesSubject.send(value)
-    }
-    
-    
-    
     func checkRoom()  {
         networkRequestState.send(.started())
         repository.checkRoom(forUserId: friendUser.id).sink { completion in
@@ -76,29 +66,6 @@ class CurrentPrivateChatViewModel: BaseViewModel {
             print("creating room response: ", response)
         }.store(in: &subscriptions)
     }
-    
-    func sendMessage(text: String) {
-        guard let room = room else { return }
-        let message = MessageBody(text: text)
-        
-        networkRequestState.send(.started())
-        repository.sendTextMessage(message: message, roomId: room.id).sink { completion in
-            self.networkRequestState.send(.finished)
-            switch completion {
-                
-            case .finished:
-                break
-            case .failure(let error):
-                print("send message: ", error)
-            }
-        } receiveValue: { response in
-            print(response)
-            guard let message = response.data?.message else { return }
-            self.addMessage(message: message)
-        }.store(in: &subscriptions)
-    }
-    
-    
 }
 
 // test sending states
@@ -117,26 +84,28 @@ extension CurrentPrivateChatViewModel {
     func sendMessage2(localMessage: LocalMessage2) {
         guard let room = room else { return }
         
-        networkRequestState.send(.started())
         repository.sendTextMessage(message: localMessage.message.messageBody, roomId: room.id).sink { completion in
-            self.networkRequestState.send(.finished)
             switch completion {
-                
             case .finished:
                 break
             case .failure(let error):
                 print("send message: ", error)
-                self.changeLocalMessageState(localMessage: localMessage, state: .fail)
+                self.updateLocalMessage(localMessage: localMessage, message: nil)
             }
         } receiveValue: { response in
             print(response)
-            guard let message = response.data?.message else { return }
-            self.changeLocalMessageState(localMessage: localMessage, state: .sent)
+            let message = response.data?.message
+            self.updateLocalMessage(localMessage: localMessage, message: message)
         }.store(in: &subscriptions)
     }
     
-    func changeLocalMessageState(localMessage: LocalMessage2, state: MessageState) {
-        guard let ind = (allMessagesSubject.value.firstIndex{$0.localId == localMessage.localId}) else { return }        
-        allMessagesSubject.value[ind].status = state
+    func updateLocalMessage(localMessage: LocalMessage2, message: Message?) {
+        guard let index = (allMessagesSubject.value.firstIndex{$0.localId == localMessage.localId}) else { return }
+        if let message = message {
+            allMessagesSubject.value[index].message = message
+            allMessagesSubject.value[index].status  = .sent
+        } else {
+            allMessagesSubject.value[index].status  = .fail
+        }
     }
 }
