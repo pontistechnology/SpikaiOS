@@ -12,30 +12,34 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
     var room: Room?
-    let messagesSubject = CurrentValueSubject<[Message], Never>([
-        Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "this is hardcoded message"), createdAt: 23)
-    ])
+    static let testMessage = Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "this is hardcoded message"), createdAt: 23)
+    
+//    let messagesSubject = CurrentValueSubject<[Message], Never>([
+//        testMessage
+//    ])
     
     let allMessagesSubject = CurrentValueSubject<[LocalMessage2], Never>([
-        
+        LocalMessage2(message: testMessage, localId: "a", status: .sent)
     ])
     
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
-        var array: [Message] = []
-        for i in 0...100000 {
-            array.append(Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "\(Int.random(in: 4...400)),  i: ~\(i)"), createdAt: 23))
-        }
-        messagesSubject.send(array)
+//        var array: [Message] = []
+//        for i in 0...100000 {
+//            array.append(Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "\(Int.random(in: 4...400)),  i: ~\(i)"), createdAt: 23))
+//        }
+//        messagesSubject.send(array)
         
         super.init(repository: repository, coordinator: coordinator)
     }
 
     func addMessage(message: Message) {
-        var value = messagesSubject.value
-        value.append(message)
-        messagesSubject.send(value)
+//        var value = messagesSubject.value
+//        value.append(message)
+//        messagesSubject.send(value)
     }
+    
+    
     
     func checkRoom()  {
         networkRequestState.send(.started())
@@ -92,5 +96,47 @@ class CurrentPrivateChatViewModel: BaseViewModel {
             guard let message = response.data?.message else { return }
             self.addMessage(message: message)
         }.store(in: &subscriptions)
+    }
+    
+    
+}
+
+// test sending states
+extension CurrentPrivateChatViewModel {
+    
+    func trySendMessage(text: String) {
+        let mes = LocalMessage2(message: Message(text: text), localId: UUID().uuidString, status: .waiting)
+        addLocalMessage(message: mes)
+        sendMessage2(localMessage: mes)
+    }
+    
+    func addLocalMessage(message: LocalMessage2) {
+        allMessagesSubject.value.append(message)
+    }
+    
+    func sendMessage2(localMessage: LocalMessage2) {
+        guard let room = room else { return }
+        
+        networkRequestState.send(.started())
+        repository.sendTextMessage(message: localMessage.message.messageBody, roomId: room.id).sink { completion in
+            self.networkRequestState.send(.finished)
+            switch completion {
+                
+            case .finished:
+                break
+            case .failure(let error):
+                print("send message: ", error)
+                self.changeLocalMessageState(localMessage: localMessage, state: .fail)
+            }
+        } receiveValue: { response in
+            print(response)
+            guard let message = response.data?.message else { return }
+            self.changeLocalMessageState(localMessage: localMessage, state: .sent)
+        }.store(in: &subscriptions)
+    }
+    
+    func changeLocalMessageState(localMessage: LocalMessage2, state: MessageState) {
+        guard let ind = (allMessagesSubject.value.firstIndex{$0.localId == localMessage.localId}) else { return }        
+        allMessagesSubject.value[ind].status = state
     }
 }

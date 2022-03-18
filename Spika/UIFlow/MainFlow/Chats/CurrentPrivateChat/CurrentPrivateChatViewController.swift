@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import SwiftUI
 
 class CurrentPrivateChatViewController: BaseViewController {
     
@@ -43,10 +42,17 @@ extension CurrentPrivateChatViewController {
         
         sink(networkRequestState: viewModel.networkRequestState)
         
-        viewModel.messagesSubject.receive(on: DispatchQueue.main).sink { [weak self] messages in
+//        viewModel.messagesSubject.receive(on: DispatchQueue.main).sink { [weak self] messages in
+//            guard let self = self else { return }
+//            self.currentPrivateChatView.messagesTableView.reloadData()
+//            self.currentPrivateChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.messagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
+//        }.store(in: &subscriptions)
+        
+        viewModel.allMessagesSubject.receive(on: DispatchQueue.main).sink { [weak self] localMessages in
             guard let self = self else { return }
+            
             self.currentPrivateChatView.messagesTableView.reloadData()
-            self.currentPrivateChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.messagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
+            self.currentPrivateChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.allMessagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
         }.store(in: &subscriptions)
     }
     
@@ -62,7 +68,8 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
     func messageInputView(_ messageView: MessageInputView, didPressSend message: String, id: Int) {
         print("send in ccVC with ID, this id is from array not message Id")
         
-        viewModel.sendMessage(text: message)
+//        viewModel.sendMessage(text: message)
+        viewModel.trySendMessage(text: message)
         
         currentPrivateChatView.messageInputView.clearTextField()
         currentPrivateChatView.messageInputView.hideReplyView()
@@ -71,8 +78,9 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
     func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String) {
         print("send in ccVC ")
         
-        viewModel.sendMessage(text: message)
-        
+//        viewModel.sendMessage(text: message)
+        viewModel.trySendMessage(text: message)
+
         currentPrivateChatView.messageInputView.clearTextField()
         currentPrivateChatView.messageInputView.hideReplyView()
     }
@@ -100,7 +108,7 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        friendInfoView.changeStatus(to: viewModel.messagesSubject.value[indexPath.row].messageBody.text)
+        friendInfoView.changeStatus(to: viewModel.allMessagesSubject.value[indexPath.row].message.messageBody.text)
         i += 1
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
     }
@@ -109,21 +117,24 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
 extension CurrentPrivateChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.messagesSubject.value.count
+//        viewModel.messagesSubject.value.count
+        viewModel.allMessagesSubject.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myUserId = viewModel.repository.getMyUserId()
-        let message = viewModel.messagesSubject.value[indexPath.row]
+//        let message = viewModel.messagesSubject.value[indexPath.row]
+        let message = viewModel.allMessagesSubject.value[indexPath.row]
         
-        switch message.type {
+        switch message.message.type {
         case "text":
-            let identifier = (message.fromUserId == myUserId)
+            let identifier = (message.message.fromUserId == myUserId || message.message.fromUserId == 999)
             ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
             : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
             
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
-            cell?.updateCell(message: message)
+            cell?.updateCell(message: message.message)
+            cell?.updateCell(messageState: message.status)
             return cell ?? UITableViewCell()
         default:
             return UITableViewCell()

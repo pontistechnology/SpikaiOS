@@ -10,7 +10,7 @@ import UIKit
 
 class MessageStateView: UIImageView, BaseView {
     
-    let state: MessageState
+    var state: MessageState
     
     init(state: MessageState) {
         self.state = state
@@ -27,6 +27,16 @@ class MessageStateView: UIImageView, BaseView {
     }
     
     func styleSubviews() {
+        changeState(to: .fail)
+    }
+    
+    func positionSubviews() {
+        constrainWidth(16)
+        constrainHeight(16)
+    }
+    
+    func changeState(to value: MessageState) {
+        state = value
         switch state {
         case .sent:
             image = UIImage(named: "sent")
@@ -39,10 +49,5 @@ class MessageStateView: UIImageView, BaseView {
         case .waiting:
             image = UIImage(named: "waiting")
         }
-    }
-    
-    func positionSubviews() {
-        constrainWidth(16)
-        constrainHeight(16)
     }
 }
