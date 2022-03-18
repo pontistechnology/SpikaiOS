@@ -22,6 +22,10 @@ class BaseViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("baseVC deinit")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barStyle = .default
@@ -60,7 +64,8 @@ class BaseViewController: UIViewController {
     }
     
     func sink(networkRequestState publisher: CurrentValueSubject<RequestState, Never>) {
-        publisher.sink { state in
+        publisher.sink { [weak self] state in
+            guard let self = self else { return }
             switch state {
             case .finished:
                 self.hideLoading()

@@ -27,6 +27,10 @@ class CurrentPrivateChatViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
+    
+    deinit {
+        print("currentChatVC deinit")
+    }
 }
 
 // MARK: Functions
@@ -39,7 +43,8 @@ extension CurrentPrivateChatViewController {
         
         sink(networkRequestState: viewModel.networkRequestState)
         
-        viewModel.messagesSubject.receive(on: DispatchQueue.main).sink { messages in
+        viewModel.messagesSubject.receive(on: DispatchQueue.main).sink { [weak self] messages in
+            guard let self = self else { return }
             self.currentPrivateChatView.messagesTableView.reloadData()
             self.currentPrivateChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.messagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
         }.store(in: &subscriptions)
@@ -98,7 +103,6 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
         friendInfoView.changeStatus(to: viewModel.messagesSubject.value[indexPath.row].messageBody.text)
         i += 1
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
-        
     }
 }
 
