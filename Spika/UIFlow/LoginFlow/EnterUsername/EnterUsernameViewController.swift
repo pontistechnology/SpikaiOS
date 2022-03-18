@@ -90,7 +90,6 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
             let widhtInPixels  = pickedImage.size.width * UIScreen.main.scale
             let heightInPixels = pickedImage.size.height * UIScreen.main.scale
             
-            print(pickedImage.jpegData(compressionQuality: 1)?.getSHA256())
             
             if widhtInPixels < 512 || heightInPixels < 512 {
                 PopUpManager.shared.presentAlert(errorMessage: "Please use better quality.")

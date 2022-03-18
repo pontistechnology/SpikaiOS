@@ -43,8 +43,8 @@ class DetailsViewModel: BaseViewModel {
         getAppCoordinator()?.presentCallHistoryScreen()
     }
     
-    func presentCurrentChatScreen(user: LocalUser) {
+    func presentCurrentPrivateChatScreen(user: LocalUser) {
 //        getAppCoordinator()?.popTopViewController(animated: false)
-        getAppCoordinator()?.presentCurrentChatScreen(user: user)
+        getAppCoordinator()?.presentCurrentPrivateChatScreen(user: user)
     }
 }

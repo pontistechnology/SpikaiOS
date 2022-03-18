@@ -18,7 +18,6 @@ class DetailsViewController: BaseViewController {
         super.viewDidLoad()
         setupView(detailsView)
         setupBindings()
-        navigationItem.title = "detailll"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,7 +60,7 @@ class DetailsViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         detailsView.contentView.messageButton.tap().sink { _ in
-            self.viewModel.presentCurrentChatScreen(user: self.viewModel.user)
+            self.viewModel.presentCurrentPrivateChatScreen(user: self.viewModel.user)
         }.store(in: &subscriptions)
         
         viewModel.userSubject.receive(on: DispatchQueue.main).sink { user in

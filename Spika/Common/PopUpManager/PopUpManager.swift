@@ -7,41 +7,35 @@
 
 import Foundation
 import UIKit
+import CoreMedia
 
 class PopUpManager {
     
     static let shared = PopUpManager()
     
     var alertWindow: UIWindow?
-    var firstButtonCompletion: (() -> ())?
-    var secondButtonCompletion: (() -> ())?
+    var completions: [() -> ()]?
     
-    func presentAlert(withTitle title: String,
-                      message: String,
-                      rightButtonText: String,
-                      completion1: @escaping () -> (),
-                      leftButtonText: String,
-                      completion2: @escaping () -> ()) {
-        
-        firstButtonCompletion  = completion1
-        secondButtonCompletion = completion2
-        
-        let alertViewController = AlertViewController(title: title, message: message, rightButtonText: rightButtonText, leftButtonText: leftButtonText)
-        setupAlertWindow(with: alertViewController)
+    private init() {
+    
     }
     
-    func presentAlert(withTitle title: String,
-                      message: String,
-                      firstButtonText: String,
-                      completion1: @escaping () -> ()) {
-        
-        let alertViewController = AlertViewController(title: title, message: message, firstButtonText: firstButtonText)
-        firstButtonCompletion  = completion1
+    func presentAlert(_ choice : StaticInfoAlert) {
+        let alertViewController = AlertViewController(choice)
         setupAlertWindow(with: alertViewController)
     }
     
     func presentAlert(errorMessage: String) {
         let alertViewController = AlertViewController(message: errorMessage)
+        setupAlertWindow(with: alertViewController)
+    }
+    
+    func presentAlert(with titleAndMessage: (title: String, message: String)? = nil, orientation: NSLayoutConstraint.Axis, closures: [(String, () -> ())]) {
+        
+        completions = closures.map{ $0.1 }
+        
+        let alertViewController = AlertViewController(withTitleAndMessage: titleAndMessage, orientation: orientation, 
+                                                      closureNames: closures.map{ $0.0 })
         setupAlertWindow(with: alertViewController)
     }
     
@@ -65,17 +59,13 @@ class PopUpManager {
 }
 
 extension PopUpManager: AlertViewControllerDelegate {
-    func alertViewController(_ alertViewController: AlertViewController, didPressFirstButton value: Bool) {
-        firstButtonCompletion?()
-        dismissAlertWindow()
-    }
-    
-    func alertViewController(_ alertViewController: AlertViewController, didPressSecondButton value: Bool) {
-        secondButtonCompletion?()
-        dismissAlertWindow()
-    }
-    
     func alertViewController(_ alertViewController: AlertViewController, needDismiss value: Bool) {
+        dismissAlertWindow()
+    }
+    
+    func alertViewController(_ alertViewController: AlertViewController, indexInStackView value: Int) {
+        guard let closures = completions else { return }
+        closures[value]()
         dismissAlertWindow()
     }
 }

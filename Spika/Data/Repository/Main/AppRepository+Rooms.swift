@@ -63,4 +63,20 @@ extension AppRepository {
         
         return networkService.performRequest(resources: resources)
     }
+    
+    func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error> {
+        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        else {return Fail<GetAllRoomsResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<GetAllRoomsResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.getAllRooms,
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
 }

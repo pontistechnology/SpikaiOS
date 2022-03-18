@@ -20,6 +20,21 @@ struct Message: Codable {
     let createdAt: Int
 }
 
+extension Message {
+    init(text: String) {
+        messageBody = MessageBody(text: text)
+        id = 999
+        fromUserId = 999
+        fromDeviceId = 999
+        totalDeviceCount = 999
+        receivedCount = 999
+        seenCount = 999
+        roomId = 999
+        type = "text"
+        createdAt = 999
+    }
+}
+
 struct MessageBody: Codable {
     let text: String
 }

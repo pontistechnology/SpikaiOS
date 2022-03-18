@@ -121,6 +121,11 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
             reactionImageView.anchor(top: containerView.topAnchor, leading: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0), size: CGSize(width: 24, height: 24))
         }
     }
+}
+
+// MARK: Public Functions
+
+extension TextMessageTableViewCell {
     
     func updateCell(message: Message, replyMessageTest: Message? = nil) {
         guard let currentReuseIdentifier = currentReuseIdentifier else {
@@ -141,7 +146,9 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
 //            replyView.updateReplyView(message: replyMessageTest ?? message)
             break
         }
-        
     }
     
+    func updateCell(messageState: MessageState) {
+        messageStateView.changeState(to: messageState)
+    }
 }

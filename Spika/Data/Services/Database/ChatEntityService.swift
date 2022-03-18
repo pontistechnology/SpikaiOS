@@ -47,7 +47,7 @@ class ChatEntityService {
     
     func addUserToChat(chat: LocalChat, user: LocalUser) -> Future<LocalChat, Error> {
         let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
-        userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")
+        userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
         let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
         chatRequest.predicate = NSPredicate(format: "id = %@", "\(chat.id)")
         do {
@@ -87,7 +87,7 @@ class ChatEntityService {
     
     func removeChatFromUser(user: LocalUser, chat: LocalChat) -> Future<LocalUser, Error> {
         let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
-        userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")
+        userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
         let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
         chatRequest.predicate = NSPredicate(format: "id = %@", "\(chat.id)")
         do {

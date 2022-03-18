@@ -49,4 +49,5 @@ protocol Repository {
     func checkRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
     func createRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error>
     func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
+    func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
 }

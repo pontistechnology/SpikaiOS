@@ -32,6 +32,11 @@ class ContactsViewController: BaseViewController {
         contactsView.tableView.delegate   = self
         contactsView.searchBar.delegate = self
         
+        contactsView.titleLabel.tap().sink { tap in
+            PopUpManager.shared.presentAlert(.copy)
+            
+        }.store(in: &subscriptions)
+        
         //TODO: delete this cooments
 //        contactsView.detailsButton.tap().sink { _ in
 //            self.viewModel.showDetailsScreen(id: 3)

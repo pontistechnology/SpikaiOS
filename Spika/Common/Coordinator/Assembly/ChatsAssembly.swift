@@ -11,7 +11,7 @@ import Swinject
 class ChatsAssembly: Assembly {
     func assemble(container: Container) {
         assembleSelectUserViewController(container)
-        assembleCurrentChatViewController(container)
+        assembleCurrentPrivateChatViewController(container)
         assembleNewGroupChatViewController(container)
     }
     
@@ -29,15 +29,15 @@ class ChatsAssembly: Assembly {
         }.inObjectScope(.transient)
     }
     
-    private func assembleCurrentChatViewController(_ container: Container) {
-        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, user: LocalUser) in
+    private func assembleCurrentPrivateChatViewController(_ container: Container) {
+        container.register(CurrentPrivateChatViewModel.self) { (resolver, coordinator: AppCoordinator, user: LocalUser) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return CurrentChatViewModel(repository: repository, coordinator: coordinator, friendUser: user)
+            return CurrentPrivateChatViewModel(repository: repository, coordinator: coordinator, friendUser: user)
         }.inObjectScope(.transient)
 
-        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, user: LocalUser) in
-            let controller = CurrentChatViewController()
-            controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, user)
+        container.register(CurrentPrivateChatViewController.self) { (resolver, coordinator: AppCoordinator, user: LocalUser) in
+            let controller = CurrentPrivateChatViewController()
+            controller.viewModel = container.resolve(CurrentPrivateChatViewModel.self, arguments: coordinator, user)
             return controller
         }.inObjectScope(.transient)
     }

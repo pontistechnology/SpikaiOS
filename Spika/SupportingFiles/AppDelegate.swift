@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func test() {
         // only for debug, remove later
-        print("type is: ", MessageType(rawValue: "textf"))
+//        print("type is: ", MessageType(rawValue: "textf"))
         
     }
     
