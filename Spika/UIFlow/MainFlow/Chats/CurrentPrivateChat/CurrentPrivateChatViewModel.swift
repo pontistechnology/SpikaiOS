@@ -93,7 +93,7 @@ extension CurrentPrivateChatViewModel {
                 self.updateLocalMessage(localMessage: localMessage, message: nil)
             }
         } receiveValue: { response in
-            print(response)
+            print("Ovo trenutno me zanima: ", response)
             let message = response.data?.message
             self.updateLocalMessage(localMessage: localMessage, message: message)
         }.store(in: &subscriptions)
