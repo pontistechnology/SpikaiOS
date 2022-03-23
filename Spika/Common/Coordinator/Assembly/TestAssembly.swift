@@ -27,7 +27,8 @@ class TestAssembly: Assembly {
             let userEntityService = UserEntityService()
             let chatEntityService = ChatEntityService()
             let messageEntityService = MessageEntityService()
-            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService)
+            let testEntityService = TestEntityService()
+            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, testEntityService: testEntityService)
         }.inObjectScope(.container)
 
         container.register(Repository.self, name: RepositoryType.test.name) { r in

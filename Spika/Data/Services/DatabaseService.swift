@@ -23,11 +23,13 @@ class DatabaseService {
     let userEntityService: UserEntityService
     let chatEntityService: ChatEntityService
     let messageEntityService: MessageEntityService
+    let testEntityService: TestEntityService
     
-    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService) {
+    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService, testEntityService: TestEntityService) {
         self.userEntityService = userEntityService
         self.chatEntityService = chatEntityService
         self.messageEntityService = messageEntityService
+        self.testEntityService = testEntityService
     }
     
 }

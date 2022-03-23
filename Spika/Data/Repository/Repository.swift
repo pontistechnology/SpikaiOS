@@ -50,4 +50,5 @@ protocol Repository {
     func createRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error>
     func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
+    func testnaRepo(naziv: String) -> Future<String, Error>
 }

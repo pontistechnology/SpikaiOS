@@ -33,8 +33,8 @@ class ContactsViewController: BaseViewController {
         contactsView.searchBar.delegate = self
         
         contactsView.titleLabel.tap().sink { tap in
-            PopUpManager.shared.presentAlert(.copy)
-            
+//            PopUpManager.shared.presentAlert(.copy)
+            self.viewModel.test()
         }.store(in: &subscriptions)
         
         //TODO: delete this cooments

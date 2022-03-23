@@ -37,6 +37,10 @@
 		933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */; };
 		933BE87727B6796B0099BA9E /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* NotesViewController.swift */; };
 		933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87827B67A280099BA9E /* ChatSearchViewController.swift */; };
+		934087B427EBA1DA00209571 /* TestEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B327EBA1DA00209571 /* TestEntityService.swift */; };
+		934087B627EBA25500209571 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B527EBA25500209571 /* CoreDataManager.swift */; };
+		934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
+		934087BA27EBAE6F00209571 /* TestRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B927EBAE6F00209571 /* TestRepository+Tests.swift */; };
 		9365A78F27E17C320038CA7F /* LocalMessage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A78E27E17C320038CA7F /* LocalMessage2.swift */; };
 		9365A79127E184FA0038CA7F /* GetAllRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */; };
 		9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367455B27C71D0100F43CCD /* PopUpManager.swift */; };
@@ -246,6 +250,10 @@
 		933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewModel.swift; sourceTree = "<group>"; };
 		933BE87627B6796A0099BA9E /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		933BE87827B67A280099BA9E /* ChatSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewController.swift; sourceTree = "<group>"; };
+		934087B327EBA1DA00209571 /* TestEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEntityService.swift; sourceTree = "<group>"; };
+		934087B527EBA25500209571 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		934087B727EBAD7100209571 /* AppRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Tests.swift"; sourceTree = "<group>"; };
+		934087B927EBAE6F00209571 /* TestRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Tests.swift"; sourceTree = "<group>"; };
 		9365A78E27E17C320038CA7F /* LocalMessage2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalMessage2.swift; sourceTree = "<group>"; };
 		9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllRoomsResponseModel.swift; sourceTree = "<group>"; };
 		9367455B27C71D0100F43CCD /* PopUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpManager.swift; sourceTree = "<group>"; };
@@ -809,6 +817,7 @@
 				ADD5041927174B82009D50CB /* AppRepository+User.swift */,
 				AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */,
 				938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */,
+				934087B727EBAD7100209571 /* AppRepository+Tests.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -821,6 +830,7 @@
 				AD9BFD0D272986C400736318 /* TestRepository+User.swift */,
 				AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */,
 				938D053927D5C524002E5CE5 /* TestRepository+Rooms.swift */,
+				934087B927EBAE6F00209571 /* TestRepository+Tests.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -1145,6 +1155,8 @@
 			children = (
 				ADD5040E27173FC2009D50CB /* Database */,
 				ADD503F2270DE39A009D50CB /* NetworkService.swift */,
+				ADD5040F27173FD9009D50CB /* DatabaseService.swift */,
+				934087B527EBA25500209571 /* CoreDataManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1203,8 +1215,8 @@
 			children = (
 				ADD5040A2716EB4B009D50CB /* UserEntityService.swift */,
 				ADD5042D271E6C15009D50CB /* ChatEntityService.swift */,
-				ADD5040F27173FD9009D50CB /* DatabaseService.swift */,
 				AD819237271E866100D5BE48 /* MessageEntityService.swift */,
+				934087B327EBA1DA00209571 /* TestEntityService.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -1506,12 +1518,14 @@
 				9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */,
 				938D053A27D5C524002E5CE5 /* TestRepository+Rooms.swift in Sources */,
 				9365A78F27E17C320038CA7F /* LocalMessage2.swift in Sources */,
+				934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */,
 				933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */,
 				93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
 				ADD5040D2716EC22009D50CB /* LocalUser.swift in Sources */,
 				93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */,
 				AD9BFD53272B184E00736318 /* VerificationTextField.swift in Sources */,
+				934087B627EBA25500209571 /* CoreDataManager.swift in Sources */,
 				ADB9D524271E83F3000793E2 /* UserEntity+CoreDataProperties.swift in Sources */,
 				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
 				AD81924A2721743900D5BE48 /* AllChatsViewController.swift in Sources */,
@@ -1587,6 +1601,7 @@
 				ADD5042E271E6C15009D50CB /* ChatEntityService.swift in Sources */,
 				938D053027D59DC1002E5CE5 /* NewGroupChatViewController.swift in Sources */,
 				933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */,
+				934087BA27EBAE6F00209571 /* TestRepository+Tests.swift in Sources */,
 				ADD5041627174384009D50CB /* LocalChat.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
 				ADB9D528271E83F3000793E2 /* ChatEntity+CoreDataProperties.swift in Sources */,
@@ -1617,6 +1632,7 @@
 				933BE85D27B65BDF0099BA9E /* SharedViewController.swift in Sources */,
 				931E23AC27D3172C0065FFFC /* MediaMessageTableViewCell.swift in Sources */,
 				AD819290272305D900D5BE48 /* TapUtils.swift in Sources */,
+				934087B427EBA1DA00209571 /* TestEntityService.swift in Sources */,
 				ADD5040127101B69009D50CB /* ContentView.swift in Sources */,
 				AD9BFD302729ABDB00736318 /* Country.swift in Sources */,
 				9365A79127E184FA0038CA7F /* GetAllRoomsResponseModel.swift in Sources */,
