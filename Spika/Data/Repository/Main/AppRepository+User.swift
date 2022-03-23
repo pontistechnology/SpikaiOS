@@ -11,6 +11,22 @@ import CryptoKit
 
 extension AppRepository {
     
+    // MARK: UserDefaults
+    
+    func saveUserInfo(user: User, device: Device) {
+        let defaults = UserDefaults.standard
+        defaults.set(user.id, forKey: Constants.UserDefaults.userId)
+        defaults.set(user.telephoneNumber, forKey: Constants.UserDefaults.userPhoneNumber)
+        defaults.set(device.id, forKey: Constants.UserDefaults.deviceId)
+        defaults.set(device.token, forKey: Constants.UserDefaults.accessToken)
+    }
+    
+    func getMyUserId() -> Int {
+        return UserDefaults.standard.integer(forKey: Constants.UserDefaults.userId)
+    }
+    
+    // MARK: Network
+    
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
         print("Phone number SHA256: ", telephoneNumber.getSHA256())
         let resources = Resources<AuthResponseModel, AuthRequestModel>(
@@ -51,30 +67,6 @@ extension AppRepository {
             bodyParameters: UserRequestModel(telephoneNumber: telephoneNumber, emailAddress: email, displayName: username, avatarUrl: avatarURL),
             httpHeaderFields: ["accesstoken" : accessToken])
         return networkService.performRequest(resources: resources)
-    }
-    
-    func saveUserInfo(user: User, device: Device) {
-        let defaults = UserDefaults.standard
-        defaults.set(user.id, forKey: Constants.UserDefaults.userId)
-        defaults.set(user.telephoneNumber, forKey: Constants.UserDefaults.userPhoneNumber)
-        defaults.set(device.id, forKey: Constants.UserDefaults.deviceId)
-        defaults.set(device.token, forKey: Constants.UserDefaults.accessToken)
-    }
-    
-    func getMyUserId() -> Int {
-        return UserDefaults.standard.integer(forKey: Constants.UserDefaults.userId)
-    }
-    
-    func getUsers() -> Future<[LocalUser], Error> {
-        return databaseService.userEntityService.getUsers()
-    }
-    
-    func saveUser(_ user: LocalUser) -> Future<LocalUser, Error> {
-        return databaseService.userEntityService.saveUser(user)
-    }
-    
-    func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error> {
-        return databaseService.userEntityService.saveUsers(users)
     }
     
     func uploadWholeFile(data: Data) -> (publisher: PassthroughSubject<UploadChunkResponseModel, Error>, totalChunksNumber: Int) {
@@ -165,5 +157,19 @@ extension AppRepository {
             queryParameters: ["page": String(page)]
         )
         return networkService.performRequest(resources: resources)
+    }
+    
+    // MARK: Database
+    
+    func getUsers() -> Future<[LocalUser], Error> {
+        return databaseService.userEntityService.getUsers()
+    }
+    
+    func saveUser(_ user: LocalUser) -> Future<LocalUser, Error> {
+        return databaseService.userEntityService.saveUser(user)
+    }
+    
+    func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error> {
+        return databaseService.userEntityService.saveUsers(users)
     }
 }

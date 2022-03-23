@@ -10,6 +10,11 @@ import Combine
 
 extension AppRepository {
     
+    // MARK: UserDefaults
+    
+    
+    // MARK: Network
+    
     func createRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
 
         guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
@@ -79,4 +84,8 @@ extension AppRepository {
         
         return networkService.performRequest(resources: resources)
     }
+    
+    // MARK: Database
+    
+    
 }

@@ -9,13 +9,11 @@ import Foundation
 import Combine
 
 extension AppRepository {
-    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
-        return databaseService.messageEntityService.saveMessage(message)
-    }
     
-    func getMessagesForChat(chat: LocalChat) -> Future<[LocalMessage], Error> {
-        return databaseService.messageEntityService.getMessagesForChat(chat: chat)
-    }
+    // MARK: UserDefaults
+    
+    
+    // MARK: Network
     
     func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
         guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
@@ -31,5 +29,15 @@ extension AppRepository {
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
+    }
+    
+    // MARK: Database
+    
+    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
+        return databaseService.messageEntityService.saveMessage(message)
+    }
+    
+    func getMessagesForChat(chat: LocalChat) -> Future<[LocalMessage], Error> {
+        return databaseService.messageEntityService.getMessagesForChat(chat: chat)
     }
 }

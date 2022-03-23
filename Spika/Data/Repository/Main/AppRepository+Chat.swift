@@ -9,6 +9,15 @@ import Foundation
 import Combine
 
 extension AppRepository {
+    
+    // MARK: UserDefaults
+    
+    
+    // MARK: Network
+    
+    
+    // MARK: Database
+    
     func createChat(_ chat: LocalChat) -> Future<LocalChat, Error> {
         return databaseService.chatEntityService.saveChat(chat)
     }

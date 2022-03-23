@@ -22,13 +22,12 @@ class UserEntityService {
         let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
         do {
             let objects = try managedContext?.fetch(fetchRequest)
-            
-            if let userEntities = objects {
-                let users = userEntities.map{ return LocalUser(entity: $0)}
-                return Future { promise in promise(.success(users))}
-            } else {
-                return Future { promise in promise(.failure(DatabseError.requestFailed))}
+            guard let userEntities = objects else {
+                return Future { promise in promise(.failure(DatabseError.requestFailed)) }
             }
+            
+            let users = userEntities.map{LocalUser(entity: $0)}
+            return Future { promise in promise(.success(users))}
             
         } catch let error as NSError {
             return Future { promise in promise(.failure(error))}
