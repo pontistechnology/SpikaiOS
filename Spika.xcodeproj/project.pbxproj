@@ -93,8 +93,6 @@
 		93E4F70127C468BB00432CFA /* CurrentPrivateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F70027C468BB00432CFA /* CurrentPrivateChatView.swift */; };
 		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		AD81923A271E873200D5BE48 /* LocalReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819239271E873200D5BE48 /* LocalReaction.swift */; };
-		AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */; };
-		AD81923C271E8AF400D5BE48 /* ReactionEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51E271E83F3000793E2 /* ReactionEntity+CoreDataProperties.swift */; };
 		AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */; };
 		AD81923E271E8AF400D5BE48 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D522271E83F3000793E2 /* MessageEntity+CoreDataProperties.swift */; };
 		AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
@@ -136,7 +134,6 @@
 		AD9BFD01272985C400736318 /* AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD00272985C400736318 /* AppTests.swift */; };
 		AD9BFD172729894300736318 /* TestAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD13272987BE00736318 /* TestAssembly.swift */; };
 		AD9BFD182729898C00736318 /* TestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD092729867800736318 /* TestRepository.swift */; };
-		AD9BFD192729899000736318 /* TestRepository+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD0B272986B300736318 /* TestRepository+Chat.swift */; };
 		AD9BFD1A2729899300736318 /* TestRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD0D272986C400736318 /* TestRepository+User.swift */; };
 		AD9BFD1B2729899500736318 /* TestRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */; };
 		AD9BFD222729950600736318 /* EnterNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD212729950600736318 /* EnterNumberViewController.swift */; };
@@ -165,8 +162,6 @@
 		AD9E39052726CD2000DC5D43 /* MessageTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E39042726CD2000DC5D43 /* MessageTextField.swift */; };
 		ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */; };
 		ADB9D524271E83F3000793E2 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */; };
-		ADB9D527271E83F3000793E2 /* ChatEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51F271E83F3000793E2 /* ChatEntity+CoreDataClass.swift */; };
-		ADB9D528271E83F3000793E2 /* ChatEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D520271E83F3000793E2 /* ChatEntity+CoreDataProperties.swift */; };
 		ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503B1270DC3C7009D50CB /* AppDelegate.swift */; };
 		ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503B3270DC3C7009D50CB /* SceneDelegate.swift */; };
 		ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */; };
@@ -194,8 +189,6 @@
 		ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040A2716EB4B009D50CB /* UserEntityService.swift */; };
 		ADD5040D2716EC22009D50CB /* LocalUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040C2716EC22009D50CB /* LocalUser.swift */; };
 		ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040F27173FD9009D50CB /* DatabaseService.swift */; };
-		ADD5041627174384009D50CB /* LocalChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041527174384009D50CB /* LocalChat.swift */; };
-		ADD504182717481D009D50CB /* AppRepository+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD504172717481D009D50CB /* AppRepository+Chat.swift */; };
 		ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
 		ADD5042E271E6C15009D50CB /* ChatEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5042D271E6C15009D50CB /* ChatEntityService.swift */; };
 		ADD50450271E81BA009D50CB /* LocalMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5044F271E81BA009D50CB /* LocalMessage.swift */; };
@@ -345,7 +338,6 @@
 		AD9BFCFE272985C400736318 /* AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9BFD00272985C400736318 /* AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTests.swift; sourceTree = "<group>"; };
 		AD9BFD092729867800736318 /* TestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRepository.swift; sourceTree = "<group>"; };
-		AD9BFD0B272986B300736318 /* TestRepository+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Chat.swift"; sourceTree = "<group>"; };
 		AD9BFD0D272986C400736318 /* TestRepository+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+User.swift"; sourceTree = "<group>"; };
 		AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Messages.swift"; sourceTree = "<group>"; };
 		AD9BFD13272987BE00736318 /* TestAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAssembly.swift; sourceTree = "<group>"; };
@@ -375,10 +367,6 @@
 		AD9E39042726CD2000DC5D43 /* MessageTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextField.swift; sourceTree = "<group>"; };
 		ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		ADB9D51E271E83F3000793E2 /* ReactionEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReactionEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		ADB9D51F271E83F3000793E2 /* ChatEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		ADB9D520271E83F3000793E2 /* ChatEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		ADB9D522271E83F3000793E2 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		ADD503AE270DC3C7009D50CB /* Spika.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spika.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -410,8 +398,6 @@
 		ADD5040A2716EB4B009D50CB /* UserEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntityService.swift; sourceTree = "<group>"; };
 		ADD5040C2716EC22009D50CB /* LocalUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUser.swift; sourceTree = "<group>"; };
 		ADD5040F27173FD9009D50CB /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
-		ADD5041527174384009D50CB /* LocalChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChat.swift; sourceTree = "<group>"; };
-		ADD504172717481D009D50CB /* AppRepository+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Chat.swift"; sourceTree = "<group>"; };
 		ADD5041927174B82009D50CB /* AppRepository+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+User.swift"; sourceTree = "<group>"; };
 		ADD5042D271E6C15009D50CB /* ChatEntityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatEntityService.swift; sourceTree = "<group>"; };
 		ADD5044F271E81BA009D50CB /* LocalMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMessage.swift; sourceTree = "<group>"; };
@@ -813,7 +799,6 @@
 			isa = PBXGroup;
 			children = (
 				ADD503DB270DD6DC009D50CB /* AppRepository.swift */,
-				ADD504172717481D009D50CB /* AppRepository+Chat.swift */,
 				ADD5041927174B82009D50CB /* AppRepository+User.swift */,
 				AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */,
 				938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */,
@@ -826,7 +811,6 @@
 			isa = PBXGroup;
 			children = (
 				AD9BFD092729867800736318 /* TestRepository.swift */,
-				AD9BFD0B272986B300736318 /* TestRepository+Chat.swift */,
 				AD9BFD0D272986C400736318 /* TestRepository+User.swift */,
 				AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */,
 				938D053927D5C524002E5CE5 /* TestRepository+Rooms.swift */,
@@ -1200,10 +1184,6 @@
 				93C3461E27EABEFC0038D7A5 /* TestEntity+CoreDataProperties.swift */,
 				ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */,
 				ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */,
-				ADB9D51D271E83F3000793E2 /* ReactionEntity+CoreDataClass.swift */,
-				ADB9D51E271E83F3000793E2 /* ReactionEntity+CoreDataProperties.swift */,
-				ADB9D51F271E83F3000793E2 /* ChatEntity+CoreDataClass.swift */,
-				ADB9D520271E83F3000793E2 /* ChatEntity+CoreDataProperties.swift */,
 				ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */,
 				ADB9D522271E83F3000793E2 /* MessageEntity+CoreDataProperties.swift */,
 			);
@@ -1247,7 +1227,6 @@
 				ADD5044F271E81BA009D50CB /* LocalMessage.swift */,
 				9365A78E27E17C320038CA7F /* LocalMessage2.swift */,
 				ADD5040C2716EC22009D50CB /* LocalUser.swift */,
-				ADD5041527174384009D50CB /* LocalChat.swift */,
 				AD819239271E873200D5BE48 /* LocalReaction.swift */,
 			);
 			path = LocalModels;
@@ -1489,11 +1468,9 @@
 			files = (
 				938D053427D5BF65002E5CE5 /* AppRepository+Rooms.swift in Sources */,
 				9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */,
-				AD81923B271E8AF400D5BE48 /* ReactionEntity+CoreDataClass.swift in Sources */,
 				93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */,
 				AD9BFD55272B1A0200736318 /* VerificationTextFieldView.swift in Sources */,
 				93227E9827D6ED70002E3DED /* SendMessageRequest.swift in Sources */,
-				AD81923C271E8AF400D5BE48 /* ReactionEntity+CoreDataProperties.swift in Sources */,
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
 				937F48E827D3D66A005E19FB /* TextMessageTableViewCell.swift in Sources */,
 				933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */,
@@ -1563,7 +1540,6 @@
 				93B8916D27CD4536000F94B0 /* MessageTableViewCell.swift in Sources */,
 				AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */,
 				930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */,
-				ADB9D527271E83F3000793E2 /* ChatEntity+CoreDataClass.swift in Sources */,
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
 				93E4F6F027C2BB9700432CFA /* SelectUsersView.swift in Sources */,
 				AD9BFD4B272B107500736318 /* EnterVerifyCodeViewModel.swift in Sources */,
@@ -1602,9 +1578,7 @@
 				938D053027D59DC1002E5CE5 /* NewGroupChatViewController.swift in Sources */,
 				933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */,
 				934087BA27EBAE6F00209571 /* TestRepository+Tests.swift in Sources */,
-				ADD5041627174384009D50CB /* LocalChat.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
-				ADB9D528271E83F3000793E2 /* ChatEntity+CoreDataProperties.swift in Sources */,
 				AD8192532721A92700D5BE48 /* StackItemView.swift in Sources */,
 				ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */,
 				ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */,
@@ -1647,13 +1621,11 @@
 				93E4F6F627C30E8700432CFA /* SelectedUsersCollectionViewCell.swift in Sources */,
 				938B477D27E29C9F004B36FD /* ChatNavigationBarView.swift in Sources */,
 				AD9BFD49272B105800736318 /* EnterVerifyCodeViewController.swift in Sources */,
-				AD9BFD192729899000736318 /* TestRepository+Chat.swift in Sources */,
 				93D86DBC27BAA17E00F275B0 /* LinksTableView.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
 				AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */,
 				ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */,
 				EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */,
-				ADD504182717481D009D50CB /* AppRepository+Chat.swift in Sources */,
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
 				93E48EB027CEA6C3003B4188 /* Message.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,

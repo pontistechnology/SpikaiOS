@@ -44,14 +44,6 @@ extension TestRepository {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func addUserToChat(chat: LocalChat, user: LocalUser) -> Future<LocalChat, Error> {
-        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
-    }
-    
-    func getUsersForChat(chat: LocalChat) -> Future<[LocalUser], Error> {
-        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
-    }
-    
     func uploadWholeFile(data: Data) -> (publisher: PassthroughSubject<UploadChunkResponseModel, Error>, totalChunksNumber: Int) {
         return (PassthroughSubject<UploadChunkResponseModel, Error>(), 0)
     }

@@ -34,10 +34,9 @@ extension AppRepository {
     // MARK: Database
     
     func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
-        return databaseService.messageEntityService.saveMessage(message)
-    }
-    
-    func getMessagesForChat(chat: LocalChat) -> Future<[LocalMessage], Error> {
-        return databaseService.messageEntityService.getMessagesForChat(chat: chat)
+//        return databaseService.messageEntityService.saveMessage(message)
+        return Future { promise in
+            promise(.failure(DatabseError.unknown))
+        } // TODO: Change
     }
 }

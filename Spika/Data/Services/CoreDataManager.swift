@@ -35,7 +35,6 @@ class CoreDataManager {
         do {
             let tests = try managedContext.fetch(TestEntity.fetchRequest())
             let users = try managedContext.fetch(UserEntity.fetchRequest())
-            let chats = try managedContext.fetch(ChatEntity.fetchRequest())
             let messages = try managedContext.fetch(MessageEntity.fetchRequest())
             
             print("~~~~~~~~~All entities~~~~~~~~~~~~~~ \n")
@@ -47,11 +46,6 @@ class CoreDataManager {
             print("\nUsers entities (count: \(users.count)): \n")
             for user in users {
                 print("User id \(user.id), created \(user.createdAt), display name \(user.displayName), avatar url \(user.avatarUrl), phonenumber \(user.telephoneNumber), email \(user.emailAddress), given NAme \(user.givenName), family name \(user.familyName) ")
-            }
-            
-            print("\nChats entities (count: \(chats.count)): \n")
-            for chat in chats {
-                print("---ChatEntity: ", chat)
             }
             
             print("\nMessages entities (count: \(messages.count)): \n")

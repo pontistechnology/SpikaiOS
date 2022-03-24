@@ -12,8 +12,6 @@ class ContactsViewModel: BaseViewModel {
     let contactsSubject = CurrentValueSubject<[[LocalUser]], Never>([])
     var users = Array<LocalUser>()
     
-    // *** remains of test ***
-    let chatsSubject = CurrentValueSubject<[LocalChat], Never>([])
     
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
@@ -158,87 +156,6 @@ class ContactsViewModel: BaseViewModel {
         }
     }
     
-    // *** some leftover code from first testing ***
-    
-    func getPosts() {
-        self.repository.getPosts().sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get posts: \(error)")
-            default: break
-            }
-        } receiveValue: { posts in
-            print(posts)
-        }.store(in: &subscriptions)
-    }
-    
-    func getChats() {
-        repository.getChats().sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get chats: \(error)")
-            default: break
-            }
-        } receiveValue: { [weak self] chats in
-            self?.chatsSubject.value = chats
-        }.store(in: &subscriptions)
-
-    }
-    
-    func createChat(name: String, type: String, id: Int) {
-        let chat = LocalChat(name: name, id: id, type: type)
-        repository.createChat(chat).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get chats: \(error)")
-            default: break
-            }
-        } receiveValue: { [weak self] chat in
-            var chats = self?.chatsSubject.value
-            chats?.append(chat)
-            self?.chatsSubject.value = chats ?? []
-        }.store(in: &subscriptions)
-
-    }
-    
-    func updateChat(name: String, type: String, id: Int) {
-        let chat = LocalChat(name: name, id: id, type: type)
-        repository.updateChat(chat).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get chats: \(error)")
-            default: break
-            }
-        } receiveValue: { chat in
-            print(chat)
-        }.store(in: &subscriptions)
-
-    }
-    
-    func addUserToChat(chat: LocalChat, user: LocalUser) {
-        repository.addUserToChat(chat: chat, user: user).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get users: \(error)")
-            default: break
-            }
-        } receiveValue: { _ in
-            self.getChats()
-        }.store(in: &subscriptions)
-    }
-    
-    func getUsersForChat(chat: LocalChat) {
-        repository.getUsersForChat(chat: chat).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get users: \(error)")
-            default: break
-            }
-        } receiveValue: { users in
-            print(users)
-        }.store(in: &subscriptions)
-    }
-    
     func saveMessage(message: LocalMessage) {
         repository.saveMessage(message).sink { completion in
             switch completion {
@@ -248,18 +165,6 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { message in
             print(message)
-        }.store(in: &subscriptions)
-    }
-    
-    func getMessagesForChat(chat: LocalChat) {
-        repository.getMessagesForChat(chat: chat).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get messages: \(error)")
-            default: break
-            }
-        } receiveValue: { messages in
-            print(messages)
         }.store(in: &subscriptions)
     }
     

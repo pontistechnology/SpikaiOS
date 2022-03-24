@@ -59,22 +59,6 @@ extension UserEntity {
     }
 }
 
-// MARK: Generated accessors for chats
-extension UserEntity {
-
-    @objc(addChatsObject:)
-    @NSManaged public func addToChats(_ value: ChatEntity)
-
-    @objc(removeChatsObject:)
-    @NSManaged public func removeFromChats(_ value: ChatEntity)
-
-    @objc(addChats:)
-    @NSManaged public func addToChats(_ values: NSSet)
-
-    @objc(removeChats:)
-    @NSManaged public func removeFromChats(_ values: NSSet)
-
-}
 
 // MARK: Generated accessors for messages
 extension UserEntity {
@@ -90,23 +74,6 @@ extension UserEntity {
 
     @objc(removeMessages:)
     @NSManaged public func removeFromMessages(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for reactions
-extension UserEntity {
-
-    @objc(addReactionsObject:)
-    @NSManaged public func addToReactions(_ value: ReactionEntity)
-
-    @objc(removeReactionsObject:)
-    @NSManaged public func removeFromReactions(_ value: ReactionEntity)
-
-    @objc(addReactions:)
-    @NSManaged public func addToReactions(_ values: NSSet)
-
-    @objc(removeReactions:)
-    @NSManaged public func removeFromReactions(_ values: NSSet)
 
 }
 

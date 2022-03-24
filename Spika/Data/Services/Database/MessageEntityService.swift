@@ -35,44 +35,44 @@ class MessageEntityService {
         }
     }
     
-    func getMessagesForChat(chat: LocalChat) -> Future<[LocalMessage], Error> {
-        let fetchRequest = NSFetchRequest<MessageEntity>(entityName: Constants.Database.messageEntity)
-        fetchRequest.predicate = NSPredicate(format: "chat.id = %@", "\(chat.id)")
-        do {
-            let objects = try managedContext?.fetch(fetchRequest)
-            
-            if let messageEntities = objects {
-                let messages = messageEntities.map{ return LocalMessage(entity: $0)}
-                return Future { promise in promise(.success(messages))}
-            } else {
-                return Future { promise in promise(.failure(DatabseError.requestFailed))}
-            }
-            
-        } catch let error as NSError {
-            return Future { promise in promise(.failure(error))}
-        }
-    }
+//    func getMessagesForChat(chat: LocalChat) -> Future<[LocalMessage], Error> {
+//        let fetchRequest = NSFetchRequest<MessageEntity>(entityName: Constants.Database.messageEntity)
+//        fetchRequest.predicate = NSPredicate(format: "chat.id = %@", "\(chat.id)")
+//        do {
+//            let objects = try managedContext?.fetch(fetchRequest)
+//            
+//            if let messageEntities = objects {
+//                let messages = messageEntities.map{ return LocalMessage(entity: $0)}
+//                return Future { promise in promise(.success(messages))}
+//            } else {
+//                return Future { promise in promise(.failure(DatabseError.requestFailed))}
+//            }
+//            
+//        } catch let error as NSError {
+//            return Future { promise in promise(.failure(error))}
+//        }
+//    }
     
-    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
-        let dbMessage = MessageEntity(insertInto: managedContext, message: message)
-        let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
-        userRequest.predicate = NSPredicate(format: "id = %@", "\(message.user?.id ?? -1)")
-        let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
-        chatRequest.predicate = NSPredicate(format: "id = %@", "\(message.chat?.id ?? -1)")
-        do {
-            if let dbUser = try managedContext?.fetch(userRequest).first,
-               let dbChat = try managedContext?.fetch(chatRequest).first {
-                dbMessage.chat = dbChat
-                dbMessage.user = dbUser
-                try managedContext?.save()
-                return Future { promise in promise(.success(message))}
-            } else {
-                return Future { promise in promise(.failure(DatabseError.requestFailed))}
-            }
-        } catch let error as NSError {
-            return Future { promise in promise(.failure(error))}
-        }
-    }
+//    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
+//        let dbMessage = MessageEntity(insertInto: managedContext, message: message)
+//        let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
+//        userRequest.predicate = NSPredicate(format: "id = %@", "\(message.user?.id ?? -1)")
+//        let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
+//        chatRequest.predicate = NSPredicate(format: "id = %@", "\(message.chat?.id ?? -1)")
+//        do {
+//            if let dbUser = try managedContext?.fetch(userRequest).first,
+//               let dbChat = try managedContext?.fetch(chatRequest).first {
+//                dbMessage.chat = dbChat
+//                dbMessage.user = dbUser
+//                try managedContext?.save()
+//                return Future { promise in promise(.success(message))}
+//            } else {
+//                return Future { promise in promise(.failure(DatabseError.requestFailed))}
+//            }
+//        } catch let error as NSError {
+//            return Future { promise in promise(.failure(error))}
+//        }
+//    }
     
     func updateMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
         let fetchRequest = NSFetchRequest<MessageEntity>(entityName: Constants.Database.messageEntity)
@@ -80,8 +80,8 @@ class MessageEntityService {
         do {
             let dbMessage = try managedContext?.fetch(fetchRequest).first
             if let dbMessage = dbMessage {
+                // TODO: dont use strings
                 dbMessage.setValue(message.user, forKey: "user")
-                dbMessage.setValue(message.chat, forKey: "chat")
                 dbMessage.setValue(message.toDeviceType, forKey: "toDeviceType")
                 dbMessage.setValue(message.replyMessageId, forKey: "replyMessageId")
                 dbMessage.setValue(message.messageType, forKey: "messageType")
@@ -90,7 +90,6 @@ class MessageEntityService {
                 dbMessage.setValue(message.fileMimeType, forKey: "fileMimeType")
                 dbMessage.setValue(message.message, forKey: "message")
                 dbMessage.setValue(message.state, forKey: "state")
-                dbMessage.setValue(message.reactions, forKey: "reactions")
                 dbMessage.setValue(message.modifiedAt, forKey: "modifiedAt")
                 try managedContext?.save()
                 return Future { promise in promise(.success(message))}

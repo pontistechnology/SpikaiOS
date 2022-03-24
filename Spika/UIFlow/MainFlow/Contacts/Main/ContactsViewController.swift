@@ -17,8 +17,6 @@ class ContactsViewController: BaseViewController {
         super.viewDidLoad()
         setupView(contactsView)
         setupBindings()
-        
-        self.viewModel.getChats()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,7 +35,7 @@ class ContactsViewController: BaseViewController {
             self.viewModel.test()
         }.store(in: &subscriptions)
         
-        //TODO: delete this cooments
+        //TODO: check this cooments
 //        contactsView.detailsButton.tap().sink { _ in
 //            self.viewModel.showDetailsScreen(id: 3)
     //        viewModel.createChat(name: "first chat", type: "group", id: 1)
@@ -49,12 +47,6 @@ class ContactsViewController: BaseViewController {
     //        viewModel.getUsersForChat(chat: chat)
     //        viewModel.getMessagesForChat(chat: chat)
 //        }.store(in: &subscriptions)
-        
-        viewModel.chatsSubject
-            .receive(on: DispatchQueue.main)
-            .sink { chats in
-                print(chats)
-            }.store(in: &subscriptions)
         
         viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { contacts in
             self.contactsView.tableView.reloadData()
