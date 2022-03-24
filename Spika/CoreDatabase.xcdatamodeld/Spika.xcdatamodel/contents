@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="MessageEntity" representedClassName="MessageEntity" syncable="YES">
+        <attribute name="bodyText" optional="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="fileMimeType" optional="YES" attributeType="String"/>
-        <attribute name="filePath" optional="YES" attributeType="String"/>
-        <attribute name="fromDeviceType" optional="YES" attributeType="String"/>
+        <attribute name="fromDeviceId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="fromUserId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="message" optional="YES" attributeType="String"/>
-        <attribute name="messageType" optional="YES" attributeType="String"/>
-        <attribute name="modifiedAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="replyMessageId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="state" optional="YES" attributeType="String"/>
-        <attribute name="toDeviceType" optional="YES" attributeType="String"/>
+        <attribute name="receivedCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="roomId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="seenCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalDeviceCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="messages" inverseEntity="UserEntity"/>
     </entity>
     <entity name="TestEntity" representedClassName="TestEntity" syncable="YES">
@@ -34,7 +33,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="209"/>
+        <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="28"/>
         <element name="TestEntity" positionX="-189" positionY="-36" width="128" height="44"/>
         <element name="UserEntity" positionX="35.22509765625" positionY="116.6122131347656" width="128" height="164"/>
     </elements>

@@ -8,16 +8,16 @@
 import Foundation
 
 struct Message: Codable {
-    let id: Int
-    let fromUserId: Int
+    let createdAt: Int
     let fromDeviceId: Int
+    let fromUserId: Int
+    let id: Int
     let totalDeviceCount: Int
     let receivedCount: Int
     let seenCount: Int
     let roomId: Int
     let type: String
     let messageBody: MessageBody
-    let createdAt: Int
 }
 
 extension Message {
