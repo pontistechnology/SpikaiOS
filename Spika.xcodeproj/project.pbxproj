@@ -41,6 +41,7 @@
 		934087B627EBA25500209571 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B527EBA25500209571 /* CoreDataManager.swift */; };
 		934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
 		934087BA27EBAE6F00209571 /* TestRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B927EBAE6F00209571 /* TestRepository+Tests.swift */; };
+		934087DE27EC064800209571 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087DC27EC064800209571 /* MessageEntity+CoreDataProperties.swift */; };
 		9365A78F27E17C320038CA7F /* LocalMessage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A78E27E17C320038CA7F /* LocalMessage2.swift */; };
 		9365A79127E184FA0038CA7F /* GetAllRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */; };
 		9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367455B27C71D0100F43CCD /* PopUpManager.swift */; };
@@ -94,7 +95,6 @@
 		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		AD81923A271E873200D5BE48 /* LocalReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819239271E873200D5BE48 /* LocalReaction.swift */; };
 		AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */; };
-		AD81923E271E8AF400D5BE48 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D522271E83F3000793E2 /* MessageEntity+CoreDataProperties.swift */; };
 		AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
 		AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819245272173F500D5BE48 /* ContactsViewController.swift */; };
 		AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192472721741600D5BE48 /* CallHistoryViewController.swift */; };
@@ -247,6 +247,7 @@
 		934087B527EBA25500209571 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		934087B727EBAD7100209571 /* AppRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Tests.swift"; sourceTree = "<group>"; };
 		934087B927EBAE6F00209571 /* TestRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Tests.swift"; sourceTree = "<group>"; };
+		934087DC27EC064800209571 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9365A78E27E17C320038CA7F /* LocalMessage2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalMessage2.swift; sourceTree = "<group>"; };
 		9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllRoomsResponseModel.swift; sourceTree = "<group>"; };
 		9367455B27C71D0100F43CCD /* PopUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpManager.swift; sourceTree = "<group>"; };
@@ -368,7 +369,6 @@
 		ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		ADB9D522271E83F3000793E2 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		ADD503AE270DC3C7009D50CB /* Spika.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spika.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADD503B1270DC3C7009D50CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADD503B3270DC3C7009D50CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1185,7 +1185,7 @@
 				ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */,
 				ADB9D51C271E83F3000793E2 /* UserEntity+CoreDataProperties.swift */,
 				ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */,
-				ADB9D522271E83F3000793E2 /* MessageEntity+CoreDataProperties.swift */,
+				934087DC27EC064800209571 /* MessageEntity+CoreDataProperties.swift */,
 			);
 			path = DatabaseEntities;
 			sourceTree = "<group>";
@@ -1481,7 +1481,6 @@
 				931E23AE27D317390065FFFC /* VoiceMessageTableViewCell.swift in Sources */,
 				93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */,
 				AD9BFD46272AECFA00736318 /* VerifyCodeRequestModel.swift in Sources */,
-				AD81923E271E8AF400D5BE48 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				AD9BFD342729AE8300736318 /* CountryTableViewCell.swift in Sources */,
 				93D86DB827BAA15900F275B0 /* DocsTableView.swift in Sources */,
 				AD8192552721C00D00D5BE48 /* UIColor+Extensions.swift in Sources */,
@@ -1519,6 +1518,7 @@
 				93E4F6EB27C2BB6D00432CFA /* SelectUsersViewController.swift in Sources */,
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
 				93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */,
+				934087DE27EC064800209571 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				93708E1D279F992500F81095 /* UILabel+Extensions.swift in Sources */,
 				93DE585827BC7B6600C45EB4 /* VideoCallViewController.swift in Sources */,
 				AD9BFD1B2729899500736318 /* TestRepository+Messages.swift in Sources */,

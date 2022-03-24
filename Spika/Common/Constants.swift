@@ -33,7 +33,6 @@ struct Constants {
     struct Database {
         static let databaseName = "CoreDatabase"
         static let userEntity = "UserEntity"
-        static let chatEntity = "ChatEntity"
         static let messageEntity = "MessageEntity"
     }
     

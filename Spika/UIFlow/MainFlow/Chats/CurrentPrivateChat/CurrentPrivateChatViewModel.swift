@@ -12,7 +12,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
     var room: Room?
-    static let testMessage = Message(id: 0, fromUserId: 0, fromDeviceId: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "this is hardcoded message"), createdAt: 23)
+    static let testMessage = Message(createdAt: 0, fromDeviceId: 0, fromUserId: 0, id: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "hardcoded message"))
     
     let allMessagesSubject = CurrentValueSubject<[LocalMessage2], Never>([
         LocalMessage2(message: testMessage, localId: "a", status: .sent)
@@ -22,7 +22,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         self.friendUser = friendUser
         var array: [LocalMessage2] = []
         for i in 0...100000 {
-            let a = Message(id: 888, fromUserId: 888, fromDeviceId: 888, totalDeviceCount: 888, receivedCount: 888, seenCount: 888, roomId: 888, type: "text", messageBody: MessageBody(text: "\(Int.random(in: 4...400)),  i: ~\(i)"), createdAt: 23)
+            let a = Message(createdAt: 0, fromDeviceId: 0, fromUserId: 0, id: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "\(Int.random(in: 4...400)),  i: ~\(i)"))
             let lm = LocalMessage2(message: a, localId: "majmun", status: .fail)
             array.append(lm)
         }
@@ -94,7 +94,8 @@ extension CurrentPrivateChatViewModel {
             }
         } receiveValue: { response in
             print("Ovo trenutno me zanima: ", response)
-            let message = response.data?.message
+            guard let message = response.data?.message else { return }
+            CoreDataManager.shared.testMESAGESAVINGTOCOREDATA(message: message)
             self.updateLocalMessage(localMessage: localMessage, message: message)
         }.store(in: &subscriptions)
     }

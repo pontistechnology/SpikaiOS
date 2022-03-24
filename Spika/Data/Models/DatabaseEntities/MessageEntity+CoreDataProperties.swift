@@ -2,7 +2,7 @@
 //  MessageEntity+CoreDataProperties.swift
 //  Spika
 //
-//  Created by Marko on 19.10.2021..
+//  Created by Nikola Barbarić on 24.03.2022..
 //
 //
 
@@ -17,20 +17,16 @@ extension MessageEntity {
     }
 
     @NSManaged public var createdAt: Int64
-    @NSManaged public var fileMimeType: String?
-    @NSManaged public var filePath: String?
-    @NSManaged public var fromDeviceType: String?
     @NSManaged public var id: Int64
-    @NSManaged public var message: String?
-    @NSManaged public var messageType: String?
-    @NSManaged public var modifiedAt: Int64
-    @NSManaged public var replyMessageId: Int64
-    @NSManaged public var state: String?
-    @NSManaged public var toDeviceType: String?
-    @NSManaged public var reactions: NSSet?
+    @NSManaged public var fromUserId: Int64
+    @NSManaged public var fromDeviceId: Int64
+    @NSManaged public var totalDeviceCount: Int64
+    @NSManaged public var receivedCount: Int64
+    @NSManaged public var seenCount: Int64
+    @NSManaged public var roomId: Int64
+    @NSManaged public var type: String?
+    @NSManaged public var bodyText: String?
     @NSManaged public var user: UserEntity?
-    
-    
 
 }
 
