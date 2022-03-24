@@ -62,4 +62,8 @@ class CoreDataManager {
         let _ = MessageEntity(message: message, context: managedContext)
         saveContext()
     }
+    
+    func FETCHALLMESSAGESFROMDB() -> [MessageEntity] {
+        return (try? managedContext.fetch(MessageEntity.fetchRequest())) ?? []
+    }
 }

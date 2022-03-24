@@ -29,6 +29,17 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         allMessagesSubject.send(array)
         
         super.init(repository: repository, coordinator: coordinator)
+        
+        FETCHFROMDB()
+    }
+    
+    func FETCHFROMDB() {
+        let a =  CoreDataManager.shared.FETCHALLMESSAGESFROMDB()
+        var p: [LocalMessage2] = []
+        a.forEach { message in
+            p.append(LocalMessage2(message: Message(text: message.bodyText!), localId: "2", status: .seen))
+        }
+        allMessagesSubject.send(p)
     }
 
     func checkRoom()  {
