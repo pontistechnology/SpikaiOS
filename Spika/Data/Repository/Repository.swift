@@ -58,11 +58,6 @@ protocol Repository {
     
     func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
     
-    
-    
-    
-    
-    
     // MARK: - COREDATA: User
     
     func getUsers() -> Future<[LocalUser], Error>
@@ -74,10 +69,6 @@ protocol Repository {
     func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error>
     func testnaRepo(naziv: String) -> Future<String, Error>
 
-    
-    
-    
-    
     // MARK: - USERDEFAULTS: User
     
     func saveUserInfo(user: User, device: Device)
