@@ -40,17 +40,17 @@ class CoreDataManager {
             print("~~~~~~~~~All entities~~~~~~~~~~~~~~ \n")
             print("\nTest entities (count: \(tests.count)): \n")
             for test in tests {
-                print("---TestEntity: ", test.testAttribute)
+                print("---TestEntity: ", test.testAttribute ?? "warning removed")
             }
             
             print("\nUsers entities (count: \(users.count)): \n")
             for user in users {
-                print("User id \(user.id), created \(user.createdAt), display name \(user.displayName), avatar url \(user.avatarUrl), phonenumber \(user.telephoneNumber), email \(user.emailAddress), given NAme \(user.givenName), family name \(user.familyName) ")
+                print("User id \(user.id), created \(user.createdAt), display name \(user.displayName ?? "warning"), avatar url \(user.avatarUrl ?? "wrng"), phonenumber \(user.telephoneNumber ?? "s"), email \(user.emailAddress ?? "s"), given NAme \(user.givenName ?? "a"), family name \(user.familyName ?? "s") ")
             }
             
             print("\nMessages entities (count: \(messages.count)): \n")
             for message in messages {
-                print("---MessageEntity: ", message.bodyText)
+                print("---MessageEntity: ", message.bodyText ?? "warning")
             }
         }
         catch {

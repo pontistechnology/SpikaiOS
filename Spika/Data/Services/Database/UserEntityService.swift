@@ -10,21 +10,12 @@ import CoreData
 import Combine
 
 class UserEntityService {
-    var managedContext : NSManagedObjectContext? {
-        guard let appDelegate =
-          UIApplication.shared.delegate as? AppDelegate else {
-          return nil
-        }
-        return appDelegate.persistentContainer.viewContext
-    }
+    let managedContext = CoreDataManager.shared.managedContext
     
     func getUsers() -> Future<[LocalUser], Error> {
         let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
         do {
-            let objects = try managedContext?.fetch(fetchRequest)
-            guard let userEntities = objects else {
-                return Future { promise in promise(.failure(DatabseError.requestFailed)) }
-            }
+            let userEntities = try managedContext.fetch(fetchRequest)
             
             let users = userEntities.map{LocalUser(entity: $0)}
             return Future { promise in promise(.success(users))}
@@ -37,7 +28,7 @@ class UserEntityService {
     func saveUser(_ user: LocalUser) -> Future<LocalUser, Error> {
         _ = UserEntity(insertInto: managedContext, user: user)
         do {
-            try managedContext?.save()
+            try managedContext.save()
             return Future { promise in promise(.success(user))}
         } catch let error as NSError {
             return Future { promise in promise(.failure(error))}
@@ -49,7 +40,7 @@ class UserEntityService {
             _ = UserEntity(insertInto: managedContext, user: user)
         }
         do {
-            try managedContext?.save()
+            try managedContext.save()
             return Future { promise in promise(.success(users))}
         } catch let error as NSError {
             return Future { promise in promise(.failure(error))}
@@ -60,7 +51,7 @@ class UserEntityService {
 //        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")
 //        do {
-//            let dbUser = try managedContext?.fetch(fetchRequest).first
+//            let dbUser = try managedContext.fetch(fetchRequest).first
 //            if let dbUser = dbUser {
 //                var chats: [LocalChat] = []
 //                dbUser.chats?.forEach{ dbChat in
@@ -82,11 +73,11 @@ class UserEntityService {
 //        let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
 //        chatRequest.predicate = NSPredicate(format: "id = %@", "\(chat.id)")
 //        do {
-//            let dbUser = try managedContext?.fetch(userRequest).first
-//            let dbChat = try managedContext?.fetch(chatRequest).first
+//            let dbUser = try managedContext.fetch(userRequest).first
+//            let dbChat = try managedContext.fetch(chatRequest).first
 //            if let dbChat = dbChat {
 //                dbUser?.addToChats(dbChat)
-//                try managedContext?.save()
+//                try managedContext.save()
 //            } else {
 //                return Future { promise in promise(.failure(DatabseError.requestFailed))}
 //            }
@@ -102,11 +93,11 @@ class UserEntityService {
 //        let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
 //        chatRequest.predicate = NSPredicate(format: "id = %@", "\(chat.id)")
 //        do {
-//            let dbUser = try managedContext?.fetch(userRequest).first
-//            let dbChat = try managedContext?.fetch(chatRequest).first
+//            let dbUser = try managedContext.fetch(userRequest).first
+//            let dbChat = try managedContext.fetch(chatRequest).first
 //            if let dbUser = dbUser {
 //                dbChat?.removeFromUsers(dbUser)
-//                try managedContext?.save()
+//                try managedContext.save()
 //            } else {
 //                return Future { promise in promise(.failure(DatabseError.requestFailed))}
 //            }
@@ -120,14 +111,14 @@ class UserEntityService {
 //        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")
 //        do {
-//            let dbUser = try managedContext?.fetch(fetchRequest).first
+//            let dbUser = try managedContext.fetch(fetchRequest).first
 //            if let dbUser = dbUser {
 //                dbUser.setValue(user.localName, forKey: "localName")
 //                dbUser.setValue(user.loginName, forKey: "loginName")
 //                dbUser.setValue(user.avatarUrl, forKey: "avatarUrl")
 //                dbUser.setValue(user.blocked, forKey: "blocked")
 //                dbUser.setValue(user.modifiedAt, forKey: "modifiedAt")
-//                try managedContext?.save()
+//                try managedContext.save()
 //                return Future { promise in promise(.success(user))}
 //            } else {
 //                return Future { promise in promise(.failure(DatabseError.noSuchRecord))}
@@ -142,10 +133,10 @@ class UserEntityService {
         let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
         fetchRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
         do {
-            let dbUser = try managedContext?.fetch(fetchRequest).first
+            let dbUser = try managedContext.fetch(fetchRequest).first
             if let dbUser = dbUser {
-                managedContext?.delete(dbUser)
-                try managedContext?.save()
+                managedContext.delete(dbUser)
+                try managedContext.save()
                 return Future { promise in promise(.success(user))}
             } else {
                 return Future { promise in promise(.failure(DatabseError.noSuchRecord))}
@@ -160,7 +151,7 @@ class UserEntityService {
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         deleteRequest.resultType = .resultTypeObjectIDs
         do{
-            try managedContext?.execute(deleteRequest)
+            try managedContext.execute(deleteRequest)
             return Future { promise in promise(.success(true))}
         } catch let error as NSError {
             return Future { promise in promise(.failure(error))}

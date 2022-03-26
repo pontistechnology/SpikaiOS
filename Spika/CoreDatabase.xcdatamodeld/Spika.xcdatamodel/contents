@@ -14,6 +14,7 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="messages" inverseEntity="UserEntity"/>
     </entity>
     <entity name="TestEntity" representedClassName="TestEntity" syncable="YES">
+        <attribute name="drugi" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="testAttribute" optional="YES" attributeType="String"/>
     </entity>
     <entity name="UserEntity" representedClassName="UserEntity" syncable="YES">
@@ -34,7 +35,7 @@
     </entity>
     <elements>
         <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="208"/>
-        <element name="TestEntity" positionX="-189" positionY="-36" width="128" height="44"/>
+        <element name="TestEntity" positionX="-189" positionY="-36" width="128" height="59"/>
         <element name="UserEntity" positionX="35.22509765625" positionY="116.6122131347656" width="128" height="164"/>
     </elements>
 </model>
