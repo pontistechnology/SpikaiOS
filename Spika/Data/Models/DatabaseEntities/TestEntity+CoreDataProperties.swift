@@ -2,7 +2,7 @@
 //  TestEntity+CoreDataProperties.swift
 //  Spika
 //
-//  Created by Nikola Barbarić on 23.03.2022..
+//  Created by Nikola Barbarić on 25.03.2022..
 //
 //
 
@@ -17,6 +17,7 @@ extension TestEntity {
     }
 
     @NSManaged public var testAttribute: String?
+    @NSManaged public var drugi: Int16
 
 }
 
