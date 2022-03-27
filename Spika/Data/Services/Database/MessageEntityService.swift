@@ -10,8 +10,12 @@ import CoreData
 import Combine
 
 class MessageEntityService {
-    let managedContext = CoreDataManager.shared.managedContext
     
+    let managedContext = CoreDataManager.shared.managedContext
+    static let entity = NSEntityDescription.entity(forEntityName: Constants.Database.messageEntity,
+                                                   in: CoreDataManager.shared.managedContext)!
+    
+
 //    func getMessages() -> Future<[LocalMessage], Error> {
 //        let fetchRequest = NSFetchRequest<MessageEntity>(entityName: Constants.Database.messageEntity)
 //        do {
