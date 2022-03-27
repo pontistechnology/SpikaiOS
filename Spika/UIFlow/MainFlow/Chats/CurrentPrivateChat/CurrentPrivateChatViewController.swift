@@ -241,7 +241,9 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
             currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .automatic)
         case .update:
             let cell = currentPrivateChatView.messagesTableView.cellForRow(at: indexPath!) as? TextMessageTableViewCell
-            cell?.updateCell(message: Message(text: "UPDATE"))
+            let a = coreDataFetchedResults.controller.object(at: indexPath!)
+            cell?.updateCell(message: Message(text: a.bodyText!))
+            cell?.updateCell(messageState: a.seenCount == 0 ? .sent : .waiting)
         @unknown default:
             fatalError("new versions of type")
         }

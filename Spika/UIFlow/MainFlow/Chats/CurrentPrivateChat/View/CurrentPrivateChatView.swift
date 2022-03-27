@@ -34,7 +34,6 @@ class CurrentPrivateChatView: UIView, BaseView {
 //        messagesTableView.separatorStyle  = .none
         messagesTableView.rowHeight = UITableView.automaticDimension
         messagesTableView.estimatedRowHeight = 5
-        messagesTableView.reloadData()
     }
     
     func positionSubviews() {        

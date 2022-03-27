@@ -74,13 +74,13 @@ extension CurrentPrivateChatViewModel {
                 
             case .finished:
                 print("finished")
-                messageEntity.seenCount = 1
-                CoreDataManager.shared.saveContext()
             case .failure(_):
                 print("failure")
             }
         } receiveValue: { response in
             print("SendMessage3 response: ", response)
+            messageEntity.seenCount = 0
+            CoreDataManager.shared.saveContext()
             guard let message = response.data?.message else { return }
             
         }.store(in: &subscriptions)
