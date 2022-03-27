@@ -27,7 +27,7 @@ class MessageStateView: UIImageView, BaseView {
     }
     
     func styleSubviews() {
-        changeState(to: .fail)
+        changeState(to: .waiting)
     }
     
     func positionSubviews() {

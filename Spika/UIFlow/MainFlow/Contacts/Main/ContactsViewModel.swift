@@ -155,19 +155,7 @@ class ContactsViewModel: BaseViewModel {
             updateContactsUI(list: filteredContacts)
         }
     }
-    
-    func saveMessage(message: LocalMessage) {
-        repository.saveMessage(message).sink { completion in
-            switch completion {
-            case let .failure(error):
-                print("Could not get message: \(error)")
-            default: break
-            }
-        } receiveValue: { message in
-            print(message)
-        }.store(in: &subscriptions)
-    }
-    
+        
     func test() {
         repository.testnaRepo(naziv: "konj").sink { completion in
             print("Completion kaže: ", completion)

@@ -12,30 +12,10 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
     var room: Room?
-    static let testMessage = Message(createdAt: 0, fromDeviceId: 0, fromUserId: 0, id: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", body: MessageBody(text: "hardcoded message"))
-    
-////    let allMessagesSubject = CurrentValueSubject<[LocalMessage2], Never>([
-//        LocalMessage2(message: testMessage, localId: "a", status: .sent)
-//    ])
-    
-    
     
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
-        
-        FETCHFROMDB()
-    }
-    
-    func FETCHFROMDB() {
-//        let a =  CoreDataManager.shared.FETCHALLMESSAGESFROMDB()
-//        var p: [LocalMessage2] = []
-//        a.forEach { message in
-//            p.append(LocalMessage2(message: Message(text: message.bodyText!), localId: "2", status: .seen))
-//        }
-//        allMessagesSubject.send(p)
-        
-        
     }
 
     func checkRoom()  {
@@ -79,40 +59,30 @@ class CurrentPrivateChatViewModel: BaseViewModel {
 extension CurrentPrivateChatViewModel {
     
     func trySendMessage(text: String) {
-        let mes = LocalMessage2(message: Message(text: text), localId: UUID().uuidString, status: .waiting)
-        addLocalMessage(message: mes)
-        sendMessage2(localMessage: mes)
+        let mesa = MessageEntity(message: Message(text: text))
+        CoreDataManager.shared.saveContext()
+        sendMessage3(messageEntity: mesa)
     }
     
-    func addLocalMessage(message: LocalMessage2) {
-        CoreDataManager.shared.testMESAGESAVINGTOCOREDATA(message: message.message)    }
-    
-    func sendMessage2(localMessage: LocalMessage2) {
-        guard let room = room else { return }
+    func sendMessage3(messageEntity: MessageEntity) {
+        guard let room = room,
+              let text = messageEntity.bodyText
+        else { return }
         
-        
-        repository.sendTextMessage(message: localMessage.message.body, roomId: room.id).sink { completion in
+        repository.sendTextMessage(message: MessageBody(text: text), roomId: room.id).sink { completion in
             switch completion {
+                
             case .finished:
-                break
-            case .failure(let error):
-                print("send message: ", error)
-                self.updateLocalMessage(localMessage: localMessage, message: nil)
+                print("finished")
+                messageEntity.seenCount = 1
+                CoreDataManager.shared.saveContext()
+            case .failure(_):
+                print("failure")
             }
         } receiveValue: { response in
-            print("Ovo trenutno me zanima: ", response)
+            print("SendMessage3 response: ", response)
             guard let message = response.data?.message else { return }
-            self.updateLocalMessage(localMessage: localMessage, message: message)
+            
         }.store(in: &subscriptions)
-    }
-    
-    func updateLocalMessage(localMessage: LocalMessage2, message: Message?) {
-//        guard let index = (allMessagesSubject.value.firstIndex{$0.localId == localMessage.localId}) else { return }
-//        if let message = message {
-//            allMessagesSubject.value[index].message = message
-//            allMessagesSubject.value[index].status  = .sent
-//        } else {
-//            allMessagesSubject.value[index].status  = .fail
-//        }
     }
 }

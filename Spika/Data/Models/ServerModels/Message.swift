@@ -28,7 +28,7 @@ extension Message {
         fromDeviceId = 999
         totalDeviceCount = 999
         receivedCount = 999
-        seenCount = 999
+        seenCount = -1
         roomId = 999
         type = "text"
         createdAt = Int(Date().timeIntervalSince1970)

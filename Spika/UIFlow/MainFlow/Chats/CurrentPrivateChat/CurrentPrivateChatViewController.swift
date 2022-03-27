@@ -52,19 +52,6 @@ extension CurrentPrivateChatViewController {
         currentPrivateChatView.messagesTableView.dataSource = self
         
         sink(networkRequestState: viewModel.networkRequestState)
-        
-//        viewModel.messagesSubject.receive(on: DispatchQueue.main).sink { [weak self] messages in
-//            guard let self = self else { return }
-//            self.currentPrivateChatView.messagesTableView.reloadData()
-//            self.currentPrivateChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.messagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
-//        }.store(in: &subscriptions)
-        
-//        viewModel.allMessagesSubject.receive(on: DispatchQueue.main).sink { [weak self] localMessages in
-//            guard let self = self else { return }
-//
-//            self.currentPrivateChatView.messagesTableView.reloadData()
-//            self.currentPrivateChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.allMessagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
-//        }.store(in: &subscriptions)
     }
     
     func checkRoom() {
@@ -126,39 +113,34 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
 extension CurrentPrivateChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        viewModel.allMessagesSubject.value.count
-        
-        guard let si = coreDataFetchedResults.controller.sections?[section] else {
+        guard let messageEntities = coreDataFetchedResults.controller.sections?[section] else {
             return 0
         }
-        return si.numberOfObjects
+        return messageEntities.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myUserId = viewModel.repository.getMyUserId()
         
-        let a = coreDataFetchedResults.controller.object(at: indexPath)
+        let messageEntity = coreDataFetchedResults.controller.object(at: indexPath)
         
-        let identifier = (a.fromUserId == myUserId || a.fromUserId == 999)
+        let identifier = (messageEntity.fromUserId == myUserId || messageEntity.fromUserId == 999)
                         ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
                         : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
-        cell?.updateCell(message: Message(text: a.bodyText ?? "fali"))
+        cell?.updateCell(message: Message(text: messageEntity.bodyText ?? "fali"))
+        
+        switch messageEntity.seenCount {
+        case 0:
+            cell?.updateCell(messageState: .sent)
+        case 1:
+            cell?.updateCell(messageState: .delivered)
+        default:
+            cell?.updateCell(messageState: .waiting)
+        }
+        
         return cell ?? UITableViewCell()
-//        switch message.message.type {
-//        case "text":
-//            let identifier = (message.message.fromUserId == myUserId || message.message.fromUserId == 999)
-//            ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
-//            : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
-//
-//            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
-//            cell?.updateCell(message: message.message)
-//            cell?.updateCell(messageState: message.status)
-//            return cell ?? UITableViewCell()
-//        default:
-//            return UITableViewCell()
-//        }
     }
 }
 
