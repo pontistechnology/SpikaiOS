@@ -117,7 +117,7 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        friendInfoView.changeStatus(to: viewModel.allMessagesSubject.value[indexPath.row].message.body.text)
+        friendInfoView.changeStatus(to: coreDataFetchedResults.controller.object(at: indexPath).bodyText ?? "no bodyText")
         i += 1
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
     }
@@ -136,7 +136,6 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myUserId = viewModel.repository.getMyUserId()
-        let message = viewModel.allMessagesSubject.value[indexPath.row]
         
         let a = coreDataFetchedResults.controller.object(at: indexPath)
         

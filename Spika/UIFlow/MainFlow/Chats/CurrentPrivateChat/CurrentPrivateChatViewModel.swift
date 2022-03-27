@@ -14,22 +14,14 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     var room: Room?
     static let testMessage = Message(createdAt: 0, fromDeviceId: 0, fromUserId: 0, id: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", body: MessageBody(text: "hardcoded message"))
     
-    let allMessagesSubject = CurrentValueSubject<[LocalMessage2], Never>([
-        LocalMessage2(message: testMessage, localId: "a", status: .sent)
-    ])
+////    let allMessagesSubject = CurrentValueSubject<[LocalMessage2], Never>([
+//        LocalMessage2(message: testMessage, localId: "a", status: .sent)
+//    ])
     
     
     
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
-        var array: [LocalMessage2] = []
-        for i in 0...100000 {
-            let a = Message(createdAt: 0, fromDeviceId: 0, fromUserId: 0, id: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", body: MessageBody(text: "\(Int.random(in: 4...400)),  i: ~\(i)"))
-            let lm = LocalMessage2(message: a, localId: "majmun", status: .fail)
-            array.append(lm)
-        }
-        allMessagesSubject.send(array)
-        
         super.init(repository: repository, coordinator: coordinator)
         
         FETCHFROMDB()
@@ -93,12 +85,11 @@ extension CurrentPrivateChatViewModel {
     }
     
     func addLocalMessage(message: LocalMessage2) {
-        allMessagesSubject.value.append(message)
-    }
+        CoreDataManager.shared.testMESAGESAVINGTOCOREDATA(message: message.message)    }
     
     func sendMessage2(localMessage: LocalMessage2) {
         guard let room = room else { return }
-        CoreDataManager.shared.testMESAGESAVINGTOCOREDATA(message: localMessage.message)
+        
         
         repository.sendTextMessage(message: localMessage.message.body, roomId: room.id).sink { completion in
             switch completion {
@@ -111,18 +102,17 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { response in
             print("Ovo trenutno me zanima: ", response)
             guard let message = response.data?.message else { return }
-//            CoreDataManager.shared.testMESAGESAVINGTOCOREDATA(message: message)
             self.updateLocalMessage(localMessage: localMessage, message: message)
         }.store(in: &subscriptions)
     }
     
     func updateLocalMessage(localMessage: LocalMessage2, message: Message?) {
-        guard let index = (allMessagesSubject.value.firstIndex{$0.localId == localMessage.localId}) else { return }
-        if let message = message {
-            allMessagesSubject.value[index].message = message
-            allMessagesSubject.value[index].status  = .sent
-        } else {
-            allMessagesSubject.value[index].status  = .fail
-        }
+//        guard let index = (allMessagesSubject.value.firstIndex{$0.localId == localMessage.localId}) else { return }
+//        if let message = message {
+//            allMessagesSubject.value[index].message = message
+//            allMessagesSubject.value[index].status  = .sent
+//        } else {
+//            allMessagesSubject.value[index].status  = .fail
+//        }
     }
 }
