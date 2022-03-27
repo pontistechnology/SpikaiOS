@@ -12,8 +12,8 @@ import CoreData
 @objc(MessageEntity)
 public class MessageEntity: NSManagedObject {
         
-    init(message: Message) {
-        super.init(entity: MessageEntityService.entity, insertInto: CoreDataManager.shared.managedContext)
+    convenience init(message: Message) {
+        self.init(entity: MessageEntityService.entity, insertInto: CoreDataManager.shared.managedContext)
         createdAt = Int64(message.createdAt)
         id = Int64(message.id)
         fromUserId = Int64(message.fromUserId)
@@ -23,6 +23,6 @@ public class MessageEntity: NSManagedObject {
         seenCount = Int64(message.seenCount)
         roomId = Int64(message.roomId)
         type = message.type
-        bodyText = message.messageBody.text
+        bodyText = message.body.text
     }
 }

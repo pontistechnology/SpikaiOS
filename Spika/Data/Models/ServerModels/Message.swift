@@ -17,12 +17,12 @@ struct Message: Codable {
     let seenCount: Int
     let roomId: Int
     let type: String
-    let messageBody: MessageBody
+    let body: MessageBody
 }
 
 extension Message {
     init(text: String) {
-        messageBody = MessageBody(text: text)
+        body = MessageBody(text: text)
         id = 999
         fromUserId = 999
         fromDeviceId = 999

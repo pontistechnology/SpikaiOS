@@ -131,7 +131,7 @@ extension TextMessageTableViewCell {
         guard let currentReuseIdentifier = currentReuseIdentifier else {
             return
         }
-        messageLabel.text = message.messageBody.text
+        messageLabel.text = message.body.text
         
         switch currentReuseIdentifier {
         case .myText:

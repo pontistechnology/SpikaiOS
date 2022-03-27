@@ -12,7 +12,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
     var room: Room?
-    static let testMessage = Message(createdAt: 0, fromDeviceId: 0, fromUserId: 0, id: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "hardcoded message"))
+    static let testMessage = Message(createdAt: 0, fromDeviceId: 0, fromUserId: 0, id: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", body: MessageBody(text: "hardcoded message"))
     
     let allMessagesSubject = CurrentValueSubject<[LocalMessage2], Never>([
         LocalMessage2(message: testMessage, localId: "a", status: .sent)
@@ -22,7 +22,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         self.friendUser = friendUser
         var array: [LocalMessage2] = []
         for i in 0...100000 {
-            let a = Message(createdAt: 0, fromDeviceId: 0, fromUserId: 0, id: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", messageBody: MessageBody(text: "\(Int.random(in: 4...400)),  i: ~\(i)"))
+            let a = Message(createdAt: 0, fromDeviceId: 0, fromUserId: 0, id: 0, totalDeviceCount: 0, receivedCount: 0, seenCount: 0, roomId: 0, type: "text", body: MessageBody(text: "\(Int.random(in: 4...400)),  i: ~\(i)"))
             let lm = LocalMessage2(message: a, localId: "majmun", status: .fail)
             array.append(lm)
         }
@@ -95,7 +95,7 @@ extension CurrentPrivateChatViewModel {
     func sendMessage2(localMessage: LocalMessage2) {
         guard let room = room else { return }
         
-        repository.sendTextMessage(message: localMessage.message.messageBody, roomId: room.id).sink { completion in
+        repository.sendTextMessage(message: localMessage.message.body, roomId: room.id).sink { completion in
             switch completion {
             case .finished:
                 break

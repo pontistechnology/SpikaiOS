@@ -59,7 +59,7 @@ class CoreDataManager {
     }
     
     func testMESAGESAVINGTOCOREDATA(message: Message){
-//        let _ = MessageEntity(message: message, context: managedContext)
+        let _ = MessageEntity(message: message)
         saveContext()
     }
     

@@ -106,7 +106,7 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        friendInfoView.changeStatus(to: viewModel.allMessagesSubject.value[indexPath.row].message.messageBody.text)
+        friendInfoView.changeStatus(to: viewModel.allMessagesSubject.value[indexPath.row].message.body.text)
         i += 1
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
     }
