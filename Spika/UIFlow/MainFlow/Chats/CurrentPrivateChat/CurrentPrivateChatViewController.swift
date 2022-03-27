@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class CurrentPrivateChatViewController: BaseViewController {
     
@@ -15,12 +16,21 @@ class CurrentPrivateChatViewController: BaseViewController {
     let friendInfoView = ChatNavigationBarView()
     var i = 1
     
+    lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [], managedContext: CoreDataManager.shared.managedContext, delegate: self)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(currentPrivateChatView)
         setupBindings()
         setupNavigationItems()
         checkRoom()
+        test()
+    }
+    
+    func test() {
+        let predicate = NSPredicate(format: "%K != %@", #keyPath(MessageEntity.bodyText), "miki")
+        coreDataFetchedResults.controller.fetchRequest.predicate = predicate
+        coreDataFetchedResults.performFetch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,12 +58,12 @@ extension CurrentPrivateChatViewController {
 //            self.currentPrivateChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.messagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
 //        }.store(in: &subscriptions)
         
-        viewModel.allMessagesSubject.receive(on: DispatchQueue.main).sink { [weak self] localMessages in
-            guard let self = self else { return }
-            
-            self.currentPrivateChatView.messagesTableView.reloadData()
-            self.currentPrivateChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.allMessagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
-        }.store(in: &subscriptions)
+//        viewModel.allMessagesSubject.receive(on: DispatchQueue.main).sink { [weak self] localMessages in
+//            guard let self = self else { return }
+//
+//            self.currentPrivateChatView.messagesTableView.reloadData()
+//            self.currentPrivateChatView.messagesTableView.scrollToRow(at: IndexPath(row: self.viewModel.allMessagesSubject.value.count - 1, section: 0), at: .bottom, animated: true)
+//        }.store(in: &subscriptions)
     }
     
     func checkRoom() {
@@ -115,26 +125,40 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
 extension CurrentPrivateChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.allMessagesSubject.value.count
+//        viewModel.allMessagesSubject.value.count
+        
+        guard let si = coreDataFetchedResults.controller.sections?[section] else {
+            return 0
+        }
+        return si.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myUserId = viewModel.repository.getMyUserId()
         let message = viewModel.allMessagesSubject.value[indexPath.row]
         
-        switch message.message.type {
-        case "text":
-            let identifier = (message.message.fromUserId == myUserId || message.message.fromUserId == 999)
-            ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
-            : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
-            cell?.updateCell(message: message.message)
-            cell?.updateCell(messageState: message.status)
-            return cell ?? UITableViewCell()
-        default:
-            return UITableViewCell()
-        }
+        let a = coreDataFetchedResults.controller.object(at: indexPath)
+        
+        let identifier = (a.fromUserId == myUserId || a.fromUserId == 999)
+                        ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
+                        : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
+        cell?.updateCell(message: Message(text: a.bodyText ?? "fali"))
+        return cell ?? UITableViewCell()
+//        switch message.message.type {
+//        case "text":
+//            let identifier = (message.message.fromUserId == myUserId || message.message.fromUserId == 999)
+//            ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
+//            : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
+//
+//            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
+//            cell?.updateCell(message: message.message)
+//            cell?.updateCell(messageState: message.status)
+//            return cell ?? UITableViewCell()
+//        default:
+//            return UITableViewCell()
+//        }
     }
 }
 
@@ -214,3 +238,34 @@ extension CurrentPrivateChatViewController {
     //            return UITableViewCell()
     //        }
     //    }
+
+extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        currentPrivateChatView.messagesTableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete:
+            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .move:
+            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath!], with: .automatic)
+            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .update:
+            let cell = currentPrivateChatView.messagesTableView.cellForRow(at: indexPath!) as? TextMessageTableViewCell
+            cell?.updateCell(message: Message(text: "UPDATE"))
+        @unknown default:
+            fatalError("new versions of type")
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        currentPrivateChatView.messagesTableView.endUpdates()
+    }
+}

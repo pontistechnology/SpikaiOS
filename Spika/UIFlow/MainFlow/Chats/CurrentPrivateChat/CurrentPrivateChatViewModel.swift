@@ -18,6 +18,8 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         LocalMessage2(message: testMessage, localId: "a", status: .sent)
     ])
     
+    
+    
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
         var array: [LocalMessage2] = []
@@ -34,12 +36,14 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     }
     
     func FETCHFROMDB() {
-        let a =  CoreDataManager.shared.FETCHALLMESSAGESFROMDB()
-        var p: [LocalMessage2] = []
-        a.forEach { message in
-            p.append(LocalMessage2(message: Message(text: message.bodyText!), localId: "2", status: .seen))
-        }
-        allMessagesSubject.send(p)
+//        let a =  CoreDataManager.shared.FETCHALLMESSAGESFROMDB()
+//        var p: [LocalMessage2] = []
+//        a.forEach { message in
+//            p.append(LocalMessage2(message: Message(text: message.bodyText!), localId: "2", status: .seen))
+//        }
+//        allMessagesSubject.send(p)
+        
+        
     }
 
     func checkRoom()  {
@@ -94,6 +98,7 @@ extension CurrentPrivateChatViewModel {
     
     func sendMessage2(localMessage: LocalMessage2) {
         guard let room = room else { return }
+        CoreDataManager.shared.testMESAGESAVINGTOCOREDATA(message: localMessage.message)
         
         repository.sendTextMessage(message: localMessage.message.body, roomId: room.id).sink { completion in
             switch completion {
@@ -106,7 +111,7 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { response in
             print("Ovo trenutno me zanima: ", response)
             guard let message = response.data?.message else { return }
-            CoreDataManager.shared.testMESAGESAVINGTOCOREDATA(message: message)
+//            CoreDataManager.shared.testMESAGESAVINGTOCOREDATA(message: message)
             self.updateLocalMessage(localMessage: localMessage, message: message)
         }.store(in: &subscriptions)
     }

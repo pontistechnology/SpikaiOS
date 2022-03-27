@@ -92,6 +92,7 @@
 		93E4F6FE27C4688C00432CFA /* CurrentPrivateChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FD27C4688C00432CFA /* CurrentPrivateChatViewModel.swift */; };
 		93E4F70127C468BB00432CFA /* CurrentPrivateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F70027C468BB00432CFA /* CurrentPrivateChatView.swift */; };
 		93FFA6C527EDD3B900A97CA1 /* TestEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFA6C327EDD3B900A97CA1 /* TestEntity+CoreDataProperties.swift */; };
+		93FFA6C727EFEF7D00A97CA1 /* CoreDataFetchedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFA6C627EFEF7D00A97CA1 /* CoreDataFetchedResults.swift */; };
 		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		AD81923A271E873200D5BE48 /* LocalReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819239271E873200D5BE48 /* LocalReaction.swift */; };
 		AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */; };
@@ -298,6 +299,7 @@
 		93E4F6FD27C4688C00432CFA /* CurrentPrivateChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatViewModel.swift; sourceTree = "<group>"; };
 		93E4F70027C468BB00432CFA /* CurrentPrivateChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatView.swift; sourceTree = "<group>"; };
 		93FFA6C327EDD3B900A97CA1 /* TestEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93FFA6C627EFEF7D00A97CA1 /* CoreDataFetchedResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFetchedResults.swift; sourceTree = "<group>"; };
 		AD819237271E866100D5BE48 /* MessageEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntityService.swift; sourceTree = "<group>"; };
 		AD819239271E873200D5BE48 /* LocalReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalReaction.swift; sourceTree = "<group>"; };
 		AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Messages.swift"; sourceTree = "<group>"; };
@@ -1141,6 +1143,7 @@
 				ADD503F2270DE39A009D50CB /* NetworkService.swift */,
 				ADD5040F27173FD9009D50CB /* DatabaseService.swift */,
 				934087B527EBA25500209571 /* CoreDataManager.swift */,
+				93FFA6C627EFEF7D00A97CA1 /* CoreDataFetchedResults.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1631,6 +1634,7 @@
 				93E48EB027CEA6C3003B4188 /* Message.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
 				ADD503F6270DF96F009D50CB /* Post.swift in Sources */,
+				93FFA6C727EFEF7D00A97CA1 /* CoreDataFetchedResults.swift in Sources */,
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,
 				EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */,
 				9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */,
