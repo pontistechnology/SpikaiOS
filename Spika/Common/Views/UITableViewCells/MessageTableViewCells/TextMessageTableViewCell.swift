@@ -127,17 +127,22 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
 
 extension TextMessageTableViewCell {
     
-    func updateCell(message: Message, replyMessageTest: Message? = nil) {
+    func updateCell(messageEntity: MessageEntity) {
         guard let currentReuseIdentifier = currentReuseIdentifier else {
             return
         }
-        messageLabel.text = message.body.text
+        messageLabel.text = messageEntity.bodyText
         
+        switch messageEntity.seenCount {
+        case 0:
+            messageStateView.changeState(to: .sent)
+        default:
+            messageStateView.changeState(to: .waiting)
+        }
         switch currentReuseIdentifier {
         case .myText:
             break
         case .myTextAndReply:
-            
 //            replyView.updateReplyView(message: replyMessageTest ?? message)
             break
         case .friendText:
@@ -147,6 +152,27 @@ extension TextMessageTableViewCell {
             break
         }
     }
+    
+//    func updateCell(message: Message, replyMessageTest: Message? = nil) {
+//        guard let currentReuseIdentifier = currentReuseIdentifier else {
+//            return
+//        }
+//        messageLabel.text = message.body.text
+//
+//        switch currentReuseIdentifier {
+//        case .myText:
+//            break
+//        case .myTextAndReply:
+//
+////            replyView.updateReplyView(message: replyMessageTest ?? message)
+//            break
+//        case .friendText:
+//            break
+//        case .friendTextAndReply:
+////            replyView.updateReplyView(message: replyMessageTest ?? message)
+//            break
+//        }
+//    }
     
     func updateCell(messageState: MessageState) {
         messageStateView.changeState(to: messageState)

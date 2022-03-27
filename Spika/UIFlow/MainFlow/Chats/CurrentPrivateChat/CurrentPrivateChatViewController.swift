@@ -129,16 +129,18 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
                         : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
-        cell?.updateCell(message: Message(text: messageEntity.bodyText ?? "fali"))
+        cell?.updateCell(messageEntity: messageEntity)
         
-        switch messageEntity.seenCount {
-        case 0:
-            cell?.updateCell(messageState: .sent)
-        case 1:
-            cell?.updateCell(messageState: .delivered)
-        default:
-            cell?.updateCell(messageState: .waiting)
-        }
+//        cell?.updateCell(message: Message(text: messageEntity.bodyText ?? "fali"))
+        
+//        switch messageEntity.seenCount {
+//        case 0:
+//            cell?.updateCell(messageState: .sent)
+//        case 1:
+//            cell?.updateCell(messageState: .delivered)
+//        default:
+//            cell?.updateCell(messageState: .waiting)
+//        }
         
         return cell ?? UITableViewCell()
     }
@@ -242,8 +244,7 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
         case .update:
             let cell = currentPrivateChatView.messagesTableView.cellForRow(at: indexPath!) as? TextMessageTableViewCell
             let a = coreDataFetchedResults.controller.object(at: indexPath!)
-            cell?.updateCell(message: Message(text: a.bodyText!))
-            cell?.updateCell(messageState: a.seenCount == 0 ? .sent : .waiting)
+            cell?.updateCell(messageEntity: a)
         @unknown default:
             fatalError("new versions of type")
         }
