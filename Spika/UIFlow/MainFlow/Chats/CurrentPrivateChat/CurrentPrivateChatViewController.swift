@@ -16,7 +16,8 @@ class CurrentPrivateChatViewController: BaseViewController {
     let friendInfoView = ChatNavigationBarView()
     var i = 1
     
-    lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [], managedContext: CoreDataManager.shared.managedContext, delegate: self)
+    let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
+    lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [sort], managedContext: CoreDataManager.shared.managedContext, delegate: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -267,5 +268,27 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         currentPrivateChatView.messagesTableView.endUpdates()
+        currentPrivateChatView.messagesTableView.scrollToBottom()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        let indexSet = IndexSet(integer: sectionIndex)
+        
+        switch type {
+        case .insert:
+            currentPrivateChatView.messagesTableView.insertSections(indexSet, with: .automatic)
+        case .delete:
+            currentPrivateChatView.messagesTableView.deleteSections(indexSet, with: .automatic)
+        default:
+            break
+        }
+    }
+}
+
+extension UITableView {
+    func scrollToBottom(){
+        let lastSectionIndex = self.numberOfSections - 1
+        let lastRowIndex = self.numberOfRows(inSection: lastSectionIndex) - 1
+        self.scrollToRow(at: IndexPath(row: lastRowIndex, section: lastSectionIndex), at: .bottom, animated: true)
     }
 }

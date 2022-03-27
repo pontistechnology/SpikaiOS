@@ -31,7 +31,7 @@ extension Message {
         seenCount = 999
         roomId = 999
         type = "text"
-        createdAt = 999
+        createdAt = Int(Date().timeIntervalSince1970)
     }
 }
 
