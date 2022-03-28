@@ -11,6 +11,19 @@ import CoreData
 
 @objc(MessageEntity)
 public class MessageEntity: NSManagedObject {
+    
+    func getMessageState() -> MessageState {
+        
+        if seenCount == 0 {
+            return .sent
+        }
+        
+//        if receivedCount == totalDeviceCount {
+//            return .delivered
+//        }
+//        
+        return .waiting
+    }
         
     convenience init(message: Message) {
         self.init(entity: MessageEntityService.entity, insertInto: CoreDataManager.shared.managedContext)

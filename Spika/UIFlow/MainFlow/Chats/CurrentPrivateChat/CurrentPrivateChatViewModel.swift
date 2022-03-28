@@ -98,7 +98,7 @@ extension CurrentPrivateChatViewModel {
             }
         } receiveValue: { response in
             print("SendMessage3 response: ", response)
-            messageEntity.seenCount = 0
+            messageEntity.seenCount = 0 // TODO: change logic
             CoreDataManager.shared.saveContext()
             guard let message = response.data?.message else { return }
             

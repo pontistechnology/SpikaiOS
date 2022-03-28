@@ -132,13 +132,8 @@ extension TextMessageTableViewCell {
             return
         }
         messageLabel.text = messageEntity.bodyText
+        messageStateView.changeState(to: messageEntity.getMessageState())
         
-        switch messageEntity.seenCount {
-        case 0:
-            messageStateView.changeState(to: .sent)
-        default:
-            messageStateView.changeState(to: .waiting)
-        }
         switch currentReuseIdentifier {
         case .myText:
             break

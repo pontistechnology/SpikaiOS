@@ -124,7 +124,7 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
         
         let messageEntity = viewModel.coreDataFetchedResults.controller.object(at: indexPath)
         
-        let identifier = (messageEntity.fromUserId == myUserId || messageEntity.fromUserId == 999)
+        let identifier = (messageEntity.fromUserId == myUserId || messageEntity.fromUserId == -1)
                         ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
                         : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
         
