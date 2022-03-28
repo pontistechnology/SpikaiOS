@@ -16,23 +16,21 @@ class CurrentPrivateChatViewController: BaseViewController {
     let friendInfoView = ChatNavigationBarView()
     var i = 1
     
-    let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
-    lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [sort], managedContext: CoreDataManager.shared.managedContext, delegate: self)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkRoom()
         setupView(currentPrivateChatView)
         setupBindings()
         setupNavigationItems()
-        checkRoom()
-        test()
+        viewModel.setFetch()
+//        test()
     }
     
-    func test() {
-        let predicate = NSPredicate(format: "%K != %@", #keyPath(MessageEntity.bodyText), "miki")
-        coreDataFetchedResults.controller.fetchRequest.predicate = predicate
-        coreDataFetchedResults.performFetch()
-    }
+//    func test() {
+//        let predicate = NSPredicate(format: "%K == %@", #keyPath(MessageEntity.roomId), viewModel.room!.id)
+//        viewModel.coreDataFetchedResults.controller.fetchRequest.predicate = predicate
+//        viewModel.coreDataFetchedResults.performFetch()
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -50,6 +48,7 @@ extension CurrentPrivateChatViewController {
         currentPrivateChatView.messageInputView.delegate = self
         currentPrivateChatView.messagesTableView.delegate = self
         currentPrivateChatView.messagesTableView.dataSource = self
+        viewModel.coreDataFetchedResults.delegate = self
         
         sink(networkRequestState: viewModel.networkRequestState)
     }
@@ -104,7 +103,7 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        friendInfoView.changeStatus(to: coreDataFetchedResults.controller.object(at: indexPath).bodyText ?? "no bodyText")
+        friendInfoView.changeStatus(to: viewModel.coreDataFetchedResults.controller.object(at: indexPath).bodyText ?? "no bodyText")
         i += 1
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
     }
@@ -113,7 +112,7 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
 extension CurrentPrivateChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let messageEntities = coreDataFetchedResults.controller.sections?[section] else {
+        guard let messageEntities = viewModel.coreDataFetchedResults.controller.sections?[section] else {
             return 0
         }
         return messageEntities.numberOfObjects
@@ -122,7 +121,7 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myUserId = viewModel.repository.getMyUserId()
         
-        let messageEntity = coreDataFetchedResults.controller.object(at: indexPath)
+        let messageEntity = viewModel.coreDataFetchedResults.controller.object(at: indexPath)
         
         let identifier = (messageEntity.fromUserId == myUserId || messageEntity.fromUserId == 999)
                         ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
@@ -130,18 +129,6 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
         cell?.updateCell(messageEntity: messageEntity)
-        
-//        cell?.updateCell(message: Message(text: messageEntity.bodyText ?? "fali"))
-        
-//        switch messageEntity.seenCount {
-//        case 0:
-//            cell?.updateCell(messageState: .sent)
-//        case 1:
-//            cell?.updateCell(messageState: .delivered)
-//        default:
-//            cell?.updateCell(messageState: .waiting)
-//        }
-        
         return cell ?? UITableViewCell()
     }
 }
@@ -243,7 +230,7 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
             currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .automatic)
         case .update:
             let cell = currentPrivateChatView.messagesTableView.cellForRow(at: indexPath!) as? TextMessageTableViewCell
-            let a = coreDataFetchedResults.controller.object(at: indexPath!)
+            let a = viewModel.coreDataFetchedResults.controller.object(at: indexPath!)
             cell?.updateCell(messageEntity: a)
         @unknown default:
             fatalError("new versions of type")

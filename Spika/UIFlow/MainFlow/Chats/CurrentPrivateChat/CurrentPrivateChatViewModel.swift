@@ -7,11 +7,15 @@
 
 import Foundation
 import Combine
+import CoreData
 
 class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
     var room: Room?
+    
+    let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
+    lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [sort], managedContext: CoreDataManager.shared.managedContext, delegate: nil)
     
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
@@ -33,6 +37,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
             if let room = response.data?.room {
                 self.room = room
                 self.networkRequestState.send(.finished)
+//                self.setFetch()
             } else {
                 self.createRoom(userId: self.friendUser.id)
             }
@@ -50,8 +55,21 @@ class CurrentPrivateChatViewModel: BaseViewModel {
                 PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
             }
         } receiveValue: { response in
+            // TODO: set room
             print("creating room response: ", response)
         }.store(in: &subscriptions)
+    }
+    
+
+
+    func setFetch() {
+//        guard let room = room else {
+//            return
+//        }
+        let predicate = NSPredicate(format: "%K != %@",
+                                    #keyPath(MessageEntity.bodyText), "miki")
+        coreDataFetchedResults.controller.fetchRequest.predicate = predicate
+        coreDataFetchedResults.performFetch()
     }
 }
 

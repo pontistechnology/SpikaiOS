@@ -50,7 +50,7 @@ class CoreDataManager {
             
             print("\nMessages entities (count: \(messages.count)): \n")
             for message in messages {
-                print("---MessageEntity: ", message.bodyText ?? "warning")
+                print("---MessageEntity: ", message.bodyText ?? "warning", message.roomId, "createdAt: ", message.createdAt)
             }
         }
         catch {

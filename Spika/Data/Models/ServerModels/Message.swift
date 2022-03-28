@@ -23,13 +23,13 @@ struct Message: Codable {
 extension Message {
     init(text: String) {
         body = MessageBody(text: text)
-        id = 999
-        fromUserId = 999
-        fromDeviceId = 999
-        totalDeviceCount = 999
-        receivedCount = 999
+        id = -1
+        fromUserId = -1
+        fromDeviceId = -1
+        totalDeviceCount = -1
+        receivedCount = -1
         seenCount = -1
-        roomId = 999
+        roomId = -1
         type = "text"
         createdAt = Int(Date().timeIntervalSince1970)
     }
