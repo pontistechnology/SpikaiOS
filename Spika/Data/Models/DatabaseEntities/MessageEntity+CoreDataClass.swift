@@ -13,7 +13,7 @@ import CoreData
 public class MessageEntity: NSManagedObject {
     
     func getMessageState() -> MessageState {
-        
+        // TODO: check first seen, then delivered, then sent, waiting, error, (check fail)
         if seenCount == 0 {
             return .sent
         }
@@ -24,7 +24,7 @@ public class MessageEntity: NSManagedObject {
 //        
         return .waiting
     }
-        
+      // TODO: think about making everything optional before response
     convenience init(message: Message) {
         self.init(entity: MessageEntityService.entity, insertInto: CoreDataManager.shared.managedContext)
         createdAt = Int64(message.createdAt)

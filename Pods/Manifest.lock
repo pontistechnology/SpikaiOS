@@ -91,6 +91,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.6.0):
     - GoogleUtilities/Logger
+  - IKEventSource (3.0.1)
   - Kingfisher (7.1.2)
   - libPhoneNumber-iOS (0.9.15)
   - nanopb (2.30908.0):
@@ -104,6 +105,7 @@ PODS:
 DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Crashlytics
+  - IKEventSource
   - Kingfisher (~> 7.0)
   - libPhoneNumber-iOS (~> 0.8)
   - Swinject
@@ -119,6 +121,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
+    - IKEventSource
     - Kingfisher
     - libPhoneNumber-iOS
     - nanopb
@@ -135,12 +138,13 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: a3311dbcf3ea651e5a070fe8559b57c174ada081
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
+  IKEventSource: ababa323587c6b0c250dd54d4a48ab68fd845e8e
   Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
-PODFILE CHECKSUM: b683653a37a7a9f225971cc895616a13788a2ffe
+PODFILE CHECKSUM: 37ea56327a7047f87b0ae0eb8cbd7b35e5a6580c
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
