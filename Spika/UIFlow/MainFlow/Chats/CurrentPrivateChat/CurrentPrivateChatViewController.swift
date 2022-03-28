@@ -18,6 +18,7 @@ class CurrentPrivateChatViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Check room first then prooceed if success
         checkRoom()
         setupView(currentPrivateChatView)
         setupBindings()

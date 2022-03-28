@@ -22,6 +22,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         super.init(repository: repository, coordinator: coordinator)
     }
 
+    // Check room first then prooceed
     func checkRoom()  {
         networkRequestState.send(.started())
         repository.checkRoom(forUserId: friendUser.id).sink { completion in
