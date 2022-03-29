@@ -17,7 +17,7 @@ extension AppRepository {
     
     func createRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
 
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        guard let accessToken = getAccessToken()
         else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -38,7 +38,7 @@ extension AppRepository {
     }
     
     func checkRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>  {
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        guard let accessToken = getAccessToken()
         else {return Fail<CheckRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -54,7 +54,7 @@ extension AppRepository {
     }
     
     func createRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error> {
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        guard let accessToken = getAccessToken()
         else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -70,7 +70,7 @@ extension AppRepository {
     }
     
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error> {
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        guard let accessToken = getAccessToken()
         else {return Fail<GetAllRoomsResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()

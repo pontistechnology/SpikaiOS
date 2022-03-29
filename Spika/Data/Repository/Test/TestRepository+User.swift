@@ -30,6 +30,14 @@ extension TestRepository {
         999
     }
     
+    func getAccessToken() -> String? {
+        "pferde"
+    }
+    
+    func getMyDeviceId() -> Int {
+        -1
+    }
+    
     func getUsers() -> Future<[LocalUser], Error> {
         let users = [LocalUser(displayName: "Mirko", id: 1337),
                      LocalUser(displayName: "Slavko", id: 1337)]

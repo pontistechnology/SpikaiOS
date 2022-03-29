@@ -8,11 +8,13 @@
 import Foundation
 import Combine
 import CoreData
+import IKEventSource
 
 class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
     var room: Room?
+    var eventSource: EventSource?
     
     let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
     lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [sort], managedContext: CoreDataManager.shared.managedContext, delegate: nil)
@@ -22,7 +24,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         super.init(repository: repository, coordinator: coordinator)
     }
 
-    // Check room first then prooceed
+    // Check room first then proceed
     func checkRoom()  {
         networkRequestState.send(.started())
         repository.checkRoom(forUserId: friendUser.id).sink { completion in

@@ -16,7 +16,7 @@ extension AppRepository {
     // MARK: Network
     
     func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        guard let accessToken = getAccessToken()
         else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()

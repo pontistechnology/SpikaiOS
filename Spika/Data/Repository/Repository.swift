@@ -73,5 +73,6 @@ protocol Repository {
     
     func saveUserInfo(user: User, device: Device?)
     func getMyUserId() -> Int
-    
+    func getAccessToken() -> String?
+    func getMyDeviceId() -> Int
 }

@@ -58,7 +58,7 @@ extension AppRepository {
     
     func updateUser(username: String?, avatarURL: String?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>{
         
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        guard let accessToken = getAccessToken()
         else {return Fail<UserResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -116,7 +116,7 @@ extension AppRepository {
     
     func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String? = nil, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
 
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        guard let accessToken = getAccessToken()
         else {return Fail<UploadChunkResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -131,7 +131,7 @@ extension AppRepository {
     }
     
     func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error> {
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        guard let accessToken = getAccessToken()
         else { return Fail<ContactsResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -146,7 +146,7 @@ extension AppRepository {
     }
     
     func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error> {
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        guard let accessToken = getAccessToken()
         else { return Fail<ContactsResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()

@@ -20,6 +20,14 @@ class AppRepository: Repository {
         self.databaseService = databaseService
     }
     
+    func getAccessToken() -> String? {
+        return UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+    }
+    
+    func getMyDeviceId() -> Int {
+        return UserDefaults.standard.integer(forKey: Constants.UserDefaults.deviceId)
+    }
+    
     func getPosts() -> AnyPublisher<[Post], Error> {
         let resources = Resources<[Post], EmptyRequestBody>(
             path: Constants.Endpoints.getPosts,
