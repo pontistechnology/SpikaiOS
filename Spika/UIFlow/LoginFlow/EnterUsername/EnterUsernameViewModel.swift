@@ -41,7 +41,7 @@ class EnterUsernameViewModel: BaseViewModel {
         }
     }
     
-    private func updateInfo(username: String? = nil, avatarUrl: String? = nil) {
+    private func updateInfo(username: String, avatarUrl: String? = nil) {
         networkRequestState.send(.started())
         repository.updateUser(username: username, avatarURL: avatarUrl, telephoneNumber: nil, email: nil).sink { [weak self] completion in
             self?.networkRequestState.send(.finished)
@@ -53,7 +53,8 @@ class EnterUsernameViewModel: BaseViewModel {
                 self?.presentHomeScreen()
             }
         } receiveValue: { response in
-
+            guard let user = response.data?.user else { return }
+            self.repository.saveUserInfo(user: user, device: nil)
             print(response)
         }.store(in: &subscriptions)
     }

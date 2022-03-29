@@ -22,7 +22,7 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
-    func saveUserInfo(user: User, device: Device) {
+    func saveUserInfo(user: User, device: Device?) {
         print(user)
     }
     

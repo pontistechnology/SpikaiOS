@@ -19,9 +19,12 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken) {
+        // TODO: check display name.isEmpty()
+        if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken),
+           let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.displayName){
             presentHomeScreen()
-//            presentEnterUsernameScreen()
+        } else if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken){
+            presentEnterUsernameScreen()
         } else {
             presentEnterNumberScreen()
         }

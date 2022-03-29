@@ -13,10 +13,12 @@ extension AppRepository {
     
     // MARK: UserDefaults
     
-    func saveUserInfo(user: User, device: Device) {
+    func saveUserInfo(user: User, device: Device? = nil) {
         let defaults = UserDefaults.standard
         defaults.set(user.id, forKey: Constants.UserDefaults.userId)
         defaults.set(user.telephoneNumber, forKey: Constants.UserDefaults.userPhoneNumber)
+        defaults.set(user.displayName, forKey: Constants.UserDefaults.displayName)
+        guard let device = device else { return }
         defaults.set(device.id, forKey: Constants.UserDefaults.deviceId)
         defaults.set(device.token, forKey: Constants.UserDefaults.accessToken)
     }

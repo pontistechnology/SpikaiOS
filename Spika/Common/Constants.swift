@@ -41,6 +41,7 @@ struct Constants {
         static let userPhoneNumber = "userPhoneNumber"
         static let deviceId = "deviceId"
         static let accessToken = "accessToken"
+        static let displayName = "displayName"
     }
     
     struct CABasicAnimations {

@@ -71,6 +71,7 @@ protocol Repository {
 
     // MARK: - USERDEFAULTS: User
     
-    func saveUserInfo(user: User, device: Device)
+    func saveUserInfo(user: User, device: Device?)
     func getMyUserId() -> Int
+    
 }
