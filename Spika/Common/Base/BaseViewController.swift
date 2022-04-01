@@ -87,3 +87,12 @@ extension BaseViewController {
         view.endEditing(true)
     }
 }
+
+extension BaseViewController {
+    func showNotification(image: UIImage, senderName: String, textOrDescription: String) {
+        let mess = MessageNotificationView(image: image, senderName: senderName, textOrDescription: textOrDescription)
+        view.addSubview(mess)
+        mess.anchor(top: view.topAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        mess.centerXToSuperview()
+    }
+}

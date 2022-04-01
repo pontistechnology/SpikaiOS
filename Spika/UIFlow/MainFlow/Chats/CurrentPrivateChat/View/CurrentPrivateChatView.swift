@@ -11,7 +11,6 @@ class CurrentPrivateChatView: UIView, BaseView {
     
     let messagesTableView = UITableView()
     let messageInputView = MessageInputView()
-    let not = MessageNotificationView(image: UIImage(named: "matejVida")!, senderName: "Jozara sa Karaule od pokojnog Bega", textOrDescription: "Ćuku trebaa svezat za centralu sf asdfas saf ")
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
     
@@ -28,7 +27,6 @@ class CurrentPrivateChatView: UIView, BaseView {
     func addSubviews() {
         addSubview(messagesTableView)
         addSubview(messageInputView)
-        addSubview(not)
     }
     
     func styleSubviews() {
@@ -44,9 +42,6 @@ class CurrentPrivateChatView: UIView, BaseView {
         messageInputView.anchor(leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         messageInputViewBottomConstraint = messageInputView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         messageInputViewBottomConstraint.isActive = true
-        
-        not.anchor(top: topAnchor, padding: UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0))
-        not.centerXToSuperview()
     }
     
     func setupBindings() {

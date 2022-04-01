@@ -52,6 +52,10 @@ extension CurrentPrivateChatViewController {
         viewModel.coreDataFetchedResults.delegate = self
         
         sink(networkRequestState: viewModel.networkRequestState)
+        
+        viewModel.sseSubject.sink { data in
+            self.showNotification(image: UIImage(named: "matejVida")!, senderName: "SSE event", textOrDescription: data)
+        }.store(in: &subscriptions)
     }
     
     func checkRoom() {

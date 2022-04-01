@@ -48,7 +48,7 @@ class PopUpManager {
         let alertWindow = UIWindow(windowScene: windowScene)
         alertWindow.rootViewController = viewController
         alertWindow.isHidden = false
-        alertWindow.overrideUserInterfaceStyle = .light
+        alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors, theme
         self.alertWindow = alertWindow
     }
     

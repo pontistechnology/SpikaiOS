@@ -16,6 +16,8 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     var room: Room?
     var eventSource: EventSource?
     
+    let sseSubject = PassthroughSubject<String, Never>()
+    
     let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
     lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [sort], managedContext: CoreDataManager.shared.managedContext, delegate: nil)
     
@@ -54,6 +56,8 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         
         eventSource?.onMessage { id, event, data in
             print("onMessage: ", id, event, data)
+            self.sseSubject.send(data!)
+            
         }
         
         eventSource?.addEventListener("message") { id, event, data in
