@@ -11,7 +11,7 @@ class CurrentPrivateChatView: UIView, BaseView {
     
     let messagesTableView = UITableView()
     let messageInputView = MessageInputView()
-    let not = MessageNotificationView(image: UIImage(named: "matejVida")!, senderName: "Jozara sa Karaule", textOrDescription: "Ćuku trebaa svezat za centralu")
+    let not = MessageNotificationView(image: UIImage(named: "matejVida")!, senderName: "Jozara sa Karaule od pokojnog Bega", textOrDescription: "Ćuku trebaa svezat za centralu sf asdfas saf ")
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
     

@@ -13,10 +13,11 @@ class MessageNotificationView: UIView {
     private let avatarImageView: UIImageView
     private let senderNameLabel: CustomLabel
     private let descriptionLabel: CustomLabel
+    private let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterialDark))
     
     init(image: UIImage, senderName: String, textOrDescription: String){
         senderNameLabel = CustomLabel(text: senderName, textSize: 14, textColor: .white, fontName: .MontserratSemiBold)
-        descriptionLabel = CustomLabel(text: "Matej Vida: Kaze da moze", textSize: 11, textColor: .white)
+        descriptionLabel = CustomLabel(text: textOrDescription, textSize: 11, textColor: .white)
         avatarImageView = UIImageView(image: image)
         super.init(frame: .zero)
         setupView()
@@ -29,13 +30,14 @@ class MessageNotificationView: UIView {
 
 extension MessageNotificationView: BaseView {
     func addSubviews() {
+        addSubview(blurEffectView)
         addSubview(avatarImageView)
         addSubview(senderNameLabel)
         addSubview(descriptionLabel)
     }
     
     func styleSubviews() {
-        backgroundColor = .textTertiary
+//        backgroundColor = .textTertiary
         layer.cornerRadius = 10
         layer.masksToBounds = true
         
@@ -49,6 +51,8 @@ extension MessageNotificationView: BaseView {
     func positionSubviews() {
         constrainWidth(344)
         constrainHeight(76)
+        
+        blurEffectView.fillSuperview()
         
         avatarImageView.constrainWidth(56)
         avatarImageView.constrainHeight(56)
