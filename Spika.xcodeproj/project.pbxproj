@@ -63,6 +63,7 @@
 		9396AE1327CBAC410041B4A6 /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AE1227CBAC410041B4A6 /* MessageInputView.swift */; };
 		9396AE1527CBBABE0041B4A6 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */; };
 		93988D5F27D8701500DF6BF8 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
+		93A76B2C27F6789500B6A03E /* MessageNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A76B2B27F6789500B6A03E /* MessageNotificationView.swift */; };
 		93B4A9EE27DB3AB000DC52F6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */; };
 		93B8916D27CD4536000F94B0 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916C27CD4536000F94B0 /* MessageTableViewCell.swift */; };
 		93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916E27CD578F000F94B0 /* Data+Extension.swift */; };
@@ -269,6 +270,7 @@
 		9396AE1227CBAC410041B4A6 /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
 		9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		93A76B2B27F6789500B6A03E /* MessageNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageNotificationView.swift; sourceTree = "<group>"; };
 		93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		93B8916C27CD4536000F94B0 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		93B8916E27CD578F000F94B0 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
@@ -990,8 +992,8 @@
 				ADD503CB270DD2EF009D50CB /* Data */,
 				ADD503CA270DD2E9009D50CB /* Common */,
 				ADD503C8270DC42E009D50CB /* SupportingFiles */,
-				ADD503C2270DC3CA009D50CB /* Info.plist */,
 				ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */,
+				ADD503C2270DC3CA009D50CB /* Info.plist */,
 			);
 			path = Spika;
 			sourceTree = "<group>";
@@ -1112,6 +1114,7 @@
 				931E23A827D2DCDA0065FFFC /* MessageStateView.swift */,
 				93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */,
 				938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */,
+				93A76B2B27F6789500B6A03E /* MessageNotificationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1578,6 +1581,7 @@
 				933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */,
 				934087BA27EBAE6F00209571 /* TestRepository+Tests.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
+				93A76B2C27F6789500B6A03E /* MessageNotificationView.swift in Sources */,
 				AD8192532721A92700D5BE48 /* StackItemView.swift in Sources */,
 				ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */,
 				ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */,

@@ -31,13 +31,11 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         guard let accessToken = repository.getAccessToken(),
               deviceId != "-1",
               let serverURL = URL(string: Constants.Networking.baseUrl
-                                  + "sse/" + deviceId
-                                  + "?accesstoken=" + accessToken
-              )
+                                  + "api/sse/" + deviceId
+                                  + "?accesstoken=" + accessToken)
         else { return }
         print("SSE URL : ", serverURL)
         eventSource = EventSource(url: serverURL)
-//        eventSource = EventSource(url: serverURL, headers: ["accesstoken" : accessToken])
         
         eventSource?.onOpen { [weak self] in
             print("CONNECTED")
@@ -45,8 +43,8 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
             print("DISCONNECTED")
-            
-            guard reconnect ?? false else { return }
+//            
+//            guard reconnect ?? false else { return }
             
             let retryTime = self?.eventSource?.retryTime ?? 3000
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(retryTime)) { [weak self] in
@@ -55,10 +53,10 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         }
         
         eventSource?.onMessage { id, event, data in
-            print("onMessage")
+            print("onMessage: ", id, event, data)
         }
         
-        eventSource?.addEventListener("user-connected") { id, event, data in
+        eventSource?.addEventListener("message") { id, event, data in
 //            self?.updateLabels(id, event: event, data: data)
             print("event listener")
         }
