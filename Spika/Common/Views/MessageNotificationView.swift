@@ -37,7 +37,6 @@ extension MessageNotificationView: BaseView {
     }
     
     func styleSubviews() {
-//        backgroundColor = .textTertiary
         layer.cornerRadius = 10
         layer.masksToBounds = true
         

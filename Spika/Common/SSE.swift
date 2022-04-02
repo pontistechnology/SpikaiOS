@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import IKEventSource
+import UIKit
 
 class SSE {
     
@@ -69,17 +70,17 @@ class SSE {
         guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
         else { return }
         
-        
+        self.alertWindow = nil
         let alertWindow = UIWindow(windowScene: windowScene)
-        alertWindow.frame = CGRect(x: 0, y: 0, width: 400, height: 300)
+        alertWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150)
         alertWindow.rootViewController = UIViewController()
-        alertWindow.rootViewController?.view.backgroundColor = .purple
+//        alertWindow.rootViewController?.view.backgroundColor = .purple
         alertWindow.isHidden = false
         alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors, theme
         
         let mess = MessageNotificationView(image: image, senderName: senderName, textOrDescription: textOrDescription)
         alertWindow.rootViewController?.view.addSubview(mess)
-        mess.anchor(top: alertWindow.rootViewController?.view.topAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
+        mess.anchor(top: alertWindow.rootViewController?.view.safeAreaLayoutGuide.topAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
         mess.centerXToSuperview()
         
         self.alertWindow = alertWindow
