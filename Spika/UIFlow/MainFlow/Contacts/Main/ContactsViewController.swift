@@ -30,9 +30,12 @@ class ContactsViewController: BaseViewController {
         contactsView.tableView.delegate   = self
         contactsView.searchBar.delegate = self
         
+        SSE.shared.startSSEConnection()
+        
         contactsView.titleLabel.tap().sink { tap in
 //            PopUpManager.shared.presentAlert(.copy)
-            self.viewModel.test()
+            PopUpManager.shared.presentAlert(errorMessage: "tititi")
+//            self.viewModel.test()
         }.store(in: &subscriptions)
         
         //TODO: check this cooments

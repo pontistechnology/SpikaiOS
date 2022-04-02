@@ -24,8 +24,8 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
-        testSSE()
-        eventSource?.connect()
+//        testSSE()
+//        eventSource?.connect()
     }
     
     func testSSE() {

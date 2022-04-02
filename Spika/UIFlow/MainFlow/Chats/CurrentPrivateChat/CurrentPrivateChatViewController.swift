@@ -154,7 +154,7 @@ extension CurrentPrivateChatViewController {
     }
     
     @objc func videoCallActionHandler() {
-        
+        showNotification(image: UIImage(named: "matejVida")!, senderName: "Alfonso", textOrDescription: "daadafd")
     }
     
     @objc func phoneCallActionHandler() {
