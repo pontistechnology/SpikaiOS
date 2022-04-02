@@ -13,7 +13,7 @@ struct Message: Codable {
     let fromUserId: Int
     let id: Int
     let totalDeviceCount: Int
-    let receivedCount: Int
+    let receivedCount: Int?
     let seenCount: Int
     let roomId: Int
     let type: String

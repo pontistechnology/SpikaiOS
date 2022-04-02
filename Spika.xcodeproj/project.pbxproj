@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6E1AA22EBF32F5F6B1E36042 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5B9AC9482808B0DB202E82 /* Pods_Spika.framework */; };
+		93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
 		930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BB27A9FB180064BED1 /* UserRequestModel.swift */; };
 		930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BD27A9FCE30064BED1 /* UserResponseModel.swift */; };
 		930290C027A9FDBE0064BED1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BF27A9FDBE0064BED1 /* User.swift */; };
@@ -216,6 +217,7 @@
 		334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
 		400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
 		583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		93017B1627F8D1EC00A0582D /* SSENewMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSENewMessage.swift; sourceTree = "<group>"; };
 		930290BB27A9FB180064BED1 /* UserRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestModel.swift; sourceTree = "<group>"; };
 		930290BD27A9FCE30064BED1 /* UserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseModel.swift; sourceTree = "<group>"; };
 		930290BF27A9FDBE0064BED1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -434,6 +436,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		93017B1527F8D19700A0582D /* SSEData */ = {
+			isa = PBXGroup;
+			children = (
+				93017B1627F8D1EC00A0582D /* SSENewMessage.swift */,
+			);
+			path = SSEData;
+			sourceTree = "<group>";
+		};
 		931E23AA27D316F30065FFFC /* MessageTableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -902,6 +912,7 @@
 		AD9BFD3D272ADA9000736318 /* NetworkModel */ = {
 			isa = PBXGroup;
 			children = (
+				93017B1527F8D19700A0582D /* SSEData */,
 				AD9BFD3E272ADAA800736318 /* RequestModel */,
 				AD9BFD40272ADAB600736318 /* ResponseModel */,
 			);
@@ -1496,6 +1507,7 @@
 				AD81926D2721E2E400D5BE48 /* UIControl+Combine.swift in Sources */,
 				933BE86627B671270099BA9E /* ChatSearchView.swift in Sources */,
 				AD8192692721D5BD00D5BE48 /* AllChatsViewModel.swift in Sources */,
+				93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */,
 				933BE86227B65C9C0099BA9E /* SharedView.swift in Sources */,
 				9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */,
 				938D053A27D5C524002E5CE5 /* TestRepository+Rooms.swift in Sources */,

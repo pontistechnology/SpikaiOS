@@ -13,7 +13,6 @@ import UIKit
 class SSE {
     
     static let shared = SSE()
-    let sseSubject = PassthroughSubject<String, Never>()
     var eventSource: EventSource?
     var alertWindow: UIWindow?
     
@@ -55,13 +54,17 @@ class SSE {
         
         eventSource?.onMessage { id, event, data in
             print("onMessage: ", id, event, data)
-//            self.sseSubject.send(data!)
-            self.showNotification(image: UIImage(named: "matejVida")!, senderName: "sse event", textOrDescription: data!)
+            
+            guard let jsonData = data?.data(using: .utf8) else { return }
+            
+            let test = try! JSONDecoder().decode(SSENewMessage.self, from: jsonData)
+            
+            
+            self.showNotification(image: UIImage(named: "matejVida")!, senderName: "sse event", textOrDescription: test.message?.body.text ?? "nema teksta")
             
         }
         
         eventSource?.addEventListener("message") { id, event, data in
-//            self?.updateLabels(id, event: event, data: data)
             print("event listener")
         }
     }
@@ -74,7 +77,6 @@ class SSE {
         let alertWindow = UIWindow(windowScene: windowScene)
         alertWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150)
         alertWindow.rootViewController = UIViewController()
-//        alertWindow.rootViewController?.view.backgroundColor = .purple
         alertWindow.isHidden = false
         alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors, theme
         
