@@ -14,8 +14,10 @@ class SSE {
     
     var eventSource: EventSource?
     var alertWindow: UIWindow?
+    let repository: Repository
     
-    init() {
+    init(repository: Repository) {
+        self.repository = repository
         print("SSE init")
     }
     

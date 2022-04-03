@@ -12,6 +12,7 @@ final class AppAssembly: Assembly {
     
     func assemble(container: Container) {
         self.assembleMainRepository(container)
+        self.assembleSSE(container)
         self.assembleHomeViewController(container)
         self.assembleContactsViewController(container)
         self.assembleCallHistoryViewController(container)
@@ -39,6 +40,12 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.container)
     }
     
+    private func assembleSSE(_ container: Container) {
+        container.register(SSE.self) { r in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return SSE(repository: repository)
+        }.inObjectScope(.container)
+    }
     
     private func assembleHomeViewController(_ container: Container) {
         container.register(HomeViewModel.self) { (resolver, coordinator: AppCoordinator) in
