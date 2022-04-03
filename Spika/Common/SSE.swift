@@ -15,9 +15,11 @@ class SSE {
     var eventSource: EventSource?
     var alertWindow: UIWindow?
     let repository: Repository
+    let coordinator: Coordinator
     
-    init(repository: Repository) {
+    init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
+        self.coordinator = coordinator
         print("SSE init")
     }
     
@@ -92,6 +94,16 @@ class SSE {
         mess.anchor(top: alertWindow.rootViewController?.view.safeAreaLayoutGuide.topAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
         mess.centerXToSuperview()
         
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
+        mess.addGestureRecognizer(tapGesture)
+        
         self.alertWindow = alertWindow
+    }
+    
+    @objc
+    func handleGesture(_ sender: UITapGestureRecognizer) {
+        (coordinator as? AppCoordinator)?.presentFavoritesScreen() // TODO: present currect chat
+        alertWindow = nil
     }
 }

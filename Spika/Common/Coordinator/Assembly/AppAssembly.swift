@@ -41,9 +41,9 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleSSE(_ container: Container) {
-        container.register(SSE.self) { r in
+        container.register(SSE.self) { (r, coordinator: AppCoordinator) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return SSE(repository: repository)
+            return SSE(repository: repository, coordinator: coordinator)
         }.inObjectScope(.container)
     }
     
