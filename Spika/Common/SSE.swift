@@ -12,12 +12,15 @@ import UIKit
 
 class SSE {
     
-    static let shared = SSE()
     var eventSource: EventSource?
     var alertWindow: UIWindow?
     
-    private init() {
-        
+    init() {
+        print("SSE init")
+    }
+    
+    deinit {
+        print("SSE deinit")
     }
     
     func startSSEConnection(){
@@ -57,11 +60,13 @@ class SSE {
             
             guard let jsonData = data?.data(using: .utf8) else { return }
             
-            let test = try! JSONDecoder().decode(SSENewMessage.self, from: jsonData)
-            
-            
-            self.showNotification(image: UIImage(named: "matejVida")!, senderName: "sse event", textOrDescription: test.message?.body.text ?? "nema teksta")
-            
+            do {
+                let test = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
+                self.showNotification(image: UIImage(named: "matejVida")!, senderName: "sse event", textOrDescription: test.message?.body.text ?? "nema teksta")
+            } catch {
+                print("onMessage decoder error catched")
+                return
+            }
         }
         
         eventSource?.addEventListener("message") { id, event, data in

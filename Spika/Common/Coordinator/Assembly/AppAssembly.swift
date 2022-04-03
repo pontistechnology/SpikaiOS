@@ -39,6 +39,7 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.container)
     }
     
+    
     private func assembleHomeViewController(_ container: Container) {
         container.register(HomeViewModel.self) { (resolver, coordinator: AppCoordinator) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
@@ -107,16 +108,18 @@ final class AppAssembly: Assembly {
     
     //      select _____ command option E and change name
     //
-    //    private func assemble_____ViewController(_ container: Container) {
-    //        container.register(_____ViewModel.self) { (resolver, coordinator: AppCoordinator) in
-    //            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-    //            return _____ViewModel(repository: repository, coordinator: coordinator)
-    //        }.inObjectScope(.transient)
-    //
-    //        container.register(_____ViewController.self) { (resolver, coordinator: AppCoordinator) in
-    //            let controller = _____ViewController()
-    //            controller.viewModel = container.resolve(_____ViewModel.self, argument: coordinator)
-    //            return controller
-    //        }.inObjectScope(.transient)
-    //    }
+//        private func assemble_____ViewController(_ container: Container) {
+//            container.register(_____ViewModel.self) { (resolver, coordinator: AppCoordinator) in
+//                let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+//                return _____ViewModel(repository: repository, coordinator: coordinator)
+//            }.inObjectScope(.transient)
+//
+//            container.register(_____ViewController.self) { (resolver, coordinator: AppCoordinator) in
+//                let controller = _____ViewController()
+//                controller.viewModel = container.resolve(_____ViewModel.self, argument: coordinator)
+//                return controller
+//            }.inObjectScope(.transient)
+//        }
+    
+   
 }

@@ -23,6 +23,7 @@ class AppCoordinator: Coordinator {
         if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken),
            let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.displayName){
             presentHomeScreen()
+            SSE().startSSEConnection()
         } else if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken){
             presentEnterUsernameScreen()
         } else {

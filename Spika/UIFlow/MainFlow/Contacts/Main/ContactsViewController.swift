@@ -30,8 +30,6 @@ class ContactsViewController: BaseViewController {
         contactsView.tableView.delegate   = self
         contactsView.searchBar.delegate = self
         
-        SSE.shared.startSSEConnection()
-        
         contactsView.titleLabel.tap().sink { tap in
 //            PopUpManager.shared.presentAlert(.copy)
             PopUpManager.shared.presentAlert(errorMessage: "tititi")

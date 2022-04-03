@@ -14,7 +14,6 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
     var room: Room?
-    var eventSource: EventSource?
     
     let sseSubject = PassthroughSubject<String, Never>()
     
@@ -24,50 +23,8 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
         self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
-//        testSSE()
-//        eventSource?.connect()
     }
     
-    func testSSE() {
-        let deviceId = String(repository.getMyDeviceId()) // TODO: Check is this needed? Can be 0?
-        guard let accessToken = repository.getAccessToken(),
-              deviceId != "-1",
-              let serverURL = URL(string: Constants.Networking.baseUrl
-                                  + "api/sse/" + deviceId
-                                  + "?accesstoken=" + accessToken)
-        else { return }
-        print("SSE URL : ", serverURL)
-        eventSource = EventSource(url: serverURL)
-        
-        eventSource?.onOpen { [weak self] in
-            print("CONNECTED")
-        }
-        
-        eventSource?.onComplete { [weak self] statusCode, reconnect, error in
-            print("DISCONNECTED")
-//            
-//            guard reconnect ?? false else { return }
-            
-            let retryTime = self?.eventSource?.retryTime ?? 3000
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(retryTime)) { [weak self] in
-                self?.eventSource?.connect()
-            }
-        }
-        
-        eventSource?.onMessage { id, event, data in
-            print("onMessage: ", id, event, data)
-            self.sseSubject.send(data!)
-            
-        }
-        
-        eventSource?.addEventListener("message") { id, event, data in
-//            self?.updateLabels(id, event: event, data: data)
-            print("event listener")
-        }
-        
-        
-    }
-
     // TODO: Check room first then proceed, find id in DB, then setFetch
     func checkRoom()  {
         networkRequestState.send(.started())
