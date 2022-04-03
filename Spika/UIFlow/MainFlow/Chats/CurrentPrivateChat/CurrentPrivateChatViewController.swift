@@ -24,15 +24,8 @@ class CurrentPrivateChatViewController: BaseViewController {
         setupBindings()
         setupNavigationItems()
         viewModel.setFetch()
-//        test()
     }
-    
-//    func test() {
-//        let predicate = NSPredicate(format: "%K == %@", #keyPath(MessageEntity.roomId), viewModel.room!.id)
-//        viewModel.coreDataFetchedResults.controller.fetchRequest.predicate = predicate
-//        viewModel.coreDataFetchedResults.performFetch()
-//    }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -253,13 +246,5 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
         default:
             break
         }
-    }
-}
-
-extension UITableView {
-    func scrollToBottom(){
-        let lastSectionIndex = self.numberOfSections - 1
-        let lastRowIndex = self.numberOfRows(inSection: lastSectionIndex) - 1
-        self.scrollToRow(at: IndexPath(row: lastRowIndex, section: lastSectionIndex), at: .bottom, animated: true)
     }
 }

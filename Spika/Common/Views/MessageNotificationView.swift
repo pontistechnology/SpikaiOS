@@ -26,6 +26,10 @@ class MessageNotificationView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        print("notificaiton deinit")
+    }
 }
 
 extension MessageNotificationView: BaseView {

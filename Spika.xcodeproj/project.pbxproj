@@ -69,6 +69,7 @@
 		93B4A9EE27DB3AB000DC52F6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */; };
 		93B8916D27CD4536000F94B0 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916C27CD4536000F94B0 /* MessageTableViewCell.swift */; };
 		93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916E27CD578F000F94B0 /* Data+Extension.swift */; };
+		93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */; };
 		93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */; };
 		93C3461F27EABEFC0038D7A5 /* TestEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C3461D27EABEFC0038D7A5 /* TestEntity+CoreDataClass.swift */; };
 		93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */; };
@@ -278,6 +279,7 @@
 		93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		93B8916C27CD4536000F94B0 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		93B8916E27CD578F000F94B0 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
+		93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewWithIcon.swift; sourceTree = "<group>"; };
 		93C3461D27EABEFC0038D7A5 /* TestEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionView.swift; sourceTree = "<group>"; };
@@ -1068,6 +1070,7 @@
 				9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */,
 				93B8916E27CD578F000F94B0 /* Data+Extension.swift */,
 				93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */,
+				93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1534,6 +1537,7 @@
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
 				93E4F6EB27C2BB6D00432CFA /* SelectUsersViewController.swift in Sources */,
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
+				93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */,
 				93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */,
 				934087DE27EC064800209571 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				93708E1D279F992500F81095 /* UILabel+Extensions.swift in Sources */,

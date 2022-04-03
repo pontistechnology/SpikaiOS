@@ -6,7 +6,7 @@
 //
 
 import Combine
-import Foundation
+import CoreData
 import IKEventSource
 import UIKit
 
@@ -16,6 +16,7 @@ class SSE {
     var alertWindow: UIWindow?
     let repository: Repository
     let coordinator: Coordinator
+    var currentMessage: Message?
     
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
@@ -65,8 +66,10 @@ class SSE {
             guard let jsonData = data?.data(using: .utf8) else { return }
             
             do {
-                let test = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
-                self.showNotification(image: UIImage(named: "matejVida")!, senderName: "sse event", textOrDescription: test.message?.body.text ?? "nema teksta")
+                let sseNewMessage = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
+                guard let message = sseNewMessage.message else { return }
+                self.currentMessage = message
+                self.showNotification()
             } catch {
                 print("onMessage decoder error catched")
                 return
@@ -78,10 +81,11 @@ class SSE {
         }
     }
     
-    func showNotification(image: UIImage, senderName: String, textOrDescription: String) {
-        guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
+    func showNotification() {
+        guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene,
+              let currentMessage = self.currentMessage
         else { return }
-        
+        // TODO: refactor
         self.alertWindow = nil
         let alertWindow = UIWindow(windowScene: windowScene)
         alertWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150)
@@ -89,11 +93,10 @@ class SSE {
         alertWindow.isHidden = false
         alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors, theme
         
-        let mess = MessageNotificationView(image: image, senderName: senderName, textOrDescription: textOrDescription)
+        let mess = MessageNotificationView(image: UIImage(named: "matejVida")!, senderName: "Sender id: \(currentMessage.fromDeviceId)", textOrDescription: currentMessage.body.text)
         alertWindow.rootViewController?.view.addSubview(mess)
         mess.anchor(top: alertWindow.rootViewController?.view.safeAreaLayoutGuide.topAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
         mess.centerXToSuperview()
-        
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
         mess.addGestureRecognizer(tapGesture)
@@ -101,9 +104,17 @@ class SSE {
         self.alertWindow = alertWindow
     }
     
-    @objc
-    func handleGesture(_ sender: UITapGestureRecognizer) {
-        (coordinator as? AppCoordinator)?.presentFavoritesScreen() // TODO: present currect chat
+    @objc func handleGesture(_ sender: UITapGestureRecognizer) {
+        guard let currentMessage = currentMessage else {
+            return
+        }
+        
+        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(currentMessage.fromUserId)")
+        guard let dbUser = try? CoreDataManager.shared.managedContext.fetch(fetchRequest).first else { return }
+        let lU = LocalUser(entity: dbUser)
+        (coordinator as? AppCoordinator)?.presentCurrentPrivateChatScreen(user: lU) // TODO: present currect chat
         alertWindow = nil
+        
     }
 }
