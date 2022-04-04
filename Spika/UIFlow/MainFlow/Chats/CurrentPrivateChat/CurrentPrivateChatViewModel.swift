@@ -14,9 +14,6 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
     var room: Room?
-    
-    let sseSubject = PassthroughSubject<String, Never>()
-    
     let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
     lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [sort], managedContext: CoreDataManager.shared.managedContext, delegate: nil)
     
@@ -71,7 +68,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
 //            return
 //        }
         let predicate = NSPredicate(format: "%K != %@",
-                                    #keyPath(MessageEntity.bodyText), "miki")
+                                    #keyPath(MessageEntity.bodyText), "miki") // TODO: add id
         coreDataFetchedResults.controller.fetchRequest.predicate = predicate
         coreDataFetchedResults.performFetch()
     }
@@ -83,10 +80,10 @@ extension CurrentPrivateChatViewModel {
     func trySendMessage(text: String) {
         let mesa = MessageEntity(message: Message(text: text))
         CoreDataManager.shared.saveContext()
-        sendMessage3(messageEntity: mesa)
+        sendMessage(messageEntity: mesa)
     }
     
-    func sendMessage3(messageEntity: MessageEntity) {
+    func sendMessage(messageEntity: MessageEntity) {
         guard let room = room,
               let text = messageEntity.bodyText
         else { return }
@@ -100,7 +97,7 @@ extension CurrentPrivateChatViewModel {
                 print("failure")
             }
         } receiveValue: { response in
-            print("SendMessage3 response: ", response)
+            print("SendMessage response: ", response)
             messageEntity.seenCount = 0 // TODO: change logic
             CoreDataManager.shared.saveContext()
             guard let message = response.data?.message else { return }

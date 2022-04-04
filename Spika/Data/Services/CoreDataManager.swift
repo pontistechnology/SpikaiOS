@@ -57,13 +57,4 @@ class CoreDataManager {
             print("Error occured: ", error.localizedDescription)
         }
     }
-    
-    func testMESAGESAVINGTOCOREDATA(message: Message){
-        let _ = MessageEntity(message: message)
-        saveContext()
-    }
-    
-    func FETCHALLMESSAGESFROMDB() -> [MessageEntity] {
-        return (try? managedContext.fetch(MessageEntity.fetchRequest())) ?? []
-    }
 }

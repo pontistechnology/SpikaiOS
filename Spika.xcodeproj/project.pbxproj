@@ -438,12 +438,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		93017B1527F8D19700A0582D /* SSEData */ = {
+		93017B1527F8D19700A0582D /* SSE */ = {
 			isa = PBXGroup;
 			children = (
+				9352641827F88937001434A3 /* SSE.swift */,
 				93017B1627F8D1EC00A0582D /* SSENewMessage.swift */,
 			);
-			path = SSEData;
+			path = SSE;
 			sourceTree = "<group>";
 		};
 		931E23AA27D316F30065FFFC /* MessageTableViewCells */ = {
@@ -914,7 +915,7 @@
 		AD9BFD3D272ADA9000736318 /* NetworkModel */ = {
 			isa = PBXGroup;
 			children = (
-				93017B1527F8D19700A0582D /* SSEData */,
+				93017B1527F8D19700A0582D /* SSE */,
 				AD9BFD3E272ADAA800736318 /* RequestModel */,
 				AD9BFD40272ADAB600736318 /* ResponseModel */,
 			);
@@ -1044,7 +1045,6 @@
 				AD81928A2722FFD000D5BE48 /* Utils */,
 				AD8192722722D55100D5BE48 /* Fonts */,
 				ADD503E7270DD87A009D50CB /* Constants.swift */,
-				9352641827F88937001434A3 /* SSE.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";

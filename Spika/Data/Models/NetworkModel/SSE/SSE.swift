@@ -68,6 +68,8 @@ class SSE {
             do {
                 let sseNewMessage = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
                 guard let message = sseNewMessage.message else { return }
+                let mesa = MessageEntity(message: message)
+                CoreDataManager.shared.saveContext()
                 self.currentMessage = message
                 self.showNotification()
             } catch {
