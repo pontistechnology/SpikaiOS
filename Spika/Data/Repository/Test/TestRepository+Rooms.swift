@@ -33,7 +33,7 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
-    func checkPrivateLocalRoom(forId id: Int) -> Future<Room, Error> {
+    func checkPrivateLocalRoom(forId id: Int) -> Future<RoomEntity, Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))
         }

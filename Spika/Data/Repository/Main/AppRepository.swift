@@ -44,4 +44,8 @@ class AppRepository: Repository {
         return networkService.performRequest(resources: resources)
     }
     
+    func trySaveChanges() -> Future<Bool, Error> {
+        databaseService.trySaveChanges()
+    }
+    
 }

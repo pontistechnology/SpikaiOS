@@ -13,7 +13,8 @@ import IKEventSource
 class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
-    var room: Room?
+//    var room: Room?
+    var roomEntity: RoomEntity?
     let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
     lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [sort], managedContext: CoreDataManager.shared.managedContext, delegate: nil)
     let tableViewShouldReload = PassthroughSubject<Bool, Never>()
@@ -36,8 +37,23 @@ extension CurrentPrivateChatViewModel {
                 self.checkRoom()
                 break
             }
-        } receiveValue: { room in
-            self.room = room
+        } receiveValue: { roomEntity in
+            self.roomEntity = roomEntity
+            self.setFetch()
+        }.store(in: &subscriptions)
+    }
+    
+    func saveLocalRoom(room: Room) {
+        repository.saveRoom(room: room).sink { completion in
+            switch completion {
+                
+            case .finished:
+                print("saved to local DB")
+            case .failure(_):
+                print("saving to local DB failed")
+            }
+        } receiveValue: { roomEntity in
+            self.roomEntity = roomEntity
             self.setFetch()
         }.store(in: &subscriptions)
     }
@@ -56,10 +72,8 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { response in
             
             if let room = response.data?.room {
-                self.room = room
-                // TODO: save it to DB
+                self.saveLocalRoom(room: room)
                 self.networkRequestState.send(.finished)
-                self.setFetch()
             } else {
                 self.createRoom(userId: self.friendUser.id)
             }
@@ -81,16 +95,11 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { response in
             print("creating room response: ", response)
             guard let room = response.data?.room else { return }
-            // TODO: save it to DB
-            self.room = room
-            self.setFetch()
+            self.saveLocalRoom(room: room)
         }.store(in: &subscriptions)
     }
     
     func setFetch() {
-        guard let room = room else {
-            return
-        }
         let predicate = NSPredicate(format: "%K != %@",
                                     #keyPath(MessageEntity.bodyText), "miki") // TODO: add id
         coreDataFetchedResults.controller.fetchRequest.predicate = predicate
@@ -115,11 +124,11 @@ extension CurrentPrivateChatViewModel {
     }
     
     func sendMessage(messageEntity: MessageEntity) {
-        guard let room = room,
+        guard let roomEntity = roomEntity,
               let text = messageEntity.bodyText
         else { return }
         
-        repository.sendTextMessage(message: MessageBody(text: text), roomId: room.id).sink { completion in
+        repository.sendTextMessage(message: MessageBody(text: text), roomId: Int(roomEntity.id)).sink { completion in
             switch completion {
                 
             case .finished:
@@ -130,7 +139,7 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { response in
             print("SendMessage response: ", response)
             messageEntity.seenCount = 0 // TODO: change logic
-            CoreDataManager.shared.saveContext()
+            CoreDataManager.shared.saveContext() // TODO: check
             guard let message = response.data?.message else { return }
             
         }.store(in: &subscriptions)

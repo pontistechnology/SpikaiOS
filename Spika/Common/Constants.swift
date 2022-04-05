@@ -34,6 +34,7 @@ struct Constants {
         static let databaseName = "CoreDatabase"
         static let userEntity = "UserEntity"
         static let messageEntity = "MessageEntity"
+        static let roomEntity = "RoomEntity"
     }
     
     struct UserDefaults {

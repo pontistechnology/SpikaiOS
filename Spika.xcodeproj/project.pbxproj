@@ -95,6 +95,8 @@
 		93E4F6FC27C4687100432CFA /* CurrentPrivateChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FB27C4687100432CFA /* CurrentPrivateChatViewController.swift */; };
 		93E4F6FE27C4688C00432CFA /* CurrentPrivateChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FD27C4688C00432CFA /* CurrentPrivateChatViewModel.swift */; };
 		93E4F70127C468BB00432CFA /* CurrentPrivateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F70027C468BB00432CFA /* CurrentPrivateChatView.swift */; };
+		93FC0DA427FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */; };
+		93FC0DA527FCD5D4005C18D6 /* RoomEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC0DA327FCD5D4005C18D6 /* RoomEntity+CoreDataProperties.swift */; };
 		93FFA6C527EDD3B900A97CA1 /* TestEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFA6C327EDD3B900A97CA1 /* TestEntity+CoreDataProperties.swift */; };
 		93FFA6C727EFEF7D00A97CA1 /* CoreDataFetchedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFA6C627EFEF7D00A97CA1 /* CoreDataFetchedResults.swift */; };
 		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
@@ -306,6 +308,8 @@
 		93E4F6FB27C4687100432CFA /* CurrentPrivateChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatViewController.swift; sourceTree = "<group>"; };
 		93E4F6FD27C4688C00432CFA /* CurrentPrivateChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatViewModel.swift; sourceTree = "<group>"; };
 		93E4F70027C468BB00432CFA /* CurrentPrivateChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatView.swift; sourceTree = "<group>"; };
+		93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		93FC0DA327FCD5D4005C18D6 /* RoomEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		93FFA6C327EDD3B900A97CA1 /* TestEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		93FFA6C627EFEF7D00A97CA1 /* CoreDataFetchedResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFetchedResults.swift; sourceTree = "<group>"; };
 		AD819237271E866100D5BE48 /* MessageEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntityService.swift; sourceTree = "<group>"; };
@@ -1203,6 +1207,8 @@
 		ADD504072716E9C7009D50CB /* DatabaseEntities */ = {
 			isa = PBXGroup;
 			children = (
+				93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */,
+				93FC0DA327FCD5D4005C18D6 /* RoomEntity+CoreDataProperties.swift */,
 				93FFA6C327EDD3B900A97CA1 /* TestEntity+CoreDataProperties.swift */,
 				93C3461D27EABEFC0038D7A5 /* TestEntity+CoreDataClass.swift */,
 				ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */,
@@ -1587,6 +1593,7 @@
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
 				AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */,
 				930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */,
+				93FC0DA527FCD5D4005C18D6 /* RoomEntity+CoreDataProperties.swift in Sources */,
 				ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */,
 				930290C027A9FDBE0064BED1 /* User.swift in Sources */,
 				93E4F6F427C30DBE00432CFA /* SelectedUsersCollectionView.swift in Sources */,
@@ -1616,6 +1623,7 @@
 				93C3461F27EABEFC0038D7A5 /* TestEntity+CoreDataClass.swift in Sources */,
 				930EE59D27A938B800143B48 /* UploadChunkResponseModel.swift in Sources */,
 				ADD503D5270DD5F4009D50CB /* AppAssembly.swift in Sources */,
+				93FC0DA427FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift in Sources */,
 				AD81923A271E873200D5BE48 /* LocalReaction.swift in Sources */,
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
 				9367456127C71D3700F43CCD /* AlertView.swift in Sources */,

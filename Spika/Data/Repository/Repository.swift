@@ -58,7 +58,11 @@ protocol Repository {
     
     func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
     
-    // MARK: - COREDATA: User
+    // MARK: - COREDATA
+    
+    func trySaveChanges() -> Future<Bool, Error>
+    
+    // MARK: COREDATA: User
     
     func getUsers() -> Future<[LocalUser], Error>
     func saveUser(_ user: LocalUser) -> Future<LocalUser, Error>
@@ -71,7 +75,8 @@ protocol Repository {
     
     // MARK: COREDATA: Room
     
-    func checkPrivateLocalRoom(forId id: Int)  -> Future<Room, Error>
+    func checkPrivateLocalRoom(forId id: Int) -> Future<RoomEntity, Error>
+    func saveRoom(room: Room) -> Future<RoomEntity, Error>
 
     // MARK: - USERDEFAULTS: User
     

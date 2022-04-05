@@ -5,7 +5,7 @@
 //  Created by Marko on 13.10.2021..
 //
 
-import Foundation
+import Combine
 
 enum DatabseError: Error {
     case requestFailed, noSuchRecord, unknown
@@ -32,6 +32,26 @@ class DatabaseService {
         self.messageEntityService = messageEntityService
         self.testEntityService = testEntityService
         self.roomEntityService = roomEntityService
+    }
+    
+    func trySaveChanges() -> Future<Bool, Error>{
+        if CoreDataManager.shared.managedContext.hasChanges {
+            do {
+                try CoreDataManager.shared.managedContext.save()
+                return Future { promise in
+                    promise(.success(true))
+                }
+            } catch {
+                return Future { promise in
+                    promise(.failure(error))
+                }
+            }
+        } else {
+            return Future { promise in
+                promise(.success(false))
+            }
+        }
+        
     }
     
 }
