@@ -23,7 +23,6 @@ class CurrentPrivateChatViewController: BaseViewController {
         setupView(currentPrivateChatView)
         setupBindings()
         setupNavigationItems()
-        viewModel.setFetch()
     }
         
     override func viewWillAppear(_ animated: Bool) {
@@ -45,10 +44,16 @@ extension CurrentPrivateChatViewController {
         viewModel.coreDataFetchedResults.delegate = self
         
         sink(networkRequestState: viewModel.networkRequestState)
+        
+        viewModel.tableViewShouldReload.sink { should in
+            if should {
+                self.currentPrivateChatView.messagesTableView.reloadData()
+            }
+        }.store(in: &subscriptions)
     }
     
     func checkRoom() {
-        viewModel.checkRoom()
+        viewModel.checkLocalRoom()
     }
 }
 

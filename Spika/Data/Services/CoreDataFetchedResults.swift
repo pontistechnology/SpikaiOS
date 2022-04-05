@@ -45,6 +45,7 @@ public class CoreDataFetchedResults<T: NSManagedObject> {
     public func performFetch(completion: @escaping (Result<Bool, Error>) -> () = {_ in}) {
         do {
             try controller.performFetch()
+            completion(.success(true))
         } catch {
             handle(error) {
                 completion(.failure(error))

@@ -32,4 +32,10 @@ extension TestRepository {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
+    
+    func checkPrivateLocalRoom(forId id: Int) -> Future<Room, Error> {
+        return Future { promise in
+            promise(.failure(DatabseError.unknown))
+        }
+    }
 }

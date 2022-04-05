@@ -30,7 +30,8 @@ final class AppAssembly: Assembly {
             let chatEntityService = ChatEntityService()
             let messageEntityService = MessageEntityService()
             let testEntityService = TestEntityService()
-            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, testEntityService: testEntityService)
+            let roomEntityService = RoomEntityService()
+            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, testEntityService: testEntityService, roomEntityService: roomEntityService)
         }.inObjectScope(.container)
 
         container.register(Repository.self, name: RepositoryType.production.name) { r in

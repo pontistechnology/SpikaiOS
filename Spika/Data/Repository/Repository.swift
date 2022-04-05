@@ -50,8 +50,8 @@ protocol Repository {
     // MARK: NETWORKING: Room
     
     func createRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error>
-    func checkRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
     func createRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error>
+    func checkRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
     
     // MARK: NETWORKING: Message
@@ -68,6 +68,10 @@ protocol Repository {
     
     func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error>
     func testnaRepo(naziv: String) -> Future<String, Error>
+    
+    // MARK: COREDATA: Room
+    
+    func checkPrivateLocalRoom(forId id: Int)  -> Future<Room, Error>
 
     // MARK: - USERDEFAULTS: User
     
