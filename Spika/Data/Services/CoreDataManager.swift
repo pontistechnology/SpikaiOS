@@ -36,6 +36,7 @@ class CoreDataManager {
             let tests = try managedContext.fetch(TestEntity.fetchRequest())
             let users = try managedContext.fetch(UserEntity.fetchRequest())
             let messages = try managedContext.fetch(MessageEntity.fetchRequest())
+            let rooms = try managedContext.fetch(RoomEntity.fetchRequest())
             
             print("~~~~~~~~~All entities~~~~~~~~~~~~~~ \n")
             print("\nTest entities (count: \(tests.count)): \n")
@@ -51,6 +52,11 @@ class CoreDataManager {
             print("\nMessages entities (count: \(messages.count)): \n")
             for message in messages {
                 print("---MessageEntity: ", message.bodyText ?? "warning", message.roomId, "createdAt: ", message.createdAt)
+            }
+            
+            print("\nRooms entities (count: \(rooms.count)): \n")
+            for room in rooms {
+                print("---MessageEntity: ", room.name ?? "warning", "roomId: ",  room.id, "createdAt: ", room.createdAt)
             }
         }
         catch {

@@ -88,9 +88,7 @@ extension AppRepository {
     // MARK: Database
     
     func checkPrivateLocalRoom(forId id: Int) -> Future<RoomEntity, Error>{
-        return Future { pr in
-            pr(.failure(DatabseError.unknown))
-        }
+        return databaseService.roomEntityService.getPrivateRoom(forId: id)
     }
     
     func saveRoom(room: Room) -> Future<RoomEntity, Error> {

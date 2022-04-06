@@ -12,10 +12,24 @@ class RoomEntityService {
     let managedContext = CoreDataManager.shared.managedContext
     static let entity = NSEntityDescription.entity(forEntityName: Constants.Database.roomEntity, in: CoreDataManager.shared.managedContext)!
     
-    func getPrivateRoom(forId id: Int) -> Future<Room, Error> {
-        
-        return Future { promise in
-            promise(.failure(DatabseError.unknown))
+    func getPrivateRoom(forId id: Int) -> Future<RoomEntity, Error> {
+        let fetchRequest = NSFetchRequest<RoomEntity>(entityName: Constants.Database.roomEntity)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)") // TODO: chagne to user Id
+        do {
+            let rooms = try managedContext.fetch(fetchRequest)
+            if rooms.count == 1 {
+                return Future { promise in
+                    promise(.success(rooms.first!))
+                }
+            } else {
+                return Future { promise in
+                    promise(.failure(DatabseError.moreThanOne))
+                }
+            }
+        } catch {
+            return Future { promise in
+                promise(.failure(error))
+            }
         }
     }
     

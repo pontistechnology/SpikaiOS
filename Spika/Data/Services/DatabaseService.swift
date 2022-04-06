@@ -8,13 +8,14 @@
 import Combine
 
 enum DatabseError: Error {
-    case requestFailed, noSuchRecord, unknown
+    case requestFailed, noSuchRecord, unknown, moreThanOne
 
     var description : String {
         switch self {
         case .requestFailed: return "Request Failed."
         case .noSuchRecord: return "Record do not exists."
         case .unknown: return "Unknown error."
+        case .moreThanOne: return "More than one record."
         }
   }
 }

@@ -13,7 +13,6 @@ import IKEventSource
 class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
-//    var room: Room?
     var roomEntity: RoomEntity?
     let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
     lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [sort], managedContext: CoreDataManager.shared.managedContext, delegate: nil)
@@ -72,6 +71,7 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { response in
             
             if let room = response.data?.room {
+                room.users
                 self.saveLocalRoom(room: room)
                 self.networkRequestState.send(.finished)
             } else {
