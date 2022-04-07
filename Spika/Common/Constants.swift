@@ -22,6 +22,7 @@ struct Constants {
         static let authenticateUser = "api/messenger/auth"
         static let verifyCode = "api/messenger/auth/verify"
         static let uploadFiles = "api/upload/files"
+        static let verifyFile = "api/upload/files/verify"
         static let userInfo = "api/messenger/me"
         static let contacts = "api/messenger/contacts"
         static let createRoom = "api/messenger/rooms"
@@ -35,6 +36,7 @@ struct Constants {
         static let userEntity = "UserEntity"
         static let messageEntity = "MessageEntity"
         static let roomEntity = "RoomEntity"
+        static let roomUserEntity = "RoomUserEntity"
     }
     
     struct UserDefaults {

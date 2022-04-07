@@ -5,7 +5,7 @@
 //  Created by Marko on 13.10.2021..
 //
 
-import Foundation
+import UIKit
 import Combine
 import CryptoKit
 
@@ -71,7 +71,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func uploadWholeFile(data: Data) -> (publisher: PassthroughSubject<UploadChunkResponseModel, Error>, totalChunksNumber: Int) {
+    func uploadWholeFile(data: Data) -> (PassthroughSubject<(File?, CGFloat), Error>) {
         
         let dataLen: Int = data.count
         let chunkSize: Int = ((1024) * 4)
@@ -80,7 +80,7 @@ extension AppRepository {
         let clientId = UUID().uuidString
         var hasher = SHA256()
         var hash: String?
-        let chunkPublisher = PassthroughSubject<UploadChunkResponseModel, Error>()
+        let somePublisher = PassthroughSubject<(File?, CGFloat), Error>()
     
         for chunkCounter in 0..<totalChunks {
             var chunk:Data
@@ -98,23 +98,34 @@ extension AppRepository {
                 hash = hasher.finalize().compactMap { String(format: "%02x", $0)}.joined()
             }
             
-            uploadChunk(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "nameOfFile", clientId: clientId, type: "avatar", fileHash: hash, relationId: 1).sink { completion in
+            uploadChunk(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, clientId: clientId).sink { completion in
                 switch completion {
                 case let .failure(error):
-                    print("Failure error", error)
-                    chunkPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
+                    print("Upload chunk error", error)
+                    somePublisher.send(completion: .failure(NetworkError.chunkUploadFail))
                 case .finished:
                     break
                 }
-            } receiveValue: { uploadFileResponseModel in
-                chunkPublisher.send(uploadFileResponseModel)
+            } receiveValue: { uploadChunkResponseModel in
+                guard let uploadedCount = uploadChunkResponseModel.data?.uploadedChunks?.count else { return }
+                let percent = CGFloat(uploadedCount) / CGFloat(totalChunks)
+                somePublisher.send((nil, percent))
+                
+                if uploadedCount == totalChunks {
+                    guard let hash = hash else {
+                        return
+                    }
+
+                    self.verifyUpload(total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1)
+                }
+//                chunkPublisher.send(uploadChunkResponseModel)
             }.store(in: &subs)
         }
         
-        return (chunkPublisher, totalChunks)
+        return somePublisher
     }
     
-    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String? = nil, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
+    func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error> {
 
         guard let accessToken = getAccessToken()
         else {return Fail<UploadChunkResponseModel, Error>(error: NetworkError.noAccessToken)
@@ -124,8 +135,23 @@ extension AppRepository {
         let resources = Resources<UploadChunkResponseModel, UploadChunkRequestModel>(
             path: Constants.Endpoints.uploadFiles,
             requestType: .POST,
-            bodyParameters: UploadChunkRequestModel(chunk: chunk, offset: offset, total: total, size: size, mimeType: mimeType, fileName: fileName, clientId: clientId, type: type, fileHash: fileHash, relationId: relationId),
+            bodyParameters: UploadChunkRequestModel(chunk: chunk, offset: offset, clientId: clientId),
             httpHeaderFields: ["accesstoken" : accessToken]) //access token
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int) -> AnyPublisher<VerifyFileResponseModel, Error>{
+        guard let accessToken = getAccessToken() else {
+            return Fail<VerifyFileResponseModel, Error>(error: NetworkError.noAccessToken).receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<VerifyFileResponseModel, VerifyFileRequestModel>(
+            path: Constants.Endpoints.verifyFile,
+            requestType: .POST,
+            bodyParameters: VerifyFileRequestModel(total: total, size: size, mimeType: mimeType, fileName: fileName, type: type, fileHash: fileHash, relationId: relationId),
+            httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
     }

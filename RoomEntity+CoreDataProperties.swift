@@ -29,10 +29,10 @@ extension RoomEntity {
 extension RoomEntity {
 
     @objc(addUsersObject:)
-    @NSManaged public func addToUsers(_ value: UserEntity)
+    @NSManaged public func addToUsers(_ value: RoomUserEntity)
 
     @objc(removeUsersObject:)
-    @NSManaged public func removeFromUsers(_ value: UserEntity)
+    @NSManaged public func removeFromUsers(_ value: RoomUserEntity)
 
     @objc(addUsers:)
     @NSManaged public func addToUsers(_ values: NSSet)

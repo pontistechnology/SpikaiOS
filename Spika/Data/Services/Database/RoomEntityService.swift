@@ -34,6 +34,7 @@ class RoomEntityService {
     }
     
     func saveRoom(_ room: Room) -> Future<RoomEntity, Error> {
+        print("save room: ", room)
         let newRoom = RoomEntity(room: room)
         do {
             try managedContext.save()
@@ -41,6 +42,7 @@ class RoomEntityService {
                 promise(.success(newRoom))
             }
         } catch {
+            print("Shit: ", error)
             return Future { promise in
                 promise(.failure(DatabseError.unknown))
             }
@@ -49,3 +51,4 @@ class RoomEntityService {
     
     
 }
+

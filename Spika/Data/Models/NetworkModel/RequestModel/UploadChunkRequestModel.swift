@@ -10,13 +10,5 @@ import Foundation
 struct UploadChunkRequestModel: Codable {
     let chunk: String
     let offset: Int
-    let total: Int
-    let size: Int
-    let mimeType: String
-    let fileName: String
     let clientId: String
-    let type: String
-    let fileHash: String?
-    let relationId: Int
-    
 }

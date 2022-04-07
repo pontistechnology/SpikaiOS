@@ -10,6 +10,7 @@ import CoreData
 import Combine
 
 class UserEntityService {
+    static let entity = NSEntityDescription.entity(forEntityName: Constants.Database.userEntity, in: CoreDataManager.shared.managedContext)!
     let managedContext = CoreDataManager.shared.managedContext
     
     func getUsers() -> Future<[LocalUser], Error> {

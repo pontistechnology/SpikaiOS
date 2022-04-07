@@ -34,6 +34,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // only for debug, remove later
 //        print("type is: ", MessageType(rawValue: "textf"))
 //        UserDefaults.standard.set("QtsRkcMeBVf9nT77", forKey: Constants.UserDefaults.accessToken)
+        CoreDataManager.shared.getAllEntities()
+        
+        
+        
+//        let b = RoomUserEntity(roomUser: RoomUser(userId: 2123, isAdmin: false, user: User(id: 333, displayName: "prvidrugitrecipeti deseti", avatarUrl: "pvi", telephoneNumber: "da", telephoneNumberHashed: "fe", emailAddress: "vfda", createdAt: 2)))
+//        
+//        CoreDataManager.shared.saveContext()
+        
+        CoreDataManager.shared.getAllEntities()
         
     }
     

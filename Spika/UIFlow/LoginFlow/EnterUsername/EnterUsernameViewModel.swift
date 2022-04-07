@@ -32,9 +32,9 @@ class EnterUsernameViewModel: BaseViewModel {
                 if let uploadedNumberOfChunks = chunkResponse.data?.uploadedChunks?.count {
                     self?.uploadProgressPublisher.send(CGFloat(uploadedNumberOfChunks) / totalNumberOfChunks)
                 }
-                if let file = chunkResponse.data?.file {
-                    self?.updateInfo(username: username, avatarUrl: file.path)
-                }
+//                if let file = chunkResponse.data?.file {
+//                    self?.updateInfo(username: username, avatarUrl: file.path)
+//                }
             }.store(in: &subscriptions)
         } else {
             self.updateInfo(username: username)

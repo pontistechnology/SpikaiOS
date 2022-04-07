@@ -37,6 +37,7 @@ class CoreDataManager {
             let users = try managedContext.fetch(UserEntity.fetchRequest())
             let messages = try managedContext.fetch(MessageEntity.fetchRequest())
             let rooms = try managedContext.fetch(RoomEntity.fetchRequest())
+            let roomUsers = try managedContext.fetch(RoomUserEntity.fetchRequest())
             
             print("~~~~~~~~~All entities~~~~~~~~~~~~~~ \n")
             print("\nTest entities (count: \(tests.count)): \n")
@@ -56,8 +57,15 @@ class CoreDataManager {
             
             print("\nRooms entities (count: \(rooms.count)): \n")
             for room in rooms {
-                print("---MessageEntity: ", room.name ?? "warning", "roomId: ",  room.id, "createdAt: ", room.createdAt)
+                print("---RoomEntity: ", room.name ?? "warning", "roomId: ",  room.id, "createdAt: ", room.createdAt)
             }
+            
+            print("\nRoomUser entities (count: \(roomUsers.count)): \n")
+            for ru in roomUsers {
+                print("---RoomEntity:  user: ", ru.user ?? "warning", "userid: ",  ru.userId, "isadmin: ", ru.isAdmin)
+            }
+            
+            
         }
         catch {
             print("Error occured: ", error.localizedDescription)
