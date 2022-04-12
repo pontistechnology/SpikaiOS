@@ -29,6 +29,9 @@ class CoreDataStack: NSObject {
                 fatalError("saveMoc error")
             }
         }
+    }
+    
+    func testis() {
         
     }
     
@@ -36,7 +39,6 @@ class CoreDataStack: NSObject {
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: Constants.Database.databaseName)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
@@ -47,12 +49,14 @@ class CoreDataStack: NSObject {
     private lazy var saveMOC: NSManagedObjectContext = {
         let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         moc.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+        moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return moc
     }()
     
     lazy var mainMOC: NSManagedObjectContext = {
         let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         moc.parent = saveMOC
+        moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return moc
     }()
     

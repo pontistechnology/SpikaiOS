@@ -40,12 +40,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //
         
         print("start")
-        let user1 = User(id: 10101, displayName: "mirko", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
-        let rUEntity1 = RoomUserEntity(roomUser: RoomUser(userId: 1234, isAdmin: true, user: user1), insertInto: coreDataStack.mainMOC)
+        let user1 = User(id: 10101, displayName: "jozara", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
+//        let rUEntity1 = RoomUserEntity(roomUser: RoomUser(userId: 1234, isAdmin: true, user: user1), insertInto: coreDataStack.mainMOC)
+        
+        let a = UserEntity(user: user1, context: coreDataStack.mainMOC)
         
         coreDataStack.saveMainContext()
         
         print("stop")
+        
+        let aa = try? coreDataStack.mainMOC.fetch(UserEntity.fetchRequest())
+        let bb = aa!.first as? UserEntity
+        print(aa?.count)
+        print(bb?.displayName)
+        
         
 
     }
