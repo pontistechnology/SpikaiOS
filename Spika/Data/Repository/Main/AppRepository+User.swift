@@ -71,7 +71,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func uploadWholeFile(data: Data) -> (PassthroughSubject<(File?, CGFloat), Error>) {
+    func uploadWholeFile(data: Data) -> (AnyPublisher<(File?, CGFloat), Error>) {
         
         let dataLen: Int = data.count
         let chunkSize: Int = ((1024) * 4)
@@ -122,7 +122,7 @@ extension AppRepository {
             }.store(in: &subs)
         }
         
-        return somePublisher
+        return somePublisher.eraseToAnyPublisher()
     }
     
     func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error> {

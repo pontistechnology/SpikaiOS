@@ -33,8 +33,11 @@ class RoomEntityService {
         }
     }
     
+    
+    
     func saveRoom(_ room: Room) -> Future<RoomEntity, Error> {
         print("save room: ", room)
+        
         let newRoom = RoomEntity(room: room)
         do {
             try managedContext.save()

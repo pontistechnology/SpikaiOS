@@ -11,12 +11,16 @@ import CoreData
 
 @objc(RoomUserEntity)
 public class RoomUserEntity: NSManagedObject {
-    convenience init(roomUser: RoomUser) {
-        self.init(entity: RoomUserEntityService.entity,
-                  insertInto: CoreDataManager.shared.managedContext)
+    
+    convenience init(roomUser: RoomUser, insertInto context: NSManagedObjectContext) {
+        print("Thread check roomuserentity: " , Thread.current)
+        guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.roomUserEntity, in: context) else {
+            fatalError("shit, do something")
+        }
+        self.init(entity: entity, insertInto: context)
         self.userId = Int64(roomUser.userId)
         self.isAdmin = roomUser.isAdmin
-        
-        self.user = UserEntity(user: roomUser.user)
+
+        self.user = UserEntity(user: roomUser.user, context: context)
     }
 }

@@ -13,7 +13,7 @@ class RoomUserEntityService {
     static let entity = NSEntityDescription.entity(forEntityName: Constants.Database.roomUserEntity, in: CoreDataManager.shared.managedContext)!
     
     func saveRoomUser(roomUser: RoomUser) {
-        let roomUser = RoomUserEntity(roomUser: roomUser)
+        
         
     }
     

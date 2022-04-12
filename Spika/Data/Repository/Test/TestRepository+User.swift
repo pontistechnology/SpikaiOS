@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import Combine
 
 extension TestRepository {
@@ -52,13 +53,27 @@ extension TestRepository {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func uploadWholeFile(data: Data) -> (publisher: PassthroughSubject<UploadChunkResponseModel, Error>, totalChunksNumber: Int) {
-        return (PassthroughSubject<UploadChunkResponseModel, Error>(), 0)
-    }
-    
     func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String?, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error> {
         // TODO: - add tests
         return Fail<UploadChunkResponseModel, Error>(error: NetworkError.badURL)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func uploadWholeFile(data: Data) -> (AnyPublisher<(File?, CGFloat), Error>) {
+        return Fail<(File?, CGFloat), Error>(error: DatabseError.unknown)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error> {
+        return Fail<UploadChunkResponseModel, Error>(error: DatabseError.unknown)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int) -> AnyPublisher<VerifyFileResponseModel, Error> {
+        return Fail<VerifyFileResponseModel, Error>(error: DatabseError.unknown)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }

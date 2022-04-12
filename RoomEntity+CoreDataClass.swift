@@ -21,8 +21,8 @@ public class RoomEntity: NSManagedObject {
         self.type = room.type
         
         for roomUser in room.users {
-            let r = RoomUserEntity(roomUser: roomUser)
-            self.addToUsers(r)
+//            let r = RoomUserEntity(roomUser: roomUser)
+//            self.addToUsers(r)
         }
     }
 }

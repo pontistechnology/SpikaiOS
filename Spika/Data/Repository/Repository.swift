@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 enum RepositoryType {
     case production, test
@@ -35,9 +36,9 @@ protocol Repository {
     
     // MARK: NETWORKING: File upload
     
-    func uploadWholeFile(data: Data) -> (publisher: PassthroughSubject<UploadChunkResponseModel, Error>, totalChunksNumber: Int)
-    func uploadChunk(chunk: String, offset: Int, total: Int, size: Int, mimeType: String, fileName: String, clientId: String, type: String, fileHash: String?, relationId: Int) -> AnyPublisher<UploadChunkResponseModel, Error>
-    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int) 
+    func uploadWholeFile(data: Data) -> (AnyPublisher<(File?, CGFloat), Error>)
+    func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error>
+    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int) -> AnyPublisher<VerifyFileResponseModel, Error>
     
     // MARK: NETWORKING: User
     
