@@ -25,7 +25,7 @@ class CoreDataManager {
 //
     var persistentContainer: NSPersistentContainer {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError("AppDelegate missing.") }
-        return appDelegate.persistentContainer
+        return appDelegate.coreDataStack.persistentContainer
     }
     
     func saveContext() {
@@ -33,7 +33,7 @@ class CoreDataManager {
         
         DispatchQueue.main.async {
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError("AppDelegate missing.") }
-            let testViewContext = appDelegate.persistentContainer.viewContext
+            let testViewContext = appDelegate.coreDataStack.persistentContainer.viewContext
             
             testViewContext.perform {
                 print("save Context .2: ", Thread.current)
