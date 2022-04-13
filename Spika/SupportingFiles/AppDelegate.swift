@@ -40,10 +40,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //
         
         print("start")
-        let user1 = User(id: 10101, displayName: "jozara", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
-//        let rUEntity1 = RoomUserEntity(roomUser: RoomUser(userId: 1234, isAdmin: true, user: user1), insertInto: coreDataStack.mainMOC)
+        let user1 = User(id: 101012, displayName: "mico", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
+        let ruser1 = RoomUser(userId: 101012, isAdmin: true, user: user1)
         
-        let a = UserEntity(user: user1, context: coreDataStack.mainMOC)
+        let rUEntity1 = RoomUserEntity(roomUser: ruser1, insertInto: coreDataStack.mainMOC)
+        
+        
+//        let thisShouldNeverFail = UserEntity(user: user1, context: coreDataStack.mainMOC)
         
         coreDataStack.saveMainContext()
         
@@ -54,8 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(aa?.count)
         print(bb?.displayName)
         
-        
-
     }
     
     func customization() {

@@ -16,7 +16,6 @@ public class UserEntity: NSManagedObject {
         print("Thread check userentity: " , Thread.current)
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.userEntity, in: context) else {
             fatalError("fanta")
-            return
         }
         self.init(entity: entity, insertInto: context)
         self.id = user.id
