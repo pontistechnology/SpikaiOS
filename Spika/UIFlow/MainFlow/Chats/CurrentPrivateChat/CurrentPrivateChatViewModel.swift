@@ -15,7 +15,11 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     let friendUser: LocalUser
     var roomEntity: RoomEntity?
     let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
-    lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self, entityName: "MessageEntity", sortDescriptors: [sort], managedContext: CoreDataManager.shared.managedContext, delegate: nil)
+    lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self,
+                                                             entityName: "MessageEntity",
+                                                             sortDescriptors: [sort],
+                                                             managedContext: repository.getMainContext(),
+                                                             delegate: nil)
     let tableViewShouldReload = PassthroughSubject<Bool, Never>()
     
     init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
@@ -118,8 +122,8 @@ extension CurrentPrivateChatViewModel {
 extension CurrentPrivateChatViewModel {
     
     func trySendMessage(text: String) {
-        let mesa = MessageEntity(message: Message(text: text))
-        CoreDataManager.shared.saveContext()
+        let mesa = MessageEntity(message: Message(text: text), context: repository.getBackgroundContext())  // TODO: CDStack
+        repository.trySaveChanges()
         sendMessage(messageEntity: mesa)
     }
     
@@ -138,8 +142,8 @@ extension CurrentPrivateChatViewModel {
             }
         } receiveValue: { response in
             print("SendMessage response: ", response)
-            messageEntity.seenCount = 0 // TODO: change logic
-            CoreDataManager.shared.saveContext() // TODO: check
+            messageEntity.seenCount = 0 // TODO: change logic and order
+            self.repository.trySaveChanges()
             guard let message = response.data?.message else { return }
             
         }.store(in: &subscriptions)

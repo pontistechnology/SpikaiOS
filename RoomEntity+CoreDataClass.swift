@@ -12,8 +12,11 @@ import CoreData
 @objc(RoomEntity)
 public class RoomEntity: NSManagedObject {
     
-    convenience init(room: Room) {
-        self.init(entity: RoomEntityService.entity, insertInto: CoreDataManager.shared.managedContext)
+    convenience init(room: Room, context: NSManagedObjectContext) {
+        guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.roomEntity, in: context) else {
+            fatalError("shit, do something")
+        }
+        self.init(entity: entity, insertInto: context)
         self.id = Int64(room.id)
         self.name = room.name
         self.avatarUrl = room.avatarUrl
@@ -21,8 +24,10 @@ public class RoomEntity: NSManagedObject {
         self.type = room.type
         
         for roomUser in room.users {
-//            let r = RoomUserEntity(roomUser: roomUser)
-//            self.addToUsers(r)
+            context.perform {
+                let r = RoomUserEntity(roomUser: roomUser, insertInto: context)
+                self.addToUsers(r)
+            }
         }
     }
 }

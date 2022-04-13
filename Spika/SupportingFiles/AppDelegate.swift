@@ -13,8 +13,6 @@ import Firebase
  @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    lazy var coreDataStack = CoreDataStack()
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -33,32 +31,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func test() {
         // only for debug, remove later
         //        print("type is: ", MessageType(rawValue: "textf"))
-        //        UserDefaults.standard.set("QtsRkcMeBVf9nT77", forKey: Constants.UserDefaults.accessToken)
+//                UserDefaults.standard.set("QtsRkcMeBVf9nT77", forKey: Constants.UserDefaults.accessToken)
         
-        print("Thread check test: ", Thread.current)
-//        CoreDataManager.shared.saveContext()
-//
-        
-        print("start")
-        let user1 = User(id: 101012, displayName: "mico", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
-        let ruser1 = RoomUser(userId: 101012, isAdmin: true, user: user1)
-        
-        coreDataStack.backgroundMOC.perform {
-            let rUEntity1 = RoomUserEntity(roomUser: ruser1, insertInto: self.coreDataStack.backgroundMOC)
-            self.coreDataStack.saveBackgroundMOC()
-        }
-        
-        
-//        let thisShouldNeverFail = UserEntity(user: user1, context: coreDataStack.mainMOC)
-        
-        coreDataStack.saveBackgroundMOC()
-        
-        print("stop")
-        
-        let aa = try? coreDataStack.mainMOC.fetch(UserEntity.fetchRequest())
-        let bb = aa!.first as? UserEntity
-        print(aa?.count)
-        print(bb?.displayName)
+//        print("Thread check test: ", Thread.current)
+////
+//        
+//        print("start")
+//        let user1 = User(id: 10102, displayName: "jozo", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
+//        let ruser1 = RoomUser(userId: 101012, isAdmin: true, user: user1)
+//        
+//        coreDataStack.backgroundMOC.perform {
+//            let rUEntity1 = RoomUserEntity(roomUser: ruser1, insertInto: self.coreDataStack.backgroundMOC)
+//            self.coreDataStack.saveBackgroundMOC()
+//        }
+//    
+//        coreDataStack.saveBackgroundMOC()
+//        
+//        print("stop")
+//        
+//        let aa = try? coreDataStack.mainMOC.fetch(UserEntity.fetchRequest())
+//        let bb = aa!.first as? UserEntity
+//        print(aa?.count)
+//        print(bb?.displayName)
         
     }
     

@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import UIKit
+import CoreData
 
 enum RepositoryType {
     case production, test
@@ -62,6 +63,8 @@ protocol Repository {
     
     // MARK: - COREDATA
     
+    func getMainContext() -> NSManagedObjectContext
+    func getBackgroundContext() -> NSManagedObjectContext
     func trySaveChanges() -> Future<Bool, Error>
     
     // MARK: COREDATA: User
@@ -73,7 +76,6 @@ protocol Repository {
     // MARK: COREDATA: Messages
     
     func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error>
-    func testnaRepo(naziv: String) -> Future<String, Error>
     
     // MARK: COREDATA: Room
     

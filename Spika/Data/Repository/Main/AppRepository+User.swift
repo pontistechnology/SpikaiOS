@@ -187,17 +187,17 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    // MARK: Database
+    // MARK: Database // TODO: CDStack change
     
     func getUsers() -> Future<[LocalUser], Error> {
-        return databaseService.userEntityService.getUsers()
+        return databaseService.getUsers()
     }
     
     func saveUser(_ user: LocalUser) -> Future<LocalUser, Error> {
-        return databaseService.userEntityService.saveUser(user)
+        return databaseService.saveUser(user)
     }
     
     func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error> {
-        return databaseService.userEntityService.saveUsers(users)
+        return databaseService.saveUsers(users)
     }
 }

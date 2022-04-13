@@ -11,6 +11,14 @@ import CoreData
 class CoreDataStack: NSObject {
     static let moduleName = Constants.Database.databaseName
     
+    override init() {
+        print("CoredataStack init")
+    }
+    
+    deinit {
+        print("CoredataStack deinit")
+    }
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: Constants.Database.databaseName)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in

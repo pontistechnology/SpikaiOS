@@ -88,10 +88,10 @@ extension AppRepository {
     // MARK: Database
     
     func checkPrivateLocalRoom(forId id: Int) -> Future<RoomEntity, Error>{
-        return databaseService.roomEntityService.getPrivateRoom(forId: id)
+        return databaseService.getPrivateRoom(forId: id)
     }
     
     func saveRoom(room: Room) -> Future<RoomEntity, Error> {
-        return databaseService.roomEntityService.saveRoom(room)
+        return databaseService.saveRoom(room)
     }
 }

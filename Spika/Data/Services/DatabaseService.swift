@@ -4,7 +4,7 @@
 //
 //  Created by Marko on 13.10.2021..
 //
-
+import CoreData
 import Combine
 
 enum DatabseError: Error {
@@ -26,33 +26,104 @@ class DatabaseService {
     let messageEntityService: MessageEntityService
     let testEntityService: TestEntityService
     let roomEntityService: RoomEntityService
+    let coreDataStack: CoreDataStack
     
-    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService, testEntityService: TestEntityService, roomEntityService: RoomEntityService) {
+    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService, testEntityService: TestEntityService, roomEntityService: RoomEntityService, coreDataStack: CoreDataStack) {
         self.userEntityService = userEntityService
         self.chatEntityService = chatEntityService
         self.messageEntityService = messageEntityService
         self.testEntityService = testEntityService
         self.roomEntityService = roomEntityService
+        self.coreDataStack = coreDataStack
     }
     
-    func trySaveChanges() -> Future<Bool, Error>{
-        if CoreDataManager.shared.managedContext.hasChanges {
-            do {
-                try CoreDataManager.shared.managedContext.save()
-                return Future { promise in
-                    promise(.success(true))
-                }
-            } catch {
-                return Future { promise in
-                    promise(.failure(error))
-                }
-            }
-        } else {
-            return Future { promise in
-                promise(.success(false))
-            }
+    func trySaveChanges() -> Future<Bool, Error> {
+        coreDataStack.saveBackgroundMOC()
+        // TODO: change CDStack
+        return Future { pro in
+            pro(.success(false))
         }
         
+    }
+}
+
+extension DatabaseService {
+    // TODO: CDStack organize inside services
+    
+    // Room
+    
+    func getPrivateRoom(forId id: Int) -> Future<RoomEntity, Error> {
+        let fetchRequest = NSFetchRequest<RoomEntity>(entityName: Constants.Database.roomEntity)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)") // TODO: chagne to user Id
+        do {
+            let rooms = try coreDataStack.mainMOC.fetch(fetchRequest)
+            if rooms.count == 1 {
+                return Future { promise in
+                    promise(.success(rooms.first!))
+                }
+            } else {
+                return Future { promise in
+                    promise(.failure(DatabseError.moreThanOne))
+                }
+            }
+        } catch {
+            return Future { promise in
+                promise(.failure(error))
+            }
+        }
+    }
+    
+    func saveRoom(_ room: Room) -> Future<RoomEntity, Error> {
+        print("save room: ", room)
+        
+        let newRoom = RoomEntity(room: room, context: coreDataStack.backgroundMOC)
+        coreDataStack.saveBackgroundMOC()
+        
+        return Future { promise in
+            promise(.success(newRoom)) // TODO: change CDStack
+        }
+    }
+    
+    // USER
+    
+    func getUsers() -> Future<[LocalUser], Error> {
+        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
+        do {
+            let userEntities = try coreDataStack.mainMOC.fetch(fetchRequest)
+            
+            let users = userEntities.map{LocalUser(entity: $0)}
+            return Future { promise in promise(.success(users))}
+            
+        } catch let error as NSError {
+            return Future { promise in promise(.failure(error))}
+        }
+    }
+    
+    func saveUser(_ user: LocalUser) -> Future<LocalUser, Error> {
+        _ = UserEntity(insertInto: coreDataStack.backgroundMOC, user: user)
+        coreDataStack.saveBackgroundMOC()
+        
+        return Future { promise in promise(.success(user))}
+        
+//            return Future { promise in promise(.failure(error))}
+    }
+    
+    func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error> {
+        for user in users {
+            coreDataStack.backgroundMOC.perform {
+                _ = UserEntity(insertInto: self.coreDataStack.backgroundMOC, user: user)                
+            }
+        }
+        coreDataStack.saveBackgroundMOC()
+        return Future { promise in promise(.success(users))} // TODO: CDStack change
+//        do {
+//            try managedContext!.save()
+//            return Future { promise in promise(.success(users))}
+//        } catch let error as NSError {
+//            return Future { promise in promise(.failure(error))}
+//        }
+        
+//        return Future { promise in promise(.failure(DatabseError.unknown))}
     }
     
 }

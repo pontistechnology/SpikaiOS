@@ -25,8 +25,12 @@ public class MessageEntity: NSManagedObject {
         return .waiting
     }
       // TODO: think about making everything optional before response
-    convenience init(message: Message) {
-        self.init(entity: MessageEntityService.entity, insertInto: CoreDataManager.shared.managedContext)
+    convenience init(message: Message, context: NSManagedObjectContext) {
+        guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.messageEntity, in: context) else {
+            fatalError("shit, do something")
+        }
+        self.init(entity: entity, insertInto: context)
+        
         createdAt = Int64(message.createdAt)
         id = Int64(message.id)
         fromUserId = Int64(message.fromUserId)

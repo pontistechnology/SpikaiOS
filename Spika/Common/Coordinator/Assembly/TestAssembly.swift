@@ -29,7 +29,8 @@ class TestAssembly: Assembly {
             let messageEntityService = MessageEntityService()
             let testEntityService = TestEntityService()
             let roomEntityService = RoomEntityService()
-            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, testEntityService: testEntityService, roomEntityService: roomEntityService)
+            let coreDataStack = CoreDataStack()
+            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, testEntityService: testEntityService, roomEntityService: roomEntityService, coreDataStack: coreDataStack)
         }.inObjectScope(.container)
 
         container.register(Repository.self, name: RepositoryType.test.name) { r in

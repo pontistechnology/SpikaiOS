@@ -68,8 +68,8 @@ class SSE {
             do {
                 let sseNewMessage = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
                 guard let message = sseNewMessage.message else { return }
-                let mesa = MessageEntity(message: message)
-                CoreDataManager.shared.saveContext()
+                let mesa = MessageEntity(message: message, context: self.repository.getBackgroundContext())
+                
                 self.currentMessage = message
                 self.showNotification()
             } catch {
@@ -113,9 +113,10 @@ class SSE {
         
         let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
         fetchRequest.predicate = NSPredicate(format: "id = %@", "\(currentMessage.fromUserId)")
-        guard let dbUser = try? CoreDataManager.shared.managedContext.fetch(fetchRequest).first else { return }
-        let lU = LocalUser(entity: dbUser)
-        (coordinator as? AppCoordinator)?.presentCurrentPrivateChatScreen(user: lU) // TODO: present currect chat
+        // TODO: CDStack
+//        guard let dbUser = try? CoreDataManager.shared.managedContext.fetch(fetchRequest).first else { return }
+//        let lU = LocalUser(entity: dbUser)
+//        (coordinator as? AppCoordinator)?.presentCurrentPrivateChatScreen(user: lU) // TODO: present currect chat
         alertWindow = nil
         
     }

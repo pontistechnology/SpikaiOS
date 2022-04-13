@@ -4,18 +4,12 @@
 //
 //  Created by Nikola Barbarić on 23.03.2022..
 //
-
-import UIKit
-import CoreData
-
-class CoreDataManager {
+//
+//import UIKit
+//import CoreData
+//
+//class CoreDataManager {
     
-    static let shared = CoreDataManager()
-    var managedContext: NSManagedObjectContext
-    
-    private init() {
-        managedContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-    }
     
 //    var managedContext: NSManagedObjectContext {
 //        print("ovo je prije svega: ", Thread.current)
@@ -23,35 +17,8 @@ class CoreDataManager {
 //        return appDelegate.persistentContainer.viewContext
 //    }
 //
-    var persistentContainer: NSPersistentContainer {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError("AppDelegate missing.") }
-        return appDelegate.coreDataStack.persistentContainer
-    }
     
-    func saveContext() {
-        print("save context .1: ", Thread.current)
-        
-        DispatchQueue.main.async {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError("AppDelegate missing.") }
-            let testViewContext = appDelegate.coreDataStack.persistentContainer.viewContext
-            
-            testViewContext.perform {
-                print("save Context .2: ", Thread.current)
-                if testViewContext.hasChanges {
-                    print("There are changes.")
-                    do {
-                        try testViewContext.save()
-                    } catch  {
-                        fatalError(error.localizedDescription)
-                    }
-                } else {
-                    print("No change.")
-                }
-            }
-        }
-    }
-    
-    func getAllEntities() {
+//    func getAllEntities() {
         // this is only for debugging, call po CoreDataManager.shared.getAllEntities from any breakpoint
         
 //        do {
@@ -92,5 +59,5 @@ class CoreDataManager {
 //        catch {
 //            print("Error occured: ", error.localizedDescription)
 //        }
-    }
-}
+//    }
+//}

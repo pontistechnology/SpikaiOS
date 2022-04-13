@@ -10,7 +10,6 @@ import CoreData
 import Combine
 
 class ChatEntityService {
-    let managedContext = CoreDataManager.shared.managedContext
 //    
 //    func getChats() -> Future<[LocalChat], Error> {
 //        let fetchRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)

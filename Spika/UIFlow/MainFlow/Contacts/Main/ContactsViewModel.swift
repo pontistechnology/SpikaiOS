@@ -155,12 +155,4 @@ class ContactsViewModel: BaseViewModel {
             updateContactsUI(list: filteredContacts)
         }
     }
-        
-    func test() {
-        repository.testnaRepo(naziv: "konj").sink { completion in
-            print("Completion kaže: ", completion)
-        } receiveValue: { povrat in
-            print("Response povrat: ", povrat)
-        }.store(in: &subscriptions)
-    }
 }

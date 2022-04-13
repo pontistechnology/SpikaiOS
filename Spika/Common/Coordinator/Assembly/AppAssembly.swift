@@ -26,12 +26,13 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.container)
         
         container.register(DatabaseService.self) { r in
+            let coreDataStack = CoreDataStack()
             let userEntityService = UserEntityService()
             let chatEntityService = ChatEntityService()
             let messageEntityService = MessageEntityService()
             let testEntityService = TestEntityService()
             let roomEntityService = RoomEntityService()
-            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, testEntityService: testEntityService, roomEntityService: roomEntityService)
+            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, testEntityService: testEntityService, roomEntityService: roomEntityService, coreDataStack: coreDataStack)
         }.inObjectScope(.container)
 
         container.register(Repository.self, name: RepositoryType.production.name) { r in
@@ -40,6 +41,13 @@ final class AppAssembly: Assembly {
             return AppRepository(networkService: networkService, databaseService: databaseService)
         }.inObjectScope(.container)
     }
+    
+//    private func assembleCoreDataStack(_ container: Container) {
+//        container.register(CoreDataStack.self) { r in
+//            let coreDataStack = CoreDataStack()
+//            return coreDataStack
+//        }.inObjectScope(.container)
+//    }
     
     private func assembleSSE(_ container: Container) {
         container.register(SSE.self) { (r, coordinator: AppCoordinator) in

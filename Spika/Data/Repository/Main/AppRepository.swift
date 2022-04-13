@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreData
 
 class AppRepository: Repository {
 
@@ -46,6 +47,14 @@ class AppRepository: Repository {
     
     func trySaveChanges() -> Future<Bool, Error> {
         databaseService.trySaveChanges()
+    }
+    
+    func getMainContext() -> NSManagedObjectContext {
+        return databaseService.coreDataStack.mainMOC
+    }
+    
+    func getBackgroundContext() -> NSManagedObjectContext {
+        return databaseService.coreDataStack.backgroundMOC
     }
     
 }

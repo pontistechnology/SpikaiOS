@@ -8,9 +8,5 @@
 import Combine
 
 extension TestRepository {
-    func testnaRepo(naziv: String) -> Future<String, Error> {
-        return Future { promise in
-            promise(.failure(DatabseError.unknown))
-        }
-    }
+    
 }

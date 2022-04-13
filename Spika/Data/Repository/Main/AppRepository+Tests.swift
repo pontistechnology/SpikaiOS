@@ -8,8 +8,5 @@
 import Combine
 
 extension AppRepository {
-    
-    func testnaRepo(naziv: String) -> Future<String, Error> {
-        return databaseService.testEntityService.testSavingUser(test: naziv)
-    }
+
 }
