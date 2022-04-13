@@ -11,31 +11,6 @@ import CoreData
 class CoreDataStack: NSObject {
     static let moduleName = Constants.Database.databaseName
     
-    func saveMainContext() {
-        guard mainMOC.hasChanges || saveMOC.hasChanges else { return }
-        
-        mainMOC.performAndWait {
-            do {
-                try mainMOC.save()
-            } catch{
-                fatalError("saving main context error")
-            }
-        }
-        
-        saveMOC.perform {
-            do {
-                try self.saveMOC.save()
-            } catch {
-                fatalError("saveMoc error")
-            }
-        }
-    }
-    
-    func testis() {
-        
-    }
-    
-    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: Constants.Database.databaseName)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -60,4 +35,49 @@ class CoreDataStack: NSObject {
         return moc
     }()
     
+    lazy var backgroundMOC: NSManagedObjectContext = {
+        let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        moc.parent = mainMOC
+        moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        return moc
+    }()
+    
+    
+}
+
+// MARK: - Functions
+
+extension CoreDataStack {
+    
+    func saveBackgroundMOC() {
+        
+        backgroundMOC.perform {
+            guard self.backgroundMOC.hasChanges else { return }
+        
+            do {
+                try self.backgroundMOC.save()
+                self.saveToDisk()
+            } catch {
+                fatalError("Background MOC saving fail.")
+            }
+        }
+    }
+
+    private func saveToDisk() {
+        mainMOC.performAndWait {
+            do {
+                try mainMOC.save()
+            } catch{
+                fatalError("saving main context error")
+            }
+        }
+        
+        saveMOC.perform {
+            do {
+                try self.saveMOC.save()
+            } catch {
+                fatalError("saveMoc error")
+            }
+        }
+    }
 }

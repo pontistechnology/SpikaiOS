@@ -43,12 +43,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let user1 = User(id: 101012, displayName: "mico", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
         let ruser1 = RoomUser(userId: 101012, isAdmin: true, user: user1)
         
-        let rUEntity1 = RoomUserEntity(roomUser: ruser1, insertInto: coreDataStack.mainMOC)
+        coreDataStack.backgroundMOC.perform {
+            let rUEntity1 = RoomUserEntity(roomUser: ruser1, insertInto: self.coreDataStack.backgroundMOC)
+            self.coreDataStack.saveBackgroundMOC()
+        }
         
         
 //        let thisShouldNeverFail = UserEntity(user: user1, context: coreDataStack.mainMOC)
         
-        coreDataStack.saveMainContext()
+        coreDataStack.saveBackgroundMOC()
         
         print("stop")
         
