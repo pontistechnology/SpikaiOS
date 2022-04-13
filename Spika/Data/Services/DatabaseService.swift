@@ -92,6 +92,7 @@ extension DatabaseService {
             let userEntities = try coreDataStack.mainMOC.fetch(fetchRequest)
             
             let users = userEntities.map{LocalUser(entity: $0)}
+            print("userentities count: ", userEntities.count, "users", users)
             return Future { promise in promise(.success(users))}
             
         } catch let error as NSError {
@@ -109,19 +110,13 @@ extension DatabaseService {
     }
     
     func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error> {
-        for user in users {
-            coreDataStack.backgroundMOC.perform {
+        coreDataStack.backgroundMOC.perform {
+            for user in users {
                 _ = UserEntity(insertInto: self.coreDataStack.backgroundMOC, user: user)                
             }
+            self.coreDataStack.saveBackgroundMOC()
         }
-        coreDataStack.saveBackgroundMOC()
         return Future { promise in promise(.success(users))} // TODO: CDStack change
-//        do {
-//            try managedContext!.save()
-//            return Future { promise in promise(.success(users))}
-//        } catch let error as NSError {
-//            return Future { promise in promise(.failure(error))}
-//        }
         
 //        return Future { promise in promise(.failure(DatabseError.unknown))}
     }

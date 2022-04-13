@@ -71,7 +71,7 @@ class ContactsViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
-    /// TODO: add paging
+    // TODO: add paging
     func postContacts(hashes: [String]) {
         repository.postContacts(hashes: hashes).sink { completion in
             switch completion {

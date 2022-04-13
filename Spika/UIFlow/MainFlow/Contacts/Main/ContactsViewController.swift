@@ -31,9 +31,7 @@ class ContactsViewController: BaseViewController {
         contactsView.searchBar.delegate = self
         
         contactsView.titleLabel.tap().sink { tap in
-//            PopUpManager.shared.presentAlert(.copy)
             PopUpManager.shared.presentAlert(errorMessage: "tititi")
-//            self.viewModel.test()
         }.store(in: &subscriptions)
         
         //TODO: check this cooments

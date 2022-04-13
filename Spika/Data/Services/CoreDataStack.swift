@@ -61,7 +61,7 @@ extension CoreDataStack {
         
         backgroundMOC.perform {
             guard self.backgroundMOC.hasChanges else { return }
-        
+            
             do {
                 try self.backgroundMOC.save()
                 self.saveToDisk()
@@ -72,6 +72,7 @@ extension CoreDataStack {
     }
 
     private func saveToDisk() {
+        let s = CFAbsoluteTimeGetCurrent()
         mainMOC.performAndWait {
             do {
                 try mainMOC.save()
@@ -79,6 +80,10 @@ extension CoreDataStack {
                 fatalError("saving main context error")
             }
         }
+        
+        let e = CFAbsoluteTimeGetCurrent()
+        
+        print("Duration of main saving", e-s)
         
         saveMOC.perform {
             do {
