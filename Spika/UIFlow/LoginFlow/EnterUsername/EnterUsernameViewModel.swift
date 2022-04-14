@@ -17,25 +17,19 @@ class EnterUsernameViewModel: BaseViewModel {
     func updateUser(username: String, imageFileData: Data?) {
         if let imageFileData = imageFileData {
             let tuple = repository.uploadWholeFile(data: imageFileData)
-//            let totalNumberOfChunks = CGFloat(tuple.totalChunksNumber)
-            
-//            tuple.publisher.sink { [weak self] completion in
-//                switch completion {
-//                case let .failure(error):
-//                    self?.uploadProgressPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
-//                    PopUpManager.shared.presentAlert(errorMessage: "Error with file upload: \(error)")
-//                default:
-//                    break
-//                }
-//            } receiveValue: { [weak self] chunkResponse in
-//                print("chunkResponse: ", chunkResponse)
-//                if let uploadedNumberOfChunks = chunkResponse.data?.uploadedChunks?.count {
-//                    self?.uploadProgressPublisher.send(CGFloat(uploadedNumberOfChunks) / totalNumberOfChunks)
-//                }
-////                if let file = chunkResponse.data?.file {
-////                    self?.updateInfo(username: username, avatarUrl: file.path)
-////                }
-//            }.store(in: &subscriptions)
+            tuple.sink { completion in
+                switch completion {
+                case .finished:
+                    break
+                case let .failure(error):
+                    self.uploadProgressPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
+                    PopUpManager.shared.presentAlert(errorMessage: "Error with file upload: \(error)")
+                }
+            } receiveValue: { (file, percent) in
+                self.uploadProgressPublisher.send(percent)
+                guard let file = file else { return }
+                self.updateInfo(username: username, avatarUrl: file.path)
+            }.store(in: &subscriptions)
         } else {
             self.updateInfo(username: username)
         }

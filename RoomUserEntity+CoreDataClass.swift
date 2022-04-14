@@ -20,8 +20,7 @@ public class RoomUserEntity: NSManagedObject {
         self.init(entity: entity, insertInto: context)
         self.userId = Int64(roomUser.userId)
         self.isAdmin = roomUser.isAdmin
-        context.perform {
-            self.user = UserEntity(user: roomUser.user, context: context)            
-        }
+        self.user = UserEntity(user: roomUser.user, context: context)
+        print("Userentity: ", self.user)
     }
 }

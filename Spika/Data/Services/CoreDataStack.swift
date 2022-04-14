@@ -60,6 +60,7 @@ extension CoreDataStack {
     func saveBackgroundMOC() {
         
         backgroundMOC.perform {
+            print("dva")
             guard self.backgroundMOC.hasChanges else { return }
             
             do {

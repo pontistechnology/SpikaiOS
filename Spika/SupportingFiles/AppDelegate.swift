@@ -36,15 +36,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                UserDefaults.standard.set("QtsRkcMeBVf9nT77", forKey: Constants.UserDefaults.accessToken)
         
 //        print("Thread check test: ", Thread.current)
+//        
+//                let aa = try? coreDataStack.mainMOC.fetch(RoomEntity.fetchRequest())
+//                let bb = aa!.first as? RoomEntity
+//                print(aa?.count)
+//                print(bb)
 
-        let user1 = User(id: 10102, displayName: "jozo", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
-        let ruser1 = RoomUser(userId: 101012, isAdmin: true, user: user1)
+//        let user1 = User(id: 10102, displayName: "kozo", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
+//        let ruser1 = RoomUser(userId: 101012, isAdmin: true, user: user1)
         
-        coreDataStack.backgroundMOC.perform {
-            
-            _ = RoomEntity(room: Room(id: 13, type: "private", name: "clover all", avatarUrl: "nema", users: [ruser1], createdAt: 45), context: self.coreDataStack.backgroundMOC)
-        }
-        self.coreDataStack.saveBackgroundMOC()
+//        coreDataStack.backgroundMOC.perform {
+//            _ = RoomEntity(room: Room(id: 13, type: "private", name: "clover all", avatarUrl: "nema", users: [ruser1], createdAt: 45), context: self.coreDataStack.backgroundMOC)
+//            _ = RoomUserEntity(roomUser: RoomUser(userId: 34, isAdmin: true, user: user1), insertInto: self.coreDataStack.backgroundMOC)
+//            let a = UserEntity(user: user1, context: self.coreDataStack.backgroundMOC)
+//            print("jedan")
+//            let b = RoomUserEntity(roomUser: ruser1, insertInto: self.coreDataStack.backgroundMOC)
+//        }
+//        self.coreDataStack.saveBackgroundMOC()
+        
+        
     
 //        let aa = try? coreDataStack.mainMOC.fetch(UserEntity.fetchRequest())
 //        let bb = aa!.first as? UserEntity

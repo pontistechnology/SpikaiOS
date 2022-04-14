@@ -116,9 +116,20 @@ extension AppRepository {
                         return
                     }
 
-                    self.verifyUpload(total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1)
+                    self.verifyUpload(total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1).sink { completion in
+                        switch completion {
+                            
+                        case .finished:
+                            break
+                        case let .failure(error):
+                            somePublisher.send(completion: .failure(NetworkError.verifyFileFail))
+                        }
+                    } receiveValue: { verifyFileResponse in
+                        print("verifyFile response", verifyFileResponse)
+                        guard let file = verifyFileResponse.data?.file else { return }
+                        somePublisher.send((file, 1))
+                    }.store(in: &self.subs)
                 }
-//                chunkPublisher.send(uploadChunkResponseModel)
             }.store(in: &subs)
         }
         
@@ -150,7 +161,7 @@ extension AppRepository {
         let resources = Resources<VerifyFileResponseModel, VerifyFileRequestModel>(
             path: Constants.Endpoints.verifyFile,
             requestType: .POST,
-            bodyParameters: VerifyFileRequestModel(total: total, size: size, mimeType: mimeType, fileName: fileName, type: type, fileHash: fileHash, relationId: relationId),
+            bodyParameters: VerifyFileRequestModel(total: total, size: size, mimeType: mimeType, fileName: fileName, type: type, fileHash: fileHash, relationId: relationId, clientId: clientId),
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)

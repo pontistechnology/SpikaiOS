@@ -23,11 +23,11 @@ public class RoomEntity: NSManagedObject {
         self.createdAt = Int64(room.createdAt)
         self.type = room.type
         
-        context.perform {
-            for roomUser in room.users {
-                let r = RoomUserEntity(roomUser: roomUser, insertInto: context)
-                self.addToUsers(r)
-            }
+//        context.perform {
+        for roomUser in room.users {
+            let r = RoomUserEntity(roomUser: roomUser, insertInto: context)
+            self.addToUsers(r)
         }
+//        }
     }
 }

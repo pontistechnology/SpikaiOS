@@ -26,6 +26,10 @@ public class UserEntity: NSManagedObject {
         self.displayName = user.displayName
     }
     
+    deinit {
+        print("GLup pokusaj")
+    }
+    
     convenience init(insertInto context: NSManagedObjectContext?, user: LocalUser) {
         guard let context = context,
             let entity = NSEntityDescription.entity(forEntityName: Constants.Database.userEntity, in: context)
