@@ -24,15 +24,13 @@ class DatabaseService {
     let userEntityService: UserEntityService
     let chatEntityService: ChatEntityService
     let messageEntityService: MessageEntityService
-    let testEntityService: TestEntityService
     let roomEntityService: RoomEntityService
     let coreDataStack: CoreDataStack
     
-    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService, testEntityService: TestEntityService, roomEntityService: RoomEntityService, coreDataStack: CoreDataStack) {
+    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService, roomEntityService: RoomEntityService, coreDataStack: CoreDataStack) {
         self.userEntityService = userEntityService
         self.chatEntityService = chatEntityService
         self.messageEntityService = messageEntityService
-        self.testEntityService = testEntityService
         self.roomEntityService = roomEntityService
         self.coreDataStack = coreDataStack
     }
@@ -105,20 +103,16 @@ extension DatabaseService {
         coreDataStack.saveBackgroundMOC()
         
         return Future { promise in promise(.success(user))}
-        
-//            return Future { promise in promise(.failure(error))}
     }
     
     func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error> {
-        coreDataStack.backgroundMOC.perform {
+        var isSavedSuccessfully = false
+        coreDataStack.backgroundMOC.performAndWait {
             for user in users {
                 _ = UserEntity(insertInto: self.coreDataStack.backgroundMOC, user: user)                
             }
             self.coreDataStack.saveBackgroundMOC()
         }
         return Future { promise in promise(.success(users))} // TODO: CDStack change
-        
-//        return Future { promise in promise(.failure(DatabseError.unknown))}
     }
-    
 }

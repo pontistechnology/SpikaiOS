@@ -28,27 +28,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    let coreDataStack = CoreDataStack()
+    
     func test() {
         // only for debug, remove later
         //        print("type is: ", MessageType(rawValue: "textf"))
 //                UserDefaults.standard.set("QtsRkcMeBVf9nT77", forKey: Constants.UserDefaults.accessToken)
         
 //        print("Thread check test: ", Thread.current)
-////
-//        
-//        print("start")
-//        let user1 = User(id: 10102, displayName: "jozo", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
-//        let ruser1 = RoomUser(userId: 101012, isAdmin: true, user: user1)
-//        
-//        coreDataStack.backgroundMOC.perform {
-//            let rUEntity1 = RoomUserEntity(roomUser: ruser1, insertInto: self.coreDataStack.backgroundMOC)
-//            self.coreDataStack.saveBackgroundMOC()
-//        }
-//    
-//        coreDataStack.saveBackgroundMOC()
-//        
-//        print("stop")
-//        
+
+        let user1 = User(id: 10102, displayName: "jozo", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
+        let ruser1 = RoomUser(userId: 101012, isAdmin: true, user: user1)
+        
+        coreDataStack.backgroundMOC.perform {
+            
+            _ = RoomEntity(room: Room(id: 13, type: "private", name: "clover all", avatarUrl: "nema", users: [ruser1], createdAt: 45), context: self.coreDataStack.backgroundMOC)
+        }
+        self.coreDataStack.saveBackgroundMOC()
+    
 //        let aa = try? coreDataStack.mainMOC.fetch(UserEntity.fetchRequest())
 //        let bb = aa!.first as? UserEntity
 //        print(aa?.count)
