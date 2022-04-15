@@ -52,9 +52,4 @@ class AppRepository: Repository {
     func getMainContext() -> NSManagedObjectContext {
         return databaseService.coreDataStack.mainMOC
     }
-    
-    func getBackgroundContext() -> NSManagedObjectContext {
-        return databaseService.coreDataStack.backgroundMOC
-    }
-    
 }

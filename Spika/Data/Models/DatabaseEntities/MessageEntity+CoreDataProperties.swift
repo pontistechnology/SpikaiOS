@@ -2,7 +2,7 @@
 //  MessageEntity+CoreDataProperties.swift
 //  Spika
 //
-//  Created by Nikola Barbarić on 24.03.2022..
+//  Created by Nikola Barbarić on 15.04.2022..
 //
 //
 
@@ -16,17 +16,16 @@ extension MessageEntity {
         return NSFetchRequest<MessageEntity>(entityName: "MessageEntity")
     }
 
-    @NSManaged public var createdAt: Int64
-    @NSManaged public var id: Int64
-    @NSManaged public var fromUserId: Int64
-    @NSManaged public var fromDeviceId: Int64
-    @NSManaged public var totalDeviceCount: Int64
-    @NSManaged public var receivedCount: Int64
-    @NSManaged public var seenCount: Int64
-    @NSManaged public var roomId: Int64
-    @NSManaged public var type: String?
     @NSManaged public var bodyText: String?
-    @NSManaged public var user: UserEntity?
+    @NSManaged public var createdAt: Int64
+    @NSManaged public var fromDeviceId: Int64
+    @NSManaged public var fromUserId: Int64
+    @NSManaged public var id: Int64
+    @NSManaged public var receivedCount: Int64
+    @NSManaged public var roomId: Int64
+    @NSManaged public var seenCount: Int64
+    @NSManaged public var totalDeviceCount: Int64
+    @NSManaged public var type: String?
 
 }
 

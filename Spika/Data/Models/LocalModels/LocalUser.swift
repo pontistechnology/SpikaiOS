@@ -33,12 +33,12 @@ struct LocalUser: Codable {
     }
     
     init(entity: UserEntity) {
-        self.id = entity.id
+        self.id = Int(entity.id)
         self.displayName = entity.displayName
         self.avatarUrl = entity.avatarUrl
         self.telephoneNumber = entity.telephoneNumber
         self.emailAddress = entity.emailAddress
-        self.createdAt = entity.createdAt
+        self.createdAt = Int(entity.createdAt)
         
         self.givenName = entity.givenName
         self.familyName = entity.familyName

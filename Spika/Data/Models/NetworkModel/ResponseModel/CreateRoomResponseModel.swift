@@ -22,8 +22,8 @@ struct Room: Codable {
     let type: String
     let name: String
     let avatarUrl: String
-    let users: [RoomUser]
     let createdAt: Int
+    let users: [RoomUser]
 }
 
 struct RoomUser: Codable {

@@ -36,7 +36,7 @@ class DatabaseService {
     }
     
     func trySaveChanges() -> Future<Bool, Error> {
-        coreDataStack.saveBackgroundMOC()
+
         // TODO: change CDStack
         return Future { pro in
             pro(.success(false))
@@ -74,11 +74,11 @@ extension DatabaseService {
     func saveRoom(_ room: Room) -> Future<RoomEntity, Error> {
         print("save room: ", room)
         
-        let newRoom = RoomEntity(room: room, context: coreDataStack.backgroundMOC)
-        coreDataStack.saveBackgroundMOC()
+//        let newRoom = RoomEntity(room: room, context: coreDataStack.backgroundMOC)
+//        coreDataStack.saveBackgroundMOC()
         
         return Future { promise in
-            promise(.success(newRoom)) // TODO: change CDStack
+            promise(.failure(DatabseError.moreThanOne)) // TODO: change CDStack
         }
     }
     
@@ -99,20 +99,20 @@ extension DatabaseService {
     }
     
     func saveUser(_ user: LocalUser) -> Future<LocalUser, Error> {
-        _ = UserEntity(insertInto: coreDataStack.backgroundMOC, user: user)
-        coreDataStack.saveBackgroundMOC()
+//        _ = UserEntity(insertInto: coreDataStack.backgroundMOC, user: user)
+//        coreDataStack.saveBackgroundMOC()
         
         return Future { promise in promise(.success(user))}
     }
     
     func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error> {
         var isSavedSuccessfully = false
-        coreDataStack.backgroundMOC.performAndWait {
-            for user in users {
-                _ = UserEntity(insertInto: self.coreDataStack.backgroundMOC, user: user)                
-            }
-            self.coreDataStack.saveBackgroundMOC()
-        }
+//        coreDataStack.backgroundMOC.performAndWait {
+//            for user in users {
+//                _ = UserEntity(insertInto: self.coreDataStack.backgroundMOC, user: user)                
+//            }
+//            self.coreDataStack.saveBackgroundMOC()
+//        }
         return Future { promise in promise(.success(users))} // TODO: CDStack change
     }
 }

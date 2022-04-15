@@ -11,7 +11,6 @@
         <attribute name="seenCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="totalDeviceCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="messages" inverseEntity="UserEntity"/>
     </entity>
     <entity name="RoomEntity" representedClassName="RoomEntity" syncable="YES">
         <attribute name="avatarUrl" optional="YES" attributeType="String"/>
@@ -19,7 +18,7 @@
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
-        <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoomUserEntity"/>
+        <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoomUserEntity" inverseName="inRooms" inverseEntity="RoomUserEntity"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -29,7 +28,8 @@
     <entity name="RoomUserEntity" representedClassName="RoomUserEntity" syncable="YES">
         <attribute name="isAdmin" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserEntity"/>
+        <relationship name="inRooms" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RoomEntity" inverseName="users" inverseEntity="RoomEntity"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserEntity" inverseName="roomUsers" inverseEntity="UserEntity"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="userId"/>
@@ -45,7 +45,7 @@
         <attribute name="givenName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="telephoneNumber" optional="YES" attributeType="String"/>
-        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageEntity" inverseName="user" inverseEntity="MessageEntity"/>
+        <relationship name="roomUsers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoomUserEntity" inverseName="user" inverseEntity="RoomUserEntity"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -53,9 +53,9 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="194"/>
+        <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="179"/>
         <element name="RoomEntity" positionX="-180" positionY="117" width="128" height="119"/>
-        <element name="RoomUserEntity" positionX="-178.015625" positionY="-33.05859375" width="128" height="88"/>
+        <element name="RoomUserEntity" positionX="-178.015625" positionY="-33.05859375" width="128" height="89"/>
         <element name="UserEntity" positionX="35.22509765625" positionY="116.6122131347656" width="128" height="164"/>
     </elements>
 </model>

@@ -18,16 +18,12 @@ public class UserEntity: NSManagedObject {
             fatalError("fanta")
         }
         self.init(entity: entity, insertInto: context)
-        self.id = user.id
-        self.createdAt = user.createdAt ?? 0 // TODO: check
+        self.id = Int64(user.id)
+        self.createdAt = Int64(user.createdAt ?? 0) // TODO: check
         self.avatarUrl = user.avatarUrl
         self.emailAddress = user.emailAddress
         self.telephoneNumber = user.telephoneNumber
         self.displayName = user.displayName
-    }
-    
-    deinit {
-        print("GLup pokusaj")
     }
     
     convenience init(insertInto context: NSManagedObjectContext?, user: LocalUser) {
@@ -39,12 +35,12 @@ public class UserEntity: NSManagedObject {
         }
         self.init(entity: entity, insertInto: context)
         
-        self.id = user.id
+        self.id = Int64(user.id)
         self.displayName = user.displayName
         self.avatarUrl = user.avatarUrl
         self.telephoneNumber = user.telephoneNumber
         self.emailAddress = user.emailAddress
-        self.createdAt = user.createdAt!
+        self.createdAt = Int64(user.createdAt!)
         
         self.givenName = user.givenName
         self.familyName = user.familyName

@@ -21,6 +21,5 @@ public class RoomUserEntity: NSManagedObject {
         self.userId = Int64(roomUser.userId)
         self.isAdmin = roomUser.isAdmin
         self.user = UserEntity(user: roomUser.user, context: context)
-        print("Userentity: ", self.user)
     }
 }

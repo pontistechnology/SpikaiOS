@@ -122,9 +122,9 @@ extension CurrentPrivateChatViewModel {
 extension CurrentPrivateChatViewModel {
     
     func trySendMessage(text: String) {
-        let mesa = MessageEntity(message: Message(text: text), context: repository.getBackgroundContext())  // TODO: CDStack
+//        let mesa = MessageEntity(message: Message(text: text), context: repository.getBackgroundContext())  // TODO: CDStack
         repository.trySaveChanges()
-        sendMessage(messageEntity: mesa)
+//        sendMessage(messageEntity: mesa)
     }
     
     func sendMessage(messageEntity: MessageEntity) {

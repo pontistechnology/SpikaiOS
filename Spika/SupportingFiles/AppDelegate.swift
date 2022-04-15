@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         FirebaseApp.configure()
-        
-        test()
+        allroomsprinter()
+//        test()
         customization()
         
         return true
@@ -30,36 +30,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let coreDataStack = CoreDataStack()
     
+    func allroomsprinter() {
+        let aa = try! coreDataStack.mainMOC.fetch(RoomEntity.fetchRequest())
+        print(aa.count)
+        for a in aa {
+            print("Begi room: ", a)
+            print("Count of users: ", a.users!.count)
+            for user in a.users! {
+                print("Begi user: ", (user as! RoomUserEntity).user?.displayName)
+            }
+        }
+    }
+    
     func test() {
         // only for debug, remove later
         //        print("type is: ", MessageType(rawValue: "textf"))
 //                UserDefaults.standard.set("QtsRkcMeBVf9nT77", forKey: Constants.UserDefaults.accessToken)
         
-//        print("Thread check test: ", Thread.current)
-//        
-//                let aa = try? coreDataStack.mainMOC.fetch(RoomEntity.fetchRequest())
-//                let bb = aa!.first as? RoomEntity
-//                print(aa?.count)
-//                print(bb)
+        print("Thread check test: ", Thread.current)
 
-//        let user1 = User(id: 10102, displayName: "kozo", avatarUrl: "1", telephoneNumber: "22", telephoneNumberHashed: "33", emailAddress: "mm", createdAt: 145)
-//        let ruser1 = RoomUser(userId: 101012, isAdmin: true, user: user1)
+
+        let roomaga = Room(id: 15, type: "private", name: "CloverAll", avatarUrl: "nema", createdAt: 43,
+                           users: [
+                            RoomUser(userId: 12,
+                                            isAdmin: true,
+                                            user: User(id: 12,
+                                                       displayName: "nikola",
+                                                       avatarUrl: "n",
+                                                       telephoneNumber: "w",
+                                                       telephoneNumberHashed: "f",
+                                                       emailAddress: "gf",
+                                                       createdAt: 12)),
+                           RoomUser(userId: 13,
+                                    isAdmin: false,
+                                    user: User(id: 13,
+                                               displayName: "mia",
+                                               avatarUrl: "f",
+                                               telephoneNumber: "f",
+                                               telephoneNumberHashed: "fsa",
+                                               emailAddress: "bar",
+                                               createdAt: 45))
+                           ])
         
-//        coreDataStack.backgroundMOC.perform {
-//            _ = RoomEntity(room: Room(id: 13, type: "private", name: "clover all", avatarUrl: "nema", users: [ruser1], createdAt: 45), context: self.coreDataStack.backgroundMOC)
-//            _ = RoomUserEntity(roomUser: RoomUser(userId: 34, isAdmin: true, user: user1), insertInto: self.coreDataStack.backgroundMOC)
-//            let a = UserEntity(user: user1, context: self.coreDataStack.backgroundMOC)
-//            print("jedan")
-//            let b = RoomUserEntity(roomUser: ruser1, insertInto: self.coreDataStack.backgroundMOC)
-//        }
-//        self.coreDataStack.saveBackgroundMOC()
+        coreDataStack.persistentContainer.performBackgroundTask { context in
+            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            let roomEntity = RoomEntity(room: roomaga, context: context)
+            try! context.save()
+        }
         
-        
-    
-//        let aa = try? coreDataStack.mainMOC.fetch(UserEntity.fetchRequest())
-//        let bb = aa!.first as? UserEntity
-//        print(aa?.count)
-//        print(bb?.displayName)
         
     }
     

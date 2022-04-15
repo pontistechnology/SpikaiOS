@@ -10,10 +10,8 @@ import Combine
 import CoreData
 
 class TestRepository: Repository {
-    func getBackgroundContext() -> NSManagedObjectContext {
-        return databaseService.coreDataStack.backgroundMOC
-    }
     
+
     func trySaveChanges() -> Future<Bool, Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))

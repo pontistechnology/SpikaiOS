@@ -61,14 +61,14 @@ class SSE {
         }
         
         eventSource?.onMessage { id, event, data in
-            print("onMessage: ", id, event, data)
+//            print("onMessage: ", id, event, data)
             
             guard let jsonData = data?.data(using: .utf8) else { return }
             
             do {
                 let sseNewMessage = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
                 guard let message = sseNewMessage.message else { return }
-                let mesa = MessageEntity(message: message, context: self.repository.getBackgroundContext())
+//                let mesa = MessageEntity(message: message, context: self.repository.getBackgroundContext())
                 
                 self.currentMessage = message
                 self.showNotification()

@@ -2,7 +2,7 @@
 //  RoomEntity+CoreDataProperties.swift
 //  Spika
 //
-//  Created by Nikola Barbarić on 06.04.2022..
+//  Created by Nikola Barbarić on 15.04.2022..
 //
 //
 
