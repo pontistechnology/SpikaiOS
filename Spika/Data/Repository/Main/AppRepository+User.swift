@@ -122,6 +122,7 @@ extension AppRepository {
                         case .finished:
                             break
                         case let .failure(error):
+                            print("verifyUpload error: ", error)
                             somePublisher.send(completion: .failure(NetworkError.verifyFileFail))
                         }
                     } receiveValue: { verifyFileResponse in

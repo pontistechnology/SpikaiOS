@@ -106,7 +106,7 @@ extension DatabaseService {
     }
     
     func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error> {
-        var isSavedSuccessfully = false
+//        var isSavedSuccessfully = false
 //        coreDataStack.backgroundMOC.performAndWait {
 //            for user in users {
 //                _ = UserEntity(insertInto: self.coreDataStack.backgroundMOC, user: user)                

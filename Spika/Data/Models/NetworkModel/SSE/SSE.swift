@@ -45,7 +45,7 @@ class SSE {
         print("SSE URL : ", serverURL)
         eventSource = EventSource(url: serverURL)
         
-        eventSource?.onOpen { [weak self] in
+        eventSource?.onOpen {
             print("CONNECTED")
         }
         

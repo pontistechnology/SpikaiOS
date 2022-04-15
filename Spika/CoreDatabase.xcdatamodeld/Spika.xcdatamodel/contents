@@ -18,7 +18,7 @@
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
-        <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoomUserEntity" inverseName="inRooms" inverseEntity="RoomUserEntity"/>
+        <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RoomUserEntity" inverseName="inRooms" inverseEntity="RoomUserEntity"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -29,7 +29,7 @@
         <attribute name="isAdmin" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="inRooms" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RoomEntity" inverseName="users" inverseEntity="RoomEntity"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserEntity" inverseName="roomUsers" inverseEntity="UserEntity"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="roomUsers" inverseEntity="UserEntity"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="userId"/>

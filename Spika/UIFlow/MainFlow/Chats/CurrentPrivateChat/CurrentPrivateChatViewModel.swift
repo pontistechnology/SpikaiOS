@@ -75,7 +75,7 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { response in
             
             if let room = response.data?.room {
-                room.users
+//                room.users
                 self.saveLocalRoom(room: room)
                 self.networkRequestState.send(.finished)
             } else {
@@ -123,7 +123,7 @@ extension CurrentPrivateChatViewModel {
     
     func trySendMessage(text: String) {
 //        let mesa = MessageEntity(message: Message(text: text), context: repository.getBackgroundContext())  // TODO: CDStack
-        repository.trySaveChanges()
+//        repository.trySaveChanges()
 //        sendMessage(messageEntity: mesa)
     }
     
@@ -143,8 +143,8 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { response in
             print("SendMessage response: ", response)
             messageEntity.seenCount = 0 // TODO: change logic and order
-            self.repository.trySaveChanges()
-            guard let message = response.data?.message else { return }
+//            self.repository.trySaveChanges()
+//            guard let message = response.data?.message else { return }
             
         }.store(in: &subscriptions)
     }

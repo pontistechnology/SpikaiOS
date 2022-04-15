@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         FirebaseApp.configure()
-        allroomsprinter()
+//        allroomsprinter()
 //        test()
         customization()
         
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Begi room: ", a)
             print("Count of users: ", a.users!.count)
             for user in a.users! {
-                print("Begi user: ", (user as! RoomUserEntity).user?.displayName)
+                print("Begi user: ", (user as! RoomUserEntity).user!.displayName!)
             }
         }
     }
@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         coreDataStack.persistentContainer.performBackgroundTask { context in
             context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-            let roomEntity = RoomEntity(room: roomaga, context: context)
+            _ = RoomEntity(room: roomaga, context: context)
             try! context.save()
         }
         
