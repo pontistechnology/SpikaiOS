@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         FirebaseApp.configure()
-//        allroomsprinter()
+        allroomsprinter()
 //        test()
         customization()
         
@@ -31,10 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let coreDataStack = CoreDataStack()
     
     func allroomsprinter() {
-        let aa = try! coreDataStack.mainMOC.fetch(RoomEntity.fetchRequest())
+        let fr = RoomEntity.fetchRequest()
+        fr.predicate = NSPredicate(format: "type == 'private' AND ANY users.userId == 12")
+        let aa = try! coreDataStack.mainMOC.fetch(fr)
         print(aa.count)
         for a in aa {
-            print("Begi room: ", a)
+            print("Begi room: ", a.type)
             print("Count of users: ", a.users!.count)
             for user in a.users! {
                 print("Begi user: ", (user as! RoomUserEntity).user!.displayName!)

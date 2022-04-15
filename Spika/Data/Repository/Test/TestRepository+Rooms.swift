@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import CoreData
 
 extension TestRepository {
     func createRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
@@ -33,7 +34,7 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
-    func checkPrivateLocalRoom(forId id: Int) -> Future<RoomEntity, Error> {
+    func checkPrivateLocalRoom(forId id: Int) -> Future<NSManagedObjectID, Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))
         }

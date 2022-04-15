@@ -39,8 +39,8 @@ extension CurrentPrivateChatViewModel {
                 print("no local room")
                 self.checkOnlineRoom()
             }
-        } receiveValue: { roomEntity in
-//            self.roomEntity = roomEntity
+        } receiveValue: { roomEntityID in
+            self.roomEntityID = roomEntityID
             self.setFetch()
         }.store(in: &subscriptions)
     }
@@ -112,7 +112,7 @@ extension CurrentPrivateChatViewModel {
             else { return }
             
             let predicate = NSPredicate(format: "%K != %@",
-                                        #keyPath(MessageEntity.roomId), roomEntity.id)
+                                        #keyPath(MessageEntity.roomId), "\(roomEntity.id)")
             self.coreDataFetchedResults.controller.fetchRequest.predicate = predicate
             self.coreDataFetchedResults.performFetch { result in
                 switch result {

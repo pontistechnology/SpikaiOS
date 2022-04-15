@@ -88,7 +88,7 @@ extension AppRepository {
     
     // MARK: Database
     
-    func checkPrivateLocalRoom(forId id: Int) -> Future<RoomEntity, Error>{
+    func checkPrivateLocalRoom(forId id: Int) -> Future<NSManagedObjectID, Error>{
         return databaseService.getPrivateRoom(forId: id)
     }
     

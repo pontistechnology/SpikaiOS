@@ -44,15 +44,15 @@ extension DatabaseService {
     
     // Room
     
-    func getPrivateRoom(forId id: Int) -> Future<RoomEntity, Error> {
+    func getPrivateRoom(forId id: Int) -> Future<NSManagedObjectID, Error> {
         // CDStack
-        let fetchRequest = NSFetchRequest<RoomEntity>(entityName: Constants.Database.roomEntity)
-        fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)") // TODO: chagne to user Id
+        let fetchRequest = RoomEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "type == 'private' AND ANY users.userId == %@", "\(id)") // TODO: chagne to user Id
         do {
             let rooms = try coreDataStack.mainMOC.fetch(fetchRequest)
             if rooms.count == 1 {
                 return Future { promise in
-                    promise(.success(rooms.first!))
+                    promise(.success(rooms.first!.objectID))
                 }
             } else {
                 return Future { promise in
