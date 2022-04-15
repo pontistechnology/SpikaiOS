@@ -12,11 +12,11 @@ import CoreData
 class TestRepository: Repository {
     
 
-    func trySaveChanges() -> Future<Bool, Error> {
-        return Future { promise in
-            promise(.failure(DatabseError.unknown))
-        }
-    }
+//    func trySaveChanges() -> Future<Bool, Error> {
+//        return Future { promise in
+//            promise(.failure(DatabseError.unknown))
+//        }
+//    }
     
     func saveRoom(room: Room) -> Future<RoomEntity, Error> {
         return Future { promise in

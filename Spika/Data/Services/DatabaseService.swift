@@ -8,7 +8,7 @@ import CoreData
 import Combine
 
 enum DatabseError: Error {
-    case requestFailed, noSuchRecord, unknown, moreThanOne
+    case requestFailed, noSuchRecord, unknown, moreThanOne, savingError
 
     var description : String {
         switch self {
@@ -16,6 +16,7 @@ enum DatabseError: Error {
         case .noSuchRecord: return "Record do not exists."
         case .unknown: return "Unknown error."
         case .moreThanOne: return "More than one record."
+        case .savingError: return "Saving error."
         }
   }
 }
@@ -35,14 +36,7 @@ class DatabaseService {
         self.coreDataStack = coreDataStack
     }
     
-    func trySaveChanges() -> Future<Bool, Error> {
 
-        // TODO: change CDStack
-        return Future { pro in
-            pro(.success(false))
-        }
-        
-    }
 }
 
 extension DatabaseService {
@@ -51,6 +45,7 @@ extension DatabaseService {
     // Room
     
     func getPrivateRoom(forId id: Int) -> Future<RoomEntity, Error> {
+        // CDStack
         let fetchRequest = NSFetchRequest<RoomEntity>(entityName: Constants.Database.roomEntity)
         fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)") // TODO: chagne to user Id
         do {
@@ -72,13 +67,21 @@ extension DatabaseService {
     }
     
     func saveRoom(_ room: Room) -> Future<RoomEntity, Error> {
-        print("save room: ", room)
         
-//        let newRoom = RoomEntity(room: room, context: coreDataStack.backgroundMOC)
-//        coreDataStack.saveBackgroundMOC()
-        
-        return Future { promise in
-            promise(.failure(DatabseError.moreThanOne)) // TODO: change CDStack
+        return Future { [weak self] promise in
+            // TODO: change thread to ID
+            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                let a = RoomEntity(room: room, context: context)
+                do {
+                    try context.save()
+                    print("this room is saved: ", room)
+                    promise(.success(a))
+                } catch {
+                    print("Error saving: ", error)
+                    promise(.failure(DatabseError.savingError))
+                }
+            }
         }
     }
     

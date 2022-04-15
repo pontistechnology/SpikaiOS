@@ -64,7 +64,7 @@ protocol Repository {
     // MARK: - COREDATA
     
     func getMainContext() -> NSManagedObjectContext
-    func trySaveChanges() -> Future<Bool, Error>
+//    func trySaveChanges() -> Future<Bool, Error>
     
     // MARK: COREDATA: User
     

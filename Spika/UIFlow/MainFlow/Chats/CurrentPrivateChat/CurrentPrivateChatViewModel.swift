@@ -75,10 +75,11 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { response in
             
             if let room = response.data?.room {
-//                room.users
+                print("There is online room.")
                 self.saveLocalRoom(room: room)
                 self.networkRequestState.send(.finished)
             } else {
+                print("There is no online room, creating started...")
                 self.createRoom(userId: self.friendUser.id)
             }
         }.store(in: &subscriptions)
