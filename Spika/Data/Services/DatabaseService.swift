@@ -66,17 +66,19 @@ extension DatabaseService {
         }
     }
     
-    func saveRoom(_ room: Room) -> Future<RoomEntity, Error> {
+    func saveRoom(_ room: Room) -> Future<NSManagedObjectID, Error> {
         
         return Future { [weak self] promise in
-            // TODO: change thread to ID
+            // TODO: change return to ID
             self?.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let a = RoomEntity(room: room, context: context)
                 do {
                     try context.save()
                     print("this room is saved: ", room)
-                    promise(.success(a))
+                    let moID = a.objectID
+                    guard !moID.isTemporaryID else { return }
+                    promise(.success(moID))
                 } catch {
                     print("Error saving: ", error)
                     promise(.failure(DatabseError.savingError))

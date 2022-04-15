@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreData
 
 extension AppRepository {
     
@@ -91,7 +92,7 @@ extension AppRepository {
         return databaseService.getPrivateRoom(forId: id)
     }
     
-    func saveRoom(room: Room) -> Future<RoomEntity, Error> {
+    func saveRoom(room: Room) -> Future<NSManagedObjectID, Error> {
         return databaseService.saveRoom(room)
     }
 }

@@ -79,7 +79,7 @@ protocol Repository {
     // MARK: COREDATA: Room
     
     func checkPrivateLocalRoom(forId id: Int) -> Future<RoomEntity, Error>
-    func saveRoom(room: Room) -> Future<RoomEntity, Error>
+    func saveRoom(room: Room) -> Future<NSManagedObjectID, Error>
 
     // MARK: - USERDEFAULTS: User
     

@@ -12,13 +12,8 @@ import CoreData
 class TestRepository: Repository {
     
 
-//    func trySaveChanges() -> Future<Bool, Error> {
-//        return Future { promise in
-//            promise(.failure(DatabseError.unknown))
-//        }
-//    }
     
-    func saveRoom(room: Room) -> Future<RoomEntity, Error> {
+    func saveRoom(room: Room) -> Future<NSManagedObjectID, Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))
         }

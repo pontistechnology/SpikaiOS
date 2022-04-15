@@ -13,7 +13,7 @@ import IKEventSource
 class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: LocalUser
-    var roomEntity: RoomEntity?
+    var roomEntityID: NSManagedObjectID?
     let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
     lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self,
                                                              entityName: "MessageEntity",
@@ -37,31 +37,15 @@ extension CurrentPrivateChatViewModel {
                 break
             case .failure(_):
                 print("no local room")
-                self.checkRoom()
-                break
+                self.checkOnlineRoom()
             }
         } receiveValue: { roomEntity in
-            self.roomEntity = roomEntity
+//            self.roomEntity = roomEntity
             self.setFetch()
         }.store(in: &subscriptions)
     }
     
-    func saveLocalRoom(room: Room) {
-        repository.saveRoom(room: room).sink { completion in
-            switch completion {
-                
-            case .finished:
-                print("saved to local DB")
-            case .failure(_):
-                print("saving to local DB failed")
-            }
-        } receiveValue: { roomEntity in
-            self.roomEntity = roomEntity
-            self.setFetch()
-        }.store(in: &subscriptions)
-    }
-    
-    func checkRoom()  {
+    func checkOnlineRoom()  {
         networkRequestState.send(.started())
         
         repository.checkRoom(forUserId: friendUser.id).sink { completion in
@@ -85,6 +69,21 @@ extension CurrentPrivateChatViewModel {
         }.store(in: &subscriptions)
     }
     
+    func saveLocalRoom(room: Room) {
+        repository.saveRoom(room: room).sink { completion in
+            switch completion {
+                
+            case .finished:
+                print("saved to local DB")
+            case .failure(_):
+                print("saving to local DB failed")
+            }
+        } receiveValue: { roomEntityID in
+            self.roomEntityID = roomEntityID
+            self.setFetch()
+        }.store(in: &subscriptions)
+    }
+    
     func createRoom(userId: Int) {
         networkRequestState.send(.started())
         repository.createRoom(userId: userId).sink { completion in
@@ -105,15 +104,23 @@ extension CurrentPrivateChatViewModel {
     }
     
     func setFetch() {
-        let predicate = NSPredicate(format: "%K != %@",
-                                    #keyPath(MessageEntity.bodyText), "miki") // TODO: add id
-        coreDataFetchedResults.controller.fetchRequest.predicate = predicate
-        coreDataFetchedResults.performFetch { result in
-            switch result {
-            case .success(_):
-                self.tableViewShouldReload.send(true)
-            case .failure(_):
-                break
+        DispatchQueue.main.async {
+            print("setFetch thread:", Thread.current)
+            let mainMOC = self.repository.getMainContext()
+            guard let roomEntityID = self.roomEntityID,
+                  let roomEntity = (mainMOC.object(with: roomEntityID) as? RoomEntity)
+            else { return }
+            
+            let predicate = NSPredicate(format: "%K != %@",
+                                        #keyPath(MessageEntity.roomId), roomEntity.id)
+            self.coreDataFetchedResults.controller.fetchRequest.predicate = predicate
+            self.coreDataFetchedResults.performFetch { result in
+                switch result {
+                case .success(_):
+                    self.tableViewShouldReload.send(true)
+                case .failure(_):
+                    break
+                }
             }
         }
     }
@@ -129,7 +136,8 @@ extension CurrentPrivateChatViewModel {
     }
     
     func sendMessage(messageEntity: MessageEntity) {
-        guard let roomEntity = roomEntity,
+        guard let roomEntityID = roomEntityID,
+              let roomEntity = (repository.getMainContext().object(with: roomEntityID) as? RoomEntity),
               let text = messageEntity.bodyText
         else { return }
         
