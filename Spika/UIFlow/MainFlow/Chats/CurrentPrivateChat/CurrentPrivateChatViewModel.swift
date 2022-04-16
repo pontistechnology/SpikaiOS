@@ -111,7 +111,7 @@ extension CurrentPrivateChatViewModel {
                   let roomEntity = (mainMOC.object(with: roomEntityID) as? RoomEntity)
             else { return }
             
-            let predicate = NSPredicate(format: "%K != %@",
+            let predicate = NSPredicate(format: "%K == %@",
                                         #keyPath(MessageEntity.roomId), "\(roomEntity.id)")
             self.coreDataFetchedResults.controller.fetchRequest.predicate = predicate
             self.coreDataFetchedResults.performFetch { result in
@@ -126,35 +126,52 @@ extension CurrentPrivateChatViewModel {
     }
 }
 
-// test sending states
 extension CurrentPrivateChatViewModel {
     
     func trySendMessage(text: String) {
-//        let mesa = MessageEntity(message: Message(text: text), context: repository.getBackgroundContext())  // TODO: CDStack
-//        repository.trySaveChanges()
-//        sendMessage(messageEntity: mesa)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self,
+                  let roomEntityID = self.roomEntityID,
+                  let roomEntity = (self.repository.getMainContext().object(with: roomEntityID) as? RoomEntity)
+            else { return }
+        
+            let mesa = MessageEntity(message: Message(text: text,
+                                                      myId: self.repository.getMyUserId(),
+                                                      roomId: Int(roomEntity.id)),
+                                     context: self.repository.getMainContext())
+            try! self.repository.getMainContext().save()
+            self.sendMessage(messageEntity: mesa)
+        }
     }
     
     func sendMessage(messageEntity: MessageEntity) {
-        guard let roomEntityID = roomEntityID,
-              let roomEntity = (repository.getMainContext().object(with: roomEntityID) as? RoomEntity),
-              let text = messageEntity.bodyText
-        else { return }
-        
-        repository.sendTextMessage(message: MessageBody(text: text), roomId: Int(roomEntity.id)).sink { completion in
-            switch completion {
-                
-            case .finished:
-                print("finished")
-            case .failure(_):
-                print("failure")
-            }
-        } receiveValue: { response in
-            print("SendMessage response: ", response)
-            messageEntity.seenCount = 0 // TODO: change logic and order
-//            self.repository.trySaveChanges()
-//            guard let message = response.data?.message else { return }
+        DispatchQueue.main.async { [weak self] in
             
-        }.store(in: &subscriptions)
+            guard let self = self,
+                  let roomEntityID = self.roomEntityID,
+                  let roomEntity = (self.repository.getMainContext().object(with: roomEntityID) as? RoomEntity),
+                  let text = messageEntity.bodyText
+            else { return }
+            
+            self.repository.sendTextMessage(message: MessageBody(text: text), roomId: Int(roomEntity.id)).sink { completion in
+                switch completion {
+                    
+                case .finished:
+                    print("finished")
+                case .failure(_):
+                    print("failure")
+                }
+            } receiveValue: { response in
+                print("SendMessage response: ", response)
+                DispatchQueue.main.async {
+                    messageEntity.seenCount = 0 // TODO: change logic and order
+                    try! self.repository.getMainContext().save()
+                }
+                
+    //            self.repository.trySaveChanges()
+    //            guard let message = response.data?.message else { return }
+                
+            }.store(in: &self.subscriptions)
+        }
     }
 }
