@@ -12,7 +12,7 @@ import Combine
 class UserEntityService {
     
     
-//    func getChatsForUser(user: LocalUser) -> Future<[LocalChat], Error> {
+//    func getChatsForUser(user: User) -> Future<[LocalChat], Error> {
 //        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")
 //        do {
@@ -32,7 +32,7 @@ class UserEntityService {
 //        }
 //    }
     
-//    func addChatToUser(user: LocalUser, chat: LocalChat) -> Future<LocalUser, Error> {
+//    func addChatToUser(user: User, chat: LocalChat) -> Future<User, Error> {
 //        let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
 //        let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
@@ -52,7 +52,7 @@ class UserEntityService {
 //        }
 //    }
 //    
-//    func removeUsetFromChat(user: LocalUser, chat: LocalChat) -> Future<LocalChat, Error> {
+//    func removeUsetFromChat(user: User, chat: LocalChat) -> Future<LocalChat, Error> {
 //        let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
 //        let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
@@ -72,7 +72,7 @@ class UserEntityService {
 //        }
 //    }
 //    
-//    func updateUser(_ user: LocalUser) -> Future<LocalUser, Error> {
+//    func updateUser(_ user: User) -> Future<User, Error> {
 //        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")
 //        do {
@@ -94,7 +94,7 @@ class UserEntityService {
 //        }
 //    }
     
-//    func deleteUser(_ user: LocalUser) -> Future<LocalUser, Error> {
+//    func deleteUser(_ user: User) -> Future<User, Error> {
 //        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
 //        do {

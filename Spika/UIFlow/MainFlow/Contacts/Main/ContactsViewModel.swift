@@ -9,15 +9,15 @@ import Combine
 
 class ContactsViewModel: BaseViewModel {
     
-    let contactsSubject = CurrentValueSubject<[[LocalUser]], Never>([])
-    var users = Array<LocalUser>()
+    let contactsSubject = CurrentValueSubject<[[User]], Never>([])
+    var users = Array<User>()
     
     
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
     }
     
-    func showDetailsScreen(user: LocalUser) {
+    func showDetailsScreen(user: User) {
         getAppCoordinator()?.presentDetailsScreen(user: user)
     }
     
@@ -38,12 +38,7 @@ class ContactsViewModel: BaseViewModel {
     }
     
     func saveUsers(_ users: [User]) {
-        var dbUsers = [LocalUser]()
-        for user in users {
-            let dbUser = LocalUser(user: user)
-            dbUsers.append(dbUser)
-        }
-        repository.saveUsers(dbUsers).sink { [weak self] completion in
+        repository.saveUsers(users).sink { [weak self] completion in
             guard let self = self else { return }
             switch completion {
             case let .failure(error):
@@ -118,7 +113,7 @@ class ContactsViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
-    func updateContactsUI(list: [LocalUser]) {
+    func updateContactsUI(list: [User]) {
         
 //        let appUser1 = AppUser(id: 100, displayName: "Ćap", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
 //        let appUser2 = AppUser(id: 100, displayName: "Cup", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
@@ -140,7 +135,7 @@ class ContactsViewModel: BaseViewModel {
 //        sortedList.append(appUser)
 //        let sortedList = list.sort(using: .localizedStandard)
           
-        var tableAppUsers = Array<Array<LocalUser>>()
+        var tableAppUsers = Array<Array<User>>()
         for user in sortedList {
             if let char1 = user.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
                 print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")

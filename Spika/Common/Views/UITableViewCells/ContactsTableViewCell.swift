@@ -53,15 +53,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     }
     
     func configureCell(_ model: User) {
-        nameLabel.text = model.displayName
-        descriptionLabel.text = model.telephoneNumber
-        
-        let url = URL(string: model.getAvatarUrl() ?? "")
-        leftImageView.kf.setImage(with: url, placeholder: UIImage(named: "user_image"))
-    }
-    
-    func configureCell(_ model: LocalUser) {
-        nameLabel.text = model.displayName
+        nameLabel.text = model.getDisplayName()
         descriptionLabel.text = model.telephoneNumber
         
         let url = URL(string: model.getAvatarUrl() ?? "")

@@ -13,5 +13,5 @@ struct LocalReaction: Codable {
     var modifiedAt: String?
     var type: String?
     var message: LocalMessage?
-    var user: LocalUser?
+    var user: User?
 }

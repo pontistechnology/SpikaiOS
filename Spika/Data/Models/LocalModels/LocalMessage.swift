@@ -9,7 +9,7 @@ import Foundation
 
 public struct LocalMessage: Codable {
     
-    init(user: LocalUser, message: String, id: Int) {
+    init(user: User, message: String, id: Int) {
     }
     
 //    init(entity: MessageEntity) {
@@ -23,7 +23,7 @@ public struct LocalMessage: Codable {
 //        self.state = entity.state
 //        self.toDeviceType = entity.toDeviceType
 //        if let dbUser = entity.user {
-//            self.user = LocalUser(entity: dbUser)
+//            self.user = User(entity: dbUser)
 //        }
 //        self.createdAt = Int(entity.createdAt)
 //        self.modifiedAt = Int(entity.modifiedAt)

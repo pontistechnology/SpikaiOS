@@ -12,7 +12,7 @@ import IKEventSource
 
 class CurrentPrivateChatViewModel: BaseViewModel {
     
-    let friendUser: LocalUser
+    let friendUser: User
     var roomEntityID: NSManagedObjectID?
     let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
     lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self,
@@ -22,7 +22,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
                                                              delegate: nil)
     let tableViewShouldReload = PassthroughSubject<Bool, Never>()
     
-    init(repository: Repository, coordinator: Coordinator, friendUser: LocalUser) {
+    init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
     }

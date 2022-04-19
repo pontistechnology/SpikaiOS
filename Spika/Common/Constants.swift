@@ -37,6 +37,7 @@ struct Constants {
         static let messageEntity = "MessageEntity"
         static let roomEntity = "RoomEntity"
         static let roomUserEntity = "RoomUserEntity"
+        static let contactEntity = "ContactEntity"
     }
     
     struct UserDefaults {

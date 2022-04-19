@@ -39,17 +39,17 @@ extension TestRepository {
         -1
     }
     
-    func getUsers() -> Future<[LocalUser], Error> {
-        let users = [LocalUser(displayName: "Mirko", id: 1337),
-                     LocalUser(displayName: "Slavko", id: 1337)]
+    func getUsers() -> Future<[User], Error> {
+        let users = [User(id: 1337, displayName: "Mirko"),
+                     User(id: 1337, displayName: "Slavko")]
         return Future { promise in promise(.success(users))}
     }
     
-    func saveUser(_ user: LocalUser) -> Future<LocalUser, Error> {
+    func saveUser(_ user: User) -> Future<User, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func saveUsers(_ user: [LocalUser]) -> Future<[LocalUser], Error> {
+    func saveUsers(_ user: [User]) -> Future<[User], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     

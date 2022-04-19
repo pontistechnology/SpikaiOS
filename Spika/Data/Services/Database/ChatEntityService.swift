@@ -38,7 +38,7 @@ class ChatEntityService {
 //        }
 //    }
 //    
-//    func addUserToChat(chat: LocalChat, user: LocalUser) -> Future<LocalChat, Error> {
+//    func addUserToChat(chat: LocalChat, user: User) -> Future<LocalChat, Error> {
 //        let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
 //        let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
@@ -58,15 +58,15 @@ class ChatEntityService {
 //        }
 //    }
 //    
-//    func getUsersForChat(chat: LocalChat) -> Future<[LocalUser], Error> {
+//    func getUsersForChat(chat: LocalChat) -> Future<[User], Error> {
 //        let fetchRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)
 //        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(chat.id)")
 //        do {
 //            let dbChat = try managedContext?.fetch(fetchRequest).first
 //            if let dbChat = dbChat {
-//                var users: [LocalUser] = []
+//                var users: [User] = []
 //                dbChat.users?.forEach{ dbUser in
-//                    users.append(LocalUser(entity: dbUser))
+//                    users.append(User(entity: dbUser))
 //                }
 //                return Future { promise in promise(.success(users))}
 //            } else {
@@ -78,7 +78,7 @@ class ChatEntityService {
 //        }
 //    }
 //    
-//    func removeChatFromUser(user: LocalUser, chat: LocalChat) -> Future<LocalUser, Error> {
+//    func removeChatFromUser(user: User, chat: LocalChat) -> Future<User, Error> {
 //        let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
 //        let chatRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)

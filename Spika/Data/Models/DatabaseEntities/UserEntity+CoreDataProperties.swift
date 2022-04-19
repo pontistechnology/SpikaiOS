@@ -13,7 +13,7 @@ import CoreData
 extension UserEntity {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<UserEntity> {
-        return NSFetchRequest<UserEntity>(entityName: "UserEntity")
+        return NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
     }
 
     @NSManaged public var avatarUrl: String?
