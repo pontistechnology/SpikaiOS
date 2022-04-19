@@ -18,7 +18,7 @@ public class MessageEntity: NSManagedObject {
             return .sent
         }
         
-//        if receivedCount == totalDeviceCount {
+//        if deliveredCount == totalDeviceCount {
 //            return .delivered
 //        }
 //        
@@ -36,7 +36,7 @@ public class MessageEntity: NSManagedObject {
         fromUserId = Int64(message.fromUserId)
         fromDeviceId = Int64(message.fromDeviceId)
         totalDeviceCount = Int64(message.totalDeviceCount)
-        receivedCount = Int64(message.receivedCount ?? -1)
+        deliveredCount = Int64(message.deliveredCount ?? -1)
         seenCount = Int64(message.seenCount)
         roomId = Int64(message.roomId)
         type = message.type

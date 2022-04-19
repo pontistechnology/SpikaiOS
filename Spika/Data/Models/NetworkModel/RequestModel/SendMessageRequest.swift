@@ -10,5 +10,5 @@ import Foundation
 struct SendMessageRequest: Codable {
     let roomId: Int
     let type: String
-    let message: MessageBody
+    let body: MessageBody
 }

@@ -25,7 +25,7 @@ extension AppRepository {
         let resources = Resources<SendMessageResponse, SendMessageRequest>(
             path: Constants.Endpoints.sendMessage,
             requestType: .POST,
-            bodyParameters: SendMessageRequest(roomId: roomId, type: "text", message: message),
+            bodyParameters: SendMessageRequest(roomId: roomId, type: "text", body: message),
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)

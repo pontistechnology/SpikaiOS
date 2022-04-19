@@ -39,7 +39,7 @@ class SSE {
               let deviceId = deviceId,
               deviceId != "-1",
               let serverURL = URL(string: Constants.Networking.baseUrl
-                                  + "api/sse/" + deviceId
+//                                  + "api/sse/" + deviceId
                                   + "?accesstoken=" + accessToken)
         else { return }
         print("SSE URL : ", serverURL)

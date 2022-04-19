@@ -149,6 +149,7 @@ extension CurrentPrivateChatViewModel {
                                                       myId: self.repository.getMyUserId(),
                                                       roomId: Int(roomEntity.id)),
                                      context: self.repository.getMainContext())
+            print("Mesa room id: ", mesa.roomId)
             try! self.repository.getMainContext().save()
             self.sendMessage(messageEntity: mesa)
         }

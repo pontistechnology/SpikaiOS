@@ -222,12 +222,16 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
             currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .automatic)
+            print("nsfetchedresults insert")
         case .delete:
+            print("nsfetchedresults delete")
             currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath!], with: .automatic)
         case .move:
+            print("nsfetchedresults move")
             currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath!], with: .automatic)
             currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .automatic)
         case .update:
+            print("nsfetchedresults update")
             let cell = currentPrivateChatView.messagesTableView.cellForRow(at: indexPath!) as? TextMessageTableViewCell
             let a = viewModel.coreDataFetchedResults.controller.object(at: indexPath!)
             cell?.updateCell(messageEntity: a)

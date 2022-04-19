@@ -13,7 +13,7 @@ struct Message: Codable {
     let fromUserId: Int
     let id: Int
     let totalDeviceCount: Int
-    let receivedCount: Int?
+    let deliveredCount: Int?
     let seenCount: Int
     let roomId: Int
     let type: String
@@ -27,7 +27,7 @@ extension Message {
         fromUserId = myId
         fromDeviceId = -1
         totalDeviceCount = -1
-        receivedCount = -1
+        deliveredCount = -1
         seenCount = -1
         self.roomId = roomId
         type = "text"
