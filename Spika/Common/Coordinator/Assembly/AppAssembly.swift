@@ -11,6 +11,7 @@ import Swinject
 final class AppAssembly: Assembly {
     
     func assemble(container: Container) {
+        self.assembleCoreDataStack(container)
         self.assembleMainRepository(container)
         self.assembleSSE(container)
         self.assembleHomeViewController(container)
@@ -26,11 +27,11 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.container)
         
         container.register(DatabaseService.self) { r in
-            let coreDataStack = CoreDataStack()
-            let userEntityService = UserEntityService()
-            let chatEntityService = ChatEntityService()
-            let messageEntityService = MessageEntityService()
-            let roomEntityService = RoomEntityService()
+            let coreDataStack = container.resolve(CoreDataStack.self)!
+            let userEntityService = UserEntityService(coreDataStack: coreDataStack)
+            let chatEntityService = ChatEntityService(coreDataStack: coreDataStack)
+            let messageEntityService = MessageEntityService(coreDataStack: coreDataStack)
+            let roomEntityService = RoomEntityService(coreDataStack: coreDataStack)
             return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, roomEntityService: roomEntityService, coreDataStack: coreDataStack)
         }.inObjectScope(.container)
 
@@ -41,12 +42,12 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.container)
     }
     
-//    private func assembleCoreDataStack(_ container: Container) {
-//        container.register(CoreDataStack.self) { r in
-//            let coreDataStack = CoreDataStack()
-//            return coreDataStack
-//        }.inObjectScope(.container)
-//    }
+    private func assembleCoreDataStack(_ container: Container) {
+        container.register(CoreDataStack.self) { r in
+            let coreDataStack = CoreDataStack()
+            return coreDataStack
+        }.inObjectScope(.container)
+    }
     
     private func assembleSSE(_ container: Container) {
         container.register(SSE.self) { (r, coordinator: AppCoordinator) in

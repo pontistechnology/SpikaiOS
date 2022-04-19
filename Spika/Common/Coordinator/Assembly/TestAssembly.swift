@@ -24,11 +24,11 @@ class TestAssembly: Assembly {
         }.inObjectScope(.container)
         
         container.register(DatabaseService.self) { r in
-            let userEntityService = UserEntityService()
-            let chatEntityService = ChatEntityService()
-            let messageEntityService = MessageEntityService()
-            let roomEntityService = RoomEntityService()
             let coreDataStack = CoreDataStack()
+            let userEntityService = UserEntityService(coreDataStack: coreDataStack)
+            let chatEntityService = ChatEntityService(coreDataStack: coreDataStack)
+            let messageEntityService = MessageEntityService(coreDataStack: coreDataStack)
+            let roomEntityService = RoomEntityService(coreDataStack: coreDataStack)
             return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, roomEntityService: roomEntityService, coreDataStack: coreDataStack)
         }.inObjectScope(.container)
 

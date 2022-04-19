@@ -206,14 +206,14 @@ extension AppRepository {
     // MARK: Database // TODO: CDStack change
     
     func getUsers() -> Future<[User], Error> {
-        return databaseService.getUsers()
+        return databaseService.userEntityService.getUsers()
     }
     
     func saveUser(_ user: User) -> Future<User, Error> {
-        return databaseService.saveUser(user)
+        return databaseService.userEntityService.saveUser(user)
     }
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
-        return databaseService.saveUsers(users)
+        return databaseService.userEntityService.saveUsers(users)
     }
 }

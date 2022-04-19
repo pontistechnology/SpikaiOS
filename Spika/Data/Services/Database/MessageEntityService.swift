@@ -11,7 +11,11 @@ import Combine
 
 class MessageEntityService {
     
+    let coreDataStack: CoreDataStack!
     
+    init(coreDataStack: CoreDataStack) {
+        self.coreDataStack = coreDataStack
+    }
     
 
 //    func getMessages() -> Future<[LocalMessage], Error> {

@@ -10,6 +10,12 @@ import CoreData
 import Combine
 
 class ChatEntityService {
+    
+    let coreDataStack: CoreDataStack!
+    
+    init(coreDataStack: CoreDataStack) {
+        self.coreDataStack = coreDataStack
+    }
 //    
 //    func getChats() -> Future<[LocalChat], Error> {
 //        let fetchRequest = NSFetchRequest<ChatEntity>(entityName: Constants.Database.chatEntity)

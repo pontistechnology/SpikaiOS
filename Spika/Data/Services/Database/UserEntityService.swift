@@ -11,6 +11,74 @@ import Combine
 
 class UserEntityService {
     
+    let coreDataStack: CoreDataStack!
+    
+    init(coreDataStack: CoreDataStack) {
+        self.coreDataStack = coreDataStack
+    }
+    
+    func getUsers() -> Future<[User], Error> {
+        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
+        do {
+            let userEntities = try coreDataStack.mainMOC.fetch(fetchRequest)
+            
+            let users = userEntities.map{User(entity: $0)}
+            print("userentities count: ", userEntities.count, "users", users)
+            return Future { promise in promise(.success(users))}
+            
+        } catch let error as NSError {
+            return Future { promise in promise(.failure(error))}
+        }
+    }
+    
+    func saveUser(_ user: User) -> Future<User, Error> {
+//        _ = UserEntity(insertInto: coreDataStack.backgroundMOC, user: user)
+//        coreDataStack.saveBackgroundMOC()
+//        return Future { promise in promise(.success(user))}
+        
+        return Future { [weak self] promise in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                let _ = UserEntity(user: user, context: context)
+                do {
+                    try context.save()
+                    promise(.success(user))
+                } catch {
+                    print("Error saving: ", error)
+                    promise(.failure(DatabseError.savingError))
+                }
+            }
+        }
+    }
+    
+    func saveUsers(_ users: [User]) -> Future<[User], Error> {
+//        var isSavedSuccessfully = false
+//        coreDataStack.backgroundMOC.performAndWait {
+//            for user in users {
+//                _ = UserEntity(insertInto: self.coreDataStack.backgroundMOC, user: user)
+//            }
+//            self.coreDataStack.saveBackgroundMOC()
+//        }
+//        return Future { promise in promise(.success(users))} // TODO: CDStack change
+
+        return Future { [weak self] promise in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                for user in users {
+                    let _ = UserEntity(user: user, context: context)
+                }
+                do {
+                    try context.save()
+                    promise(.success(users))
+                } catch {
+                    print("Error saving: ", error)
+                    promise(.failure(DatabseError.savingError))
+                }
+            }
+        }
+        
+    }
+    
     
 //    func getChatsForUser(user: User) -> Future<[LocalChat], Error> {
 //        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
