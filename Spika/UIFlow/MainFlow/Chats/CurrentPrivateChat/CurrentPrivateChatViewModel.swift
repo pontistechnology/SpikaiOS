@@ -76,7 +76,7 @@ extension CurrentPrivateChatViewModel {
     
     func saveLocalRoom(room: Room) {
         repository.saveRoom(room: room).sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             switch completion {
                 
             case .finished:
@@ -165,7 +165,7 @@ extension CurrentPrivateChatViewModel {
             else { return }
             
             self.repository.sendTextMessage(message: MessageBody(text: text), roomId: Int(roomEntity.id)).sink { [weak self] completion in
-                guard let self = self else { return }
+                guard let _ = self else { return }
                 switch completion {
                     
                 case .finished:

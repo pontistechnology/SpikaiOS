@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let aa = try! coreDataStack.mainMOC.fetch(fr)
         print(aa.count)
         for a in aa {
-            print("Begi room: ", a.type)
+//            print("Begi room: ", a.type)
             print("Count of users: ", a.users!.count)
             for user in a.users! {
                 print("Begi user: ", (user as! RoomUserEntity).user!.displayName!)

@@ -16,7 +16,7 @@ class SelectUsersViewModel: BaseViewModel {
     
     func getOnlineContacts(page: Int) {
         repository.getContacts(page: page).sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             switch completion {
             case let .failure(error):
                 print("get contacts error: ", error)

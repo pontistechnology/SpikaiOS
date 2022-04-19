@@ -23,7 +23,7 @@ class ContactsViewModel: BaseViewModel {
     
     func getUsersAndUpdateUI() {
         repository.getUsers().sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             switch completion {
             case let .failure(error):
                 print("Could not get users: \(error)")
@@ -39,21 +39,21 @@ class ContactsViewModel: BaseViewModel {
     
     func saveUsers(_ users: [User]) {
         repository.saveUsers(users).sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             switch completion {
             case let .failure(error):
                 print("Could not save user: \(error)")
             default: break
             }
         } receiveValue: { [weak self] users in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             print("Saved users to DB: \(users)")
         }.store(in: &subscriptions)
     }
     
     func getContacts() {
         ContactsUtils.getContacts().sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             switch completion {
             case let .failure(error):
                 print("Could not get contacts: \(error)")
@@ -75,7 +75,7 @@ class ContactsViewModel: BaseViewModel {
     // TODO: add paging
     func postContacts(hashes: [String]) {
         repository.postContacts(hashes: hashes).sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             switch completion {
             case let .failure(error):
                 print("post contacts error: ", error)
@@ -83,14 +83,14 @@ class ContactsViewModel: BaseViewModel {
                 break
             }
         } receiveValue: { [weak self] response in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             print("Success: ", response)
         }.store(in: &subscriptions)
     }
     
     func getOnlineContacts(page: Int) {
         repository.getContacts(page: page).sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             switch completion {
             case let .failure(error):
                 print("get contacts error: ", error)

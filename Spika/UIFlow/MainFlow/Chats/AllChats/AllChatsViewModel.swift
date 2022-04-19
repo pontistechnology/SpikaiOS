@@ -21,7 +21,7 @@ class AllChatsViewModel: BaseViewModel {
     
     func getAllRooms() {
         repository.getAllRooms().sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             print("get all rooms: ", completion)
         } receiveValue: { [weak self] response in
             guard let self = self else { return }

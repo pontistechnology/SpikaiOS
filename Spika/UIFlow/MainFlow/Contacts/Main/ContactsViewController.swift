@@ -31,7 +31,7 @@ class ContactsViewController: BaseViewController {
         contactsView.searchBar.delegate = self
         
         contactsView.titleLabel.tap().sink { [weak self] tap in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             PopUpManager.shared.presentAlert(errorMessage: "tititi")
         }.store(in: &subscriptions)
         

@@ -99,7 +99,7 @@ extension AppRepository {
             }
             
             uploadChunk(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, clientId: clientId).sink { [weak self] completion in
-                guard let self = self else { return }
+                guard let _ = self else { return }
                 switch completion {
                 case let .failure(error):
                     print("Upload chunk error", error)
@@ -119,7 +119,7 @@ extension AppRepository {
                     }
 
                     self.verifyUpload(total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1).sink { [weak self] completion in
-                        guard let self = self else { return }
+                        guard let _ = self else { return }
                         switch completion {
                             
                         case .finished:
@@ -129,7 +129,7 @@ extension AppRepository {
                             somePublisher.send(completion: .failure(NetworkError.verifyFileFail))
                         }
                     } receiveValue: { [weak self] verifyFileResponse in
-                        guard let self = self else { return }
+                        guard let _ = self else { return }
                         print("verifyFile response", verifyFileResponse)
                         guard let file = verifyFileResponse.data?.file else { return }
                         somePublisher.send((file, 1))
