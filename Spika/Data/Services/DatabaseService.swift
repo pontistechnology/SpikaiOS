@@ -89,12 +89,12 @@ extension DatabaseService {
     
     // USER
     
-    func getUsers() -> Future<[LocalUser], Error> {
+    func getUsers() -> Future<[User], Error> {
         let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
         do {
             let userEntities = try coreDataStack.mainMOC.fetch(fetchRequest)
             
-            let users = userEntities.map{LocalUser(entity: $0)}
+            let users = userEntities.map{User(entity: $0)}
             print("userentities count: ", userEntities.count, "users", users)
             return Future { promise in promise(.success(users))}
             
@@ -103,14 +103,14 @@ extension DatabaseService {
         }
     }
     
-    func saveUser(_ user: LocalUser) -> Future<LocalUser, Error> {
+    func saveUser(_ user: User) -> Future<User, Error> {
 //        _ = UserEntity(insertInto: coreDataStack.backgroundMOC, user: user)
 //        coreDataStack.saveBackgroundMOC()
         
         return Future { promise in promise(.success(user))}
     }
     
-    func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error> {
+    func saveUsers(_ users: [User]) -> Future<[User], Error> {
 //        var isSavedSuccessfully = false
 //        coreDataStack.backgroundMOC.performAndWait {
 //            for user in users {

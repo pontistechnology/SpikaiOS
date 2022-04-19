@@ -68,9 +68,9 @@ protocol Repository {
     
     // MARK: COREDATA: User
     
-    func getUsers() -> Future<[LocalUser], Error>
-    func saveUser(_ user: LocalUser) -> Future<LocalUser, Error>
-    func saveUsers(_ users: [LocalUser]) -> Future<[LocalUser], Error>
+    func getUsers() -> Future<[User], Error>
+    func saveUser(_ user: User) -> Future<User, Error>
+    func saveUsers(_ users: [User]) -> Future<[User], Error>
     
     // MARK: COREDATA: Messages
     

@@ -58,20 +58,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                             isAdmin: true,
                                             user: User(id: 12,
                                                        displayName: "nikola",
-                                                       avatarUrl: "n",
-                                                       telephoneNumber: "w",
-                                                       telephoneNumberHashed: "f",
-                                                       emailAddress: "gf",
-                                                       createdAt: 12)),
+                                                       avatarUrl: "n")
+                                    ),
                            RoomUser(userId: 13,
                                     isAdmin: false,
                                     user: User(id: 13,
                                                displayName: "mia",
-                                               avatarUrl: "f",
-                                               telephoneNumber: "f",
-                                               telephoneNumberHashed: "fsa",
-                                               emailAddress: "bar",
-                                               createdAt: 45))
+                                               avatarUrl: "f")
+                                   )
                            ])
         
         coreDataStack.persistentContainer.performBackgroundTask { context in

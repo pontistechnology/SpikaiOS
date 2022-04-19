@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ContactEntity" representedClassName="ContactEntity" syncable="YES">
+        <attribute name="familyName" optional="YES" attributeType="String"/>
+        <attribute name="givenName" optional="YES" attributeType="String"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="phoneNumber"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="MessageEntity" representedClassName="MessageEntity" syncable="YES">
         <attribute name="bodyText" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -57,5 +67,6 @@
         <element name="RoomEntity" positionX="-180" positionY="117" width="128" height="119"/>
         <element name="RoomUserEntity" positionX="-178.015625" positionY="-33.05859375" width="128" height="89"/>
         <element name="UserEntity" positionX="35.22509765625" positionY="116.6122131347656" width="128" height="164"/>
+        <element name="ContactEntity" positionX="-180" positionY="117" width="128" height="74"/>
     </elements>
 </model>

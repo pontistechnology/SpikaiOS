@@ -24,9 +24,12 @@ public class UserEntity: NSManagedObject {
         self.emailAddress = user.emailAddress
         self.telephoneNumber = user.telephoneNumber
         self.displayName = user.displayName
+        
+        self.givenName = user.givenName
+        self.familyName = user.familyName
     }
     
-    convenience init(insertInto context: NSManagedObjectContext?, user: LocalUser) {
+    convenience init(insertInto context: NSManagedObjectContext?, user: User) {
         guard let context = context,
             let entity = NSEntityDescription.entity(forEntityName: Constants.Database.userEntity, in: context)
         else {
@@ -44,5 +47,20 @@ public class UserEntity: NSManagedObject {
         
         self.givenName = user.givenName
         self.familyName = user.familyName
+    }
+    
+    func getDisplayName() -> String {
+        var displayNameResult: String
+        
+        displayNameResult = [givenName, familyName]
+            .compactMap { $0 }
+            .joined(separator: " ")
+
+        
+        if displayNameResult.isEmpty {
+            displayNameResult = displayName ?? "noname"
+        }
+        
+        return displayNameResult
     }
 }

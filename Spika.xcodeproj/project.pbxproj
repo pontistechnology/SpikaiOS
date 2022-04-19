@@ -11,7 +11,6 @@
 		93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
 		930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BB27A9FB180064BED1 /* UserRequestModel.swift */; };
 		930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BD27A9FCE30064BED1 /* UserResponseModel.swift */; };
-		930290C027A9FDBE0064BED1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BF27A9FDBE0064BED1 /* User.swift */; };
 		930290C227AC96040064BED1 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C127AC96040064BED1 /* ContactsTableViewCell.swift */; };
 		930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C327ACA2E90064BED1 /* ContactsTableView.swift */; };
 		930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
@@ -197,7 +196,6 @@
 		ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
 		ADD5040127101B69009D50CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040027101B69009D50CB /* ContentView.swift */; };
 		ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040A2716EB4B009D50CB /* UserEntityService.swift */; };
-		ADD5040D2716EC22009D50CB /* LocalUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040C2716EC22009D50CB /* LocalUser.swift */; };
 		ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040F27173FD9009D50CB /* DatabaseService.swift */; };
 		ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
 		ADD5042E271E6C15009D50CB /* ChatEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5042D271E6C15009D50CB /* ChatEntityService.swift */; };
@@ -206,6 +204,9 @@
 		EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */; };
 		EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */; };
 		EAA6A39F27CCF30C00B7E01F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAA6A39E27CCF30C00B7E01F /* GoogleService-Info.plist */; };
+		EAFA8B94280EFFD200F9B321 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B93280EFFD200F9B321 /* User.swift */; };
+		EAFA8B96280F05B000F9B321 /* ContactEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B95280F05B000F9B321 /* ContactEntity+CoreDataClass.swift */; };
+		EAFA8B98280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B97280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift */; };
 		ECFEE2B1CA4F9001F7F12BC3 /* Pods_Spika_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -227,7 +228,6 @@
 		93017B1627F8D1EC00A0582D /* SSENewMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSENewMessage.swift; sourceTree = "<group>"; };
 		930290BB27A9FB180064BED1 /* UserRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestModel.swift; sourceTree = "<group>"; };
 		930290BD27A9FCE30064BED1 /* UserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseModel.swift; sourceTree = "<group>"; };
-		930290BF27A9FDBE0064BED1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		930290C127AC96040064BED1 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
 		930290C327ACA2E90064BED1 /* ContactsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableView.swift; sourceTree = "<group>"; };
 		930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadChunkRequestModel.swift; sourceTree = "<group>"; };
@@ -416,7 +416,6 @@
 		ADD503FD27101B44009D50CB /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		ADD5040027101B69009D50CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		ADD5040A2716EB4B009D50CB /* UserEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntityService.swift; sourceTree = "<group>"; };
-		ADD5040C2716EC22009D50CB /* LocalUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUser.swift; sourceTree = "<group>"; };
 		ADD5040F27173FD9009D50CB /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		ADD5041927174B82009D50CB /* AppRepository+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+User.swift"; sourceTree = "<group>"; };
 		ADD5042D271E6C15009D50CB /* ChatEntityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatEntityService.swift; sourceTree = "<group>"; };
@@ -428,6 +427,9 @@
 		EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsResponseModel.swift; sourceTree = "<group>"; };
 		EAA6A39E27CCF30C00B7E01F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EACC42E127A2B89C00EA0DD2 /* Spika.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spika.entitlements; sourceTree = "<group>"; };
+		EAFA8B93280EFFD200F9B321 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		EAFA8B95280F05B000F9B321 /* ContactEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContactEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EAFA8B97280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContactEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1224,6 +1226,8 @@
 				93980E06280A10F30015351F /* RoomUserEntity+CoreDataProperties.swift */,
 				ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */,
 				93980E03280A10F30015351F /* UserEntity+CoreDataProperties.swift */,
+				EAFA8B95280F05B000F9B321 /* ContactEntity+CoreDataClass.swift */,
+				EAFA8B97280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift */,
 			);
 			path = DatabaseEntities;
 			sourceTree = "<group>";
@@ -1264,7 +1268,6 @@
 			isa = PBXGroup;
 			children = (
 				ADD5044F271E81BA009D50CB /* LocalMessage.swift */,
-				ADD5040C2716EC22009D50CB /* LocalUser.swift */,
 				AD819239271E873200D5BE48 /* LocalReaction.swift */,
 			);
 			path = LocalModels;
@@ -1273,8 +1276,8 @@
 		EA29CE3A27E0B42A00B392E6 /* ServerModels */ = {
 			isa = PBXGroup;
 			children = (
+				EAFA8B93280EFFD200F9B321 /* User.swift */,
 				93E48EAF27CEA6C3003B4188 /* Message.swift */,
-				930290BF27A9FDBE0064BED1 /* User.swift */,
 				ADD503F5270DF96F009D50CB /* Post.swift */,
 			);
 			path = ServerModels;
@@ -1518,6 +1521,7 @@
 				930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */,
 				931E23AE27D317390065FFFC /* VoiceMessageTableViewCell.swift in Sources */,
 				93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */,
+				EAFA8B98280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift in Sources */,
 				AD9BFD46272AECFA00736318 /* VerifyCodeRequestModel.swift in Sources */,
 				AD9BFD342729AE8300736318 /* CountryTableViewCell.swift in Sources */,
 				93D86DB827BAA15900F275B0 /* DocsTableView.swift in Sources */,
@@ -1537,7 +1541,6 @@
 				93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
 				93BD5B3C27FB83A400240331 /* RoomEntityService.swift in Sources */,
-				ADD5040D2716EC22009D50CB /* LocalUser.swift in Sources */,
 				93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */,
 				AD9BFD53272B184E00736318 /* VerificationTextField.swift in Sources */,
 				934087B627EBA25500209571 /* CoreDataManager.swift in Sources */,
@@ -1572,6 +1575,7 @@
 				93B4A9EE27DB3AB000DC52F6 /* CircularProgressBar.swift in Sources */,
 				ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */,
 				93D87CE927D1BF9C0087C9FD /* VoiceMessageView.swift in Sources */,
+				EAFA8B94280EFFD200F9B321 /* User.swift in Sources */,
 				AD9E39052726CD2000DC5D43 /* MessageTextField.swift in Sources */,
 				AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */,
 				EA9D14DB27BA540A0070BE2B /* ContactsUtils.swift in Sources */,
@@ -1602,7 +1606,6 @@
 				AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */,
 				930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */,
 				ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */,
-				930290C027A9FDBE0064BED1 /* User.swift in Sources */,
 				93980E07280A10F30015351F /* RoomEntity+CoreDataProperties.swift in Sources */,
 				93E4F6F427C30DBE00432CFA /* SelectedUsersCollectionView.swift in Sources */,
 				938D052E27D59D83002E5CE5 /* NewGroupChatView.swift in Sources */,
@@ -1684,6 +1687,7 @@
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
 				ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */,
 				9355BEDA28056D1A00B9EC85 /* CoreDataStack.swift in Sources */,
+				EAFA8B96280F05B000F9B321 /* ContactEntity+CoreDataClass.swift in Sources */,
 				93988D5F27D8701500DF6BF8 /* UIImage+Extensions.swift in Sources */,
 				933BE86427B667980099BA9E /* ContactsAssembly.swift in Sources */,
 				AD9BFD182729898C00736318 /* TestRepository.swift in Sources */,

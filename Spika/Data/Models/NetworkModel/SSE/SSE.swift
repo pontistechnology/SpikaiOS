@@ -115,7 +115,7 @@ class SSE {
         fetchRequest.predicate = NSPredicate(format: "id = %@", "\(currentMessage.fromUserId)")
         // TODO: CDStack
 //        guard let dbUser = try? CoreDataManager.shared.managedContext.fetch(fetchRequest).first else { return }
-//        let lU = LocalUser(entity: dbUser)
+//        let lU = User(entity: dbUser)
 //        (coordinator as? AppCoordinator)?.presentCurrentPrivateChatScreen(user: lU) // TODO: present currect chat
         alertWindow = nil
         

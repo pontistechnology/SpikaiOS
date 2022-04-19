@@ -50,7 +50,7 @@ extension AllChatsViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let room = viewModel.roomsPublisher.value[indexPath.row]
         if room.type == "private" {
-            // MARK: TODO: find localuser in db
+            // MARK: TODO: find user in db
             
             viewModel.presentCurrentPrivateChatScreen()
         }
