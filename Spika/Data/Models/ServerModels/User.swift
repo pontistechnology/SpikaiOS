@@ -57,6 +57,8 @@ struct User: Codable {
         if let avatarUrl = avatarUrl {
             if avatarUrl.starts(with: "http") {
                 return avatarUrl
+            } else if avatarUrl.starts(with: "/") {
+                return Constants.Networking.baseUrl + avatarUrl.dropFirst()
             } else {
                 return Constants.Networking.baseUrl + avatarUrl
             }
