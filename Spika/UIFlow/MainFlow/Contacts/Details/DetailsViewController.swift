@@ -59,11 +59,13 @@ class DetailsViewController: BaseViewController {
             self?.viewModel.presentVideoCallScreen(url: url)
         }.store(in: &subscriptions)
         
-        detailsView.contentView.messageButton.tap().sink { _ in
+        detailsView.contentView.messageButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.viewModel.presentCurrentPrivateChatScreen(user: self.viewModel.user)
         }.store(in: &subscriptions)
         
-        viewModel.userSubject.receive(on: DispatchQueue.main).sink { user in
+        viewModel.userSubject.receive(on: DispatchQueue.main).sink { [weak self] user in
+            guard let self = self else { return }
             self.detailsView.contentView.nameLabel.text = user.displayName
             let url = URL(string: user.getAvatarUrl() ?? "")
             self.detailsView.contentView.profilePhoto.kf.setImage(with: url, placeholder: UIImage(named: "user_image"))

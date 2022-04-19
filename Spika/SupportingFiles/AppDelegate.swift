@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         FirebaseApp.configure()
-        allroomsprinter()
+//        allroomsprinter()
 //        test()
         customization()
         

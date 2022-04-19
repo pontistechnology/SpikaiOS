@@ -17,7 +17,8 @@ class NewGroupChatViewModel: BaseViewModel {
     }
     
     func createRoom(name: String) {
-        repository.createRoom(name: name, users: selectedUsers).sink { completion in
+        repository.createRoom(name: name, users: selectedUsers).sink { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
             case let .failure(error):
                 print(error)
@@ -25,7 +26,8 @@ class NewGroupChatViewModel: BaseViewModel {
             case .finished:
                 break
             }
-        } receiveValue: { response in
+        } receiveValue: { [weak self] response in
+            guard let self = self else { return }
             print("Create room response ", response)
         }.store(in: &subscriptions)
 

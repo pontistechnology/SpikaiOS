@@ -24,7 +24,8 @@ class EnterVerifyCodeViewModel: BaseViewModel {
     func verifyCode(code: String) {
         networkRequestState.send(.started())
         repository.verifyCode(code: code, deviceId: deviceId).sink { [weak self] completion in
-            self?.networkRequestState.send(.finished)
+            guard let self = self else { return }
+            self.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
                 PopUpManager.shared.presentAlert(errorMessage: "Could not auth user: \(error)")

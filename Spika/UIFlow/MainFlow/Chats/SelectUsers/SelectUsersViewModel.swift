@@ -15,14 +15,16 @@ class SelectUsersViewModel: BaseViewModel {
     var users : [User] = []
     
     func getOnlineContacts(page: Int) {
-        repository.getContacts(page: page).sink { completion in
+        repository.getContacts(page: page).sink { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
             case let .failure(error):
                 print("get contacts error: ", error)
             default:
                 break
             }
-        } receiveValue: { response in
+        } receiveValue: { [weak self] response in
+            guard let self = self else { return }
             print("Success: ", response)
             if let list = response.data?.list {
                 self.users = list

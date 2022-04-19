@@ -22,13 +22,15 @@ class ContactsViewModel: BaseViewModel {
     }
     
     func getUsersAndUpdateUI() {
-        repository.getUsers().sink { completion in
+        repository.getUsers().sink { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
             case let .failure(error):
                 print("Could not get users: \(error)")
             default: break
             }
-        } receiveValue: { users in
+        } receiveValue: { [weak self] users in
+            guard let self = self else { return }
             print("Read users from DB: \(users)")
             self.users = users
             self.updateContactsUI(list: users)
@@ -41,25 +43,29 @@ class ContactsViewModel: BaseViewModel {
             let dbUser = LocalUser(user: user)
             dbUsers.append(dbUser)
         }
-        repository.saveUsers(dbUsers).sink { completion in
+        repository.saveUsers(dbUsers).sink { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
             case let .failure(error):
                 print("Could not save user: \(error)")
             default: break
             }
-        } receiveValue: { users in
+        } receiveValue: { [weak self] users in
+            guard let self = self else { return }
             print("Saved users to DB: \(users)")
         }.store(in: &subscriptions)
     }
     
     func getContacts() {
-        ContactsUtils.getContacts().sink { completion in
+        ContactsUtils.getContacts().sink { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
             case let .failure(error):
                 print("Could not get contacts: \(error)")
             default: break
             }
-        } receiveValue: { contacts in
+        } receiveValue: { [weak self] contacts in
+            guard let self = self else { return }
             print(contacts)
             var contacts = contacts
             for (index, contact) in contacts.enumerated() {
@@ -73,27 +79,31 @@ class ContactsViewModel: BaseViewModel {
     
     // TODO: add paging
     func postContacts(hashes: [String]) {
-        repository.postContacts(hashes: hashes).sink { completion in
+        repository.postContacts(hashes: hashes).sink { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
             case let .failure(error):
                 print("post contacts error: ", error)
             default:
                 break
             }
-        } receiveValue: { response in
+        } receiveValue: { [weak self] response in
+            guard let self = self else { return }
             print("Success: ", response)
         }.store(in: &subscriptions)
     }
     
     func getOnlineContacts(page: Int) {
-        repository.getContacts(page: page).sink { completion in
+        repository.getContacts(page: page).sink { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
             case let .failure(error):
                 print("get contacts error: ", error)
             default:
                 break
             }
-        } receiveValue: { response in
+        } receiveValue: { [weak self] response in
+            guard let self = self else { return }
             print("Success: ", response)
             if let list = response.data?.list {
                 self.saveUsers(list)

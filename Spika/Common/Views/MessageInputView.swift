@@ -108,21 +108,25 @@ class MessageInputView: UIView, BaseView {
     func setupBindings() {
         messageTextView.delegate = self
         
-        plusButton.tap().sink { _ in
+        plusButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.delegate?.messageInputView(didPressPlusButton: self)
         }.store(in: &subscriptions)
         
-        closeButton.tap().sink { _ in
+        closeButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.messageTextView.text = ""
             self.textViewDidChange(self.messageTextView)
             self.messageTextView.resignFirstResponder()
         }.store(in: &subscriptions)
         
-        emojiButton.tap().sink { _ in
+        emojiButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.delegate?.messageInputView(didPressEmojiButton: self)
         }.store(in: &subscriptions)
 
-        sendButton.tap().sink { _ in
+        sendButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             let text = self.messageTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty else { return }
             if let replyViewId = self.replyViewId {
@@ -132,15 +136,18 @@ class MessageInputView: UIView, BaseView {
             }
         }.store(in: &subscriptions)
         
-        microphoneButton.tap().sink { _ in
+        microphoneButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.delegate?.messageInputView(didPressMicrophoneButton: self)
         }.store(in: &subscriptions)
         
-        cameraButton.tap().sink { _ in
+        cameraButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.delegate?.messageInputView(didPressCameraButton: self)
         }.store(in: &subscriptions)
         
-        closeReplyViewButton.tap().sink { _ in
+        closeReplyViewButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.hideReplyView()
         }.store(in: &subscriptions)
     }

@@ -30,12 +30,14 @@ class ContactsViewController: BaseViewController {
         contactsView.tableView.delegate   = self
         contactsView.searchBar.delegate = self
         
-        contactsView.titleLabel.tap().sink { tap in
+        contactsView.titleLabel.tap().sink { [weak self] tap in
+            guard let self = self else { return }
             PopUpManager.shared.presentAlert(errorMessage: "tititi")
         }.store(in: &subscriptions)
         
         //TODO: check this cooments
-//        contactsView.detailsButton.tap().sink { _ in
+//        contactsView.detailsButton.tap().sink { [weak self] _ in
+//        guard let self = self else { return }
 //            self.viewModel.showDetailsScreen(id: 3)
     //        viewModel.createChat(name: "first chat", type: "group", id: 1)
     //        let user1 = User(loginName: "Marko", avatarUrl: nil, localName: "Marko", id: 1, blocked: false)
@@ -47,7 +49,8 @@ class ContactsViewController: BaseViewController {
     //        viewModel.getMessagesForChat(chat: chat)
 //        }.store(in: &subscriptions)
         
-        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { contacts in
+        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] contacts in
+            guard let self = self else { return }
             self.contactsView.tableView.reloadData()
         }.store(in: &subscriptions)
         

@@ -20,9 +20,11 @@ class AllChatsViewModel: BaseViewModel {
     }
     
     func getAllRooms() {
-        repository.getAllRooms().sink { completion in
+        repository.getAllRooms().sink { [weak self] completion in
+            guard let self = self else { return }
             print("get all rooms: ", completion)
-        } receiveValue: { response in
+        } receiveValue: { [weak self] response in
+            guard let self = self else { return }
             guard let rooms = response.data?.list else { return }
             self.roomsPublisher.send(rooms)
         }.store(in: &subscriptions)

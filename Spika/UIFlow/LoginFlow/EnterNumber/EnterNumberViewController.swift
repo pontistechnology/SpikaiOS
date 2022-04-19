@@ -19,11 +19,13 @@ class EnterNumberViewController: BaseViewController {
     }
     
     func setupBindings() {
-        enterNumberView.enterNumberTextField.countryNumberLabel.tap().sink { _ in
+        enterNumberView.enterNumberTextField.countryNumberLabel.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.viewModel.presentCountryPicker(delegate: self)
         }.store(in: &subscriptions)
         
-        enterNumberView.nextButton.tap().sink { _ in
+        enterNumberView.nextButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             guard let fullNumber = self.enterNumberView.getFullNumber(), let uuid = UIDevice.current.identifierForVendor?.uuidString else { return }
             self.viewModel.authenticateWithNumber(
                 number: fullNumber,

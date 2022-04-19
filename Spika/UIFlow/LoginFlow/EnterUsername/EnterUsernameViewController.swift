@@ -53,12 +53,15 @@ class EnterUsernameViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         enterUsernameView.nextButton.tap().sink { [weak self] _ in
-            if let username = self?.enterUsernameView.usernameTextfield.text {
-                self?.viewModel.updateUser(username: username, imageFileData: self?.fileData)
+            guard let self = self else { return }
+            if let username = self.enterUsernameView.usernameTextfield.text {
+                self.viewModel.updateUser(username: username, imageFileData: self.fileData)
             }
         }.store(in: &subscriptions)
         
-        viewModel.uploadProgressPublisher.sink { completion in
+        viewModel.uploadProgressPublisher.sink { [weak self] completion in
+            guard let self = self else { return }
+            
             switch completion {
             case .finished:
                 break
@@ -67,7 +70,8 @@ class EnterUsernameViewController: BaseViewController {
                 self.enterUsernameView.profilePictureView.deleteMainImage()
                 self.enterUsernameView.profilePictureView.hideUploadProgress()
             }
-        } receiveValue: { progress in
+        } receiveValue: { [weak self] progress in
+            guard let self = self else { return }
             self.enterUsernameView.profilePictureView.showUploadProgress(progress: progress)
         }.store(in: &subscriptions)
 

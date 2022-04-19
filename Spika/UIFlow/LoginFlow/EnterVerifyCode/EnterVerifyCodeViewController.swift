@@ -29,17 +29,20 @@ class EnterVerifyCodeViewController: BaseViewController {
     }
     
     func setupBindings() {
-        enterVerifyCodeView.nextButton.tap().sink { _ in
+        enterVerifyCodeView.nextButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.viewModel.verifyCode(code: self.enterVerifyCodeView.verificationTextFieldView.code)
         }.store(in: &subscriptions)
         
-        enterVerifyCodeView.resendCodeButton.tap().sink { _ in
+        enterVerifyCodeView.resendCodeButton.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.viewModel.resendCode()
         }.store(in: &subscriptions)
         
         viewModel.resendSubject.sink { [weak self] resended in
+            guard let self = self else { return }
             if resended {
-                self?.enterVerifyCodeView.setupTimer()
+                self.enterVerifyCodeView.setupTimer()
             }
         }.store(in: &subscriptions)
         

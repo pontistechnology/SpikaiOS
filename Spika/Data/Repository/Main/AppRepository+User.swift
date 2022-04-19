@@ -98,7 +98,8 @@ extension AppRepository {
                 hash = hasher.finalize().compactMap { String(format: "%02x", $0)}.joined()
             }
             
-            uploadChunk(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, clientId: clientId).sink { completion in
+            uploadChunk(chunk: chunk.base64EncodedString(), offset: chunkBase/chunkSize, clientId: clientId).sink { [weak self] completion in
+                guard let self = self else { return }
                 switch completion {
                 case let .failure(error):
                     print("Upload chunk error", error)
@@ -106,7 +107,8 @@ extension AppRepository {
                 case .finished:
                     break
                 }
-            } receiveValue: { uploadChunkResponseModel in
+            } receiveValue: { [weak self] uploadChunkResponseModel in
+                guard let self = self else { return }
                 guard let uploadedCount = uploadChunkResponseModel.data?.uploadedChunks?.count else { return }
                 let percent = CGFloat(uploadedCount) / CGFloat(totalChunks)
                 somePublisher.send((nil, percent))
@@ -116,7 +118,8 @@ extension AppRepository {
                         return
                     }
 
-                    self.verifyUpload(total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1).sink { completion in
+                    self.verifyUpload(total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1).sink { [weak self] completion in
+                        guard let self = self else { return }
                         switch completion {
                             
                         case .finished:
@@ -125,7 +128,8 @@ extension AppRepository {
                             print("verifyUpload error: ", error)
                             somePublisher.send(completion: .failure(NetworkError.verifyFileFail))
                         }
-                    } receiveValue: { verifyFileResponse in
+                    } receiveValue: { [weak self] verifyFileResponse in
+                        guard let self = self else { return }
                         print("verifyFile response", verifyFileResponse)
                         guard let file = verifyFileResponse.data?.file else { return }
                         somePublisher.send((file, 1))

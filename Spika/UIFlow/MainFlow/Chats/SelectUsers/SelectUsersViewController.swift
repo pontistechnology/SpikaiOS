@@ -35,19 +35,23 @@ class SelectUsersViewController: BaseViewController {
             self?.dismiss(animated: true, completion: nil)
         }.store(in: &subscriptions)
         
-        selectUsersView.chatOptionLabel.tap().sink { _ in
+        selectUsersView.chatOptionLabel.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.selectUsersView.setGroupUserVisible(self.selectUsersView.groupUsersCollectionView.isHidden ? true : false)
         }.store(in: &subscriptions)
         
-        selectUsersView.nextLabel.tap().sink { _ in
+        selectUsersView.nextLabel.tap().sink { [weak self] _ in
+            guard let self = self else { return }
             self.viewModel.presentNewGroupScreen()
         }.store(in: &subscriptions)
         
-        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { _ in
+        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] _ in
+            guard let self = self else { return }
             self.selectUsersView.contactsTableView.reloadData()
         }.store(in: &subscriptions)
         
-        viewModel.selectedUsersSubject.receive(on: DispatchQueue.main).sink { selectedContacts in
+        viewModel.selectedUsersSubject.receive(on: DispatchQueue.main).sink { [weak self] selectedContacts in
+            guard let self = self else { return }
             self.selectUsersView.numberSelectedUsersLabel.text = "\(selectedContacts.count) / 100 selected"
             self.selectUsersView.groupUsersCollectionView.reloadData()
         }.store(in: &subscriptions)

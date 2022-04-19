@@ -45,7 +45,8 @@ extension CurrentPrivateChatViewController {
         
         sink(networkRequestState: viewModel.networkRequestState)
         
-        viewModel.tableViewShouldReload.sink { should in
+        viewModel.tableViewShouldReload.sink { [weak self] should in
+            guard let self = self else { return }
             if should {
                 self.currentPrivateChatView.messagesTableView.reloadData()
             }

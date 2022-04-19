@@ -32,7 +32,8 @@ class AllChatsViewController: BaseViewController {
             self?.viewModel.presentSelectUserScreen()
         }.store(in: &subscriptions)
         
-        viewModel.roomsPublisher.sink { rooms in
+        viewModel.roomsPublisher.sink { [weak self] rooms in
+            guard let self = self else { return }
             self.allChatsView.allChatsTableView.reloadData()
         }.store(in: &subscriptions)
     }

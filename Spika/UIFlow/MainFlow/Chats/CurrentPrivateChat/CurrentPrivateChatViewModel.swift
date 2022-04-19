@@ -31,7 +31,8 @@ class CurrentPrivateChatViewModel: BaseViewModel {
 extension CurrentPrivateChatViewModel {
     
     func checkLocalRoom() {
-        repository.checkPrivateLocalRoom(forId: friendUser.id).sink { completion in
+        repository.checkPrivateLocalRoom(forId: friendUser.id).sink { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
             case .finished:
                 break
@@ -39,7 +40,8 @@ extension CurrentPrivateChatViewModel {
                 print("no local room")
                 self.checkOnlineRoom()
             }
-        } receiveValue: { roomEntityID in
+        } receiveValue: { [weak self] roomEntityID in
+            guard let self = self else { return }
             self.roomEntityID = roomEntityID
             self.setFetch()
         }.store(in: &subscriptions)
@@ -48,7 +50,8 @@ extension CurrentPrivateChatViewModel {
     func checkOnlineRoom()  {
         networkRequestState.send(.started())
         
-        repository.checkRoom(forUserId: friendUser.id).sink { completion in
+        repository.checkRoom(forUserId: friendUser.id).sink { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
             case .finished:
                 print("online check finished")
@@ -56,7 +59,9 @@ extension CurrentPrivateChatViewModel {
                 PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
                 self.networkRequestState.send(.finished)
             }
-        } receiveValue: { response in
+        } receiveValue: { [weak self] response in
+            
+            guard let self = self else { return }
             
             if let room = response.data?.room {
                 print("There is online room.")
@@ -70,7 +75,8 @@ extension CurrentPrivateChatViewModel {
     }
     
     func saveLocalRoom(room: Room) {
-        repository.saveRoom(room: room).sink { completion in
+        repository.saveRoom(room: room).sink { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
                 
             case .finished:
@@ -78,7 +84,8 @@ extension CurrentPrivateChatViewModel {
             case .failure(_):
                 print("saving to local DB failed")
             }
-        } receiveValue: { roomEntityID in
+        } receiveValue: { [weak self] roomEntityID in
+            guard let self = self else { return }
             self.roomEntityID = roomEntityID
             self.setFetch()
         }.store(in: &subscriptions)
@@ -86,7 +93,8 @@ extension CurrentPrivateChatViewModel {
     
     func createRoom(userId: Int) {
         networkRequestState.send(.started())
-        repository.createRoom(userId: userId).sink { completion in
+        repository.createRoom(userId: userId).sink { [weak self] completion in
+            guard let self = self else { return }
             self.networkRequestState.send(.finished)
             
             switch completion {
@@ -96,7 +104,8 @@ extension CurrentPrivateChatViewModel {
                 PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
                 // TODO: present dialog and return?
             }
-        } receiveValue: { response in
+        } receiveValue: { [weak self] response in
+            guard let self = self else { return }
             print("creating room response: ", response)
             guard let room = response.data?.room else { return }
             self.saveLocalRoom(room: room)
@@ -114,7 +123,8 @@ extension CurrentPrivateChatViewModel {
             let predicate = NSPredicate(format: "%K == %@",
                                         #keyPath(MessageEntity.roomId), "\(roomEntity.id)")
             self.coreDataFetchedResults.controller.fetchRequest.predicate = predicate
-            self.coreDataFetchedResults.performFetch { result in
+            self.coreDataFetchedResults.performFetch { [weak self] result in
+                guard let self = self else { return }
                 switch result {
                 case .success(_):
                     self.tableViewShouldReload.send(true)
@@ -153,7 +163,8 @@ extension CurrentPrivateChatViewModel {
                   let text = messageEntity.bodyText
             else { return }
             
-            self.repository.sendTextMessage(message: MessageBody(text: text), roomId: Int(roomEntity.id)).sink { completion in
+            self.repository.sendTextMessage(message: MessageBody(text: text), roomId: Int(roomEntity.id)).sink { [weak self] completion in
+                guard let self = self else { return }
                 switch completion {
                     
                 case .finished:
@@ -161,14 +172,14 @@ extension CurrentPrivateChatViewModel {
                 case .failure(_):
                     print("failure")
                 }
-            } receiveValue: { response in
+            } receiveValue: { [weak self] response in
+                guard let self = self else { return }
                 print("SendMessage response: ", response)
                 DispatchQueue.main.async {
-                    messageEntity.seenCount = 0 // TODO: change logic and order
+                    messageEntity.seenCount = 0 // TODO: change logic and order, change Message body
                     try! self.repository.getMainContext().save()
                 }
                 
-    //            self.repository.trySaveChanges()
     //            guard let message = response.data?.message else { return }
                 
             }.store(in: &self.subscriptions)
