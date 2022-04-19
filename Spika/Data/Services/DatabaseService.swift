@@ -106,8 +106,21 @@ extension DatabaseService {
     func saveUser(_ user: User) -> Future<User, Error> {
 //        _ = UserEntity(insertInto: coreDataStack.backgroundMOC, user: user)
 //        coreDataStack.saveBackgroundMOC()
+//        return Future { promise in promise(.success(user))}
         
-        return Future { promise in promise(.success(user))}
+        return Future { [weak self] promise in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                let _ = UserEntity(user: user, context: context)
+                do {
+                    try context.save()
+                    promise(.success(user))
+                } catch {
+                    print("Error saving: ", error)
+                    promise(.failure(DatabseError.savingError))
+                }
+            }
+        }
     }
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
@@ -118,6 +131,23 @@ extension DatabaseService {
 //            }
 //            self.coreDataStack.saveBackgroundMOC()
 //        }
-        return Future { promise in promise(.success(users))} // TODO: CDStack change
+//        return Future { promise in promise(.success(users))} // TODO: CDStack change
+
+        return Future { [weak self] promise in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                for user in users {
+                    let _ = UserEntity(user: user, context: context)
+                }
+                do {
+                    try context.save()
+                    promise(.success(users))
+                } catch {
+                    print("Error saving: ", error)
+                    promise(.failure(DatabseError.savingError))
+                }
+            }
+        }
+        
     }
 }
