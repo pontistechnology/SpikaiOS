@@ -22,7 +22,7 @@ extension UserEntity {
     @NSManaged public var emailAddress: String?
     @NSManaged public var familyName: String?
     @NSManaged public var givenName: String?
-    @NSManaged public var id: Int64
+    @NSManaged public var id: String?
     @NSManaged public var telephoneNumber: String?
     @NSManaged public var roomUsers: RoomUserEntity?
 

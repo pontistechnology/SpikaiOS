@@ -30,7 +30,7 @@ struct User: Codable {
         guard let entity = entity else {
             return nil
         }
-        self.id = Int(entity.id)
+        self.id = Int(entity.id ?? "0") ?? 0
         self.displayName = entity.displayName
         self.avatarUrl = entity.avatarUrl
         self.telephoneNumber = entity.telephoneNumber
