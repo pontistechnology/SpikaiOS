@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class PopUpManager {
-    
+    // TODO: PopUpButtonClosure
     static let shared = PopUpManager()
     
     var alertWindow: UIWindow?

@@ -18,24 +18,23 @@ class UserEntityService {
     }
     
     func getUsers() -> Future<[User], Error> {
-        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
-        do {
-            let userEntities = try coreDataStack.mainMOC.fetch(fetchRequest)
-            
-            let users = userEntities.map{User(entity: $0)}
-            print("userentities count: ", userEntities.count, "users", users)
-            return Future { promise in promise(.success(users))}
-            
-        } catch let error as NSError {
-            return Future { promise in promise(.failure(error))}
+        return Future { [weak self] promise in
+            guard let self = self else { return }
+            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+                let fetchRequest = UserEntity.fetchRequest() // mislav NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
+                do {
+                    let userEntities = try context.fetch(fetchRequest)
+                    let users = userEntities.map{ User(entity: $0) }
+                    print("userentities count: ", userEntities.count, "users", users)
+                    promise(.success(users.compactMap{ $0 }))
+                } catch { //mislav let error as NSError
+                    promise(.failure(error))
+                }
+            }
         }
     }
     
     func saveUser(_ user: User) -> Future<User, Error> {
-//        _ = UserEntity(insertInto: coreDataStack.backgroundMOC, user: user)
-//        coreDataStack.saveBackgroundMOC()
-//        return Future { promise in promise(.success(user))}
-        
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -52,15 +51,6 @@ class UserEntityService {
     }
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
-//        var isSavedSuccessfully = false
-//        coreDataStack.backgroundMOC.performAndWait {
-//            for user in users {
-//                _ = UserEntity(insertInto: self.coreDataStack.backgroundMOC, user: user)
-//            }
-//            self.coreDataStack.saveBackgroundMOC()
-//        }
-//        return Future { promise in promise(.success(users))} // TODO: CDStack change
-
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -76,10 +66,9 @@ class UserEntityService {
                 }
             }
         }
-        
     }
-    
-    
+}
+
 //    func getChatsForUser(user: User) -> Future<[LocalChat], Error> {
 //        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")
@@ -94,12 +83,12 @@ class UserEntityService {
 //            } else {
 //                return Future { promise in promise(.failure(NetworkError.requestFailed))}
 //            }
-//            
+//
 //        } catch let error as NSError {
 //            return Future { promise in promise(.failure(error))}
 //        }
 //    }
-    
+
 //    func addChatToUser(user: User, chat: LocalChat) -> Future<User, Error> {
 //        let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
@@ -119,7 +108,7 @@ class UserEntityService {
 //            return Future { promise in promise(.failure(error))}
 //        }
 //    }
-//    
+//
 //    func removeUsetFromChat(user: User, chat: LocalChat) -> Future<LocalChat, Error> {
 //        let userRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        userRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
@@ -139,7 +128,7 @@ class UserEntityService {
 //            return Future { promise in promise(.failure(error))}
 //        }
 //    }
-//    
+//
 //    func updateUser(_ user: User) -> Future<User, Error> {
 //        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(user.id ?? -1)")
@@ -161,7 +150,7 @@ class UserEntityService {
 //            return Future { promise in promise(.failure(error))}
 //        }
 //    }
-    
+
 //    func deleteUser(_ user: User) -> Future<User, Error> {
 //        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
 //        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(user.id)")
@@ -178,7 +167,7 @@ class UserEntityService {
 //            return Future { promise in promise(.failure(error))}
 //        }
 //    }
-    
+
 //    func deleteAllUsers() -> Future<Bool, Error> {
 //        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Constants.Database.userEntity)
 //        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -190,5 +179,3 @@ class UserEntityService {
 //            return Future { promise in promise(.failure(error))}
 //        }
 //    }
-    
-}

@@ -59,7 +59,7 @@ protocol Repository {
     
     // MARK: NETWORKING: Message
     
-    func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
+    func sendTextMessage(body: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
     
     // MARK: - COREDATA
     
@@ -74,12 +74,14 @@ protocol Repository {
     
     // MARK: COREDATA: Messages
     
-    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error>
+    func saveMessage(message: Message) -> Future<(Message, NSManagedObjectID), Error>
+    func getMessages(forRoomId: Int) -> Future<[Message], Error>
+    func updateLocalMessage(message: Message, objectId: NSManagedObjectID) -> Future<Message, Error>
     
     // MARK: COREDATA: Room
     
-    func checkPrivateLocalRoom(forId id: Int) -> Future<NSManagedObjectID, Error>
-    func saveRoom(room: Room) -> Future<NSManagedObjectID, Error>
+    func checkPrivateLocalRoom(forId id: Int) -> Future<Room, Error>
+    func saveRoom(room: Room) -> Future<Room, Error>
 
     // MARK: - USERDEFAULTS: User
     

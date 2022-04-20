@@ -5,7 +5,7 @@
 //  Created by Marko on 19.10.2021..
 //
 
-import Foundation
+import CoreData
 import Combine
 
 extension AppRepository {
@@ -15,7 +15,7 @@ extension AppRepository {
     
     // MARK: Network
     
-    func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendTextMessage(body: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -25,7 +25,7 @@ extension AppRepository {
         let resources = Resources<SendMessageResponse, SendMessageRequest>(
             path: Constants.Endpoints.sendMessage,
             requestType: .POST,
-            bodyParameters: SendMessageRequest(roomId: roomId, type: "text", body: message),
+            bodyParameters: SendMessageRequest(roomId: roomId, type: "text", body: body),
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
@@ -33,10 +33,15 @@ extension AppRepository {
     
     // MARK: Database
     
-    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
-//        return databaseService.messageEntityService.saveMessage(message)
-        return Future { promise in
-            promise(.failure(DatabseError.unknown))
-        } // TODO: Change
+    func saveMessage(message: Message) -> Future<(Message, NSManagedObjectID), Error> {
+        return databaseService.messageEntityService.saveMessage(message: message)
+    }
+    
+    func getMessages(forRoomId roomId: Int) -> Future<[Message], Error> {
+        self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
+    }
+    
+    func updateLocalMessage(message: Message, objectId: NSManagedObjectID) -> Future<Message, Error> {
+        self.databaseService.messageEntityService.updateMessage(message: message, objectId: objectId)
     }
 }

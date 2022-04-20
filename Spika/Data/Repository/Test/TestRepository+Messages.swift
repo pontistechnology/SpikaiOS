@@ -5,18 +5,27 @@
 //  Created by Marko on 27.10.2021..
 //
 
-import Foundation
+import CoreData
 import Combine
 
 extension TestRepository {
-    func saveMessage(_ message: LocalMessage) -> Future<LocalMessage, Error> {
+    func saveMessage(message: Message) -> Future<(Message, NSManagedObjectID), Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func sendTextMessage(message: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendTextMessage(body: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
        return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
     }
-        
+    
+    func getMessages(forRoomId: Int) -> Future<[Message], Error> {
+        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+    }
+    
+    func updateLocalMessage(message: Message, objectId: NSManagedObjectID) -> Future<Message, Error> {
+        Future { p in
+            p(.failure(DatabseError.requestFailed))
+        }
+    }
 }

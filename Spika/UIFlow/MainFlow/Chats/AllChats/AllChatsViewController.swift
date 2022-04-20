@@ -67,11 +67,12 @@ extension AllChatsViewController: UITableViewDataSource {
         let room = viewModel.roomsPublisher.value[indexPath.row]
         
 typeTest: if room.type == "private" {
-            guard let friend = room.users.first (where: { user in
-                user.user.id != viewModel.getMyUserId()
-            }) else { break typeTest }
+        guard let roomUsers = room.users else { break typeTest}
+        let friend = roomUsers.first(where: { roomUser in
+                roomUser.user!.id != viewModel.getMyUserId() })
+        
             
-            cell?.configureCell(avatarUrl: room.avatarUrl, name: friend.user.displayName ?? "unknown name", desc: "private room, id: \(room.id)")
+            cell?.configureCell(avatarUrl: room.avatarUrl ?? "smth", name: friend!.user!.displayName ?? "unknown name", desc: "private room, id: \(room.id)")
         }
         
         return cell ?? UITableViewCell()

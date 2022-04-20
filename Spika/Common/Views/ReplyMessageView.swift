@@ -62,12 +62,12 @@ class ReplyMessageView: UIView, BaseView {
     func updateReplyView(message: Message) {
         senderNameLabel.text = "user with id: \(message.id)"
         
-        guard let messageType = MessageType(rawValue: message.type) else { return }
+        guard let messageType = MessageType(rawValue: message.type!) else { return }
         
         switch messageType {
         case .text:
             leftImageView.image = UIImage(systemName: "textformat")
-            messageLabel.text = message.body.text
+            messageLabel.text = message.body!.text
         case .photo:
             leftImageView.image = UIImage(systemName: "photo")
             messageLabel.text = "Photo message"

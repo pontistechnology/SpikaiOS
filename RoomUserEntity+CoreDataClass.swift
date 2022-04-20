@@ -18,8 +18,8 @@ public class RoomUserEntity: NSManagedObject {
             fatalError("shit, do something")
         }
         self.init(entity: entity, insertInto: context)
-        self.userId = Int64(roomUser.userId)
-        self.isAdmin = roomUser.isAdmin
-        self.user = UserEntity(user: roomUser.user, context: context)
+        self.userId = Int64(roomUser.userId!)
+        self.isAdmin = roomUser.isAdmin! // TODO: check always?
+        self.user = UserEntity(user: roomUser.user!, context: context)
     }
 }

@@ -127,12 +127,12 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
 
 extension TextMessageTableViewCell {
     
-    func updateCell(messageEntity: MessageEntity) {
+    func updateCell(message: Message) {
         guard let currentReuseIdentifier = currentReuseIdentifier else {
             return
         }
-        messageLabel.text = messageEntity.bodyText
-        messageStateView.changeState(to: messageEntity.getMessageState())
+        messageLabel.text = message.body?.text
+        messageStateView.changeState(to: message.getMessageState())
         
         switch currentReuseIdentifier {
         case .myText:

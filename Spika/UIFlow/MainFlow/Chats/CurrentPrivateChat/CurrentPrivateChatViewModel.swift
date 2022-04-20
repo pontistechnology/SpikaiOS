@@ -13,13 +13,8 @@ import IKEventSource
 class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: User
-    var roomEntityID: NSManagedObjectID?
-    let sort = NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)
-    lazy var coreDataFetchedResults = CoreDataFetchedResults(ofType: MessageEntity.self,
-                                                             entityName: "MessageEntity",
-                                                             sortDescriptors: [sort],
-                                                             managedContext: repository.getMainContext(),
-                                                             delegate: nil)
+    var room: Room?
+    var messages: [Message] = []
     let tableViewShouldReload = PassthroughSubject<Bool, Never>()
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
@@ -40,10 +35,10 @@ extension CurrentPrivateChatViewModel {
                 print("no local room")
                 self.checkOnlineRoom()
             }
-        } receiveValue: { [weak self] roomEntityID in
+        } receiveValue: { [weak self] room in
             guard let self = self else { return }
-            self.roomEntityID = roomEntityID
-            self.setFetch()
+            self.room = room
+            self.loadMessages()
         }.store(in: &subscriptions)
     }
     
@@ -84,10 +79,10 @@ extension CurrentPrivateChatViewModel {
             case .failure(_):
                 print("saving to local DB failed")
             }
-        } receiveValue: { [weak self] roomEntityID in
+        } receiveValue: { [weak self] room in
             guard let self = self else { return }
-            self.roomEntityID = roomEntityID
-            self.setFetch()
+            self.room = room
+            //            self.loadMessages() // TODO: Does it have sense?
         }.store(in: &subscriptions)
     }
     
@@ -112,78 +107,68 @@ extension CurrentPrivateChatViewModel {
         }.store(in: &subscriptions)
     }
     
-    func setFetch() {
-        DispatchQueue.main.async {
-            print("setFetch thread:", Thread.current)
-            let mainMOC = self.repository.getMainContext()
-            guard let roomEntityID = self.roomEntityID,
-                  let roomEntity = (mainMOC.object(with: roomEntityID) as? RoomEntity)
-            else { return }
-            
-            let predicate = NSPredicate(format: "%K == %@",
-                                        #keyPath(MessageEntity.roomId), "\(roomEntity.id)")
-            self.coreDataFetchedResults.controller.fetchRequest.predicate = predicate
-            self.coreDataFetchedResults.performFetch { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(_):
-                    self.tableViewShouldReload.send(true)
-                case .failure(_):
-                    break
-                }
+    func loadMessages() {
+        guard let room = room else { return }
+        print("u loag messages stiglo: ", room)
+        repository.getMessages(forRoomId: room.id).sink { completion in
+            switch completion {
+            case .finished:
+                break
+            case .failure(_):
+                break
             }
-        }
+        } receiveValue: { [weak self] messages in
+            guard let self = self else { return }
+            self.messages = messages
+            self.tableViewShouldReload.send(true)
+        }.store(in: &subscriptions)
     }
 }
 
 extension CurrentPrivateChatViewModel {
     
     func trySendMessage(text: String) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self,
-                  let roomEntityID = self.roomEntityID,
-                  let roomEntity = (self.repository.getMainContext().object(with: roomEntityID) as? RoomEntity)
-            else { return }
+        guard let room = self.room else { return }
+        let message = Message(createdAt: Int(Date().timeIntervalSince1970),
+                              fromUserId: repository.getMyUserId(),
+                              roomId: room.id, type: .text,
+                              body: MessageBody(text: text))
         
-            let mesa = MessageEntity(message: Message(text: text,
-                                                      myId: self.repository.getMyUserId(),
-                                                      roomId: Int(roomEntity.id)),
-                                     context: self.repository.getMainContext())
-            print("Mesa room id: ", mesa.roomId)
-            try! self.repository.getMainContext().save()
-            self.sendMessage(messageEntity: mesa)
-        }
+        repository.saveMessage(message: message).sink { completion in
+            
+        } receiveValue: { [weak self] (message, objectId) in
+            guard let body = message.body else { return }
+            self?.sendMessage(body: body, objectId: objectId)
+        }.store(in: &subscriptions)
     }
     
-    func sendMessage(messageEntity: MessageEntity) {
-        DispatchQueue.main.async { [weak self] in
-            
+    func sendMessage(body: MessageBody, objectId: NSManagedObjectID) {
+        guard let room = self.room else { return }
+        
+        self.repository.sendTextMessage(body: body, roomId: room.id).sink { [weak self] completion in
+            guard let _ = self else { return }
+            switch completion {
+                
+            case .finished:
+                print("finished")
+            case .failure(_):
+                print("failure")
+            }
+        } receiveValue: { [weak self] response in
+            print("SendMessage response: ", response)
             guard let self = self,
-                  let roomEntityID = self.roomEntityID,
-                  let roomEntity = (self.repository.getMainContext().object(with: roomEntityID) as? RoomEntity),
-                  let text = messageEntity.bodyText
+                  let message = response.data?.message
             else { return }
+            self.updateMessage(message: message, objectId: objectId)
+        }.store(in: &self.subscriptions)
+    }
+    
+    func updateMessage(message: Message, objectId: NSManagedObjectID) {
+        repository.updateLocalMessage(message: message, objectId: objectId).sink { completion in
             
-            self.repository.sendTextMessage(message: MessageBody(text: text), roomId: Int(roomEntity.id)).sink { [weak self] completion in
-                guard let _ = self else { return }
-                switch completion {
-                    
-                case .finished:
-                    print("finished")
-                case .failure(_):
-                    print("failure")
-                }
-            } receiveValue: { [weak self] response in
-                guard let self = self else { return }
-                print("SendMessage response: ", response)
-                DispatchQueue.main.async {
-                    messageEntity.seenCount = 0 // TODO: change logic and order, change Message body
-                    try! self.repository.getMainContext().save()
-                }
-                
-    //            guard let message = response.data?.message else { return }
-                
-            }.store(in: &self.subscriptions)
-        }
+        } receiveValue: { message in
+            //TODO: change in array
+        }.store(in: &subscriptions)
+
     }
 }

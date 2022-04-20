@@ -31,15 +31,22 @@ public class MessageEntity: NSManagedObject {
         }
         self.init(entity: entity, insertInto: context)
         
-        createdAt = Int64(message.createdAt)
-        id = Int64(message.id)
-        fromUserId = Int64(message.fromUserId)
-        fromDeviceId = Int64(message.fromDeviceId)
-        totalDeviceCount = Int64(message.totalDeviceCount)
+        if let c = message.createdAt {
+            createdAt = Int64(c)
+        }
+        
+        if let fromUserId = message.fromUserId {
+            self.fromUserId = Int64(fromUserId)
+        }
+//        createdAt = Int64(message.createdAt)
+        id = Int64(message.id ?? 999999)
+//        fromUserId = Int64(message.fromUserId ?? 999999)
+        fromDeviceId = Int64(message.fromDeviceId  ?? 1234512)
+        totalDeviceCount = Int64(message.totalDeviceCount ?? 1234512)
         deliveredCount = Int64(message.deliveredCount ?? -1)
-        seenCount = Int64(message.seenCount)
-        roomId = Int64(message.roomId)
+        seenCount = Int64(message.seenCount ?? 1234512)
+        roomId = Int64(message.roomId ?? 1234512)
         type = message.type
-        bodyText = message.body.text
+        bodyText = message.body!.text
     }
 }

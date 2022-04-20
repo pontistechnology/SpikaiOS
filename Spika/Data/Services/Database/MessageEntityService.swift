@@ -17,6 +17,61 @@ class MessageEntityService {
         self.coreDataStack = coreDataStack
     }
     
+    func getMessages(forRoomId id: Int) -> Future<[Message], Error>{
+        Future { [weak self] promise in
+            guard let self = self else { return }
+            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+                let fetchRequest = MessageEntity.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(MessageEntity.roomId), "\(id)")
+                
+                do {
+                    let messagesEntities = try context.fetch(fetchRequest)
+                    let messages = messagesEntities.map{ Message(messageEntity: $0)}
+                    promise(.success(messages.compactMap{$0}))
+                } catch {
+                    promise(.failure(DatabseError.requestFailed))
+                }
+            }
+        }
+    }
+    
+    func saveMessage(message: Message) -> Future<(Message, NSManagedObjectID), Error> {
+        return Future { [weak self] promise in
+            guard let self = self else { return }
+            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                let entity = MessageEntity(message: message, context: context)
+                do {
+                    try context.save()
+                    if entity.objectID.isTemporaryID{
+                        promise(.failure(DatabseError.savingError))
+                    } else {
+                        promise(.success((message, entity.objectID)))
+                    }
+                } catch {
+                    promise(.failure(DatabseError.savingError))
+                }
+            }
+        }
+    }
+    
+    func updateMessage(message: Message, objectId: NSManagedObjectID) -> Future<Message, Error> {
+        Future { promise in
+            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                
+                do {
+                    try context.save()
+                    promise(.success(message))
+                } catch {
+                    promise(.failure(DatabseError.savingError))
+                }
+            }
+        }
+    }
+    
+    
+    
 
 //    func getMessages() -> Future<[LocalMessage], Error> {
 //        let fetchRequest = NSFetchRequest<MessageEntity>(entityName: Constants.Database.messageEntity)

@@ -21,40 +21,38 @@ class RoomEntityService {
 
 extension RoomEntityService {
     
-    func getPrivateRoom(forId id: Int) -> Future<NSManagedObjectID, Error> {
-        // CDStack
-        let fetchRequest = RoomEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "type == 'private' AND ANY users.userId == %@", "\(id)") // TODO: chagne to user Id
-        do {
-            let rooms = try coreDataStack.mainMOC.fetch(fetchRequest)
-            if rooms.count == 1 {
-                return Future { promise in
-                    promise(.success(rooms.first!.objectID))
+    func getPrivateRoom(forId id: Int) -> Future<Room, Error> {
+        Future { promise in
+            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+                let fetchRequest = RoomEntity.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "type == 'private' AND ANY users.userId == %@", "\(id)")
+                
+                do {
+                    let rooms = try context.fetch(fetchRequest)
+                    
+                    if rooms.count == 1 {
+                        let r = Room(roomEntity: rooms.first!)
+                        promise(.success(r))
+                    } else {
+                        promise(.failure(DatabseError.moreThanOne))
+                    }
+                } catch {
+                    promise(.failure(error))
                 }
-            } else {
-                return Future { promise in
-                    promise(.failure(DatabseError.moreThanOne))
-                }
-            }
-        } catch {
-            return Future { promise in
-                promise(.failure(error))
             }
         }
     }
     
-    func saveRoom(_ room: Room) -> Future<NSManagedObjectID, Error> {
+    func saveRoom(_ room: Room) -> Future<Room, Error> {
         
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                let a = RoomEntity(room: room, context: context)
+                let _ = RoomEntity(room: room, context: context)
                 do {
                     try context.save()
                     print("this room is saved: ", room)
-                    let moID = a.objectID
-                    guard !moID.isTemporaryID else { return }
-                    promise(.success(moID))
+                    promise(.success(room))
                 } catch {
                     print("Error saving: ", error)
                     promise(.failure(DatabseError.savingError))

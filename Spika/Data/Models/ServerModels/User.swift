@@ -26,7 +26,10 @@ struct User: Codable {
         self.avatarUrl = avatarUrl
     }
     
-    init(entity: UserEntity) {
+    init?(entity: UserEntity?) {
+        guard let entity = entity else {
+            return nil
+        }
         self.id = Int(entity.id)
         self.displayName = entity.displayName
         self.avatarUrl = entity.avatarUrl

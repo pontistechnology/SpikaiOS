@@ -20,10 +20,10 @@ public class RoomEntity: NSManagedObject {
         self.id = Int64(room.id)
         self.name = room.name
         self.avatarUrl = room.avatarUrl
-        self.createdAt = Int64(room.createdAt)
+        self.createdAt = Int64(room.createdAt!)
         self.type = room.type
         
-        for roomUser in room.users {
+        for roomUser in room.users! { // TODO: check
             let r = RoomUserEntity(roomUser: roomUser, insertInto: context)
             self.addToUsers(r)
         }
