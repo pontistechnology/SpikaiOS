@@ -62,12 +62,20 @@ class ContactsViewModel: BaseViewModel {
         } receiveValue: { [weak self] contacts in
             guard let self = self else { return }
             print(contacts)
-            var contacts = contacts
-            for (index, contact) in contacts.enumerated() {
-                contacts[index] = contact.getSHA256()
-            }
-            print(contacts)
-            self.postContacts(hashes: contacts)
+            self.repository.saveContacts(contacts).sink { completion in
+                
+            } receiveValue: { contactss in
+                print("saved contatssssss", contactss)
+            }.store(in: &self.subscriptions)
+
+//            var contacts = contacts
+//            for var contact in contacts {
+//                contact.telephone = contact.telephone.getSHA256()
+//            }
+//
+            let phoneHashes = contacts.map { $0.telephone.getSHA256() }
+            print(phoneHashes)
+            self.postContacts(hashes: phoneHashes)
             
         }.store(in: &subscriptions)
     }
@@ -101,7 +109,23 @@ class ContactsViewModel: BaseViewModel {
             guard let self = self else { return }
             print("Success: ", response)
             if let list = response.data?.list {
-                self.saveUsers(list)
+                for var user in list {
+                    self.repository.getContact(phoneNumber: user.telephoneNumber!).sink { [weak self] completion in
+                        guard let _ = self else { return }
+                        switch completion {
+                        case let .failure(error):
+                            print("cant find contact: ", user.telephoneNumber, " ",error)
+                        default:
+                            break
+                        }
+                    } receiveValue: { [weak self] contact in
+                        print("contact found: ", contact.telephone)
+                        user.familyName = contact.firstName
+                        user.givenName = contact.lastName
+                        self?.repository.saveUser(user)
+                    }.store(in: &self.subscriptions)
+                }
+//                self.saveUsers(list)
             }
             if let limit = response.data?.limit, let count = response.data?.count {
                 if page * limit < count {

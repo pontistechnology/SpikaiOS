@@ -216,4 +216,12 @@ extension AppRepository {
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return databaseService.userEntityService.saveUsers(users)
     }
+    
+    func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
+        return databaseService.userEntityService.saveContacts(contacts)
+    }
+    
+    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
+        return databaseService.userEntityService.getContact(phoneNumber: phoneNumber)
+    }
 }

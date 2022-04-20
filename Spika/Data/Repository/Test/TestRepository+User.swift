@@ -97,4 +97,11 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
+    func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
+        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+    }
+    
+    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
+        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+    }
 }

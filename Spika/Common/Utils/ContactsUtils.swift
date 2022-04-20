@@ -12,7 +12,7 @@ import libPhoneNumber_iOS
 
 class ContactsUtils {
     
-    class func getContacts() -> Future<[String], Error> {
+    class func getContacts() -> Future<[FetchedContact], Error> {
         return Future() { promise in
             let store = CNContactStore()
             var contacts = [FetchedContact]()
@@ -28,32 +28,48 @@ class ContactsUtils {
                     let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
                     do {
                         try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
+                            
+                            guard let phoneUtil = NBPhoneNumberUtil.sharedInstance(), let defaultRegionCode = defaultRegionCode() else {
+                                return
+                            }
+                            
                             for phoneNumber in contact.phoneNumbers {
-                                contacts.append(FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: phoneNumber.value.stringValue))
+                                
+                                do {
+                                    let parsedPhoneNumber: NBPhoneNumber = try phoneUtil.parse(phoneNumber.value.stringValue, defaultRegion: defaultRegionCode)
+                                    let formattedString: String = try phoneUtil.format(parsedPhoneNumber, numberFormat: .E164)
+                                    
+                                    contacts.append(FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: formattedString))
+                                }
+                                catch let error as NSError {
+                                    print(error.localizedDescription)
+                                }
                             }
                         })
                     } catch let error {
                         print("Failed to enumerate contact", error)
                     }
                     
-                    guard let phoneUtil = NBPhoneNumberUtil.sharedInstance(), let defaultRegionCode = defaultRegionCode() else {
-                        return
-                    }
-                    
-                    var phoneNumbers = [String]()
-                    for contact in contacts {
-                        print(contact.telephone + " " + contact.firstName + " " + contact.lastName)
-                        do {
-                            let phoneNumber: NBPhoneNumber = try phoneUtil.parse(contact.telephone, defaultRegion: defaultRegionCode)
-                            let formattedString: String = try phoneUtil.format(phoneNumber, numberFormat: .E164)
-                            phoneNumbers.append(formattedString)
-                            print("[\(formattedString)]")
-                        }
-                        catch let error as NSError {
-                            print(error.localizedDescription)
-                        }
-                    }
-                    promise(.success(phoneNumbers))
+//                    guard let phoneUtil = NBPhoneNumberUtil.sharedInstance(), let defaultRegionCode = defaultRegionCode() else {
+//                        return
+//                    }
+//                    
+//                    var phoneNumbers = [String]()
+//                    for var contact in contacts {
+//                        print(contact.telephone! + " " + contact.firstName! + " " + contact.lastName!)
+//                        do {
+//                            let phoneNumber: NBPhoneNumber = try phoneUtil.parse(contact.telephone, defaultRegion: defaultRegionCode)
+//                            let formattedString: String = try phoneUtil.format(phoneNumber, numberFormat: .E164)
+//                            phoneNumbers.append(formattedString)
+//                            print("[\(formattedString)]")
+//                            contact.telephone = formattedString
+//                            print("changes: " + contact.telephone! + " " + contact.firstName! + " " + contact.lastName!)
+//                        }
+//                        catch let error as NSError {
+//                            print(error.localizedDescription)
+//                        }
+//                    }
+                    promise(.success(contacts))
                 } else {
                     print("access denied")
                     promise(.success([]))
@@ -76,10 +92,4 @@ class ContactsUtils {
         }
         return nil
     }
-}
-
-struct FetchedContact {
-    var firstName: String
-    var lastName: String
-    var telephone: String
 }

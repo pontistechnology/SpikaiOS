@@ -89,4 +89,8 @@ protocol Repository {
     func getMyUserId() -> Int
     func getAccessToken() -> String?
     func getMyDeviceId() -> Int
+    
+    // MARK: COREDATA: Contacts
+    func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error>
+    func getContact(phoneNumber: String) -> Future<FetchedContact, Error>
 }
