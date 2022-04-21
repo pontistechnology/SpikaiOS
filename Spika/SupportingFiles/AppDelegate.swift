@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func test() {
         // only for debug, remove later
         //        print("type is: ", MessageType(rawValue: "textf"))
-//                UserDefaults.standard.set("QtsRkcMeBVf9nT77", forKey: Constants.UserDefaults.accessToken)
+//                UserDefaults.standard.set("ZEJfWG4mW5fhYPvb", forKey: Constants.UserDefaults.accessToken)
         
         print("Thread check test: ", Thread.current)
 

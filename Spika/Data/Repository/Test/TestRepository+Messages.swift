@@ -9,7 +9,7 @@ import CoreData
 import Combine
 
 extension TestRepository {
-    func saveMessage(message: Message) -> Future<(Message, NSManagedObjectID), Error> {
+    func saveMessage(message: Message) -> Future<(Message, String), Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
@@ -23,7 +23,7 @@ extension TestRepository {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func updateLocalMessage(message: Message, objectId: NSManagedObjectID) -> Future<Message, Error> {
+    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error> {
         Future { p in
             p(.failure(DatabseError.requestFailed))
         }

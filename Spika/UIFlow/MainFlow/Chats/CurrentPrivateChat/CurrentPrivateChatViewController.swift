@@ -102,8 +102,11 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        friendInfoView.changeStatus(to: "\(i)" ?? "no bodyText")
+        friendInfoView.changeStatus(to: "\(i)")
         i += 1
+        print("local id: ", viewModel.messages[indexPath.row].body?.localId!)
+        print("id: ", viewModel.messages[indexPath.row].id!)
+        print("Cijeli message: ", viewModel.messages[indexPath.row])
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
     }
 }
@@ -111,9 +114,6 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
 extension CurrentPrivateChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        guard let messageEntities = viewModel.coreDataFetchedResults.controller.sections?[section] else {
-//            return 0
-//        }
         return viewModel.messages.count
     }
     

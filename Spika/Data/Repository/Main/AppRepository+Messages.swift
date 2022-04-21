@@ -33,7 +33,7 @@ extension AppRepository {
     
     // MARK: Database
     
-    func saveMessage(message: Message) -> Future<(Message, NSManagedObjectID), Error> {
+    func saveMessage(message: Message) -> Future<(Message, String), Error> {
         return databaseService.messageEntityService.saveMessage(message: message)
     }
     
@@ -41,7 +41,7 @@ extension AppRepository {
         self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
     }
     
-    func updateLocalMessage(message: Message, objectId: NSManagedObjectID) -> Future<Message, Error> {
-        self.databaseService.messageEntityService.updateMessage(message: message, objectId: objectId)
+    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error> {
+        self.databaseService.messageEntityService.updateMessage(message: message, localId: localId)
     }
 }

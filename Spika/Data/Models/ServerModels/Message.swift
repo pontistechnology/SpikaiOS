@@ -8,8 +8,8 @@
 import Foundation
 
 struct Message: Codable {
-    let createdAt: Int?      // TODO: all optionals????????
-    let fromDeviceId: Int?   // MARK: we dont need this?
+    let createdAt: Int?
+    let fromDeviceId: Int?
     let fromUserId: Int?
     let id: Int?
     let totalDeviceCount: Int?
@@ -17,13 +17,13 @@ struct Message: Codable {
     let seenCount: Int?
     let roomId: Int?
     let type: String?
-    let body: MessageBody?
+    var body: MessageBody?
 }
 
 extension Message {
     init(createdAt: Int, fromUserId: Int, roomId: Int, type: MessageType, body: MessageBody) {
         self.body = body
-        self.id = -1
+        self.id = nil
         self.fromUserId = fromUserId
         self.fromDeviceId = nil
         self.totalDeviceCount = nil
@@ -38,7 +38,7 @@ extension Message {
         self.init(createdAt: Int(messageEntity.createdAt),
                   fromDeviceId: Int(messageEntity.fromDeviceId),
                   fromUserId: Int(messageEntity.fromUserId),
-                  id: Int(messageEntity.id),
+                  id: Int(messageEntity.id ?? "-1"),
                   totalDeviceCount: Int(messageEntity.totalDeviceCount),
                   deliveredCount: Int(messageEntity.deliveredCount),
                   seenCount: Int(messageEntity.seenCount),
@@ -63,6 +63,7 @@ extension Message {
 
 struct MessageBody: Codable {
     let text: String?
+    var localId: String?
 }
 
 enum MessageType: String, Codable {

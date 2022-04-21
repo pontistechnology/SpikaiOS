@@ -12,18 +12,6 @@ import CoreData
 @objc(MessageEntity)
 public class MessageEntity: NSManagedObject {
     
-    func getMessageState() -> MessageState {
-        // TODO: check first seen, then delivered, then sent, waiting, error, (check fail)
-        if seenCount == 0 {
-            return .sent
-        }
-        
-//        if deliveredCount == totalDeviceCount {
-//            return .delivered
-//        }
-//        
-        return .waiting
-    }
       // TODO: think about making everything optional before response
     convenience init(message: Message, context: NSManagedObjectContext) {
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.messageEntity, in: context) else {
@@ -38,15 +26,37 @@ public class MessageEntity: NSManagedObject {
         if let fromUserId = message.fromUserId {
             self.fromUserId = Int64(fromUserId)
         }
-//        createdAt = Int64(message.createdAt)
-        id = Int64(message.id ?? 999999)
-//        fromUserId = Int64(message.fromUserId ?? 999999)
-        fromDeviceId = Int64(message.fromDeviceId  ?? 1234512)
-        totalDeviceCount = Int64(message.totalDeviceCount ?? 1234512)
-        deliveredCount = Int64(message.deliveredCount ?? -1)
-        seenCount = Int64(message.seenCount ?? 1234512)
-        roomId = Int64(message.roomId ?? 1234512)
-        type = message.type
-        bodyText = message.body!.text
+        
+        if let id = message.id {
+            self.id = "\(id)"
+        }
+        
+        if let fromDeviceId = message.fromDeviceId {
+            self.fromDeviceId = Int64(fromDeviceId)
+        }
+        
+        if let totalDeviceCount = message.totalDeviceCount {
+            self.totalDeviceCount = Int64(totalDeviceCount)
+        }
+
+        if let deliveredCount = message.deliveredCount {
+            self.deliveredCount = Int64(deliveredCount)
+        }
+
+        if let seenCount = message.seenCount {
+            self.seenCount = Int64(seenCount)
+        }
+        
+        if let roomId = message.roomId {
+            self.roomId = Int64(roomId)
+        }
+
+        if let type = message.type {
+            self.type = type
+        }
+        
+        if let bodyText = message.body?.text {
+            self.bodyText = bodyText
+        }
     }
 }
