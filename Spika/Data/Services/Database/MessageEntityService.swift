@@ -60,7 +60,6 @@ class MessageEntityService {
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
                 guard let fromUserId = message.fromUserId,
-                      let fromDeviceId = message.fromDeviceId,
                       let createdAt = message.createdAt,
                       let deliveredCount = message.deliveredCount,
                       let roomId = message.roomId,
@@ -81,7 +80,6 @@ class MessageEntityService {
                         entity.id = "\(id)"
                         entity.bodyText = bodyText
                         entity.createdAt = Int64(createdAt)
-                        entity.fromDeviceId = Int64(fromDeviceId)
                         entity.fromUserId = Int64(fromUserId)
                         entity.deliveredCount = Int64(deliveredCount)
                         entity.roomId = Int64(roomId)

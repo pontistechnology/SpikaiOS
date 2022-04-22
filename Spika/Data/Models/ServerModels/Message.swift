@@ -9,7 +9,6 @@ import Foundation
 
 struct Message: Codable {
     let createdAt: Int?
-    let fromDeviceId: Int?
     let fromUserId: Int?
     let id: Int?
     let totalUserCount: Int?
@@ -25,7 +24,6 @@ extension Message {
         self.body = body
         self.id = nil
         self.fromUserId = fromUserId
-        self.fromDeviceId = nil
         self.totalUserCount = nil
         self.deliveredCount = -1
         self.seenCount = -1
@@ -36,7 +34,6 @@ extension Message {
     
     init(messageEntity: MessageEntity) {
         self.init(createdAt: Int(messageEntity.createdAt),
-                  fromDeviceId: Int(messageEntity.fromDeviceId),
                   fromUserId: Int(messageEntity.fromUserId),
                   id: Int(messageEntity.id ?? "-1"),
                   totalUserCount: Int(messageEntity.totalUserCount),

@@ -95,7 +95,7 @@ class SSE {
         alertWindow.isHidden = false
         alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors, theme
         
-        let mess = MessageNotificationView(image: UIImage(named: "matejVida")!, senderName: "Sender id: \(currentMessage.fromDeviceId)", textOrDescription: currentMessage.body?.text ?? "NOTEXTSSE")
+        let mess = MessageNotificationView(image: UIImage(named: "matejVida")!, senderName: "Sender id: \(currentMessage.fromUserId)", textOrDescription: currentMessage.body?.text ?? "NOTEXTSSE")
         alertWindow.rootViewController?.view.addSubview(mess)
         mess.anchor(top: alertWindow.rootViewController?.view.safeAreaLayoutGuide.topAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
         mess.centerXToSuperview()

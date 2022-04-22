@@ -14,7 +14,6 @@
         <attribute name="bodyText" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="deliveredCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="fromDeviceId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="fromUserId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="roomId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -64,7 +63,7 @@
     </entity>
     <elements>
         <element name="ContactEntity" positionX="-180" positionY="117" width="128" height="74"/>
-        <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="179"/>
+        <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="164"/>
         <element name="RoomEntity" positionX="-180" positionY="117" width="128" height="119"/>
         <element name="RoomUserEntity" positionX="-178.015625" positionY="-33.05859375" width="128" height="89"/>
         <element name="UserEntity" positionX="35.22509765625" positionY="116.6122131347656" width="128" height="164"/>

@@ -31,10 +31,6 @@ public class MessageEntity: NSManagedObject {
             self.id = "\(id)"
         }
         
-        if let fromDeviceId = message.fromDeviceId {
-            self.fromDeviceId = Int64(fromDeviceId)
-        }
-        
         if let totalUserCount = message.totalUserCount {
             self.totalUserCount = Int64(totalUserCount)
         }
