@@ -120,8 +120,8 @@ class ContactsViewModel: BaseViewModel {
                         }
                     } receiveValue: { [weak self] contact in
                         print("contact found: ", contact.telephone)
-                        user.familyName = contact.firstName
-                        user.givenName = contact.lastName
+                        user.givenName = contact.firstName
+                        user.familyName = contact.lastName
                         self?.repository.saveUser(user)
                     }.store(in: &self.subscriptions)
                 }

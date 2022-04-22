@@ -73,11 +73,11 @@ struct User: Codable {
 
 extension User: Comparable {
     static func < (lhs: User, rhs: User) -> Bool {
-        return lhs.displayName!.localizedStandardCompare(rhs.displayName!) == .orderedAscending
+        return lhs.getDisplayName().localizedStandardCompare(rhs.getDisplayName()) == .orderedAscending
     }
     
     static func == (lhs: User, rhs: User) -> Bool {
-        return lhs.displayName!.localizedStandardCompare(rhs.displayName!) == .orderedSame
+        return lhs.getDisplayName().localizedStandardCompare(rhs.getDisplayName()) == .orderedSame
     }
 }
 
