@@ -17,6 +17,7 @@ class SSE {
     let repository: Repository
     let coordinator: Coordinator
     var currentMessage: Message?
+    var subs = Set<AnyCancellable>()
     
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
@@ -34,15 +35,11 @@ class SSE {
     }
     
     func setupSSE() {
-        let deviceId = UserDefaults.standard.string(forKey: Constants.UserDefaults.deviceId) // TODO: Check is this needed? Can be 0?
         guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken),
-              let deviceId = deviceId,
-              deviceId != "-1",
               let serverURL = URL(string: Constants.Networking.baseUrl
-//                                  + "api/sse/" + deviceId
+                                  + "api/sse/"
                                   + "?accesstoken=" + accessToken)
         else { return }
-        print("SSE URL : ", serverURL)
         eventSource = EventSource(url: serverURL)
         
         eventSource?.onOpen {
@@ -51,7 +48,6 @@ class SSE {
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
             print("DISCONNECTED")
-//
 //            guard reconnect ?? false else { return }
             
             let retryTime = self?.eventSource?.retryTime ?? 3000
@@ -61,17 +57,23 @@ class SSE {
         }
         
         eventSource?.onMessage { id, event, data in
-//            print("onMessage: ", id, event, data)
-            
-            guard let jsonData = data?.data(using: .utf8) else { return }
+            print("onMessage: ", id, event, data)
+            print("Eventsource onmessage thread: ", Thread.current)
+            guard let jsonData = data?.data(using: .utf8) else {
+                print("SSE jsonData error")
+                return }
             
             do {
                 let sseNewMessage = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
                 guard let message = sseNewMessage.message else { return }
-//                let mesa = MessageEntity(message: message, context: self.repository.getBackgroundContext())
-                
-                self.currentMessage = message
-                self.showNotification()
+                self.repository.saveMessage(message: message).sink { c in
+                    print("completion save message sse: ", c)
+                } receiveValue: { (message, localId) in
+                    self.currentMessage = message
+                    self.showNotification()
+                }.store(in: &self.subs)
+
+               
             } catch {
                 print("onMessage decoder error catched")
                 return
@@ -84,26 +86,28 @@ class SSE {
     }
     
     func showNotification() {
-        guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene,
-              let currentMessage = self.currentMessage
-        else { return }
-        // TODO: refactor
-        self.alertWindow = nil
-        let alertWindow = UIWindow(windowScene: windowScene)
-        alertWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150)
-        alertWindow.rootViewController = UIViewController()
-        alertWindow.isHidden = false
-        alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors, theme
-        
-        let mess = MessageNotificationView(image: UIImage(named: "matejVida")!, senderName: "Sender id: \(currentMessage.fromUserId)", textOrDescription: currentMessage.body?.text ?? "NOTEXTSSE")
-        alertWindow.rootViewController?.view.addSubview(mess)
-        mess.anchor(top: alertWindow.rootViewController?.view.safeAreaLayoutGuide.topAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
-        mess.centerXToSuperview()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
-        mess.addGestureRecognizer(tapGesture)
-        
-        self.alertWindow = alertWindow
+        DispatchQueue.main.async {
+            guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene,
+                  let currentMessage = self.currentMessage
+            else { return }
+            // TODO: refactor
+            self.alertWindow = nil
+            let alertWindow = UIWindow(windowScene: windowScene)
+            alertWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150)
+            alertWindow.rootViewController = UIViewController()
+            alertWindow.isHidden = false
+            alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors, theme
+            
+            let mess = MessageNotificationView(image: UIImage(named: "matejVida")!, senderName: "Sender id: \(currentMessage.fromUserId)", textOrDescription: currentMessage.body?.text ?? "NOTEXTSSE")
+            alertWindow.rootViewController?.view.addSubview(mess)
+            mess.anchor(top: alertWindow.rootViewController?.view.safeAreaLayoutGuide.topAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
+            mess.centerXToSuperview()
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleGesture(_:)))
+            mess.addGestureRecognizer(tapGesture)
+            
+            self.alertWindow = alertWindow
+        }
     }
     
     @objc func handleGesture(_ sender: UITapGestureRecognizer) {
