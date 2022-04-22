@@ -14,8 +14,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: User
     var room: Room?
-    var messages: [Message] = []
-    let tableViewShouldReload = PassthroughSubject<Bool, Never>()
+    let roomPublisher = PassthroughSubject<Room, Error>()
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
@@ -38,7 +37,7 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { [weak self] room in
             guard let self = self else { return }
             self.room = room
-            self.loadMessages()
+            self.roomPublisher.send(room)
         }.store(in: &subscriptions)
     }
     
@@ -53,6 +52,7 @@ extension CurrentPrivateChatViewModel {
             case .failure(let error):
                 PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
                 self.networkRequestState.send(.finished)
+                // TODO: publish error
             }
         } receiveValue: { [weak self] response in
             
@@ -82,7 +82,7 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { [weak self] room in
             guard let self = self else { return }
             self.room = room
-            //            self.loadMessages() // TODO: Does it have sense?
+            self.roomPublisher.send(room)
         }.store(in: &subscriptions)
     }
     
@@ -97,7 +97,7 @@ extension CurrentPrivateChatViewModel {
                 print("private room created")
             case .failure(let error):
                 PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
-                // TODO: present dialog and return?
+                // TODO: present dialog and return? publish error
             }
         } receiveValue: { [weak self] response in
             guard let self = self else { return }
@@ -119,8 +119,6 @@ extension CurrentPrivateChatViewModel {
             }
         } receiveValue: { [weak self] messages in
             guard let self = self else { return }
-            self.messages = messages
-            self.tableViewShouldReload.send(true)
         }.store(in: &subscriptions)
     }
 }
@@ -129,20 +127,24 @@ extension CurrentPrivateChatViewModel {
     
     func trySendMessage(text: String) {
         guard let room = self.room else { return }
-        let message = Message(createdAt: Int(Date().timeIntervalSince1970),
+        let message = Message(createdAt: Int(Date().timeIntervalSince1970) * 1000,
                               fromUserId: repository.getMyUserId(),
                               roomId: room.id, type: .text,
                               body: MessageBody(text: text))
         
         repository.saveMessage(message: message).sink { completion in
             
-        } receiveValue: { [weak self] (message, objectId) in
-            guard let body = message.body else { return }
-            self?.sendMessage(body: body, objectId: objectId)
+        } receiveValue: { [weak self] (message, uuid) in
+            guard let self = self else { return }
+            var savedMessage = message
+            savedMessage.body?.localId = uuid
+            guard let body = savedMessage.body else { return }
+            self.sendMessage(body: body, localId: uuid)
         }.store(in: &subscriptions)
     }
     
-    func sendMessage(body: MessageBody, objectId: NSManagedObjectID) {
+    // TODO: uuid will not be in body?
+    func sendMessage(body: MessageBody, localId: String) {
         guard let room = self.room else { return }
         
         self.repository.sendTextMessage(body: body, roomId: room.id).sink { [weak self] completion in
@@ -157,17 +159,22 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { [weak self] response in
             print("SendMessage response: ", response)
             guard let self = self,
-                  let message = response.data?.message
+                  let message = response.data?.message,
+                  let localId = message.body?.localId
             else { return }
-            self.updateMessage(message: message, objectId: objectId)
+            self.updateMessage(message: message, localId: localId)
         }.store(in: &self.subscriptions)
     }
     
-    func updateMessage(message: Message, objectId: NSManagedObjectID) {
-        repository.updateLocalMessage(message: message, objectId: objectId).sink { completion in
+    func updateMessage(message: Message, localId: String) {
+        repository.updateLocalMessage(message: message, localId: localId).sink { completion in
             
-        } receiveValue: { message in
+        } receiveValue: { [weak self] message in
             //TODO: change in array
+            guard let self = self else { return }
+//            guard let i = self.messages.firstIndex(where: {$0.body?.localId == localId}) else { return }
+//            self.messages[i] = message
+//            self.tableViewShouldReload.send(true)
         }.store(in: &subscriptions)
 
     }

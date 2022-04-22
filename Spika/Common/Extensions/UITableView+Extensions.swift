@@ -13,4 +13,5 @@ extension UITableView {
         let lastRowIndex = self.numberOfRows(inSection: lastSectionIndex) - 1
         self.scrollToRow(at: IndexPath(row: lastRowIndex, section: lastSectionIndex), at: .bottom, animated: true)
     }
+    
 }

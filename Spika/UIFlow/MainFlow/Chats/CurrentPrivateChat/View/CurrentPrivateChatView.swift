@@ -32,6 +32,7 @@ class CurrentPrivateChatView: UIView, BaseView {
     func styleSubviews() {
         messagesTableView.backgroundColor = .blue
 //        messagesTableView.separatorStyle  = .none
+        messagesTableView.keyboardDismissMode = .onDrag
         messagesTableView.rowHeight = UITableView.automaticDimension
         messagesTableView.estimatedRowHeight = 5
     }

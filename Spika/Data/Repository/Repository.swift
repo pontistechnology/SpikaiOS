@@ -74,9 +74,9 @@ protocol Repository {
     
     // MARK: COREDATA: Messages
     
-    func saveMessage(message: Message) -> Future<(Message, NSManagedObjectID), Error>
+    func saveMessage(message: Message) -> Future<(Message, String), Error>
     func getMessages(forRoomId: Int) -> Future<[Message], Error>
-    func updateLocalMessage(message: Message, objectId: NSManagedObjectID) -> Future<Message, Error>
+    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error>
     
     // MARK: COREDATA: Room
     

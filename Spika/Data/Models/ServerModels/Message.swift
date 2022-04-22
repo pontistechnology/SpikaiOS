@@ -8,25 +8,25 @@
 import Foundation
 
 struct Message: Codable {
-    let createdAt: Int?      // TODO: all optionals????????
-    let fromDeviceId: Int?   // MARK: we dont need this?
+    let createdAt: Int?
+    let fromDeviceId: Int?
     let fromUserId: Int?
     let id: Int?
-    let totalDeviceCount: Int?
+    let totalUserCount: Int?
     let deliveredCount: Int?
     let seenCount: Int?
     let roomId: Int?
     let type: String?
-    let body: MessageBody?
+    var body: MessageBody?
 }
 
 extension Message {
     init(createdAt: Int, fromUserId: Int, roomId: Int, type: MessageType, body: MessageBody) {
         self.body = body
-        self.id = -1
+        self.id = nil
         self.fromUserId = fromUserId
         self.fromDeviceId = nil
-        self.totalDeviceCount = nil
+        self.totalUserCount = nil
         self.deliveredCount = -1
         self.seenCount = -1
         self.roomId = roomId
@@ -38,8 +38,8 @@ extension Message {
         self.init(createdAt: Int(messageEntity.createdAt),
                   fromDeviceId: Int(messageEntity.fromDeviceId),
                   fromUserId: Int(messageEntity.fromUserId),
-                  id: Int(messageEntity.id),
-                  totalDeviceCount: Int(messageEntity.totalDeviceCount),
+                  id: Int(messageEntity.id ?? "-1"),
+                  totalUserCount: Int(messageEntity.totalUserCount),
                   deliveredCount: Int(messageEntity.deliveredCount),
                   seenCount: Int(messageEntity.seenCount),
                   roomId: Int(messageEntity.roomId),
@@ -49,20 +49,29 @@ extension Message {
     
     func getMessageState() -> MessageState {
         // TODO: check first seen, then delivered, then sent, waiting, error, (check fail)
-        if seenCount == 0 {
+        if(seenCount == totalUserCount) {
+            return .seen
+        }
+        
+        if(deliveredCount == totalUserCount) {
+            return .delivered
+        }
+        
+        if(deliveredCount == 0) {
             return .sent
         }
         
-//        if deliveredCount == totalDeviceCount {
-//            return .delivered
-//        }
-//
+        if seenCount == nil || deliveredCount == nil {
+            return .fail
+        }
+        
         return .waiting
     }
 }
 
 struct MessageBody: Codable {
     let text: String?
+    var localId: String?
 }
 
 enum MessageType: String, Codable {
