@@ -15,14 +15,14 @@ class CurrentPrivateChatViewController: BaseViewController {
     var viewModel: CurrentPrivateChatViewModel!
     let friendInfoView = ChatNavigationBarView()
     var i = 1
+    var frc: NSFetchedResultsController<MessageEntity>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Check room first then prooceed if success
-        checkRoom()
         setupView(currentPrivateChatView)
-        setupBindings()
         setupNavigationItems()
+        setupBindings()
+        checkRoom()
     }
         
     override func viewWillAppear(_ animated: Bool) {
@@ -37,27 +37,106 @@ class CurrentPrivateChatViewController: BaseViewController {
 // MARK: Functions
 
 extension CurrentPrivateChatViewController {
+    func checkRoom() {
+        viewModel.checkLocalRoom()
+    }
+
     func setupBindings() {
         currentPrivateChatView.messageInputView.delegate = self
         currentPrivateChatView.messagesTableView.delegate = self
         currentPrivateChatView.messagesTableView.dataSource = self
-        
         sink(networkRequestState: viewModel.networkRequestState)
         
-        viewModel.tableViewShouldReload.receive(on: DispatchQueue.main).sink { [weak self] should in
+        viewModel.roomPublisher.sink { c in
+            print(c)
+            // TODO: pop vc?, presentAlert?
+        } receiveValue: { [weak self] room in
             guard let self = self else { return }
-            if should {
-                self.currentPrivateChatView.messagesTableView.reloadData()
-            }
+            self.setFetch(room: room)
         }.store(in: &subscriptions)
-    }
-    
-    func checkRoom() {
-        viewModel.checkLocalRoom()
     }
 }
 
-// MARK: MessageInputView actions
+// MARK: - NSFetchedResultsController
+
+extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
+    
+    func setFetch(room: Room) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let fetchRequest = MessageEntity.fetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
+            fetchRequest.predicate = NSPredicate(format: "%K == %d", #keyPath(MessageEntity.roomId), room.id)
+            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
+            self.frc?.delegate = self
+            do {
+                try self.frc?.performFetch()
+                self.currentPrivateChatView.messagesTableView.reloadData()
+            } catch {
+                fatalError("Failed to fetch entities: \(error)") // TODO: handle error
+            }
+        }
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        currentPrivateChatView.messagesTableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        print("TYPE: ", type.rawValue)
+        switch type {
+        case .insert:
+            guard let newIndexPath = newIndexPath else {
+                return
+            }
+            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
+            
+        case .delete:
+            guard let indexPath = indexPath else {
+                return
+            }
+            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+        case .move:
+            guard let indexPath = indexPath,
+                  let newIndexPath = newIndexPath
+            else {
+                return
+            }
+            currentPrivateChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+            
+        case .update:
+            guard let indexPath = indexPath else {
+                return
+            }
+//            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+//            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
+            
+            currentPrivateChatView.messagesTableView.reloadRows(at: [indexPath], with: .fade)
+            
+//            let cell = currentPrivateChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
+//            let entity = frc?.object(at: indexPath)
+//            let message = Message(messageEntity: entity!)
+//            cell?.updateCell(message: message)
+            break
+        default:
+            break
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        currentPrivateChatView.messagesTableView.endUpdates()
+        currentPrivateChatView.messagesTableView.scrollToBottom()
+    }
+    
+//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
+//        print("snapshot begi: ", snapshot)
+//        currentPrivateChatView.messagesTableView.reloadData()
+//        currentPrivateChatView.messagesTableView.scrollToBottom()
+//    }
+}
+
+
+// MARK: - MessageInputView actions
 
 extension CurrentPrivateChatViewController: MessageInputViewDelegate {
     
@@ -96,7 +175,7 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
     }
 }
 
-// MARK: UITableView
+// MARK: - UITableView
 
 extension CurrentPrivateChatViewController: UITableViewDelegate {
     
@@ -104,9 +183,6 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         friendInfoView.changeStatus(to: "\(i)")
         i += 1
-        print("local id: ", viewModel.messages[indexPath.row].body?.localId!)
-        print("id: ", viewModel.messages[indexPath.row].id!)
-        print("Cijeli message: ", viewModel.messages[indexPath.row])
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
     }
 }
@@ -114,25 +190,28 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
 extension CurrentPrivateChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.messages.count
+        guard let sections = self.frc?.sections else { return 0 }
+        return sections[section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myUserId = viewModel.repository.getMyUserId()
+        guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
+        let message = Message(messageEntity: entity)
         
-        let messageEntity = viewModel.messages[indexPath.row]
-        
-        let identifier = (messageEntity.fromUserId == myUserId || messageEntity.fromUserId == -1)
+        let identifier = (message.fromUserId == myUserId)
                         ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
                         : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
-        cell?.updateCell(message: messageEntity)
+        
+        cell?.updateCell(message: message)
+        
         return cell ?? UITableViewCell()
     }
 }
 
-// MARK: Navigation items setup
+// MARK: - Navigation items setup
 
 extension CurrentPrivateChatViewController {
     func setupNavigationItems() {
@@ -155,9 +234,9 @@ extension CurrentPrivateChatViewController {
     }
 }
 
-// MARK: swipe gestures on cells
+// MARK: - swipe gestures on cells
 
-extension CurrentPrivateChatViewController {
+//extension CurrentPrivateChatViewController {
     //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     //        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
     //            self.currentPrivateChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.messagesSubject.value[indexPath.row]), id: indexPath.row)
@@ -166,7 +245,7 @@ extension CurrentPrivateChatViewController {
     //        firstLeft.backgroundColor = .systemBlue
     //        return UISwipeActionsConfiguration(actions: [firstLeft])
     //    }
-}
+//}
     
 // MARK: reply to message
 //        Commented because there is no replyId on backend for now

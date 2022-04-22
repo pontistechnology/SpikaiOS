@@ -12,7 +12,7 @@ struct Message: Codable {
     let fromDeviceId: Int?
     let fromUserId: Int?
     let id: Int?
-    let totalDeviceCount: Int?
+    let totalUserCount: Int?
     let deliveredCount: Int?
     let seenCount: Int?
     let roomId: Int?
@@ -26,7 +26,7 @@ extension Message {
         self.id = nil
         self.fromUserId = fromUserId
         self.fromDeviceId = nil
-        self.totalDeviceCount = nil
+        self.totalUserCount = nil
         self.deliveredCount = -1
         self.seenCount = -1
         self.roomId = roomId
@@ -39,7 +39,7 @@ extension Message {
                   fromDeviceId: Int(messageEntity.fromDeviceId),
                   fromUserId: Int(messageEntity.fromUserId),
                   id: Int(messageEntity.id ?? "-1"),
-                  totalDeviceCount: Int(messageEntity.totalDeviceCount),
+                  totalUserCount: Int(messageEntity.totalUserCount),
                   deliveredCount: Int(messageEntity.deliveredCount),
                   seenCount: Int(messageEntity.seenCount),
                   roomId: Int(messageEntity.roomId),
@@ -49,14 +49,22 @@ extension Message {
     
     func getMessageState() -> MessageState {
         // TODO: check first seen, then delivered, then sent, waiting, error, (check fail)
-        if seenCount == 0 {
+        if(seenCount == totalUserCount) {
+            return .seen
+        }
+        
+        if(deliveredCount == totalUserCount) {
+            return .delivered
+        }
+        
+        if(deliveredCount == 0) {
             return .sent
         }
         
-//        if deliveredCount == totalDeviceCount {
-//            return .delivered
-//        }
-//
+        if seenCount == nil || deliveredCount == nil {
+            return .fail
+        }
+        
         return .waiting
     }
 }

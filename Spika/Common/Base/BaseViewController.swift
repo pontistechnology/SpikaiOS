@@ -45,22 +45,28 @@ class BaseViewController: UIViewController {
     }
     
     private func showLoading(progress: CGFloat?) {
-        if let _ = circularProgressBar.superview {
-            print("jes")
-        } else {
-            view.addSubview(circularProgressBar)
-            circularProgressBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-        }
-        
-        if let progress = progress {
-            circularProgressBar.setProgress(to: progress)
-        } else {
-            circularProgressBar.startSpinning()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            if let _ = self.circularProgressBar.superview {
+                print("jes")
+            } else {
+                self.view.addSubview(self.circularProgressBar)
+                self.circularProgressBar.anchor(top: self.view.topAnchor, leading: self.view.leadingAnchor, bottom: self.view.bottomAnchor, trailing: self.view.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            }
+            
+            if let progress = progress {
+                self.circularProgressBar.setProgress(to: progress)
+            } else {
+                self.circularProgressBar.startSpinning()
+            }
         }
     }
     
     private func hideLoading() {
-        circularProgressBar.removeFromSuperview()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.circularProgressBar.removeFromSuperview()
+        }
     }
     
     func sink(networkRequestState publisher: CurrentValueSubject<RequestState, Never>) {

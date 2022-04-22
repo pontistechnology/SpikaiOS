@@ -24,7 +24,7 @@ extension MessageEntity {
     @NSManaged public var deliveredCount: Int64
     @NSManaged public var roomId: Int64
     @NSManaged public var seenCount: Int64
-    @NSManaged public var totalDeviceCount: Int64
+    @NSManaged public var totalUserCount: Int64
     @NSManaged public var type: String?
 
 }

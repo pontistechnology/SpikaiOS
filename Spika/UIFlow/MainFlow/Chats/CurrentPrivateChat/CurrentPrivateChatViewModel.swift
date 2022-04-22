@@ -14,14 +14,11 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     
     let friendUser: User
     var room: Room?
-    var messages: [Message] = []
-    let tableViewShouldReload = PassthroughSubject<Bool, Never>()
+    let roomPublisher = PassthroughSubject<Room, Error>()
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
-        let b = Message(createdAt: 222, fromUserId: 2, roomId: 2, type: .text, body: MessageBody(text: "fas"))
-        messages.append(b)
     }
 }
 
@@ -40,7 +37,7 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { [weak self] room in
             guard let self = self else { return }
             self.room = room
-            self.loadMessages()
+            self.roomPublisher.send(room)
         }.store(in: &subscriptions)
     }
     
@@ -55,6 +52,7 @@ extension CurrentPrivateChatViewModel {
             case .failure(let error):
                 PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
                 self.networkRequestState.send(.finished)
+                // TODO: publish error
             }
         } receiveValue: { [weak self] response in
             
@@ -84,7 +82,7 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { [weak self] room in
             guard let self = self else { return }
             self.room = room
-            //            self.loadMessages() // TODO: Does it have sense?
+            self.roomPublisher.send(room)
         }.store(in: &subscriptions)
     }
     
@@ -99,7 +97,7 @@ extension CurrentPrivateChatViewModel {
                 print("private room created")
             case .failure(let error):
                 PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
-                // TODO: present dialog and return?
+                // TODO: present dialog and return? publish error
             }
         } receiveValue: { [weak self] response in
             guard let self = self else { return }
@@ -121,8 +119,6 @@ extension CurrentPrivateChatViewModel {
             }
         } receiveValue: { [weak self] messages in
             guard let self = self else { return }
-            self.messages = messages
-            self.tableViewShouldReload.send(true)
         }.store(in: &subscriptions)
     }
 }
@@ -131,7 +127,7 @@ extension CurrentPrivateChatViewModel {
     
     func trySendMessage(text: String) {
         guard let room = self.room else { return }
-        let message = Message(createdAt: Int(Date().timeIntervalSince1970),
+        let message = Message(createdAt: Int(Date().timeIntervalSince1970) * 1000,
                               fromUserId: repository.getMyUserId(),
                               roomId: room.id, type: .text,
                               body: MessageBody(text: text))
@@ -142,8 +138,6 @@ extension CurrentPrivateChatViewModel {
             guard let self = self else { return }
             var savedMessage = message
             savedMessage.body?.localId = uuid
-            self.messages.append(savedMessage)
-            self.tableViewShouldReload.send(true) // TODO: observe array somewhere else
             guard let body = savedMessage.body else { return }
             self.sendMessage(body: body, localId: uuid)
         }.store(in: &subscriptions)
@@ -178,9 +172,9 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { [weak self] message in
             //TODO: change in array
             guard let self = self else { return }
-            guard let i = self.messages.firstIndex(where: {$0.body?.localId == localId}) else { return }
-            self.messages[i] = message
-            self.tableViewShouldReload.send(true)
+//            guard let i = self.messages.firstIndex(where: {$0.body?.localId == localId}) else { return }
+//            self.messages[i] = message
+//            self.tableViewShouldReload.send(true)
         }.store(in: &subscriptions)
 
     }

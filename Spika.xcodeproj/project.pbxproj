@@ -1177,7 +1177,6 @@
 			isa = PBXGroup;
 			children = (
 				EA29CE3A27E0B42A00B392E6 /* ServerModels */,
-				EA29CE3927E0B41800B392E6 /* LocalModels */,
 				AD9BFD3D272ADA9000736318 /* NetworkModel */,
 				ADD504072716E9C7009D50CB /* DatabaseEntities */,
 			);
@@ -1252,13 +1251,6 @@
 				583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		EA29CE3927E0B41800B392E6 /* LocalModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = LocalModels;
 			sourceTree = "<group>";
 		};
 		EA29CE3A27E0B42A00B392E6 /* ServerModels */ = {

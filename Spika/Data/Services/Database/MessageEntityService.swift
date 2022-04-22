@@ -41,6 +41,7 @@ class MessageEntityService {
             self.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let entity = MessageEntity(message: message, context: context)
+                print("entity id : ", entity.roomId)
                 let uuid = UUID().uuidString
                 entity.id = uuid
                 do {
@@ -64,7 +65,7 @@ class MessageEntityService {
                       let deliveredCount = message.deliveredCount,
                       let roomId = message.roomId,
                       let seenCount = message.seenCount,
-                      let totalDeviceCount = message.totalDeviceCount,
+                      let totalUserCount = message.totalUserCount,
                       let bodyText = message.body?.text,
                       let id = message.id
                 else {
@@ -85,7 +86,7 @@ class MessageEntityService {
                         entity.deliveredCount = Int64(deliveredCount)
                         entity.roomId = Int64(roomId)
                         entity.seenCount = Int64(seenCount)
-                        entity.totalDeviceCount = Int64(totalDeviceCount)
+                        entity.totalUserCount = Int64(totalUserCount)
                         entity.type = message.type
                         // TODO: update everything
                         
