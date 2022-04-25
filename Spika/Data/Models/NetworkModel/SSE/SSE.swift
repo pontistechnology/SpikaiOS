@@ -57,8 +57,7 @@ class SSE {
         }
         
         eventSource?.onMessage { id, event, data in
-            print("onMessage: ", id, event, data)
-            print("Eventsource onmessage thread: ", Thread.current)
+//            print("onMessage: ", id, event, data)
             guard let jsonData = data?.data(using: .utf8) else {
                 print("SSE jsonData error")
                 return }
@@ -67,7 +66,7 @@ class SSE {
                 let sseNewMessage = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
                 guard let message = sseNewMessage.message else { return }
                 self.repository.saveMessage(message: message).sink { c in
-                    print("completion save message sse: ", c)
+//                    print("completion save message sse: ", c)
                 } receiveValue: { (message, localId) in
                     self.currentMessage = message
                     self.showNotification()
@@ -86,6 +85,7 @@ class SSE {
     }
     
     func showNotification() {
+        // TODO: First check user in db, then set his name and image. if there is not user, for now say Unknown, but later check online whos that
         DispatchQueue.main.async {
             guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene,
                   let currentMessage = self.currentMessage
@@ -111,16 +111,18 @@ class SSE {
     }
     
     @objc func handleGesture(_ sender: UITapGestureRecognizer) {
-        guard let currentMessage = currentMessage else {
+        guard let senderId = currentMessage?.fromUserId else {
             return
         }
         
-        let fetchRequest = NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
-        fetchRequest.predicate = NSPredicate(format: "id = %@", "\(currentMessage.fromUserId)")
-        // TODO: CDStack
-//        guard let dbUser = try? CoreDataManager.shared.managedContext.fetch(fetchRequest).first else { return }
-//        let lU = User(entity: dbUser)
-//        (coordinator as? AppCoordinator)?.presentCurrentPrivateChatScreen(user: lU) // TODO: present currect chat
+        repository.getUser(withId: senderId).sink { c in
+            print(c)
+        } receiveValue: { [weak self] user in
+            DispatchQueue.main.async {
+                (self?.coordinator as? AppCoordinator)?.presentCurrentPrivateChatScreen(user: user)                
+            }
+        }.store(in: &subs)
+        
         alertWindow = nil
         
     }

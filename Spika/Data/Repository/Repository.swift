@@ -69,6 +69,7 @@ protocol Repository {
     // MARK: COREDATA: User
     
     func getUsers() -> Future<[User], Error>
+    func getUser(withId id: Int) -> Future<User, Error>
     func saveUser(_ user: User) -> Future<User, Error>
     func saveUsers(_ users: [User]) -> Future<[User], Error>
     

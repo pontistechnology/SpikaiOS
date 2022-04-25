@@ -131,7 +131,7 @@ extension CurrentPrivateChatViewModel {
                               fromUserId: repository.getMyUserId(),
                               roomId: room.id, type: .text,
                               body: MessageBody(text: text))
-        
+        print("createdTimestamp", message.createdAt)
         repository.saveMessage(message: message).sink { completion in
             
         } receiveValue: { [weak self] (message, uuid) in

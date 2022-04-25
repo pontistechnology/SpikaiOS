@@ -31,8 +31,8 @@ class MessageStateView: UIImageView, BaseView {
     }
     
     func positionSubviews() {
-        constrainWidth(16)
-        constrainHeight(16)
+        constrainWidth(12)
+        constrainHeight(12)
     }
     
     func changeState(to value: MessageState) {

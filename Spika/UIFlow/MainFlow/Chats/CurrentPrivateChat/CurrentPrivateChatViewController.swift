@@ -180,6 +180,9 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
 extension CurrentPrivateChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? TextMessageTableViewCell else { return }
+        (tableView.visibleCells as? [TextMessageTableViewCell])?.forEach{ $0.timeLabel.isHidden = true}
+        cell.tapHandler()
         tableView.deselectRow(at: indexPath, animated: true)
         friendInfoView.changeStatus(to: "\(i)")
         i += 1
@@ -198,11 +201,12 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
         let myUserId = viewModel.repository.getMyUserId()
         guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
         let message = Message(messageEntity: entity)
+        print("check this ids: ", message)
         
         let identifier = (message.fromUserId == myUserId)
                         ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
                         : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
-        
+        print(identifier)
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
         
         cell?.updateCell(message: message)

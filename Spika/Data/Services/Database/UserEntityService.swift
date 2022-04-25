@@ -67,6 +67,34 @@ class UserEntityService {
             }
         }
     }
+    
+    func getUser(withId id: Int) -> Future<User, Error> {
+        return Future { [weak self] promise in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                let fetchRequest = UserEntity.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
+                do {
+                    let dbUsers = try context.fetch(fetchRequest)
+                    if dbUsers.count == 0 {
+                        promise(.failure(DatabseError.noSuchRecord))
+                    } else if dbUsers.count > 1 {
+                        promise(.failure(DatabseError.moreThanOne))
+                    } else {
+                        guard let user = User(entity: dbUsers.first) else {
+                            print("GUARD getUser(UserEntityService) error: ")
+                            promise(.failure(DatabseError.unknown))
+                            return
+                        }
+                        promise(.success(user))
+                    }
+                } catch {
+                    promise(.failure(error))
+                }
+                
+            }
+        }
+    }
 }
 
 //    func getChatsForUser(user: User) -> Future<[LocalChat], Error> {

@@ -31,15 +31,15 @@ class CurrentPrivateChatView: UIView, BaseView {
     
     func styleSubviews() {
         messagesTableView.backgroundColor = .blue
-//        messagesTableView.separatorStyle  = .none
+        messagesTableView.separatorStyle  = .none
         messagesTableView.keyboardDismissMode = .onDrag
         messagesTableView.rowHeight = UITableView.automaticDimension
         messagesTableView.estimatedRowHeight = 5
     }
     
     func positionSubviews() {        
-        messagesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: messageInputView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 8, left:8, bottom: 8, right: 8))
-        
+        messagesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: messageInputView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left:0, bottom: 0, right: 0))
+    
         messageInputView.anchor(leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         messageInputViewBottomConstraint = messageInputView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         messageInputViewBottomConstraint.isActive = true

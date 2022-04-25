@@ -209,6 +209,10 @@ extension AppRepository {
         return databaseService.userEntityService.getUsers()
     }
     
+    func getUser(withId id: Int) -> Future<User, Error> {
+        return databaseService.userEntityService.getUser(withId: id)
+    }
+    
     func saveUser(_ user: User) -> Future<User, Error> {
         return databaseService.userEntityService.saveUser(user)
     }
