@@ -113,7 +113,35 @@ class UserEntityService {
         }
     }
     
-    
+    func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
+        return Future { [weak self] promise in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+                for var user in users {
+//                    saveUsers(users)
+                    let fetchRequest = ContactEntity.fetchRequest()
+                    fetchRequest.predicate = NSPredicate(format: "phoneNumber = %@", user.telephoneNumber!)
+                    do {
+                        let fetchResult = try context.fetch(fetchRequest)
+                        if let contactEntity = fetchResult.first {
+                            let contact = FetchedContact(firstName: contactEntity.givenName,
+                                                         lastName: contactEntity.familyName,
+                                                         telephone: contactEntity.phoneNumber)
+                            print("contatct found: ", contact)
+                            user.givenName = contact.firstName
+                            user.familyName = contact.lastName
+                            self?.saveUser(user)
+                            
+                        }
+                    } catch {
+                        print("Error loading: ", error)
+                        promise(.failure(DatabseError.requestFailed))
+                    }
+                    
+                }
+                promise(.success(users))
+            }
+        }
+    }
 }
 
 //    func getChatsForUser(user: User) -> Future<[LocalChat], Error> {

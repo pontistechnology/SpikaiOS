@@ -68,11 +68,6 @@ class ContactsViewModel: BaseViewModel {
                 print("saved contatssssss", contactss)
             }.store(in: &self.subscriptions)
 
-//            var contacts = contacts
-//            for var contact in contacts {
-//                contact.telephone = contact.telephone.getSHA256()
-//            }
-//
             let phoneHashes = contacts.map { $0.telephone.getSHA256() }
             print(phoneHashes)
             self.postContacts(hashes: phoneHashes)
@@ -109,24 +104,9 @@ class ContactsViewModel: BaseViewModel {
             guard let self = self else { return }
             print("Success: ", response)
             if let list = response.data?.list {
-                for var user in list {
-                    self.repository.getContact(phoneNumber: user.telephoneNumber!).sink { [weak self] completion in
-                        guard let _ = self else { return }
-                        switch completion {
-                        case let .failure(error):
-                            print("cant find contact: ", user.telephoneNumber, " ",error)
-                        default:
-                            break
-                        }
-                    } receiveValue: { [weak self] contact in
-                        print("contact found: ", contact.telephone)
-                        user.givenName = contact.firstName
-                        user.familyName = contact.lastName
-                        self?.repository.saveUser(user)
-                    }.store(in: &self.subscriptions)
-                }
-//                self.saveUsers(list)
+                self.repository.updateUsersWithContactData(list)
             }
+                        
             if let limit = response.data?.limit, let count = response.data?.count {
                 if page * limit < count {
                     self.getOnlineContacts(page: page + 1)
@@ -138,36 +118,16 @@ class ContactsViewModel: BaseViewModel {
     }
     
     func updateContactsUI(list: [User]) {
-        
-//        let appUser1 = AppUser(id: 100, displayName: "Ćap", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
-//        let appUser2 = AppUser(id: 100, displayName: "Cup", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
-//        let appUser3 = AppUser(id: 100, displayName: "Ćop", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
-//        var testList = list
-//        testList.append(appUser1)
-//        testList.append(appUser2)
-//        testList.append(appUser3)
-        
         //TODO: check if sort needed
         let sortedList = list.sorted()
-        
-//        let sortedList = list.sorted(using: .localizedStandard)
-        
-//        var yuyu = ["blabla", "blublu"]
-//        var testList = yuyu.sort(using: .localizedStandard)
-        
-//        let appUser = AppUser(id: 100, displayName: "Tito", avatarUrl: "bla", telephoneNumber: "000", telephoneNumberHashed: nil, emailAddress: nil, createdAt: 0)
-//        sortedList.append(appUser)
-//        let sortedList = list.sort(using: .localizedStandard)
           
         var tableAppUsers = Array<Array<User>>()
         for user in sortedList {
-            if let char1 = user.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
-                print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
+
+            let char1 = user.getDisplayName().prefix(1)
+            if let char2 = tableAppUsers.last?.last?.getDisplayName().prefix(1), char1.localizedLowercase == char2.localizedLowercase {
                 tableAppUsers[tableAppUsers.count - 1].append(user)
             } else {
-                if let char1 = user.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1) {
-                    print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
-                }
                 tableAppUsers.append([user])
             }
         }
@@ -180,7 +140,7 @@ class ContactsViewModel: BaseViewModel {
         if filter.isEmpty {
             updateContactsUI(list: users)
         } else {
-            let filteredContacts = users.filter{ $0.displayName!.localizedStandardContains(filter) }
+            let filteredContacts = users.filter{ $0.getDisplayName().localizedStandardContains(filter) }
             updateContactsUI(list: filteredContacts)
         }
     }

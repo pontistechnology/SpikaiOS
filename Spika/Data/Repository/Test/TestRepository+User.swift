@@ -104,4 +104,8 @@ extension TestRepository {
     func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
+    
+    func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
+        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+    }
 }
