@@ -49,7 +49,7 @@ extension CurrentPrivateChatViewController {
         
         viewModel.roomPublisher.sink { completion in
             // TODO: pop vc?, presentAlert?
-            switch completion {
+            switch completion {
                 
             case .finished:
                 break

@@ -11,4 +11,5 @@ struct CheckRoomResponseModel: Codable {
     let status: String?
     let data: RoomData?
     let error: String?
+    let message: String?
 }

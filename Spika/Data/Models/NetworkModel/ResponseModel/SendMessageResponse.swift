@@ -11,6 +11,7 @@ struct SendMessageResponse: Codable {
     let status: String?
     let data: SendMessageData?
     let error: String?
+    let message: String?
 }
 
 struct SendMessageData: Codable {

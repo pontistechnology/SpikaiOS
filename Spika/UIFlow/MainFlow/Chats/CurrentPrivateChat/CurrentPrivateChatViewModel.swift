@@ -150,7 +150,7 @@ extension CurrentPrivateChatViewModel {
         }.store(in: &subscriptions)
     }
     
-    // TODO: uuid will not be in body?
+    
     func sendMessage(body: MessageBody, localId: String) {
         guard let room = self.room else { return }
         
@@ -179,20 +179,7 @@ extension CurrentPrivateChatViewModel {
             
         }.store(in: &subscriptions)
     }
-    
-//    func updateMessage(message: Message, localId: String) {
-//        repository.updateLocalMessage(message: message, localId: localId).sink { completion in
-//
-//        } receiveValue: { [weak self] message in
-//            //TODO: change in array
-//            guard let self = self else { return }
-////            guard let i = self.messages.firstIndex(where: {$0.body?.localId == localId}) else { return }
-////            self.messages[i] = message
-////            self.tableViewShouldReload.send(true)
-//        }.store(in: &subscriptions)
-//
-//    }
-    
+        
     func popTopViewController() {
         getAppCoordinator()?.popTopViewController()
     }

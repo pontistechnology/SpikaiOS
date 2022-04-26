@@ -66,6 +66,7 @@ class SSE {
             do {
                 let sseNewMessage = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
                 guard let message = sseNewMessage.message else { return }
+                print("\nSSE message: ", message)
                 self.repository.saveMessage(message: message).sink { c in
 //                    print("completion save message sse: ", c)
                 } receiveValue: { message in

@@ -12,6 +12,7 @@ struct AuthResponseModel: Codable {
     let status: String?
     let data: AuthData?
     let error: String?
+    let message: String?
 }
 
 // MARK: - DataClass

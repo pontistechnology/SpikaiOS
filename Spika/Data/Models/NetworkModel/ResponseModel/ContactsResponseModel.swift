@@ -12,6 +12,7 @@ struct ContactsResponseModel: Codable {
     let status: String?
     let data: ContactsData?
     let error: String?
+    let message: String?
 }
 
 // MARK: - DataClass

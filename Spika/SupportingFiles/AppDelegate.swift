@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func test() {
         // only for debug, remove later
         // print("type is: ", MessageType(rawValue: "textf"))
-        // UserDefaults.standard.set("ZEJfWG4mW5fhYPvb", forKey: Constants.UserDefaults.accessToken)
+         UserDefaults.standard.set("STx4njvXxPVOgxR7", forKey: Constants.UserDefaults.accessToken)
     }
     
     func customization() {

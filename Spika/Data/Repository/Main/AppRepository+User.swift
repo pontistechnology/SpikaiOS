@@ -203,7 +203,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    // MARK: Database // TODO: CDStack change
+    // MARK: Database
     
     func getUsers() -> Future<[User], Error> {
         return databaseService.userEntityService.getUsers()

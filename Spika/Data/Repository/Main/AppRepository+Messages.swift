@@ -43,8 +43,5 @@ extension AppRepository {
     func getMessages(forRoomId roomId: Int) -> Future<[Message], Error> {
         self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
     }
-    
-//    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error> {
-//        self.databaseService.messageEntityService.updateMessage(message: message, localId: localId)
-//    }
+
 }
