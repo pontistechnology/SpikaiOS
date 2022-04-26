@@ -13,4 +13,20 @@ class HomeViewModel: BaseViewModel {
         return getAppCoordinator()!.getHomeTabBarItems()
     }
     
+    func updatePush() {
+        repository.updatePushToken().sink { completion in
+            switch completion {
+                
+            case .finished:
+                break
+            case let .failure(error):
+                print("Update Push token error:" , error)
+            }
+        } receiveValue: { response in
+            guard let _ = response.data?.device else {
+                print("GUARD UPDATE PUSH RESPONSE")
+                return
+            }
+        }.store(in: &subscriptions)
+    }
 }

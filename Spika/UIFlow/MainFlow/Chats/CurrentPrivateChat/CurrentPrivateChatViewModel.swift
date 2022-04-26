@@ -102,6 +102,11 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { [weak self] response in
             guard let self = self else { return }
             print("creating room response: ", response)
+            if let errorMessage = response.message {
+                PopUpManager.shared.presentAlert(with: (title: "Error", message: errorMessage), orientation: .horizontal, closures: [("Ok", {
+                    self.getAppCoordinator()?.popTopViewController()
+                })])
+            }
             guard let room = response.data?.room else { return }
             self.saveLocalRoom(room: room)
         }.store(in: &subscriptions)
@@ -133,12 +138,14 @@ extension CurrentPrivateChatViewModel {
                               body: MessageBody(text: text))
         print("createdTimestamp", message.createdAt)
         repository.saveMessage(message: message).sink { completion in
-            
+            print("save message c: ", completion)
         } receiveValue: { [weak self] (message, uuid) in
             guard let self = self else { return }
             var savedMessage = message
             savedMessage.body?.localId = uuid
-            guard let body = savedMessage.body else { return }
+            guard let body = savedMessage.body else {
+                print("GUARD trySendMessage body missing")
+                return }
             self.sendMessage(body: body, localId: uuid)
         }.store(in: &subscriptions)
     }
@@ -153,8 +160,8 @@ extension CurrentPrivateChatViewModel {
                 
             case .finished:
                 print("finished")
-            case .failure(_):
-                print("failure")
+            case let .failure(error):
+                print("send text message error: ", error)
             }
         } receiveValue: { [weak self] response in
             print("SendMessage response: ", response)
@@ -177,5 +184,9 @@ extension CurrentPrivateChatViewModel {
 //            self.tableViewShouldReload.send(true)
         }.store(in: &subscriptions)
 
+    }
+    
+    func popTopViewController() {
+        getAppCoordinator()?.popTopViewController()
     }
 }

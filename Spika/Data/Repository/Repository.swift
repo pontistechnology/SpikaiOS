@@ -61,6 +61,10 @@ protocol Repository {
     
     func sendTextMessage(body: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
     
+    // MARK: NETWORKING: Device
+    
+    func updatePushToken() -> AnyPublisher<UpdatePushResponseModel, Error>
+    
     // MARK: - COREDATA
     
     func getMainContext() -> NSManagedObjectContext

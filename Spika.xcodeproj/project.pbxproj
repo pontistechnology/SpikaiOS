@@ -39,6 +39,10 @@
 		933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87827B67A280099BA9E /* ChatSearchViewController.swift */; };
 		934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
 		934087BA27EBAE6F00209571 /* TestRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B927EBAE6F00209571 /* TestRepository+Tests.swift */; };
+		934F2EDD28172BD10086C343 /* UpdatePushResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */; };
+		934F2EDF28172D150086C343 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
+		934F2EE128172EEA0086C343 /* UpdatePushRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */; };
+		934F2EE3281735590086C343 /* TestRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE2281735590086C343 /* TestRepository+Device.swift */; };
 		9352641927F88937001434A3 /* SSE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9352641827F88937001434A3 /* SSE.swift */; };
 		9355BEDA28056D1A00B9EC85 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9355BED928056D1A00B9EC85 /* CoreDataStack.swift */; };
 		9365A79127E184FA0038CA7F /* GetAllRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */; };
@@ -253,6 +257,10 @@
 		933BE87827B67A280099BA9E /* ChatSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewController.swift; sourceTree = "<group>"; };
 		934087B727EBAD7100209571 /* AppRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Tests.swift"; sourceTree = "<group>"; };
 		934087B927EBAE6F00209571 /* TestRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Tests.swift"; sourceTree = "<group>"; };
+		934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePushResponseModel.swift; sourceTree = "<group>"; };
+		934F2EDE28172D150086C343 /* AppRepository+Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Device.swift"; sourceTree = "<group>"; };
+		934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePushRequestModel.swift; sourceTree = "<group>"; };
+		934F2EE2281735590086C343 /* TestRepository+Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Device.swift"; sourceTree = "<group>"; };
 		9352641827F88937001434A3 /* SSE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSE.swift; sourceTree = "<group>"; };
 		9355BED928056D1A00B9EC85 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllRoomsResponseModel.swift; sourceTree = "<group>"; };
@@ -828,6 +836,7 @@
 				AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */,
 				938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */,
 				934087B727EBAD7100209571 /* AppRepository+Tests.swift */,
+				934F2EDE28172D150086C343 /* AppRepository+Device.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -840,6 +849,7 @@
 				AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */,
 				938D053927D5C524002E5CE5 /* TestRepository+Rooms.swift */,
 				934087B927EBAE6F00209571 /* TestRepository+Tests.swift */,
+				934F2EE2281735590086C343 /* TestRepository+Device.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -941,6 +951,7 @@
 				938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */,
 				93227E9727D6ED70002E3DED /* SendMessageRequest.swift */,
 				9396AB7227FED6FF00696757 /* VerifyFileRequestModel.swift */,
+				934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -957,6 +968,7 @@
 				93227E9527D6D99D002E3DED /* CheckRoomResponseModel.swift */,
 				93227E9927D6EE47002E3DED /* SendMessageResponse.swift */,
 				9396AB7027FED6F000696757 /* VerifyFileResponseModel.swift */,
+				934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -1515,11 +1527,13 @@
 				AD81926D2721E2E400D5BE48 /* UIControl+Combine.swift in Sources */,
 				933BE86627B671270099BA9E /* ChatSearchView.swift in Sources */,
 				AD8192692721D5BD00D5BE48 /* AllChatsViewModel.swift in Sources */,
+				934F2EDF28172D150086C343 /* AppRepository+Device.swift in Sources */,
 				93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */,
 				933BE86227B65C9C0099BA9E /* SharedView.swift in Sources */,
 				9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */,
 				938D053A27D5C524002E5CE5 /* TestRepository+Rooms.swift in Sources */,
 				934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */,
+				934F2EE3281735590086C343 /* TestRepository+Device.swift in Sources */,
 				933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */,
 				93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
@@ -1538,6 +1552,7 @@
 				AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */,
 				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
+				934F2EDD28172BD10086C343 /* UpdatePushResponseModel.swift in Sources */,
 				93E4F6EB27C2BB6D00432CFA /* SelectUsersViewController.swift in Sources */,
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
 				93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */,
@@ -1621,6 +1636,7 @@
 				9367456127C71D3700F43CCD /* AlertView.swift in Sources */,
 				AD9BFD29272995CA00736318 /* LoginAssembly.swift in Sources */,
 				93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */,
+				934F2EE128172EEA0086C343 /* UpdatePushRequestModel.swift in Sources */,
 				933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */,
 				930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */,
 				93227E9627D6D99D002E3DED /* CheckRoomResponseModel.swift in Sources */,

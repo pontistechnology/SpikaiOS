@@ -44,7 +44,6 @@ class DetailsViewModel: BaseViewModel {
     }
     
     func presentCurrentPrivateChatScreen(user: User) {
-//        getAppCoordinator()?.popTopViewController(animated: false)
         getAppCoordinator()?.presentCurrentPrivateChatScreen(user: user)
     }
 }

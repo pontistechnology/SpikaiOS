@@ -9,11 +9,10 @@ import Foundation
 
 extension Int {
     func convertTimestampToHoursAndMinutes() -> String {
-        print("vrijeme: ", self)
-        let d = Double(self) / 1000 // TODO: check. Device and server timestamp is not same
+        let d = Double(self) / 1000
         let date = Date(timeIntervalSince1970: d)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm" //Specify your format that you want
+        dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: date)
     }
 }

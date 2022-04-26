@@ -30,6 +30,7 @@ struct Constants {
         static let checkRoom = "api/messenger/rooms/users"
         static let sendMessage = "api/messenger/messages"
         static let getAllRooms = "api/messenger/rooms"
+        static let updatePush = "api/messenger/device"
     }
     
     struct Database {
@@ -47,6 +48,7 @@ struct Constants {
         static let deviceId = "deviceId"
         static let accessToken = "accessToken"
         static let displayName = "displayName"
+        static let pushToken = "pushToken"
     }
     
     struct CABasicAnimations {

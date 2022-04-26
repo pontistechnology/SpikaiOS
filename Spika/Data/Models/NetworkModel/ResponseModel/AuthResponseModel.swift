@@ -31,5 +31,4 @@ struct Device: Codable {
     let osVersion: String?
     let appVersion: Int?
     let pushToken: String?
-    
 }

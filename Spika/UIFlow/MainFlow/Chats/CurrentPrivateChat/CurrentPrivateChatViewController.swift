@@ -47,9 +47,17 @@ extension CurrentPrivateChatViewController {
         currentPrivateChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
         
-        viewModel.roomPublisher.sink { c in
-            print(c)
+        viewModel.roomPublisher.sink { completion in
             // TODO: pop vc?, presentAlert?
+            switch completion {
+                
+            case .finished:
+                break
+            case let .failure(error):
+                PopUpManager.shared.presentAlert(with: (title: "Error", message: error.localizedDescription), orientation: .horizontal, closures: [("Ok", {
+                    self.viewModel.getAppCoordinator()?.popTopViewController()
+                })])
+            }
         } receiveValue: { [weak self] room in
             guard let self = self else { return }
             self.setFetch(room: room)
@@ -201,7 +209,6 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
         let myUserId = viewModel.repository.getMyUserId()
         guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
         let message = Message(messageEntity: entity)
-        print("check this ids: ", message)
         
         let identifier = (message.fromUserId == myUserId)
                         ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue

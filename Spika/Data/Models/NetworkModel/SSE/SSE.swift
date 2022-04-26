@@ -52,11 +52,12 @@ class SSE {
             
             let retryTime = self?.eventSource?.retryTime ?? 3000
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(retryTime)) { [weak self] in
-                self?.eventSource?.connect()
+//                self?.eventSource?.connect()
             }
         }
         
         eventSource?.onMessage { id, event, data in
+            print("SSE on message")
 //            print("onMessage: ", id, event, data)
             guard let jsonData = data?.data(using: .utf8) else {
                 print("SSE jsonData error")

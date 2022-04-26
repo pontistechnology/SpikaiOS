@@ -21,8 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         FirebaseApp.configure()
-//        allroomsprinter()
-//        test()
+        registerForPushNotifications()
         customization()
         
         return true
@@ -36,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let aa = try! coreDataStack.mainMOC.fetch(fr)
         print(aa.count)
         for a in aa {
-//            print("Begi room: ", a.type)
             print("Count of users: ", a.users!.count)
             for user in a.users! {
                 print("Begi user: ", (user as! RoomUserEntity).user!.displayName!)
@@ -46,35 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func test() {
         // only for debug, remove later
-        //        print("type is: ", MessageType(rawValue: "textf"))
-//                UserDefaults.standard.set("ZEJfWG4mW5fhYPvb", forKey: Constants.UserDefaults.accessToken)
-        
-        print("Thread check test: ", Thread.current)
-
-
-        let roomaga = Room(id: 15, type: "private", name: "CloverAll", avatarUrl: "nema", createdAt: 43,
-                           users: [
-                            RoomUser(userId: 12,
-                                            isAdmin: true,
-                                            user: User(id: 12,
-                                                       displayName: "nikola",
-                                                       avatarUrl: "n")
-                                    ),
-                           RoomUser(userId: 13,
-                                    isAdmin: false,
-                                    user: User(id: 13,
-                                               displayName: "mia",
-                                               avatarUrl: "f")
-                                   )
-                           ])
-        
-        coreDataStack.persistentContainer.performBackgroundTask { context in
-            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-            _ = RoomEntity(room: roomaga, context: context)
-            try! context.save()
-        }
-        
-        
+        // print("type is: ", MessageType(rawValue: "textf"))
+        // UserDefaults.standard.set("ZEJfWG4mW5fhYPvb", forKey: Constants.UserDefaults.accessToken)
     }
     
     func customization() {
@@ -87,6 +58,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes(
             [   NSAttributedString.Key.font : font,
             ], for: .disabled)
+    }
+    
+    func registerForPushNotifications() {
+        UNUserNotificationCenter.current()
+          .requestAuthorization(
+            options: [.alert, .sound, .badge]) { [weak self] granted, _ in
+            print("Permission granted: \(granted)")
+            guard granted else { return }
+            self?.getNotificationSettings()
+          }
+    }
+    
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            print("Notification settings: \(settings)")
+          guard settings.authorizationStatus == .authorized else { return }
+          DispatchQueue.main.async {
+            UIApplication.shared.registerForRemoteNotifications()
+          }
+      }
+    }
+    
+    func application(
+      _ application: UIApplication,
+      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+      let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+      let token = tokenParts.joined()
+      print("Push Token: \(token)")
+        UserDefaults.standard.set(token, forKey: Constants.UserDefaults.pushToken)
+    }
+    
+    func application(
+      _ application: UIApplication,
+      didFailToRegisterForRemoteNotificationsWithError error: Error
+    ) {
+        print("Failed to register: \(error)")
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        print("PUSH: ", userInfo)
+        if let aps = userInfo["aps"] as? [String: Any], let alert = aps["alert"] as? [String: Any] {
+            let title = alert["title"] as? String ?? ""
+            let body = alert["body"] as? String ?? ""
+            
+            
+        }
     }
     
     // MARK: UISceneSession Lifecycle
