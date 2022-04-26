@@ -59,7 +59,7 @@ protocol Repository {
     
     // MARK: NETWORKING: Message
     
-    func sendTextMessage(body: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
+    func sendTextMessage(body: MessageBody, roomId: Int, localId: String) -> AnyPublisher<SendMessageResponse, Error>
     
     // MARK: NETWORKING: Device
     
@@ -79,9 +79,9 @@ protocol Repository {
     
     // MARK: COREDATA: Messages
     
-    func saveMessage(message: Message) -> Future<(Message, String), Error>
+    func saveMessage(message: Message) -> Future<Message, Error>
     func getMessages(forRoomId: Int) -> Future<[Message], Error>
-    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error>
+//    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error>
     
     // MARK: COREDATA: Room
     

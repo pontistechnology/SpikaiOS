@@ -31,6 +31,10 @@ public class MessageEntity: NSManagedObject {
             self.id = "\(id)"
         }
         
+        if let localId = message.localId {
+            self.localId = localId
+        }
+        
         if let totalUserCount = message.totalUserCount {
             self.totalUserCount = Int64(totalUserCount)
         }

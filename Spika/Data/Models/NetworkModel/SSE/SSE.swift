@@ -68,7 +68,7 @@ class SSE {
                 guard let message = sseNewMessage.message else { return }
                 self.repository.saveMessage(message: message).sink { c in
 //                    print("completion save message sse: ", c)
-                } receiveValue: { (message, localId) in
+                } receiveValue: { message in
                     self.currentMessage = message
                     self.showNotification()
                 }.store(in: &self.subs)

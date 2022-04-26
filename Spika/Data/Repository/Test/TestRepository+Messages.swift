@@ -9,11 +9,11 @@ import CoreData
 import Combine
 
 extension TestRepository {
-    func saveMessage(message: Message) -> Future<(Message, String), Error> {
+    func saveMessage(message: Message) -> Future<Message, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func sendTextMessage(body: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendTextMessage(body: MessageBody, roomId: Int, localId: String) -> AnyPublisher<SendMessageResponse, Error> {
        return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()

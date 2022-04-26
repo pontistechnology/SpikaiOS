@@ -26,7 +26,7 @@ extension RoomEntityService {
             self.coreDataStack.persistentContainer.performBackgroundTask { context in
                 let fetchRequest = RoomEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "type == 'private' AND ANY users.userId == %@", "\(id)")
-                
+                // TODO: change predicate if
                 do {
                     let rooms = try context.fetch(fetchRequest)
                     

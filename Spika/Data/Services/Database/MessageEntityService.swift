@@ -35,18 +35,16 @@ class MessageEntityService {
         }
     }
     
-    func saveMessage(message: Message) -> Future<(Message, String), Error> {
+    func saveMessage(message: Message) -> Future<Message, Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                let entity = MessageEntity(message: message, context: context)
-                print("entity id : ", entity.roomId)
-                let uuid = UUID().uuidString
-                entity.id = uuid
+                let _ = MessageEntity(message: message, context: context)
+                
                 do {
                     try context.save()
-                    promise(.success((message, uuid)))
+                    promise(.success(message))
                 } catch {
                     promise(.failure(DatabseError.savingError))
                 }
@@ -54,55 +52,55 @@ class MessageEntityService {
         }
     }
     
-    func updateMessage(message: Message, localId: String) -> Future<Message, Error> {
-        Future { promise in
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                
-                guard let fromUserId = message.fromUserId,
-                      let createdAt = message.createdAt,
-                      let deliveredCount = message.deliveredCount,
-                      let roomId = message.roomId,
-                      let seenCount = message.seenCount,
-                      let totalUserCount = message.totalUserCount,
-                      let bodyText = message.body?.text,
-                      let id = message.id
-                else {
-                    print("GUARD(updateMessage): something missing")
-                    return }
-                
-                let fr = MessageEntity.fetchRequest()
-                fr.predicate = NSPredicate(format: "id == %@", localId)
-                do {
-                    let entities = try context.fetch(fr)
-                    if entities.count == 1 {
-                        guard let entity = entities.first else { return }
-                        entity.id = "\(id)"
-                        entity.bodyText = bodyText
-                        entity.createdAt = Int64(createdAt)
-                        entity.fromUserId = Int64(fromUserId)
-                        entity.deliveredCount = Int64(deliveredCount)
-                        entity.roomId = Int64(roomId)
-                        entity.seenCount = Int64(seenCount)
-                        entity.totalUserCount = Int64(totalUserCount)
-                        entity.type = message.type
-                        // TODO: update everything
-                        
-                        var updatedMessage = Message(messageEntity: entity)
-                        updatedMessage.body?.localId = localId
-
-                        try context.save()
-                        promise(.success(updatedMessage))
-                    } else {
-                        promise(.failure(DatabseError.savingError))
-                    }
-                    
-                } catch {
-                    promise(.failure(DatabseError.savingError))
-                }
-            }
-        }
-    }
+//    func updateMessage(message: Message, localId: String) -> Future<Message, Error> {
+//        Future { promise in
+//            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+//                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+//
+//                guard let fromUserId = message.fromUserId,
+//                      let createdAt = message.createdAt,
+//                      let deliveredCount = message.deliveredCount,
+//                      let roomId = message.roomId,
+//                      let seenCount = message.seenCount,
+//                      let totalUserCount = message.totalUserCount,
+//                      let bodyText = message.body?.text,
+//                      let id = message.id
+//                else {
+//                    print("GUARD(updateMessage): something missing")
+//                    return }
+//
+//                let fr = MessageEntity.fetchRequest()
+//                fr.predicate = NSPredicate(format: "id == %@", localId)
+//                do {
+//                    let entities = try context.fetch(fr)
+//                    if entities.count == 1 {
+//                        guard let entity = entities.first else { return }
+//                        entity.id = "\(id)"
+//                        entity.bodyText = bodyText
+//                        entity.createdAt = Int64(createdAt)
+//                        entity.fromUserId = Int64(fromUserId)
+//                        entity.deliveredCount = Int64(deliveredCount)
+//                        entity.roomId = Int64(roomId)
+//                        entity.seenCount = Int64(seenCount)
+//                        entity.totalUserCount = Int64(totalUserCount)
+//                        entity.type = message.type
+//                        // TODO: update everything
+//
+//                        var updatedMessage = Message(messageEntity: entity)
+//                        updatedMessage.body?.localId = localId
+//
+//                        try context.save()
+//                        promise(.success(updatedMessage))
+//                    } else {
+//                        promise(.failure(DatabseError.savingError))
+//                    }
+//
+//                } catch {
+//                    promise(.failure(DatabseError.savingError))
+//                }
+//            }
+//        }
+//    }
     
     
     
