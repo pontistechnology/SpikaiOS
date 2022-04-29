@@ -23,7 +23,7 @@ extension RoomEntityService {
     
     func getPrivateRoom(forId id: Int) -> Future<Room, Error> {
         Future { promise in
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = RoomEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "type == 'private' AND ANY users.userId == %@", "\(id)")
                 // TODO: change predicate if
@@ -46,7 +46,7 @@ extension RoomEntityService {
     func saveRoom(_ room: Room) -> Future<Room, Error> {
         
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let _ = RoomEntity(room: room, context: context)
                 do {

@@ -20,7 +20,7 @@ class MessageEntityService {
     func getMessages(forRoomId id: Int) -> Future<[Message], Error>{
         Future { [weak self] promise in
             guard let self = self else { return }
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = MessageEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(MessageEntity.roomId), "\(id)")
                 
@@ -38,7 +38,7 @@ class MessageEntityService {
     func saveMessage(message: Message) -> Future<Message, Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let _ = MessageEntity(message: message, context: context)
                 

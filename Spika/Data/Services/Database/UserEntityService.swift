@@ -20,7 +20,7 @@ class UserEntityService {
     func getUsers() -> Future<[User], Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = UserEntity.fetchRequest() // mislav NSFetchRequest<UserEntity>(entityName: Constants.Database.userEntity)
                 do {
                     let userEntities = try context.fetch(fetchRequest)
@@ -36,7 +36,7 @@ class UserEntityService {
     
     func saveUser(_ user: User) -> Future<User, Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let _ = UserEntity(user: user, context: context)
                 do {
@@ -52,7 +52,7 @@ class UserEntityService {
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for user in users {
                     let _ = UserEntity(user: user, context: context)
@@ -70,7 +70,7 @@ class UserEntityService {
     
     func getUser(withId id: Int) -> Future<User, Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let fetchRequest = UserEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")

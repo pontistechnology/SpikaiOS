@@ -15,6 +15,8 @@
 		930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C327ACA2E90064BED1 /* ContactsTableView.swift */; };
 		930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
 		930EE59D27A938B800143B48 /* UploadChunkResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */; };
+		9319416B2819CB510067566C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9319416A2819CB510067566C /* NotificationService.swift */; };
+		9319416F2819CB510067566C /* SpikaNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 931941682819CB510067566C /* SpikaNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		931E23A927D2DCDA0065FFFC /* MessageStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23A827D2DCDA0065FFFC /* MessageStateView.swift */; };
 		931E23AC27D3172C0065FFFC /* MediaMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23AB27D3172C0065FFFC /* MediaMessageTableViewCell.swift */; };
 		931E23AE27D317390065FFFC /* VoiceMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23AD27D317390065FFFC /* VoiceMessageTableViewCell.swift */; };
@@ -24,6 +26,12 @@
 		9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6827B3702000FA0EB1 /* DetailsView.swift */; };
 		9323EC6B27B3E8D500FA0EB1 /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6A27B3E8D500FA0EB1 /* NavView.swift */; };
 		9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */; };
+		9324B252281BDEFD00E7D76D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9355BED928056D1A00B9EC85 /* CoreDataStack.swift */; };
+		9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */; };
+		9324B254281BDFD700E7D76D /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */; };
+		9324B255281BDFDA00E7D76D /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93980E05280A10F30015351F /* MessageEntity+CoreDataProperties.swift */; };
+		9324B256281BE03800E7D76D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E48EAF27CEA6C3003B4188 /* Message.swift */; };
+		9324B257281BE0D900E7D76D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E7270DD87A009D50CB /* Constants.swift */; };
 		933BE85D27B65BDF0099BA9E /* SharedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE85C27B65BDF0099BA9E /* SharedViewController.swift */; };
 		933BE85F27B65C6F0099BA9E /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE85E27B65C6F0099BA9E /* SharedViewModel.swift */; };
 		933BE86227B65C9C0099BA9E /* SharedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86127B65C9C0099BA9E /* SharedView.swift */; };
@@ -212,6 +220,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9319416D2819CB510067566C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADD503A6270DC3C7009D50CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 931941672819CB510067566C;
+			remoteInfo = SpikaNotificationService;
+		};
 		AD9BFD02272985C400736318 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADD503A6270DC3C7009D50CB /* Project object */;
@@ -220,6 +235,20 @@
 			remoteInfo = Spika;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		931941702819CB510067566C /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9319416F2819CB510067566C /* SpikaNotificationService.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		05AE93FDC8E4FE6FD37B579F /* Pods-Spika-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -233,6 +262,9 @@
 		930290C327ACA2E90064BED1 /* ContactsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableView.swift; sourceTree = "<group>"; };
 		930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadChunkRequestModel.swift; sourceTree = "<group>"; };
 		930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadChunkResponseModel.swift; sourceTree = "<group>"; };
+		931941682819CB510067566C /* SpikaNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpikaNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		9319416A2819CB510067566C /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		9319416C2819CB510067566C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		931E23A827D2DCDA0065FFFC /* MessageStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStateView.swift; sourceTree = "<group>"; };
 		931E23AB27D3172C0065FFFC /* MediaMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaMessageTableViewCell.swift; sourceTree = "<group>"; };
 		931E23AD27D317390065FFFC /* VoiceMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -242,6 +274,7 @@
 		9323EC6827B3702000FA0EB1 /* DetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		9323EC6A27B3E8D500FA0EB1 /* NavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavView.swift; sourceTree = "<group>"; };
 		9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchView.swift; sourceTree = "<group>"; };
+		9324B251281BD6C200E7D76D /* SpikaNotificationService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpikaNotificationService.entitlements; sourceTree = "<group>"; };
 		933BE85C27B65BDF0099BA9E /* SharedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViewController.swift; sourceTree = "<group>"; };
 		933BE85E27B65C6F0099BA9E /* SharedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViewModel.swift; sourceTree = "<group>"; };
 		933BE86127B65C9C0099BA9E /* SharedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedView.swift; sourceTree = "<group>"; };
@@ -435,6 +468,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		931941652819CB510067566C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD9BFCFB272985C400736318 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -461,6 +501,16 @@
 				93017B1627F8D1EC00A0582D /* SSENewMessage.swift */,
 			);
 			path = SSE;
+			sourceTree = "<group>";
+		};
+		931941692819CB510067566C /* SpikaNotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				9324B251281BD6C200E7D76D /* SpikaNotificationService.entitlements */,
+				9319416A2819CB510067566C /* NotificationService.swift */,
+				9319416C2819CB510067566C /* Info.plist */,
+			);
+			path = SpikaNotificationService;
 			sourceTree = "<group>";
 		};
 		931E23AA27D316F30065FFFC /* MessageTableViewCells */ = {
@@ -1006,6 +1056,7 @@
 			children = (
 				ADD503B0270DC3C7009D50CB /* Spika */,
 				AD9BFCFF272985C400736318 /* AppTests */,
+				931941692819CB510067566C /* SpikaNotificationService */,
 				ADD503AF270DC3C7009D50CB /* Products */,
 				CC12D1B198A94B9651C98AB6 /* Pods */,
 				E2C678E9AAA86BDAFF0B632C /* Frameworks */,
@@ -1017,6 +1068,7 @@
 			children = (
 				ADD503AE270DC3C7009D50CB /* Spika.app */,
 				AD9BFCFE272985C400736318 /* AppTests.xctest */,
+				931941682819CB510067566C /* SpikaNotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1281,6 +1333,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		931941672819CB510067566C /* SpikaNotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 931941732819CB510067566C /* Build configuration list for PBXNativeTarget "SpikaNotificationService" */;
+			buildPhases = (
+				931941642819CB510067566C /* Sources */,
+				931941652819CB510067566C /* Frameworks */,
+				931941662819CB510067566C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SpikaNotificationService;
+			productName = SpikaNotificationService;
+			productReference = 931941682819CB510067566C /* SpikaNotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		AD9BFCFD272985C400736318 /* AppTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD9BFD04272985C500736318 /* Build configuration list for PBXNativeTarget "AppTests" */;
@@ -1311,10 +1380,12 @@
 				ADD503AC270DC3C7009D50CB /* Resources */,
 				EAA6A3A127CCF88C00B7E01F /* ShellScript */,
 				31BA492FD2CFFE591818CB3B /* [CP] Embed Pods Frameworks */,
+				931941702819CB510067566C /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9319416E2819CB510067566C /* PBXTargetDependency */,
 			);
 			name = Spika;
 			productName = Spika;
@@ -1328,9 +1399,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1300;
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					931941672819CB510067566C = {
+						CreatedOnToolsVersion = 13.3;
+					};
 					AD9BFCFD272985C400736318 = {
 						CreatedOnToolsVersion = 13.0;
 						TestTargetID = ADD503AD270DC3C7009D50CB;
@@ -1355,11 +1429,19 @@
 			targets = (
 				ADD503AD270DC3C7009D50CB /* Spika */,
 				AD9BFCFD272985C400736318 /* AppTests */,
+				931941672819CB510067566C /* SpikaNotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		931941662819CB510067566C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD9BFCFC272985C400736318 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1490,6 +1572,20 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		931941642819CB510067566C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9319416B2819CB510067566C /* NotificationService.swift in Sources */,
+				9324B252281BDEFD00E7D76D /* CoreDataStack.swift in Sources */,
+				9324B254281BDFD700E7D76D /* MessageEntity+CoreDataClass.swift in Sources */,
+				9324B256281BE03800E7D76D /* Message.swift in Sources */,
+				9324B257281BE0D900E7D76D /* Constants.swift in Sources */,
+				9324B255281BDFDA00E7D76D /* MessageEntity+CoreDataProperties.swift in Sources */,
+				9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD9BFCFA272985C400736318 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1694,6 +1790,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9319416E2819CB510067566C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 931941672819CB510067566C /* SpikaNotificationService */;
+			targetProxy = 9319416D2819CB510067566C /* PBXContainerItemProxy */;
+		};
 		AD9BFD03272985C400736318 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = ADD503AD270DC3C7009D50CB /* Spika */;
@@ -1713,6 +1814,62 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		931941712819CB510067566C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationService.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = YU755VYJCP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpikaNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpikaNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika.Spika3NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		931941722819CB510067566C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationService.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = YU755VYJCP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpikaNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpikaNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika.Spika3NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		AD9BFD05272985C500736318 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 05AE93FDC8E4FE6FD37B579F /* Pods-Spika-AppTests.debug.xcconfig */;
@@ -1881,6 +2038,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
@@ -1917,6 +2075,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
@@ -1952,6 +2111,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		931941732819CB510067566C /* Build configuration list for PBXNativeTarget "SpikaNotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				931941712819CB510067566C /* Debug */,
+				931941722819CB510067566C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AD9BFD04272985C500736318 /* Build configuration list for PBXNativeTarget "AppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

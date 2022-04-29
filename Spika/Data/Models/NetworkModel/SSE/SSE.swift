@@ -86,6 +86,8 @@ class SSE {
         }
     }
     
+    
+    
     func showNotification() {
         // TODO: First check user in db, then set his name and image. if there is not user, for now say Unknown, but later check online whos that
         DispatchQueue.main.async {
