@@ -18,6 +18,7 @@ class SSE {
     let coordinator: Coordinator
     var currentMessage: Message?
     var subs = Set<AnyCancellable>()
+    let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
     
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
@@ -35,7 +36,7 @@ class SSE {
     }
     
     func setupSSE() {
-        guard let accessToken = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken),
+        guard let accessToken = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
               let serverURL = URL(string: Constants.Networking.baseUrl
                                   + "api/sse/"
                                   + "?accesstoken=" + accessToken)

@@ -53,7 +53,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
         messaging.token { token, _ in
             guard let token = token else { return }
             print("New Push fcmToken: ", token)
-            UserDefaults.standard.set(token, forKey: Constants.UserDefaults.pushToken)
+            let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
+            userDefaults.set(token, forKey: Constants.UserDefaults.pushToken)
         }
     }
     
@@ -73,7 +74,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
 extension AppDelegate {
     
     func test() {
-         UserDefaults.standard.set("STx4njvXxPVOgxR7", forKey: Constants.UserDefaults.accessToken)
+        let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
+        userDefaults.set("fich0x3WTUwjlGF5", forKey: Constants.UserDefaults.accessToken)
     }
     
     func allroomsprinter() {

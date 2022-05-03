@@ -60,6 +60,7 @@ protocol Repository {
     // MARK: NETWORKING: Message
     
     func sendTextMessage(body: MessageBody, roomId: Int, localId: String) -> AnyPublisher<SendMessageResponse, Error>
+    func sendDeliveredStatus(messageIds: [Int]) -> AnyPublisher<DeliveredResponseModel, Error>
     
     // MARK: NETWORKING: Device
     

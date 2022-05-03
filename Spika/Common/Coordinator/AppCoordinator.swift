@@ -12,6 +12,7 @@ class AppCoordinator: Coordinator {
     
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -20,12 +21,12 @@ class AppCoordinator: Coordinator {
     
     func start() {
         // TODO: check display name.isEmpty()
-        if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken),
-           let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.displayName){
+        if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
+           let _ = userDefaults.string(forKey: Constants.UserDefaults.displayName){
             presentHomeScreen()
             let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
             sse?.startSSEConnection() // TODO: for now disabled
-        } else if let _ = UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken){
+        } else if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken){
             presentEnterUsernameScreen()
         } else {
             presentEnterNumberScreen()

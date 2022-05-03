@@ -11,6 +11,7 @@ struct Constants {
     struct Strings {
         static let appName = "Spika"
         static let cancel = "Cancel"
+        static let appGroupName = "group.studio.clover.Spika.groupSpika"
     }
     
     struct Networking {
@@ -31,6 +32,7 @@ struct Constants {
         static let sendMessage = "api/messenger/messages"
         static let getAllRooms = "api/messenger/rooms"
         static let updatePush = "api/messenger/device"
+        static let deliveredStatus = "api/messenger/messages/delivered"
     }
     
     struct Database {
@@ -49,6 +51,7 @@ struct Constants {
         static let accessToken = "accessToken"
         static let displayName = "displayName"
         static let pushToken = "pushToken"
+        static let testing = "satasda"
     }
     
     struct CABasicAnimations {

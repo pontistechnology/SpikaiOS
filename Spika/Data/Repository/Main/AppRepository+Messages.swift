@@ -34,6 +34,22 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func sendDeliveredStatus(messageIds: [Int]) -> AnyPublisher<DeliveredResponseModel, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<DeliveredResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<DeliveredResponseModel, DeliveredRequestModel>(
+            path: Constants.Endpoints.deliveredStatus,
+            requestType: .POST,
+            bodyParameters: DeliveredRequestModel(messagesIds: messageIds),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
     // MARK: Database
     
     func saveMessage(message: Message) -> Future<Message, Error> {

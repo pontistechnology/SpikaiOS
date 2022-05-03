@@ -27,12 +27,6 @@ class TestRepository: Repository {
         self.databaseService = databaseService
     }
     
-    func getPosts() -> AnyPublisher<[Post], Error> {
-        return Fail<[Post], Error>(error: NetworkError.badURL)
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
-    
     func getMainContext() -> NSManagedObjectContext {
         databaseService.coreDataStack.mainMOC
     }
