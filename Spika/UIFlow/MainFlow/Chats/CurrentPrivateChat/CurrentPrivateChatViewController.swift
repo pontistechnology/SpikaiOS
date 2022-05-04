@@ -62,6 +62,11 @@ extension CurrentPrivateChatViewController {
             guard let self = self else { return }
             self.setFetch(room: room)
         }.store(in: &subscriptions)
+        
+        currentPrivateChatView.downArrowImageView.tap().sink { [weak self] _ in
+            self?.currentPrivateChatView.messagesTableView.scrollToBottom()
+        }.store(in: &subscriptions)
+
     }
 }
 
@@ -195,6 +200,18 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
         friendInfoView.changeStatus(to: "\(i)")
         i += 1
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let totalSections = self.frc?.sections?.count,
+              let totalRowsInLastSection = self.frc?.sections?[totalSections - 1].numberOfObjects,
+              let isLastRowVisible = tableView.indexPathsForVisibleRows?.contains(IndexPath(row: totalRowsInLastSection - 1, section: totalSections - 1)) else {
+            return
+        }
+        
+        currentPrivateChatView.hideScrollToBottomButton(should: isLastRowVisible)
+
     }
 }
 

@@ -11,6 +11,7 @@ class CurrentPrivateChatView: UIView, BaseView {
     
     let messagesTableView = UITableView()
     let messageInputView = MessageInputView()
+    let downArrowImageView = UIImageView(image: UIImage(named: "downArrow"))
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
     
@@ -26,6 +27,7 @@ class CurrentPrivateChatView: UIView, BaseView {
     
     func addSubviews() {
         addSubview(messagesTableView)
+        addSubview(downArrowImageView)
         addSubview(messageInputView)
     }
     
@@ -35,10 +37,15 @@ class CurrentPrivateChatView: UIView, BaseView {
         messagesTableView.keyboardDismissMode = .interactive
         messagesTableView.rowHeight = UITableView.automaticDimension
         messagesTableView.estimatedRowHeight = 5
+        
+        downArrowImageView.isHidden = true
     }
     
     func positionSubviews() {        
         messagesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: messageInputView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left:0, bottom: 0, right: 0))
+        
+        downArrowImageView.anchor(bottom: messagesTableView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 9))
+        downArrowImageView.centerXToSuperview()
     
         messageInputView.anchor(leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         messageInputViewBottomConstraint = messageInputView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
@@ -74,6 +81,10 @@ class CurrentPrivateChatView: UIView, BaseView {
     deinit {
         NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
         NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
+    }
+    
+    func hideScrollToBottomButton(should: Bool) {
+        downArrowImageView.isHidden = should
     }
 }
 
