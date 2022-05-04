@@ -45,11 +45,13 @@ struct User: Codable {
         var displayNameResult: String
         
         displayNameResult = [givenName, familyName] // TODO display real names
-            .compactMap { $0 }
+            .flatMap{ $0 }
             .joined(separator: " ")
+        
+        
 
         
-        if displayNameResult.isEmpty {
+        if displayNameResult.isEmpty || displayNameResult.starts(with: " ") {
             displayNameResult = displayName ?? "noname"
         }
         
@@ -73,11 +75,11 @@ struct User: Codable {
 
 extension User: Comparable {
     static func < (lhs: User, rhs: User) -> Bool {
-        return lhs.getDisplayName().localizedStandardCompare(rhs.getDisplayName()) == .orderedAscending
+        return lhs.getDisplayName().localizedCaseInsensitiveCompare(rhs.getDisplayName()) == .orderedAscending
     }
     
     static func == (lhs: User, rhs: User) -> Bool {
-        return lhs.getDisplayName().localizedStandardCompare(rhs.getDisplayName()) == .orderedSame
+        return lhs.getDisplayName().localizedCaseInsensitiveCompare(rhs.getDisplayName()) == .orderedSame
     }
 }
 

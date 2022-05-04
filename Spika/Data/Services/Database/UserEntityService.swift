@@ -129,9 +129,8 @@ class UserEntityService {
                             print("contatct found: ", contact)
                             user.givenName = contact.firstName
                             user.familyName = contact.lastName
-                            self?.saveUser(user)
-                            
                         }
+                        self?.saveUser(user)
                     } catch {
                         print("Error loading: ", error)
                         promise(.failure(DatabseError.requestFailed))

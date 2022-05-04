@@ -7,16 +7,20 @@
 
 import UIKit
 import Combine
+import CoreData
 
 class ContactsViewController: BaseViewController {
     
     private let contactsView = ContactsView()
     var viewModel: ContactsViewModel!
     
+    var frc: NSFetchedResultsController<UserEntity>?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(contactsView)
         setupBindings()
+        setFetch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +58,7 @@ class ContactsViewController: BaseViewController {
             self.contactsView.tableView.reloadData()
         }.store(in: &subscriptions)
         
-        viewModel.getUsersAndUpdateUI()
+//        viewModel.getUsersAndUpdateUI()
         viewModel.getContacts()
         viewModel.getOnlineContacts(page: 1)
     }
@@ -107,6 +111,86 @@ extension ContactsViewController: SearchBarDelegate {
     
     func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
         viewModel.filterContactsUI(filter: "")
+    }
+}
+
+// MARK: - NSFetchedResultsController
+
+extension ContactsViewController: NSFetchedResultsControllerDelegate {
+    
+    func setFetch() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let fetchRequest = UserEntity.fetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(UserEntity.displayName), ascending: true)]
+//            fetchRequest.predicate = NSPredicate(format: "%K == %d", #keyPath(MessageEntity.roomId), room.id)
+            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
+            self.frc?.delegate = self
+            do {
+                try self.frc?.performFetch()
+                self.contactsView.tableView.reloadData()
+            } catch {
+                fatalError("Failed to fetch entities: \(error)") // TODO: handle error
+            }
+        }
+    }
+    
+//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        currentPrivateChatView.messagesTableView.beginUpdates()
+//    }
+//
+//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+//        print("TYPE: ", type.rawValue)
+//        switch type {
+//        case .insert:
+//            guard let newIndexPath = newIndexPath else {
+//                return
+//            }
+//            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
+//
+//        case .delete:
+//            guard let indexPath = indexPath else {
+//                return
+//            }
+//            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+//        case .move:
+//            guard let indexPath = indexPath,
+//                  let newIndexPath = newIndexPath
+//            else {
+//                return
+//            }
+//            currentPrivateChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+//
+//        case .update:
+//            guard let indexPath = indexPath else {
+//                return
+//            }
+////            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+////            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
+//
+//            currentPrivateChatView.messagesTableView.reloadRows(at: [indexPath], with: .fade)
+//
+////            let cell = currentPrivateChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
+////            let entity = frc?.object(at: indexPath)
+////            let message = Message(messageEntity: entity!)
+////            cell?.updateCell(message: message)
+//            break
+//        default:
+//            break
+//        }
+//    }
+//
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        currentPrivateChatView.messagesTableView.endUpdates()
+//        currentPrivateChatView.messagesTableView.scrollToBottom()
+        self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
+//        print("snapshot begi: ", snapshot)
+//        currentPrivateChatView.messagesTableView.reloadData()
+//        currentPrivateChatView.messagesTableView.scrollToBottom()
+        self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
     }
 }
 
