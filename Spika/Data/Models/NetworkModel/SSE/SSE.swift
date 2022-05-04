@@ -16,9 +16,11 @@ class SSE {
     var alertWindow: UIWindow?
     let repository: Repository
     let coordinator: Coordinator
-    var currentMessage: Message?
     var subs = Set<AnyCancellable>()
     let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
+
+    var currentMessage: Message?
+    var userSender: User?
     
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
@@ -67,15 +69,15 @@ class SSE {
             do {
                 let sseNewMessage = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
                 guard let message = sseNewMessage.message else { return }
+                self.currentMessage = nil
+                self.userSender = nil
                 print("\nSSE message: ", message)
                 self.repository.saveMessage(message: message).sink { c in
 //                    print("completion save message sse: ", c)
                 } receiveValue: { message in
                     self.currentMessage = message
-                    self.showNotification()
+                    self.prepareMessageForShowing()
                 }.store(in: &self.subs)
-
-               
             } catch {
                 print("onMessage decoder error catched")
                 return
@@ -87,15 +89,35 @@ class SSE {
         }
     }
     
+    func prepareMessageForShowing() {
+        guard let currentMessage = currentMessage,
+              let senderId = currentMessage.fromUserId,
+              senderId != repository.getMyUserId()
+        else {
+            return
+        }
+        repository.getUser(withId: senderId).sink { [weak self] completion in
+            guard let self = self else { return }
+            switch completion {
+            case .finished:
+                break
+            case .failure(_):
+                self.showNotification(imageUrl: nil, name: "Unknown", text: currentMessage.body?.text ?? "no sse message")
+            }
+        } receiveValue: { [weak self] user in
+            guard let self = self else { return }
+            self.userSender = user
+            self.showNotification(imageUrl: URL(string: user.getAvatarUrl() ?? ""),
+                                  name: user.getDisplayName(),
+                                  text: currentMessage.body?.text ?? "no sse message")
+        }.store(in: &subs)
+    }
     
-    
-    func showNotification() {
-        // TODO: First check user in db, then set his name and image. if there is not user, for now say Unknown, but later check online whos that
+    func showNotification(imageUrl: URL?, name: String, text: String) {
         DispatchQueue.main.async {
-            guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene,
-                  let currentMessage = self.currentMessage
+            guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
             else { return }
-            // TODO: refactor
+            
             self.alertWindow = nil
             let alertWindow = UIWindow(windowScene: windowScene)
             alertWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150)
@@ -103,32 +125,27 @@ class SSE {
             alertWindow.isHidden = false
             alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors, theme
             
-            let mess = MessageNotificationView(image: UIImage(named: "matejVida")!, senderName: "Sender id: \(currentMessage.fromUserId)", textOrDescription: currentMessage.body?.text ?? "NOTEXTSSE")
-            alertWindow.rootViewController?.view.addSubview(mess)
-            mess.anchor(top: alertWindow.rootViewController?.view.safeAreaLayoutGuide.topAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
-            mess.centerXToSuperview()
+            let messageNotificationView = MessageNotificationView(imageUrl: imageUrl, senderName: name, textOrDescription: text)
+            
+            alertWindow.rootViewController?.view.addSubview(messageNotificationView)
+            messageNotificationView.anchor(top: alertWindow.rootViewController?.view.safeAreaLayoutGuide.topAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
+            messageNotificationView.centerXToSuperview()
             
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleGesture(_:)))
-            mess.addGestureRecognizer(tapGesture)
+            messageNotificationView.addGestureRecognizer(tapGesture)
             
             self.alertWindow = alertWindow
         }
     }
     
     @objc func handleGesture(_ sender: UITapGestureRecognizer) {
-        guard let senderId = currentMessage?.fromUserId else {
+        // TODO: What if sender is unknown?
+        guard let userSender = userSender else {
             return
         }
-        
-        repository.getUser(withId: senderId).sink { c in
-            print(c)
-        } receiveValue: { [weak self] user in
-            DispatchQueue.main.async {
-                (self?.coordinator as? AppCoordinator)?.presentCurrentPrivateChatScreen(user: user)                
-            }
-        }.store(in: &subs)
-        
+        DispatchQueue.main.async {
+            (self.coordinator as? AppCoordinator)?.presentCurrentPrivateChatScreen(user: userSender)
+        }
         alertWindow = nil
-        
     }
 }

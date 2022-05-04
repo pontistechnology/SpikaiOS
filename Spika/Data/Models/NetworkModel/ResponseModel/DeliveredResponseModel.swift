@@ -15,15 +15,15 @@ struct DeliveredResponseModel: Codable {
 }
 
 struct DeliveredData: Codable {
-    let messageRecords: [MessageRecord]
+    let messageRecords: [MessageRecord]?
 }
 
 struct MessageRecord: Codable {
-    let id: Int
-    let messageId: Int
-    let userId: Int
-    let type: String
-    let reaction: String
-    let modifiedAt: Int
-    let createdAt: Int
+    let id: Int?
+    let messageId: Int?
+    let userId: Int?
+    let type: String?
+    let reaction: String?
+    let modifiedAt: Int?
+    let createdAt: Int?
 }

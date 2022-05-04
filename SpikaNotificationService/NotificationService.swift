@@ -12,7 +12,7 @@ import Combine
 class NotificationService: UNNotificationServiceExtension {
     
     var subs = Set<AnyCancellable>()
-    let userDefaults = UserDefaults(suiteName: "group.studio.clover.Spika.groupSpika")
+    let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
     let coreDataStack = CoreDataStack()
     lazy var repository = AppRepository(
         networkService: NetworkService(),
