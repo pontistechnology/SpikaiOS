@@ -20,7 +20,7 @@ class UserEntityService {
     func getUsers() -> Future<[User], Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = UserEntity.fetchRequest()
                 do {
                     let userEntities = try context.fetch(fetchRequest)
@@ -69,10 +69,9 @@ class UserEntityService {
         }
     }
     
-<<<<<<< HEAD
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for contact in contacts {
                     let _ = ContactEntity(phoneNumber: contact.telephone,
@@ -93,7 +92,7 @@ class UserEntityService {
     
     func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = ContactEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "phoneNumber = %@", phoneNumber)
                 do {
@@ -116,7 +115,7 @@ class UserEntityService {
     
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 for var user in users {
 //                    saveUsers(users)
                     let fetchRequest = ContactEntity.fetchRequest()
@@ -139,7 +138,10 @@ class UserEntityService {
                     
                 }
                 promise(.success(users))
-=======
+            }
+        }
+    }
+    
     func getUser(withId id: Int) -> Future<User, Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistantContainer.performBackgroundTask { context in
@@ -163,8 +165,6 @@ class UserEntityService {
                 } catch {
                     promise(.failure(error))
                 }
-                
->>>>>>> 1.0.0/nikolasBranch
             }
         }
     }
