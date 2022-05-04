@@ -14,7 +14,7 @@ class AppRepository: Repository {
     let networkService: NetworkService
     let databaseService: DatabaseService
     var subs = Set<AnyCancellable>()
-    
+    let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
     
     init(networkService: NetworkService, databaseService: DatabaseService) {
         self.networkService = networkService
@@ -27,22 +27,11 @@ class AppRepository: Repository {
     }
     
     func getAccessToken() -> String? {
-        return UserDefaults.standard.string(forKey: Constants.UserDefaults.accessToken)
+        return userDefaults.string(forKey: Constants.UserDefaults.accessToken)
     }
     
     func getMyDeviceId() -> Int {
-        return UserDefaults.standard.integer(forKey: Constants.UserDefaults.deviceId)
-    }
-    
-    func getPosts() -> AnyPublisher<[Post], Error> {
-        let resources = Resources<[Post], EmptyRequestBody>(
-            path: Constants.Endpoints.getPosts,
-            requestType: .GET,
-            bodyParameters: nil,
-            httpHeaderFields: nil,
-            queryParameters: nil
-        )
-        return networkService.performRequest(resources: resources)
+        return userDefaults.integer(forKey: Constants.UserDefaults.deviceId)
     }
     
     func getMainContext() -> NSManagedObjectContext {

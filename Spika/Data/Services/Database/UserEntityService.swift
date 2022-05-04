@@ -37,7 +37,7 @@ class UserEntityService {
     
     func saveUser(_ user: User) -> Future<User, Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let _ = UserEntity(user: user, context: context)
                 do {
@@ -53,7 +53,7 @@ class UserEntityService {
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for user in users {
                     let _ = UserEntity(user: user, context: context)
@@ -69,6 +69,7 @@ class UserEntityService {
         }
     }
     
+<<<<<<< HEAD
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { context in
@@ -138,6 +139,32 @@ class UserEntityService {
                     
                 }
                 promise(.success(users))
+=======
+    func getUser(withId id: Int) -> Future<User, Error> {
+        return Future { [weak self] promise in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                let fetchRequest = UserEntity.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
+                do {
+                    let dbUsers = try context.fetch(fetchRequest)
+                    if dbUsers.count == 0 {
+                        promise(.failure(DatabseError.noSuchRecord))
+                    } else if dbUsers.count > 1 {
+                        promise(.failure(DatabseError.moreThanOne))
+                    } else {
+                        guard let user = User(entity: dbUsers.first) else {
+                            print("GUARD getUser(UserEntityService) error: ")
+                            promise(.failure(DatabseError.unknown))
+                            return
+                        }
+                        promise(.success(user))
+                    }
+                } catch {
+                    promise(.failure(error))
+                }
+                
+>>>>>>> 1.0.0/nikolasBranch
             }
         }
     }

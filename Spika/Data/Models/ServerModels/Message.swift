@@ -9,23 +9,23 @@ import Foundation
 
 struct Message: Codable {
     let createdAt: Int?
-    let fromDeviceId: Int?
     let fromUserId: Int?
     let id: Int?
+    let localId: String?
     let totalUserCount: Int?
     let deliveredCount: Int?
     let seenCount: Int?
     let roomId: Int?
     let type: String?
-    var body: MessageBody?
+    let body: MessageBody?
 }
 
 extension Message {
-    init(createdAt: Int, fromUserId: Int, roomId: Int, type: MessageType, body: MessageBody) {
+    init(createdAt: Int, fromUserId: Int, roomId: Int, type: MessageType, body: MessageBody, localId: String) {
         self.body = body
         self.id = nil
+        self.localId = localId
         self.fromUserId = fromUserId
-        self.fromDeviceId = nil
         self.totalUserCount = nil
         self.deliveredCount = -1
         self.seenCount = -1
@@ -36,9 +36,9 @@ extension Message {
     
     init(messageEntity: MessageEntity) {
         self.init(createdAt: Int(messageEntity.createdAt),
-                  fromDeviceId: Int(messageEntity.fromDeviceId),
                   fromUserId: Int(messageEntity.fromUserId),
                   id: Int(messageEntity.id ?? "-1"),
+                  localId: messageEntity.localId,
                   totalUserCount: Int(messageEntity.totalUserCount),
                   deliveredCount: Int(messageEntity.deliveredCount),
                   seenCount: Int(messageEntity.seenCount),
@@ -71,7 +71,6 @@ extension Message {
 
 struct MessageBody: Codable {
     let text: String?
-    var localId: String?
 }
 
 enum MessageType: String, Codable {

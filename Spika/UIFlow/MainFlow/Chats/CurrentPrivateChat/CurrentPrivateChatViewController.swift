@@ -47,13 +47,26 @@ extension CurrentPrivateChatViewController {
         currentPrivateChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
         
-        viewModel.roomPublisher.sink { c in
-            print(c)
+        viewModel.roomPublisher.sink { completion in
             // TODO: pop vc?, presentAlert?
+            switch completion {
+                
+            case .finished:
+                break
+            case let .failure(error):
+                PopUpManager.shared.presentAlert(with: (title: "Error", message: error.localizedDescription), orientation: .horizontal, closures: [("Ok", {
+                    self.viewModel.getAppCoordinator()?.popTopViewController()
+                })])
+            }
         } receiveValue: { [weak self] room in
             guard let self = self else { return }
             self.setFetch(room: room)
         }.store(in: &subscriptions)
+        
+        currentPrivateChatView.downArrowImageView.tap().sink { [weak self] _ in
+            self?.currentPrivateChatView.messagesTableView.scrollToBottom()
+        }.store(in: &subscriptions)
+
     }
 }
 
@@ -180,10 +193,25 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
 extension CurrentPrivateChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? TextMessageTableViewCell else { return }
+        (tableView.visibleCells as? [TextMessageTableViewCell])?.forEach{ $0.timeLabel.isHidden = true}
+        cell.tapHandler()
         tableView.deselectRow(at: indexPath, animated: true)
         friendInfoView.changeStatus(to: "\(i)")
         i += 1
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let totalSections = self.frc?.sections?.count,
+              let totalRowsInLastSection = self.frc?.sections?[totalSections - 1].numberOfObjects,
+              let isLastRowVisible = tableView.indexPathsForVisibleRows?.contains(IndexPath(row: totalRowsInLastSection - 1, section: totalSections - 1)) else {
+            return
+        }
+        
+        currentPrivateChatView.hideScrollToBottomButton(should: isLastRowVisible)
+
     }
 }
 
@@ -202,7 +230,7 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
         let identifier = (message.fromUserId == myUserId)
                         ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
                         : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
-        
+        print(identifier)
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
         
         cell?.updateCell(message: message)

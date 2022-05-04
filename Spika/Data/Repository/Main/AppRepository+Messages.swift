@@ -15,7 +15,7 @@ extension AppRepository {
     
     // MARK: Network
     
-    func sendTextMessage(body: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendTextMessage(body: MessageBody, roomId: Int, localId: String) -> AnyPublisher<SendMessageResponse, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -25,7 +25,26 @@ extension AppRepository {
         let resources = Resources<SendMessageResponse, SendMessageRequest>(
             path: Constants.Endpoints.sendMessage,
             requestType: .POST,
-            bodyParameters: SendMessageRequest(roomId: roomId, type: "text", body: body),
+            bodyParameters: SendMessageRequest(roomId: roomId,
+                                               type: MessageType.text.rawValue,
+                                               body: body,
+                                               localId: localId),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func sendDeliveredStatus(messageIds: [Int]) -> AnyPublisher<DeliveredResponseModel, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<DeliveredResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<DeliveredResponseModel, DeliveredRequestModel>(
+            path: Constants.Endpoints.deliveredStatus,
+            requestType: .POST,
+            bodyParameters: DeliveredRequestModel(messagesIds: messageIds),
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
@@ -33,15 +52,12 @@ extension AppRepository {
     
     // MARK: Database
     
-    func saveMessage(message: Message) -> Future<(Message, String), Error> {
+    func saveMessage(message: Message) -> Future<Message, Error> {
         return databaseService.messageEntityService.saveMessage(message: message)
     }
     
     func getMessages(forRoomId roomId: Int) -> Future<[Message], Error> {
         self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
     }
-    
-    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error> {
-        self.databaseService.messageEntityService.updateMessage(message: message, localId: localId)
-    }
+
 }

@@ -11,6 +11,7 @@ struct UserResponseModel: Codable {
     let status: String?
     let data: UserData?
     let error: String?
+    let message: String?
 }
 
 // MARK: - DataClass

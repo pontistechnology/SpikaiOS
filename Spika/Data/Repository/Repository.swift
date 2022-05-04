@@ -59,7 +59,12 @@ protocol Repository {
     
     // MARK: NETWORKING: Message
     
-    func sendTextMessage(body: MessageBody, roomId: Int) -> AnyPublisher<SendMessageResponse, Error>
+    func sendTextMessage(body: MessageBody, roomId: Int, localId: String) -> AnyPublisher<SendMessageResponse, Error>
+    func sendDeliveredStatus(messageIds: [Int]) -> AnyPublisher<DeliveredResponseModel, Error>
+    
+    // MARK: NETWORKING: Device
+    
+    func updatePushToken() -> AnyPublisher<UpdatePushResponseModel, Error>
     
     // MARK: - COREDATA
     
@@ -69,14 +74,15 @@ protocol Repository {
     // MARK: COREDATA: User
     
     func getUsers() -> Future<[User], Error>
+    func getUser(withId id: Int) -> Future<User, Error>
     func saveUser(_ user: User) -> Future<User, Error>
     func saveUsers(_ users: [User]) -> Future<[User], Error>
     
     // MARK: COREDATA: Messages
     
-    func saveMessage(message: Message) -> Future<(Message, String), Error>
+    func saveMessage(message: Message) -> Future<Message, Error>
     func getMessages(forRoomId: Int) -> Future<[Message], Error>
-    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error>
+//    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error>
     
     // MARK: COREDATA: Room
     

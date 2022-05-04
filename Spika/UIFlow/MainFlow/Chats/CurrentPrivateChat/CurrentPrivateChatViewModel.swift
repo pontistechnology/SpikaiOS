@@ -102,6 +102,11 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { [weak self] response in
             guard let self = self else { return }
             print("creating room response: ", response)
+            if let errorMessage = response.message {
+                PopUpManager.shared.presentAlert(with: (title: "Error", message: errorMessage), orientation: .horizontal, closures: [("Ok", {
+                    self.getAppCoordinator()?.popTopViewController()
+                })])
+            }
             guard let room = response.data?.room else { return }
             self.saveLocalRoom(room: room)
         }.store(in: &subscriptions)
@@ -127,55 +132,55 @@ extension CurrentPrivateChatViewModel {
     
     func trySendMessage(text: String) {
         guard let room = self.room else { return }
+        print("ROOM: ", room)
+        let uuid = UUID().uuidString
         let message = Message(createdAt: Int(Date().timeIntervalSince1970) * 1000,
                               fromUserId: repository.getMyUserId(),
                               roomId: room.id, type: .text,
-                              body: MessageBody(text: text))
+                              body: MessageBody(text: text), localId: uuid)
         
         repository.saveMessage(message: message).sink { completion in
-            
-        } receiveValue: { [weak self] (message, uuid) in
+            print("save message c: ", completion)
+        } receiveValue: { [weak self] message in
             guard let self = self else { return }
-            var savedMessage = message
-            savedMessage.body?.localId = uuid
-            guard let body = savedMessage.body else { return }
+            guard let body = message.body else {
+                print("GUARD trySendMessage body missing")
+                return }
             self.sendMessage(body: body, localId: uuid)
         }.store(in: &subscriptions)
     }
     
-    // TODO: uuid will not be in body?
+    
     func sendMessage(body: MessageBody, localId: String) {
         guard let room = self.room else { return }
         
-        self.repository.sendTextMessage(body: body, roomId: room.id).sink { [weak self] completion in
+        self.repository.sendTextMessage(body: body, roomId: room.id, localId: localId).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 
             case .finished:
                 print("finished")
-            case .failure(_):
-                print("failure")
+            case let .failure(error):
+                print("send text message error: ", error)
             }
         } receiveValue: { [weak self] response in
             print("SendMessage response: ", response)
             guard let self = self,
-                  let message = response.data?.message,
-                  let localId = message.body?.localId
+                  let message = response.data?.message
             else { return }
-            self.updateMessage(message: message, localId: localId)
+            self.saveMessage(message: message)
         }.store(in: &self.subscriptions)
     }
     
-    func updateMessage(message: Message, localId: String) {
-        repository.updateLocalMessage(message: message, localId: localId).sink { completion in
+    func saveMessage(message: Message) {
+        repository.saveMessage(message: message).sink { c in
+            print(c)
+        } receiveValue: { _ in
             
-        } receiveValue: { [weak self] message in
-            //TODO: change in array
-            guard let self = self else { return }
-//            guard let i = self.messages.firstIndex(where: {$0.body?.localId == localId}) else { return }
-//            self.messages[i] = message
-//            self.tableViewShouldReload.send(true)
         }.store(in: &subscriptions)
-
+    }
+        
+    func popTopViewController() {
+        getAppCoordinator()?.popTopViewController()
     }
 }

@@ -15,10 +15,12 @@ class MessageNotificationView: UIView {
     private let descriptionLabel: CustomLabel
     private let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterialDark))
     
-    init(image: UIImage, senderName: String, textOrDescription: String){
+    init(imageUrl: URL?, senderName: String, textOrDescription: String){
         senderNameLabel = CustomLabel(text: senderName, textSize: 14, textColor: .white, fontName: .MontserratSemiBold)
         descriptionLabel = CustomLabel(text: textOrDescription, textSize: 11, textColor: .white)
-        avatarImageView = UIImageView(image: image)
+        
+        avatarImageView = UIImageView()
+        avatarImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "user_image"))
         super.init(frame: .zero)
         setupView()
     }

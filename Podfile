@@ -11,6 +11,7 @@ target 'Spika' do
   pod 'Kingfisher', '~> 7.0'
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
+  pod 'Firebase/Messaging'
   pod 'IKEventSource'
 
   target 'AppTests' do

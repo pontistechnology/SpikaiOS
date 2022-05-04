@@ -15,6 +15,55 @@
 		930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C327ACA2E90064BED1 /* ContactsTableView.swift */; };
 		930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
 		930EE59D27A938B800143B48 /* UploadChunkResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */; };
+		9319416B2819CB510067566C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9319416A2819CB510067566C /* NotificationService.swift */; };
+		9319416F2819CB510067566C /* SpikaNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 931941682819CB510067566C /* SpikaNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		931B14D6281FD91100A0CD35 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
+		931B14D7281FD91100A0CD35 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
+		931B14D8281FD91100A0CD35 /* AppRepository+Rooms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */; };
+		931B14D9281FD91100A0CD35 /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
+		931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
+		931B14DB281FD91100A0CD35 /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DB270DD6DC009D50CB /* AppRepository.swift */; };
+		931B14DC2821182800A0CD35 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F2270DE39A009D50CB /* NetworkService.swift */; };
+		931B14DD2821182D00A0CD35 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040F27173FD9009D50CB /* DatabaseService.swift */; };
+		931B14DE2821185300A0CD35 /* UserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040A2716EB4B009D50CB /* UserEntityService.swift */; };
+		931B14DF2821186000A0CD35 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
+		931B14E02821186300A0CD35 /* RoomEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BD5B3B27FB83A400240331 /* RoomEntityService.swift */; };
+		931B14E12821186600A0CD35 /* RoomUserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */; };
+		931B14E2282118D700A0CD35 /* ChatEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5042D271E6C15009D50CB /* ChatEntityService.swift */; };
+		931B14E528211A5100A0CD35 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B93280EFFD200F9B321 /* User.swift */; };
+		931B14F128211AC100A0CD35 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
+		931B14F228211AC100A0CD35 /* VerifyCodeRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD45272AECFA00736318 /* VerifyCodeRequestModel.swift */; };
+		931B14F328211AC100A0CD35 /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BB27A9FB180064BED1 /* UserRequestModel.swift */; };
+		931B14F428211AC100A0CD35 /* AuthRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */; };
+		931B14F528211AC100A0CD35 /* CreateRoomRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */; };
+		931B14F628211AC100A0CD35 /* VerifyFileRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AB7227FED6FF00696757 /* VerifyFileRequestModel.swift */; };
+		931B14F728211AC100A0CD35 /* SendMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9727D6ED70002E3DED /* SendMessageRequest.swift */; };
+		931B14F828211AC100A0CD35 /* UpdatePushRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */; };
+		931B14F928211AC100A0CD35 /* ContactsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */; };
+		931B150028211AC600A0CD35 /* SendMessageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9927D6EE47002E3DED /* SendMessageResponse.swift */; };
+		931B150128211AC600A0CD35 /* CheckRoomResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9527D6D99D002E3DED /* CheckRoomResponseModel.swift */; };
+		931B150228211AC600A0CD35 /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BD27A9FCE30064BED1 /* UserResponseModel.swift */; };
+		931B150328211AC600A0CD35 /* UpdatePushResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */; };
+		931B150428211AC600A0CD35 /* AuthResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD41272ADAD500736318 /* AuthResponseModel.swift */; };
+		931B150528211AC600A0CD35 /* UploadChunkResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */; };
+		931B150628211AC600A0CD35 /* CreateRoomResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053727D5C05F002E5CE5 /* CreateRoomResponseModel.swift */; };
+		931B150728211AC600A0CD35 /* ContactsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */; };
+		931B150828211AC600A0CD35 /* GetAllRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */; };
+		931B150928211AC600A0CD35 /* VerifyFileResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AB7027FED6F000696757 /* VerifyFileResponseModel.swift */; };
+		931B150A28211ACB00A0CD35 /* RoomEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93980E01280A10F30015351F /* RoomEntity+CoreDataProperties.swift */; };
+		931B150B28211ACB00A0CD35 /* ContactEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B97280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift */; };
+		931B150C28211ACB00A0CD35 /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93980E06280A10F30015351F /* RoomUserEntity+CoreDataProperties.swift */; };
+		931B150D28211ACB00A0CD35 /* ContactEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B95280F05B000F9B321 /* ContactEntity+CoreDataClass.swift */; };
+		931B150E28211ACB00A0CD35 /* RoomEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */; };
+		931B150F28211ACB00A0CD35 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
+		931B151028211ACB00A0CD35 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */; };
+		931B151128211ACB00A0CD35 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93980E03280A10F30015351F /* UserEntity+CoreDataProperties.swift */; };
+		931B151228211B1300A0CD35 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D9270DD6AD009D50CB /* Repository.swift */; };
+		931B151328211B3F00A0CD35 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68152739024B00BDC439 /* String+Extension.swift */; };
+		931B15152821291400A0CD35 /* DeliveredRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15142821291400A0CD35 /* DeliveredRequestModel.swift */; };
+		931B15162821291400A0CD35 /* DeliveredRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15142821291400A0CD35 /* DeliveredRequestModel.swift */; };
+		931B15182821295600A0CD35 /* DeliveredResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15172821295600A0CD35 /* DeliveredResponseModel.swift */; };
+		931B15192821295600A0CD35 /* DeliveredResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15172821295600A0CD35 /* DeliveredResponseModel.swift */; };
 		931E23A927D2DCDA0065FFFC /* MessageStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23A827D2DCDA0065FFFC /* MessageStateView.swift */; };
 		931E23AC27D3172C0065FFFC /* MediaMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23AB27D3172C0065FFFC /* MediaMessageTableViewCell.swift */; };
 		931E23AE27D317390065FFFC /* VoiceMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23AD27D317390065FFFC /* VoiceMessageTableViewCell.swift */; };
@@ -24,6 +73,12 @@
 		9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6827B3702000FA0EB1 /* DetailsView.swift */; };
 		9323EC6B27B3E8D500FA0EB1 /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6A27B3E8D500FA0EB1 /* NavView.swift */; };
 		9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */; };
+		9324B252281BDEFD00E7D76D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9355BED928056D1A00B9EC85 /* CoreDataStack.swift */; };
+		9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */; };
+		9324B254281BDFD700E7D76D /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */; };
+		9324B255281BDFDA00E7D76D /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93980E05280A10F30015351F /* MessageEntity+CoreDataProperties.swift */; };
+		9324B256281BE03800E7D76D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E48EAF27CEA6C3003B4188 /* Message.swift */; };
+		9324B257281BE0D900E7D76D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E7270DD87A009D50CB /* Constants.swift */; };
 		933BE85D27B65BDF0099BA9E /* SharedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE85C27B65BDF0099BA9E /* SharedViewController.swift */; };
 		933BE85F27B65C6F0099BA9E /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE85E27B65C6F0099BA9E /* SharedViewModel.swift */; };
 		933BE86227B65C9C0099BA9E /* SharedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86127B65C9C0099BA9E /* SharedView.swift */; };
@@ -39,6 +94,10 @@
 		933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87827B67A280099BA9E /* ChatSearchViewController.swift */; };
 		934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
 		934087BA27EBAE6F00209571 /* TestRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B927EBAE6F00209571 /* TestRepository+Tests.swift */; };
+		934F2EDD28172BD10086C343 /* UpdatePushResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */; };
+		934F2EDF28172D150086C343 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
+		934F2EE128172EEA0086C343 /* UpdatePushRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */; };
+		934F2EE3281735590086C343 /* TestRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE2281735590086C343 /* TestRepository+Device.swift */; };
 		9352641927F88937001434A3 /* SSE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9352641827F88937001434A3 /* SSE.swift */; };
 		9355BEDA28056D1A00B9EC85 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9355BED928056D1A00B9EC85 /* CoreDataStack.swift */; };
 		9365A79127E184FA0038CA7F /* GetAllRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */; };
@@ -75,6 +134,7 @@
 		93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */; };
 		93BD5B3C27FB83A400240331 /* RoomEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BD5B3B27FB83A400240331 /* RoomEntityService.swift */; };
 		93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */; };
+		93C714A12815F888008BBA33 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int+Extensions.swift */; };
 		93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
 		93CEF90227FD856A0038B7A9 /* RoomUserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */; };
 		93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */; };
@@ -188,7 +248,6 @@
 		ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503EA270DE28E009D50CB /* HomeViewController.swift */; };
 		ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503EC270DE2B9009D50CB /* HomeViewModel.swift */; };
 		ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F2270DE39A009D50CB /* NetworkService.swift */; };
-		ADD503F6270DF96F009D50CB /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F5270DF96F009D50CB /* Post.swift */; };
 		ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FB27101B20009D50CB /* DetailsViewController.swift */; };
 		ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
 		ADD5040127101B69009D50CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040027101B69009D50CB /* ContentView.swift */; };
@@ -208,6 +267,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9319416D2819CB510067566C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADD503A6270DC3C7009D50CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 931941672819CB510067566C;
+			remoteInfo = SpikaNotificationService;
+		};
 		AD9BFD02272985C400736318 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADD503A6270DC3C7009D50CB /* Project object */;
@@ -216,6 +282,20 @@
 			remoteInfo = Spika;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		931941702819CB510067566C /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9319416F2819CB510067566C /* SpikaNotificationService.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		05AE93FDC8E4FE6FD37B579F /* Pods-Spika-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -229,6 +309,11 @@
 		930290C327ACA2E90064BED1 /* ContactsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableView.swift; sourceTree = "<group>"; };
 		930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadChunkRequestModel.swift; sourceTree = "<group>"; };
 		930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadChunkResponseModel.swift; sourceTree = "<group>"; };
+		931941682819CB510067566C /* SpikaNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpikaNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		9319416A2819CB510067566C /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		9319416C2819CB510067566C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		931B15142821291400A0CD35 /* DeliveredRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveredRequestModel.swift; sourceTree = "<group>"; };
+		931B15172821295600A0CD35 /* DeliveredResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveredResponseModel.swift; sourceTree = "<group>"; };
 		931E23A827D2DCDA0065FFFC /* MessageStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStateView.swift; sourceTree = "<group>"; };
 		931E23AB27D3172C0065FFFC /* MediaMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaMessageTableViewCell.swift; sourceTree = "<group>"; };
 		931E23AD27D317390065FFFC /* VoiceMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -238,6 +323,7 @@
 		9323EC6827B3702000FA0EB1 /* DetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		9323EC6A27B3E8D500FA0EB1 /* NavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavView.swift; sourceTree = "<group>"; };
 		9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchView.swift; sourceTree = "<group>"; };
+		9324B251281BD6C200E7D76D /* SpikaNotificationService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpikaNotificationService.entitlements; sourceTree = "<group>"; };
 		933BE85C27B65BDF0099BA9E /* SharedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViewController.swift; sourceTree = "<group>"; };
 		933BE85E27B65C6F0099BA9E /* SharedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViewModel.swift; sourceTree = "<group>"; };
 		933BE86127B65C9C0099BA9E /* SharedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedView.swift; sourceTree = "<group>"; };
@@ -253,6 +339,10 @@
 		933BE87827B67A280099BA9E /* ChatSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewController.swift; sourceTree = "<group>"; };
 		934087B727EBAD7100209571 /* AppRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Tests.swift"; sourceTree = "<group>"; };
 		934087B927EBAE6F00209571 /* TestRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Tests.swift"; sourceTree = "<group>"; };
+		934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePushResponseModel.swift; sourceTree = "<group>"; };
+		934F2EDE28172D150086C343 /* AppRepository+Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Device.swift"; sourceTree = "<group>"; };
+		934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePushRequestModel.swift; sourceTree = "<group>"; };
+		934F2EE2281735590086C343 /* TestRepository+Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Device.swift"; sourceTree = "<group>"; };
 		9352641827F88937001434A3 /* SSE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSE.swift; sourceTree = "<group>"; };
 		9355BED928056D1A00B9EC85 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllRoomsResponseModel.swift; sourceTree = "<group>"; };
@@ -289,6 +379,7 @@
 		93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		93BD5B3B27FB83A400240331 /* RoomEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomEntityService.swift; sourceTree = "<group>"; };
 		93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewWithIcon.swift; sourceTree = "<group>"; };
+		93C714A02815F888008BBA33 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomUserEntityService.swift; sourceTree = "<group>"; };
 		93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionView.swift; sourceTree = "<group>"; };
@@ -405,7 +496,6 @@
 		ADD503EA270DE28E009D50CB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		ADD503EC270DE2B9009D50CB /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		ADD503F2270DE39A009D50CB /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		ADD503F5270DF96F009D50CB /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		ADD503FB27101B20009D50CB /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		ADD503FD27101B44009D50CB /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		ADD5040027101B69009D50CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -427,6 +517,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		931941652819CB510067566C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD9BFCFB272985C400736318 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -453,6 +550,16 @@
 				93017B1627F8D1EC00A0582D /* SSENewMessage.swift */,
 			);
 			path = SSE;
+			sourceTree = "<group>";
+		};
+		931941692819CB510067566C /* SpikaNotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				9324B251281BD6C200E7D76D /* SpikaNotificationService.entitlements */,
+				9319416A2819CB510067566C /* NotificationService.swift */,
+				9319416C2819CB510067566C /* Info.plist */,
+			);
+			path = SpikaNotificationService;
 			sourceTree = "<group>";
 		};
 		931E23AA27D316F30065FFFC /* MessageTableViewCells */ = {
@@ -828,6 +935,7 @@
 				AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */,
 				938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */,
 				934087B727EBAD7100209571 /* AppRepository+Tests.swift */,
+				934F2EDE28172D150086C343 /* AppRepository+Device.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -840,6 +948,7 @@
 				AD9BFD0F272986E300736318 /* TestRepository+Messages.swift */,
 				938D053927D5C524002E5CE5 /* TestRepository+Rooms.swift */,
 				934087B927EBAE6F00209571 /* TestRepository+Tests.swift */,
+				934F2EE2281735590086C343 /* TestRepository+Device.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -941,6 +1050,8 @@
 				938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */,
 				93227E9727D6ED70002E3DED /* SendMessageRequest.swift */,
 				9396AB7227FED6FF00696757 /* VerifyFileRequestModel.swift */,
+				934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */,
+				931B15142821291400A0CD35 /* DeliveredRequestModel.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -957,6 +1068,8 @@
 				93227E9527D6D99D002E3DED /* CheckRoomResponseModel.swift */,
 				93227E9927D6EE47002E3DED /* SendMessageResponse.swift */,
 				9396AB7027FED6F000696757 /* VerifyFileResponseModel.swift */,
+				934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */,
+				931B15172821295600A0CD35 /* DeliveredResponseModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -994,6 +1107,7 @@
 			children = (
 				ADD503B0270DC3C7009D50CB /* Spika */,
 				AD9BFCFF272985C400736318 /* AppTests */,
+				931941692819CB510067566C /* SpikaNotificationService */,
 				ADD503AF270DC3C7009D50CB /* Products */,
 				CC12D1B198A94B9651C98AB6 /* Pods */,
 				E2C678E9AAA86BDAFF0B632C /* Frameworks */,
@@ -1005,6 +1119,7 @@
 			children = (
 				ADD503AE270DC3C7009D50CB /* Spika.app */,
 				AD9BFCFE272985C400736318 /* AppTests.xctest */,
+				931941682819CB510067566C /* SpikaNotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1081,6 +1196,7 @@
 				93B8916E27CD578F000F94B0 /* Data+Extension.swift */,
 				93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */,
 				93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */,
+				93C714A02815F888008BBA33 /* Int+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1262,13 +1378,30 @@
 				93E48EAF27CEA6C3003B4188 /* Message.swift */,
 				ADD503F5270DF96F009D50CB /* Post.swift */,
 				EAC81D772810422F0004D835 /* FetchedContact.swift */,
-			);
+s			);
 			path = ServerModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		931941672819CB510067566C /* SpikaNotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 931941732819CB510067566C /* Build configuration list for PBXNativeTarget "SpikaNotificationService" */;
+			buildPhases = (
+				931941642819CB510067566C /* Sources */,
+				931941652819CB510067566C /* Frameworks */,
+				931941662819CB510067566C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SpikaNotificationService;
+			productName = SpikaNotificationService;
+			productReference = 931941682819CB510067566C /* SpikaNotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		AD9BFCFD272985C400736318 /* AppTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD9BFD04272985C500736318 /* Build configuration list for PBXNativeTarget "AppTests" */;
@@ -1299,10 +1432,12 @@
 				ADD503AC270DC3C7009D50CB /* Resources */,
 				EAA6A3A127CCF88C00B7E01F /* ShellScript */,
 				31BA492FD2CFFE591818CB3B /* [CP] Embed Pods Frameworks */,
+				931941702819CB510067566C /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9319416E2819CB510067566C /* PBXTargetDependency */,
 			);
 			name = Spika;
 			productName = Spika;
@@ -1316,9 +1451,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1300;
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					931941672819CB510067566C = {
+						CreatedOnToolsVersion = 13.3;
+					};
 					AD9BFCFD272985C400736318 = {
 						CreatedOnToolsVersion = 13.0;
 						TestTargetID = ADD503AD270DC3C7009D50CB;
@@ -1343,11 +1481,19 @@
 			targets = (
 				ADD503AD270DC3C7009D50CB /* Spika */,
 				AD9BFCFD272985C400736318 /* AppTests */,
+				931941672819CB510067566C /* SpikaNotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		931941662819CB510067566C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD9BFCFC272985C400736318 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1478,6 +1624,65 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		931941642819CB510067566C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				931B150F28211ACB00A0CD35 /* RoomUserEntity+CoreDataClass.swift in Sources */,
+				9319416B2819CB510067566C /* NotificationService.swift in Sources */,
+				931B14D9281FD91100A0CD35 /* AppRepository+User.swift in Sources */,
+				931B151028211ACB00A0CD35 /* UserEntity+CoreDataClass.swift in Sources */,
+				931B14F928211AC100A0CD35 /* ContactsRequestModel.swift in Sources */,
+				931B150728211AC600A0CD35 /* ContactsResponseModel.swift in Sources */,
+				931B150828211AC600A0CD35 /* GetAllRoomsResponseModel.swift in Sources */,
+				9324B252281BDEFD00E7D76D /* CoreDataStack.swift in Sources */,
+				931B151328211B3F00A0CD35 /* String+Extension.swift in Sources */,
+				931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */,
+				931B14F428211AC100A0CD35 /* AuthRequestModel.swift in Sources */,
+				931B14D8281FD91100A0CD35 /* AppRepository+Rooms.swift in Sources */,
+				931B150528211AC600A0CD35 /* UploadChunkResponseModel.swift in Sources */,
+				931B15162821291400A0CD35 /* DeliveredRequestModel.swift in Sources */,
+				931B14DB281FD91100A0CD35 /* AppRepository.swift in Sources */,
+				931B151128211ACB00A0CD35 /* UserEntity+CoreDataProperties.swift in Sources */,
+				931B151228211B1300A0CD35 /* Repository.swift in Sources */,
+				931B150D28211ACB00A0CD35 /* ContactEntity+CoreDataClass.swift in Sources */,
+				931B150A28211ACB00A0CD35 /* RoomEntity+CoreDataProperties.swift in Sources */,
+				931B14F628211AC100A0CD35 /* VerifyFileRequestModel.swift in Sources */,
+				931B150428211AC600A0CD35 /* AuthResponseModel.swift in Sources */,
+				931B14F328211AC100A0CD35 /* UserRequestModel.swift in Sources */,
+				931B14DD2821182D00A0CD35 /* DatabaseService.swift in Sources */,
+				931B14DC2821182800A0CD35 /* NetworkService.swift in Sources */,
+				931B14F728211AC100A0CD35 /* SendMessageRequest.swift in Sources */,
+				9324B254281BDFD700E7D76D /* MessageEntity+CoreDataClass.swift in Sources */,
+				931B14DF2821186000A0CD35 /* MessageEntityService.swift in Sources */,
+				931B14D6281FD91100A0CD35 /* AppRepository+Tests.swift in Sources */,
+				931B14F828211AC100A0CD35 /* UpdatePushRequestModel.swift in Sources */,
+				931B150328211AC600A0CD35 /* UpdatePushResponseModel.swift in Sources */,
+				931B150C28211ACB00A0CD35 /* RoomUserEntity+CoreDataProperties.swift in Sources */,
+				931B15192821295600A0CD35 /* DeliveredResponseModel.swift in Sources */,
+				931B150B28211ACB00A0CD35 /* ContactEntity+CoreDataProperties.swift in Sources */,
+				9324B256281BE03800E7D76D /* Message.swift in Sources */,
+				931B150228211AC600A0CD35 /* UserResponseModel.swift in Sources */,
+				931B150128211AC600A0CD35 /* CheckRoomResponseModel.swift in Sources */,
+				931B14E2282118D700A0CD35 /* ChatEntityService.swift in Sources */,
+				9324B257281BE0D900E7D76D /* Constants.swift in Sources */,
+				931B14F128211AC100A0CD35 /* UploadChunkRequestModel.swift in Sources */,
+				931B14E02821186300A0CD35 /* RoomEntityService.swift in Sources */,
+				9324B255281BDFDA00E7D76D /* MessageEntity+CoreDataProperties.swift in Sources */,
+				931B14F528211AC100A0CD35 /* CreateRoomRequestModel.swift in Sources */,
+				931B150628211AC600A0CD35 /* CreateRoomResponseModel.swift in Sources */,
+				9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */,
+				931B150E28211ACB00A0CD35 /* RoomEntity+CoreDataClass.swift in Sources */,
+				931B14D7281FD91100A0CD35 /* AppRepository+Device.swift in Sources */,
+				931B150028211AC600A0CD35 /* SendMessageResponse.swift in Sources */,
+				931B14DE2821185300A0CD35 /* UserEntityService.swift in Sources */,
+				931B14E12821186600A0CD35 /* RoomUserEntityService.swift in Sources */,
+				931B150928211AC600A0CD35 /* VerifyFileResponseModel.swift in Sources */,
+				931B14F228211AC100A0CD35 /* VerifyCodeRequestModel.swift in Sources */,
+				931B14E528211A5100A0CD35 /* User.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD9BFCFA272985C400736318 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1515,11 +1720,13 @@
 				AD81926D2721E2E400D5BE48 /* UIControl+Combine.swift in Sources */,
 				933BE86627B671270099BA9E /* ChatSearchView.swift in Sources */,
 				AD8192692721D5BD00D5BE48 /* AllChatsViewModel.swift in Sources */,
+				934F2EDF28172D150086C343 /* AppRepository+Device.swift in Sources */,
 				93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */,
 				933BE86227B65C9C0099BA9E /* SharedView.swift in Sources */,
 				9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */,
 				938D053A27D5C524002E5CE5 /* TestRepository+Rooms.swift in Sources */,
 				934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */,
+				934F2EE3281735590086C343 /* TestRepository+Device.swift in Sources */,
 				933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */,
 				93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
@@ -1538,6 +1745,7 @@
 				AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */,
 				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
+				934F2EDD28172BD10086C343 /* UpdatePushResponseModel.swift in Sources */,
 				93E4F6EB27C2BB6D00432CFA /* SelectUsersViewController.swift in Sources */,
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
 				93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */,
@@ -1599,6 +1807,7 @@
 				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
 				93708E14279F871400F81095 /* EnterUsernameViewController.swift in Sources */,
 				93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */,
+				93C714A12815F888008BBA33 /* Int+Extensions.swift in Sources */,
 				ADD5042E271E6C15009D50CB /* ChatEntityService.swift in Sources */,
 				938D053027D59DC1002E5CE5 /* NewGroupChatViewController.swift in Sources */,
 				933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */,
@@ -1620,6 +1829,7 @@
 				9367456127C71D3700F43CCD /* AlertView.swift in Sources */,
 				AD9BFD29272995CA00736318 /* LoginAssembly.swift in Sources */,
 				93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */,
+				934F2EE128172EEA0086C343 /* UpdatePushRequestModel.swift in Sources */,
 				933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */,
 				930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */,
 				93227E9627D6D99D002E3DED /* CheckRoomResponseModel.swift in Sources */,
@@ -1645,6 +1855,7 @@
 				AD9BFD1A2729899300736318 /* TestRepository+User.swift in Sources */,
 				933BE87327B677F10099BA9E /* NotesViewModel.swift in Sources */,
 				93CEF90227FD856A0038B7A9 /* RoomUserEntityService.swift in Sources */,
+				931B15152821291400A0CD35 /* DeliveredRequestModel.swift in Sources */,
 				9396AB7327FED6FF00696757 /* VerifyFileRequestModel.swift in Sources */,
 				93E4F6F627C30E8700432CFA /* SelectedUsersCollectionViewCell.swift in Sources */,
 				938B477D27E29C9F004B36FD /* ChatNavigationBarView.swift in Sources */,
@@ -1658,7 +1869,6 @@
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
 				93E48EB027CEA6C3003B4188 /* Message.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
-				ADD503F6270DF96F009D50CB /* Post.swift in Sources */,
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,
 				EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */,
 				9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */,
@@ -1667,6 +1877,7 @@
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
 				ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */,
 				9355BEDA28056D1A00B9EC85 /* CoreDataStack.swift in Sources */,
+				931B15182821295600A0CD35 /* DeliveredResponseModel.swift in Sources */,
 				EAFA8B96280F05B000F9B321 /* ContactEntity+CoreDataClass.swift in Sources */,
 				93988D5F27D8701500DF6BF8 /* UIImage+Extensions.swift in Sources */,
 				933BE86427B667980099BA9E /* ContactsAssembly.swift in Sources */,
@@ -1678,6 +1889,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9319416E2819CB510067566C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 931941672819CB510067566C /* SpikaNotificationService */;
+			targetProxy = 9319416D2819CB510067566C /* PBXContainerItemProxy */;
+		};
 		AD9BFD03272985C400736318 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = ADD503AD270DC3C7009D50CB /* Spika */;
@@ -1697,6 +1913,62 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		931941712819CB510067566C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationService.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = YU755VYJCP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpikaNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpikaNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika.Spika3NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		931941722819CB510067566C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationService.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = YU755VYJCP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpikaNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpikaNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika.Spika3NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		AD9BFD05272985C500736318 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 05AE93FDC8E4FE6FD37B579F /* Pods-Spika-AppTests.debug.xcconfig */;
@@ -1865,6 +2137,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
@@ -1901,6 +2174,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
@@ -1936,6 +2210,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		931941732819CB510067566C /* Build configuration list for PBXNativeTarget "SpikaNotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				931941712819CB510067566C /* Debug */,
+				931941722819CB510067566C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AD9BFD04272985C500736318 /* Build configuration list for PBXNativeTarget "AppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -14,17 +14,16 @@ extension AppRepository {
     // MARK: UserDefaults
     
     func saveUserInfo(user: User, device: Device? = nil) {
-        let defaults = UserDefaults.standard
-        defaults.set(user.id, forKey: Constants.UserDefaults.userId)
-        defaults.set(user.telephoneNumber, forKey: Constants.UserDefaults.userPhoneNumber)
-        defaults.set(user.displayName, forKey: Constants.UserDefaults.displayName)
+        userDefaults.set(user.id, forKey: Constants.UserDefaults.userId)
+        userDefaults.set(user.telephoneNumber, forKey: Constants.UserDefaults.userPhoneNumber)
+        userDefaults.set(user.displayName, forKey: Constants.UserDefaults.displayName)
         guard let device = device else { return }
-        defaults.set(device.id, forKey: Constants.UserDefaults.deviceId)
-        defaults.set(device.token, forKey: Constants.UserDefaults.accessToken)
+        userDefaults.set(device.id, forKey: Constants.UserDefaults.deviceId)
+        userDefaults.set(device.token, forKey: Constants.UserDefaults.accessToken)
     }
     
     func getMyUserId() -> Int {
-        return UserDefaults.standard.integer(forKey: Constants.UserDefaults.userId)
+        return userDefaults.integer(forKey: Constants.UserDefaults.userId)
     }
     
     // MARK: Network
@@ -203,10 +202,14 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    // MARK: Database // TODO: CDStack change
+    // MARK: Database
     
     func getUsers() -> Future<[User], Error> {
         return databaseService.userEntityService.getUsers()
+    }
+    
+    func getUser(withId id: Int) -> Future<User, Error> {
+        return databaseService.userEntityService.getUser(withId: id)
     }
     
     func saveUser(_ user: User) -> Future<User, Error> {

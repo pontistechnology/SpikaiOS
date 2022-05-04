@@ -11,4 +11,5 @@ struct SendMessageRequest: Codable {
     let roomId: Int
     let type: String
     let body: MessageBody
+    let localId: String
 }

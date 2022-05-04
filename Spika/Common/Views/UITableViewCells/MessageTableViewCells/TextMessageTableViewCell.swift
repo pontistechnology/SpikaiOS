@@ -20,12 +20,14 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
     let currentReuseIdentifier: TextReuseIdentifier?
     
     let containerView = UIView()
-    let messageLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .logoBlue)
+    let messageLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .logoBlue, alignment: .justified)
+    let timeLabel = CustomLabel(text: "11:54", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
     let messageStateView = MessageStateView(state: .waiting)
     let replyView = ReplyMessageView()
     let reactionImageView = UIImageView(image: UIImage(named: "reaction"))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        print("text cell init")
         if let identifier = TextReuseIdentifier(rawValue: reuseIdentifier ?? "errrrrrorr") {
             currentReuseIdentifier = identifier
         } else {
@@ -39,10 +41,19 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("textcell deinit")
+    }
+    
+    override func prepareForReuse() {
+        timeLabel.isHidden = true
+    }
+    
     func addSubviews() {
         guard let currentReuseIdentifier = currentReuseIdentifier else { return }
         
         contentView.addSubview(containerView)
+        contentView.addSubview(timeLabel)
         containerView.addSubview(messageLabel)
         
         switch currentReuseIdentifier {
@@ -66,7 +77,7 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
         }
         switch currentReuseIdentifier {
         case .myText:
-            containerView.backgroundColor = UIColor(hexString: "C8EBFE") // ask nika for color
+            containerView.backgroundColor = UIColor(hexString: "C8EBFE") // TODO: ask nika for color
         case .myTextAndReply:
             containerView.backgroundColor = UIColor(hexString: "C8EBFE") // ask nika for color
         case .friendText:
@@ -77,6 +88,7 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
         containerView.layer.cornerRadius = 10
         containerView.layer.masksToBounds = true
         messageLabel.numberOfLines = 0
+        timeLabel.isHidden = true
     }
     
     func positionSubviews() {
@@ -89,11 +101,14 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
         
         switch currentReuseIdentifier {
         case .myText:
-            containerView.anchor(top: contentView.topAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
+            containerView.anchor(top: contentView.topAnchor, bottom: contentView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 20))
             
             messageLabel.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
            
-            messageStateView.anchor(top: containerView.bottomAnchor, bottom: contentView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
+            messageStateView.anchor(leading: containerView.trailingAnchor, bottom: containerView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 6))
+            
+            timeLabel.anchor(trailing: containerView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
+            timeLabel.centerYToSuperview()
             
         case .myTextAndReply:
             containerView.anchor(top: contentView.topAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
@@ -132,6 +147,11 @@ extension TextMessageTableViewCell {
             return
         }
         messageLabel.text = message.body?.text
+        
+        if let createdAt = message.createdAt {
+            timeLabel.text = createdAt.convertTimestampToHoursAndMinutes()
+        }
+        
         messageStateView.changeState(to: message.getMessageState())
         
         switch currentReuseIdentifier {
@@ -146,6 +166,10 @@ extension TextMessageTableViewCell {
 //            replyView.updateReplyView(message: replyMessageTest ?? message)
             break
         }
+    }
+    
+    func tapHandler() {
+        timeLabel.isHidden.toggle()
     }
     
 //    func updateCell(message: Message, replyMessageTest: Message? = nil) {
@@ -168,8 +192,4 @@ extension TextMessageTableViewCell {
 //            break
 //        }
 //    }
-    
-    func updateCell(messageState: MessageState) {
-        messageStateView.changeState(to: messageState)
-    }
 }
