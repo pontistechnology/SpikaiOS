@@ -10,13 +10,12 @@ import Combine
 
 class AllChatsViewModel: BaseViewModel {
     
-    let roomsPublisher = CurrentValueSubject<[Room], Never>([])
-    
     func presentSelectUserScreen() {
         getAppCoordinator()?.presentSelectUserScreen()
     }
     
-    func  presentCurrentPrivateChatScreen() {
+    func presentCurrentPrivateChatScreen(user: User) {
+        getAppCoordinator()?.presentCurrentPrivateChatScreen(user: user)
     }
     
     func getAllRooms() {
@@ -26,7 +25,7 @@ class AllChatsViewModel: BaseViewModel {
         } receiveValue: { [weak self] response in
             guard let self = self else { return }
             guard let rooms = response.data?.list else { return }
-            self.roomsPublisher.send(rooms)
+            print("rooms server: ", rooms.count)
         }.store(in: &subscriptions)
     }
     
