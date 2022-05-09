@@ -7,6 +7,7 @@
 
 import CoreData
 import Combine
+import Foundation
 
 class RoomEntityService {
     
@@ -21,7 +22,7 @@ class RoomEntityService {
 
 extension RoomEntityService {
     
-    func getPrivateRoom(forId id: Int) -> Future<Room, Error> {
+    func getPrivateRoom(forUserId id: Int) -> Future<Room, Error> {
         Future { promise in
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = RoomEntity.fetchRequest()
@@ -38,6 +39,25 @@ extension RoomEntityService {
                     }
                 } catch {
                     promise(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func checkLocalRoom(withId roomId: Int) -> Future<Room, Error> {
+        Future { promise in
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
+                let fetchRequest = RoomEntity.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %d", roomId)
+                do {
+                    let rooms = try context.fetch(fetchRequest)
+                    if rooms.count == 1 {
+                        promise(.success(Room(roomEntity: rooms.first!)))
+                    } else {
+                        promise(.failure(DatabseError.moreThanOne))
+                    }
+                } catch {
+                    promise(.failure(DatabseError.requestFailed))
                 }
             }
         }

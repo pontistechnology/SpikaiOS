@@ -204,12 +204,12 @@ extension AppRepository {
     
     // MARK: Database
     
-    func getUsers() -> Future<[User], Error> {
-        return databaseService.userEntityService.getUsers()
+    func getLocalUsers() -> Future<[User], Error> {
+        return databaseService.userEntityService.getLocalUsers()
     }
     
-    func getUser(withId id: Int) -> Future<User, Error> {
-        return databaseService.userEntityService.getUser(withId: id)
+    func getLocalUser(withId id: Int) -> Future<User, Error> {
+        return databaseService.userEntityService.getLocalUser(withId: id)
     }
     
     func saveUser(_ user: User) -> Future<User, Error> {

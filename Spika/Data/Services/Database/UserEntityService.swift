@@ -17,7 +17,7 @@ class UserEntityService {
         self.coreDataStack = coreDataStack
     }
     
-    func getUsers() -> Future<[User], Error> {
+    func getLocalUsers() -> Future<[User], Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
@@ -68,7 +68,7 @@ class UserEntityService {
         }
     }
     
-    func getUser(withId id: Int) -> Future<User, Error> {
+    func getLocalUser(withId id: Int) -> Future<User, Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy

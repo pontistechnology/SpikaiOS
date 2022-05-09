@@ -10,8 +10,8 @@ import UIKit
 class AllChatsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "AllChatsTableViewCell"
     
-    let nameLabel = CustomLabel(text: "__", fontName: .MontserratSemiBold)
-    let descriptionLabel = CustomLabel(text: "__", textSize: 11, textColor: .textTertiary)
+    let nameLabel = CustomLabel(text: "", fontName: .MontserratSemiBold)
+    let descriptionLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary)
     let leftImageView = UIImageView(image: UIImage(named: "user_image"))
     let timeLabel = CustomLabel(text: "Yesterday", textSize: 10, textColor: .textTertiary)
     let messagesNumberLabel = CustomLabel(text: "2", textSize: 10, textColor: .white, fontName: .MontserratSemiBold, alignment: .center)

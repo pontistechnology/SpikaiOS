@@ -40,6 +40,17 @@ class ChatsAssembly: Assembly {
             controller.viewModel = container.resolve(CurrentPrivateChatViewModel.self, arguments: coordinator, user)
             return controller
         }.inObjectScope(.transient)
+        
+        container.register(CurrentPrivateChatViewModel.self) { (resolver, coordinator: AppCoordinator, room: Room) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return CurrentPrivateChatViewModel(repository: repository, coordinator: coordinator, room: room)
+        }.inObjectScope(.transient)
+
+        container.register(CurrentPrivateChatViewController.self) { (resolver, coordinator: AppCoordinator, room: Room) in
+            let controller = CurrentPrivateChatViewController()
+            controller.viewModel = container.resolve(CurrentPrivateChatViewModel.self, arguments: coordinator, room)
+            return controller
+        }.inObjectScope(.transient)
     }
     
     private func assembleNewGroupChatViewController(_ container: Container) {

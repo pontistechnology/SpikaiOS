@@ -22,7 +22,7 @@ class ContactsViewModel: BaseViewModel {
     }
     
     func getUsersAndUpdateUI() {
-        repository.getUsers().sink { [weak self] completion in
+        repository.getLocalUsers().sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
             case let .failure(error):

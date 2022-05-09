@@ -20,31 +20,49 @@ class CurrentPrivateChatViewModel: BaseViewModel {
         self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
     }
+    
+    init(repository: Repository, coordinator: Coordinator, room: Room) {
+        self.room = room
+        
+        guard let roomUsers = room.users,
+           let friendRoomUser = roomUsers.first(where: { roomUser in
+            roomUser.user!.id != repository.getMyUserId()
+        }),
+           let friendUser = friendRoomUser.user else {
+            fatalError()
+        }
+        self.friendUser = friendUser
+        super.init(repository: repository, coordinator: coordinator)
+    }
 }
 
 extension CurrentPrivateChatViewModel {
     
     func checkLocalRoom() {
-        repository.checkPrivateLocalRoom(forId: friendUser.id).sink { [weak self] completion in
-            guard let self = self else { return }
-            switch completion {
-            case .finished:
-                break
-            case .failure(_):
-                print("no local room")
-                self.checkOnlineRoom()
-            }
-        } receiveValue: { [weak self] room in
-            guard let self = self else { return }
-            self.room = room
-            self.roomPublisher.send(room)
-        }.store(in: &subscriptions)
+        if let room = room {
+            roomPublisher.send(room)
+        } else {
+            repository.checkPrivateLocalRoom(forUserId: friendUser.id).sink { [weak self] completion in
+                guard let self = self else { return }
+                switch completion {
+                case .finished:
+                    break
+                case .failure(_):
+                    print("no local room")
+                    self.checkOnlineRoom()
+                }
+            } receiveValue: { [weak self] room in
+                guard let self = self else { return }
+                self.room = room
+                self.roomPublisher.send(room)
+            }.store(in: &subscriptions)
+        }
     }
     
     func checkOnlineRoom()  {
         networkRequestState.send(.started())
         
-        repository.checkRoom(forUserId: friendUser.id).sink { [weak self] completion in
+        repository.checkOnlineRoom(forUserId: friendUser.id).sink { [weak self] completion in
             guard let self = self else { return }
             switch completion {
             case .finished:
@@ -70,7 +88,7 @@ extension CurrentPrivateChatViewModel {
     }
     
     func saveLocalRoom(room: Room) {
-        repository.saveRoom(room: room).sink { [weak self] completion in
+        repository.saveLocalRoom(room: room).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 
@@ -88,7 +106,7 @@ extension CurrentPrivateChatViewModel {
     
     func createRoom(userId: Int) {
         networkRequestState.send(.started())
-        repository.createRoom(userId: userId).sink { [weak self] completion in
+        repository.createOnlineRoom(userId: userId).sink { [weak self] completion in
             guard let self = self else { return }
             self.networkRequestState.send(.finished)
             
@@ -139,7 +157,7 @@ extension CurrentPrivateChatViewModel {
                               roomId: room.id, type: .text,
                               body: MessageBody(text: text), localId: uuid)
         
-        repository.saveMessage(message: message).sink { completion in
+        repository.saveMessage(message: message,roomId: room.id).sink { completion in
             print("save message c: ", completion)
         } receiveValue: { [weak self] message in
             guard let self = self else { return }
@@ -168,12 +186,12 @@ extension CurrentPrivateChatViewModel {
             guard let self = self,
                   let message = response.data?.message
             else { return }
-            self.saveMessage(message: message)
+            self.saveMessage(message: message, room: room)
         }.store(in: &self.subscriptions)
     }
     
-    func saveMessage(message: Message) {
-        repository.saveMessage(message: message).sink { c in
+    func saveMessage(message: Message, room: Room) {
+        repository.saveMessage(message: message, roomId: room.id).sink { c in
             print(c)
         } receiveValue: { _ in
             

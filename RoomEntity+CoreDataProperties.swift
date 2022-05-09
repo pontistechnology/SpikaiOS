@@ -2,7 +2,7 @@
 //  RoomEntity+CoreDataProperties.swift
 //  Spika
 //
-//  Created by Nikola Barbarić on 08.05.2022..
+//  Created by Nikola Barbarić on 09.05.2022..
 //
 //
 
@@ -21,7 +21,43 @@ extension RoomEntity {
     @NSManaged public var id: Int64
     @NSManaged public var name: String?
     @NSManaged public var type: String?
+    @NSManaged public var messages: NSOrderedSet?
     @NSManaged public var users: NSSet?
+
+}
+
+// MARK: Generated accessors for messages
+extension RoomEntity {
+
+    @objc(insertObject:inMessagesAtIndex:)
+    @NSManaged public func insertIntoMessages(_ value: MessageEntity, at idx: Int)
+
+    @objc(removeObjectFromMessagesAtIndex:)
+    @NSManaged public func removeFromMessages(at idx: Int)
+
+    @objc(insertMessages:atIndexes:)
+    @NSManaged public func insertIntoMessages(_ values: [MessageEntity], at indexes: NSIndexSet)
+
+    @objc(removeMessagesAtIndexes:)
+    @NSManaged public func removeFromMessages(at indexes: NSIndexSet)
+
+    @objc(replaceObjectInMessagesAtIndex:withObject:)
+    @NSManaged public func replaceMessages(at idx: Int, with value: MessageEntity)
+
+    @objc(replaceMessagesAtIndexes:withMessages:)
+    @NSManaged public func replaceMessages(at indexes: NSIndexSet, with values: [MessageEntity])
+
+    @objc(addMessagesObject:)
+    @NSManaged public func addToMessages(_ value: MessageEntity)
+
+    @objc(removeMessagesObject:)
+    @NSManaged public func removeFromMessages(_ value: MessageEntity)
+
+    @objc(addMessages:)
+    @NSManaged public func addToMessages(_ values: NSOrderedSet)
+
+    @objc(removeMessages:)
+    @NSManaged public func removeFromMessages(_ values: NSOrderedSet)
 
 }
 

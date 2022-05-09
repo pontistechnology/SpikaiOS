@@ -20,7 +20,7 @@ class SSE {
     let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
 
     var currentMessage: Message?
-    var userSender: User?
+    var senderRoom: Room?
     
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
@@ -59,58 +59,27 @@ class SSE {
             }
         }
         
-        eventSource?.onMessage { id, event, data in
-            print("SSE on message")
-//            print("onMessage: ", id, event, data)
-            guard let jsonData = data?.data(using: .utf8) else {
-                print("SSE jsonData error")
-                return }
+        
+        
+        eventSource?.onMessage { [weak self] id, event, data in
+            guard let self = self else { return }
             
-            do {
-                let sseNewMessage = try JSONDecoder().decode(SSENewMessage.self, from: jsonData)
-                guard let message = sseNewMessage.message else { return }
-                self.currentMessage = nil
-                self.userSender = nil
-                print("\nSSE message: ", message)
-                self.repository.saveMessage(message: message).sink { c in
-//                    print("completion save message sse: ", c)
-                } receiveValue: { message in
-                    self.currentMessage = message
-                    self.prepareMessageForShowing()
-                }.store(in: &self.subs)
-            } catch {
-                print("onMessage decoder error catched")
+            
+            guard let jsonData = data?.data(using: .utf8),
+                  let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData),
+                  let message = sseNewMessage.message
+            else {
+                print("SSE decoding error")
                 return
             }
+            guard let roomId = message.roomId else { return }
+            self.currentMessage = message
+            self.checkLocalRoom(roomId: roomId)
         }
         
         eventSource?.addEventListener("message") { id, event, data in
             print("event listener")
         }
-    }
-    
-    func prepareMessageForShowing() {
-        guard let currentMessage = currentMessage,
-              let senderId = currentMessage.fromUserId,
-              senderId != repository.getMyUserId()
-        else {
-            return
-        }
-        repository.getUser(withId: senderId).sink { [weak self] completion in
-            guard let self = self else { return }
-            switch completion {
-            case .finished:
-                break
-            case .failure(_):
-                self.showNotification(imageUrl: nil, name: "Unknown", text: currentMessage.body?.text ?? "no sse message")
-            }
-        } receiveValue: { [weak self] user in
-            guard let self = self else { return }
-            self.userSender = user
-            self.showNotification(imageUrl: URL(string: user.getAvatarUrl() ?? ""),
-                                  name: user.getDisplayName(),
-                                  text: currentMessage.body?.text ?? "no sse message")
-        }.store(in: &subs)
     }
     
     func showNotification(imageUrl: URL?, name: String, text: String) {
@@ -135,17 +104,95 @@ class SSE {
             messageNotificationView.addGestureRecognizer(tapGesture)
             
             self.alertWindow = alertWindow
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+                self.alertWindow = nil
+            }
         }
+        
     }
     
     @objc func handleGesture(_ sender: UITapGestureRecognizer) {
-        // TODO: What if sender is unknown?
-        guard let userSender = userSender else {
-            return
-        }
-        DispatchQueue.main.async {
-            (self.coordinator as? AppCoordinator)?.presentCurrentPrivateChatScreen(user: userSender)
-        }
+        // TODO: handle tap
+        
+        (self.coordinator as? AppCoordinator)?.presentCurrentPrivateChatScreen(room: senderRoom!)
+    
         alertWindow = nil
     }
+}
+
+extension SSE {
+    func checkLocalRoom(roomId: Int) {
+        repository.checkLocalRoom(withId: roomId).sink { [weak self] c in
+            switch c {
+                
+            case .finished:
+                break
+            case .failure(_):
+                self?.checkOnlineRoom(roomId: roomId)
+                break
+            }
+        } receiveValue: { [weak self] room in
+            guard let currentMessage = self?.currentMessage else { return }
+            self?.senderRoom = room
+            self?.saveMessage(message: currentMessage, room: room)
+        }.store(in: &subs)
+    }
+    
+    
+    func checkOnlineRoom(roomId: Int) {
+        repository.checkOnlineRoom(forRoomId: roomId).sink { completion in
+            switch completion {
+                
+            case .finished:
+                break
+            case .failure(_):
+                // TODO: handle error
+                break
+            }
+        } receiveValue: { [weak self] response in
+            guard let room = response.data?.room else { return }
+            self?.saveLocalRoom(room: room)
+        }.store(in: &subs)
+    }
+    
+    func saveLocalRoom(room: Room) {
+        repository.saveLocalRoom(room: room).sink { completion in
+            switch completion {
+                
+            case .finished:
+                break
+            case .failure(_):
+                break
+            }
+        } receiveValue: { [weak self] room in
+            self?.checkLocalRoom(roomId: room.id)
+        }.store(in: &subs)
+    }
+    
+    func saveMessage(message: Message, room: Room) {
+        repository.saveMessage(message: message, roomId: room.id).sink { [weak self] c in
+            guard let self = self else { return }
+            switch c {
+                
+            case .finished:
+                break
+            case let .failure(error):
+                break
+            }
+        } receiveValue: { message in
+            guard let senderRoomUser = room.users?.first(where: { roomUser in
+                roomUser.user?.id == message.fromUserId
+            }),
+                  let sender = senderRoomUser.user
+            else { return }
+            
+            self.showNotification(imageUrl: URL(string: sender.getAvatarUrl() ?? "noUrl"),
+                                  name: sender.getDisplayName(),
+                                  text: message.body?.text ?? "no text sse")
+        }.store(in: &subs)
+
+    }
+    
+    
 }

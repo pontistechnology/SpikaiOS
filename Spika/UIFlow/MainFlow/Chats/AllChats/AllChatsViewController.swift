@@ -109,7 +109,7 @@ extension AllChatsViewController: UITableViewDataSource {
         {
             cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
                                 name: friendUser.getDisplayName(),
-                                desc: "private room, id: \(room.id)")
+                                desc: entity.getLastMessage()?.bodyText ?? "No messages")
         }
         
         return cell ?? UITableViewCell()

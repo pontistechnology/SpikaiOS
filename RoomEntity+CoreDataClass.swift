@@ -28,4 +28,8 @@ public class RoomEntity: NSManagedObject {
             self.addToUsers(r)
         }
     }
+    
+    func getLastMessage() -> MessageEntity? {
+        return (messages?.lastObject as? MessageEntity)
+    }
 }
