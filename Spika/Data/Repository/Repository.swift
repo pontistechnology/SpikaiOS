@@ -52,9 +52,10 @@ protocol Repository {
     
     // MARK: NETWORKING: Room
     
-    func createRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error>
-    func createRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error>
-    func checkRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
+    func createOnlineRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error>
+    func createOnlineRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error>
+    func checkOnlineRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
+    func checkOnlineRoom(forRoomId roomId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
     
     // MARK: NETWORKING: Message
@@ -73,21 +74,22 @@ protocol Repository {
     
     // MARK: COREDATA: User
     
-    func getUsers() -> Future<[User], Error>
-    func getUser(withId id: Int) -> Future<User, Error>
+    func getLocalUsers() -> Future<[User], Error>
+    func getLocalUser(withId id: Int) -> Future<User, Error>
     func saveUser(_ user: User) -> Future<User, Error>
     func saveUsers(_ users: [User]) -> Future<[User], Error>
     
     // MARK: COREDATA: Messages
     
-    func saveMessage(message: Message) -> Future<Message, Error>
+    func saveMessage(message: Message, roomId: Int) -> Future<Message, Error>
     func getMessages(forRoomId: Int) -> Future<[Message], Error>
 //    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error>
     
     // MARK: COREDATA: Room
     
-    func checkPrivateLocalRoom(forId id: Int) -> Future<Room, Error>
-    func saveRoom(room: Room) -> Future<Room, Error>
+    func checkPrivateLocalRoom(forUserId id: Int) -> Future<Room, Error>
+    func saveLocalRoom(room: Room) -> Future<Room, Error>
+    func checkLocalRoom(withId roomId: Int) -> Future<Room, Error>
 
     // MARK: - USERDEFAULTS: User
     

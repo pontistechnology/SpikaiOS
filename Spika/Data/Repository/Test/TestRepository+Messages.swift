@@ -9,7 +9,7 @@ import CoreData
 import Combine
 
 extension TestRepository {
-    func saveMessage(message: Message) -> Future<Message, Error> {
+    func saveMessage(message: Message, roomId: Int) -> Future<Message, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     

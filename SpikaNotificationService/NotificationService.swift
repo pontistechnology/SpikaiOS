@@ -24,6 +24,7 @@ class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
+    var currentMessage: Message?
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
@@ -31,37 +32,14 @@ class NotificationService: UNNotificationServiceExtension {
         
         if let bestAttemptContent = bestAttemptContent {
             guard let jsonData = (bestAttemptContent.userInfo["message"] as? String)?.data(using: .utf8),
-                  let message = try? JSONDecoder().decode(Message.self, from: jsonData)
+                  let message = try? JSONDecoder().decode(Message.self, from: jsonData),
+                  let roomId = message.roomId
             else { return }
             
-            repository.saveMessage(message: message).sink { c in
-                print(c)
-                switch c {
-                case .finished:
-                    break
-                case let .failure(error):
-                    bestAttemptContent.title = "SE: \(error)"
-                    contentHandler(bestAttemptContent)
-                }
-            } receiveValue: { message in
-                guard let id = message.id else {
-                    bestAttemptContent.title = "guard error"
-                    contentHandler(bestAttemptContent)
-                    return }
-                self.repository.sendDeliveredStatus(messageIds: [id]).sink { c in
-                    switch(c) {
-                    case .finished:
-                        break
-                    case let .failure(error):
-                        bestAttemptContent.title = "Api: \(error)"
-                        contentHandler(bestAttemptContent)
-                    }
-                } receiveValue: { response in
-                    print(response)
-                    bestAttemptContent.title = "\(bestAttemptContent.title) [saved]"
-                    contentHandler(bestAttemptContent)
-                }.store(in: &self.subs)
-            }.store(in: &subs)
+            currentMessage = message
+            guard let id = message.id else { return }
+            sendDeliveredStatus(messageIds: [id])
+            checkLocalRoom(roomId: roomId)
         }
     }
     
@@ -72,5 +50,91 @@ class NotificationService: UNNotificationServiceExtension {
             contentHandler(bestAttemptContent)
         }
     }
+}
 
+extension NotificationService {
+    
+    func sendDeliveredStatus(messageIds: [Int]) {
+        repository.sendDeliveredStatus(messageIds: messageIds).sink { c in
+            
+        } receiveValue: { response in
+            
+        }.store(in: &subs)
+    }
+    
+    func checkLocalRoom(roomId: Int) {
+        repository.checkLocalRoom(withId: roomId).sink { [weak self] c in
+            switch c {
+                
+            case .finished:
+                break
+            case .failure(_):
+                self?.checkOnlineRoom(roomId: roomId)
+                break
+            }
+        } receiveValue: { [weak self] room in
+            guard let currentMessage = self?.currentMessage else { return }
+            self?.saveMessage(message: currentMessage, room: room)
+        }.store(in: &subs)
+    }
+    
+    func checkOnlineRoom(roomId: Int) {
+        repository.checkOnlineRoom(forRoomId: roomId).sink { completion in
+            switch completion {
+                
+            case .finished:
+                break
+            case .failure(_):
+                // TODO: handle error
+                break
+            }
+        } receiveValue: { [weak self] response in
+            guard let room = response.data?.room else { return }
+            self?.saveLocalRoom(room: room)
+        }.store(in: &subs)
+    }
+    
+    func saveLocalRoom(room: Room) {
+        repository.saveLocalRoom(room: room).sink { completion in
+            switch completion {
+                
+            case .finished:
+                break
+            case .failure(_):
+                break
+            }
+        } receiveValue: { [weak self] room in
+            self?.checkLocalRoom(roomId: room.id)
+        }.store(in: &subs)
+    }
+    
+    func saveMessage(message: Message, room: Room) {
+        repository.saveMessage(message: message, roomId: room.id).sink { [weak self] c in
+            guard let self = self else { return }
+            switch c {
+                
+            case .finished:
+                break
+            case let .failure(error):
+                guard let bestAttemptContent = self.bestAttemptContent,
+                      let contentHandler = self.contentHandler
+                else { return }
+                
+                bestAttemptContent.title = "Saving Error: \(error)"
+                contentHandler(bestAttemptContent)
+            }
+        } receiveValue: { message in
+            guard let senderRoomUser = room.users?.first(where: { roomUser in
+                roomUser.user?.id == message.fromUserId
+            }),
+                  let senderName = senderRoomUser.user?.getDisplayName(),
+                  let bestAttemptContent = self.bestAttemptContent,
+                  let contentHandler = self.contentHandler
+            else { return }
+            
+            bestAttemptContent.title = senderName
+            contentHandler(bestAttemptContent)
+        }.store(in: &subs)
+
+    }
 }

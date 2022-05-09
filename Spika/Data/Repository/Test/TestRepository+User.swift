@@ -39,11 +39,11 @@ extension TestRepository {
         -1
     }
     
-    func getUser(withId id: Int) -> Future<User, Error> {
+    func getLocalUser(withId id: Int) -> Future<User, Error> {
         return Future { promise in promise(.failure(DatabseError.unknown))}
     }
     
-    func getUsers() -> Future<[User], Error> {
+    func getLocalUsers() -> Future<[User], Error> {
         let users = [User(id: 1337, displayName: "Mirko"),
                      User(id: 1337, displayName: "Slavko")]
         return Future { promise in promise(.success(users))}

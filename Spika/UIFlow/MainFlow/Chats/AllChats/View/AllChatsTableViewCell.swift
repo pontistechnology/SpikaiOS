@@ -10,9 +10,9 @@ import UIKit
 class AllChatsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "AllChatsTableViewCell"
     
-    let nameLabel = CustomLabel(text: "Matej Vidaaaaaaaaaaaaakakakkakkakakkakkaka", fontName: .MontserratSemiBold)
-    let descriptionLabel = CustomLabel(text: "Matej Vida: Kaže da može sada, a i sutra", textSize: 11, textColor: .textTertiary)
-    let leftImageView = UIImageView(image: UIImage(named: "matejVida"))
+    let nameLabel = CustomLabel(text: "", fontName: .MontserratSemiBold)
+    let descriptionLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary)
+    let leftImageView = UIImageView(image: UIImage(named: "user_image"))
     let timeLabel = CustomLabel(text: "Yesterday", textSize: 10, textColor: .textTertiary)
     let messagesNumberLabel = CustomLabel(text: "2", textSize: 10, textColor: .white, fontName: .MontserratSemiBold, alignment: .center)
     
@@ -57,15 +57,19 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.anchor(top: timeLabel.bottomAnchor, trailing: timeLabel.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
     }
     
-    func configureCell(avatarUrl: String, name: String, desc: String) {
-        let url = URL(string: avatarUrl)
-        leftImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "nose"))
+    func configureCell(avatarUrl: String?, name: String, desc: String) {
+        if let avatarUrl = avatarUrl,
+           let realUrl = URL(string: avatarUrl)
+        {
+            leftImageView.kf.setImage(with: realUrl,
+                                      placeholder: UIImage(named: "user_image"))
+        }
         nameLabel.text = name
         descriptionLabel.text = desc
     }
     
     override func prepareForReuse() {
-        leftImageView.image = UIImage(systemName: "house")
+        leftImageView.image = UIImage(named: "user_image")
         nameLabel.text = ""
         descriptionLabel.text = ""
     }

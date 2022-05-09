@@ -124,7 +124,7 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
 //            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
 //            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
             
-            currentPrivateChatView.messagesTableView.reloadRows(at: [indexPath], with: .fade)
+            currentPrivateChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
             
 //            let cell = currentPrivateChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
 //            let entity = frc?.object(at: indexPath)

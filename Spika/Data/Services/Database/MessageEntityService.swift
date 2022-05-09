@@ -34,19 +34,32 @@ class MessageEntityService {
             }
         }
     }
-    
-    func saveMessage(message: Message) -> Future<Message, Error> {
+
+    func saveMessage(message: Message, roomId: Int) -> Future<Message, Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
+            
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                let _ = MessageEntity(message: message, context: context)
                 
+                let roomEntityFR = RoomEntity.fetchRequest()
+                roomEntityFR.predicate = NSPredicate(format: "id == %d", roomId)
                 do {
-                    try context.save()
-                    promise(.success(message))
+                    let rooms = try context.fetch(roomEntityFR)
+                    if rooms.count == 1 {
+                        let messageEntity = MessageEntity(message: message, context: context)
+                        rooms.first!.addToMessages(messageEntity)
+                        do {
+                            try context.save()
+                            promise(.success(Message(messageEntity: messageEntity)))
+                        } catch {
+                            promise(.failure(DatabseError.savingError))
+                        }
+                    } else {
+                        promise(.failure(DatabseError.moreThanOne))
+                    }
                 } catch {
-                    promise(.failure(DatabseError.savingError))
+                    promise(.failure(DatabseError.requestFailed))
                 }
             }
         }

@@ -27,7 +27,7 @@ class AppTests: XCTestCase {
     }
     
     func test_sers_requestSuccess() {
-        sut.repository.getUsers().sink { completion in
+        sut.repository.getLocalUsers().sink { completion in
             switch completion {
             case let .failure(error):
                 print("Could not get users: \(error)")

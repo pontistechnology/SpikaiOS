@@ -11,7 +11,7 @@ import CoreData
 
 class TestRepository: Repository {
    
-    func saveRoom(room: Room) -> Future<Room, Error> {
+    func saveLocalRoom(room: Room) -> Future<Room, Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))
         }

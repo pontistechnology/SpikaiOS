@@ -17,7 +17,7 @@ class NewGroupChatViewModel: BaseViewModel {
     }
     
     func createRoom(name: String) {
-        repository.createRoom(name: name, users: selectedUsers).sink { [weak self] completion in
+        repository.createOnlineRoom(name: name, users: selectedUsers).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
             case let .failure(error):

@@ -20,22 +20,6 @@ class ContactsViewModel: BaseViewModel {
         getAppCoordinator()?.presentDetailsScreen(user: user)
     }
     
-//    func getUsersAndUpdateUI() {
-//        repository.getUsers().sink { [weak self] completion in
-//            guard let _ = self else { return }
-//            switch completion {
-//            case let .failure(error):
-//                print("Could not get users: \(error)")
-//            default: break
-//            }
-//        } receiveValue: { [weak self] users in
-//            guard let self = self else { return }
-//            print("Read users from DB: \(users)")
-//            self.users = users
-//            self.updateContactsUI(list: users)
-//        }.store(in: &subscriptions)
-//    }
-    
     func updateUsersFromFrc(_ userEntities: [UserEntity]) {
         print (userEntities)
         
@@ -46,9 +30,6 @@ class ContactsViewModel: BaseViewModel {
             }
         }
         self.updateContactsUI(list: users)
-        
-//        self.users = users
-//        self.updateContactsUI(list: users)
     }
     
     func saveUsers(_ users: [User]) {

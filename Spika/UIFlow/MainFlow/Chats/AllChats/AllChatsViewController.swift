@@ -5,12 +5,14 @@
 //  Created by Marko on 21.10.2021..
 //
 
+import CoreData
 import UIKit
 
 class AllChatsViewController: BaseViewController {
     
     private let allChatsView = AllChatsView()
     var viewModel: AllChatsViewModel!
+    var frc: NSFetchedResultsController<RoomEntity>?
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -20,7 +22,6 @@ class AllChatsViewController: BaseViewController {
         super.viewDidLoad()
         setupView(allChatsView)
         setupBindings()
-        getAllRooms()
     }
     
     func setupBindings() {
@@ -32,10 +33,8 @@ class AllChatsViewController: BaseViewController {
             self?.viewModel.presentSelectUserScreen()
         }.store(in: &subscriptions)
         
-        viewModel.roomsPublisher.sink { [weak self] rooms in
-            guard let self = self else { return }
-            self.allChatsView.allChatsTableView.reloadData()
-        }.store(in: &subscriptions)
+        setRoomsFetch()
+        
     }
     
     func getAllRooms() {
@@ -44,49 +43,78 @@ class AllChatsViewController: BaseViewController {
     
 }
 
+// MARK: - NSFetchedResultsController
+
+extension AllChatsViewController: NSFetchedResultsControllerDelegate {
+    
+    func setRoomsFetch() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let fetchRequest = RoomEntity.fetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.name), ascending: true)]
+            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                  managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
+            self.frc?.delegate = self
+            do {
+                try self.frc?.performFetch()
+            } catch {
+                fatalError("Failed to fetch entities: \(error)")
+                // TODO: handle error and change main context to func
+            }
+ 
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        allChatsView.allChatsTableView.reloadData()
+    }
+}
+
 extension AllChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let room = viewModel.roomsPublisher.value[indexPath.row]
-        if room.type == "private" {
-            // MARK: TODO: find user in db
-            
-            viewModel.presentCurrentPrivateChatScreen()
+        guard let entity = frc?.object(at: indexPath) else { return }
+        let room = Room(roomEntity: entity)
+        
+        if room.type == "private",
+           let roomUsers = room.users,
+           let friendRoomUser = roomUsers.first(where: { roomUser in
+               roomUser.user!.id != viewModel.getMyUserId()
+           }),
+           let friendUser = friendRoomUser.user
+        {
+            viewModel.presentCurrentPrivateChatScreen(user: friendUser)
         }
     }
 }
 
 extension AllChatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.roomsPublisher.value.count
+        guard let sections = self.frc?.sections else { return 0 }
+        return sections[section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
-        let room = viewModel.roomsPublisher.value[indexPath.row]
+        guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
+        let room = Room(roomEntity: entity)
         
-typeTest: if room.type == "private" {
-        guard let roomUsers = room.users else { break typeTest}
-        let friend = roomUsers.first(where: { roomUser in
-                roomUser.user!.id != viewModel.getMyUserId() })
-        
-            
-            cell?.configureCell(avatarUrl: room.avatarUrl ?? "smth", name: friend!.user!.displayName ?? "unknown name", desc: "private room, id: \(room.id)")
+        if room.type == "private",
+           let roomUsers = room.users,
+           let friendRoomUser = roomUsers.first(where: { roomUser in
+               roomUser.user!.id != viewModel.getMyUserId()
+           }),
+           let friendUser = friendRoomUser.user
+        {
+            cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
+                                name: friendUser.getDisplayName(),
+                                desc: entity.getLastMessage()?.bodyText ?? "No messages")
         }
         
         return cell ?? UITableViewCell()
     }
 }
-
-
-
-
-
-
-
-
-
 
 // MARK: UITableview swipe animations, ignore for now
 extension AllChatsViewController {

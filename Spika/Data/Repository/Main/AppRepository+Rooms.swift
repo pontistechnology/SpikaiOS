@@ -16,7 +16,7 @@ extension AppRepository {
     
     // MARK: Network
     
-    func createRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
+    func createOnlineRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
 
         guard let accessToken = getAccessToken()
         else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
@@ -38,7 +38,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func checkRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>  {
+    func checkOnlineRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>  {
         guard let accessToken = getAccessToken()
         else {return Fail<CheckRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -46,7 +46,7 @@ extension AppRepository {
         }
         
         let resources = Resources<CheckRoomResponseModel, EmptyRequestBody>(
-            path: Constants.Endpoints.checkRoom + "/" + String(userId),
+            path: Constants.Endpoints.checkRoomForUserId + "/" + String(userId),
             requestType: .GET,
             bodyParameters: nil,
             httpHeaderFields: ["accesstoken" : accessToken])
@@ -54,7 +54,23 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func createRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error> {
+    func checkOnlineRoom(forRoomId roomId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>  {
+        guard let accessToken = getAccessToken()
+        else {return Fail<CheckRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<CheckRoomResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.checkRoomForRoomId + "/" + String(roomId),
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func createOnlineRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -88,11 +104,15 @@ extension AppRepository {
     
     // MARK: Database
     
-    func checkPrivateLocalRoom(forId id: Int) -> Future<Room, Error>{
-        return databaseService.roomEntityService.getPrivateRoom(forId: id)
+    func checkPrivateLocalRoom(forUserId id: Int) -> Future<Room, Error>{
+        return databaseService.roomEntityService.getPrivateRoom(forUserId: id)
     }
     
-    func saveRoom(room: Room) -> Future<Room, Error> {
+    func saveLocalRoom(room: Room) -> Future<Room, Error> {
         return databaseService.roomEntityService.saveRoom(room)
+    }
+    
+    func checkLocalRoom(withId roomId: Int) -> Future<Room, Error> {
+        databaseService.roomEntityService.checkLocalRoom(withId: roomId)
     }
 }
