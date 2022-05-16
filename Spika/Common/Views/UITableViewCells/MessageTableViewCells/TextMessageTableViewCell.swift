@@ -20,7 +20,7 @@ class TextMessageTableViewCell: UITableViewCell, BaseView {
     let currentReuseIdentifier: TextReuseIdentifier?
     
     let containerView = UIView()
-    let messageLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .logoBlue, alignment: .justified)
+    let messageLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .logoBlue)
     let timeLabel = CustomLabel(text: "11:54", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
     let messageStateView = MessageStateView(state: .waiting)
     let replyView = ReplyMessageView()
@@ -146,7 +146,7 @@ extension TextMessageTableViewCell {
         guard let currentReuseIdentifier = currentReuseIdentifier else {
             return
         }
-        messageLabel.text = message.body?.text
+        messageLabel.text = "\(message)"
         
         if let createdAt = message.createdAt {
             timeLabel.text = createdAt.convertTimestampToHoursAndMinutes()

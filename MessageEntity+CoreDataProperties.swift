@@ -2,7 +2,7 @@
 //  MessageEntity+CoreDataProperties.swift
 //  Spika
 //
-//  Created by Nikola Barbarić on 08.05.2022..
+//  Created by Nikola Barbarić on 11.05.2022..
 //
 //
 
@@ -26,8 +26,25 @@ extension MessageEntity {
     @NSManaged public var seenCount: Int64
     @NSManaged public var totalUserCount: Int64
     @NSManaged public var type: String?
-    
     @NSManaged public var room: RoomEntity?
+    @NSManaged public var records: NSSet?
+
+}
+
+// MARK: Generated accessors for records
+extension MessageEntity {
+
+    @objc(addRecordsObject:)
+    @NSManaged public func addToRecords(_ value: MessageRecordEntity)
+
+    @objc(removeRecordsObject:)
+    @NSManaged public func removeFromRecords(_ value: MessageRecordEntity)
+
+    @objc(addRecords:)
+    @NSManaged public func addToRecords(_ values: NSSet)
+
+    @objc(removeRecords:)
+    @NSManaged public func removeFromRecords(_ values: NSSet)
 
 }
 

@@ -34,12 +34,14 @@ struct Constants {
         static let getAllRooms = "api/messenger/rooms"
         static let updatePush = "api/messenger/device"
         static let deliveredStatus = "api/messenger/messages/delivered"
+        static let messageRecordSync = "/api/messenger/message-records/sync"
     }
     
     struct Database {
         static let databaseName = "CoreDatabase"
         static let userEntity = "UserEntity"
         static let messageEntity = "MessageEntity"
+        static let messageRecordEntity = "MessageRecordEntity"
         static let roomEntity = "RoomEntity"
         static let roomUserEntity = "RoomUserEntity"
         static let contactEntity = "ContactEntity"

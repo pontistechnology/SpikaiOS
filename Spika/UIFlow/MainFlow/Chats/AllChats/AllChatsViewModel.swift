@@ -18,6 +18,10 @@ class AllChatsViewModel: BaseViewModel {
         getAppCoordinator()?.presentCurrentPrivateChatScreen(user: user)
     }
     
+    func presentCurrentPrivateChatScreen(room: Room) {
+        getAppCoordinator()?.presentCurrentPrivateChatScreen(room: room)
+    }
+    
     func getAllRooms() {
         repository.getAllRooms().sink { [weak self] completion in
             guard let _ = self else { return }

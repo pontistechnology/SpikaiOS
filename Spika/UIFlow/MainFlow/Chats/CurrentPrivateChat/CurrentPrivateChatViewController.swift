@@ -79,7 +79,7 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
             guard let self = self else { return }
             let fetchRequest = MessageEntity.fetchRequest()
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
-            fetchRequest.predicate = NSPredicate(format: "%K == %d", #keyPath(MessageEntity.roomId), room.id)
+            fetchRequest.predicate = NSPredicate(format: "room.id == %d", room.id)
             self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
             self.frc?.delegate = self
             do {
@@ -213,6 +213,8 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
         currentPrivateChatView.hideScrollToBottomButton(should: isLastRowVisible)
 
     }
+    
+    
 }
 
 extension CurrentPrivateChatViewController: UITableViewDataSource {
@@ -225,6 +227,10 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myUserId = viewModel.repository.getMyUserId()
         guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
+        
+        for rec in entity.records! {
+            print("rrec: ", (rec as! MessageRecordEntity).type)
+        }
         let message = Message(messageEntity: entity)
         
         let identifier = (message.fromUserId == myUserId)
@@ -249,7 +255,7 @@ extension CurrentPrivateChatViewController {
         navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
 
-        friendInfoView.change(avatarUrl: viewModel.friendUser.avatarUrl, name: viewModel.friendUser.displayName, lastSeen: "yesterday")
+        friendInfoView.change(avatarUrl: viewModel.friendUser.getAvatarUrl(), name: viewModel.friendUser.getDisplayName(), lastSeen: "yesterday")
         let vtest = UIBarButtonItem(customView: friendInfoView)
         navigationItem.leftBarButtonItem = vtest
     }
@@ -264,16 +270,29 @@ extension CurrentPrivateChatViewController {
 
 // MARK: - swipe gestures on cells
 
-//extension CurrentPrivateChatViewController {
-    //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    //        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
-    //            self.currentPrivateChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.messagesSubject.value[indexPath.row]), id: indexPath.row)
-    //                completionHandler(true)
-    //            }
-    //        firstLeft.backgroundColor = .systemBlue
-    //        return UISwipeActionsConfiguration(actions: [firstLeft])
-    //    }
-//}
+extension CurrentPrivateChatViewController {
+//        func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//            let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
+//                self.currentPrivateChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.messagesSubject.value[indexPath.row]), id: indexPath.row)
+//                    completionHandler(true)
+//                }
+//            firstLeft.backgroundColor = .systemBlue
+//            return UISwipeActionsConfiguration(actions: [firstLeft])
+//        }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let firstRight = UIContextualAction(style: .normal, title: "Details") { (action, view, completionHandler) in
+            if let messageEntity = self.frc?.object(at: indexPath),
+               let records = Message(messageEntity: messageEntity).records {
+                self.viewModel.presentMessageDetails(records: records)
+                completionHandler(true)
+            }
+        }
+        firstRight.backgroundColor = .systemBlue
+        return UISwipeActionsConfiguration(actions: [firstRight])
+    }
+    
+}
     
 // MARK: reply to message
 //        Commented because there is no replyId on backend for now

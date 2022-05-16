@@ -134,4 +134,19 @@ class AppCoordinator: Coordinator {
         selectUserVC?.pushViewController(viewController, animated: true)
     }
     
+    func presentMessageDetails(users: [User], records: [MessageRecord]) {
+        let viewControllerToPresent = MessageDetailsViewController(users: users, records: records)
+        if #available(iOS 15.0, *) {
+            if let sheet = viewControllerToPresent.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        navigationController.present(viewControllerToPresent, animated: true)
+//        present(viewControllerToPresent, animated: true, completion: nil)
+    }
+    
 }

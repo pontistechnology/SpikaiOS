@@ -34,11 +34,15 @@ class NotificationService: UNNotificationServiceExtension {
             guard let jsonData = (bestAttemptContent.userInfo["message"] as? String)?.data(using: .utf8),
                   let message = try? JSONDecoder().decode(Message.self, from: jsonData),
                   let roomId = message.roomId
-            else { return }
+            else {
+                bestAttemptContent.title = "DECODING ERROR"
+                contentHandler(bestAttemptContent)
+                return
+            }
             
             currentMessage = message
-            guard let id = message.id else { return }
-            sendDeliveredStatus(messageIds: [id])
+//            guard let id = message.id else { return }
+//            sendDeliveredStatus(messageIds: [id])
             checkLocalRoom(roomId: roomId)
         }
     }
@@ -58,7 +62,10 @@ extension NotificationService {
         repository.sendDeliveredStatus(messageIds: messageIds).sink { c in
             
         } receiveValue: { response in
-            
+            guard let bestAttemptContent = self.bestAttemptContent,
+                  let contentHandler = self.contentHandler
+            else { return }
+            contentHandler(bestAttemptContent)
         }.store(in: &subs)
     }
     
@@ -128,12 +135,14 @@ extension NotificationService {
                 roomUser.user?.id == message.fromUserId
             }),
                   let senderName = senderRoomUser.user?.getDisplayName(),
-                  let bestAttemptContent = self.bestAttemptContent,
-                  let contentHandler = self.contentHandler
+                  let bestAttemptContent = self.bestAttemptContent
             else { return }
             
             bestAttemptContent.title = senderName
-            contentHandler(bestAttemptContent)
+            guard let id = self.currentMessage?.id else {
+                return
+            }
+            self.sendDeliveredStatus(messageIds: [id])
         }.store(in: &subs)
 
     }

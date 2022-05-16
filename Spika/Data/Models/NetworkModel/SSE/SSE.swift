@@ -59,22 +59,36 @@ class SSE {
             }
         }
         
-        
-        
         eventSource?.onMessage { [weak self] id, event, data in
-            guard let self = self else { return }
-            
-            
-            guard let jsonData = data?.data(using: .utf8),
-                  let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData),
-                  let message = sseNewMessage.message
+            print("DATA: ", data)
+        
+            guard let self = self,
+                  let jsonData = data?.data(using: .utf8),
+                  let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData)
             else {
                 print("SSE decoding error")
                 return
             }
-            guard let roomId = message.roomId else { return }
-            self.currentMessage = message
-            self.checkLocalRoom(roomId: roomId)
+            switch sseNewMessage.type {
+            case "NEW_MESSAGE":
+                guard let message = sseNewMessage.message,
+                      let roomId  = message.roomId
+                else { return }
+                self.currentMessage = message
+                self.checkLocalRoom(roomId: roomId)
+            case "NEW_MESSAGE_RECORD":
+                guard let record = sseNewMessage.messageRecord else { return }
+                print("MESSAGE RECORD ON SSE: ", record)
+                self.repository.saveMessageRecord(messageRecord: record).sink { c in
+                    
+                } receiveValue: { record in
+                    
+                }.store(in: &self.subs)
+
+                break
+            default:
+                break
+            }
         }
         
         eventSource?.addEventListener("message") { id, event, data in
@@ -122,6 +136,26 @@ class SSE {
 }
 
 extension SSE {
+    
+    func sendDeliveredStatus(messageIds: [Int]) {
+        repository.sendDeliveredStatus(messageIds: messageIds).sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let self = self,
+                  let currentMessage = self.currentMessage,
+                  let senderRoom = self.senderRoom,
+                  let senderRoomUser = senderRoom.users?.first(where: { roomUser in
+                roomUser.user?.id == currentMessage.fromUserId
+            }),
+                  let sender = senderRoomUser.user
+            else { return }
+            
+            self.showNotification(imageUrl: URL(string: sender.getAvatarUrl() ?? "noUrl"),
+                                  name: sender.getDisplayName(),
+                                  text: currentMessage.body?.text ?? "no text sse")
+        }.store(in: &subs)
+    }
+    
     func checkLocalRoom(roomId: Int) {
         repository.checkLocalRoom(withId: roomId).sink { [weak self] c in
             switch c {
@@ -181,15 +215,10 @@ extension SSE {
                 break
             }
         } receiveValue: { message in
-            guard let senderRoomUser = room.users?.first(where: { roomUser in
-                roomUser.user?.id == message.fromUserId
-            }),
-                  let sender = senderRoomUser.user
-            else { return }
+            guard let id = message.id else { return }
+            self.sendDeliveredStatus(messageIds: [id])
             
-            self.showNotification(imageUrl: URL(string: sender.getAvatarUrl() ?? "noUrl"),
-                                  name: sender.getDisplayName(),
-                                  text: message.body?.text ?? "no text sse")
+            
         }.store(in: &subs)
 
     }

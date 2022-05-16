@@ -18,6 +18,7 @@ struct Message: Codable {
     let roomId: Int?
     let type: String?
     let body: MessageBody?
+    let records: [MessageRecord]?
 }
 
 extension Message {
@@ -32,9 +33,18 @@ extension Message {
         self.roomId = roomId
         self.type = type.rawValue
         self.createdAt = createdAt
+        self.records = nil
     }
     
     init(messageEntity: MessageEntity) {
+        var messageRecords: [MessageRecord] = []
+        
+        if let records = messageEntity.records?.allObjects as? [MessageRecordEntity] {
+            for messageRecordEntity in records {
+                let record = MessageRecord(messageRecordEntity: messageRecordEntity)
+                messageRecords.append(record)
+            }
+        }
         self.init(createdAt: Int(messageEntity.createdAt),
                   fromUserId: Int(messageEntity.fromUserId),
                   id: Int(messageEntity.id ?? "-1"),
@@ -44,26 +54,40 @@ extension Message {
                   seenCount: Int(messageEntity.seenCount),
                   roomId: Int(messageEntity.roomId),
                   type: messageEntity.type ?? "todo check",
-                  body: MessageBody(text: messageEntity.bodyText ?? ""))
+                  body: MessageBody(text: messageEntity.bodyText ?? ""),
+                  records: messageRecords)
     }
     
     func getMessageState() -> MessageState {
         // TODO: check first seen, then delivered, then sent, waiting, error, (check fail)
-        if(seenCount == totalUserCount) {
+        guard let records = records,
+              let totalUserCount = totalUserCount
+        else {
+            print("there is no records")
+            return .fail
+        }
+        
+        print("RECORDS: ", records)
+        
+        if records.filter { $0.type == "seen" }.count == totalUserCount {
             return .seen
         }
         
-        if(deliveredCount == totalUserCount) {
+        if records.filter { $0.type == "delivered" }.count == totalUserCount - 1 {
             return .delivered
         }
         
-        if(deliveredCount == 0) {
-            return .sent
-        }
-        
-        if seenCount == nil || deliveredCount == nil {
-            return .fail
-        }
+//        if(deliveredCount == totalUserCount) {
+//            return .delivered
+//        }
+//
+//        if(deliveredCount == 0) {
+//            return .sent
+//        }
+//
+//        if seenCount == nil || deliveredCount == nil {
+//            return .fail
+//        }
         
         return .waiting
     }

@@ -16,6 +16,7 @@ class AllChatsViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        allChatsView.allChatsTableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -51,12 +52,13 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = RoomEntity.fetchRequest()
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.name), ascending: true)]
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.getLastMessage), ascending: true)]
             self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                   managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
             self.frc?.delegate = self
             do {
                 try self.frc?.performFetch()
+                self.allChatsView.allChatsTableView.reloadData()
             } catch {
                 fatalError("Failed to fetch entities: \(error)")
                 // TODO: handle error and change main context to func
@@ -77,14 +79,8 @@ extension AllChatsViewController: UITableViewDelegate {
         guard let entity = frc?.object(at: indexPath) else { return }
         let room = Room(roomEntity: entity)
         
-        if room.type == "private",
-           let roomUsers = room.users,
-           let friendRoomUser = roomUsers.first(where: { roomUser in
-               roomUser.user!.id != viewModel.getMyUserId()
-           }),
-           let friendUser = friendRoomUser.user
-        {
-            viewModel.presentCurrentPrivateChatScreen(user: friendUser)
+        if room.type == "private" {
+            viewModel.presentCurrentPrivateChatScreen(room: room)
         }
     }
 }
@@ -98,6 +94,11 @@ extension AllChatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
         guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
+        print("entity je: ", entity)
+        for mes in entity.messages! {
+            print("AA: ", (mes as? MessageEntity)?.bodyText)
+        }
+        print("JOJO")
         let room = Room(roomEntity: entity)
         
         if room.type == "private",
@@ -107,9 +108,9 @@ extension AllChatsViewController: UITableViewDataSource {
            }),
            let friendUser = friendRoomUser.user
         {
-            cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
-                                name: friendUser.getDisplayName(),
-                                desc: entity.getLastMessage()?.bodyText ?? "No messages")
+//            cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
+//                                name: friendUser.getDisplayName(),
+//                                desc: entity.getLastMessage()?.bodyText ?? "No messages")
         }
         
         return cell ?? UITableViewCell()

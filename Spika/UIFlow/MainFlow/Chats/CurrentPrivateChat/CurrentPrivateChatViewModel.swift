@@ -36,6 +36,23 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     }
 }
 
+// MARK: - Navigation
+extension CurrentPrivateChatViewModel {
+    func popTopViewController() {
+        getAppCoordinator()?.popTopViewController()
+    }
+    
+    func presentMessageDetails(records: [MessageRecord]) {
+        guard let roomUsers = room?.users else {
+            return
+        }
+        let users = roomUsers.compactMap { roomUser in
+            roomUser.user
+        }
+        getAppCoordinator()?.presentMessageDetails(users: users, records: records)
+    }
+}
+
 extension CurrentPrivateChatViewModel {
     
     func checkLocalRoom() {
@@ -196,9 +213,5 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { _ in
             
         }.store(in: &subscriptions)
-    }
-        
-    func popTopViewController() {
-        getAppCoordinator()?.popTopViewController()
     }
 }

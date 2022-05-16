@@ -29,7 +29,7 @@ public class RoomEntity: NSManagedObject {
         }
     }
     
-    func getLastMessage() -> MessageEntity? {
-        return (messages?.lastObject as? MessageEntity)
+    @objc lazy var getLastMessage =  {
+        (self.messages?.lastObject as! MessageEntity)
     }
 }

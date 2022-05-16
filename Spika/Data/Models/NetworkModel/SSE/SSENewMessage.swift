@@ -10,4 +10,5 @@ import Foundation
 struct SSENewMessage: Codable {
     let type: String?
     let message: Message?
+    let messageRecord: MessageRecord?
 }

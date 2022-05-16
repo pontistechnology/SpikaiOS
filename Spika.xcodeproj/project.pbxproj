@@ -96,6 +96,10 @@
 		933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87827B67A280099BA9E /* ChatSearchViewController.swift */; };
 		934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
 		934087BA27EBAE6F00209571 /* TestRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B927EBAE6F00209571 /* TestRepository+Tests.swift */; };
+		934F036B282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F0369282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift */; };
+		934F036C282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F0369282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift */; };
+		934F036D282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F036A282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift */; };
+		934F036E282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F036A282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift */; };
 		934F2EDD28172BD10086C343 /* UpdatePushResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */; };
 		934F2EDF28172D150086C343 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
 		934F2EE128172EEA0086C343 /* UpdatePushRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */; };
@@ -159,6 +163,11 @@
 		93E4F6FC27C4687100432CFA /* CurrentPrivateChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FB27C4687100432CFA /* CurrentPrivateChatViewController.swift */; };
 		93E4F6FE27C4688C00432CFA /* CurrentPrivateChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FD27C4688C00432CFA /* CurrentPrivateChatViewModel.swift */; };
 		93E4F70127C468BB00432CFA /* CurrentPrivateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F70027C468BB00432CFA /* CurrentPrivateChatView.swift */; };
+		93F4A898282CDC0500CEA637 /* MessageRequestSyncResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A897282CDC0500CEA637 /* MessageRequestSyncResponseModel.swift */; };
+		93F4A899282DD5ED00CEA637 /* MessageRequestSyncResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A897282CDC0500CEA637 /* MessageRequestSyncResponseModel.swift */; };
+		93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */; };
+		93F4A89E282DE9C400CEA637 /* MessageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */; };
+		93F4A8A0282DF1B500CEA637 /* MessageDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */; };
 		93FC0DA427FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */; };
 		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */; };
@@ -340,6 +349,8 @@
 		933BE87827B67A280099BA9E /* ChatSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewController.swift; sourceTree = "<group>"; };
 		934087B727EBAD7100209571 /* AppRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Tests.swift"; sourceTree = "<group>"; };
 		934087B927EBAE6F00209571 /* TestRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Tests.swift"; sourceTree = "<group>"; };
+		934F0369282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageRecordEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		934F036A282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageRecordEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePushResponseModel.swift; sourceTree = "<group>"; };
 		934F2EDE28172D150086C343 /* AppRepository+Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Device.swift"; sourceTree = "<group>"; };
 		934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePushRequestModel.swift; sourceTree = "<group>"; };
@@ -403,6 +414,10 @@
 		93E4F6FB27C4687100432CFA /* CurrentPrivateChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatViewController.swift; sourceTree = "<group>"; };
 		93E4F6FD27C4688C00432CFA /* CurrentPrivateChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatViewModel.swift; sourceTree = "<group>"; };
 		93E4F70027C468BB00432CFA /* CurrentPrivateChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatView.swift; sourceTree = "<group>"; };
+		93F4A897282CDC0500CEA637 /* MessageRequestSyncResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequestSyncResponseModel.swift; sourceTree = "<group>"; };
+		93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewController.swift; sourceTree = "<group>"; };
+		93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsView.swift; sourceTree = "<group>"; };
+		93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailTableViewCell.swift; sourceTree = "<group>"; };
 		93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		AD819237271E866100D5BE48 /* MessageEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntityService.swift; sourceTree = "<group>"; };
 		AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Messages.swift"; sourceTree = "<group>"; };
@@ -718,6 +733,7 @@
 				930290C127AC96040064BED1 /* ContactsTableViewCell.swift */,
 				93D86DBF27BAB49D00F275B0 /* DocsTableViewCell.swift */,
 				93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */,
+				93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */,
 			);
 			path = UITableViewCells;
 			sourceTree = "<group>";
@@ -796,6 +812,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		93F4A89A282DE9A300CEA637 /* MessageDetails */ = {
+			isa = PBXGroup;
+			children = (
+				93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */,
+				93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */,
+			);
+			path = MessageDetails;
+			sourceTree = "<group>";
+		};
 		AD8192412721738500D5BE48 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
@@ -822,6 +847,7 @@
 		AD819243272173A300D5BE48 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				93F4A89A282DE9A300CEA637 /* MessageDetails */,
 				938D052B27D59A4D002E5CE5 /* NewGroupChat */,
 				93E4F6E927C2BA4600432CFA /* AllChats */,
 				93E4F6F927C4680700432CFA /* CurrentPrivateChat */,
@@ -1068,6 +1094,7 @@
 				9396AB7027FED6F000696757 /* VerifyFileResponseModel.swift */,
 				934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */,
 				931B15172821295600A0CD35 /* DeliveredResponseModel.swift */,
+				93F4A897282CDC0500CEA637 /* MessageRequestSyncResponseModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -1327,6 +1354,8 @@
 				EAFA8B97280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift */,
 				ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */,
 				93160BC1282831EC00562342 /* MessageEntity+CoreDataProperties.swift */,
+				934F0369282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift */,
+				934F036A282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift */,
 				93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */,
 				93160BBD2828111100562342 /* RoomEntity+CoreDataProperties.swift */,
 				93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */,
@@ -1634,6 +1663,7 @@
 				9324B252281BDEFD00E7D76D /* CoreDataStack.swift in Sources */,
 				931B151328211B3F00A0CD35 /* String+Extension.swift in Sources */,
 				931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */,
+				934F036C282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift in Sources */,
 				931B14F428211AC100A0CD35 /* AuthRequestModel.swift in Sources */,
 				931B14D8281FD91100A0CD35 /* AppRepository+Rooms.swift in Sources */,
 				931B150528211AC600A0CD35 /* UploadChunkResponseModel.swift in Sources */,
@@ -1643,6 +1673,7 @@
 				931B151128211ACB00A0CD35 /* UserEntity+CoreDataProperties.swift in Sources */,
 				931B151228211B1300A0CD35 /* Repository.swift in Sources */,
 				931B150D28211ACB00A0CD35 /* ContactEntity+CoreDataClass.swift in Sources */,
+				93F4A899282DD5ED00CEA637 /* MessageRequestSyncResponseModel.swift in Sources */,
 				931B14F628211AC100A0CD35 /* VerifyFileRequestModel.swift in Sources */,
 				931B150428211AC600A0CD35 /* AuthResponseModel.swift in Sources */,
 				931B14F328211AC100A0CD35 /* UserRequestModel.swift in Sources */,
@@ -1667,6 +1698,7 @@
 				931B14E02821186300A0CD35 /* RoomEntityService.swift in Sources */,
 				931B14F528211AC100A0CD35 /* CreateRoomRequestModel.swift in Sources */,
 				931B150628211AC600A0CD35 /* CreateRoomResponseModel.swift in Sources */,
+				934F036E282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */,
 				931B150E28211ACB00A0CD35 /* RoomEntity+CoreDataClass.swift in Sources */,
 				931B14D7281FD91100A0CD35 /* AppRepository+Device.swift in Sources */,
@@ -1743,6 +1775,7 @@
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
 				934F2EDD28172BD10086C343 /* UpdatePushResponseModel.swift in Sources */,
 				93E4F6EB27C2BB6D00432CFA /* SelectUsersViewController.swift in Sources */,
+				93F4A8A0282DF1B500CEA637 /* MessageDetailTableViewCell.swift in Sources */,
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
 				93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */,
 				93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */,
@@ -1756,6 +1789,7 @@
 				93E4F6FC27C4687100432CFA /* CurrentPrivateChatViewController.swift in Sources */,
 				AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */,
 				93E4F6ED27C2BB8100432CFA /* SelectUsersViewModel.swift in Sources */,
+				934F036B282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift in Sources */,
 				ADD503D3270DD5A4009D50CB /* AppCoordinator.swift in Sources */,
 				93160BBE2828111100562342 /* RoomEntity+CoreDataProperties.swift in Sources */,
 				93160BC4282831EC00562342 /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -1779,6 +1813,7 @@
 				93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */,
 				9367455E27C71D1300F43CCD /* AlertViewController.swift in Sources */,
 				AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */,
+				93F4A89E282DE9C400CEA637 /* MessageDetailsView.swift in Sources */,
 				93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */,
 				AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */,
 				938D053627D5BFF8002E5CE5 /* CreateRoomRequestModel.swift in Sources */,
@@ -1790,6 +1825,7 @@
 				938D053227D59DD3002E5CE5 /* NewGroupChatViewModel.swift in Sources */,
 				AD81924F2721A89A00D5BE48 /* TabBarItem.swift in Sources */,
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
+				93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */,
 				AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */,
 				930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */,
 				ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */,
@@ -1855,6 +1891,7 @@
 				931B15152821291400A0CD35 /* DeliveredRequestModel.swift in Sources */,
 				9396AB7327FED6FF00696757 /* VerifyFileRequestModel.swift in Sources */,
 				93E4F6F627C30E8700432CFA /* SelectedUsersCollectionViewCell.swift in Sources */,
+				93F4A898282CDC0500CEA637 /* MessageRequestSyncResponseModel.swift in Sources */,
 				938B477D27E29C9F004B36FD /* ChatNavigationBarView.swift in Sources */,
 				AD9BFD49272B105800736318 /* EnterVerifyCodeViewController.swift in Sources */,
 				93D86DBC27BAA17E00F275B0 /* LinksTableView.swift in Sources */,
@@ -1864,6 +1901,7 @@
 				EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */,
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
 				93E48EB027CEA6C3003B4188 /* Message.swift in Sources */,
+				934F036D282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,
 				EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */,

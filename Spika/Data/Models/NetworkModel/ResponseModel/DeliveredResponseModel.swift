@@ -27,3 +27,15 @@ struct MessageRecord: Codable {
     let modifiedAt: Int?
     let createdAt: Int?
 }
+
+extension MessageRecord {
+    init(messageRecordEntity: MessageRecordEntity) {
+        self.init(id: Int(messageRecordEntity.id),
+                  messageId: Int(messageRecordEntity.messageId),
+                  userId: Int(messageRecordEntity.userId),
+                  type: messageRecordEntity.type,
+                  reaction: messageRecordEntity.reaction,
+                  modifiedAt: Int(messageRecordEntity.modifiedAt),
+                  createdAt: Int(messageRecordEntity.createdAt))
+    }
+}

@@ -50,6 +50,23 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func getMessageRecordsAfter(timestamp: Int) -> AnyPublisher<MessageRecordSyncResponseModel, Error> {
+        guard let accessToken = getAccessToken()
+        else {
+            return Fail<MessageRecordSyncResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<MessageRecordSyncResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.messageRecordSync + "\(timestamp)",
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
     // MARK: Database
     
     func saveMessage(message: Message, roomId: Int) -> Future<Message, Error> {
@@ -58,6 +75,10 @@ extension AppRepository {
     
     func getMessages(forRoomId roomId: Int) -> Future<[Message], Error> {
         self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
+    }
+    
+    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error> {
+        self.databaseService.messageEntityService.saveMessageRecord(messageRecord: messageRecord)
     }
 
 }

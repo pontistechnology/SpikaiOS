@@ -34,4 +34,16 @@ extension TestRepository {
             p(.failure(DatabseError.requestFailed))
         }
     }
+    
+    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error> {
+        Future { p in
+            p(.failure(DatabseError.unknown))
+        }
+    }
+    
+    func getMessageRecordsAfter(timestamp: Int) -> AnyPublisher<MessageRecordSyncResponseModel, Error> {
+        return Fail<MessageRecordSyncResponseModel, Error>(error: NetworkError.unknown)
+                 .receive(on: DispatchQueue.main)
+                 .eraseToAnyPublisher()
+    }
 }

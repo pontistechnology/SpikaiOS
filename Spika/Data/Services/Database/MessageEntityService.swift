@@ -34,7 +34,7 @@ class MessageEntityService {
             }
         }
     }
-
+    // TODO: use roomId from message?
     func saveMessage(message: Message, roomId: Int) -> Future<Message, Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
@@ -52,6 +52,37 @@ class MessageEntityService {
                         do {
                             try context.save()
                             promise(.success(Message(messageEntity: messageEntity)))
+                        } catch {
+                            promise(.failure(DatabseError.savingError))
+                        }
+                    } else {
+                        promise(.failure(DatabseError.moreThanOne))
+                    }
+                } catch {
+                    promise(.failure(DatabseError.requestFailed))
+                }
+            }
+        }
+    }
+    
+    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error> {
+        return Future { [weak self] promise in
+            guard let self = self else { return }
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                
+                let messageFR = MessageEntity.fetchRequest()
+                guard let messageId = messageRecord.messageId else { return }
+                messageFR.predicate = NSPredicate(format: "id == %d", messageId)
+                
+                do {
+                    let messages = try context.fetch(messageFR)
+                    if messages.count == 1 {
+                        let recordEntity = MessageRecordEntity(record: messageRecord, context: context)
+                        messages.first!.addToRecords(recordEntity)
+                        do {
+                            try context.save()
+                            promise(.success(messageRecord))
                         } catch {
                             promise(.failure(DatabseError.savingError))
                         }
