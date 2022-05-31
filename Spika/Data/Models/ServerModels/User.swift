@@ -57,7 +57,7 @@ struct User: Codable {
     }
     
     func getAvatarUrl() -> String? {
-        if let avatarUrl = avatarUrl {
+        if let avatarUrl = avatarUrl, !avatarUrl.isEmpty {
             if avatarUrl.starts(with: "http") {
                 return avatarUrl
             } else if avatarUrl.starts(with: "/") {
