@@ -66,7 +66,7 @@ class NetworkService {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("ios", forHTTPHeaderField: "os-name")
         request.addValue(UIDevice.current.systemVersion, forHTTPHeaderField: "os-version")
-        request.addValue(UIDevice.current.name, forHTTPHeaderField: "device-name")
+        request.addValue(UIDevice.current.model, forHTTPHeaderField: "device-name")
         request.addValue((Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown", forHTTPHeaderField: "app-version")
         request.addValue(Locale.current.languageCode ?? "unknown", forHTTPHeaderField: "language")
         
