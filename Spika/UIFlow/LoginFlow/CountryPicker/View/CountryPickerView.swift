@@ -72,7 +72,7 @@ class CountryPickerView: UIView, BaseView {
         if filter.isEmpty {
             filteredCountries = countries
         } else {
-            filteredCountries = countries.filter{ $0.name.contains(filter) }
+            filteredCountries = countries.filter{ $0.name.localizedLowercase.contains(filter.localizedLowercase) }
         }
         countriesTableView.reloadData()
     }
