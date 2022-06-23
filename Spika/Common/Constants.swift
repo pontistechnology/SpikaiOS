@@ -34,7 +34,10 @@ struct Constants {
         static let getAllRooms = "api/messenger/rooms"
         static let updatePush = "api/messenger/device"
         static let deliveredStatus = "api/messenger/messages/delivered"
-        static let messageRecordSync = "/api/messenger/message-records/sync"
+        static let syncRooms = "api/messenger/rooms/sync"
+        static let syncMessages = "api/messenger/messages/sync"
+        static let syncMessageRecords = "api/messenger/message-records/sync"
+        static let syncUsers = "api/messenger/users/sync"
     }
     
     struct Database {
@@ -54,7 +57,10 @@ struct Constants {
         static let accessToken = "accessToken"
         static let displayName = "displayName"
         static let pushToken = "pushToken"
-        static let testing = "satasda"
+        static let roomsSyncTimestamp = "roomsSyncTimestamp"
+        static let usersSyncTimestamp = "usersSyncTimestamp"
+        static let messagesSyncTimestamp = "messagesSyncTimestamp"
+        static let messageRecordsSyncTimestamp = "messageRecordsSyncTimestamp"
     }
     
     struct CABasicAnimations {

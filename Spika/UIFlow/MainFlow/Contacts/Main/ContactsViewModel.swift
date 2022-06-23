@@ -31,7 +31,7 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] users in
             guard let self = self else { return }
-            print("Read users from DB: \(users)")
+//            print("Read users from DB: \(users)")
             self.users = users
             self.updateContactsUI(list: users)
         }.store(in: &subscriptions)
@@ -47,7 +47,7 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] users in
             guard let _ = self else { return }
-            print("Saved users to DB: \(users)")
+//            print("Saved users to DB: \(users)")
         }.store(in: &subscriptions)
     }
     
@@ -61,12 +61,12 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] contacts in
             guard let self = self else { return }
-            print(contacts)
+//            print(contacts)
             var contacts = contacts
             for (index, contact) in contacts.enumerated() {
                 contacts[index] = contact.getSHA256()
             }
-            print(contacts)
+//            print(contacts)
             self.postContacts(hashes: contacts)
             
         }.store(in: &subscriptions)
@@ -84,7 +84,7 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] response in
             guard let _ = self else { return }
-            print("Success: ", response)
+//            print("Success: ", response)
         }.store(in: &subscriptions)
     }
     
@@ -99,7 +99,7 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] response in
             guard let self = self else { return }
-            print("Success: ", response)
+//            print("Success: ", response)
             if let list = response.data?.list {
                 self.saveUsers(list)
             }
@@ -138,11 +138,11 @@ class ContactsViewModel: BaseViewModel {
         var tableAppUsers = Array<Array<User>>()
         for user in sortedList {
             if let char1 = user.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
-                print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
+//                print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
                 tableAppUsers[tableAppUsers.count - 1].append(user)
             } else {
                 if let char1 = user.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1) {
-                    print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
+//                    print("\(char1.localizedLowercase) \(char2.localizedLowercase) \(char1.localizedCompare(char2) == .orderedSame)")
                 }
                 tableAppUsers.append([user])
             }

@@ -89,6 +89,8 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
                 fatalError("Failed to fetch entities: \(error)") // TODO: handle error
             }
         }
+        
+        viewModel.roomVisited(roomId: room.id)
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -240,6 +242,7 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
         
         cell?.updateCell(message: message)
+        cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
         
         return cell ?? UITableViewCell()
     }

@@ -17,19 +17,15 @@ public class RoomEntity: NSManagedObject {
             fatalError("shit, do something")
         }
         self.init(entity: entity, insertInto: context)
-        self.id = Int64(room.id)
+        self.id = room.id
         self.name = room.name
         self.avatarUrl = room.avatarUrl
-        self.createdAt = Int64(room.createdAt!)
+        self.createdAt = room.createdAt!
         self.type = room.type
         
         for roomUser in room.users! { // TODO: check
-            let r = RoomUserEntity(roomUser: roomUser, insertInto: context)
+            let r = RoomUserEntity(roomUser: roomUser, roomId: room.id, insertInto: context)
             self.addToUsers(r)
         }
-    }
-    
-    @objc lazy var getLastMessage =  {
-        (self.messages?.lastObject as! MessageEntity)
     }
 }

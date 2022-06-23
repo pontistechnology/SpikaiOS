@@ -25,7 +25,7 @@ class UserEntityService {
                 do {
                     let userEntities = try context.fetch(fetchRequest)
                     let users = userEntities.map{ User(entity: $0) }
-                    print("userentities count: ", userEntities.count, "users", users)
+//                    print("userentities count: ", userEntities.count, "users", users)
                     promise(.success(users.compactMap{ $0 }))
                 } catch { //mislav let error as NSError
                     promise(.failure(error))
@@ -55,6 +55,9 @@ class UserEntityService {
             self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for user in users {
+                    if user.displayName == nil {
+                        continue
+                    }
                     let _ = UserEntity(user: user, context: context)
                 }
                 do {
@@ -68,7 +71,7 @@ class UserEntityService {
         }
     }
     
-    func getLocalUser(withId id: Int) -> Future<User, Error> {
+    func getLocalUser(withId id: Int64) -> Future<User, Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy

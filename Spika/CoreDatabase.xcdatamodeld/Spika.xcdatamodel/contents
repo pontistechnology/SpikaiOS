@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ContactEntity" representedClassName="ContactEntity" syncable="YES">
         <attribute name="familyName" optional="YES" attributeType="String"/>
         <attribute name="givenName" optional="YES" attributeType="String"/>
@@ -23,9 +23,6 @@
         <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MessageRecordEntity" inverseName="message" inverseEntity="MessageRecordEntity"/>
         <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RoomEntity" inverseName="messages" inverseEntity="RoomEntity"/>
-        <fetchedProperty name="fetchedProperty" optional="YES">
-            <fetchRequest name="fetchedPropertyFetchRequest" entity="MessageEntity"/>
-        </fetchedProperty>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -54,13 +51,12 @@
         <attribute name="avatarUrl" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastMessageTimestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="visitedRoom" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MessageEntity" inverseName="room" inverseEntity="MessageEntity"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RoomUserEntity" inverseName="inRooms" inverseEntity="RoomUserEntity"/>
-        <fetchedProperty name="messages2" optional="YES">
-            <fetchRequest name="fetchedPropertyFetchRequest" entity="RoomEntity"/>
-        </fetchedProperty>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -69,11 +65,13 @@
     </entity>
     <entity name="RoomUserEntity" representedClassName="RoomUserEntity" syncable="YES">
         <attribute name="isAdmin" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="roomId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="inRooms" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RoomEntity" inverseName="users" inverseEntity="RoomEntity"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="roomUsers" inverseEntity="UserEntity"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
+                <constraint value="roomId"/>
                 <constraint value="userId"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
@@ -96,10 +94,10 @@
     </entity>
     <elements>
         <element name="ContactEntity" positionX="-180" positionY="117" width="128" height="74"/>
-        <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="230"/>
+        <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="209"/>
         <element name="MessageRecordEntity" positionX="-180" positionY="117" width="128" height="14"/>
-        <element name="RoomEntity" positionX="-180" positionY="117" width="128" height="155"/>
-        <element name="RoomUserEntity" positionX="-178.015625" positionY="-33.05859375" width="128" height="89"/>
+        <element name="RoomEntity" positionX="-180" positionY="117" width="128" height="164"/>
+        <element name="RoomUserEntity" positionX="-178.015625" positionY="-33.05859375" width="128" height="104"/>
         <element name="UserEntity" positionX="35.22509765625" positionY="116.6122131347656" width="128" height="164"/>
     </elements>
 </model>

@@ -11,7 +11,7 @@ import IKEventSource
 import UIKit
 
 class SSE {
-    
+    let dispatchGroup = DispatchGroup()
     var eventSource: EventSource?
     var alertWindow: UIWindow?
     let repository: Repository
@@ -32,13 +32,102 @@ class SSE {
         print("SSE deinit")
     }
     
+    func syncAndStartSSE() {
+        
+        repository.printAllMessages()
+        
+        dispatchGroup.enter()
+        repository.syncRooms(timestamp: repository.getRoomsSyncTimestamp()).sink { [weak self] c in
+            print("C: ", c)
+            self?.dispatchGroup.leave()
+        } receiveValue: { [weak self] response in
+            guard let rooms = response.data?.rooms else { return }
+            print("SYNCED ROOMS: ", rooms)
+            self?.repository.saveLocalRooms(rooms: rooms).sink { [weak self] c in
+                print(c)
+            } receiveValue: { [weak self] rooms in
+                self?.repository.setRoomsSyncTimestamp(Date().currentTimeMillis())
+            }.store(in: &self!.subs)
+
+        }.store(in: &subs)
+        
+        dispatchGroup.enter()
+        repository.syncUsers(timestamp: repository.getUsersSyncTimestamp()).sink { [weak self] c in
+            print("users C: ", c)
+            self?.dispatchGroup.leave()
+        } receiveValue: { [weak self] response in
+            print("sync users: ", response)
+            guard let users = response.data?.users else {
+                return
+            }
+            self?.repository.setUsersSyncTimestamp(Date().currentTimeMillis())
+            self?.dispatchGroup.enter()
+            self?.repository.saveUsers(users).sink(receiveCompletion: { [weak self] c in
+                print("save users sync c: ", c)
+                self?.dispatchGroup.leave()
+            }, receiveValue: { users in
+                
+            }).store(in: &self!.subs)
+        }.store(in: &subs)
+
+
+        
+        
+        
+        dispatchGroup.enter()
+        repository.syncMessages(timestamp: repository.getMessagesSyncTimestamp()).sink { [weak self] c in
+            print("messages C: ", c)
+            self?.dispatchGroup.leave()
+        } receiveValue: { [weak self] response in
+            print("sync messages: ", response)
+            guard let self = self else { return }
+            guard let messages = response.data?.messages else { return }
+            self.repository.setMessagesSyncTimestamp(Date().currentTimeMillis())
+            print("messages before: ", messages.count)
+            messages.forEach { message in
+                if let roomId = message.roomId {
+                    self.repository.saveMessage(message: message, roomId: roomId).sink { c in
+                        print("sync messages saving c: ", c)
+                    } receiveValue: { message in
+                        print("PAPA")
+                    }.store(in: &self.subs)
+                }
+            }
+        }.store(in: &subs)
+        
+        dispatchGroup.enter()
+        repository.syncMessageRecords(timestamp: repository.getMessageRecordsSyncTimestamp()).sink { [weak self] c in
+            print("sync message records C: ", c)
+            self?.dispatchGroup.leave()
+        } receiveValue: { [weak self] response in
+            guard let self = self else { return }
+            guard let records = response.data?.messageRecords else { return }
+            self.repository.setMessageRecordsSyncTimestamp(Date().currentTimeMillis())
+            print("records before: ", records.count)
+            
+            records.forEach { record in
+                self.repository.saveMessageRecord(messageRecord: record).sink { c in
+                } receiveValue: { record in
+                    print("sync saved message record: ", record)
+                    
+                }.store(in: &self.subs)
+            }
+        }.store(in: &subs)
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            print("ALL FINISHEED")
+            self?.startSSEConnection()
+        }
+    }
+    
+    
     func startSSEConnection(){
         setupSSE()
         eventSource?.connect()
     }
     
     func setupSSE() {
-        guard let accessToken = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
+        guard let accessToken = repository.getAccessToken(),
               let serverURL = URL(string: Constants.Networking.baseUrl
                                   + "api/sse/"
                                   + "?accesstoken=" + accessToken)
@@ -137,7 +226,7 @@ class SSE {
 
 extension SSE {
     
-    func sendDeliveredStatus(messageIds: [Int]) {
+    func sendDeliveredStatus(messageIds: [Int64]) {
         repository.sendDeliveredStatus(messageIds: messageIds).sink { c in
             
         } receiveValue: { [weak self] response in
@@ -156,7 +245,7 @@ extension SSE {
         }.store(in: &subs)
     }
     
-    func checkLocalRoom(roomId: Int) {
+    func checkLocalRoom(roomId: Int64) {
         repository.checkLocalRoom(withId: roomId).sink { [weak self] c in
             switch c {
                 
@@ -174,7 +263,7 @@ extension SSE {
     }
     
     
-    func checkOnlineRoom(roomId: Int) {
+    func checkOnlineRoom(roomId: Int64) {
         repository.checkOnlineRoom(forRoomId: roomId).sink { completion in
             switch completion {
                 
@@ -218,7 +307,7 @@ extension SSE {
             guard let id = message.id else { return }
             self.sendDeliveredStatus(messageIds: [id])
             
-            
+
         }.store(in: &subs)
 
     }

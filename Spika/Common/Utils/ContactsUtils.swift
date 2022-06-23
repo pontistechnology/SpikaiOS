@@ -42,12 +42,12 @@ class ContactsUtils {
                     
                     var phoneNumbers = [String]()
                     for contact in contacts {
-                        print(contact.telephone + " " + contact.firstName + " " + contact.lastName)
+//                        print(contact.telephone + " " + contact.firstName + " " + contact.lastName)
                         do {
                             let phoneNumber: NBPhoneNumber = try phoneUtil.parse(contact.telephone, defaultRegion: defaultRegionCode)
                             let formattedString: String = try phoneUtil.format(phoneNumber, numberFormat: .E164)
                             phoneNumbers.append(formattedString)
-                            print("[\(formattedString)]")
+//                            print("[\(formattedString)]")
                         }
                         catch let error as NSError {
                             print(error.localizedDescription)

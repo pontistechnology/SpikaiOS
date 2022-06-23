@@ -19,15 +19,15 @@ public class MessageRecordEntity: NSManagedObject {
         self.init(entity: entity, insertInto: context)
         
         if let id = record.id {
-            self.id = Int64(id)
+            self.id = id
         }
         
         if let messageId = record.messageId {
-            self.messageId = Int64(messageId)
+            self.messageId = messageId
         }
         
         if let userId = record.userId {
-            self.userId = Int64(userId)
+            self.userId = userId
         }
         
         if let type = record.type {
@@ -39,11 +39,11 @@ public class MessageRecordEntity: NSManagedObject {
         }
         
         if let modifiedAt = record.modifiedAt {
-            self.modifiedAt = Int64(modifiedAt)
+            self.modifiedAt = modifiedAt
         }
         
         if let createdAt = record.createdAt {
-            self.createdAt = Int64(createdAt)
+            self.createdAt = createdAt
         }
     }
 }

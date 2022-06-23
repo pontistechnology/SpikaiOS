@@ -15,7 +15,7 @@ extension AppRepository {
     
     // MARK: Network
     
-    func sendTextMessage(body: MessageBody, roomId: Int, localId: String) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendTextMessage(body: MessageBody, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -34,7 +34,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func sendDeliveredStatus(messageIds: [Int]) -> AnyPublisher<DeliveredResponseModel, Error> {
+    func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<DeliveredResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -50,30 +50,34 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func getMessageRecordsAfter(timestamp: Int) -> AnyPublisher<MessageRecordSyncResponseModel, Error> {
-        guard let accessToken = getAccessToken()
-        else {
-            return Fail<MessageRecordSyncResponseModel, Error>(error: NetworkError.noAccessToken)
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
-        }
-        
-        let resources = Resources<MessageRecordSyncResponseModel, EmptyRequestBody>(
-            path: Constants.Endpoints.messageRecordSync + "\(timestamp)",
-            requestType: .GET,
-            bodyParameters: nil,
-            httpHeaderFields: ["accesstoken" : accessToken])
-        
-        return networkService.performRequest(resources: resources)
+    func printAllMessages() {
+        databaseService.messageEntityService.printAllMessages()
     }
+    
+//    func getMessageRecordsAfter(timestamp: Int) -> AnyPublisher<MessageRecordSyncResponseModel, Error> {
+//        guard let accessToken = getAccessToken()
+//        else {
+//            return Fail<MessageRecordSyncResponseModel, Error>(error: NetworkError.noAccessToken)
+//                .receive(on: DispatchQueue.main)
+//                .eraseToAnyPublisher()
+//        }
+//        
+//        let resources = Resources<MessageRecordSyncResponseModel, EmptyRequestBody>(
+//            path: Constants.Endpoints.messageRecordSync + "\(timestamp)",
+//            requestType: .GET,
+//            bodyParameters: nil,
+//            httpHeaderFields: ["accesstoken" : accessToken])
+//        
+//        return networkService.performRequest(resources: resources)
+//    }
     
     // MARK: Database
     
-    func saveMessage(message: Message, roomId: Int) -> Future<Message, Error> {
+    func saveMessage(message: Message, roomId: Int64) -> Future<Message, Error> {
         return databaseService.messageEntityService.saveMessage(message: message, roomId: roomId)
     }
     
-    func getMessages(forRoomId roomId: Int) -> Future<[Message], Error> {
+    func getMessages(forRoomId roomId: Int64) -> Future<[Message], Error> {
         self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
     }
     

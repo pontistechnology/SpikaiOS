@@ -20,11 +20,11 @@ public class MessageEntity: NSManagedObject {
         self.init(entity: entity, insertInto: context)
         
         if let c = message.createdAt {
-            createdAt = Int64(c)
+            createdAt = c
         }
         
         if let fromUserId = message.fromUserId {
-            self.fromUserId = Int64(fromUserId)
+            self.fromUserId = fromUserId
         }
         
         if let id = message.id {
@@ -36,19 +36,19 @@ public class MessageEntity: NSManagedObject {
         }
         
         if let totalUserCount = message.totalUserCount {
-            self.totalUserCount = Int64(totalUserCount)
+            self.totalUserCount = totalUserCount
         }
 
         if let deliveredCount = message.deliveredCount {
-            self.deliveredCount = Int64(deliveredCount)
+            self.deliveredCount = deliveredCount
         }
 
         if let seenCount = message.seenCount {
-            self.seenCount = Int64(seenCount)
+            self.seenCount = seenCount
         }
         
         if let roomId = message.roomId {
-            self.roomId = Int64(roomId)
+            self.roomId = roomId
         }
 
         if let type = message.type {

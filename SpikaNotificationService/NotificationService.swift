@@ -58,7 +58,7 @@ class NotificationService: UNNotificationServiceExtension {
 
 extension NotificationService {
     
-    func sendDeliveredStatus(messageIds: [Int]) {
+    func sendDeliveredStatus(messageIds: [Int64]) {
         repository.sendDeliveredStatus(messageIds: messageIds).sink { c in
             
         } receiveValue: { response in
@@ -69,7 +69,7 @@ extension NotificationService {
         }.store(in: &subs)
     }
     
-    func checkLocalRoom(roomId: Int) {
+    func checkLocalRoom(roomId: Int64) {
         repository.checkLocalRoom(withId: roomId).sink { [weak self] c in
             switch c {
                 
@@ -85,7 +85,7 @@ extension NotificationService {
         }.store(in: &subs)
     }
     
-    func checkOnlineRoom(roomId: Int) {
+    func checkOnlineRoom(roomId: Int64) {
         repository.checkOnlineRoom(forRoomId: roomId).sink { completion in
             switch completion {
                 

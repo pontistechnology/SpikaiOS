@@ -27,7 +27,7 @@ extension TestRepository {
         print(user)
     }
     
-    func getMyUserId() -> Int {
+    func getMyUserId() -> Int64 {
         999
     }
     
@@ -35,11 +35,11 @@ extension TestRepository {
         "pferde"
     }
     
-    func getMyDeviceId() -> Int {
+    func getMyDeviceId() -> Int64 {
         -1
     }
     
-    func getLocalUser(withId id: Int) -> Future<User, Error> {
+    func getLocalUser(withId id: Int64) -> Future<User, Error> {
         return Future { promise in promise(.failure(DatabseError.unknown))}
     }
     

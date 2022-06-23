@@ -9,18 +9,18 @@ import Foundation
 
 // MARK: - User
 struct User: Codable {
-    let id: Int
+    let id: Int64
     var displayName: String?
     var avatarUrl: String?
     var telephoneNumber: String?
     var telephoneNumberHashed: String?
     var emailAddress: String?
-    var createdAt: Int?
+    var createdAt: Int64?
     
     var givenName: String?
     var familyName: String?
     
-    init(id: Int, displayName: String, avatarUrl: String? = nil) {
+    init(id: Int64, displayName: String, avatarUrl: String? = nil) {
         self.id = id
         self.displayName = displayName
         self.avatarUrl = avatarUrl
@@ -30,12 +30,12 @@ struct User: Codable {
         guard let entity = entity else {
             return nil
         }
-        self.id = Int(entity.id)
+        self.id = entity.id
         self.displayName = entity.displayName
         self.avatarUrl = entity.avatarUrl
         self.telephoneNumber = entity.telephoneNumber
         self.emailAddress = entity.emailAddress
-        self.createdAt = Int(entity.createdAt)
+        self.createdAt = entity.createdAt
         
         self.givenName = entity.givenName
         self.familyName = entity.familyName
@@ -73,11 +73,11 @@ struct User: Codable {
 
 extension User: Comparable {
     static func < (lhs: User, rhs: User) -> Bool {
-        return lhs.displayName!.localizedStandardCompare(rhs.displayName!) == .orderedAscending
+        return (lhs.displayName ?? "a").localizedStandardCompare(rhs.displayName ?? "b") == .orderedAscending
     }
     
     static func == (lhs: User, rhs: User) -> Bool {
-        return lhs.displayName!.localizedStandardCompare(rhs.displayName!) == .orderedSame
+        return (lhs.displayName ?? "a").localizedStandardCompare(rhs.displayName ?? "b") == .orderedSame
     }
 }
 

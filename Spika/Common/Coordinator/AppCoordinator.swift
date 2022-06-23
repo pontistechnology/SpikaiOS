@@ -23,9 +23,10 @@ class AppCoordinator: Coordinator {
         // TODO: check display name.isEmpty()
         if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
            let _ = userDefaults.string(forKey: Constants.UserDefaults.displayName){
-            presentHomeScreen()
             let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
-            sse?.startSSEConnection() // TODO: for now disabled
+            sse?.syncAndStartSSE()
+            presentHomeScreen()
+            // TODO: for now disabled
         } else if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken){
             presentEnterUsernameScreen()
         } else {
@@ -135,6 +136,7 @@ class AppCoordinator: Coordinator {
     }
     
     func presentMessageDetails(users: [User], records: [MessageRecord]) {
+        // TODO: assemble this vc
         let viewControllerToPresent = MessageDetailsViewController(users: users, records: records)
         if #available(iOS 15.0, *) {
             if let sheet = viewControllerToPresent.sheetPresentationController {

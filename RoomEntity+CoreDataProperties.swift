@@ -2,7 +2,7 @@
 //  RoomEntity+CoreDataProperties.swift
 //  Spika
 //
-//  Created by Nikola Barbarić on 09.05.2022..
+//  Created by Nikola Barbarić on 21.06.2022..
 //
 //
 
@@ -19,8 +19,10 @@ extension RoomEntity {
     @NSManaged public var avatarUrl: String?
     @NSManaged public var createdAt: Int64
     @NSManaged public var id: Int64
+    @NSManaged public var lastMessageTimestamp: Int64
     @NSManaged public var name: String?
     @NSManaged public var type: String?
+    @NSManaged public var visitedRoom: Int64
     @NSManaged public var messages: NSOrderedSet?
     @NSManaged public var users: NSSet?
 

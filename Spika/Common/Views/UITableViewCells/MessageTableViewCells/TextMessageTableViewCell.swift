@@ -146,14 +146,26 @@ extension TextMessageTableViewCell {
         guard let currentReuseIdentifier = currentReuseIdentifier else {
             return
         }
-        messageLabel.text = "\(message)"
+        messageLabel.text =
+        """
+        text: \(message.body?.text),
+        id: \(message.id),
+        from id: \(message.fromUserId),
+        roomId: \(message.roomId),
+        createdAt: \(message.createdAt),
+        localId: \(message.localId),
+        \n
+        """
+        
+        for record in message.records! {
+            messageLabel.text?.append("\n\n")
+            messageLabel.text?.append("record: \(record)")
+        }
         
         if let createdAt = message.createdAt {
             timeLabel.text = createdAt.convertTimestampToHoursAndMinutes()
         }
-        
-        messageStateView.changeState(to: message.getMessageState())
-        
+                
         switch currentReuseIdentifier {
         case .myText:
             break
@@ -166,6 +178,10 @@ extension TextMessageTableViewCell {
 //            replyView.updateReplyView(message: replyMessageTest ?? message)
             break
         }
+    }
+    
+    func updateCellState(to state: MessageState) {
+        messageStateView.changeState(to: state)
     }
     
     func tapHandler() {
