@@ -7,17 +7,20 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class SelectUsersViewController: BaseViewController {
     
     private let selectUsersView = SelectUsersView()
     var viewModel: SelectUsersViewModel!
     
+    var frc: NSFetchedResultsController<UserEntity>?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(selectUsersView)
         setupBindings()
-        viewModel.getOnlineContacts(page: 1)
+        setFetch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -103,7 +106,7 @@ extension SelectUsersViewController: UITableViewDelegate {
 extension SelectUsersViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        viewModel.contactsSubject.value[section].first?.displayName?.prefix(1).uppercased()
+        viewModel.contactsSubject.value[section].first?.getDisplayName().prefix(1).uppercased()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -176,4 +179,32 @@ extension SelectUsersViewController: SearchBarDelegate {
     }
 }
 
+// MARK: - NSFetchedResultsController
+
+extension SelectUsersViewController: NSFetchedResultsControllerDelegate {
+    
+    func setFetch() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let fetchRequest = UserEntity.fetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(UserEntity.displayName), ascending: true)]
+            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
+            self.frc?.delegate = self
+            do {
+                try self.frc?.performFetch()
+                self.selectUsersView.contactsTableView.reloadData()
+            } catch {
+                fatalError("Failed to fetch entities: \(error)") // TODO: handle error
+            }
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
+        self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
+    }
+}
 

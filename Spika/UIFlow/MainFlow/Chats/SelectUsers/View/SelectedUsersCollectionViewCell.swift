@@ -5,6 +5,7 @@
 //  Created by Nikola Barbarić on 21.02.2022..
 //
 import UIKit
+import Kingfisher
 
 class SelectedUsersCollectionViewCell: UICollectionViewCell, BaseView {
     
@@ -12,7 +13,7 @@ class SelectedUsersCollectionViewCell: UICollectionViewCell, BaseView {
 
     let imageView = UIImageView()
     let closeImageView = UIImageView()
-    let firstLetterLabel = CustomLabel(text: "Ž", textSize: 20, textColor: .white, fontName: .MontserratExtraBold, alignment: .center)
+    let firstLetterLabel = CustomLabel(text: "Ž", textSize: 20, textColor: .black, fontName: .MontserratExtraBold, alignment: .center)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,6 +34,7 @@ class SelectedUsersCollectionViewCell: UICollectionViewCell, BaseView {
     func styleSubviews() {
         imageView.layer.cornerRadius = 25
         imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
         
         closeImageView.image = UIImage(named: "deleteCell")
     }
@@ -44,10 +46,14 @@ class SelectedUsersCollectionViewCell: UICollectionViewCell, BaseView {
     }
     
     func updateCell(user: User) {
-        firstLetterLabel.text = user.displayName?.prefix(1).uppercased()
-        let url = URL(string: //user.avatarUrl ?? avatarUrl is not working now
-                      "https://c.tenor.com/_XivCIgUF90AAAAd/bounce-boob.gif")
-        
-        imageView.kf.setImage(with: url)
+        let url = URL(string: user.getAvatarUrl() ?? "")
+        imageView.kf.setImage(with: url, placeholder: UIImage(named: "user_image"), completionHandler: { result in
+            switch result {
+            case .success:
+                self.firstLetterLabel.text = ""
+            case .failure:
+                self.firstLetterLabel.text = user.displayName?.prefix(1).uppercased()
+            }
+        })
     }
 }

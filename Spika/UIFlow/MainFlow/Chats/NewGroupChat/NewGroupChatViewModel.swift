@@ -29,6 +29,7 @@ class NewGroupChatViewModel: BaseViewModel {
         } receiveValue: { [weak self] response in
             guard let _ = self else { return }
             print("Create room response ", response)
+            self?.getAppCoordinator()?.dismissViewController()
         }.store(in: &subscriptions)
 
     }

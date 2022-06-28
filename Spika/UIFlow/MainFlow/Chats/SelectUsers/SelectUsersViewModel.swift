@@ -14,6 +14,18 @@ class SelectUsersViewModel: BaseViewModel {
     let selectedUsersSubject = CurrentValueSubject<[User], Never>([])
     var users : [User] = []
     
+    func updateUsersFromFrc(_ userEntities: [UserEntity]) {
+        print (userEntities)
+        
+        self.users = []
+        for userEntity in userEntities {
+            if let user = User(entity: userEntity) {
+                users.append(user)
+            }
+        }
+        self.updateContactsUI(list: users)
+    }
+    
     func getOnlineContacts(page: Int) {
         repository.getContacts(page: page).sink { [weak self] completion in
             guard let _ = self else { return }
@@ -36,12 +48,16 @@ class SelectUsersViewModel: BaseViewModel {
     
     func updateContactsUI(list: [User]) {
           
+        let sortedList = list.sorted()
+          
         var tableAppUsers = Array<Array<User>>()
-        for appUser in list {
-            if let char1 = appUser.displayName?.prefix(1), let char2 = tableAppUsers.last?.last?.displayName?.prefix(1), char1 == char2 {
-                tableAppUsers[tableAppUsers.count - 1].append(appUser)
+        for user in sortedList {
+
+            let char1 = user.getDisplayName().prefix(1)
+            if let char2 = tableAppUsers.last?.last?.getDisplayName().prefix(1), char1.localizedLowercase == char2.localizedLowercase {
+                tableAppUsers[tableAppUsers.count - 1].append(user)
             } else {
-                tableAppUsers.append([appUser])
+                tableAppUsers.append([user])
             }
         }
         
@@ -53,7 +69,7 @@ class SelectUsersViewModel: BaseViewModel {
         if filter.isEmpty {
             updateContactsUI(list: users)
         } else {
-            let filteredContacts = users.filter{ $0.displayName!.lowercased().contains(filter.lowercased()) }
+            let filteredContacts = users.filter{ $0.getDisplayName().localizedStandardContains(filter) }
             updateContactsUI(list: filteredContacts)
         }
     }

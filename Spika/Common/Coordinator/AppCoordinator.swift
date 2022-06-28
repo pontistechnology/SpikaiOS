@@ -151,4 +151,8 @@ class AppCoordinator: Coordinator {
 //        present(viewControllerToPresent, animated: true, completion: nil)
     }
     
+    func dismissViewController() {
+        let currentVC = navigationController.presentedViewController as? UINavigationController
+        currentVC?.dismiss(animated: true)
+    }
 }

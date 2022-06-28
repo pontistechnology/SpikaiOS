@@ -123,7 +123,6 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
             guard let self = self else { return }
             let fetchRequest = UserEntity.fetchRequest()
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(UserEntity.displayName), ascending: true)]
-//            fetchRequest.predicate = NSPredicate(format: "%K == %d", #keyPath(MessageEntity.roomId), room.id)
             self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
             self.frc?.delegate = self
             do {
@@ -181,15 +180,10 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
 //    }
 //
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        currentPrivateChatView.messagesTableView.endUpdates()
-//        currentPrivateChatView.messagesTableView.scrollToBottom()
         self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
-//        print("snapshot begi: ", snapshot)
-//        currentPrivateChatView.messagesTableView.reloadData()
-//        currentPrivateChatView.messagesTableView.scrollToBottom()
         self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
     }
 }

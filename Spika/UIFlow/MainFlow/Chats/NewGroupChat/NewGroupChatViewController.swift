@@ -12,6 +12,9 @@ class NewGroupChatViewController: BaseViewController {
     
     private let newGroupChatView = NewGroupChatView()
     var viewModel: NewGroupChatViewModel!
+    private let imagePicker = UIImagePickerController()
+    let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    var fileData: Data?
     
     override func viewDidLoad() {
         super.viewDidLoad()
