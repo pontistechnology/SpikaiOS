@@ -110,15 +110,15 @@ extension AllChatsViewController: UITableViewDataSource {
         {
             cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
                                 name: friendUser.getDisplayName(),
-                                desc: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "No messages")
-            cell?.timeLabel.text = "\(room.users?.count) usrs, id:  \(room.id)"
+                                description: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "No messages",
+                                time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "")
         }
         
         if room.type != "private" {
             cell?.configureCell(avatarUrl: room.avatarUrl,
                                 name: room.name ?? "noname",
-                                desc: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "no messages")
-            cell?.timeLabel.text = "\(room.users?.count) usrs, id:  \(room.id)"
+                                description: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "no messages",
+                                time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "")
         }
         
         cell?.messagesNumberLabel.text = "\((entity.messages?.array as! [MessageEntity]).filter{$0.createdAt > entity.visitedRoom && $0.fromUserId != viewModel.getMyUserId()}.count)"

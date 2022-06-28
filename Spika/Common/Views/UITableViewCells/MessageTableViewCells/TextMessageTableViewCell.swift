@@ -163,7 +163,7 @@ extension TextMessageTableViewCell {
         }
         
         if let createdAt = message.createdAt {
-            timeLabel.text = createdAt.convertTimestampToHoursAndMinutes()
+            timeLabel.text = createdAt.convert(to: .HHmm)
         }
                 
         switch currentReuseIdentifier {
