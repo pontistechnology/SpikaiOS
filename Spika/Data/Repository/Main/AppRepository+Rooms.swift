@@ -38,7 +38,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func checkOnlineRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>  {
+    func checkOnlineRoom(forUserId userId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>  {
         guard let accessToken = getAccessToken()
         else {return Fail<CheckRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -54,7 +54,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func checkOnlineRoom(forRoomId roomId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>  {
+    func checkOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>  {
         guard let accessToken = getAccessToken()
         else {return Fail<CheckRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -70,7 +70,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func createOnlineRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error> {
+    func createOnlineRoom(userId: Int64) -> AnyPublisher<CreateRoomResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -104,7 +104,7 @@ extension AppRepository {
     
     // MARK: Database
     
-    func checkPrivateLocalRoom(forUserId id: Int) -> Future<Room, Error>{
+    func checkPrivateLocalRoom(forUserId id: Int64) -> Future<Room, Error>{
         return databaseService.roomEntityService.getPrivateRoom(forUserId: id)
     }
     
@@ -112,7 +112,15 @@ extension AppRepository {
         return databaseService.roomEntityService.saveRoom(room)
     }
     
-    func checkLocalRoom(withId roomId: Int) -> Future<Room, Error> {
+    func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error> {
+        databaseService.roomEntityService.saveRooms(rooms)
+    }
+    
+    func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error> {
         databaseService.roomEntityService.checkLocalRoom(withId: roomId)
+    }
+    
+    func roomVisited(roomId: Int64) {
+        databaseService.roomEntityService.roomVisited(roomId: roomId)
     }
 }

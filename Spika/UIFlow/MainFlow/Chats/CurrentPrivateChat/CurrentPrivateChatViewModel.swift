@@ -36,6 +36,23 @@ class CurrentPrivateChatViewModel: BaseViewModel {
     }
 }
 
+// MARK: - Navigation
+extension CurrentPrivateChatViewModel {
+    func popTopViewController() {
+        getAppCoordinator()?.popTopViewController()
+    }
+    
+    func presentMessageDetails(records: [MessageRecord]) {
+        guard let roomUsers = room?.users else {
+            return
+        }
+        let users = roomUsers.compactMap { roomUser in
+            roomUser.user
+        }
+        getAppCoordinator()?.presentMessageDetails(users: users, records: records)
+    }
+}
+
 extension CurrentPrivateChatViewModel {
     
     func checkLocalRoom() {
@@ -104,7 +121,7 @@ extension CurrentPrivateChatViewModel {
         }.store(in: &subscriptions)
     }
     
-    func createRoom(userId: Int) {
+    func createRoom(userId: Int64) {
         networkRequestState.send(.started())
         repository.createOnlineRoom(userId: userId).sink { [weak self] completion in
             guard let self = self else { return }
@@ -144,6 +161,10 @@ extension CurrentPrivateChatViewModel {
             guard let self = self else { return }
         }.store(in: &subscriptions)
     }
+    
+    func roomVisited(roomId: Int64) {
+        repository.roomVisited(roomId: roomId)
+    }
 }
 
 extension CurrentPrivateChatViewModel {
@@ -152,7 +173,7 @@ extension CurrentPrivateChatViewModel {
         guard let room = self.room else { return }
         print("ROOM: ", room)
         let uuid = UUID().uuidString
-        let message = Message(createdAt: Int(Date().timeIntervalSince1970) * 1000,
+        let message = Message(createdAt: Date().currentTimeMillis(),
                               fromUserId: repository.getMyUserId(),
                               roomId: room.id, type: .text,
                               body: MessageBody(text: text), localId: uuid)
@@ -196,9 +217,5 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { _ in
             
         }.store(in: &subscriptions)
-    }
-        
-    func popTopViewController() {
-        getAppCoordinator()?.popTopViewController()
     }
 }

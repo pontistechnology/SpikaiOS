@@ -22,8 +22,8 @@ extension AppRepository {
         userDefaults.set(device.token, forKey: Constants.UserDefaults.accessToken)
     }
     
-    func getMyUserId() -> Int {
-        return userDefaults.integer(forKey: Constants.UserDefaults.userId)
+    func getMyUserId() -> Int64 {
+        return Int64(userDefaults.integer(forKey: Constants.UserDefaults.userId))
     }
     
     // MARK: Network
@@ -208,7 +208,7 @@ extension AppRepository {
         return databaseService.userEntityService.getLocalUsers()
     }
     
-    func getLocalUser(withId id: Int) -> Future<User, Error> {
+    func getLocalUser(withId id: Int64) -> Future<User, Error> {
         return databaseService.userEntityService.getLocalUser(withId: id)
     }
     

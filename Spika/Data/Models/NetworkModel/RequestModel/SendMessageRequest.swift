@@ -8,7 +8,7 @@
 import Foundation
 
 struct SendMessageRequest: Codable {
-    let roomId: Int
+    let roomId: Int64
     let type: String
     let body: MessageBody
     let localId: String

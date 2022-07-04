@@ -18,6 +18,10 @@ class AllChatsViewModel: BaseViewModel {
         getAppCoordinator()?.presentCurrentPrivateChatScreen(user: user)
     }
     
+    func presentCurrentPrivateChatScreen(room: Room) {
+        getAppCoordinator()?.presentCurrentPrivateChatScreen(room: room)
+    }
+    
     func getAllRooms() {
         repository.getAllRooms().sink { [weak self] completion in
             guard let _ = self else { return }
@@ -25,11 +29,21 @@ class AllChatsViewModel: BaseViewModel {
         } receiveValue: { [weak self] response in
             guard let self = self else { return }
             guard let rooms = response.data?.list else { return }
+            
+            rooms.forEach { room in
+                self.repository.saveLocalRoom(room: room).sink { c in
+                    print("save room allCV: ", c)
+                } receiveValue: { room in
+                    
+                }.store(in: &self.subscriptions)
+
+            }
+            
             print("rooms server: ", rooms.count)
         }.store(in: &subscriptions)
     }
     
-    func getMyUserId() -> Int {
+    func getMyUserId() -> Int64 {
         return repository.getMyUserId()
     }
 }

@@ -42,7 +42,7 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] users in
             guard let _ = self else { return }
-            print("Saved users to DB: \(users)")
+//            print("Saved users to DB: \(users)")
         }.store(in: &subscriptions)
     }
     
@@ -66,7 +66,6 @@ class ContactsViewModel: BaseViewModel {
             let phoneHashes = contacts.map { $0.telephone.getSHA256() }
             print(phoneHashes)
             self.postContacts(hashes: phoneHashes)
-            
         }.store(in: &subscriptions)
     }
     
@@ -82,7 +81,7 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] response in
             guard let _ = self else { return }
-            print("Success: ", response)
+//            print("Success: ", response)
         }.store(in: &subscriptions)
     }
     
@@ -97,7 +96,7 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] response in
             guard let self = self else { return }
-            print("Success: ", response)
+//            print("Success: ", response)
             if let list = response.data?.list {
                 self.repository.updateUsersWithContactData(list)
             }
@@ -118,7 +117,6 @@ class ContactsViewModel: BaseViewModel {
           
         var tableAppUsers = Array<Array<User>>()
         for user in sortedList {
-
             let char1 = user.getDisplayName().prefix(1)
             if let char2 = tableAppUsers.last?.last?.getDisplayName().prefix(1), char1.localizedLowercase == char2.localizedLowercase {
                 tableAppUsers[tableAppUsers.count - 1].append(user)

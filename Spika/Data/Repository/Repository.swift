@@ -53,15 +53,22 @@ protocol Repository {
     // MARK: NETWORKING: Room
     
     func createOnlineRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error>
-    func createOnlineRoom(userId: Int) -> AnyPublisher<CreateRoomResponseModel, Error>
-    func checkOnlineRoom(forUserId userId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
-    func checkOnlineRoom(forRoomId roomId: Int) -> AnyPublisher<CheckRoomResponseModel, Error>
+    func createOnlineRoom(userId: Int64) -> AnyPublisher<CreateRoomResponseModel, Error>
+    func checkOnlineRoom(forUserId userId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
+    func checkOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
     
     // MARK: NETWORKING: Message
     
-    func sendTextMessage(body: MessageBody, roomId: Int, localId: String) -> AnyPublisher<SendMessageResponse, Error>
-    func sendDeliveredStatus(messageIds: [Int]) -> AnyPublisher<DeliveredResponseModel, Error>
+    func sendTextMessage(body: MessageBody, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error>
+    func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error>
+    
+    // MARK: NETWORKING: Sync
+    
+    func syncRooms(timestamp: Int64) -> AnyPublisher<SyncRoomsResponseModel, Error>
+    func syncMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error>
+    func syncMessageRecords(timestamp: Int64) -> AnyPublisher<SyncMessageRecordsResponseModel, Error>
+    func syncUsers(timestamp: Int64) -> AnyPublisher<SyncUsersResponseModel, Error>
     
     // MARK: NETWORKING: Device
     
@@ -75,31 +82,43 @@ protocol Repository {
     // MARK: COREDATA: User
     
     func getLocalUsers() -> Future<[User], Error>
-    func getLocalUser(withId id: Int) -> Future<User, Error>
+    func getLocalUser(withId id: Int64) -> Future<User, Error>
     func saveUser(_ user: User) -> Future<User, Error>
     func saveUsers(_ users: [User]) -> Future<[User], Error>
     
     // MARK: COREDATA: Messages
     
-    func saveMessage(message: Message, roomId: Int) -> Future<Message, Error>
-    func getMessages(forRoomId: Int) -> Future<[Message], Error>
+    func saveMessage(message: Message, roomId: Int64) -> Future<Message, Error>
+    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error>
+    func getMessages(forRoomId: Int64) -> Future<[Message], Error>
+    func printAllMessages()
 //    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error>
     
     // MARK: COREDATA: Room
     
-    func checkPrivateLocalRoom(forUserId id: Int) -> Future<Room, Error>
+    func checkPrivateLocalRoom(forUserId id: Int64) -> Future<Room, Error>
     func saveLocalRoom(room: Room) -> Future<Room, Error>
-    func checkLocalRoom(withId roomId: Int) -> Future<Room, Error>
+    func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error>
+    func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error>
+    func roomVisited(roomId: Int64)
 
     // MARK: - USERDEFAULTS: User
     
     func saveUserInfo(user: User, device: Device?)
-    func getMyUserId() -> Int
+    func getMyUserId() -> Int64
     func getAccessToken() -> String?
-    func getMyDeviceId() -> Int
+    func getMyDeviceId() -> Int64
+    func getUsersSyncTimestamp() -> Int64
+    func getRoomsSyncTimestamp() -> Int64
+    func getMessagesSyncTimestamp() -> Int64
+    func getMessageRecordsSyncTimestamp() -> Int64
+    func setUsersSyncTimestamp(_ timestamp: Int64)
+    func setRoomsSyncTimestamp(_ timestamp: Int64)
+    func setMessagesSyncTimestamp(_ timestamp: Int64)
+    func setMessageRecordsSyncTimestamp(_ timestamp: Int64)
     
     // MARK: COREDATA: Contacts
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error>
     func getContact(phoneNumber: String) -> Future<FetchedContact, Error>
-    func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error>
+    func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error>    
 }

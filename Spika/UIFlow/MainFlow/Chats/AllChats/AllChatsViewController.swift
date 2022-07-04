@@ -16,6 +16,7 @@ class AllChatsViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        allChatsView.allChatsTableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -31,6 +32,7 @@ class AllChatsViewController: BaseViewController {
         
         allChatsView.pencilImageView.tap().sink { [weak self] _ in
             self?.viewModel.presentSelectUserScreen()
+            self?.getAllRooms()
         }.store(in: &subscriptions)
         
         setRoomsFetch()
@@ -51,12 +53,13 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = RoomEntity.fetchRequest()
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.name), ascending: true)]
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false)]
             self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                   managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
             self.frc?.delegate = self
             do {
                 try self.frc?.performFetch()
+                self.allChatsView.allChatsTableView.reloadData()
             } catch {
                 fatalError("Failed to fetch entities: \(error)")
                 // TODO: handle error and change main context to func
@@ -77,14 +80,10 @@ extension AllChatsViewController: UITableViewDelegate {
         guard let entity = frc?.object(at: indexPath) else { return }
         let room = Room(roomEntity: entity)
         
-        if room.type == "private",
-           let roomUsers = room.users,
-           let friendRoomUser = roomUsers.first(where: { roomUser in
-               roomUser.user!.id != viewModel.getMyUserId()
-           }),
-           let friendUser = friendRoomUser.user
-        {
-            viewModel.presentCurrentPrivateChatScreen(user: friendUser)
+        print("ROOM_: ", room)
+        
+        if room.type == "private" {
+            viewModel.presentCurrentPrivateChatScreen(room: room)
         }
     }
 }
@@ -98,8 +97,10 @@ extension AllChatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
         guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
+        print("ALLCVC: ", indexPath, " roomentity: ", entity)
+    
         let room = Room(roomEntity: entity)
-        
+        print("room at indexpath: ", indexPath, room)
         if room.type == "private",
            let roomUsers = room.users,
            let friendRoomUser = roomUsers.first(where: { roomUser in
@@ -109,8 +110,20 @@ extension AllChatsViewController: UITableViewDataSource {
         {
             cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
                                 name: friendUser.getDisplayName(),
-                                desc: entity.getLastMessage()?.bodyText ?? "No messages")
+                                description: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "No messages",
+                                time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "")
         }
+        
+        if room.type != "private" {
+            cell?.configureCell(avatarUrl: room.avatarUrl,
+                                name: room.name ?? "noname",
+                                description: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "no messages",
+                                time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "")
+        }
+        
+        cell?.messagesNumberLabel.text = "\((entity.messages?.array as! [MessageEntity]).filter{$0.createdAt > entity.visitedRoom && $0.fromUserId != viewModel.getMyUserId()}.count)"
+        
+        
         
         return cell ?? UITableViewCell()
     }

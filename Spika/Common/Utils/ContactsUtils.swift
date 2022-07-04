@@ -50,25 +50,6 @@ class ContactsUtils {
                         print("Failed to enumerate contact", error)
                     }
                     
-//                    guard let phoneUtil = NBPhoneNumberUtil.sharedInstance(), let defaultRegionCode = defaultRegionCode() else {
-//                        return
-//                    }
-//                    
-//                    var phoneNumbers = [String]()
-//                    for var contact in contacts {
-//                        print(contact.telephone! + " " + contact.firstName! + " " + contact.lastName!)
-//                        do {
-//                            let phoneNumber: NBPhoneNumber = try phoneUtil.parse(contact.telephone, defaultRegion: defaultRegionCode)
-//                            let formattedString: String = try phoneUtil.format(phoneNumber, numberFormat: .E164)
-//                            phoneNumbers.append(formattedString)
-//                            print("[\(formattedString)]")
-//                            contact.telephone = formattedString
-//                            print("changes: " + contact.telephone! + " " + contact.firstName! + " " + contact.lastName!)
-//                        }
-//                        catch let error as NSError {
-//                            print(error.localizedDescription)
-//                        }
-//                    }
                     promise(.success(contacts))
                 } else {
                     print("access denied")

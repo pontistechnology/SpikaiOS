@@ -20,30 +20,33 @@ struct RoomData: Codable {
 
 // TODO: move models
 struct Room: Codable {
-    let id: Int
+    let id: Int64
     let type: String?
     let name: String?
     let avatarUrl: String?
-    let createdAt: Int?
+    let createdAt: Int64?
     let users: [RoomUser]?
 }
 
 extension Room {
     init(roomEntity: RoomEntity) {
+        print("INIT ROOM ENTITY: ", roomEntity.id, roomEntity.users?.count)
         let roomUsers = roomEntity.users?.allObjects.compactMap{ RoomUser(roomUserEntity: $0 as? RoomUserEntity)}
-        self.init(id: Int(roomEntity.id),
+        
+        self.init(id: roomEntity.id,
                   type: roomEntity.type,
                   name: roomEntity.name,
                   avatarUrl: roomEntity.avatarUrl,
-                  createdAt: Int(roomEntity.createdAt),
+                  createdAt: roomEntity.createdAt,
                   users: roomUsers
                   )
     }
 }
 
 struct RoomUser: Codable {
-    let userId: Int?
+    let userId: Int64
     let isAdmin: Bool?
+    let roomId: Int64?
     let user: User?
 }
 
@@ -52,8 +55,9 @@ extension RoomUser {
         guard let roomUserEntity = roomUserEntity else {
             return nil
         }
-        self.init(userId: Int(roomUserEntity.userId),
+        self.init(userId: roomUserEntity.userId,
                   isAdmin: roomUserEntity.isAdmin,
+                  roomId: roomUserEntity.roomId,
                   user: User(entity: roomUserEntity.user)) // TODO: check !
     }
 }

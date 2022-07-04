@@ -8,6 +8,7 @@
 import Foundation
 
 struct SSENewMessage: Codable {
-    let type: String?
+    let type: SSEEventType?
     let message: Message?
+    let messageRecord: MessageRecord?
 }

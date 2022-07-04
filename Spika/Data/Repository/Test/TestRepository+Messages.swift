@@ -9,23 +9,23 @@ import CoreData
 import Combine
 
 extension TestRepository {
-    func saveMessage(message: Message, roomId: Int) -> Future<Message, Error> {
+    func saveMessage(message: Message, roomId: Int64) -> Future<Message, Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
-    func sendTextMessage(body: MessageBody, roomId: Int, localId: String) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendTextMessage(body: MessageBody, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error> {
        return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
     }
     
-    func sendDeliveredStatus(messageIds: [Int]) -> AnyPublisher<DeliveredResponseModel, Error> {
+    func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error> {
         return Fail<DeliveredResponseModel, Error>(error: NetworkError.noAccessToken)
                  .receive(on: DispatchQueue.main)
                  .eraseToAnyPublisher()
     }
     
-    func getMessages(forRoomId: Int) -> Future<[Message], Error> {
+    func getMessages(forRoomId: Int64) -> Future<[Message], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
     
@@ -33,5 +33,15 @@ extension TestRepository {
         Future { p in
             p(.failure(DatabseError.requestFailed))
         }
+    }
+    
+    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error> {
+        Future { p in
+            p(.failure(DatabseError.unknown))
+        }
+    }
+    
+    func printAllMessages() {
+        databaseService.messageEntityService.printAllMessages()
     }
 }

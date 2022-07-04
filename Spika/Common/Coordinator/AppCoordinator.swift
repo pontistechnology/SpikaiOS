@@ -23,9 +23,10 @@ class AppCoordinator: Coordinator {
         // TODO: check display name.isEmpty()
         if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
            let _ = userDefaults.string(forKey: Constants.UserDefaults.displayName){
-            presentHomeScreen()
             let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
-            sse?.startSSEConnection() // TODO: for now disabled
+            sse?.syncAndStartSSE()
+            presentHomeScreen()
+            // TODO: for now disabled
         } else if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken){
             presentEnterUsernameScreen()
         } else {
@@ -132,6 +133,22 @@ class AppCoordinator: Coordinator {
         let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroupChatViewController.self, arguments: self, selectedMembers)!
         let selectUserVC = navigationController.presentedViewController as? UINavigationController
         selectUserVC?.pushViewController(viewController, animated: true)
+    }
+    
+    func presentMessageDetails(users: [User], records: [MessageRecord]) {
+        // TODO: assemble this vc
+        let viewControllerToPresent = MessageDetailsViewController(users: users, records: records)
+        if #available(iOS 15.0, *) {
+            if let sheet = viewControllerToPresent.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        navigationController.present(viewControllerToPresent, animated: true)
+//        present(viewControllerToPresent, animated: true, completion: nil)
     }
     
 }

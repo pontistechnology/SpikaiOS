@@ -13,7 +13,6 @@ import CoreData
 public class ContactEntity: NSManagedObject {
     
     convenience init(phoneNumber: String, givenName: String?, familyName: String?, context: NSManagedObjectContext) {
-        print("Thread check userentity: " , Thread.current)
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.contactEntity, in: context) else {
             fatalError("fanta")
         }

@@ -24,12 +24,12 @@ struct AuthData: Codable {
 
 // MARK: - Device
 struct Device: Codable {
-    let id: Int?
-    let userId: Int?
+    let id: Int64?
+    let userId: Int64?
     let token: String?
-    let tokenExpiredAt: Int?
+    let tokenExpiredAt: Int64?
     let osName: String?
     let osVersion: String?
-    let appVersion: Int?
+    let appVersion: String?
     let pushToken: String?
 }

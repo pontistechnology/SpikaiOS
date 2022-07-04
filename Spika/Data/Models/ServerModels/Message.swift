@@ -8,20 +8,21 @@
 import Foundation
 
 struct Message: Codable {
-    let createdAt: Int?
-    let fromUserId: Int?
-    let id: Int?
+    let createdAt: Int64?
+    let fromUserId: Int64?
+    let id: Int64?
     let localId: String?
-    let totalUserCount: Int?
-    let deliveredCount: Int?
-    let seenCount: Int?
-    let roomId: Int?
+    let totalUserCount: Int64?
+    let deliveredCount: Int64?
+    let seenCount: Int64?
+    let roomId: Int64?
     let type: String?
     let body: MessageBody?
+    let records: [MessageRecord]?
 }
 
 extension Message {
-    init(createdAt: Int, fromUserId: Int, roomId: Int, type: MessageType, body: MessageBody, localId: String) {
+    init(createdAt: Int64, fromUserId: Int64, roomId: Int64, type: MessageType, body: MessageBody, localId: String) {
         self.body = body
         self.id = nil
         self.localId = localId
@@ -32,38 +33,61 @@ extension Message {
         self.roomId = roomId
         self.type = type.rawValue
         self.createdAt = createdAt
+        self.records = nil
     }
     
     init(messageEntity: MessageEntity) {
-        self.init(createdAt: Int(messageEntity.createdAt),
-                  fromUserId: Int(messageEntity.fromUserId),
-                  id: Int(messageEntity.id ?? "-1"),
+        var messageRecords: [MessageRecord] = []
+        
+        if let records = messageEntity.records?.allObjects as? [MessageRecordEntity] {
+            for messageRecordEntity in records {
+                let record = MessageRecord(messageRecordEntity: messageRecordEntity)
+                messageRecords.append(record)
+            }
+        }
+        self.init(createdAt: messageEntity.createdAt,
+                  fromUserId: messageEntity.fromUserId,
+                  id: Int64(messageEntity.id ?? "-1"),
                   localId: messageEntity.localId,
-                  totalUserCount: Int(messageEntity.totalUserCount),
-                  deliveredCount: Int(messageEntity.deliveredCount),
-                  seenCount: Int(messageEntity.seenCount),
-                  roomId: Int(messageEntity.roomId),
-                  type: messageEntity.type ?? "todo check",
-                  body: MessageBody(text: messageEntity.bodyText ?? ""))
+                  totalUserCount: messageEntity.totalUserCount,
+                  deliveredCount: messageEntity.deliveredCount,
+                  seenCount: messageEntity.seenCount,
+                  roomId: messageEntity.roomId,
+                  type: messageEntity.type, // check
+                  body: MessageBody(text: messageEntity.bodyText ?? ""),
+                  records: messageRecords)
     }
     
-    func getMessageState() -> MessageState {
+    func getMessageState(myUserId: Int64) -> MessageState {
         // TODO: check first seen, then delivered, then sent, waiting, error, (check fail)
-        if(seenCount == totalUserCount) {
+        guard let records = records,
+              let totalUserCount = totalUserCount
+        else {
+            print("there is no records")
+            return .fail
+        }
+        
+        print("RECORDS: ", records)
+        
+        if records.filter { $0.type == "seen" && $0.userId != myUserId}.count == totalUserCount - 1 {
             return .seen
         }
         
-        if(deliveredCount == totalUserCount) {
+        if records.filter { $0.type == "delivered" && $0.userId != myUserId}.count == totalUserCount - 1 {
             return .delivered
         }
         
-        if(deliveredCount == 0) {
-            return .sent
-        }
-        
-        if seenCount == nil || deliveredCount == nil {
-            return .fail
-        }
+//        if(deliveredCount == totalUserCount) {
+//            return .delivered
+//        }
+//
+//        if(deliveredCount == 0) {
+//            return .sent
+//        }
+//
+//        if seenCount == nil || deliveredCount == nil {
+//            return .fail
+//        }
         
         return .waiting
     }
