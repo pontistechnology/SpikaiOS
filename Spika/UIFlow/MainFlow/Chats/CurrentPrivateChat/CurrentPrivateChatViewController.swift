@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreData
+import PhotosUI
 
 class CurrentPrivateChatViewController: BaseViewController {
     
@@ -66,7 +67,6 @@ extension CurrentPrivateChatViewController {
         currentPrivateChatView.downArrowImageView.tap().sink { [weak self] _ in
             self?.currentPrivateChatView.messagesTableView.scrollToBottom()
         }.store(in: &subscriptions)
-
     }
 }
 
@@ -182,7 +182,7 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
     }
     
     func messageInputView(didPressPlusButton messageVeiw: MessageInputView) {
-        print("plus in ccVC")
+        presentLibraryPicker()
     }
     
     func messageInputView(didPressEmojiButton messageVeiw: MessageInputView) {
@@ -233,16 +233,26 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
         for rec in entity.records! {
             print("rrec: ", (rec as! MessageRecordEntity).type)
         }
+        
         let message = Message(messageEntity: entity)
         
         let identifier = (message.fromUserId == myUserId)
                         ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
                         : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
+        
+        
         print(identifier)
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
         
         cell?.updateCell(message: message)
         cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        
+        if message.type == "image" {
+            let cell2 = tableView.dequeueReusableCell(withIdentifier: ImageMessageTableViewCell.ImageReuseIdentifier.myImage.rawValue, for: indexPath) as? ImageMessageTableViewCell
+            cell2?.updateCell(message: message)
+            cell2?.updateCellState(to: message.getMessageState(myUserId: myUserId))
+            return cell2 ?? UITableViewCell()
+        }
         
         return cell ?? UITableViewCell()
     }
@@ -296,6 +306,42 @@ extension CurrentPrivateChatViewController {
     }
     
 }
+
+extension CurrentPrivateChatViewController: PHPickerViewControllerDelegate {
+    
+    func presentLibraryPicker() {
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+        
+        configuration.filter = .any(of: [.images, .livePhotos, .videos])
+        configuration.preferredAssetRepresentationMode = .current
+        configuration.selectionLimit = 30
+        //        configuration.selection = .ordered // iOS 15 required
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        dismiss(animated: true)
+        
+        for result in results {
+            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+                result.itemProvider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier) { data, error in
+                    guard let data = data else { return }
+                    print(data)
+                    self.viewModel.sendImage(data: data)
+                }
+            }
+        }
+        
+        print("PHPICKER: ", results)
+    }
+    
+    
+}
+
+
     
 // MARK: reply to message
 //        Commented because there is no replyId on backend for now

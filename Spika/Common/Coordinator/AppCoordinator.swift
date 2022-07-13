@@ -155,4 +155,18 @@ class AppCoordinator: Coordinator {
         let currentVC = navigationController.presentedViewController as? UINavigationController
         currentVC?.dismiss(animated: true)
     }
+    
+    func presentMoreActionsSheet() {
+        let viewControllerToPresent = UIViewController()
+        if #available(iOS 15.0, *) {
+            if let sheet = viewControllerToPresent.sheetPresentationController {
+                sheet.detents = [.medium()]
+                sheet.prefersGrabberVisible = false
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        navigationController.present(viewControllerToPresent, animated: true)
+    }
 }

@@ -57,6 +57,7 @@ class CurrentPrivateChatView: UIView, BaseView {
         messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myTextAndReply.rawValue)
         messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue)
         messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendTextAndReply.rawValue)
+        messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: ImageMessageTableViewCell.ImageReuseIdentifier.myImage.rawValue)
         
         
         messagesTableView.register(MediaMessageTableViewCell.self, forCellReuseIdentifier: MediaMessageTableViewCell.reuseIdentifier)
