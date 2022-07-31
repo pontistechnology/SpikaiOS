@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CurrentPrivateChatView: UIView, BaseView {
+class CurrentChatView: UIView, BaseView {
     
     let messagesTableView = UITableView()
     let messageInputView = MessageInputView()
@@ -53,12 +53,26 @@ class CurrentPrivateChatView: UIView, BaseView {
     }
     
     func setupBindings() {
-        messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue)
-        messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myTextAndReply.rawValue)
-        messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue)
-        messagesTableView.register(TextMessageTableViewCell.self, forCellReuseIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendTextAndReply.rawValue)
-        messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: ImageMessageTableViewCell.ImageReuseIdentifier.myImage.rawValue)
+        messagesTableView.register(TextMessageTableViewCell.self,
+                                   forCellReuseIdentifier: TextMessageTableViewCell.myTextReuseIdentifier)
+        messagesTableView.register(TextMessageTableViewCell.self,
+                                   forCellReuseIdentifier: TextMessageTableViewCell.friendTextReuseIdentifier)
+        messagesTableView.register(TextMessageTableViewCell.self,
+                                   forCellReuseIdentifier: TextMessageTableViewCell.groupTextReuseIdentifier)
         
+        
+        messagesTableView.register(ImageMessageTableViewCell.self,
+                                   forCellReuseIdentifier: ImageMessageTableViewCell.myImageReuseIdentifier)
+        messagesTableView.register(ImageMessageTableViewCell.self,
+                                   forCellReuseIdentifier: ImageMessageTableViewCell.friendImageReuseIdentifier)
+        messagesTableView.register(ImageMessageTableViewCell.self,
+                                   forCellReuseIdentifier: ImageMessageTableViewCell.groupImageReuseIdentifier)
+        
+        
+        
+        messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: "imageLeft")
+        messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: "imageRight")
+
         
         messagesTableView.register(MediaMessageTableViewCell.self, forCellReuseIdentifier: MediaMessageTableViewCell.reuseIdentifier)
         messagesTableView.register(VoiceMessageTableViewCell.self, forCellReuseIdentifier: VoiceMessageTableViewCell.reuseIdentifier)

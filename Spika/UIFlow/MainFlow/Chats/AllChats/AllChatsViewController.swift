@@ -82,8 +82,10 @@ extension AllChatsViewController: UITableViewDelegate {
         
         print("ROOM_: ", room)
         
-        if room.type == "private" {
-            viewModel.presentCurrentPrivateChatScreen(room: room)
+        if room.type == RoomType.privateRoom.rawValue {
+            viewModel.presentCurrentChatScreen(room: room)
+        } else {
+            viewModel.presentCurrentChatScreen(room: room)
         }
     }
 }
@@ -115,7 +117,7 @@ extension AllChatsViewController: UITableViewDataSource {
         }
         
         if room.type != "private" {
-            cell?.configureCell(avatarUrl: room.avatarUrl,
+            cell?.configureCell(avatarUrl: room.getAvatarUrl(),
                                 name: room.name ?? "noname",
                                 description: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "no messages",
                                 time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "")

@@ -39,5 +39,15 @@ extension String {
 
             return ceil(boundingBox.width)
     }
-
+    
+    // TODO: check
+    func getAvatarUrl() -> String? {
+        if self.starts(with: "http") {
+            return self
+        } else if self.starts(with: "/") {
+            return Constants.Networking.baseUrl + self.dropFirst()
+        } else {
+            return Constants.Networking.baseUrl + self
+        }
+    }
 }

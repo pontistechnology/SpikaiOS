@@ -135,7 +135,7 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
     }
     
 //    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        currentPrivateChatView.messagesTableView.beginUpdates()
+//        currentChatView.messagesTableView.beginUpdates()
 //    }
 //
 //    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
@@ -145,31 +145,31 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
 //            guard let newIndexPath = newIndexPath else {
 //                return
 //            }
-//            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
+//            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
 //
 //        case .delete:
 //            guard let indexPath = indexPath else {
 //                return
 //            }
-//            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+//            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
 //        case .move:
 //            guard let indexPath = indexPath,
 //                  let newIndexPath = newIndexPath
 //            else {
 //                return
 //            }
-//            currentPrivateChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+//            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
 //
 //        case .update:
 //            guard let indexPath = indexPath else {
 //                return
 //            }
-////            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-////            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
+////            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+////            currentChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
 //
-//            currentPrivateChatView.messagesTableView.reloadRows(at: [indexPath], with: .fade)
+//            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .fade)
 //
-////            let cell = currentPrivateChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
+////            let cell = currentChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
 ////            let entity = frc?.object(at: indexPath)
 ////            let message = Message(messageEntity: entity!)
 ////            cell?.updateCell(message: message)

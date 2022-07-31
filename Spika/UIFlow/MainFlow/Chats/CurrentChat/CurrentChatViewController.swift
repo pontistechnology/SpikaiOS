@@ -10,17 +10,17 @@ import UIKit
 import CoreData
 import PhotosUI
 
-class CurrentPrivateChatViewController: BaseViewController {
+class CurrentChatViewController: BaseViewController {
     
-    private let currentPrivateChatView = CurrentPrivateChatView()
-    var viewModel: CurrentPrivateChatViewModel!
+    private let currentChatView = CurrentChatView()
+    var viewModel: CurrentChatViewModel!
     let friendInfoView = ChatNavigationBarView()
     var i = 1
     var frc: NSFetchedResultsController<MessageEntity>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView(currentPrivateChatView)
+        setupView(currentChatView)
         setupNavigationItems()
         setupBindings()
         checkRoom()
@@ -37,15 +37,15 @@ class CurrentPrivateChatViewController: BaseViewController {
 
 // MARK: Functions
 
-extension CurrentPrivateChatViewController {
+extension CurrentChatViewController {
     func checkRoom() {
         viewModel.checkLocalRoom()
     }
 
     func setupBindings() {
-        currentPrivateChatView.messageInputView.delegate = self
-        currentPrivateChatView.messagesTableView.delegate = self
-        currentPrivateChatView.messagesTableView.dataSource = self
+        currentChatView.messageInputView.delegate = self
+        currentChatView.messagesTableView.delegate = self
+        currentChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
         
         viewModel.roomPublisher.sink { completion in
@@ -64,15 +64,15 @@ extension CurrentPrivateChatViewController {
             self.setFetch(room: room)
         }.store(in: &subscriptions)
         
-        currentPrivateChatView.downArrowImageView.tap().sink { [weak self] _ in
-            self?.currentPrivateChatView.messagesTableView.scrollToBottom()
+        currentChatView.downArrowImageView.tap().sink { [weak self] _ in
+            self?.currentChatView.messagesTableView.scrollToBottom()
         }.store(in: &subscriptions)
     }
 }
 
 // MARK: - NSFetchedResultsController
 
-extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
+extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     func setFetch(room: Room) {
         DispatchQueue.main.async { [weak self] in
@@ -84,7 +84,7 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
             self.frc?.delegate = self
             do {
                 try self.frc?.performFetch()
-                self.currentPrivateChatView.messagesTableView.reloadData()
+                self.currentChatView.messagesTableView.reloadData()
             } catch {
                 fatalError("Failed to fetch entities: \(error)") // TODO: handle error
             }
@@ -94,7 +94,7 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        currentPrivateChatView.messagesTableView.beginUpdates()
+        currentChatView.messagesTableView.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
@@ -104,31 +104,31 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
             guard let newIndexPath = newIndexPath else {
                 return
             }
-            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
+            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
             
         case .delete:
             guard let indexPath = indexPath else {
                 return
             }
-            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
         case .move:
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath
             else {
                 return
             }
-            currentPrivateChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
             
         case .update:
             guard let indexPath = indexPath else {
                 return
             }
-//            currentPrivateChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-//            currentPrivateChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
+//            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+//            currentChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
             
-            currentPrivateChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
+            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
             
-//            let cell = currentPrivateChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
+//            let cell = currentChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
 //            let entity = frc?.object(at: indexPath)
 //            let message = Message(messageEntity: entity!)
 //            cell?.updateCell(message: message)
@@ -139,29 +139,29 @@ extension CurrentPrivateChatViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        currentPrivateChatView.messagesTableView.endUpdates()
-        currentPrivateChatView.messagesTableView.scrollToBottom()
+        currentChatView.messagesTableView.endUpdates()
+        currentChatView.messagesTableView.scrollToBottom()
     }
     
 //    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
 //        print("snapshot begi: ", snapshot)
-//        currentPrivateChatView.messagesTableView.reloadData()
-//        currentPrivateChatView.messagesTableView.scrollToBottom()
+//        currentChatView.messagesTableView.reloadData()
+//        currentChatView.messagesTableView.scrollToBottom()
 //    }
 }
 
 
 // MARK: - MessageInputView actions
 
-extension CurrentPrivateChatViewController: MessageInputViewDelegate {
+extension CurrentChatViewController: MessageInputViewDelegate {
     
     func messageInputView(_ messageView: MessageInputView, didPressSend message: String, id: Int) {
         print("send in ccVC with ID, this id is from array not message Id")
         
         viewModel.trySendMessage(text: message)
         
-        currentPrivateChatView.messageInputView.clearTextField()
-        currentPrivateChatView.messageInputView.hideReplyView()
+        currentChatView.messageInputView.clearTextField()
+        currentChatView.messageInputView.hideReplyView()
     }
     
     func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String) {
@@ -169,8 +169,8 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
         
         viewModel.trySendMessage(text: message)
 
-        currentPrivateChatView.messageInputView.clearTextField()
-        currentPrivateChatView.messageInputView.hideReplyView()
+        currentChatView.messageInputView.clearTextField()
+        currentChatView.messageInputView.hideReplyView()
     }
     
     func messageInputView(didPressCameraButton messageVeiw: MessageInputView) {
@@ -192,7 +192,7 @@ extension CurrentPrivateChatViewController: MessageInputViewDelegate {
 
 // MARK: - UITableView
 
-extension CurrentPrivateChatViewController: UITableViewDelegate {
+extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? TextMessageTableViewCell else { return }
@@ -212,14 +212,14 @@ extension CurrentPrivateChatViewController: UITableViewDelegate {
             return
         }
         
-        currentPrivateChatView.hideScrollToBottomButton(should: isLastRowVisible)
+        currentChatView.hideScrollToBottomButton(should: isLastRowVisible)
 
     }
     
     
 }
 
-extension CurrentPrivateChatViewController: UITableViewDataSource {
+extension CurrentChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = self.frc?.sections else { return 0 }
@@ -236,31 +236,53 @@ extension CurrentPrivateChatViewController: UITableViewDataSource {
         
         let message = Message(messageEntity: entity)
         
-        let identifier = (message.fromUserId == myUserId)
-                        ? TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue
-                        : TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue
-        
-        
-        print(identifier)
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
-        
-        cell?.updateCell(message: message)
-        cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
-        
-        if message.type == "image" {
-            let cell2 = tableView.dequeueReusableCell(withIdentifier: ImageMessageTableViewCell.ImageReuseIdentifier.myImage.rawValue, for: indexPath) as? ImageMessageTableViewCell
-            cell2?.updateCell(message: message)
-            cell2?.updateCellState(to: message.getMessageState(myUserId: myUserId))
-            return cell2 ?? UITableViewCell()
+        if message.type == "text" {
+            var identifier = ""
+            
+            if myUserId == message.fromUserId! {
+                identifier = TextMessageTableViewCell.myTextReuseIdentifier
+            } else if viewModel.room?.type == "private" {
+                identifier = TextMessageTableViewCell.friendTextReuseIdentifier
+            } else {
+                identifier = TextMessageTableViewCell.groupTextReuseIdentifier
+            }
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
+            
+            cell?.updateCell(message: message)
+            cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
+            if let user = viewModel.getUser(for: message.fromUserId!) {
+                
+                cell?.updateSenderInfo(name: user.getDisplayName(), photoUrl: URL(string: user.getAvatarUrl() ?? ""))
+            }
+            return cell ?? UITableViewCell()
         }
         
-        return cell ?? UITableViewCell()
+        if message.type == "image" {
+            var identifier = ""
+            
+            if myUserId == message.fromUserId! {
+                identifier = ImageMessageTableViewCell.myImageReuseIdentifier
+            } else if viewModel.room?.type == "private" {
+                identifier = ImageMessageTableViewCell.friendImageReuseIdentifier
+            } else {
+                identifier = ImageMessageTableViewCell.groupImageReuseIdentifier
+            }
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? ImageMessageTableViewCell
+            cell?.updateCell(message: message)
+            cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
+            
+            return cell ?? UITableViewCell()
+        }
+        
+        return UITableViewCell()
     }
 }
 
 // MARK: - Navigation items setup
 
-extension CurrentPrivateChatViewController {
+extension CurrentChatViewController {
     func setupNavigationItems() {
         let videoCallButton = UIBarButtonItem(image: UIImage(named: "videoCall"), style: .plain, target: self, action: #selector(videoCallActionHandler))
         let audioCallButton = UIBarButtonItem(image: UIImage(named: "phoneCall"), style: .plain, target: self, action: #selector(phoneCallActionHandler))
@@ -268,7 +290,14 @@ extension CurrentPrivateChatViewController {
         navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
 
-        friendInfoView.change(avatarUrl: viewModel.friendUser.getAvatarUrl(), name: viewModel.friendUser.getDisplayName(), lastSeen: "yesterday")
+        if viewModel.room?.type == RoomType.privateRoom.rawValue {
+            friendInfoView.change(avatarUrl: viewModel.friendUser.getAvatarUrl(), name: viewModel.friendUser.getDisplayName(), lastSeen: "yesterday")
+        } else {
+            friendInfoView.change(avatarUrl: viewModel.room?.getAvatarUrl(),
+                                  name: viewModel.room?.name,
+                                  lastSeen: "today")
+        }
+        
         let vtest = UIBarButtonItem(customView: friendInfoView)
         navigationItem.leftBarButtonItem = vtest
     }
@@ -283,10 +312,10 @@ extension CurrentPrivateChatViewController {
 
 // MARK: - swipe gestures on cells
 
-extension CurrentPrivateChatViewController {
+extension CurrentChatViewController {
 //        func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 //            let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
-//                self.currentPrivateChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.messagesSubject.value[indexPath.row]), id: indexPath.row)
+//                self.currentChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.messagesSubject.value[indexPath.row]), id: indexPath.row)
 //                    completionHandler(true)
 //                }
 //            firstLeft.backgroundColor = .systemBlue
@@ -307,7 +336,7 @@ extension CurrentPrivateChatViewController {
     
 }
 
-extension CurrentPrivateChatViewController: PHPickerViewControllerDelegate {
+extension CurrentChatViewController: PHPickerViewControllerDelegate {
     
     func presentLibraryPicker() {
         var configuration = PHPickerConfiguration(photoLibrary: .shared())
@@ -337,48 +366,4 @@ extension CurrentPrivateChatViewController: PHPickerViewControllerDelegate {
         
         print("PHPICKER: ", results)
     }
-    
-    
 }
-
-
-    
-// MARK: reply to message
-//        Commented because there is no replyId on backend for now
-    
-    //        switch message.messageType {
-    //        case .text:
-    //            break
-    
-    //
-    //            switch message.isMyMessage {
-    //            case true:
-    //                if let replyId = message.replyMessageId {
-    //                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myTextAndReply.rawValue, for: indexPath) as? TextMessageTableViewCell
-    //                    cell?.updateCell(message: message, replyMessageTest: viewModel.messagesSubject.value[replyId])
-    //                    return cell ?? UITableViewCell()
-    //                } else {
-    //                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.myText.rawValue, for: indexPath) as? TextMessageTableViewCell
-    //                    cell?.updateCell(message: message)
-    //                    return cell ?? UITableViewCell()
-    //                }
-    //            case false:
-    //                if let replyId = message.replyMessageId {
-    //                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendTextAndReply.rawValue, for: indexPath) as? TextMessageTableViewCell
-    //                    cell?.updateCell(message: message, replyMessageTest: viewModel.messagesSubject.value[replyId])
-    //                    return cell ?? UITableViewCell()
-    //                } else {
-    //                    let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageTableViewCell.TextReuseIdentifier.friendText.rawValue, for: indexPath) as? TextMessageTableViewCell
-    //                    cell?.updateCell(message: message)
-    //                    return cell ?? UITableViewCell()
-    //                }
-    //            }
-    
-    //        case .photo:
-    //            return UITableViewCell()
-    //        case .video:
-    //            return UITableViewCell()
-    //        case .voice:
-    //            return UITableViewCell()
-    //        }
-    //    }

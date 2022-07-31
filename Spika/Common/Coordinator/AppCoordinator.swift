@@ -115,18 +115,18 @@ class AppCoordinator: Coordinator {
         navigationController.present(navC, animated: true, completion: nil)
     }
     
-    func presentCurrentPrivateChatScreen(user: User) {
+    func presentCurrentChatScreen(user: User) {
         let homeViewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
-        let currentPrivateChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentPrivateChatViewController.self, arguments: self, user)!
+        let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, user)!
         
-        navigationController.setViewControllers([homeViewController, currentPrivateChatViewController], animated: true)
+        navigationController.setViewControllers([homeViewController, currentChatViewController], animated: true)
     }
     
-    func presentCurrentPrivateChatScreen(room: Room) {
+    func presentCurrentChatScreen(room: Room) {
         let homeViewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
-        let currentPrivateChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentPrivateChatViewController.self, arguments: self, room)!
+        let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, room)!
         
-        navigationController.setViewControllers([homeViewController, currentPrivateChatViewController], animated: true)
+        navigationController.setViewControllers([homeViewController, currentChatViewController], animated: true)
     }
     
     func presentNewGroupChatScreen(selectedMembers: [User]) {

@@ -175,9 +175,9 @@
 		93E4F6F427C30DBE00432CFA /* SelectedUsersCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6F327C30DBE00432CFA /* SelectedUsersCollectionView.swift */; };
 		93E4F6F627C30E8700432CFA /* SelectedUsersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6F527C30E8700432CFA /* SelectedUsersCollectionViewCell.swift */; };
 		93E4F6F827C3A4B100432CFA /* AllChatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6F727C3A4B100432CFA /* AllChatsTableViewCell.swift */; };
-		93E4F6FC27C4687100432CFA /* CurrentPrivateChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FB27C4687100432CFA /* CurrentPrivateChatViewController.swift */; };
-		93E4F6FE27C4688C00432CFA /* CurrentPrivateChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FD27C4688C00432CFA /* CurrentPrivateChatViewModel.swift */; };
-		93E4F70127C468BB00432CFA /* CurrentPrivateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F70027C468BB00432CFA /* CurrentPrivateChatView.swift */; };
+		93E4F6FC27C4687100432CFA /* CurrentChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FB27C4687100432CFA /* CurrentChatViewController.swift */; };
+		93E4F6FE27C4688C00432CFA /* CurrentChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FD27C4688C00432CFA /* CurrentChatViewModel.swift */; };
+		93E4F70127C468BB00432CFA /* CurrentChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F70027C468BB00432CFA /* CurrentChatView.swift */; };
 		93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */; };
 		93F4A89E282DE9C400CEA637 /* MessageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */; };
 		93F4A8A0282DF1B500CEA637 /* MessageDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */; };
@@ -435,9 +435,9 @@
 		93E4F6F327C30DBE00432CFA /* SelectedUsersCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedUsersCollectionView.swift; sourceTree = "<group>"; };
 		93E4F6F527C30E8700432CFA /* SelectedUsersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedUsersCollectionViewCell.swift; sourceTree = "<group>"; };
 		93E4F6F727C3A4B100432CFA /* AllChatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatsTableViewCell.swift; sourceTree = "<group>"; };
-		93E4F6FB27C4687100432CFA /* CurrentPrivateChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatViewController.swift; sourceTree = "<group>"; };
-		93E4F6FD27C4688C00432CFA /* CurrentPrivateChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatViewModel.swift; sourceTree = "<group>"; };
-		93E4F70027C468BB00432CFA /* CurrentPrivateChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrivateChatView.swift; sourceTree = "<group>"; };
+		93E4F6FB27C4687100432CFA /* CurrentChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatViewController.swift; sourceTree = "<group>"; };
+		93E4F6FD27C4688C00432CFA /* CurrentChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatViewModel.swift; sourceTree = "<group>"; };
+		93E4F70027C468BB00432CFA /* CurrentChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatView.swift; sourceTree = "<group>"; };
 		93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewController.swift; sourceTree = "<group>"; };
 		93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsView.swift; sourceTree = "<group>"; };
 		93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -820,20 +820,20 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		93E4F6F927C4680700432CFA /* CurrentPrivateChat */ = {
+		93E4F6F927C4680700432CFA /* CurrentChat */ = {
 			isa = PBXGroup;
 			children = (
 				93E4F6FF27C468AB00432CFA /* View */,
-				93E4F6FB27C4687100432CFA /* CurrentPrivateChatViewController.swift */,
-				93E4F6FD27C4688C00432CFA /* CurrentPrivateChatViewModel.swift */,
+				93E4F6FB27C4687100432CFA /* CurrentChatViewController.swift */,
+				93E4F6FD27C4688C00432CFA /* CurrentChatViewModel.swift */,
 			);
-			path = CurrentPrivateChat;
+			path = CurrentChat;
 			sourceTree = "<group>";
 		};
 		93E4F6FF27C468AB00432CFA /* View */ = {
 			isa = PBXGroup;
 			children = (
-				93E4F70027C468BB00432CFA /* CurrentPrivateChatView.swift */,
+				93E4F70027C468BB00432CFA /* CurrentChatView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -876,7 +876,7 @@
 				93F4A89A282DE9A300CEA637 /* MessageDetails */,
 				938D052B27D59A4D002E5CE5 /* NewGroupChat */,
 				93E4F6E927C2BA4600432CFA /* AllChats */,
-				93E4F6F927C4680700432CFA /* CurrentPrivateChat */,
+				93E4F6F927C4680700432CFA /* CurrentChat */,
 				93E4F6E827C2BA2900432CFA /* SelectUsers */,
 			);
 			path = Chats;
@@ -1827,7 +1827,7 @@
 				939B30462850DDE700FFA537 /* SyncMessagesResponseModel.swift in Sources */,
 				AD8192872722D9BA00D5BE48 /* SecondaryButton.swift in Sources */,
 				AD9A68162739024B00BDC439 /* String+Extension.swift in Sources */,
-				93E4F6FC27C4687100432CFA /* CurrentPrivateChatViewController.swift in Sources */,
+				93E4F6FC27C4687100432CFA /* CurrentChatViewController.swift in Sources */,
 				AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */,
 				93E4F6ED27C2BB8100432CFA /* SelectUsersViewModel.swift in Sources */,
 				934F036B282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift in Sources */,
@@ -1872,7 +1872,7 @@
 				ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */,
 				93E4F6F427C30DBE00432CFA /* SelectedUsersCollectionView.swift in Sources */,
 				938D052E27D59D83002E5CE5 /* NewGroupChatView.swift in Sources */,
-				93E4F6FE27C4688C00432CFA /* CurrentPrivateChatViewModel.swift in Sources */,
+				93E4F6FE27C4688C00432CFA /* CurrentChatViewModel.swift in Sources */,
 				93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				933BE87727B6796B0099BA9E /* NotesViewController.swift in Sources */,
 				AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */,
@@ -1915,7 +1915,7 @@
 				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,
 				AD81926F2722D0A400D5BE48 /* SegmentedControl.swift in Sources */,
 				AD9BFD4E272B10AF00736318 /* EnterVerifyCodeView.swift in Sources */,
-				93E4F70127C468BB00432CFA /* CurrentPrivateChatView.swift in Sources */,
+				93E4F70127C468BB00432CFA /* CurrentChatView.swift in Sources */,
 				933BE85D27B65BDF0099BA9E /* SharedViewController.swift in Sources */,
 				931E23AC27D3172C0065FFFC /* MediaMessageTableViewCell.swift in Sources */,
 				9396AB7127FED6F100696757 /* VerifyFileResponseModel.swift in Sources */,

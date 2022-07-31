@@ -34,7 +34,7 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
-    func checkPrivateLocalRoom(forUserId id: Int64) -> Future<Room, Error> {
+    func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))
         }

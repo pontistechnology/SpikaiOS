@@ -24,8 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func customization() {
-        let a: Int64 = 1655807293133
-        print("appdel: ", a.convert(to: .allChatsTimeFormat))
+        print("TOKEN: ", UserDefaults(suiteName: Constants.Strings.appGroupName)?.string(forKey: Constants.UserDefaults.accessToken))
         
         guard let font =  UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14) else { return }
         UIBarButtonItem.appearance().setTitleTextAttributes(

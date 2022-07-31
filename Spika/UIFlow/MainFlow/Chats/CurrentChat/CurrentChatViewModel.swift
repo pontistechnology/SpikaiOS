@@ -10,7 +10,7 @@ import Combine
 import CoreData
 import IKEventSource
 
-class CurrentPrivateChatViewModel: BaseViewModel {
+class CurrentChatViewModel: BaseViewModel {
     
     let friendUser: User
     var room: Room?
@@ -37,7 +37,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
 }
 
 // MARK: - Navigation
-extension CurrentPrivateChatViewModel {
+extension CurrentChatViewModel {
     func popTopViewController() {
         getAppCoordinator()?.popTopViewController()
     }
@@ -53,13 +53,13 @@ extension CurrentPrivateChatViewModel {
     }
 }
 
-extension CurrentPrivateChatViewModel {
+extension CurrentChatViewModel {
     
     func checkLocalRoom() {
         if let room = room {
             roomPublisher.send(room)
         } else {
-            repository.checkPrivateLocalRoom(forUserId: friendUser.id).sink { [weak self] completion in
+            repository.checkLocalRoom(forUserId: friendUser.id).sink { [weak self] completion in
                 guard let self = self else { return }
                 switch completion {
                 case .finished:
@@ -167,7 +167,7 @@ extension CurrentPrivateChatViewModel {
     }
 }
 
-extension CurrentPrivateChatViewModel {
+extension CurrentChatViewModel {
     
     func trySendMessage(text: String) {
         guard let room = self.room else { return }
@@ -221,7 +221,7 @@ extension CurrentPrivateChatViewModel {
 }
 
 // MARK: Image
-extension CurrentPrivateChatViewModel {
+extension CurrentChatViewModel {
     func sendImage(data: Data) {
         repository.uploadWholeFile(data: data).sink { c in
             print(c)
@@ -236,4 +236,12 @@ extension CurrentPrivateChatViewModel {
     }
     
     
+}
+
+extension CurrentChatViewModel {
+    func getUser(for id: Int64) -> User? {
+        return room?.users?.first(where: { roomUser in
+            roomUser.userId == id
+        })?.user
+    }
 }
