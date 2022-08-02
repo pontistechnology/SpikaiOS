@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ContactEntity" representedClassName="ContactEntity" syncable="YES">
         <attribute name="familyName" optional="YES" attributeType="String"/>
         <attribute name="givenName" optional="YES" attributeType="String"/>
@@ -16,6 +16,7 @@
         <attribute name="deliveredCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="fromUserId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="imagePath" optional="YES" attributeType="String"/>
         <attribute name="localId" optional="YES" attributeType="String"/>
         <attribute name="roomId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="seenCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -94,7 +95,7 @@
     </entity>
     <elements>
         <element name="ContactEntity" positionX="-180" positionY="117" width="128" height="74"/>
-        <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="209"/>
+        <element name="MessageEntity" positionX="-383.64501953125" positionY="66.63189697265625" width="128" height="224"/>
         <element name="MessageRecordEntity" positionX="-180" positionY="117" width="128" height="14"/>
         <element name="RoomEntity" positionX="-180" positionY="117" width="128" height="164"/>
         <element name="RoomUserEntity" positionX="-178.015625" positionY="-33.05859375" width="128" height="104"/>

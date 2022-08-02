@@ -68,7 +68,7 @@ class ReplyMessageView: UIView, BaseView {
         case .text:
             leftImageView.image = UIImage(systemName: "textformat")
             messageLabel.text = message.body!.text
-        case .photo:
+        case .image:
             leftImageView.image = UIImage(systemName: "photo")
             messageLabel.text = "Photo message"
         case .video:

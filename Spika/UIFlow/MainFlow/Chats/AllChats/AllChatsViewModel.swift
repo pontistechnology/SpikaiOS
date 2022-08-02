@@ -14,12 +14,12 @@ class AllChatsViewModel: BaseViewModel {
         getAppCoordinator()?.presentSelectUserScreen()
     }
     
-    func presentCurrentPrivateChatScreen(user: User) {
-        getAppCoordinator()?.presentCurrentPrivateChatScreen(user: user)
+    func presentCurrentChatScreen(user: User) {
+        getAppCoordinator()?.presentCurrentChatScreen(user: user)
     }
     
-    func presentCurrentPrivateChatScreen(room: Room) {
-        getAppCoordinator()?.presentCurrentPrivateChatScreen(room: room)
+    func presentCurrentChatScreen(room: Room) {
+        getAppCoordinator()?.presentCurrentChatScreen(room: room)
     }
     
     func getAllRooms() {

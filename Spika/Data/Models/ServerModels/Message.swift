@@ -54,7 +54,7 @@ extension Message {
                   seenCount: messageEntity.seenCount,
                   roomId: messageEntity.roomId,
                   type: messageEntity.type, // check
-                  body: MessageBody(text: messageEntity.bodyText ?? ""),
+                  body: MessageBody(text: messageEntity.bodyText ?? "", file: FileData(fileName: nil, mimeType: nil, path: messageEntity.imagePath, size: nil), fileId: nil, thumbId: nil),
                   records: messageRecords)
     }
     
@@ -95,11 +95,21 @@ extension Message {
 
 struct MessageBody: Codable {
     let text: String?
+    let file: FileData?
+    let fileId: Int?
+    let thumbId: Int?
+}
+
+struct FileData: Codable {
+    let fileName: String?
+    let mimeType: String?
+    let path: String?
+    let size: Int?
 }
 
 enum MessageType: String, Codable {
     case text
-    case photo
+    case image
     case video
     case voice
 }

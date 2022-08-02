@@ -60,7 +60,7 @@ protocol Repository {
     
     // MARK: NETWORKING: Message
     
-    func sendTextMessage(body: MessageBody, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error>
+    func sendTextMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error>
     func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error>
     
     // MARK: NETWORKING: Sync
@@ -96,7 +96,7 @@ protocol Repository {
     
     // MARK: COREDATA: Room
     
-    func checkPrivateLocalRoom(forUserId id: Int64) -> Future<Room, Error>
+    func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>
     func saveLocalRoom(room: Room) -> Future<Room, Error>
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error>
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error>

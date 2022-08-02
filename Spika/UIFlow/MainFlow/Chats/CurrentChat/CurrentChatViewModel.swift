@@ -10,7 +10,7 @@ import Combine
 import CoreData
 import IKEventSource
 
-class CurrentPrivateChatViewModel: BaseViewModel {
+class CurrentChatViewModel: BaseViewModel {
     
     let friendUser: User
     var room: Room?
@@ -37,7 +37,7 @@ class CurrentPrivateChatViewModel: BaseViewModel {
 }
 
 // MARK: - Navigation
-extension CurrentPrivateChatViewModel {
+extension CurrentChatViewModel {
     func popTopViewController() {
         getAppCoordinator()?.popTopViewController()
     }
@@ -53,13 +53,13 @@ extension CurrentPrivateChatViewModel {
     }
 }
 
-extension CurrentPrivateChatViewModel {
+extension CurrentChatViewModel {
     
     func checkLocalRoom() {
         if let room = room {
             roomPublisher.send(room)
         } else {
-            repository.checkPrivateLocalRoom(forUserId: friendUser.id).sink { [weak self] completion in
+            repository.checkLocalRoom(forUserId: friendUser.id).sink { [weak self] completion in
                 guard let self = self else { return }
                 switch completion {
                 case .finished:
@@ -167,7 +167,7 @@ extension CurrentPrivateChatViewModel {
     }
 }
 
-extension CurrentPrivateChatViewModel {
+extension CurrentChatViewModel {
     
     func trySendMessage(text: String) {
         guard let room = self.room else { return }
@@ -176,24 +176,24 @@ extension CurrentPrivateChatViewModel {
         let message = Message(createdAt: Date().currentTimeMillis(),
                               fromUserId: repository.getMyUserId(),
                               roomId: room.id, type: .text,
-                              body: MessageBody(text: text), localId: uuid)
+                              body: MessageBody(text: text, file: nil, fileId: nil, thumbId: nil), localId: uuid)
         
-        repository.saveMessage(message: message,roomId: room.id).sink { completion in
+        repository.saveMessage(message: message, roomId: room.id).sink { completion in
             print("save message c: ", completion)
         } receiveValue: { [weak self] message in
             guard let self = self else { return }
             guard let body = message.body else {
                 print("GUARD trySendMessage body missing")
                 return }
-            self.sendMessage(body: body, localId: uuid)
+            self.sendMessage(body: body, localId: uuid, type: .text)
         }.store(in: &subscriptions)
     }
     
     
-    func sendMessage(body: MessageBody, localId: String) {
+    func sendMessage(body: MessageBody, localId: String, type: MessageType) {
         guard let room = self.room else { return }
         
-        self.repository.sendTextMessage(body: body, roomId: room.id, localId: localId).sink { [weak self] completion in
+        self.repository.sendTextMessage(body: body, type: type, roomId: room.id, localId: localId).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 
@@ -217,5 +217,31 @@ extension CurrentPrivateChatViewModel {
         } receiveValue: { _ in
             
         }.store(in: &subscriptions)
+    }
+}
+
+// MARK: Image
+extension CurrentChatViewModel {
+    func sendImage(data: Data) {
+        repository.uploadWholeFile(data: data).sink { c in
+            print(c)
+        } receiveValue: { (file, uploadPercent) in
+            print("PERCENT: ", uploadPercent, ", file: ", file)
+            
+            if let file = file {
+                print("UPLOADANO : ", file)
+                self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: nil), localId: UUID().uuidString, type: .image)
+            }
+        }.store(in: &subscriptions)
+    }
+    
+    
+}
+
+extension CurrentChatViewModel {
+    func getUser(for id: Int64) -> User? {
+        return room?.users?.first(where: { roomUser in
+            roomUser.userId == id
+        })?.user
     }
 }

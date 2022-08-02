@@ -43,7 +43,7 @@ class DetailsViewModel: BaseViewModel {
         getAppCoordinator()?.presentCallHistoryScreen()
     }
     
-    func presentCurrentPrivateChatScreen(user: User) {
-        getAppCoordinator()?.presentCurrentPrivateChatScreen(user: user)
+    func presentCurrentChatScreen(user: User) {
+        getAppCoordinator()?.presentCurrentChatScreen(user: user)
     }
 }

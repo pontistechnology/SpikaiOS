@@ -2,7 +2,7 @@
 //  MessageEntity+CoreDataProperties.swift
 //  Spika
 //
-//  Created by Nikola Barbarić on 11.05.2022..
+//  Created by Nikola Barbarić on 09.07.2022..
 //
 //
 
@@ -26,8 +26,9 @@ extension MessageEntity {
     @NSManaged public var seenCount: Int64
     @NSManaged public var totalUserCount: Int64
     @NSManaged public var type: String?
-    @NSManaged public var room: RoomEntity?
+    @NSManaged public var imagePath: String?
     @NSManaged public var records: NSSet?
+    @NSManaged public var room: RoomEntity?
 
 }
 

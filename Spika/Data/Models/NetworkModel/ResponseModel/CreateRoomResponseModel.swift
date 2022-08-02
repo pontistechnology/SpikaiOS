@@ -28,6 +28,11 @@ struct Room: Codable {
     let users: [RoomUser]?
 }
 
+enum RoomType: String {
+    case privateRoom = "private"
+    case groupRoom = "group"
+}
+
 extension Room {
     init(roomEntity: RoomEntity) {
         print("INIT ROOM ENTITY: ", roomEntity.id, roomEntity.users?.count)
@@ -61,3 +66,21 @@ extension RoomUser {
                   user: User(entity: roomUserEntity.user)) // TODO: check !
     }
 }
+
+// TODO: there is a same function in User model,
+extension Room {
+    func getAvatarUrl() -> String? {
+        if let avatarUrl = avatarUrl, !avatarUrl.isEmpty {
+            if avatarUrl.starts(with: "http") {
+                return avatarUrl
+            } else if avatarUrl.starts(with: "/") {
+                return Constants.Networking.baseUrl + avatarUrl.dropFirst()
+            } else {
+                return Constants.Networking.baseUrl + avatarUrl
+            }
+        } else {
+            return nil
+        }
+    }
+}
+

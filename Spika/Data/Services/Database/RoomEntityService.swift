@@ -22,7 +22,7 @@ class RoomEntityService {
 
 extension RoomEntityService {
     
-    func getPrivateRoom(forUserId id: Int64) -> Future<Room, Error> {
+    func getRoom(forUserId id: Int64) -> Future<Room, Error> {
         Future { promise in
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = RoomEntity.fetchRequest()
