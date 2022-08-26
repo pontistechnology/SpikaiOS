@@ -112,6 +112,7 @@ enum MessageType: String, Codable {
     case image
     case video
     case voice
+    case file
 }
 
 enum MessageState {

@@ -80,7 +80,7 @@ extension AppRepository {
         var hasher = SHA256()
         var hash: String?
         let somePublisher = PassthroughSubject<(File?, CGFloat), Error>()
-    
+        
         for chunkCounter in 0..<totalChunks {
             var chunk:Data
             let chunkBase: Int = chunkCounter * chunkSize
@@ -116,7 +116,7 @@ extension AppRepository {
                     guard let hash = hash else {
                         return
                     }
-
+                    
                     self.verifyUpload(total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1).sink { [weak self] completion in
                         guard let _ = self else { return }
                         switch completion {
@@ -141,7 +141,7 @@ extension AppRepository {
     }
     
     func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error> {
-
+        
         guard let accessToken = getAccessToken()
         else {return Fail<UploadChunkResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -230,5 +230,77 @@ extension AppRepository {
     
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         return databaseService.userEntityService.updateUsersWithContactData(users)
+    }
+    
+    
+    @available(iOSApplicationExtension 13.4, *)
+    func uploadWholeFile(fromUrl url: URL) -> (AnyPublisher<(File?, CGFloat), Error>) {
+        
+        let chunkSize: Int = 1024 * 4
+        let clientId = UUID().uuidString
+        var hasher = SHA256()
+        var hash: String?
+        let somePublisher = PassthroughSubject<(File?, CGFloat), Error>()
+        
+        guard FileManager.default.fileExists(atPath: url.path),
+              let outputFileHandle = try? FileHandle(forReadingFrom: url),
+              let resources = try? url.resourceValues(forKeys:[.fileSizeKey]),
+              let fileSize = resources.fileSize
+        else {
+            return somePublisher.eraseToAnyPublisher()
+        }
+        
+        let totalChunks = fileSize / chunkSize + (fileSize % chunkSize != 0 ? 1 : 0)
+        var chunk = try? outputFileHandle.read(upToCount: chunkSize)
+        var chunkOffset = 0
+        while (chunk != nil) {
+            guard let safeChunk = chunk else { break }
+            hasher.update(data: safeChunk)
+            hash = hasher.finalize().compactMap { String(format: "%02x", $0)}.joined()
+            
+            uploadChunk(chunk: safeChunk.base64EncodedString(),
+                        offset: chunkOffset,
+                        clientId: clientId).sink { [weak self] completion in
+                guard let _ = self else { return }
+                switch completion {
+                case let .failure(error):
+                    print("Upload chunk error", error)
+                    somePublisher.send(completion: .failure(NetworkError.chunkUploadFail))
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] uploadChunkResponseModel in
+                guard let self = self,
+                      let uploadedCount = uploadChunkResponseModel.data?.uploadedChunks?.count else { return }
+                let percent = CGFloat(uploadedCount) / CGFloat(totalChunks)
+                somePublisher.send((nil, percent))
+                
+                if uploadedCount == totalChunks {
+                    guard let hash = hash else { return }
+                    
+                    self.verifyUpload(total: totalChunks, size: fileSize, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1).sink { [weak self] completion in
+                        switch completion {
+                            
+                        case .finished:
+                            break
+                        case let .failure(error):
+                            print("verifyUpload error: ", error)
+                            somePublisher.send(completion: .failure(NetworkError.verifyFileFail))
+                        }
+                    } receiveValue: { [weak self] verifyFileResponse in
+                        print("verifyFile response", verifyFileResponse)
+                        guard let file = verifyFileResponse.data?.file else { return }
+                        somePublisher.send((file, 1))
+                    }.store(in: &self.subs)
+                }
+            }.store(in: &subs)
+            chunk = try? outputFileHandle.read(upToCount: chunkSize)
+            chunkOffset += 1
+        }
+        
+        try? outputFileHandle.close()
+        print("File reading complete")
+        
+        return somePublisher.eraseToAnyPublisher()
     }
 }

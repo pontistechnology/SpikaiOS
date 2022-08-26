@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         configureNotifications(app: application)
         customization()
-        
+        test()
         return true
     }
     
@@ -76,8 +76,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
 extension AppDelegate {
     
     func test() {
-        let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
-        userDefaults.set("fich0x3WTUwjlGF5", forKey: Constants.UserDefaults.accessToken)
+//        let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
+//        userDefaults.set("fich0x3WTUwjlGF5", forKey: Constants.UserDefaults.accessToken)
     }
     
     func allroomsprinter() {

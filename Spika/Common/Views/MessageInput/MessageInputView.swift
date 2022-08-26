@@ -14,7 +14,8 @@ protocol MessageInputViewDelegate: AnyObject {
     func messageInputView(_ messageView: MessageInputView, didPressSend message: String, id: Int)
     func messageInputView(didPressCameraButton messageVeiw: MessageInputView)
     func messageInputView(didPressMicrophoneButton messageVeiw: MessageInputView)
-    func messageInputView(didPressPlusButton messageVeiw: MessageInputView)
+    func messageInputView(didPressLibraryButton messageVeiw: MessageInputView)
+    func messageInputView(didPressFilesButton messageVeiw: MessageInputView)
     func messageInputView(didPressEmojiButton messageVeiw: MessageInputView)
 }
 
@@ -30,6 +31,8 @@ class MessageInputView: UIView, BaseView {
     private var replyView: ReplyMessageView?
     private var replyViewId: Int?
     private let closeReplyViewButton = UIButton()
+    private let additionalOptionsView = AdditionalOptionsView()
+    let selectedFilesView = SelectedFilesView()
     
     private var messageTextViewHeightConstraint = NSLayoutConstraint()
     private var messageTextViewTrailingConstraint = NSLayoutConstraint()
@@ -110,7 +113,27 @@ class MessageInputView: UIView, BaseView {
         
         plusButton.tap().sink { [weak self] _ in
             guard let self = self else { return }
-            self.delegate?.messageInputView(didPressPlusButton: self)
+            if self.additionalOptionsView.superview == nil {
+                self.showAdditionalOptions()
+            } else {
+                self.hideAdditionalOptions()
+            }
+            
+            if self.selectedFilesView.superview != nil {
+                self.hideSelectedFiles()
+            }
+        }.store(in: &subscriptions)
+        
+        additionalOptionsView.libraryImageView.tap().sink { [weak self] _ in
+            guard let self = self else { return }
+            self.hideAdditionalOptions()
+            self.delegate?.messageInputView(didPressLibraryButton: self)
+        }.store(in: &subscriptions)
+        
+        additionalOptionsView.filesImageView.tap().sink { [weak self] _ in
+            guard let self = self else { return }
+            self.hideAdditionalOptions()
+            self.delegate?.messageInputView(didPressFilesButton: self)
         }.store(in: &subscriptions)
         
         closeButton.tap().sink { [weak self] _ in
@@ -200,6 +223,49 @@ class MessageInputView: UIView, BaseView {
     }
 }
 
+// MARK: - Additional options view
+
+extension MessageInputView {
+    func showAdditionalOptions() {
+        if additionalOptionsView.superview == nil {
+            addSubview(additionalOptionsView)
+            
+            additionalOptionsView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            additionalOptionsView.constrainHeight(152)
+            heightConstraint.constant += 152
+        }
+    }
+    
+    func hideAdditionalOptions() {
+        if additionalOptionsView.superview != nil {
+            additionalOptionsView.removeFromSuperview()
+            heightConstraint.constant -= 152            
+        }
+    }
+}
+
+// MARK: - Selected files view
+
+extension MessageInputView {
+    func showSelectedFiles(_ files: [SelectedFile]) {
+        if selectedFilesView.superview == nil {
+            addSubview(selectedFilesView)
+            
+            selectedFilesView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            selectedFilesView.constrainHeight(120)
+            heightConstraint.constant += selectedFilesView.height            
+        }
+        selectedFilesView.showFiles(files)
+    }
+    
+    func hideSelectedFiles() {
+        if selectedFilesView.superview != nil {
+            selectedFilesView.removeFromSuperview()
+            heightConstraint.constant -= selectedFilesView.height
+        }
+    }
+}
+
 extension MessageInputView: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
@@ -225,6 +291,7 @@ extension MessageInputView: UITextViewDelegate {
         }
         
         heightConstraint.constant = heightOfTextView + 24 + (replyView != nil ? 60 : 0)
+        + ((selectedFilesView.superview != nil) ? selectedFilesView.height : 0.0)
         
         messageTextViewHeightConstraint.constant = heightOfTextView
         DispatchQueue.main.async {

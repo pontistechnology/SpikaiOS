@@ -68,6 +68,10 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.register(ImageMessageTableViewCell.self,
                                    forCellReuseIdentifier: ImageMessageTableViewCell.groupImageReuseIdentifier)
         
+        messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.myFileReuseIdentifier)
+        messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.friendFileReuseIdentifier)
+        messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.groupFileReuseIdentifier)
+        
         
         
         messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: "imageLeft")

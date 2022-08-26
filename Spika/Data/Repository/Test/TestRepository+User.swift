@@ -112,4 +112,10 @@ extension TestRepository {
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }
+    
+    func uploadWholeFile(fromUrl url: URL) -> (AnyPublisher<(File?, CGFloat), Error>) {
+        return Fail<(File?, CGFloat), Error>(error: DatabseError.unknown)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 }

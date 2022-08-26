@@ -77,6 +77,8 @@ class ReplyMessageView: UIView, BaseView {
         case .voice:
             leftImageView.image = UIImage(systemName: "music.note")
             messageLabel.text = "Voice message"
+        case .file:
+            break
         }
     }
 }

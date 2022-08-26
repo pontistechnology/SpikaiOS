@@ -29,13 +29,17 @@ class BaseMessageTableViewCell: UITableViewCell {
         
         if let reuseIdentifier = reuseIdentifier {
             if reuseIdentifier == TextMessageTableViewCell.myTextReuseIdentifier ||
-                reuseIdentifier == ImageMessageTableViewCell.myImageReuseIdentifier {
+                reuseIdentifier == ImageMessageTableViewCell.myImageReuseIdentifier ||
+                reuseIdentifier == FileMessageTableViewCell.myFileReuseIdentifier
+            {
                 setupContainer(sender: .me)
             } else if reuseIdentifier == TextMessageTableViewCell.friendTextReuseIdentifier ||
-                reuseIdentifier == ImageMessageTableViewCell.friendImageReuseIdentifier {
+                reuseIdentifier == ImageMessageTableViewCell.friendImageReuseIdentifier ||
+                        reuseIdentifier == FileMessageTableViewCell.friendFileReuseIdentifier{
                 setupContainer(sender: .friend)
             } else if reuseIdentifier == TextMessageTableViewCell.groupTextReuseIdentifier ||
-                reuseIdentifier == ImageMessageTableViewCell.groupImageReuseIdentifier {
+                reuseIdentifier == ImageMessageTableViewCell.groupImageReuseIdentifier  ||
+                        reuseIdentifier == FileMessageTableViewCell.groupFileReuseIdentifier{
                 setupContainer(sender: .group)
             }
         }

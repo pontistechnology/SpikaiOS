@@ -15,6 +15,8 @@ class CurrentChatViewModel: BaseViewModel {
     let friendUser: User
     var room: Room?
     let roomPublisher = PassthroughSubject<Room, Error>()
+    let selectedFiles = CurrentValueSubject<[SelectedFile], Never>([])
+    let uploadProgressPublisher = PassthroughSubject<(Int, CGFloat), Never>()
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
@@ -171,6 +173,7 @@ extension CurrentChatViewModel {
     
     func trySendMessage(text: String) {
         guard let room = self.room else { return }
+        sendSelectedFiles(files: selectedFiles.value)
         print("ROOM: ", room)
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
@@ -222,7 +225,7 @@ extension CurrentChatViewModel {
 
 // MARK: Image
 extension CurrentChatViewModel {
-    func sendImage(data: Data) {
+    private func sendImage(data: Data) {
         repository.uploadWholeFile(data: data).sink { c in
             print(c)
         } receiveValue: { (file, uploadPercent) in
@@ -235,7 +238,46 @@ extension CurrentChatViewModel {
         }.store(in: &subscriptions)
     }
     
-    
+    func sendSelectedFiles(files: [SelectedFile]) {
+        files.forEach { selectedFile in
+            if selectedFile.fileType == .image {
+                repository.uploadWholeFile(fromUrl: selectedFile.fileUrl).sink { c in
+                    
+                } receiveValue: { [weak self] (file, uploadPercent) in
+                    guard let self = self else { return }
+                    if let index = files.firstIndex(where: { sf in
+                        sf.fileUrl == selectedFile.fileUrl
+                    }) {
+                        self.uploadProgressPublisher.send((index, uploadPercent))
+                    }
+                    
+                    print("NOVA: ", uploadPercent)
+                    if let file = file {
+                        print("UPLOADANO : ", file)
+//                        self.selectedFiles.value.removeAll { sf in
+//                            sf.fileUrl == selectedFile.fileUrl
+//                        }
+                        self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: file.id), localId: UUID().uuidString, type: .image)
+                    }
+                }.store(in: &subscriptions)
+            } else {
+                repository.uploadWholeFile(fromUrl: selectedFile.fileUrl).sink { c in
+                    
+                } receiveValue: { (file, uploadPercent) in
+                    if let index = files.firstIndex(where: { sf in
+                        sf.fileUrl == selectedFile.fileUrl
+                    }) {
+                        self.uploadProgressPublisher.send((index, uploadPercent))
+                    }
+                    
+                    if let file = file {
+                        self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: nil), localId: UUID().uuidString, type: .file)
+                    }
+                }.store(in: &subscriptions)
+
+            }
+        }
+    }
 }
 
 extension CurrentChatViewModel {
