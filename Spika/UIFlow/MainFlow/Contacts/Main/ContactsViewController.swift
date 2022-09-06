@@ -68,6 +68,12 @@ extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         64
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.customFont(name: .MontserratSemiBold, size: 16)
+        header.textLabel?.textColor = .textPrimary
+    }
 }
 
 extension ContactsViewController: UITableViewDataSource {

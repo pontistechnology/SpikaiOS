@@ -11,8 +11,8 @@ import Kingfisher
 
 class ContactsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "ContactsTableViewCell"
-    let nameLabel = CustomLabel(text: "Matej Vidaaaaaaaaaaaaakakakkakkakakkakkaka")
-    let descriptionLabel = CustomLabel(text: "CTO")
+    let nameLabel = CustomLabel(text: "Matej Vidaaaaaaaaaaaaakakakkakkakakkakkaka", textSize: 14, fontName: .MontserratMedium)
+    let descriptionLabel = CustomLabel(text: "CTO", textSize: 12, fontName: .MontserratRegular)
     let leftImageView = UIImageView(image: UIImage(named: "matejVida"))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

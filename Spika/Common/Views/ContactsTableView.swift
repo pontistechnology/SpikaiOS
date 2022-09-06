@@ -20,6 +20,7 @@ class ContactsTableView: UITableView {
     }
     
     func setupTV() {
+        separatorStyle = .none
         register(ContactsTableViewCell.self, forCellReuseIdentifier: ContactsTableViewCell.reuseIdentifier)
         rowHeight = 64
     }
