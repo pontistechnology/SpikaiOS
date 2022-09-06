@@ -32,7 +32,7 @@ class AllChatsView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        pencilImageView.image = UIImage(named: "pencil")
+        pencilImageView.image = .pencil
         allChatsTableView.backgroundColor = .gray
         allChatsTableView.rowHeight = 70
     }

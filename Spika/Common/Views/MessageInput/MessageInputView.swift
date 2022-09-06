@@ -75,12 +75,12 @@ class MessageInputView: UIView, BaseView {
         messageTextView.layer.borderWidth = 1
         messageTextView.customFont(name: .MontserratMedium)
         
-        plusButton.setImage(UIImage(named: "plus"), for: .normal)
-        sendButton.setImage(UIImage(named: "send"), for: .normal)
-        emojiButton.setImage(UIImage(named: "smile"), for: .normal)
-        closeButton.setImage(UIImage(named: "close"), for: .normal)
-        cameraButton.setImage(UIImage(named: "camera"), for: .normal)
-        microphoneButton.setImage(UIImage(named: "microphone"), for: .normal)
+        plusButton.setImage(.plus, for: .normal)
+        sendButton.setImage(.send, for: .normal)
+        emojiButton.setImage(.smile, for: .normal)
+        closeButton.setImage(.close, for: .normal)
+        cameraButton.setImage(.camera, for: .normal)
+        microphoneButton.setImage(.microphone, for: .normal)
         
         self.closeButton.alpha = 0
         self.sendButton.alpha = 0

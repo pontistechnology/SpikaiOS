@@ -11,7 +11,7 @@ import UIKit
 class MessageDetailTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "MessageDetailTableViewCell"
     
-    let leftImageView = UIImageView(image: UIImage(named: "user_image"))
+    let leftImageView = UIImageView(image: .userImage)
     let userNameLabel = CustomLabel(text: "Marko Marić", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
     let timeLabel  = CustomLabel(text: "05.09.2020. 23:95", textSize: 12, textColor: .textSecondary, fontName: .MontserratRegular, alignment: .right)
     
@@ -51,7 +51,7 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
     
     func configureCell(avatarUrl: String?, name: String, time: String) {
         if let url = URL(string: avatarUrl ?? "") {
-            leftImageView.kf.setImage(with: url, placeholder: UIImage(named: "user_image"))
+            leftImageView.kf.setImage(with: url, placeholder: UIImage.userImage)
         }
         
         userNameLabel.text = name

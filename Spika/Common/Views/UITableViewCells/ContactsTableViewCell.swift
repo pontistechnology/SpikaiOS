@@ -13,7 +13,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "ContactsTableViewCell"
     let nameLabel = CustomLabel(text: "Matej Vidaaaaaaaaaaaaakakakkakkakakkakkaka", textSize: 14, fontName: .MontserratMedium)
     let descriptionLabel = CustomLabel(text: "CTO", textSize: 12, fontName: .MontserratRegular)
-    let leftImageView = UIImageView(image: UIImage(named: "matejVida"))
+    let leftImageView = UIImageView(image: .userImage)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -57,11 +57,11 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         descriptionLabel.text = model.telephoneNumber
         
         let url = URL(string: model.getAvatarUrl() ?? "")
-        leftImageView.kf.setImage(with: url, placeholder: UIImage(named: "user_image"))
+        leftImageView.kf.setImage(with: url, placeholder: UIImage.userImage)
     }
     
     override func prepareForReuse() {
-        leftImageView.image = UIImage(systemName: "house")
+        leftImageView.image = .house
         nameLabel.text = ""
         descriptionLabel.text = ""
     }

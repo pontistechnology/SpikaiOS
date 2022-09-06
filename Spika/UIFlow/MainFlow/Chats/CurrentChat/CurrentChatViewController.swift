@@ -343,8 +343,8 @@ extension CurrentChatViewController: UITableViewDataSource {
 
 extension CurrentChatViewController {
     func setupNavigationItems() {
-        let videoCallButton = UIBarButtonItem(image: UIImage(named: "videoCall"), style: .plain, target: self, action: #selector(videoCallActionHandler))
-        let audioCallButton = UIBarButtonItem(image: UIImage(named: "phoneCall"), style: .plain, target: self, action: #selector(phoneCallActionHandler))
+        let videoCallButton = UIBarButtonItem(image: .videoCall, style: .plain, target: self, action: #selector(videoCallActionHandler))
+        let audioCallButton = UIBarButtonItem(image: .phoneCall, style: .plain, target: self, action: #selector(phoneCallActionHandler))
         
         navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true

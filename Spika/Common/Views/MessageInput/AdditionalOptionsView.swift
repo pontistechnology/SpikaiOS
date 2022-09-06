@@ -11,10 +11,10 @@ import UIKit
 class AdditionalOptionsView: UIView {
     private let moreActionsLabel = CustomLabel(text: "More actions", textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
     private let optionsStackView = UIStackView()
-    let filesImageView = UIImageView(image: UIImage(named: "files"))
-    let libraryImageView = UIImageView(image: UIImage(named: "library"))
-    let locationImageView = UIImageView(image: UIImage(named: "location"))
-    let contactImageView = UIImageView(image: UIImage(named: "contact"))
+    let filesImageView = UIImageView(image: .files)
+    let libraryImageView = UIImageView(image: .library)
+    let locationImageView = UIImageView(image: .location)
+    let contactImageView = UIImageView(image: .contact)
     
     init(){
         super.init(frame: .zero)

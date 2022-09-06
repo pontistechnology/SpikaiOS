@@ -36,7 +36,7 @@ class SelectedUsersCollectionViewCell: UICollectionViewCell, BaseView {
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
         
-        closeImageView.image = UIImage(named: "deleteCell")
+        closeImageView.image = .deleteCell
     }
     
     func positionSubviews() {
@@ -47,7 +47,7 @@ class SelectedUsersCollectionViewCell: UICollectionViewCell, BaseView {
     
     func updateCell(user: User) {
         let url = URL(string: user.getAvatarUrl() ?? "")
-        imageView.kf.setImage(with: url, placeholder: UIImage(named: "user_image"), completionHandler: { result in
+        imageView.kf.setImage(with: url, placeholder: UIImage.userImage, completionHandler: { result in
             switch result {
             case .success:
                 self.firstLetterLabel.text = ""

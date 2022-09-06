@@ -32,7 +32,7 @@ class MediaCollectionViewCell: UICollectionViewCell, BaseView {
     
     func styleSubviews() {
         backgroundColor = .red
-        imageView.image = UIImage(named: "matejVida")
+        imageView.image = .testImage
     }
     
     func positionSubviews() {

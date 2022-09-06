@@ -39,15 +39,15 @@ class MessageStateView: UIImageView, BaseView {
         state = value
         switch state {
         case .sent:
-            image = UIImage(named: "sent")
+            image = .sent
         case .delivered:
-            image = UIImage(named: "delivered")
+            image = .delivered
         case .seen:
-            image = UIImage(named: "seen")
+            image = .seen
         case .fail:
-            image = UIImage(named: "fail")
+            image = .fail
         case .waiting:
-            image = UIImage(named: "waiting")
+            image = .waiting
         }
     }
 }

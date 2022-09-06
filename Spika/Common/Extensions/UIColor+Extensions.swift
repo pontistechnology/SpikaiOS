@@ -28,6 +28,9 @@ public extension UIColor {
         self.init(red:(value >> 16) & 0xff, green:(value >> 8) & 0xff, blue:value & 0xff)
     }
     
+    static func safeColor(named name: String) -> UIColor {
+        return UIColor(named: name) ?? .clear
+    }
 }
 
 extension UIColor {
@@ -37,22 +40,22 @@ extension UIColor {
         - Sort it like in Assets folder
     */
     
-    static let appBlueLight = UIColor(named: "appBlueLight")        ?? .clear
-    static let appGreen = UIColor(named: "appGreen")                ?? .clear
-    static let appRed = UIColor(named: "appRed")                    ?? .clear
-    static let appWhite = UIColor(named: "appWhite")                ?? .clear
-    static let borderColor = UIColor(named: "borderColor")          ?? .clear
-    static let chatBackground = UIColor(named: "chatBackground")    ?? .clear
-    static let darkBackground = UIColor(named: "darkBackground")    ?? .clear
-    static let darkBackground2 = UIColor(named: "darkBackground2")  ?? .clear
-    static let logoBlue = UIColor(named: "logoBlue")                ?? .clear
-    static let logoBlueLighter = UIColor(named: "logoBlueLighter")  ?? .clear
-    static let navigation = UIColor(named: "navigation")            ?? .clear
-    static let primaryColor = UIColor(named: "primaryColor")        ?? .clear
-    static let secondaryColor = UIColor(named: "secondaryColor")    ?? .clear
-    static let textPrimary = UIColor(named: "textPrimary")          ?? .clear
-    static let textSecondary = UIColor(named: "textSecondary")      ?? .clear
-    static let textTertiary = UIColor(named: "textTertiary")        ?? .clear
+    static let appBlueLight = safeColor(named: "appBlueLight")
+    static let appGreen = safeColor(named: "appGreen")
+    static let appRed = safeColor(named: "appRed")
+    static let appWhite = safeColor(named: "appWhite")
+    static let borderColor = safeColor(named: "borderColor")
+    static let chatBackground = safeColor(named: "chatBackground")
+    static let darkBackground = safeColor(named: "darkBackground")
+    static let darkBackground2 = safeColor(named: "darkBackground2")
+    static let logoBlue = safeColor(named: "logoBlue")
+    static let logoBlueLighter = safeColor(named: "logoBlueLighter")
+    static let navigation = safeColor(named: "navigation")
+    static let primaryColor = safeColor(named: "primaryColor")
+    static let secondaryColor = safeColor(named: "secondaryColor")
+    static let textPrimary = safeColor(named: "textPrimary")
+    static let textSecondary = safeColor(named: "textSecondary")
+    static let textTertiary = safeColor(named: "textTertiary")
     
     /* Common Combinations of colors
         - These colors are combinations of individual colors
@@ -60,14 +63,14 @@ extension UIColor {
         - There are two colors in a color name, the first one is for lightMode and the second one for darkMode
     */
     
-    static let textPrimaryAndWhite = UIColor(named: "textPrimary+white")    ?? .clear
-    static let textTertiaryAndDarkBackground2 = UIColor(named: "textTertiary+darkBackground2")  ?? .clear
-    static let chatBackgroundAndDarkBackground2 = UIColor(named: "chatBackground+darkBackground2") ?? .clear
-    static let whiteAndDarkBackground = UIColor(named: "white+darkBackground")  ?? .clear
-    static let whiteAndDarkBackground2 = UIColor(named: "white+darkBackground2")    ?? .clear
+    static let textPrimaryAndWhite = safeColor(named: "textPrimary+white")
+    static let textTertiaryAndDarkBackground2 = safeColor(named: "textTertiary+darkBackground2")
+    static let chatBackgroundAndDarkBackground2 = safeColor(named: "chatBackground+darkBackground2")
+    static let whiteAndDarkBackground = safeColor(named: "white+darkBackground")
+    static let whiteAndDarkBackground2 = safeColor(named: "white+darkBackground2")
     
     // Uncommon colors
     
-    static let errorRedLight = UIColor(named: "errorRedLight")  ?? .clear
+    static let errorRedLight = safeColor(named: "errorRedLight")
     
 }

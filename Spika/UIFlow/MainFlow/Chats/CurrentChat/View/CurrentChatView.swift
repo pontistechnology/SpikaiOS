@@ -11,7 +11,7 @@ class CurrentChatView: UIView, BaseView {
     
     let messagesTableView = UITableView()
     let messageInputView = MessageInputView()
-    let downArrowImageView = UIImageView(image: UIImage(named: "downArrow"))
+    let downArrowImageView = UIImageView(image: .downArrow)
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
     
@@ -76,10 +76,6 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: "imageLeft")
         messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: "imageRight")
 
-        
-        messagesTableView.register(MediaMessageTableViewCell.self, forCellReuseIdentifier: MediaMessageTableViewCell.reuseIdentifier)
-        messagesTableView.register(VoiceMessageTableViewCell.self, forCellReuseIdentifier: VoiceMessageTableViewCell.reuseIdentifier)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }

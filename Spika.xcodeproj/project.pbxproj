@@ -65,8 +65,6 @@
 		931B15182821295600A0CD35 /* DeliveredResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15172821295600A0CD35 /* DeliveredResponseModel.swift */; };
 		931B15192821295600A0CD35 /* DeliveredResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15172821295600A0CD35 /* DeliveredResponseModel.swift */; };
 		931E23A927D2DCDA0065FFFC /* MessageStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23A827D2DCDA0065FFFC /* MessageStateView.swift */; };
-		931E23AC27D3172C0065FFFC /* MediaMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23AB27D3172C0065FFFC /* MediaMessageTableViewCell.swift */; };
-		931E23AE27D317390065FFFC /* VoiceMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23AD27D317390065FFFC /* VoiceMessageTableViewCell.swift */; };
 		93227E9627D6D99D002E3DED /* CheckRoomResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9527D6D99D002E3DED /* CheckRoomResponseModel.swift */; };
 		93227E9827D6ED70002E3DED /* SendMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9727D6ED70002E3DED /* SendMessageRequest.swift */; };
 		93227E9A27D6EE47002E3DED /* SendMessageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9927D6EE47002E3DED /* SendMessageResponse.swift */; };
@@ -346,8 +344,6 @@
 		931B15142821291400A0CD35 /* DeliveredRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveredRequestModel.swift; sourceTree = "<group>"; };
 		931B15172821295600A0CD35 /* DeliveredResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveredResponseModel.swift; sourceTree = "<group>"; };
 		931E23A827D2DCDA0065FFFC /* MessageStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStateView.swift; sourceTree = "<group>"; };
-		931E23AB27D3172C0065FFFC /* MediaMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaMessageTableViewCell.swift; sourceTree = "<group>"; };
-		931E23AD27D317390065FFFC /* VoiceMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessageTableViewCell.swift; sourceTree = "<group>"; };
 		93227E9527D6D99D002E3DED /* CheckRoomResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRoomResponseModel.swift; sourceTree = "<group>"; };
 		93227E9727D6ED70002E3DED /* SendMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageRequest.swift; sourceTree = "<group>"; };
 		93227E9927D6EE47002E3DED /* SendMessageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageResponse.swift; sourceTree = "<group>"; };
@@ -617,8 +613,6 @@
 			isa = PBXGroup;
 			children = (
 				93B8916C27CD4536000F94B0 /* MessageTableViewCell.swift */,
-				931E23AB27D3172C0065FFFC /* MediaMessageTableViewCell.swift */,
-				931E23AD27D317390065FFFC /* VoiceMessageTableViewCell.swift */,
 				937F48E727D3D66A005E19FB /* TextMessageTableViewCell.swift */,
 				9361E5A72879B4760049F218 /* ImageMessageTableViewCell.swift */,
 				939260E7287E619100CF6497 /* BaseMessageTableViewCell.swift */,
@@ -1804,7 +1798,6 @@
 				93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */,
 				AD9BFD172729894300736318 /* TestAssembly.swift in Sources */,
 				930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */,
-				931E23AE27D317390065FFFC /* VoiceMessageTableViewCell.swift in Sources */,
 				93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */,
 				937FBE6928B5309E00C3A888 /* AVAsset+Extensions.swift in Sources */,
 				EAFA8B98280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift in Sources */,
@@ -1951,7 +1944,6 @@
 				AD9BFD4E272B10AF00736318 /* EnterVerifyCodeView.swift in Sources */,
 				93E4F70127C468BB00432CFA /* CurrentChatView.swift in Sources */,
 				933BE85D27B65BDF0099BA9E /* SharedViewController.swift in Sources */,
-				931E23AC27D3172C0065FFFC /* MediaMessageTableViewCell.swift in Sources */,
 				9396AB7127FED6F100696757 /* VerifyFileResponseModel.swift in Sources */,
 				AD819290272305D900D5BE48 /* TapUtils.swift in Sources */,
 				ADD5040127101B69009D50CB /* ContentView.swift in Sources */,

@@ -12,7 +12,7 @@ class ImageViewWithIcon: UIView, BaseView {
     private let backgroundView = UIView()
     private let mainImageView = UIImageView()
     private let plainImageView = UIImageView()
-    private let cameraIcon = ImageButton(image: UIImage(named: "camera")!, size: CGSize(width: 28, height: 28))
+    private let cameraIcon = ImageButton(image: .camera, size: CGSize(width: 28, height: 28))
     private let uploadProgressView = CircularProgressBar(spinnerWidth: 24)
     
     private let image: UIImage
@@ -41,7 +41,7 @@ class ImageViewWithIcon: UIView, BaseView {
         backgroundView.layer.cornerRadius = size.height / 2
         backgroundView.clipsToBounds = true
         
-        plainImageView.image = UIImage(named: "camera")
+        plainImageView.image = .camera
         plainImageView.contentMode = .scaleAspectFit
 
         mainImageView.image = image

@@ -68,7 +68,7 @@ class DetailsViewController: BaseViewController {
             guard let self = self else { return }
             self.detailsView.contentView.nameLabel.text = user.displayName
             let url = URL(string: user.getAvatarUrl() ?? "")
-            self.detailsView.contentView.profilePhoto.kf.setImage(with: url, placeholder: UIImage(named: "user_image"))
+            self.detailsView.contentView.profilePhoto.kf.setImage(with: url, placeholder: UIImage.userImage)
         }.store(in: &subscriptions)
     }
     
