@@ -14,7 +14,7 @@ class TextMessageTableViewCell: BaseMessageTableViewCell {
     static let friendTextReuseIdentifier = "FriendTextMessageTableViewCell"
     static let groupTextReuseIdentifier = "GroupTextMessageTableViewCell"
     
-    let messageLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .logoBlue)
+    let messageLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .logoBlue, fontName: .MontserratMedium)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

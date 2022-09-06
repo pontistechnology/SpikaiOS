@@ -21,6 +21,7 @@ protocol MessageInputViewDelegate: AnyObject {
 
 class MessageInputView: UIView, BaseView {
     
+    private let topLine = UIView()
     private let plusButton = UIButton()
     private let closeButton = UIButton()
     private let sendButton = UIButton()
@@ -28,9 +29,7 @@ class MessageInputView: UIView, BaseView {
     private let microphoneButton = UIButton()
     private let emojiButton = UIButton()
     private let messageTextView = UITextView()
-    private var replyView: ReplyMessageView?
-    private var replyViewId: Int?
-    private let closeReplyViewButton = UIButton()
+    private let placeholderLabel = CustomLabel(text: "Type here...", textSize: 14, textColor: .textTertiary, fontName: .MontserratMedium)
     private let additionalOptionsView = AdditionalOptionsView()
     let selectedFilesView = SelectedFilesView()
     
@@ -54,6 +53,7 @@ class MessageInputView: UIView, BaseView {
     }
     
     func addSubviews() {
+        addSubview(topLine)
         addSubview(plusButton)
         addSubview(closeButton)
         addSubview(messageTextView)
@@ -61,15 +61,18 @@ class MessageInputView: UIView, BaseView {
         addSubview(cameraButton)
         addSubview(emojiButton)
         addSubview(sendButton)
+        messageTextView.addSubview(placeholderLabel)
     }
     
     func styleSubviews() {
-        backgroundColor = .gray
+        topLine.backgroundColor = .navigation
         
         messageTextView.textContainerInset.left = 10
         messageTextView.textContainerInset.right = 36
         messageTextView.layer.cornerRadius = 10
         messageTextView.clipsToBounds = true
+        messageTextView.layer.borderColor = UIColor.borderColor.cgColor
+        messageTextView.layer.borderWidth = 1
         messageTextView.customFont(name: .MontserratMedium)
         
         plusButton.setImage(UIImage(named: "plus"), for: .normal)
@@ -78,13 +81,15 @@ class MessageInputView: UIView, BaseView {
         closeButton.setImage(UIImage(named: "close"), for: .normal)
         cameraButton.setImage(UIImage(named: "camera"), for: .normal)
         microphoneButton.setImage(UIImage(named: "microphone"), for: .normal)
-        closeReplyViewButton.setImage(UIImage(named: "close"), for: .normal)
         
         self.closeButton.alpha = 0
         self.sendButton.alpha = 0
     }
     
     func positionSubviews() {
+        
+        topLine.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        topLine.constrainHeight(0.5)
         
         heightConstraint = heightAnchor.constraint(equalToConstant: 56)
         heightConstraint.isActive = true
@@ -106,6 +111,9 @@ class MessageInputView: UIView, BaseView {
         messageTextViewTrailingConstraint = messageTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -95)
         messageTextViewHeightConstraint.isActive = true
         messageTextViewTrailingConstraint.isActive = true
+        
+        placeholderLabel.anchor(leading: messageTextView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+        placeholderLabel.centerYToSuperview()
     }
     
     func setupBindings() {
@@ -152,11 +160,7 @@ class MessageInputView: UIView, BaseView {
             guard let self = self else { return }
             let text = self.messageTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty else { return }
-            if let replyViewId = self.replyViewId {
-                self.delegate?.messageInputView(self, didPressSend: text, id: replyViewId)
-            } else {
-                self.delegate?.messageInputView(self, didPressSend: text)
-            }
+            self.delegate?.messageInputView(self, didPressSend: text)
         }.store(in: &subscriptions)
         
         microphoneButton.tap().sink { [weak self] _ in
@@ -167,11 +171,6 @@ class MessageInputView: UIView, BaseView {
         cameraButton.tap().sink { [weak self] _ in
             guard let self = self else { return }
             self.delegate?.messageInputView(didPressCameraButton: self)
-        }.store(in: &subscriptions)
-        
-        closeReplyViewButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            self.hideReplyView()
         }.store(in: &subscriptions)
     }
     
@@ -192,33 +191,6 @@ class MessageInputView: UIView, BaseView {
                 
                 self.layoutIfNeeded()
             }
-        }
-    }
-    
-    func showReplyView(view: ReplyMessageView, id: Int) {
-        if replyView == nil && replyViewId == nil {
-            replyView = view
-            replyViewId = id
-            heightConstraint.constant += 60
-            
-            addSubview(replyView!)
-            addSubview(closeReplyViewButton)
-            replyView?.anchor(top: topAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 8, left: 20, bottom: 0, right: 0))
-            
-            closeReplyViewButton.anchor(top: topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 15), size: CGSize(width: 24, height: 24))
-        } else {
-            hideReplyView()
-            showReplyView(view: view, id: id)
-        }
-    }
-    
-    func hideReplyView() {
-        if replyView != nil && replyViewId != nil {
-            replyView?.removeFromSuperview()
-            closeReplyViewButton.removeFromSuperview()
-            replyView = nil
-            replyViewId = nil
-            heightConstraint.constant -= 60
         }
     }
 }
@@ -273,9 +245,11 @@ extension MessageInputView: UITextViewDelegate {
         if textView.text.count == 0 {
             self.animateMessageView(isEmpty: true)
             wasMessageTextViewEmpty = true
+            placeholderLabel.isHidden = false
         } else if wasMessageTextViewEmpty {
             self.animateMessageView(isEmpty: false)
             wasMessageTextViewEmpty = false
+            placeholderLabel.isHidden = true
         }
         
         var heightOfTextView: CGFloat = 32
@@ -290,7 +264,7 @@ extension MessageInputView: UITextViewDelegate {
             heightOfTextView = 32 + 5 * (textView.font?.lineHeight ?? 0)
         }
         
-        heightConstraint.constant = heightOfTextView + 24 + (replyView != nil ? 60 : 0)
+        heightConstraint.constant = heightOfTextView + 24
         + ((selectedFilesView.superview != nil) ? selectedFilesView.height : 0.0)
         
         messageTextViewHeightConstraint.constant = heightOfTextView

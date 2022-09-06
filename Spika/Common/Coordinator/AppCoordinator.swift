@@ -16,7 +16,6 @@ class AppCoordinator: Coordinator {
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        navigationController.navigationBar.backgroundColor = .brown
     }
     
     func start() {

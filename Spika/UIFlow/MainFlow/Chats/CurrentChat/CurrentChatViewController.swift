@@ -200,7 +200,6 @@ extension CurrentChatViewController: MessageInputViewDelegate {
         viewModel.trySendMessage(text: message)
         
         currentChatView.messageInputView.clearTextField()
-        currentChatView.messageInputView.hideReplyView()
     }
     
     func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String) {
@@ -209,7 +208,6 @@ extension CurrentChatViewController: MessageInputViewDelegate {
         viewModel.trySendMessage(text: message)
 //        viewModel.sendSelectedFiles(files: viewModel.selectedFiles.value)
         currentChatView.messageInputView.clearTextField()
-        currentChatView.messageInputView.hideReplyView()
     }
     
     func messageInputView(didPressCameraButton messageVeiw: MessageInputView) {
