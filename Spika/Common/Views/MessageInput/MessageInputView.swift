@@ -11,7 +11,6 @@ import Combine
 
 protocol MessageInputViewDelegate: AnyObject {
     func messageInputView(_ messageView: MessageInputView, didPressSend message: String)
-    func messageInputView(_ messageView: MessageInputView, didPressSend message: String, id: Int)
     func messageInputView(didPressCameraButton messageVeiw: MessageInputView)
     func messageInputView(didPressMicrophoneButton messageVeiw: MessageInputView)
     func messageInputView(didPressLibraryButton messageVeiw: MessageInputView)
@@ -46,6 +45,10 @@ class MessageInputView: UIView, BaseView {
         super.init(frame: frame)
         setupView()
         setupBindings()
+        
+        let a = UIView(frame: CGRect(x: 20, y: 20, width: 20, height: 20))
+        a.backgroundColor = .red
+        messageTextView.inputAccessoryView = a
     }
     
     required init?(coder: NSCoder) {
@@ -75,12 +78,12 @@ class MessageInputView: UIView, BaseView {
         messageTextView.layer.borderWidth = 1
         messageTextView.customFont(name: .MontserratMedium)
         
-        plusButton.setImage(.plus, for: .normal)
-        sendButton.setImage(.send, for: .normal)
-        emojiButton.setImage(.smile, for: .normal)
-        closeButton.setImage(.close, for: .normal)
-        cameraButton.setImage(.camera, for: .normal)
-        microphoneButton.setImage(.microphone, for: .normal)
+        plusButton.setImage(UIImage(safeImage: .plus), for: .normal)
+        sendButton.setImage(UIImage(safeImage: .send), for: .normal)
+        emojiButton.setImage(UIImage(safeImage: .smile), for: .normal)
+        closeButton.setImage(UIImage(safeImage: .close), for: .normal)
+        cameraButton.setImage(UIImage(safeImage: .camera), for: .normal)
+        microphoneButton.setImage(UIImage(safeImage: .microphone), for: .normal)
         
         self.closeButton.alpha = 0
         self.sendButton.alpha = 0

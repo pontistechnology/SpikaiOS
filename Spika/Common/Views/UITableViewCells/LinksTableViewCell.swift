@@ -13,7 +13,7 @@ class LinksTableViewCell: UITableViewCell, BaseView {
     
     let titleLabel = CustomLabel(text: "this is default text for cell", textSize: 11)
     let linkLabel  = CustomLabel(text: "www.defaultfsajofiajsoidfjoiasjodifjiosajdoifjsoaidjfoisafoijasidfjolink.com", textSize: 9, textColor: .textTertiary)
-    let leftImageView = UIImageView(image: .docs)
+    let leftImageView = UIImageView(image: UIImage(safeImage: .docs))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

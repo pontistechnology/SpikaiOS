@@ -18,7 +18,7 @@ class BaseMessageTableViewCell: UITableViewCell {
     
     let containerView = UIView()
     let senderNameLabel = CustomLabel(text: "Matej Vida", textSize: 12, textColor: .textTertiary, fontName: .MontserratRegular, alignment: .left)
-    let senderPhotoImageview = UIImageView(image: .userImage)
+    let senderPhotoImageview = UIImageView(image: UIImage(safeImage: .userImage))
     let timeLabel = CustomLabel(text: "11:54", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
     let messageStateView = MessageStateView(state: .waiting)
     let replyView = ReplyMessageView()

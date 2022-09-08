@@ -11,9 +11,9 @@ class ContentView: UIView, BaseView {
     
     let profilePhoto = UIImageView()
     let nameLabel = CustomLabel(text: "Name and Surname")
-    let messageButton = ImageButton(image: .chatBubble)
-    let phoneCallButton = ImageButton(image: .phoneCall)
-    let videoCallButton = ImageButton(image: .videoCall)
+    let messageButton = ImageButton(image: UIImage(safeImage: .chatBubble))
+    let phoneCallButton = ImageButton(image: UIImage(safeImage: .phoneCall))
+    let videoCallButton = ImageButton(image: UIImage(safeImage: .videoCall))
     let testLabel = CustomLabel(text: "Test")
     let optionButtonsStackView = UIStackView()
     let switchStackView = UIStackView()
@@ -62,7 +62,7 @@ class ContentView: UIView, BaseView {
     
     func styleSubviews() {
         
-        profilePhoto.image = .testImage
+        profilePhoto.image = UIImage(safeImage: .testImage)
         profilePhoto.layer.cornerRadius = 50
         profilePhoto.contentMode = .scaleAspectFill
         profilePhoto.clipsToBounds = true

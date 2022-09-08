@@ -16,6 +16,6 @@ public struct Country: Hashable {
     }
     public var flag: UIImage {
         // Cocoapods || SPM
-        return UIImage.safeImage(named: code.uppercased())
+        return UIImage(named: code.uppercased())! // todo !
     }
 }

@@ -12,7 +12,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     
     let nameLabel = CustomLabel(text: "", fontName: .MontserratSemiBold)
     let descriptionLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary)
-    let leftImageView = UIImageView(image: .userImage)
+    let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
     let timeLabel = CustomLabel(text: "Yesterday", textSize: 10, textColor: .textTertiary)
     let messagesNumberLabel = CustomLabel(text: "2", textSize: 10, textColor: .white, fontName: .MontserratSemiBold, alignment: .center)
     
@@ -62,7 +62,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
            let realUrl = URL(string: avatarUrl)
         {
             leftImageView.kf.setImage(with: realUrl,
-                                      placeholder: UIImage.userImage)
+                                      placeholder: UIImage(safeImage: .userImage))
         }
         nameLabel.text = name
         descriptionLabel.text = description
@@ -70,7 +70,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     }
     
     override func prepareForReuse() {
-        leftImageView.image = .userImage
+        leftImageView.image = UIImage(safeImage: .userImage)
         nameLabel.text = ""
         descriptionLabel.text = ""
     }

@@ -11,7 +11,7 @@ class CurrentChatView: UIView, BaseView {
     
     let messagesTableView = UITableView()
     let messageInputView = MessageInputView()
-    let downArrowImageView = UIImageView(image: .downArrow)
+    let downArrowImageView = UIImageView(image: UIImage(safeImage: .downArrow))
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
     
@@ -33,7 +33,7 @@ class CurrentChatView: UIView, BaseView {
     
     func styleSubviews() {
         messagesTableView.separatorStyle  = .none
-        messagesTableView.keyboardDismissMode = .interactive
+        messagesTableView.keyboardDismissMode = .onDrag
         messagesTableView.rowHeight = UITableView.automaticDimension
         messagesTableView.estimatedRowHeight = 5
         
@@ -70,11 +70,6 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.myFileReuseIdentifier)
         messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.friendFileReuseIdentifier)
         messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.groupFileReuseIdentifier)
-        
-        
-        
-        messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: "imageLeft")
-        messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: "imageRight")
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)

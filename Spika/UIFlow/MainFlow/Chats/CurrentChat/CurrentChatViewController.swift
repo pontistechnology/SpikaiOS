@@ -194,19 +194,10 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
 
 extension CurrentChatViewController: MessageInputViewDelegate {
     
-    func messageInputView(_ messageView: MessageInputView, didPressSend message: String, id: Int) {
-        print("send in ccVC with ID, this id is from array not message Id")
-        
-        viewModel.trySendMessage(text: message)
-        
-        currentChatView.messageInputView.clearTextField()
-    }
-    
     func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String) {
         print("send in ccVC ")
         
         viewModel.trySendMessage(text: message)
-//        viewModel.sendSelectedFiles(files: viewModel.selectedFiles.value)
         currentChatView.messageInputView.clearTextField()
     }
     
@@ -343,8 +334,8 @@ extension CurrentChatViewController: UITableViewDataSource {
 
 extension CurrentChatViewController {
     func setupNavigationItems() {
-        let videoCallButton = UIBarButtonItem(image: .videoCall, style: .plain, target: self, action: #selector(videoCallActionHandler))
-        let audioCallButton = UIBarButtonItem(image: .phoneCall, style: .plain, target: self, action: #selector(phoneCallActionHandler))
+        let videoCallButton = UIBarButtonItem(image: UIImage(safeImage: .videoCall), style: .plain, target: self, action: #selector(videoCallActionHandler))
+        let audioCallButton = UIBarButtonItem(image: UIImage(safeImage: .phoneCall), style: .plain, target: self, action: #selector(phoneCallActionHandler))
         
         navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
@@ -405,7 +396,6 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
         configuration.filter = .any(of: [.images, .livePhotos, .videos]) // TODO: check
         configuration.preferredAssetRepresentationMode = .current
         configuration.selectionLimit = 30
-        //        configuration.selection = .ordered // iOS 15 required
         
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self

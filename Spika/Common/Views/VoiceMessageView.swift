@@ -41,7 +41,7 @@ class VoiceMessageView: UIView, BaseView {
         
         layer.cornerRadius = 10
         layer.masksToBounds = true
-        playButton.setImage(.play, for: .normal)
+        playButton.setImage(UIImage(safeImage: .play), for: .normal)
         lineView.backgroundColor = .logoBlue
         markerView.backgroundColor = .logoBlue
         markerView.layer.cornerRadius = 9

@@ -10,7 +10,7 @@ import UIKit
 
 class EnterUsernameView: UIView, BaseView {
     
-    let profilePictureView = ImageViewWithIcon(image: .logo, size: CGSize(width: 100, height: 100))
+    let profilePictureView = ImageViewWithIcon(image: UIImage(safeImage: .logo), size: CGSize(width: 100, height: 100))
     private let usernameLabel = CustomLabel(text: "Username", textColor: .textTertiary, fontName: .MontserratMedium)
     let usernameTextfield = TextField(textPlaceholder: "Enter username")
     let nextButton = MainButton()

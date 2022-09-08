@@ -196,7 +196,7 @@ extension CurrentChatViewModel {
     func sendMessage(body: MessageBody, localId: String, type: MessageType) {
         guard let room = self.room else { return }
         
-        self.repository.sendTextMessage(body: body, type: type, roomId: room.id, localId: localId).sink { [weak self] completion in
+        self.repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 

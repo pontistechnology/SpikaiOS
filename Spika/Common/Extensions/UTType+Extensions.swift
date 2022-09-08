@@ -12,9 +12,9 @@ extension UTType {
     func thumbnail() -> UIImage {
         switch self {
         case .pdf:
-            return .pdfThumbnail
+            return UIImage(safeImage: .pdfThumbnail)
         default:
-            return .unknownFileThumbnail
+            return UIImage(safeImage: .unknownFileThumbnail)
         }
     }
 }

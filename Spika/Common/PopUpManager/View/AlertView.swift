@@ -47,7 +47,7 @@ class AlertView: UIView, BaseView {
     let containerView = UIView()
     let descriptionLabel = CustomLabel(text: "For copy and favorite", textSize: 11, textColor: .textSecondary, fontName: .MontserratMedium, alignment: .center)
     let messageLabel = CustomLabel(text: "message message", textSize: 13, textColor: .appRed, fontName: .MontserratMedium, alignment: .center)
-    let imageView = UIImageView(image: .error)
+    let imageView = UIImageView(image: UIImage(safeImage: .error))
     let titleLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
     let buttonsStackView = UIStackView()
     
@@ -152,7 +152,7 @@ class AlertView: UIView, BaseView {
             buttonsStackView.layer.borderColor = UIColor.gray.cgColor
         case .staticInfo:
             containerView.backgroundColor = .whiteAndDarkBackground
-            imageView.image = .sent
+            imageView.image = UIImage(safeImage: .sent)
             descriptionLabel.text = staticChoice.description
         }
     }

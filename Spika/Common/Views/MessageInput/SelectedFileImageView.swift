@@ -14,7 +14,7 @@ struct FileIcon {
 
 class SelectedFileImageView: UIImageView {
     
-    let deleteImageView = UIImageView(image: .deleteCell)
+    let deleteImageView = UIImageView(image: UIImage(safeImage: .deleteCell))
     let fileNameLabel = CustomLabel(text: "fileName", textSize: 10, textColor: .textPrimary, fontName: .MontserratRegular)
     private let progressView = CircularProgressBar(spinnerWidth: 20)
     
