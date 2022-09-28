@@ -45,10 +45,6 @@ class MessageInputView: UIView, BaseView {
         super.init(frame: frame)
         setupView()
         setupBindings()
-        
-        let a = UIView(frame: CGRect(x: 20, y: 20, width: 20, height: 20))
-        a.backgroundColor = .red
-        messageTextView.inputAccessoryView = a
     }
     
     required init?(coder: NSCoder) {

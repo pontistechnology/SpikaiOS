@@ -1,8 +1,8 @@
 //
 //  MessageEntity+CoreDataProperties.swift
-//  Spika
+//  
 //
-//  Created by Nikola Barbarić on 09.07.2022..
+//  Created by Nikola Barbarić on 28.09.2022..
 //
 //
 
@@ -21,15 +21,35 @@ extension MessageEntity {
     @NSManaged public var deliveredCount: Int64
     @NSManaged public var fromUserId: Int64
     @NSManaged public var id: String?
+    @NSManaged public var imagePath: String?
     @NSManaged public var localId: String?
     @NSManaged public var roomId: Int64
     @NSManaged public var seenCount: Int64
     @NSManaged public var totalUserCount: Int64
     @NSManaged public var type: String?
-    @NSManaged public var imagePath: String?
+    @NSManaged public var createdDate: Date?
     @NSManaged public var records: NSSet?
     @NSManaged public var room: RoomEntity?
-
+    
+    @objc public var sectionName: String {
+        guard let createdDate = createdDate else {
+            return ""
+        }
+        let dateFormatter = DateFormatter()
+        if createdDate.isInToday {
+            return "Today"
+        } else if createdDate.isInYesterday {
+            return "Yesterday"
+        } else if createdDate.isInThisWeek {
+            dateFormatter.dateFormat = "EEEE"
+        }
+        else if createdDate.isInThisYear {
+            dateFormatter.dateFormat = "dd MM"
+        } else {
+            dateFormatter.dateFormat = "dd MM YYYY"
+        }
+        return dateFormatter.string(from: createdDate)
+    }
 }
 
 // MARK: Generated accessors for records
@@ -46,9 +66,5 @@ extension MessageEntity {
 
     @objc(removeRecords:)
     @NSManaged public func removeFromRecords(_ values: NSSet)
-
-}
-
-extension MessageEntity : Identifiable {
 
 }

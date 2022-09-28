@@ -117,9 +117,11 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = MessageEntity.fetchRequest()
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
+            fetchRequest.sortDescriptors = [
+                NSSortDescriptor(key: "createdDate", ascending: true),
+                NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
             fetchRequest.predicate = NSPredicate(format: "room.id == %d", room.id)
-            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
+            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: "sectionName", cacheName: nil)
             self.frc?.delegate = self
             do {
                 try self.frc?.performFetch()
@@ -133,52 +135,53 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        currentChatView.messagesTableView.beginUpdates()
+//        currentChatView.messagesTableView.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         print("TYPE: ", type.rawValue)
-        switch type {
-        case .insert:
-            guard let newIndexPath = newIndexPath else {
-                return
-            }
-            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-            
-        case .delete:
-            guard let indexPath = indexPath else {
-                return
-            }
-            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-        case .move:
-            guard let indexPath = indexPath,
-                  let newIndexPath = newIndexPath
-            else {
-                return
-            }
-            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
-            
-        case .update:
-            guard let indexPath = indexPath else {
-                return
-            }
-            //            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-            //            currentChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
-            
-            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
-            
-            //            let cell = currentChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
-            //            let entity = frc?.object(at: indexPath)
-            //            let message = Message(messageEntity: entity!)
-            //            cell?.updateCell(message: message)
-            break
-        default:
-            break
-        }
+        currentChatView.messagesTableView.reloadData()
+//        switch type {
+//        case .insert:
+//            guard let newIndexPath = newIndexPath else {
+//                return
+//            }
+//            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
+//
+//        case .delete:
+//            guard let indexPath = indexPath else {
+//                return
+//            }
+//            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+//        case .move:
+//            guard let indexPath = indexPath,
+//                  let newIndexPath = newIndexPath
+//            else {
+//                return
+//            }
+//            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+//
+//        case .update:
+//            guard let indexPath = indexPath else {
+//                return
+//            }
+//            //            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+//            //            currentChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
+//
+//            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
+//
+//            //            let cell = currentChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
+//            //            let entity = frc?.object(at: indexPath)
+//            //            let message = Message(messageEntity: entity!)
+//            //            cell?.updateCell(message: message)
+//            break
+//        default:
+//            break
+//        }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        currentChatView.messagesTableView.endUpdates()
+//        currentChatView.messagesTableView.endUpdates()
         currentChatView.messagesTableView.scrollToBottom()
     }
     
@@ -235,7 +238,7 @@ extension CurrentChatViewController: UITableViewDelegate {
         i += 1
         navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
     }
-    
+        
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         guard let totalSections = self.frc?.sections?.count,
@@ -252,6 +255,10 @@ extension CurrentChatViewController: UITableViewDelegate {
 }
 
 extension CurrentChatViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.frc?.sections?.count ?? 0
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = self.frc?.sections else { return 0 }
@@ -327,6 +334,17 @@ extension CurrentChatViewController: UITableViewDataSource {
         }
         
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let sections = self.frc?.sections else { return nil }
+        var name = sections[section].name
+        if let time = (sections[section].objects?.first as? MessageEntity)?.createdAt {
+            name.append(", ")
+            name.append(time.convert(to: .HHmm))
+        }
+        let dateLabel = CustomLabel(text: name, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
+        return dateLabel
     }
 }
 

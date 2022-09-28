@@ -9,7 +9,7 @@ import UIKit
 
 class CurrentChatView: UIView, BaseView {
     
-    let messagesTableView = UITableView()
+    let messagesTableView = UITableView(frame: .zero, style: .grouped)
     let messageInputView = MessageInputView()
     let downArrowImageView = UIImageView(image: UIImage(safeImage: .downArrow))
     
@@ -33,11 +33,14 @@ class CurrentChatView: UIView, BaseView {
     
     func styleSubviews() {
         messagesTableView.separatorStyle  = .none
-        messagesTableView.keyboardDismissMode = .onDrag
+        messagesTableView.keyboardDismissMode = .interactive
         messagesTableView.rowHeight = UITableView.automaticDimension
         messagesTableView.estimatedRowHeight = 5
+        messagesTableView.backgroundColor = .clear
         
         downArrowImageView.isHidden = true
+        
+        backgroundColor = .white
     }
     
     func positionSubviews() {        

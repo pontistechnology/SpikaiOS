@@ -21,6 +21,7 @@ public class MessageEntity: NSManagedObject {
         
         if let c = message.createdAt {
             createdAt = c
+            createdDate = Date(timeIntervalSince1970: Double(c) / 1000)
         }
         
         if let fromUserId = message.fromUserId {
