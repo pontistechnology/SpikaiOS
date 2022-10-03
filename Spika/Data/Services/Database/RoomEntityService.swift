@@ -71,17 +71,6 @@ extension RoomEntityService {
                 let a = RoomEntity(room: room, context: context)
                 do {
                     try context.save()
-                    
-                    
-                    self!.coreDataStack.persistantContainer.viewContext.performAndWait {
-                        let fr = RoomEntity.fetchRequest()
-                        fr.predicate = NSPredicate(format: "id == %d", room.id)
-                        let rooms = try! self?.coreDataStack.persistantContainer.viewContext.fetch(fr)
-                        
-                        
-                    print("DOHVACENe: ", rooms!.count)
-                    print("USERA U DOHV: ", rooms!.first?.users!.count)
-                    }
                     print("this room is saved: ", room)
                     promise(.success(room))
                 } catch {

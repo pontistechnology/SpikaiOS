@@ -39,20 +39,6 @@ class ContactsViewController: BaseViewController {
             PopUpManager.shared.presentAlert(errorMessage: "tititi")
         }.store(in: &subscriptions)
         
-        //TODO: check this cooments
-//        contactsView.detailsButton.tap().sink { [weak self] _ in
-//        guard let self = self else { return }
-//            self.viewModel.showDetailsScreen(id: 3)
-    //        viewModel.createChat(name: "first chat", type: "group", id: 1)
-    //        let user1 = User(loginName: "Marko", avatarUrl: nil, localName: "Marko", id: 1, blocked: false)
-    //        viewModel.repository.saveUser(user1)
-    //        let chat = Chat(name: "first chat", id: 1, type: "group")
-    //        let message = Message(chat: chat, user: user1, message: "SecondMEssage", id: 1)
-    //        viewModel.saveMessage(message: message)
-    //        viewModel.getUsersForChat(chat: chat)
-    //        viewModel.getMessagesForChat(chat: chat)
-//        }.store(in: &subscriptions)
-        
         viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] contacts in
             guard let self = self else { return }
             self.contactsView.tableView.reloadData()
@@ -140,51 +126,6 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
         }
     }
     
-//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        currentChatView.messagesTableView.beginUpdates()
-//    }
-//
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-//        print("TYPE: ", type.rawValue)
-//        switch type {
-//        case .insert:
-//            guard let newIndexPath = newIndexPath else {
-//                return
-//            }
-//            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-//
-//        case .delete:
-//            guard let indexPath = indexPath else {
-//                return
-//            }
-//            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-//        case .move:
-//            guard let indexPath = indexPath,
-//                  let newIndexPath = newIndexPath
-//            else {
-//                return
-//            }
-//            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
-//
-//        case .update:
-//            guard let indexPath = indexPath else {
-//                return
-//            }
-////            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-////            currentChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
-//
-//            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .fade)
-//
-////            let cell = currentChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
-////            let entity = frc?.object(at: indexPath)
-////            let message = Message(messageEntity: entity!)
-////            cell?.updateCell(message: message)
-//            break
-//        default:
-//            break
-//        }
-//    }
-//
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
     }

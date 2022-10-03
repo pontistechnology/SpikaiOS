@@ -25,35 +25,11 @@ extension TestRepository {
         return Fail<SyncMessageRecordsResponseModel, Error>(error: NetworkError.unknown).receive(on: DispatchQueue.main).eraseToAnyPublisher()
     }
     
-    func setUsersSyncTimestamp(_ timestamp: Int64) {
+    func setSyncTimestamp(for type: SyncType) {
         
     }
     
-    func setRoomsSyncTimestamp(_ timestamp: Int64) {
-        
-    }
-    
-    func setMessagesSyncTimestamp(_ timestamp: Int64) {
-        
-    }
-    
-    func setMessageRecordsSyncTimestamp(_ timestamp: Int64) {
-        
-    }
-    
-    func getUsersSyncTimestamp() -> Int64 {
-        4
-    }
-    
-    func getRoomsSyncTimestamp() -> Int64 {
-        4
-    }
-    
-    func getMessagesSyncTimestamp() -> Int64 {
-        4
-    }
-    
-    func getMessageRecordsSyncTimestamp() -> Int64 {
-        3
+    func getSyncTimestamp(for type: SyncType) -> Int64 {
+        0
     }
 }
