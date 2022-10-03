@@ -126,6 +126,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             do {
                 try self.frc?.performFetch()
                 self.currentChatView.messagesTableView.reloadData()
+                self.currentChatView.messagesTableView.scrollToBottom()
             } catch {
                 fatalError("Failed to fetch entities: \(error)") // TODO: handle error
             }
@@ -135,61 +136,59 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        currentChatView.messagesTableView.beginUpdates()
+        currentChatView.messagesTableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        switch type {
+            case .insert:
+            currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+            case .delete:
+                currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+            case .move:
+                break
+            case .update:
+                break
+            }
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         print("TYPE: ", type.rawValue)
-        currentChatView.messagesTableView.reloadData()
-//        switch type {
-//        case .insert:
-//            guard let newIndexPath = newIndexPath else {
-//                return
-//            }
-//            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-//
-//        case .delete:
-//            guard let indexPath = indexPath else {
-//                return
-//            }
-//            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-//        case .move:
-//            guard let indexPath = indexPath,
-//                  let newIndexPath = newIndexPath
-//            else {
-//                return
-//            }
-//            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
-//
-//        case .update:
-//            guard let indexPath = indexPath else {
-//                return
-//            }
-//            //            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-//            //            currentChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
-//
-//            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
-//
-//            //            let cell = currentChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
-//            //            let entity = frc?.object(at: indexPath)
-//            //            let message = Message(messageEntity: entity!)
-//            //            cell?.updateCell(message: message)
-//            break
-//        default:
-//            break
-//        }
+        switch type {
+        case .insert:
+            guard let newIndexPath = newIndexPath else {
+                return
+            }
+            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
+
+        case .delete:
+            guard let indexPath = indexPath else {
+                return
+            }
+            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+        case .move:
+            guard let indexPath = indexPath,
+                  let newIndexPath = newIndexPath
+            else {
+                return
+            }
+            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+
+        case .update:
+            guard let indexPath = indexPath else {
+                return
+            }
+            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
+            break
+        default:
+            break
+        }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        currentChatView.messagesTableView.endUpdates()
+        currentChatView.messagesTableView.endUpdates()
         currentChatView.messagesTableView.scrollToBottom()
     }
-    
-    //    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
-    //        print("snapshot begi: ", snapshot)
-    //        currentChatView.messagesTableView.reloadData()
-    //        currentChatView.messagesTableView.scrollToBottom()
-    //    }
 }
 
 

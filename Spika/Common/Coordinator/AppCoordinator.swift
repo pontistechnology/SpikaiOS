@@ -115,17 +115,15 @@ class AppCoordinator: Coordinator {
     }
     
     func presentCurrentChatScreen(user: User) {
-        let homeViewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
         let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, user)!
         
-        navigationController.setViewControllers([homeViewController, currentChatViewController], animated: true)
+        navigationController.pushViewController(currentChatViewController, animated: true)
     }
     
     func presentCurrentChatScreen(room: Room) {
-        let homeViewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
         let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, room)!
         
-        navigationController.setViewControllers([homeViewController, currentChatViewController], animated: true)
+        navigationController.pushViewController(currentChatViewController, animated: true)
     }
     
     func presentNewGroupChatScreen(selectedMembers: [User]) {
@@ -145,6 +143,7 @@ class AppCoordinator: Coordinator {
             }
         } else {
             // Fallback on earlier versions
+            // TODO: fix for ios 14
         }
         navigationController.present(viewControllerToPresent, animated: true)
 //        present(viewControllerToPresent, animated: true, completion: nil)
