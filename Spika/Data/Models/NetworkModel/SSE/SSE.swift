@@ -81,22 +81,18 @@ class SSE {
         
         
         dispatchGroup.enter()
-        repository.syncMessages(timestamp: repository.getMessagesSyncTimestamp()).sink { [weak self] c in
+        repository.syncMessages().sink { [weak self] c in
             print("messages C: ", c)
             self?.dispatchGroup.leave()
         } receiveValue: { [weak self] response in
             print("sync messages: ", response)
             guard let self = self else { return }
             guard let messages = response.data?.messages else { return }
-            self.repository.setMessagesSyncTimestamp(Date().currentTimeMillis())
             print("messages before: ", messages.count)
             messages.forEach { message in
                 if let roomId = message.roomId {
-                    self.repository.saveMessage(message: message, roomId: roomId).sink { c in
-                        print("sync messages saving c: ", c)
-                    } receiveValue: { message in
-                        print("PAPA")
-                    }.store(in: &self.subs)
+                    print("MESSAGEID: ", message.id)
+                    self.checkLocalRoom(message: message, roomId: roomId)
                 }
             }
         }.store(in: &subs)
@@ -238,6 +234,7 @@ class SSE {
 extension SSE {
     
     func sendDeliveredStatus(messages: [Message]) {
+        print("message id in sse: ", messages)
         windowWorkItem?.cancel()
         windowWorkItem = nil
         showNotification(imageUrl: URL(string: "noUrl"),
@@ -249,6 +246,7 @@ extension SSE {
             
         } receiveValue: { [weak self] response in
             // TODO: fetch information, save message records
+            print("send delivered status sse response: ", response)
             
             
             
@@ -307,6 +305,7 @@ extension SSE {
     }
     
     func saveMessage(message: Message) {
+        print("ALAISDJ: ", message.id)
         guard let roomId = message.roomId else { return }
         repository.saveMessage(message: message, roomId: roomId).sink { [weak self] c in
             guard let self = self else { return }
@@ -325,3 +324,4 @@ extension SSE {
     
     
 }
+

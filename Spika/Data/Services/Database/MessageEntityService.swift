@@ -76,7 +76,7 @@ class MessageEntityService {
                         print("saved message:", message)
                         do {
                             try context.save()
-                            promise(.success(Message(messageEntity: messageEntity)))
+                            promise(.success(message))
                         } catch {
                             promise(.failure(DatabseError.savingError))
                         }

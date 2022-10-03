@@ -47,7 +47,7 @@ extension Message {
         }
         self.init(createdAt: messageEntity.createdAt,
                   fromUserId: messageEntity.fromUserId,
-                  id: Int64(messageEntity.id ?? "-1"),
+                  id: Int64(messageEntity.id ?? "-2"),
                   localId: messageEntity.localId,
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,

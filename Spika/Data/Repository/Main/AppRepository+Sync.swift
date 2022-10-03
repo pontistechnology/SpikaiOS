@@ -50,7 +50,7 @@ extension AppRepository {
     
     
     
-    func syncMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error> {
+    func syncMessages() -> AnyPublisher<SyncMessagesResponseModel, Error> {
         guard let accessToken = getAccessToken() else { return
             Fail<SyncMessagesResponseModel, Error>(error: NetworkError.noAccessToken)
                     .receive(on: DispatchQueue.main)
@@ -58,7 +58,7 @@ extension AppRepository {
         }
         
         let resources = Resources<SyncMessagesResponseModel, EmptyRequestBody>(
-            path: Constants.Endpoints.syncMessages, //for now: + "/\(timestamp)",
+            path: Constants.Endpoints.syncMessages,
             requestType: .GET,
             bodyParameters: nil,
             httpHeaderFields: ["accesstoken" : accessToken])

@@ -40,6 +40,7 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
+        print("message id u repos: ", messageIds)
         
         let resources = Resources<DeliveredResponseModel, DeliveredRequestModel>(
             path: Constants.Endpoints.deliveredStatus,
