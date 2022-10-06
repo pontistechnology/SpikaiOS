@@ -11,7 +11,6 @@ import IKEventSource
 import UIKit
 
 class SSE {
-    private let dispatchGroup = DispatchGroup()
     private var windowWorkItem: DispatchWorkItem?
     private var eventSource: EventSource?
     private var alertWindow: UIWindow?
@@ -19,10 +18,7 @@ class SSE {
     private let coordinator: Coordinator
     private var subs = Set<AnyCancellable>()
     
-    private let newMessages = PassthroughSubject<Message, Never>()
-    private let messagesWithLocalRoom = PassthroughSubject<Message, Never>()
-    private let messagesWithoutLocalRoom = PassthroughSubject<Message, Never>()
-    private let savedMessages = PassthroughSubject<Message, Never>()
+    private let finishedSyncPublisher = PassthroughSubject<SyncType, Never>()
     
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
@@ -34,18 +30,33 @@ class SSE {
     deinit {
         print("SSE deinit")
     }
+}
+
+extension SSE {
+    
+    func setupBindings() {
+        finishedSyncPublisher.sink { [weak self] finished in
+            guard let self = self else { return }
+            switch finished {
+                
+            case .users:
+                self.syncMessages()
+            case .rooms:
+                self.syncUsers()
+            case .messages:
+                self.syncMessageRecords()
+            case .messageRecords:
+                break // start sse
+                
+            }
+        }.store(in: &subs)
+    }
+}
+
+extension SSE {
     
     func syncAndStartSSE() {
-        
         syncRooms()
-        syncUsers()
-        syncMessages()
-        syncMessageRecords()
-        
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            print("ALL Syncs FINISHED")
-            self?.startSSEConnection()
-        }
     }
     
     func startSSEConnection(){
@@ -88,7 +99,7 @@ class SSE {
             switch type {
             case .newMessage:
                 guard let message = sseNewMessage.message else { return }
-                self.newMessages.send(message)
+//                self.newMessages.send(message)
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
                 print("MESSAGE RECORD ON SSE: ", record)
@@ -97,6 +108,70 @@ class SSE {
                 break
             }
         }
+    }
+}
+
+extension SSE {
+    func syncRooms() {
+        repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { [weak self] c in
+        } receiveValue: { [weak self] response in
+            guard let rooms = response.data?.rooms else { return }
+            self?.repository.saveLocalRooms(rooms: rooms).sink { _ in
+                
+            } receiveValue: { [weak self] rooms in
+                self?.repository.setSyncTimestamp(for: .rooms)
+            }.store(in: &self!.subs)
+
+        }.store(in: &subs)
+    }
+    
+    func syncMessages() {
+        print("messages timestamp: ", repository.getSyncTimestamp(for: .messages))
+        repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { [weak self] c in
+            print("messages C: ", c)
+        } receiveValue: { [weak self] response in
+            print("sync messages: ", response)
+            guard let self = self else { return }
+            guard let messages = response.data?.messages else { return }
+            print("messages before: ", messages.count)
+            messages.forEach { message in
+//                self.newMessages.send(message)
+            }
+        }.store(in: &subs)
+    }
+    
+    func syncUsers() {
+        repository.syncUsers(timestamp: repository.getSyncTimestamp(for: .users)).sink { [weak self] c in
+            print("users C: ", c)
+        } receiveValue: { [weak self] response in
+            print("sync users: ", response)
+            guard let users = response.data?.users else { return }
+            self?.repository.setSyncTimestamp(for: .users)
+            self?.repository.saveUsers(users).sink(receiveCompletion: { [weak self] c in
+                print("save users sync c: ", c)
+            }, receiveValue: { users in
+                
+            }).store(in: &self!.subs)
+        }.store(in: &subs)
+    }
+    
+    func syncMessageRecords() {
+        repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { [weak self] c in
+            print("sync message records C: ", c)
+        } receiveValue: { [weak self] response in
+            guard let self = self else { return }
+            guard let records = response.data?.messageRecords else { return }
+            self.repository.setSyncTimestamp(for: .messageRecords)
+            print("records before: ", records.count)
+            
+            records.forEach { record in
+                self.repository.saveMessageRecord(messageRecord: record).sink { c in
+                } receiveValue: { record in
+                    print("sync saved message record: ", record)
+                    
+                }.store(in: &self.subs)
+            }
+        }.store(in: &subs)
     }
 }
 
@@ -127,11 +202,11 @@ extension SSE {
             case .finished:
                 break
             case .failure(_):
-                self?.messagesWithoutLocalRoom.send(message)
+//                self?.messagesWithoutLocalRoom.send(message)
                 break
             }
         } receiveValue: { [weak self] room in
-            self?.messagesWithLocalRoom.send(message)
+//            self?.messagesWithLocalRoom.send(message)
         }.store(in: &subs)
     }
     
@@ -163,7 +238,7 @@ extension SSE {
                 break
             }
         } receiveValue: { [weak self] room in
-            self?.messagesWithLocalRoom.send(message)
+//            self?.messagesWithLocalRoom.send(message)
         }.store(in: &subs)
     }
     
@@ -179,7 +254,7 @@ extension SSE {
             }
         } receiveValue: { [weak self] message in
             guard let self = self else { return }
-            self.savedMessages.send(message)
+//            self.savedMessages.send(message)
             self.repository.setSyncTimestamp(for: .messages)
         }.store(in: &subs)
     }
@@ -188,101 +263,6 @@ extension SSE {
         repository.saveMessageRecord(messageRecord: record).sink { c in
         } receiveValue: { record in
         }.store(in: &self.subs)
-    }
-}
-
-extension SSE {
-    
-    func setupBindings() {
-        newMessages.sink { [weak self] message in
-            self?.checkLocalRoom(message: message)
-        }.store(in: &subs)
-        
-        messagesWithLocalRoom.sink { [weak self] message in
-            self?.saveMessage(message: message)
-        }.store(in: &subs)
-        
-        messagesWithoutLocalRoom.sink { [weak self] message in
-            self?.checkOnlineRoom(message: message)
-        }.store(in: &subs)
-        
-        savedMessages.sink { [weak self] message in
-            self?.sendDeliveredStatus(messages: [message])
-        }.store(in: &subs)
-    }
-}
-
-extension SSE {
-    func syncRooms() {
-        dispatchGroup.enter()
-        repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { [weak self] c in
-            self?.dispatchGroup.leave()
-        } receiveValue: { [weak self] response in
-            guard let rooms = response.data?.rooms else { return }
-            self?.repository.saveLocalRooms(rooms: rooms).sink { _ in
-                
-            } receiveValue: { [weak self] rooms in
-                self?.repository.setSyncTimestamp(for: .rooms)
-            }.store(in: &self!.subs)
-
-        }.store(in: &subs)
-    }
-    
-    func syncMessages() {
-        dispatchGroup.enter()
-        print("messages timestamp: ", repository.getSyncTimestamp(for: .messages))
-        repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { [weak self] c in
-            print("messages C: ", c)
-            self?.dispatchGroup.leave()
-        } receiveValue: { [weak self] response in
-            print("sync messages: ", response)
-            guard let self = self else { return }
-            guard let messages = response.data?.messages else { return }
-            print("messages before: ", messages.count)
-            messages.forEach { message in
-                self.newMessages.send(message)
-            }
-        }.store(in: &subs)
-    }
-    
-    func syncUsers() {
-        dispatchGroup.enter()
-        repository.syncUsers(timestamp: repository.getSyncTimestamp(for: .users)).sink { [weak self] c in
-            print("users C: ", c)
-            self?.dispatchGroup.leave()
-        } receiveValue: { [weak self] response in
-            print("sync users: ", response)
-            guard let users = response.data?.users else { return }
-            self?.repository.setSyncTimestamp(for: .users)
-            self?.dispatchGroup.enter()
-            self?.repository.saveUsers(users).sink(receiveCompletion: { [weak self] c in
-                print("save users sync c: ", c)
-                self?.dispatchGroup.leave()
-            }, receiveValue: { users in
-                
-            }).store(in: &self!.subs)
-        }.store(in: &subs)
-    }
-    
-    func syncMessageRecords() {
-        dispatchGroup.enter()
-        repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { [weak self] c in
-            print("sync message records C: ", c)
-            self?.dispatchGroup.leave()
-        } receiveValue: { [weak self] response in
-            guard let self = self else { return }
-            guard let records = response.data?.messageRecords else { return }
-            self.repository.setSyncTimestamp(for: .messageRecords)
-            print("records before: ", records.count)
-            
-            records.forEach { record in
-                self.repository.saveMessageRecord(messageRecord: record).sink { c in
-                } receiveValue: { record in
-                    print("sync saved message record: ", record)
-                    
-                }.store(in: &self.subs)
-            }
-        }.store(in: &subs)
     }
 }
 
