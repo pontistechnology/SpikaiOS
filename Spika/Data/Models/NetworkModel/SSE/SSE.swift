@@ -23,12 +23,12 @@ class SSE {
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
         self.coordinator = coordinator
-        print("SSE init")
+        print("SSE: init")
         setupBindings()
     }
     
     deinit {
-        print("SSE deinit")
+        print("SSE: deinit")
     }
 }
 
@@ -71,11 +71,11 @@ extension SSE {
         eventSource = EventSource(url: serverURL)
         
         eventSource?.onOpen {
-            print("CONNECTED")
+            print("SSE: CONNECTED")
         }
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
-            print("DISCONNECTED")
+            print("SSE: DISCONNECTED")
 //            guard reconnect ?? false else { return }
             
 //            let retryTime = self?.eventSource?.retryTime ?? 3000
@@ -85,13 +85,13 @@ extension SSE {
         }
         
         eventSource?.onMessage { [weak self] id, event, data in
-            print("SSE without decoding: ", data ?? "")
+            print("SSE: without decoding: ", data ?? "")
             guard let self = self,
                   let jsonData = data?.data(using: .utf8),
                   let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData),
                   let type = sseNewMessage.type
             else {
-                print("SSE decoding error")
+                print("SSE: decoding error")
                 return
             }
             switch type {
@@ -100,7 +100,7 @@ extension SSE {
 //                self.newMessages.send(message)
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
-                print("MESSAGE RECORD ON SSE: ", record)
+                print("SSE: MESSAGE RECORD ON SSE: ", record)
                 self.saveMessageRecords([record])
             default:
                 break
@@ -109,61 +109,103 @@ extension SSE {
     }
 }
 
+// MARK: - Sync api calls
+
 extension SSE {
     func syncRooms() {
         repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { c in
+            print("SSE: sync rooms c: ", c)
         } receiveValue: { [weak self] response in
+            print("SSE: sync rooms response: ", response)
             guard let rooms = response.data?.rooms else { return }
-            self?.repository.saveLocalRooms(rooms: rooms).sink { _ in
-                
-            } receiveValue: { [weak self] rooms in
-                self?.repository.setSyncTimestamp(for: .rooms)
-                self?.finishedSyncPublisher.send(.rooms)
-            }.store(in: &self!.subs)
-
+            self?.saveLocalRooms(rooms)
         }.store(in: &subs)
     }
     
     func syncMessages() {
         repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { c in
+            print("SSE: sync messages c: ", c)
         } receiveValue: { [weak self] response in
-            print("sync messages: ", response)
+            print("SSE: sync messages response: ", response)
             guard let self = self,
                   let messages = response.data?.messages
             else { return }
-            print("messages before: ", messages.count)
             self.saveMessages(messages)
         }.store(in: &subs)
     }
     
     func syncUsers() {
         repository.syncUsers(timestamp: repository.getSyncTimestamp(for: .users)).sink { [weak self] c in
-            print("users C: ", c)
+            print("SSE: sync users C: ", c)
         } receiveValue: { [weak self] response in
-            print("sync users: ", response)
+            print("SSE: sync users response: ", response)
             guard let users = response.data?.users else { return }
-            self?.repository.setSyncTimestamp(for: .users)
-            self?.repository.saveUsers(users).sink(receiveCompletion: { c in
-                print("save users sync c: ", c)
-            }, receiveValue: { [weak self] users in
-                self?.finishedSyncPublisher.send(.users)
-            }).store(in: &self!.subs)
+            self?.saveUsers(users)
         }.store(in: &subs)
     }
     
     func syncMessageRecords() {
         repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { [weak self] c in
-            print("sync message records C: ", c)
+            print("SSE: sync message records C: ", c)
         } receiveValue: { [weak self] response in
+            print("SSE: sync message records response", response)
             guard let self = self else { return }
             guard let records = response.data?.messageRecords else { return }
             self.repository.setSyncTimestamp(for: .messageRecords)
-            print("records before: ", records.count)
+            print("SSE: records before: ", records.count)
             self.saveMessageRecords(records)
         }.store(in: &subs)
     }
 }
 
+// MARK: - Saving to local database
+
+extension SSE {
+    func saveUsers(_ users: [User]) {
+        repository.saveUsers(users).sink { c in
+            print("SSE: save _ c: ", c)
+        } receiveValue: { [weak self] users in
+            print("SSE: save users success")
+            self?.finishedSyncPublisher.send(.users)
+        }.store(in: &subs)
+    }
+    
+    func saveLocalRooms(_ rooms: [Room]) {
+        repository.saveLocalRooms(rooms: rooms).sink { c in
+            print("SSE: save rooms c: ", c)
+            switch c {
+            case .finished:
+                break
+            case .failure(_):
+                break
+            }
+        } receiveValue: { [weak self] rooms in
+            print("SSE: save rooms success")
+            self?.finishedSyncPublisher.send(.rooms)
+        }.store(in: &subs)
+    }
+    
+    func saveMessages(_ messages: [Message]) {
+        repository.saveMessages(messages).sink { c in
+            print("SSE: save message c: ", c)
+        } receiveValue: { [weak self] messages in
+            print("SSE: SAVED MESSAGES: ", messages.count)
+            self?.finishedSyncPublisher.send(.messages)
+            // TODO: - call delivered
+        }.store(in: &subs)
+    }
+    
+    func saveMessageRecords(_ records: [MessageRecord]) {
+        repository.saveMessageRecords(records).sink { c in
+            print("SSE: save message records c: ", c)
+        } receiveValue: { [weak self] records in
+            print("SSE: saved records")
+            self?.finishedSyncPublisher.send(.messageRecords)
+        }.store(in: &subs)
+    }
+}
+
+// MARK: - sending delivered ids
 extension SSE {
     
     func sendDeliveredStatus(messages: [Message]) {
@@ -182,73 +224,9 @@ extension SSE {
             print("send delivered status sse response: ", response)
         }.store(in: &subs)
     }
-    
-    func checkLocalRoom(message: Message) {
-        guard let roomId = message.roomId else { return }
-        repository.checkLocalRoom(withId: roomId).sink { [weak self] c in
-            switch c {
-                
-            case .finished:
-                break
-            case .failure(_):
-//                self?.messagesWithoutLocalRoom.send(message)
-                break
-            }
-        } receiveValue: { [weak self] room in
-//            self?.messagesWithLocalRoom.send(message)
-        }.store(in: &subs)
-    }
-    
-    
-    func checkOnlineRoom(message: Message) {
-        guard let roomId = message.roomId else { return }
-        repository.checkOnlineRoom(forRoomId: roomId).sink { completion in
-            switch completion {
-                
-            case .finished:
-                break
-            case .failure(_):
-                // TODO: handle error
-                break
-            }
-        } receiveValue: { [weak self] response in
-            guard let room = response.data?.room else { return }
-            self?.saveLocalRooms([room])
-        }.store(in: &subs)
-    }
-    
-    func saveLocalRooms(_ rooms: [Room]) {
-        repository.saveLocalRooms(rooms: rooms).sink { completion in
-            switch completion {
-                
-            case .finished:
-                break
-            case .failure(_):
-                break
-            }
-        } receiveValue: { [weak self] rooms in
-//            self?.messagesWithLocalRoom.send(message)
-        }.store(in: &subs)
-    }
-    
-    func saveMessages(_ messages: [Message]) {
-        repository.saveMessages(messages).sink { c in
-            
-        } receiveValue: { [weak self] messages in
-            print("SAVED MESSAGES: ", messages.count)
-            self?.finishedSyncPublisher.send(.messages)
-            // TODO: - call delivered
-        }.store(in: &subs)
-    }
-    
-    func saveMessageRecords(_ records: [MessageRecord]) {
-        repository.saveMessageRecords(records).sink { c in
-            
-        } receiveValue: { records in
-            
-        }.store(in: &subs)
-    }
 }
+
+// MARK: - Notification show
 
 extension SSE {
     
