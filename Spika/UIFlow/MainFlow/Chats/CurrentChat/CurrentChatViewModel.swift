@@ -183,13 +183,12 @@ extension CurrentChatViewModel {
                               roomId: room.id, type: .text,
                               body: MessageBody(text: text, file: nil, fileId: nil, thumbId: nil), localId: uuid)
         
-        repository.saveMessage(message: message, roomId: room.id).sink { completion in
-            print("save message c: ", completion)
-        } receiveValue: { [weak self] message in
-            guard let self = self else { return }
-            guard let body = message.body else {
-                print("GUARD trySendMessage body missing")
-                return }
+        repository.saveMessages([message]).sink { c in
+            
+        } receiveValue: { [weak self] messages in
+            guard let self = self,
+                  let body = message.body
+            else { return }
             self.sendMessage(body: body, localId: uuid, type: .text)
         }.store(in: &subscriptions)
     }
@@ -217,7 +216,7 @@ extension CurrentChatViewModel {
     }
     
     func saveMessage(message: Message, room: Room) {
-        repository.saveMessage(message: message, roomId: room.id).sink { c in
+        repository.saveMessages([message]).sink { c in
             print(c)
         } receiveValue: { _ in
             

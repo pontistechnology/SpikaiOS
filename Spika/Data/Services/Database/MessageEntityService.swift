@@ -56,35 +56,37 @@ class MessageEntityService {
             }
         }
     }
-    // TODO: use roomId from message?
-    func saveMessage(message: Message, roomId: Int64) -> Future<Message, Error> {
+
+    func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
             
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
-                let roomEntityFR = RoomEntity.fetchRequest()
-                roomEntityFR.predicate = NSPredicate(format: "id == %d", roomId)
-                do {
-                    let rooms = try context.fetch(roomEntityFR)
-                    print("RC: ", rooms.count)
-                    if rooms.count == 1 {
-                        let messageEntity = MessageEntity(message: message, context: context)
-                        rooms.first!.lastMessageTimestamp = Int64(message.createdAt ?? 0)
-                        rooms.first!.addToMessages(messageEntity)
-                        print("saved message:", message)
-                        do {
-                            try context.save()
-                            promise(.success(message))
-                        } catch {
-                            promise(.failure(DatabseError.savingError))
+                for i in 0..<messages.count {
+                    guard let roomId = messages[i].roomId else { continue }
+                    let roomEntityFR = RoomEntity.fetchRequest()
+                    roomEntityFR.predicate = NSPredicate(format: "id == %d", roomId)
+                    do {
+                        let rooms = try context.fetch(roomEntityFR)
+                        if rooms.count == 1 {
+                            let messageEntity = MessageEntity(message: messages[i], context: context)
+                            rooms.first!.lastMessageTimestamp = messages[i].createdAt ?? 0
+                            rooms.first!.addToMessages(messageEntity)
+                        } else {
+                            promise(.failure(DatabseError.moreThanOne))
                         }
-                    } else {
-                        promise(.failure(DatabseError.moreThanOne))
+                        
+                    } catch {
+                        promise(.failure(DatabseError.requestFailed))
                     }
+                }
+                do {
+                    try context.save()
+                    promise(.success(messages))
                 } catch {
-                    promise(.failure(DatabseError.requestFailed))
+                    promise(.failure(DatabseError.savingError))
                 }
             }
         }

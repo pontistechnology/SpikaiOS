@@ -117,34 +117,40 @@ extension NotificationService {
     }
     
     func saveMessage(message: Message, room: Room) {
-        repository.saveMessage(message: message, roomId: room.id).sink { [weak self] c in
-            guard let self = self else { return }
-            switch c {
-                
-            case .finished:
-                break
-            case let .failure(error):
-                guard let bestAttemptContent = self.bestAttemptContent,
-                      let contentHandler = self.contentHandler
-                else { return }
-                
-                bestAttemptContent.title = "Saving Error: \(error)"
-                contentHandler(bestAttemptContent)
-            }
-        } receiveValue: { message in
-            guard let senderRoomUser = room.users?.first(where: { roomUser in
-                roomUser.user?.id == message.fromUserId
-            }),
-                  let senderName = senderRoomUser.user?.getDisplayName(),
-                  let bestAttemptContent = self.bestAttemptContent
-            else { return }
+        repository.saveMessages([message]).sink { c in
             
-            bestAttemptContent.title = senderName
-            guard let id = self.currentMessage?.id else {
-                return
-            }
-            self.sendDeliveredStatus(messageIds: [id])
+        } receiveValue: { messages in
+            
         }.store(in: &subs)
+        // TODO: use logic below
+//        repository.saveMessage(message: message, roomId: room.id).sink { [weak self] c in
+//            guard let self = self else { return }
+//            switch c {
+//
+//            case .finished:
+//                break
+//            case let .failure(error):
+//                guard let bestAttemptContent = self.bestAttemptContent,
+//                      let contentHandler = self.contentHandler
+//                else { return }
+//
+//                bestAttemptContent.title = "Saving Error: \(error)"
+//                contentHandler(bestAttemptContent)
+//            }
+//        } receiveValue: { message in
+//            guard let senderRoomUser = room.users?.first(where: { roomUser in
+//                roomUser.user?.id == message.fromUserId
+//            }),
+//                  let senderName = senderRoomUser.user?.getDisplayName(),
+//                  let bestAttemptContent = self.bestAttemptContent
+//            else { return }
+//
+//            bestAttemptContent.title = senderName
+//            guard let id = self.currentMessage?.id else {
+//                return
+//            }
+//            self.sendDeliveredStatus(messageIds: [id])
+//        }.store(in: &subs)
 
     }
 }

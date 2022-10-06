@@ -11,13 +11,6 @@ import CoreData
 
 class TestRepository: Repository {
    
-    func saveLocalRoom(room: Room) -> Future<Room, Error> {
-        return Future { promise in
-            promise(.failure(DatabseError.unknown))
-        }
-    }
-    
-    
     let networkService: NetworkService
     let databaseService: DatabaseService
     var subs = Set<AnyCancellable>()

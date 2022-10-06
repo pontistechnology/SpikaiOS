@@ -124,17 +124,14 @@ extension SSE {
     }
     
     func syncMessages() {
-        print("messages timestamp: ", repository.getSyncTimestamp(for: .messages))
-        repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { [weak self] c in
-            print("messages C: ", c)
+        repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { c in
         } receiveValue: { [weak self] response in
             print("sync messages: ", response)
-            guard let self = self else { return }
-            guard let messages = response.data?.messages else { return }
+            guard let self = self,
+                  let messages = response.data?.messages
+            else { return }
             print("messages before: ", messages.count)
-            messages.forEach { message in
-//                self.newMessages.send(message)
-            }
+            self.saveMessages(messages)
         }.store(in: &subs)
     }
     
@@ -240,20 +237,12 @@ extension SSE {
         }.store(in: &subs)
     }
     
-    func saveMessage(message: Message) {
-        guard let roomId = message.roomId else { return }
-        repository.saveMessage(message: message, roomId: roomId).sink { c in
-            switch c {
-                
-            case .finished:
-                break
-            case .failure(_):
-                break
-            }
-        } receiveValue: { [weak self] message in
-            guard let self = self else { return }
-//            self.savedMessages.send(message)
-            self.repository.setSyncTimestamp(for: .messages)
+    func saveMessages(_ messages: [Message]) {
+        repository.saveMessages(messages).sink { c in
+            
+        } receiveValue: { messages in
+            print("SAVED MESSAGES: ", messages.count)
+            // TODO: - call delivered
         }.store(in: &subs)
     }
     

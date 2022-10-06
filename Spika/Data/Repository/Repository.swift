@@ -89,7 +89,7 @@ protocol Repository {
     
     // MARK: COREDATA: Messages
     
-    func saveMessage(message: Message, roomId: Int64) -> Future<Message, Error>
+    func saveMessages(_ messages: [Message]) -> Future<[Message], Error>
     func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error>
     func getMessages(forRoomId: Int64) -> Future<[Message], Error>
     func printAllMessages()
