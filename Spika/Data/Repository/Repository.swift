@@ -90,7 +90,7 @@ protocol Repository {
     // MARK: COREDATA: Messages
     
     func saveMessages(_ messages: [Message]) -> Future<[Message], Error>
-    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error>
+    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error>
     func getMessages(forRoomId: Int64) -> Future<[Message], Error>
     func printAllMessages()
 //    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error>

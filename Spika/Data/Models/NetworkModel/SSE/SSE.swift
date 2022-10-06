@@ -101,7 +101,7 @@ extension SSE {
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
                 print("MESSAGE RECORD ON SSE: ", record)
-                self.saveMessageRecord(record)
+                self.saveMessageRecords([record])
             default:
                 break
             }
@@ -118,6 +118,7 @@ extension SSE {
                 
             } receiveValue: { [weak self] rooms in
                 self?.repository.setSyncTimestamp(for: .rooms)
+                self?.finishedSyncPublisher.send(.rooms)
             }.store(in: &self!.subs)
 
         }.store(in: &subs)
@@ -142,10 +143,10 @@ extension SSE {
             print("sync users: ", response)
             guard let users = response.data?.users else { return }
             self?.repository.setSyncTimestamp(for: .users)
-            self?.repository.saveUsers(users).sink(receiveCompletion: { [weak self] c in
+            self?.repository.saveUsers(users).sink(receiveCompletion: { c in
                 print("save users sync c: ", c)
-            }, receiveValue: { users in
-                
+            }, receiveValue: { [weak self] users in
+                self?.finishedSyncPublisher.send(.users)
             }).store(in: &self!.subs)
         }.store(in: &subs)
     }
@@ -158,14 +159,7 @@ extension SSE {
             guard let records = response.data?.messageRecords else { return }
             self.repository.setSyncTimestamp(for: .messageRecords)
             print("records before: ", records.count)
-            
-            records.forEach { record in
-                self.repository.saveMessageRecord(messageRecord: record).sink { c in
-                } receiveValue: { record in
-                    print("sync saved message record: ", record)
-                    
-                }.store(in: &self.subs)
-            }
+            self.saveMessageRecords(records)
         }.store(in: &subs)
     }
 }
@@ -240,16 +234,19 @@ extension SSE {
     func saveMessages(_ messages: [Message]) {
         repository.saveMessages(messages).sink { c in
             
-        } receiveValue: { messages in
+        } receiveValue: { [weak self] messages in
             print("SAVED MESSAGES: ", messages.count)
+            self?.finishedSyncPublisher.send(.messages)
             // TODO: - call delivered
         }.store(in: &subs)
     }
     
-    func saveMessageRecord(_ record: MessageRecord) {
-        repository.saveMessageRecord(messageRecord: record).sink { c in
-        } receiveValue: { record in
-        }.store(in: &self.subs)
+    func saveMessageRecords(_ records: [MessageRecord]) {
+        repository.saveMessageRecords(records).sink { c in
+            
+        } receiveValue: { records in
+            
+        }.store(in: &subs)
     }
 }
 

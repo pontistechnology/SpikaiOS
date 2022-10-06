@@ -91,37 +91,37 @@ class MessageEntityService {
             }
         }
     }
-    
-    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error> {
+    // TODO: - check for failures
+    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                
-                let messageFR = MessageEntity.fetchRequest()
-                guard let messageId = messageRecord.messageId else { return }
-                messageFR.predicate = NSPredicate(format: "id == %d", messageId)
-                
-                do {
-                    let messages = try context.fetch(messageFR)
-                    
-                    if messages.count == 1 {
-                        let recordEntity = MessageRecordEntity(record: messageRecord, context: context)
-                        messages.first!.addToRecords(recordEntity)
-                        do {
-                            try context.save()
-                            promise(.success(messageRecord))
-                        } catch {
-                            promise(.failure(DatabseError.savingError))
-                        }
-                    } else {
-                        if messages.count != 0 {
-                            print("more than one: ", messages)
-                        }
-                        promise(.failure(DatabseError.moreThanOne))
+                for i in 0 ..< messageRecords.count {
+                    guard let messageId = messageRecords[i].messageId else {
+                        print("DATABASE: MessageRecord id missing while saving.")
+                        continue
                     }
+                    let messageFR = MessageEntity.fetchRequest()
+                    messageFR.predicate = NSPredicate(format: "id == %d", messageId)
+                    guard let messages = try? context.fetch(messageFR)
+                    else {
+                        print("DATABASE: Message is missing for MessageRecord.")
+                        continue
+                    }
+                    if messages.count == 1 {
+                        let recordEntity = MessageRecordEntity(record: messageRecords[i], context: context)
+                        messages.first!.addToRecords(recordEntity)
+                    } else {
+                        print("DATABASE: More than one message for messageRecord id.")
+                        continue
+                    }
+                }
+                do {
+                    try context.save()
+                    promise(.success(messageRecords))
                 } catch {
-                    promise(.failure(DatabseError.requestFailed))
+                    promise(.failure(DatabseError.savingError))
                 }
             }
         }

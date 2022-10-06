@@ -37,7 +37,7 @@ extension TestRepository {
         }
     }
     
-    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error> {
+    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
         Future { p in
             p(.failure(DatabseError.unknown))
         }
