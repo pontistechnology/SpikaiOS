@@ -10,6 +10,7 @@ import Foundation
 enum SyncType {
     case users
     case rooms
+    case messages
     case messageRecords
 }
 

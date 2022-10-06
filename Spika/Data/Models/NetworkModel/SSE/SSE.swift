@@ -177,8 +177,10 @@ extension SSE {
             case .failure(_):
                 break
             }
-        } receiveValue: { message in
+        } receiveValue: { [weak self] message in
+            guard let self = self else { return }
             self.savedMessages.send(message)
+            self.repository.setSyncTimestamp(for: .messages)
         }.store(in: &subs)
     }
     
@@ -228,7 +230,8 @@ extension SSE {
     
     func syncMessages() {
         dispatchGroup.enter()
-        repository.syncMessages().sink { [weak self] c in
+        print("messages timestamp: ", repository.getSyncTimestamp(for: .messages))
+        repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { [weak self] c in
             print("messages C: ", c)
             self?.dispatchGroup.leave()
         } receiveValue: { [weak self] response in

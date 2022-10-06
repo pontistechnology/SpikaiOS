@@ -27,22 +27,16 @@ class ContactsViewController: BaseViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    var testC = 0
     
     func setupBindings() {
         contactsView.tableView.dataSource = self
         contactsView.tableView.delegate   = self
         contactsView.searchBar.delegate = self
         
-        contactsView.titleLabel.tap().sink { [weak self] tap in
-            guard let _ = self else { return }
-            PopUpManager.shared.presentAlert(errorMessage: "tititi")
-        }.store(in: &subscriptions)
-        
-        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] contacts in
-            guard let self = self else { return }
-            self.contactsView.tableView.reloadData()
-        }.store(in: &subscriptions)
+//        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] contacts in
+//            guard let self = self else { return }
+//            self.contactsView.tableView.reloadData()
+//        }.store(in: &subscriptions)
         
 //        viewModel.getUsersAndUpdateUI()
         viewModel.getContacts()
@@ -65,44 +59,54 @@ extension ContactsViewController: UITableViewDelegate {
 extension ContactsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let char = viewModel.contactsSubject.value[section].first?.displayName?.prefix(1) {
-            return char.localizedUppercase
-        } else {
-            return "@"
-        }
+        guard let sections = self.frc?.sections else { return "nil" }
+        return sections[section].name
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.contactsSubject.value.count
+        frc?.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.contactsSubject.value[section].count
+        guard let sections = self.frc?.sections else { return 0 }
+        return sections[section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
-        cell?.configureCell(viewModel.contactsSubject.value[indexPath.section][indexPath.row])
+        guard let user = User(entity: frc?.object(at: indexPath)) else {
+            return UITableViewCell()
+        }
+        cell?.configureCell(user)
         return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("t: ", indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
-        let user = viewModel.contactsSubject.value[indexPath.section][indexPath.row]
+        guard let user = User(entity: frc?.object(at: indexPath)) else { return }
         viewModel.showDetailsScreen(user: user)
     }
 }
 
+// MARK: - Search bar
 extension ContactsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
         if let value = value {
-            viewModel.filterContactsUI(filter: value)
+            changePredicate(to: value)
         }
     }
     
     func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
-        viewModel.filterContactsUI(filter: "")
+        changePredicate(to: "")
+    }
+    
+    func changePredicate(to newString: String) {
+        self.frc?.fetchRequest.predicate = newString.isEmpty
+        ? nil : NSPredicate(format: "contactsName CONTAINS '\(newString)'")
+        // TODO: better search, begins or something like that
+        try? self.frc?.performFetch()
+        self.contactsView.tableView.reloadData()
     }
 }
 
@@ -114,8 +118,10 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = UserEntity.fetchRequest()
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(UserEntity.displayName), ascending: true)]
-            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
+            fetchRequest.sortDescriptors = [
+                NSSortDescriptor(key: "contactsName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:))),
+                NSSortDescriptor(key: #keyPath(UserEntity.displayName), ascending: true)]
+            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: "sectionName", cacheName: nil)
             self.frc?.delegate = self
             do {
                 try self.frc?.performFetch()
@@ -127,11 +133,7 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
-        self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
+        contactsView.tableView.reloadData()
     }
 }
 

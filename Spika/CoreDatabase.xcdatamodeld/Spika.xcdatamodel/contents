@@ -80,11 +80,10 @@
     </entity>
     <entity name="UserEntity" representedClassName="UserEntity" syncable="YES">
         <attribute name="avatarUrl" optional="YES" attributeType="String"/>
+        <attribute name="contactsName" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="displayName" optional="YES" attributeType="String"/>
         <attribute name="emailAddress" optional="YES" attributeType="String"/>
-        <attribute name="familyName" optional="YES" attributeType="String"/>
-        <attribute name="givenName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="telephoneNumber" optional="YES" attributeType="String"/>
         <relationship name="roomUsers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoomUserEntity" inverseName="user" inverseEntity="RoomUserEntity"/>

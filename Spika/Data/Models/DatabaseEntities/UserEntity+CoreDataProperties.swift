@@ -20,8 +20,7 @@ extension UserEntity {
     @NSManaged public var createdAt: Int64
     @NSManaged public var displayName: String?
     @NSManaged public var emailAddress: String?
-    @NSManaged public var familyName: String?
-    @NSManaged public var givenName: String?
+    @NSManaged public var contactsName: String?
     @NSManaged public var id: Int64
     @NSManaged public var telephoneNumber: String?
     @NSManaged public var roomUsers: RoomUserEntity?

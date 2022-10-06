@@ -26,31 +26,32 @@ class ContactsUtils {
                 if granted {
                     let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
                     let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
-                    do {
-                        try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
-                            
-                            guard let phoneUtil = NBPhoneNumberUtil.sharedInstance(), let defaultRegionCode = defaultRegionCode() else {
-                                return
-                            }
-                            
-                            for phoneNumber in contact.phoneNumbers {
+                    DispatchQueue.global(qos: .background).async {
+                        do {
+                            try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
                                 
-                                do {
-                                    let parsedPhoneNumber: NBPhoneNumber = try phoneUtil.parse(phoneNumber.value.stringValue, defaultRegion: defaultRegionCode)
-                                    let formattedString: String = try phoneUtil.format(parsedPhoneNumber, numberFormat: .E164)
+                                guard let phoneUtil = NBPhoneNumberUtil.sharedInstance(), let defaultRegionCode = defaultRegionCode() else {
+                                    return
+                                }
+                                
+                                for phoneNumber in contact.phoneNumbers {
                                     
-                                    contacts.append(FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: formattedString))
+                                    do {
+                                        let parsedPhoneNumber: NBPhoneNumber = try phoneUtil.parse(phoneNumber.value.stringValue, defaultRegion: defaultRegionCode)
+                                        let formattedString: String = try phoneUtil.format(parsedPhoneNumber, numberFormat: .E164)
+                                        
+                                        contacts.append(FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: formattedString))
+                                    }
+                                    catch let error as NSError {
+                                        print(error.localizedDescription)
+                                    }
                                 }
-                                catch let error as NSError {
-                                    print(error.localizedDescription)
-                                }
-                            }
-                        })
-                    } catch let error {
-                        print("Failed to enumerate contact", error)
+                            })
+                        } catch let error {
+                            print("Failed to enumerate contact", error)
+                        }
+                        promise(.success(contacts))
                     }
-                    
-                    promise(.success(contacts))
                 } else {
                     print("access denied")
                     promise(.success([]))

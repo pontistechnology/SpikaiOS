@@ -109,9 +109,9 @@ class AppCoordinator: Coordinator {
     }
     
     func presentSelectUserScreen() {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(SelectUsersViewController.self, argument: self)!
-        let navC = UINavigationController(rootViewController: viewController)
-        navigationController.present(navC, animated: true, completion: nil)
+//        let viewController = Assembler.sharedAssembler.resolver.resolve(SelectUsersViewController.self, argument: self)!
+//        let navC = UINavigationController(rootViewController: viewController)
+//        navigationController.present(navC, animated: true, completion: nil)
     }
     
     func presentCurrentChatScreen(user: User) {

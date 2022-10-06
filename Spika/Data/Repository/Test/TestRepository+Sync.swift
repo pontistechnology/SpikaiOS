@@ -17,7 +17,7 @@ extension TestRepository {
         return Fail<SyncUsersResponseModel, Error>(error: NetworkError.unknown).receive(on: DispatchQueue.main).eraseToAnyPublisher()
     }
     
-    func syncMessages() -> AnyPublisher<SyncMessagesResponseModel, Error> {
+    func syncMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error> {
         return Fail<SyncMessagesResponseModel, Error>(error: NetworkError.unknown).receive(on: DispatchQueue.main).eraseToAnyPublisher()
     }
     

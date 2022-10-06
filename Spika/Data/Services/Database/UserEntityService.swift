@@ -130,8 +130,9 @@ class UserEntityService {
                                                          lastName: contactEntity.familyName,
                                                          telephone: contactEntity.phoneNumber)
                             print("contatct found: ", contact)
-                            user.givenName = contact.firstName
-                            user.familyName = contact.lastName
+                            user.contactsName = contact.firstName ?? ""
+                            + " "
+                            + (contact.lastName ?? "")
                         }
                         self?.saveUser(user)
                     } catch {

@@ -17,8 +17,7 @@ struct User: Codable {
     var emailAddress: String?
     var createdAt: Int64?
     
-    var givenName: String?
-    var familyName: String?
+    var contactsName: String?
     
     init(id: Int64, displayName: String, avatarUrl: String? = nil) {
         self.id = id
@@ -37,17 +36,13 @@ struct User: Codable {
         self.emailAddress = entity.emailAddress
         self.createdAt = entity.createdAt
         
-        self.givenName = entity.givenName
-        self.familyName = entity.familyName
+        self.contactsName = entity.contactsName
     }
     
     func getDisplayName() -> String {
         var displayNameResult: String
         
-        displayNameResult = [givenName, familyName] // TODO display real names
-            .compactMap{ $0 }
-            .joined(separator: " ")
-            .trimmingCharacters(in: .whitespaces)
+        displayNameResult = contactsName ?? (displayName ?? "no name")
         
         if displayNameResult.isEmpty {
             displayNameResult = displayName ?? "noname"
@@ -70,15 +65,3 @@ struct User: Codable {
         }
     }
 }
-
-extension User: Comparable {
-    static func < (lhs: User, rhs: User) -> Bool {
-        return lhs.getDisplayName().localizedCaseInsensitiveCompare(rhs.getDisplayName()) == .orderedAscending
-    }
-    
-    static func == (lhs: User, rhs: User) -> Bool {
-        return lhs.getDisplayName().localizedCaseInsensitiveCompare(rhs.getDisplayName()) == .orderedSame
-    }
-}
-
-
