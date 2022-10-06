@@ -108,10 +108,6 @@ extension AppRepository {
         return databaseService.roomEntityService.getRoom(forUserId: id)
     }
     
-    func saveLocalRoom(room: Room) -> Future<Room, Error> {
-        return databaseService.roomEntityService.saveRoom(room)
-    }
-    
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error> {
         databaseService.roomEntityService.saveRooms(rooms)
     }

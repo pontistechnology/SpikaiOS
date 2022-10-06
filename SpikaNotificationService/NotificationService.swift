@@ -102,7 +102,7 @@ extension NotificationService {
     }
     
     func saveLocalRoom(room: Room) {
-        repository.saveLocalRoom(room: room).sink { completion in
+        repository.saveLocalRooms(rooms: [room]).sink { completion in
             switch completion {
                 
             case .finished:
@@ -110,7 +110,8 @@ extension NotificationService {
             case .failure(_):
                 break
             }
-        } receiveValue: { [weak self] room in
+        } receiveValue: { [weak self] rooms in
+            guard let room = rooms.first else { return }
             self?.checkLocalRoom(roomId: room.id)
         }.store(in: &subs)
     }

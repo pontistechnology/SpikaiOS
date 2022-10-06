@@ -107,7 +107,7 @@ extension CurrentChatViewModel {
     }
     
     func saveLocalRoom(room: Room) {
-        repository.saveLocalRoom(room: room).sink { [weak self] completion in
+        repository.saveLocalRooms(rooms: [room]).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 
@@ -116,8 +116,10 @@ extension CurrentChatViewModel {
             case .failure(_):
                 print("saving to local DB failed")
             }
-        } receiveValue: { [weak self] room in
-            guard let self = self else { return }
+        } receiveValue: { [weak self] rooms in
+            guard let self = self,
+                  let room = rooms.first
+            else { return }
             self.room = room
             self.roomPublisher.send(room)
         }.store(in: &subscriptions)

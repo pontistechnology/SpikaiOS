@@ -30,15 +30,11 @@ class AllChatsViewModel: BaseViewModel {
             guard let self = self else { return }
             guard let rooms = response.data?.list else { return }
             
-            rooms.forEach { room in
-                self.repository.saveLocalRoom(room: room).sink { c in
-                    print("save room allCV: ", c)
-                } receiveValue: { room in
-                    
-                }.store(in: &self.subscriptions)
-
-            }
-            
+            self.repository.saveLocalRooms(rooms: rooms).sink { c in
+                print("Save room allCV: ", c)
+            } receiveValue: { rooms in
+                
+            }.store(in: &self.subscriptions)
             print("rooms server: ", rooms.count)
         }.store(in: &subscriptions)
     }

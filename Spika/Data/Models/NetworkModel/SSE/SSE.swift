@@ -38,7 +38,6 @@ extension SSE {
         finishedSyncPublisher.sink { [weak self] finished in
             guard let self = self else { return }
             switch finished {
-                
             case .users:
                 self.syncMessages()
             case .rooms:
@@ -47,7 +46,6 @@ extension SSE {
                 self.syncMessageRecords()
             case .messageRecords:
                 break // start sse
-                
             }
         }.store(in: &subs)
     }
@@ -113,7 +111,7 @@ extension SSE {
 
 extension SSE {
     func syncRooms() {
-        repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { [weak self] c in
+        repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { c in
         } receiveValue: { [weak self] response in
             guard let rooms = response.data?.rooms else { return }
             self?.repository.saveLocalRooms(rooms: rooms).sink { _ in
@@ -224,12 +222,12 @@ extension SSE {
             }
         } receiveValue: { [weak self] response in
             guard let room = response.data?.room else { return }
-            self?.saveLocalRoom(room: room, message: message)
+            self?.saveLocalRooms([room])
         }.store(in: &subs)
     }
     
-    func saveLocalRoom(room: Room, message: Message) {
-        repository.saveLocalRoom(room: room).sink { completion in
+    func saveLocalRooms(_ rooms: [Room]) {
+        repository.saveLocalRooms(rooms: rooms).sink { completion in
             switch completion {
                 
             case .finished:
@@ -237,7 +235,7 @@ extension SSE {
             case .failure(_):
                 break
             }
-        } receiveValue: { [weak self] room in
+        } receiveValue: { [weak self] rooms in
 //            self?.messagesWithLocalRoom.send(message)
         }.store(in: &subs)
     }
