@@ -24,6 +24,7 @@ class SSE {
         self.repository = repository
         self.coordinator = coordinator
         setupBindings()
+        setupSSE()
         print("SSE: init")
     }
     
@@ -58,7 +59,6 @@ extension SSE {
     }
     
     func startSSEConnection(){
-        setupSSE()
         eventSource?.connect()
     }
     
@@ -67,7 +67,9 @@ extension SSE {
               let serverURL = URL(string: Constants.Networking.baseUrl
                                   + "api/sse/"
                                   + "?accesstoken=" + accessToken)
-        else { return }
+        else {
+            print("SSE: AccessToken is missing.")
+            return }
         eventSource = EventSource(url: serverURL)
         
         eventSource?.onOpen {
@@ -78,10 +80,10 @@ extension SSE {
             print("SSE: DISCONNECTED")
 //            guard reconnect ?? false else { return }
             
-//            let retryTime = self?.eventSource?.retryTime ?? 3000
-//            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(retryTime)) { [weak self] in
-//                self?.eventSource?.connect()
-//            }
+            let retryTime = self?.eventSource?.retryTime ?? 1500
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(retryTime)) { [weak self] in
+                self?.eventSource?.connect()
+            }
         }
         
         eventSource?.onMessage { [weak self] id, event, data in
@@ -97,7 +99,7 @@ extension SSE {
             switch type {
             case .newMessage:
                 guard let message = sseNewMessage.message else { return }
-//                self.newMessages.send(message)
+                print("SSE: new message _ ", message)
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
                 print("SSE: MESSAGE RECORD ON SSE: ", record)
@@ -223,6 +225,7 @@ extension SSE {
                     self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: timestamp)
                 }
                 self?.finishedSyncPublisher.send(.messageRecords)
+                self?.eventSource?.connect()
             }
         }.store(in: &subs)
     }

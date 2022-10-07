@@ -38,7 +38,6 @@ class EnterVerifyCodeViewModel: BaseViewModel {
             else {
                 PopUpManager.shared.presentAlert(errorMessage: "No user or device response.")
                 return
-                
             }
             self?.repository.saveUserInfo(user: user, device: device)
             if user.displayName != "" && user.avatarUrl != "" {
