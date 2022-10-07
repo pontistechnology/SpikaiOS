@@ -92,33 +92,30 @@ extension AppRepository {
     func getSyncTimestamp(for type: SyncType) -> Int64 {
         switch type {
             
-        case .users:
-            return Int64(userDefaults.integer(forKey: Constants.UserDefaults.usersSyncTimestamp))
         case .rooms:
             return Int64(userDefaults.integer(forKey: Constants.UserDefaults.roomsSyncTimestamp))
-        case .messageRecords:
-            return Int64(userDefaults.integer(forKey: Constants.UserDefaults.messageRecordsSyncTimestamp))
+        case .users:
+            return Int64(userDefaults.integer(forKey: Constants.UserDefaults.usersSyncTimestamp))
         case .messages:
-            if 0 == Int64(userDefaults.integer(forKey: Constants.UserDefaults.messagesSyncTimestamp)) {
-                return Date().currentTimeMillis()
-            } else {
-                return Int64(userDefaults.integer(forKey: Constants.UserDefaults.messagesSyncTimestamp))
-            }
+            let timestamp = Int64(userDefaults.integer(forKey: Constants.UserDefaults.messagesSyncTimestamp))
+            return timestamp == 0 ? Date().currentTimeMillis() : timestamp
+        case .messageRecords:
+            let timestamp = Int64(userDefaults.integer(forKey: Constants.UserDefaults.messageRecordsSyncTimestamp))
+            return timestamp == 0 ? Date().currentTimeMillis() : timestamp
         }
     }
     
-    func setSyncTimestamp(for type: SyncType) {
-        let now = Date().currentTimeMillis()
+    func setSyncTimestamp(for type: SyncType, timestamp: Int64) {
         switch type {
             
         case .users:
-            userDefaults.set(now, forKey: Constants.UserDefaults.usersSyncTimestamp)
+            userDefaults.set(timestamp, forKey: Constants.UserDefaults.usersSyncTimestamp)
         case .rooms:
-            userDefaults.set(now, forKey: Constants.UserDefaults.roomsSyncTimestamp)
+            userDefaults.set(timestamp, forKey: Constants.UserDefaults.roomsSyncTimestamp)
         case .messageRecords:
-            userDefaults.set(now, forKey: Constants.UserDefaults.messageRecordsSyncTimestamp)
+            userDefaults.set(timestamp, forKey: Constants.UserDefaults.messageRecordsSyncTimestamp)
         case .messages:
-            userDefaults.set(now, forKey: Constants.UserDefaults.messagesSyncTimestamp)
+            userDefaults.set(timestamp, forKey: Constants.UserDefaults.messagesSyncTimestamp)
         }
     }
 }

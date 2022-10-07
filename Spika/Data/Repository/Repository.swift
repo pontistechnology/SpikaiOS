@@ -109,7 +109,7 @@ protocol Repository {
     func getAccessToken() -> String?
     func getMyDeviceId() -> Int64
     func getSyncTimestamp(for type: SyncType) -> Int64
-    func setSyncTimestamp(for type: SyncType)
+    func setSyncTimestamp(for type: SyncType, timestamp: Int64)
     
     // MARK: COREDATA: Contacts
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error>
