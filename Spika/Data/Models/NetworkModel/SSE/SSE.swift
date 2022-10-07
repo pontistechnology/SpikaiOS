@@ -100,6 +100,7 @@ extension SSE {
             case .newMessage:
                 guard let message = sseNewMessage.message else { return }
                 print("SSE: new message _ ", message)
+                self.saveMessages([message])
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
                 print("SSE: MESSAGE RECORD ON SSE: ", record)
@@ -212,6 +213,7 @@ extension SSE {
             }
             // TODO: - call delivered
             // TODO: - show last message?
+            self?.showNotification(imageUrl: nil, name: "\(messages.last?.id)", text: "\(messages.last?.body?.text)")
         }.store(in: &subs)
     }
     

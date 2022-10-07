@@ -79,14 +79,8 @@ extension AllChatsViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let entity = frc?.object(at: indexPath) else { return }
         let room = Room(roomEntity: entity)
-        
         print("ROOM_: ", room)
-        
-        if room.type == RoomType.privateRoom.rawValue {
-            viewModel.presentCurrentChatScreen(room: room)
-        } else {
-            viewModel.presentCurrentChatScreen(room: room)
-        }
+        viewModel.presentCurrentChatScreen(room: room)
     }
 }
 
