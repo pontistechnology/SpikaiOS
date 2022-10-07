@@ -118,7 +118,7 @@ extension SSE {
         } receiveValue: { [weak self] response in
             print("SSE: sync rooms response: ", response)
             guard let rooms = response.data?.rooms else { return }
-            self?.saveLocalRooms(rooms)
+            self?.saveLocalRooms(rooms, isSync: true)
         }.store(in: &subs)
     }
     
@@ -130,7 +130,7 @@ extension SSE {
             guard let self = self,
                   let messages = response.data?.messages
             else { return }
-            self.saveMessages(messages)
+            self.saveMessages(messages, isSync: true)
         }.store(in: &subs)
     }
     
@@ -140,7 +140,7 @@ extension SSE {
         } receiveValue: { [weak self] response in
             print("SSE: sync users response: ", response)
             guard let users = response.data?.users else { return }
-            self?.saveUsers(users)
+            self?.saveUsers(users, isSync: true)
         }.store(in: &subs)
     }
     
@@ -152,7 +152,7 @@ extension SSE {
             guard let self = self else { return }
             guard let records = response.data?.messageRecords else { return }
             print("SSE: records before: ", records.count)
-            self.saveMessageRecords(records)
+            self.saveMessageRecords(records, isSync: true)
         }.store(in: &subs)
     }
 }
@@ -160,20 +160,22 @@ extension SSE {
 // MARK: - Saving to local database
 
 extension SSE {
-    func saveUsers(_ users: [User]) {
+    func saveUsers(_ users: [User], isSync: Bool = false) {
         repository.saveUsers(users).sink { c in
             print("SSE: save _ c: ", c)
         } receiveValue: { [weak self] users in
             print("SSE: save users success")
-            if !users.isEmpty {
-                let timestamp = users.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
-                self?.repository.setSyncTimestamp(for: .users, timestamp: timestamp)
+            if isSync {
+                if !users.isEmpty {
+                    let timestamp = users.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
+                    self?.repository.setSyncTimestamp(for: .users, timestamp: timestamp)
+                }
+                self?.finishedSyncPublisher.send(.users)
             }
-            self?.finishedSyncPublisher.send(.users)
         }.store(in: &subs)
     }
     
-    func saveLocalRooms(_ rooms: [Room]) {
+    func saveLocalRooms(_ rooms: [Room], isSync: Bool = false) {
         repository.saveLocalRooms(rooms: rooms).sink { c in
             print("SSE: save rooms c: ", c)
             switch c {
@@ -184,38 +186,44 @@ extension SSE {
             }
         } receiveValue: { [weak self] rooms in
             print("SSE: save rooms success")
-            if !rooms.isEmpty {
-                let timestamp = rooms.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
-                self?.repository.setSyncTimestamp(for: .rooms, timestamp: timestamp)
+            if isSync {
+                if !rooms.isEmpty {
+                    let timestamp = rooms.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
+                    self?.repository.setSyncTimestamp(for: .rooms, timestamp: timestamp)
+                }
+                self?.finishedSyncPublisher.send(.rooms)
             }
-            self?.finishedSyncPublisher.send(.rooms)
         }.store(in: &subs)
     }
     
-    func saveMessages(_ messages: [Message]) {
+    func saveMessages(_ messages: [Message], isSync: Bool = false) {
         repository.saveMessages(messages).sink { c in
             print("SSE: save message c: ", c)
         } receiveValue: { [weak self] messages in
             print("SSE: SAVED MESSAGES: ", messages.count)
-            if !messages.isEmpty {
-                let timestamp = messages.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
-                self?.repository.setSyncTimestamp(for: .messages, timestamp: timestamp)
+            if isSync {
+                if !messages.isEmpty {
+                    let timestamp = messages.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
+                    self?.repository.setSyncTimestamp(for: .messages, timestamp: timestamp)
+                }
+                self?.finishedSyncPublisher.send(.messages)
             }
-            self?.finishedSyncPublisher.send(.messages)
             // TODO: - call delivered
         }.store(in: &subs)
     }
     
-    func saveMessageRecords(_ records: [MessageRecord]) {
+    func saveMessageRecords(_ records: [MessageRecord], isSync: Bool = false) {
         repository.saveMessageRecords(records).sink { c in
             print("SSE: save message records c: ", c)
         } receiveValue: { [weak self] records in
             print("SSE: saved records")
-            if !records.isEmpty {
-                let timestamp = records.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
-                self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: timestamp)
+            if isSync {
+                if !records.isEmpty {
+                    let timestamp = records.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
+                    self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: timestamp)
+                }
+                self?.finishedSyncPublisher.send(.messageRecords)
             }
-            self?.finishedSyncPublisher.send(.messageRecords)
         }.store(in: &subs)
     }
 }
