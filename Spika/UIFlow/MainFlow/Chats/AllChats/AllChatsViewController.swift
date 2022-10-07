@@ -36,7 +36,7 @@ class AllChatsViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         setRoomsFetch()
-        
+    
     }
     
     func getAllRooms() {

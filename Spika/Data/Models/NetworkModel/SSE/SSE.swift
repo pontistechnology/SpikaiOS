@@ -78,7 +78,7 @@ extension SSE {
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
             print("SSE: DISCONNECTED")
-//            guard reconnect ?? false else { return }
+//            guard reconnect ?? false else { return } // if server wants to control reconnecting
             
             let retryTime = self?.eventSource?.retryTime ?? 1500
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(retryTime)) { [weak self] in
@@ -211,6 +211,7 @@ extension SSE {
                 self?.finishedSyncPublisher.send(.messages)
             }
             // TODO: - call delivered
+            // TODO: - show last message?
         }.store(in: &subs)
     }
     
@@ -246,8 +247,7 @@ extension SSE {
         repository.sendDeliveredStatus(messageIds: messages.compactMap{$0.id}).sink { c in
             
         } receiveValue: { [weak self] response in
-            // TODO: fetch information, save message records
-            print("send delivered status sse response: ", response)
+            print("SSE: send delivered status sse response: ", response)
         }.store(in: &subs)
     }
 }
