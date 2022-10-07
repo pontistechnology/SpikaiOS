@@ -18,14 +18,16 @@ class AppCoordinator: Coordinator {
         self.navigationController = navigationController
     }
     
+    func syncAndStartSSE() {
+        let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
+        sse?.syncAndStartSSE()
+    }
+    
     func start() {
         // TODO: check display name.isEmpty()
         if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
            let _ = userDefaults.string(forKey: Constants.UserDefaults.displayName){
-            let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
-            sse?.syncAndStartSSE()
             presentHomeScreen()
-            // TODO: for now disabled
         } else if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken){
             presentEnterUsernameScreen()
         } else {
@@ -57,6 +59,7 @@ class AppCoordinator: Coordinator {
     // MARK: MAIN FLOW
     func presentHomeScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
+        syncAndStartSSE()
         self.navigationController.setViewControllers([viewController], animated: true)
     }
     
