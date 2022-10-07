@@ -85,5 +85,9 @@ extension AppRepository {
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
         self.databaseService.messageEntityService.saveMessageRecords(messageRecords)
     }
+    
+    func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error> {
+        self.databaseService.messageEntityService.getNotificationInfoForMessage(message: message)
+    }
 
 }

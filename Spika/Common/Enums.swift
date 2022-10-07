@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 enum SyncType {
     case users
     case rooms
@@ -22,4 +23,11 @@ enum SSEEventType: String, Codable {
     case updateRoom = "UPDATE_ROOM"
     case deleteRoom = "DELETE_ROOM"
     case userUpdate = "USER_UPDATE"
+}
+
+struct MessageNotificationInfo {
+    let senderName: String?
+    let senderAvatarUrl: String?
+    let messageText: String?
+    let roomName: String?
 }

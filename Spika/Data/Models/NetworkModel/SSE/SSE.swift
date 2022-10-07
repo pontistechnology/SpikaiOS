@@ -212,8 +212,10 @@ extension SSE {
                 self?.finishedSyncPublisher.send(.messages)
             }
             // TODO: - call delivered
-            // TODO: - show last message?
-            self?.showNotification(imageUrl: nil, name: "\(messages.last?.id)", text: "\(messages.last?.body?.text)")
+            // TODO: - show last message
+            if let lastMessage = messages.last {
+                self?.getMessageNotificationInfo(message: lastMessage)
+            }
         }.store(in: &subs)
     }
     
@@ -241,10 +243,6 @@ extension SSE {
         print("message id in sse: ", messages)
         windowWorkItem?.cancel()
         windowWorkItem = nil
-        showNotification(imageUrl: URL(string: "noUrl"),
-                                          name: "no name",
-                               text: messages.last?.body?.text ?? "no text")
-        
         
         repository.sendDeliveredStatus(messageIds: messages.compactMap{$0.id}).sink { c in
             
@@ -258,7 +256,18 @@ extension SSE {
 
 extension SSE {
     
-    func showNotification(imageUrl: URL?, name: String, text: String) {
+    func getMessageNotificationInfo(message: Message) {
+        repository.getNotificationInfoForMessage(message).sink { c in
+            
+        } receiveValue: { [weak self] info in
+            self?.showNotification(imageUrl: info.senderAvatarUrl,
+                             name: info.roomName ?? "noname",
+                             text: info.messageText ?? "notext")
+        }.store(in: &subs)
+
+    }
+    
+    func showNotification(imageUrl: String?, name: String, text: String) {
         DispatchQueue.main.async {
             guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
             else { return }
@@ -270,7 +279,7 @@ extension SSE {
             alertWindow.isHidden = false
             alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors
             
-            let messageNotificationView = MessageNotificationView(imageUrl: imageUrl, senderName: name, textOrDescription: text)
+            let messageNotificationView = MessageNotificationView(imageUrl: URL(string: imageUrl ?? ""), senderName: name, textOrDescription: text)
             
             alertWindow.rootViewController?.view.addSubview(messageNotificationView)
             messageNotificationView.anchor(top: alertWindow.rootViewController?.view.safeAreaLayoutGuide.topAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))

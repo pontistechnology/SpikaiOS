@@ -46,4 +46,10 @@ extension TestRepository {
     func printAllMessages() {
         databaseService.messageEntityService.printAllMessages()
     }
+    
+    func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error> {
+        Future { p in
+            p(.failure(DatabseError.requestFailed))
+        }
+    }
 }

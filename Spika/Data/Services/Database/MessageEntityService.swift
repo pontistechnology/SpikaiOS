@@ -127,3 +127,54 @@ class MessageEntityService {
         }
     }
 }
+
+extension MessageEntityService {
+    
+    func getNotificationInfoForMessage(message: Message) -> Future<MessageNotificationInfo, Error> {
+        return Future { promise in
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                guard let roomId = message.roomId else { return }
+                
+                let roomEntiryFR = RoomEntity.fetchRequest()
+                roomEntiryFR.predicate = NSPredicate(format: "id == %d", roomId)
+                
+                do {
+                    let rooms = try context.fetch(roomEntiryFR)
+                    if rooms.count == 1 {
+                        let room = Room(roomEntity: rooms.first!)
+                        let rU = room.users?.first(where: { roomUser in
+                            roomUser.userId == message.fromUserId
+                        })
+                        let info: MessageNotificationInfo
+                        
+                        if room.type == "private" {
+                            info = MessageNotificationInfo(senderName: rU?.user?.getDisplayName(), senderAvatarUrl: rU?.user?.getAvatarUrl(), messageText: message.body?.text, roomName: rU?.user?.getDisplayName())
+                        } else {
+                            info = MessageNotificationInfo(senderName: rU?.user?.getDisplayName(), senderAvatarUrl: room.getAvatarUrl(), messageText: message.body?.text, roomName: room.name)
+                        }
+                        promise(.success(info))
+                    }
+                } catch {
+                    promise(.failure(DatabseError.unknown))
+                }
+                
+            }
+        }
+
+    }
+    
+}
+//                let info: MessageNotificationInfo!
+//                if room.type == "private" {
+//                    info = MessageNotificationInfo(senderName: rU?.user?.getDisplayName(), senderAvatarUrl: rU?.user, messageText: message.body?.text, roomName: rU?.user?.getDisplayName())
+//                } else {
+//                    info =
+//                }
+//                promise(.success(info))
+//            }
+//        } catch {
+//            promise(.failure(DatabseError.moreThanOne))
+//        }
+//    }
+//}
