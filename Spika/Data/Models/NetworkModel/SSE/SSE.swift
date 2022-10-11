@@ -79,11 +79,8 @@ extension SSE {
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
             print("SSE: DISCONNECTED")
 //            guard reconnect ?? false else { return } // if server wants to control reconnecting
-            
-            let retryTime = self?.eventSource?.retryTime ?? 1500
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(retryTime)) { [weak self] in
-                self?.eventSource?.connect()
-            }
+            self?.syncAndStartSSE()
+//            let retryTime = self?.eventSource?.retryTime ?? 1500
         }
         
         eventSource?.onMessage { [weak self] id, event, data in
