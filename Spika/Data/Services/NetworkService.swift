@@ -74,7 +74,7 @@ class NetworkService {
         return URLSession.shared.dataTaskPublisher(for: request)
                     .map(\.data)
                     .decode(type: T.self, decoder: JSONDecoder())
-//                    .receive(on: DispatchQueue.main)
+                    .receive(on: DispatchQueue.main)
                     .eraseToAnyPublisher()
     }
     

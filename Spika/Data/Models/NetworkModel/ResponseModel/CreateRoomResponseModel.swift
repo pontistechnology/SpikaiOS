@@ -21,14 +21,14 @@ struct RoomData: Codable {
 // TODO: move models
 struct Room: Codable {
     let id: Int64
-    let type: String?
+    let type: RoomType?
     let name: String?
     let avatarUrl: String?
     let createdAt: Int64?
     let users: [RoomUser]?
 }
 
-enum RoomType: String {
+enum RoomType: String, Codable {
     case privateRoom = "private"
     case groupRoom = "group"
 }
@@ -39,7 +39,7 @@ extension Room {
         let roomUsers = roomEntity.users?.allObjects.compactMap{ RoomUser(roomUserEntity: $0 as? RoomUserEntity)}
         
         self.init(id: roomEntity.id,
-                  type: roomEntity.type,
+                  type: RoomType(rawValue: roomEntity.type ?? ""),
                   name: roomEntity.name,
                   avatarUrl: roomEntity.avatarUrl,
                   createdAt: roomEntity.createdAt,

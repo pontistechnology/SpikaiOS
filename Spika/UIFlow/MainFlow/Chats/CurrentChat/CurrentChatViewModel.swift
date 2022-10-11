@@ -151,21 +151,6 @@ extension CurrentChatViewModel {
         }.store(in: &subscriptions)
     }
     
-    func loadMessages() {
-        guard let room = room else { return }
-        print("u loag messages stiglo: ", room)
-        repository.getMessages(forRoomId: room.id).sink { completion in
-            switch completion {
-            case .finished:
-                break
-            case .failure(_):
-                break
-            }
-        } receiveValue: { [weak self] messages in
-            guard let self = self else { return }
-        }.store(in: &subscriptions)
-    }
-    
     func roomVisited(roomId: Int64) {
         repository.roomVisited(roomId: roomId)
     }
@@ -282,7 +267,7 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-    func getUser(for id: Int64) -> User? {
+    func getUser(for id: Int64) -> User? {
         return room?.users?.first(where: { roomUser in
             roomUser.userId == id
         })?.user

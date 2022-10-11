@@ -26,8 +26,7 @@ enum SSEEventType: String, Codable {
 }
 
 struct MessageNotificationInfo {
-    let senderName: String?
-    let senderAvatarUrl: String?
-    let messageText: String?
-    let roomName: String?
+    let title: String
+    let photoUrl: String
+    let messageText: String
 }

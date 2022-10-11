@@ -57,7 +57,7 @@ extension CurrentChatViewController {
         currentChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
         
-        viewModel.roomPublisher.sink { completion in
+        viewModel.roomPublisher.receive(on: DispatchQueue.main).sink { completion in
             // TODO: pop vc?, presentAlert?
             switch completion {
                 
@@ -71,6 +71,7 @@ extension CurrentChatViewController {
         } receiveValue: { [weak self] room in
             guard let self = self else { return }
             self.setFetch(room: room)
+            self.setupNavigationItems()
         }.store(in: &subscriptions)
         
         currentChatView.downArrowImageView.tap().sink { [weak self] _ in
@@ -114,22 +115,19 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     func setFetch(room: Room) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            let fetchRequest = MessageEntity.fetchRequest()
-            fetchRequest.sortDescriptors = [
-                NSSortDescriptor(key: "createdDate", ascending: true),
-                NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
-            fetchRequest.predicate = NSPredicate(format: "room.id == %d", room.id)
-            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: "sectionName", cacheName: nil)
-            self.frc?.delegate = self
-            do {
-                try self.frc?.performFetch()
-                self.currentChatView.messagesTableView.reloadData()
-                self.currentChatView.messagesTableView.scrollToBottom()
-            } catch {
-                fatalError("Failed to fetch entities: \(error)") // TODO: handle error
-            }
+        let fetchRequest = MessageEntity.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "createdDate", ascending: true),
+            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "room.id == %d", room.id)
+        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: "sectionName", cacheName: nil)
+        self.frc?.delegate = self
+        do {
+            try self.frc?.performFetch()
+            self.currentChatView.messagesTableView.reloadData()
+            self.currentChatView.messagesTableView.scrollToBottom()
+        } catch {
+            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
         }
         
         viewModel.roomVisited(roomId: room.id)
@@ -149,7 +147,9 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
                 break
             case .update:
                 break
-            }
+            @unknown default:
+            break
+        }
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
@@ -279,7 +279,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             
             if myUserId == message.fromUserId! {
                 identifier = TextMessageTableViewCell.myTextReuseIdentifier
-            } else if viewModel.room?.type == "private" {
+            } else if viewModel.room?.type == .privateRoom {
                 identifier = TextMessageTableViewCell.friendTextReuseIdentifier
             } else {
                 identifier = TextMessageTableViewCell.groupTextReuseIdentifier
@@ -301,7 +301,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             
             if myUserId == message.fromUserId! {
                 identifier = ImageMessageTableViewCell.myImageReuseIdentifier
-            } else if viewModel.room?.type == "private" {
+            } else if viewModel.room?.type == .privateRoom {
                 identifier = ImageMessageTableViewCell.friendImageReuseIdentifier
             } else {
                 identifier = ImageMessageTableViewCell.groupImageReuseIdentifier
@@ -319,7 +319,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             
             if myUserId == message.fromUserId! {
                 identifier = FileMessageTableViewCell.myFileReuseIdentifier
-            } else if viewModel.room?.type == "private" {
+            } else if viewModel.room?.type == .privateRoom {
                 identifier = FileMessageTableViewCell.friendFileReuseIdentifier
             } else {
                 identifier = FileMessageTableViewCell.groupFileReuseIdentifier
@@ -357,7 +357,7 @@ extension CurrentChatViewController {
         navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
         
-        if viewModel.room?.type == RoomType.privateRoom.rawValue {
+        if viewModel.room?.type == .privateRoom {
             friendInfoView.change(avatarUrl: viewModel.friendUser.getAvatarUrl(), name: viewModel.friendUser.getDisplayName(), lastSeen: "yesterday")
         } else {
             friendInfoView.change(avatarUrl: viewModel.room?.getAvatarUrl(),
@@ -380,14 +380,6 @@ extension CurrentChatViewController {
 // MARK: - swipe gestures on cells
 
 extension CurrentChatViewController {
-    //        func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    //            let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
-    //                self.currentChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.messagesSubject.value[indexPath.row]), id: indexPath.row)
-    //                    completionHandler(true)
-    //                }
-    //            firstLeft.backgroundColor = .systemBlue
-    //            return UISwipeActionsConfiguration(actions: [firstLeft])
-    //        }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let firstRight = UIContextualAction(style: .normal, title: "Details") { (action, view, completionHandler) in

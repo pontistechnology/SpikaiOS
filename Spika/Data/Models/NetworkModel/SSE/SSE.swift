@@ -46,7 +46,7 @@ extension SSE {
             case .messages:
                 self.syncMessageRecords()
             case .messageRecords:
-                break // start sse
+                self.startSSEConnection()
             }
         }.store(in: &subs)
     }
@@ -105,6 +105,14 @@ extension SSE {
                 guard let record = sseNewMessage.messageRecord else { return }
                 print("SSE: MESSAGE RECORD ON SSE: ", record)
                 self.saveMessageRecords([record])
+            case .newRoom:
+                guard let room = sseNewMessage.room else { return }
+                print("SSE: NEW ROOM: ", room)
+                self.saveLocalRooms([room])
+            case .updateRoom:
+                guard let room = sseNewMessage.room else { return }
+                print("SSE: UPDATE ROOM: ", room)
+                self.saveLocalRooms([room])
             default:
                 break
             }
@@ -125,6 +133,7 @@ extension SSE {
         }.store(in: &subs)
     }
     
+    // TODO: - check local DB for all roomIds, and fetch the missing ones
     func syncMessages() {
         repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { c in
             print("SSE: sync messages c: ", c)
@@ -205,6 +214,7 @@ extension SSE {
         } receiveValue: { [weak self] messages in
             print("SSE: SAVED MESSAGES: ", messages.count)
             if isSync {
+                self?.repository.setSyncTimestamp(for: .messages, timestamp: Date().currentTimeMillis())
                 if !messages.isEmpty {
                     let timestamp = messages.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
                     self?.repository.setSyncTimestamp(for: .messages, timestamp: timestamp)
@@ -212,7 +222,7 @@ extension SSE {
                 self?.finishedSyncPublisher.send(.messages)
             }
             // TODO: - call delivered
-            // TODO: - show last message
+            self?.sendDeliveredStatus(messages: messages)
             if let lastMessage = messages.last {
                 self?.getMessageNotificationInfo(message: lastMessage)
             }
@@ -225,12 +235,12 @@ extension SSE {
         } receiveValue: { [weak self] records in
             print("SSE: saved records")
             if isSync {
+                self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: Date().currentTimeMillis())
                 if !records.isEmpty {
                     let timestamp = records.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
                     self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: timestamp)
                 }
                 self?.finishedSyncPublisher.send(.messageRecords)
-                self?.eventSource?.connect()
             }
         }.store(in: &subs)
     }
@@ -260,17 +270,23 @@ extension SSE {
         repository.getNotificationInfoForMessage(message).sink { c in
             
         } receiveValue: { [weak self] info in
-            self?.showNotification(imageUrl: info.senderAvatarUrl,
-                             name: info.roomName ?? "noname",
-                             text: info.messageText ?? "notext")
+            self?.showNotification(imageUrl: info.photoUrl, name: info.title, text: info.messageText)
         }.store(in: &subs)
 
     }
     
     func showNotification(imageUrl: String?, name: String, text: String) {
         DispatchQueue.main.async {
+            
             guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
             else { return }
+            for window in windowScene.windows {
+                for vc in window.rootViewController?.children ?? [] {
+                    if vc is CurrentChatViewController {
+                        return
+                    }
+                }
+            }
             
             self.alertWindow = nil
             let alertWindow = UIWindow(windowScene: windowScene)

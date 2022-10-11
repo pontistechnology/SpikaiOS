@@ -21,7 +21,7 @@ public class RoomEntity: NSManagedObject {
         self.name = room.name
         self.avatarUrl = room.avatarUrl
         self.createdAt = room.createdAt!
-        self.type = room.type
+        self.type = room.type?.rawValue
         
         for roomUser in room.users! { // TODO: check
             let r = RoomUserEntity(roomUser: roomUser, roomId: room.id, insertInto: context)

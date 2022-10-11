@@ -131,8 +131,8 @@ class MessageEntityService {
 extension MessageEntityService {
     
     func getNotificationInfoForMessage(message: Message) -> Future<MessageNotificationInfo, Error> {
-        return Future { promise in
-            self.coreDataStack.persistantContainer.performBackgroundTask { context in
+        return Future { [weak self] promise in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 guard let roomId = message.roomId else { return }
                 
@@ -148,10 +148,14 @@ extension MessageEntityService {
                         })
                         let info: MessageNotificationInfo
                         
-                        if room.type == "private" {
-                            info = MessageNotificationInfo(senderName: rU?.user?.getDisplayName(), senderAvatarUrl: rU?.user?.getAvatarUrl(), messageText: message.body?.text, roomName: rU?.user?.getDisplayName())
+                        if room.type == .privateRoom {
+                            info = MessageNotificationInfo(title: rU?.user?.getDisplayName() ?? "no name",
+                                                           photoUrl: rU?.user?.getAvatarUrl() ?? "",
+                                                           messageText: message.body?.text ?? " ")
                         } else {
-                            info = MessageNotificationInfo(senderName: rU?.user?.getDisplayName(), senderAvatarUrl: room.getAvatarUrl(), messageText: message.body?.text, roomName: room.name)
+                            info = MessageNotificationInfo(title: room.name ?? "no name",
+                                                           photoUrl: room.getAvatarUrl() ?? "",
+                                                           messageText: "\(rU?.user?.getDisplayName() ?? "_") :" + (message.body?.text ?? ""))
                         }
                         promise(.success(info))
                     }
@@ -165,16 +169,3 @@ extension MessageEntityService {
     }
     
 }
-//                let info: MessageNotificationInfo!
-//                if room.type == "private" {
-//                    info = MessageNotificationInfo(senderName: rU?.user?.getDisplayName(), senderAvatarUrl: rU?.user, messageText: message.body?.text, roomName: rU?.user?.getDisplayName())
-//                } else {
-//                    info =
-//                }
-//                promise(.success(info))
-//            }
-//        } catch {
-//            promise(.failure(DatabseError.moreThanOne))
-//        }
-//    }
-//}

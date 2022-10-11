@@ -53,6 +53,7 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = RoomEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false)]
             self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                   managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
@@ -97,7 +98,12 @@ extension AllChatsViewController: UITableViewDataSource {
     
         let room = Room(roomEntity: entity)
         print("room at indexpath: ", indexPath, room)
-        if room.type == "private",
+        let messagesEntities = (entity.messages?.array as! [MessageEntity]).filter{$0.createdAt > entity.visitedRoom && $0.fromUserId != viewModel.getMyUserId()}
+        for m in messagesEntities {
+            print("mmm \(messagesEntities.firstIndex(of: m)):  createdat: ", m.createdAt, " text: ", m.bodyText, " from userid: ", m.fromUserId, "entitiy visited: ", entity.visitedRoom)
+        }
+        let badgeNumber = messagesEntities.count
+        if room.type == .privateRoom,
            let roomUsers = room.users,
            let friendRoomUser = roomUsers.first(where: { roomUser in
                roomUser.user!.id != viewModel.getMyUserId()
@@ -107,19 +113,17 @@ extension AllChatsViewController: UITableViewDataSource {
             cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
                                 name: friendUser.getDisplayName(),
                                 description: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "No messages",
-                                time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "")
+                                time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
+                                badgeNumber: badgeNumber)
         }
         
-        if room.type != "private" {
+        if room.type != .privateRoom {
             cell?.configureCell(avatarUrl: room.getAvatarUrl(),
                                 name: room.name ?? "noname",
                                 description: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "no messages",
-                                time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "")
+                                time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
+                                badgeNumber: badgeNumber)
         }
-        
-        cell?.messagesNumberLabel.text = "\((entity.messages?.array as! [MessageEntity]).filter{$0.createdAt > entity.visitedRoom && $0.fromUserId != viewModel.getMyUserId()}.count)"
-        
-        
         
         return cell ?? UITableViewCell()
     }
