@@ -118,9 +118,14 @@ extension AllChatsViewController: UITableViewDataSource {
         }
         
         if room.type != .privateRoom {
+            let lastMessage = entity.messages?.lastObject as? MessageEntity
+            let senderName = room.users?.first(where: { ru in
+                ru.userId == lastMessage?.fromUserId
+            })?.user?.getDisplayName() ?? "no name"
+            
             cell?.configureCell(avatarUrl: room.getAvatarUrl(),
                                 name: room.name ?? "noname",
-                                description: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "no messages",
+                                description: senderName + ": " + (lastMessage?.bodyText ?? "no messages"),
                                 time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
                                 badgeNumber: badgeNumber)
         }

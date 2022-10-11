@@ -155,7 +155,7 @@ extension MessageEntityService {
                         } else {
                             info = MessageNotificationInfo(title: room.name ?? "no name",
                                                            photoUrl: room.getAvatarUrl() ?? "",
-                                                           messageText: "\(rU?.user?.getDisplayName() ?? "_") :" + (message.body?.text ?? ""))
+                                                           messageText: "\(rU?.user?.getDisplayName() ?? "_"): " + (message.body?.text ?? ""))
                         }
                         promise(.success(info))
                     }
