@@ -63,8 +63,6 @@ extension TextMessageTableViewCell {
 //            messageLabel.text?.append("record: \(record)")
 //        }
         
-        if let createdAt = message.createdAt {
-            updateTime(to: createdAt)
-        }
+        updateTime(to: message.createdAt)
     }
 }

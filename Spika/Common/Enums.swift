@@ -25,6 +25,11 @@ enum SSEEventType: String, Codable {
     case userUpdate = "USER_UPDATE"
 }
 
+enum RoomType: String, Codable {
+    case privateRoom = "private"
+    case groupRoom = "group"
+}
+
 struct MessageNotificationInfo {
     let title: String
     let photoUrl: String

@@ -197,7 +197,7 @@ extension SSE {
             print("SSE: save rooms success")
             if isSync {
                 if !rooms.isEmpty {
-                    let timestamp = rooms.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
+                    let timestamp = rooms.max{ ($0.createdAt) < ($1.createdAt) }?.createdAt ?? 0
                     self?.repository.setSyncTimestamp(for: .rooms, timestamp: timestamp)
                 }
                 self?.finishedSyncPublisher.send(.rooms)
@@ -269,7 +269,6 @@ extension SSE {
         } receiveValue: { [weak self] info in
             self?.showNotification(imageUrl: info.photoUrl, name: info.title, text: info.messageText)
         }.store(in: &subs)
-
     }
     
     func showNotification(imageUrl: String?, name: String, text: String) {

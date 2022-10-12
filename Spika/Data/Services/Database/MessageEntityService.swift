@@ -65,7 +65,7 @@ class MessageEntityService {
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
                 for i in 0..<messages.count {
-                    guard let roomId = messages[i].roomId else { continue }
+                    let roomId = messages[i].roomId
                     let roomEntityFR = RoomEntity.fetchRequest()
                     roomEntityFR.predicate = NSPredicate(format: "id == %d", roomId)
                     do {
@@ -98,10 +98,7 @@ class MessageEntityService {
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for i in 0 ..< messageRecords.count {
-                    guard let messageId = messageRecords[i].messageId else {
-                        print("DATABASE: MessageRecord id missing while saving.")
-                        continue
-                    }
+                    let messageId = messageRecords[i].messageId
                     let messageFR = MessageEntity.fetchRequest()
                     messageFR.predicate = NSPredicate(format: "id == %d", messageId)
                     guard let messages = try? context.fetch(messageFR)
@@ -134,7 +131,7 @@ extension MessageEntityService {
         return Future { [weak self] promise in
             self?.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                guard let roomId = message.roomId else { return }
+                let roomId = message.roomId
                 
                 let roomEntiryFR = RoomEntity.fetchRequest()
                 roomEntiryFR.predicate = NSPredicate(format: "id == %d", roomId)
@@ -143,19 +140,19 @@ extension MessageEntityService {
                     let rooms = try context.fetch(roomEntiryFR)
                     if rooms.count == 1 {
                         let room = Room(roomEntity: rooms.first!)
-                        let rU = room.users?.first(where: { roomUser in
+                        let rU = room.users.first(where: { roomUser in
                             roomUser.userId == message.fromUserId
                         })
                         let info: MessageNotificationInfo
                         
                         if room.type == .privateRoom {
-                            info = MessageNotificationInfo(title: rU?.user?.getDisplayName() ?? "no name",
-                                                           photoUrl: rU?.user?.getAvatarUrl() ?? "",
+                            info = MessageNotificationInfo(title: rU?.user.getDisplayName() ?? "no name",
+                                                           photoUrl: rU?.user.getAvatarUrl() ?? "",
                                                            messageText: message.body?.text ?? " ")
                         } else {
                             info = MessageNotificationInfo(title: room.name ?? "no name",
                                                            photoUrl: room.getAvatarUrl() ?? "",
-                                                           messageText: "\(rU?.user?.getDisplayName() ?? "_"): " + (message.body?.text ?? ""))
+                                                           messageText: "\(rU?.user.getDisplayName() ?? "_"): " + (message.body?.text ?? ""))
                         }
                         promise(.success(info))
                     }

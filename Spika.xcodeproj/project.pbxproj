@@ -138,6 +138,12 @@
 		9396AE1527CBBABE0041B4A6 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */; };
 		93980E09280A10F30015351F /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93980E03280A10F30015351F /* UserEntity+CoreDataProperties.swift */; };
 		93988D5F27D8701500DF6BF8 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
+		939AAE3C28F62F6600DD5142 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE3B28F62F6600DD5142 /* Room.swift */; };
+		939AAE3D28F62F6600DD5142 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE3B28F62F6600DD5142 /* Room.swift */; };
+		939AAE3F28F62FFF00DD5142 /* RoomUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE3E28F62FFF00DD5142 /* RoomUser.swift */; };
+		939AAE4028F62FFF00DD5142 /* RoomUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE3E28F62FFF00DD5142 /* RoomUser.swift */; };
+		939AAE4228F6308100DD5142 /* MessageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE4128F6308100DD5142 /* MessageRecord.swift */; };
+		939AAE4328F6308100DD5142 /* MessageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE4128F6308100DD5142 /* MessageRecord.swift */; };
 		939B30402850DC1F00FFA537 /* AppRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */; };
 		939B30422850DC2D00FFA537 /* TestRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B30412850DC2D00FFA537 /* TestRepository+Sync.swift */; };
 		939B30442850DD2200FFA537 /* SyncRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B30432850DD2200FFA537 /* SyncRoomsResponseModel.swift */; };
@@ -411,6 +417,9 @@
 		9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		93980E03280A10F30015351F /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserEntity+CoreDataProperties.swift"; path = "Spika/Data/Models/DatabaseEntities/UserEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		939AAE3B28F62F6600DD5142 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		939AAE3E28F62FFF00DD5142 /* RoomUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomUser.swift; sourceTree = "<group>"; };
+		939AAE4128F6308100DD5142 /* MessageRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRecord.swift; sourceTree = "<group>"; };
 		939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Sync.swift"; sourceTree = "<group>"; };
 		939B30412850DC2D00FFA537 /* TestRepository+Sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Sync.swift"; sourceTree = "<group>"; };
 		939B30432850DD2200FFA537 /* SyncRoomsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRoomsResponseModel.swift; sourceTree = "<group>"; };
@@ -1463,6 +1472,9 @@
 				EAFA8B93280EFFD200F9B321 /* User.swift */,
 				93E48EAF27CEA6C3003B4188 /* Message.swift */,
 				EAC81D772810422F0004D835 /* FetchedContact.swift */,
+				939AAE3B28F62F6600DD5142 /* Room.swift */,
+				939AAE3E28F62FFF00DD5142 /* RoomUser.swift */,
+				939AAE4128F6308100DD5142 /* MessageRecord.swift */,
 			);
 			path = ServerModels;
 			sourceTree = "<group>";
@@ -1736,7 +1748,9 @@
 				93179C3D28B709B6006F928B /* AppRepository+User.swift in Sources */,
 				931B150D28211ACB00A0CD35 /* ContactEntity+CoreDataClass.swift in Sources */,
 				931B14F628211AC100A0CD35 /* VerifyFileRequestModel.swift in Sources */,
+				939AAE3D28F62F6600DD5142 /* Room.swift in Sources */,
 				931B150428211AC600A0CD35 /* AuthResponseModel.swift in Sources */,
+				939AAE4328F6308100DD5142 /* MessageRecord.swift in Sources */,
 				931B14F328211AC100A0CD35 /* UserRequestModel.swift in Sources */,
 				EA9B662228227CB70009228C /* FetchedContact.swift in Sources */,
 				931B14DD2821182D00A0CD35 /* DatabaseService.swift in Sources */,
@@ -1749,6 +1763,7 @@
 				931B14F828211AC100A0CD35 /* UpdatePushRequestModel.swift in Sources */,
 				931B150328211AC600A0CD35 /* UpdatePushResponseModel.swift in Sources */,
 				931B15192821295600A0CD35 /* DeliveredResponseModel.swift in Sources */,
+				939AAE4028F62FFF00DD5142 /* RoomUser.swift in Sources */,
 				931B150B28211ACB00A0CD35 /* ContactEntity+CoreDataProperties.swift in Sources */,
 				9362B48F28623A44009F617D /* RoomEntity+CoreDataProperties.swift in Sources */,
 				9324B256281BE03800E7D76D /* Message.swift in Sources */,
@@ -1796,6 +1811,7 @@
 				93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */,
 				AD9BFD55272B1A0200736318 /* VerificationTextFieldView.swift in Sources */,
 				93227E9827D6ED70002E3DED /* SendMessageRequest.swift in Sources */,
+				939AAE4228F6308100DD5142 /* MessageRecord.swift in Sources */,
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
 				937F48E827D3D66A005E19FB /* TextMessageTableViewCell.swift in Sources */,
 				933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */,
@@ -1805,12 +1821,14 @@
 				930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */,
 				93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */,
 				937FBE6928B5309E00C3A888 /* AVAsset+Extensions.swift in Sources */,
+				939AAE3F28F62FFF00DD5142 /* RoomUser.swift in Sources */,
 				EAFA8B98280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift in Sources */,
 				AD9BFD46272AECFA00736318 /* VerifyCodeRequestModel.swift in Sources */,
 				AD9BFD342729AE8300736318 /* CountryTableViewCell.swift in Sources */,
 				93D86DB827BAA15900F275B0 /* DocsTableView.swift in Sources */,
 				AD8192552721C00D00D5BE48 /* UIColor+Extensions.swift in Sources */,
 				AD81926B2721D5DE00D5BE48 /* SettingsViewModel.swift in Sources */,
+				939AAE3C28F62F6600DD5142 /* Room.swift in Sources */,
 				AD9A68182739084A00BDC439 /* ActionButton.swift in Sources */,
 				AD8192612721D52200D5BE48 /* CallHistoryView.swift in Sources */,
 				93583D9828A3DE9F00CC5642 /* SelectedFileImageView.swift in Sources */,

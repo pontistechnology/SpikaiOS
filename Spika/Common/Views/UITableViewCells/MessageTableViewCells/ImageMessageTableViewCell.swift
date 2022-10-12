@@ -50,8 +50,6 @@ extension ImageMessageTableViewCell {
     func updateCell(message: Message) {
         photoImageView.kf.setImage(with: URL(string: message.body?.file?.path?.getAvatarUrl() ?? "error"), placeholder: UIImage(systemName: "house"))
         
-        if let createdAt = message.createdAt {
-            updateTime(to: createdAt)
-        }
+        updateTime(to: message.createdAt)
     }
 }

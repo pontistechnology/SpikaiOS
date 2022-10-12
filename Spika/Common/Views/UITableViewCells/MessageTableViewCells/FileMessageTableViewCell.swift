@@ -51,8 +51,6 @@ extension FileMessageTableViewCell {
         photoImageView.image = UIImage(systemName: "doc")
         nameLabel.text = message.body?.file?.fileName ?? "fileName"
         
-        if let createdAt = message.createdAt {
-            updateTime(to: createdAt)
-        }
+        updateTime(to: message.createdAt)
     }
 }

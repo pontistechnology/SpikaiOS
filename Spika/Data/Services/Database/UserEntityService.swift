@@ -159,11 +159,12 @@ class UserEntityService {
                     } else if dbUsers.count > 1 {
                         promise(.failure(DatabseError.moreThanOne))
                     } else {
-                        guard let user = User(entity: dbUsers.first) else {
+                        guard let userEntity = dbUsers.first else {
                             print("GUARD getUser(UserEntityService) error: ")
                             promise(.failure(DatabseError.unknown))
                             return
                         }
+                        let user = User(entity: userEntity)
                         promise(.success(user))
                     }
                 } catch {

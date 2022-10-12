@@ -277,7 +277,7 @@ extension CurrentChatViewController: UITableViewDataSource {
         if message.type == "text" {
             var identifier = ""
             
-            if myUserId == message.fromUserId! {
+            if myUserId == message.fromUserId {
                 identifier = TextMessageTableViewCell.myTextReuseIdentifier
             } else if viewModel.room?.type == .privateRoom {
                 identifier = TextMessageTableViewCell.friendTextReuseIdentifier
@@ -289,7 +289,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             
             cell?.updateCell(message: message)
             cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
-            if let user = viewModel.getUser(for: message.fromUserId!) {
+            if let user = viewModel.getUser(for: message.fromUserId) {
                 
                 cell?.updateSenderInfo(name: user.getDisplayName(), photoUrl: URL(string: user.getAvatarUrl() ?? ""))
             }
@@ -299,7 +299,7 @@ extension CurrentChatViewController: UITableViewDataSource {
         if message.type == "image" {
             var identifier = ""
             
-            if myUserId == message.fromUserId! {
+            if myUserId == message.fromUserId {
                 identifier = ImageMessageTableViewCell.myImageReuseIdentifier
             } else if viewModel.room?.type == .privateRoom {
                 identifier = ImageMessageTableViewCell.friendImageReuseIdentifier
@@ -317,7 +317,7 @@ extension CurrentChatViewController: UITableViewDataSource {
         if message.type == "file" {
             var identifier = ""
             
-            if myUserId == message.fromUserId! {
+            if myUserId == message.fromUserId {
                 identifier = FileMessageTableViewCell.myFileReuseIdentifier
             } else if viewModel.room?.type == .privateRoom {
                 identifier = FileMessageTableViewCell.friendFileReuseIdentifier

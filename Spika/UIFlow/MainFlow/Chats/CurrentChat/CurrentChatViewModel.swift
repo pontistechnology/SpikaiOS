@@ -26,14 +26,13 @@ class CurrentChatViewModel: BaseViewModel {
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
         
-        guard let roomUsers = room.users,
-           let friendRoomUser = roomUsers.first(where: { roomUser in
-            roomUser.user!.id != repository.getMyUserId()
-        }),
-           let friendUser = friendRoomUser.user else {
+        let roomUsers = room.users
+        guard let friendRoomUser = roomUsers.first(where: { roomUser in
+            roomUser.user.id != repository.getMyUserId()
+        }) else {
             fatalError()
         }
-        self.friendUser = friendUser
+        self.friendUser = friendRoomUser.user
         super.init(repository: repository, coordinator: coordinator)
     }
 }
@@ -268,7 +267,7 @@ extension CurrentChatViewModel {
 
 extension CurrentChatViewModel {
     func getUser(for id: Int64) -> User? {
-        return room?.users?.first(where: { roomUser in
+        return room?.users.first(where: { roomUser in
             roomUser.userId == id
         })?.user
     }

@@ -74,9 +74,10 @@ extension ContactsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
-        guard let user = User(entity: frc?.object(at: indexPath)) else {
+        guard let userEntity = frc?.object(at: indexPath) else {
             return UITableViewCell()
         }
+        let user = User(entity: userEntity)
         cell?.configureCell(user)
         return cell ?? UITableViewCell()
     }
@@ -84,7 +85,8 @@ extension ContactsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("t: ", indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let user = User(entity: frc?.object(at: indexPath)) else { return }
+        guard let userEntity = frc?.object(at: indexPath) else { return }
+        let user = User(entity: userEntity)
         viewModel.showDetailsScreen(user: user)
     }
 }

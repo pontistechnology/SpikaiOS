@@ -77,7 +77,7 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
 extension AllChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+//        tableView.deselectRow(at: indexPath, animated: true)
         guard let entity = frc?.object(at: indexPath) else { return }
         let room = Room(roomEntity: entity)
         print("ROOM_: ", room)
@@ -104,12 +104,11 @@ extension AllChatsViewController: UITableViewDataSource {
         }
         let badgeNumber = messagesEntities.count
         if room.type == .privateRoom,
-           let roomUsers = room.users,
-           let friendRoomUser = roomUsers.first(where: { roomUser in
-               roomUser.user!.id != viewModel.getMyUserId()
-           }),
-           let friendUser = friendRoomUser.user
+           let friendRoomUser = room.users.first(where: { roomUser in
+               roomUser.user.id != viewModel.getMyUserId()
+           })
         {
+            let friendUser = friendRoomUser.user
             cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
                                 name: friendUser.getDisplayName(),
                                 description: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "No messages",
@@ -119,9 +118,9 @@ extension AllChatsViewController: UITableViewDataSource {
         
         if room.type != .privateRoom {
             let lastMessage = entity.messages?.lastObject as? MessageEntity
-            let senderName = room.users?.first(where: { ru in
+            let senderName = room.users.first(where: { ru in
                 ru.userId == lastMessage?.fromUserId
-            })?.user?.getDisplayName() ?? "no name"
+            })?.user.getDisplayName() ?? "no name"
             
             cell?.configureCell(avatarUrl: room.getAvatarUrl(),
                                 name: room.name ?? "noname",

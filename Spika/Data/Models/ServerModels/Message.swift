@@ -8,14 +8,14 @@
 import Foundation
 
 struct Message: Codable {
-    let createdAt: Int64?
-    let fromUserId: Int64?
+    let createdAt: Int64
+    let fromUserId: Int64
+    let roomId: Int64
     let id: Int64?
     let localId: String?
     let totalUserCount: Int64?
     let deliveredCount: Int64?
     let seenCount: Int64?
-    let roomId: Int64?
     let type: String?
     let body: MessageBody?
     let records: [MessageRecord]?
@@ -47,12 +47,12 @@ extension Message {
         }
         self.init(createdAt: messageEntity.createdAt,
                   fromUserId: messageEntity.fromUserId,
+                  roomId: messageEntity.roomId,
                   id: Int64(messageEntity.id ?? "-2"),
                   localId: messageEntity.localId,
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
-                  roomId: messageEntity.roomId,
                   type: messageEntity.type, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "", file: FileData(fileName: nil, mimeType: nil, path: messageEntity.imagePath, size: nil), fileId: nil, thumbId: nil),
                   records: messageRecords)

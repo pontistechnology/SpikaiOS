@@ -19,14 +19,10 @@ public class MessageEntity: NSManagedObject {
         }
         self.init(entity: entity, insertInto: context)
         
-        if let c = message.createdAt {
-            createdAt = c
-            createdDate = Date(timeIntervalSince1970: Double(c) / 1000)
-        }
+        createdAt = message.createdAt
+        createdDate = Date(timeIntervalSince1970: Double(message.createdAt) / 1000)
         
-        if let fromUserId = message.fromUserId {
-            self.fromUserId = fromUserId
-        }
+        fromUserId = message.fromUserId
         
         if let id = message.id {
             self.id = "\(id)"
@@ -48,9 +44,7 @@ public class MessageEntity: NSManagedObject {
             self.seenCount = seenCount
         }
         
-        if let roomId = message.roomId {
-            self.roomId = roomId
-        }
+        roomId = message.roomId
 
         if let type = message.type {
             self.type = type
