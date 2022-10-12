@@ -29,3 +29,25 @@ public class RoomEntity: NSManagedObject {
         }
     }
 }
+
+extension RoomEntity {
+    func numberOfUnreadMessages() -> Int{
+        return (messages?.array as! [MessageEntity]).filter{$0.createdAt > visitedRoom}.count
+//            && $0.fromUserId != viewModel.getMyUserId()}
+    }
+    
+    func lastMessageText() -> String {
+        guard let lastMessage = messages?.lastObject as? MessageEntity else {
+            return "No messages"
+        }
+        if type == RoomType.privateRoom.rawValue {
+            return lastMessage.bodyText ?? ""
+        } else {
+            return ((users?.allObjects as? [RoomUserEntity])?.first(where: {$0.userId == lastMessage.fromUserId})?.user?.contactsName ?? "no name") + ": " + (lastMessage.bodyText ?? "")
+        }
+    }
+    
+    func lastMessageTime() -> String {
+        return (messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? ""
+    }
+}

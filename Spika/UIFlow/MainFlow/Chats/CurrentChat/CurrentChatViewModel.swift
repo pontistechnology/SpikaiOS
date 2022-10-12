@@ -27,12 +27,10 @@ class CurrentChatViewModel: BaseViewModel {
         self.room = room
         
         let roomUsers = room.users
-        guard let friendRoomUser = roomUsers.first(where: { roomUser in
-            roomUser.user.id != repository.getMyUserId()
-        }) else {
+        guard let friendUser = room.getFriendUserInPrivateRoom(myUserId: repository.getMyUserId()) else {
             fatalError()
         }
-        self.friendUser = friendRoomUser.user
+        self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
     }
 }

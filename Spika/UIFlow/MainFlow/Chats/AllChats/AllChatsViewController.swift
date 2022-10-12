@@ -16,7 +16,6 @@ class AllChatsViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        allChatsView.allChatsTableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -26,23 +25,15 @@ class AllChatsViewController: BaseViewController {
     }
     
     func setupBindings() {
-        
         allChatsView.allChatsTableView.delegate = self
         allChatsView.allChatsTableView.dataSource = self
         
         allChatsView.pencilImageView.tap().sink { [weak self] _ in
             self?.viewModel.presentSelectUserScreen()
-            self?.getAllRooms()
         }.store(in: &subscriptions)
         
         setRoomsFetch()
-    
     }
-    
-    func getAllRooms() {
-        viewModel.getAllRooms()
-    }
-    
 }
 
 // MARK: - NSFetchedResultsController
@@ -54,7 +45,9 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
             guard let self = self else { return }
             let fetchRequest = RoomEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false)]
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp),
+                                                             ascending: false),
+                                            NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
             self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                   managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
             self.frc?.delegate = self
@@ -77,10 +70,9 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
 extension AllChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-        guard let entity = frc?.object(at: indexPath) else { return }
-        let room = Room(roomEntity: entity)
-        print("ROOM_: ", room)
+        guard let roomEntity = frc?.object(at: indexPath) else { return }
+        let room = Room(roomEntity: roomEntity)
+        print("ROOM selected: ", room)
         viewModel.presentCurrentChatScreen(room: room)
     }
 }
@@ -94,38 +86,26 @@ extension AllChatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
         guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
-        print("ALLCVC: ", indexPath, " roomentity: ", entity)
     
         let room = Room(roomEntity: entity)
         print("room at indexpath: ", indexPath, room)
-        let messagesEntities = (entity.messages?.array as! [MessageEntity]).filter{$0.createdAt > entity.visitedRoom && $0.fromUserId != viewModel.getMyUserId()}
-        for m in messagesEntities {
-            print("mmm \(messagesEntities.firstIndex(of: m)):  createdat: ", m.createdAt, " text: ", m.bodyText, " from userid: ", m.fromUserId, "entitiy visited: ", entity.visitedRoom)
-        }
-        let badgeNumber = messagesEntities.count
+        
+        let badgeNumber = entity.numberOfUnreadMessages()
         if room.type == .privateRoom,
-           let friendRoomUser = room.users.first(where: { roomUser in
-               roomUser.user.id != viewModel.getMyUserId()
-           })
+           let friendUser = room.getFriendUserInPrivateRoom(myUserId: viewModel.getMyUserId())
         {
-            let friendUser = friendRoomUser.user
             cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
                                 name: friendUser.getDisplayName(),
-                                description: (entity.messages?.lastObject as? MessageEntity)?.bodyText ?? "No messages",
-                                time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
+                                description: entity.lastMessageText(),
+                                time: entity.lastMessageTime(),
                                 badgeNumber: badgeNumber)
-        }
-        
-        if room.type != .privateRoom {
-            let lastMessage = entity.messages?.lastObject as? MessageEntity
-            let senderName = room.users.first(where: { ru in
-                ru.userId == lastMessage?.fromUserId
-            })?.user.getDisplayName() ?? "no name"
+            
+        } else if room.type != .privateRoom {
             
             cell?.configureCell(avatarUrl: room.getAvatarUrl(),
                                 name: room.name ?? "noname",
-                                description: senderName + ": " + (lastMessage?.bodyText ?? "no messages"),
-                                time: (entity.messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
+                                description: entity.lastMessageText(),
+                                time: entity.lastMessageTime(),
                                 badgeNumber: badgeNumber)
         }
         

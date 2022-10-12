@@ -144,6 +144,7 @@
 		939AAE4028F62FFF00DD5142 /* RoomUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE3E28F62FFF00DD5142 /* RoomUser.swift */; };
 		939AAE4228F6308100DD5142 /* MessageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE4128F6308100DD5142 /* MessageRecord.swift */; };
 		939AAE4328F6308100DD5142 /* MessageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE4128F6308100DD5142 /* MessageRecord.swift */; };
+		939AAE4428F6613D00DD5142 /* Int64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int64+Extensions.swift */; };
 		939B30402850DC1F00FFA537 /* AppRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */; };
 		939B30422850DC2D00FFA537 /* TestRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B30412850DC2D00FFA537 /* TestRepository+Sync.swift */; };
 		939B30442850DD2200FFA537 /* SyncRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B30432850DD2200FFA537 /* SyncRoomsResponseModel.swift */; };
@@ -1736,6 +1737,7 @@
 				931B151328211B3F00A0CD35 /* String+Extension.swift in Sources */,
 				931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */,
 				934F036C282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift in Sources */,
+				939AAE4428F6613D00DD5142 /* Int64+Extensions.swift in Sources */,
 				931B14F428211AC100A0CD35 /* AuthRequestModel.swift in Sources */,
 				931B14D8281FD91100A0CD35 /* AppRepository+Rooms.swift in Sources */,
 				931B150528211AC600A0CD35 /* UploadChunkResponseModel.swift in Sources */,

@@ -31,8 +31,8 @@ extension Room {
     }
 }
 
-// TODO: there is a same function in User model
 extension Room {
+    // TODO: there is a same function in User model
     func getAvatarUrl() -> String? {
         if let avatarUrl = avatarUrl, !avatarUrl.isEmpty {
             if avatarUrl.starts(with: "http") {
@@ -45,5 +45,17 @@ extension Room {
         } else {
             return nil
         }
+    }
+    
+    func getFriendUserInPrivateRoom(myUserId: Int64) -> User? {
+        if type == .privateRoom {
+            return users.first(where: { $0.user.id != myUserId })?.user
+        } else {
+            return nil
+        }
+    }
+    
+    func getDisplayNameFor(userId: Int64) -> String {
+        return users.first(where: { $0.userId == userId})?.user.getDisplayName() ?? "no name"
     }
 }
