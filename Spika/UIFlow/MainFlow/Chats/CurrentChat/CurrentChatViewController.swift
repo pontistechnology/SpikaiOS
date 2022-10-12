@@ -358,7 +358,7 @@ extension CurrentChatViewController {
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room?.type == .privateRoom {
-            friendInfoView.change(avatarUrl: viewModel.friendUser.getAvatarUrl(), name: viewModel.friendUser.getDisplayName(), lastSeen: "yesterday")
+            friendInfoView.change(avatarUrl: viewModel.friendUser?.getAvatarUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: "yesterday")
         } else {
             friendInfoView.change(avatarUrl: viewModel.room?.getAvatarUrl(),
                                   name: viewModel.room?.name,

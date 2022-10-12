@@ -12,7 +12,7 @@ import IKEventSource
 
 class CurrentChatViewModel: BaseViewModel {
     
-    let friendUser: User
+    let friendUser: User?
     var room: Room?
     let roomPublisher = PassthroughSubject<Room, Error>()
     let selectedFiles = CurrentValueSubject<[SelectedFile], Never>([])
@@ -27,10 +27,7 @@ class CurrentChatViewModel: BaseViewModel {
         self.room = room
         
         let roomUsers = room.users
-        guard let friendUser = room.getFriendUserInPrivateRoom(myUserId: repository.getMyUserId()) else {
-            fatalError()
-        }
-        self.friendUser = friendUser
+        self.friendUser = room.getFriendUserInPrivateRoom(myUserId: repository.getMyUserId())
         super.init(repository: repository, coordinator: coordinator)
     }
 }
@@ -57,7 +54,7 @@ extension CurrentChatViewModel {
     func checkLocalRoom() {
         if let room = room {
             roomPublisher.send(room)
-        } else {
+        } else if let friendUser = friendUser {
             repository.checkLocalRoom(forUserId: friendUser.id).sink { [weak self] completion in
                 guard let self = self else { return }
                 switch completion {
@@ -76,6 +73,7 @@ extension CurrentChatViewModel {
     }
     
     func checkOnlineRoom()  {
+        guard let friendUser = friendUser else { return }
         networkRequestState.send(.started())
         
         repository.checkOnlineRoom(forUserId: friendUser.id).sink { [weak self] completion in
@@ -98,7 +96,7 @@ extension CurrentChatViewModel {
                 self.networkRequestState.send(.finished)
             } else {
                 print("There is no online room, creating started...")
-                self.createRoom(userId: self.friendUser.id)
+                self.createRoom(userId: friendUser.id)
             }
         }.store(in: &subscriptions)
     }
