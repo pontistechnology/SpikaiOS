@@ -24,7 +24,6 @@ class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
-    var currentMessage: Message?
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
@@ -32,27 +31,19 @@ class NotificationService: UNNotificationServiceExtension {
         
         if let bestAttemptContent = bestAttemptContent {
             guard let jsonData = (bestAttemptContent.userInfo["message"] as? String)?.data(using: .utf8),
-                  let message = try? JSONDecoder().decode(Message.self, from: jsonData),
-                  let roomId = message.roomId
+                  let message = try? JSONDecoder().decode(Message.self, from: jsonData)
             else {
-                bestAttemptContent.title = "DECODING ERROR"
-                contentHandler(bestAttemptContent)
+                show(title: "Error", text: "Decoding error")
                 return
             }
-            
-            currentMessage = message
-//            guard let id = message.id else { return }
-//            sendDeliveredStatus(messageIds: [id])
-            checkLocalRoom(roomId: roomId)
+            saveMessage(message: message)
         }
     }
     
     override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
-        if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
-            contentHandler(bestAttemptContent)
-        }
+        show(title: "Error", text: "serviceExtensionTimeWillExpire")
     }
 }
 
@@ -69,88 +60,38 @@ extension NotificationService {
         }.store(in: &subs)
     }
     
-    func checkLocalRoom(roomId: Int64) {
-        repository.checkLocalRoom(withId: roomId).sink { [weak self] c in
+    func saveMessage(message: Message) {
+        repository.saveMessages([message]).sink { [weak self] c in
             switch c {
-                
             case .finished:
                 break
-            case .failure(_):
-                self?.checkOnlineRoom(roomId: roomId)
-                break
+            case let .failure(error):
+                self?.show(title: "saving error", text: error.localizedDescription)
             }
-        } receiveValue: { [weak self] room in
-            guard let currentMessage = self?.currentMessage else { return }
-            self?.saveMessage(message: currentMessage, room: room)
+        } receiveValue: { [weak self] messages in
+            self?.getMessageNotificationInfo(message: messages.first!)
         }.store(in: &subs)
     }
     
-    func checkOnlineRoom(roomId: Int64) {
-        repository.checkOnlineRoom(forRoomId: roomId).sink { completion in
-            switch completion {
-                
+    func getMessageNotificationInfo(message: Message) {
+        repository.getNotificationInfoForMessage(message).sink { [weak self] c in
+            switch c {
             case .finished:
                 break
-            case .failure(_):
-                // TODO: handle error
-                break
+            case let .failure(error):
+                self?.show(title: "get not info error", text: error.localizedDescription)
             }
-        } receiveValue: { [weak self] response in
-            guard let room = response.data?.room else { return }
-            self?.saveLocalRoom(room: room)
+        } receiveValue: { [weak self] info in
+            self?.show(title: info.title, text: info.messageText)
         }.store(in: &subs)
     }
     
-    func saveLocalRoom(room: Room) {
-        repository.saveLocalRooms(rooms: [room]).sink { completion in
-            switch completion {
-                
-            case .finished:
-                break
-            case .failure(_):
-                break
-            }
-        } receiveValue: { [weak self] rooms in
-            guard let room = rooms.first else { return }
-            self?.checkLocalRoom(roomId: room.id)
-        }.store(in: &subs)
-    }
-    
-    func saveMessage(message: Message, room: Room) {
-        repository.saveMessages([message]).sink { c in
-            
-        } receiveValue: { messages in
-            
-        }.store(in: &subs)
-        // TODO: use logic below
-//        repository.saveMessage(message: message, roomId: room.id).sink { [weak self] c in
-//            guard let self = self else { return }
-//            switch c {
-//
-//            case .finished:
-//                break
-//            case let .failure(error):
-//                guard let bestAttemptContent = self.bestAttemptContent,
-//                      let contentHandler = self.contentHandler
-//                else { return }
-//
-//                bestAttemptContent.title = "Saving Error: \(error)"
-//                contentHandler(bestAttemptContent)
-//            }
-//        } receiveValue: { message in
-//            guard let senderRoomUser = room.users?.first(where: { roomUser in
-//                roomUser.user?.id == message.fromUserId
-//            }),
-//                  let senderName = senderRoomUser.user?.getDisplayName(),
-//                  let bestAttemptContent = self.bestAttemptContent
-//            else { return }
-//
-//            bestAttemptContent.title = senderName
-//            guard let id = self.currentMessage?.id else {
-//                return
-//            }
-//            self.sendDeliveredStatus(messageIds: [id])
-//        }.store(in: &subs)
-
+    func show(title: String, text: String) {
+        guard let bestAttemptContent = self.bestAttemptContent,
+              let contentHandler = self.contentHandler
+        else { return }
+        bestAttemptContent.title = title
+        bestAttemptContent.body  = text
+        contentHandler(bestAttemptContent)
     }
 }
