@@ -39,6 +39,11 @@ class CurrentChatViewController: BaseViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let room = viewModel.room else { return }
+        viewModel.roomVisited(roomId: room.id)
+    }
+    
     deinit {
         print("currentChatVC deinit")
     }
@@ -137,36 +142,44 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         currentChatView.messagesTableView.beginUpdates()
     }
     
+    // MARK: - sections
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
             case .insert:
+            print("DIDCHANGE: sections insert")
             currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
             case .delete:
+            print("DIDCHANGE: sections delete")
                 currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
             case .move:
+            print("DIDCHANGE: sections move")
                 break
             case .update:
+            print("DIDCHANGE: sections update")
                 break
             @unknown default:
             break
         }
     }
     
+    // MARK: - rows
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         print("TYPE: ", type.rawValue)
         switch type {
         case .insert:
+            print("DIDCHANGE: rows insert")
             guard let newIndexPath = newIndexPath else {
                 return
             }
             currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-
         case .delete:
+            print("DIDCHANGE: rows delete")
             guard let indexPath = indexPath else {
                 return
             }
-            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .none)
         case .move:
+            print("DIDCHANGE: rows move")
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath
             else {
@@ -175,11 +188,13 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
 
         case .update:
+            print("DIDCHANGE: rows update")
             guard let indexPath = indexPath else {
                 return
             }
-            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
-            break
+            UIView.performWithoutAnimation {
+                currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
+            }
         default:
             break
         }

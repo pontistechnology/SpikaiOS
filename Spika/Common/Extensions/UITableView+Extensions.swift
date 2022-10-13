@@ -13,6 +13,12 @@ extension UITableView {
         if lastSectionIndex < 0 { return }
         let lastRowIndex = self.numberOfRows(inSection: lastSectionIndex) - 1
         if lastRowIndex < 0 { return }
-        self.scrollToRow(at: IndexPath(row: lastRowIndex, section: lastSectionIndex), at: .bottom, animated: true)
+        let lastCellIndexPath = IndexPath(row: lastRowIndex, section: lastSectionIndex)
+        let cellRect = self.rectForRow(at: lastCellIndexPath)
+        let completelyVisible = self.bounds.contains(cellRect)
+        if !completelyVisible {
+            print("Tableview scrollToBottom executed.")
+            self.scrollToRow(at: lastCellIndexPath, at: .bottom, animated: false)
+        }
     }
 }
