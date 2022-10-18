@@ -19,7 +19,7 @@ class EnterVerifyCodeView: UIView, BaseView {
     let nextButton = MainButton()
     let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)
     let resendCodeButton = ActionButton()
-    let errorMessageLabel = CustomLabel(text: "The code is incorrect!", textSize: 14, textColor: .appRed, fontName: .MontserratMedium, alignment: .center)
+
     var timer: Timer?
     var timeCounter: Int = 120
     
@@ -43,7 +43,6 @@ class EnterVerifyCodeView: UIView, BaseView {
     func addSubviews() {
         addSubview(logoImageView)
         addSubview(titleLabel)
-        addSubview(errorMessageLabel)
         addSubview(otpTextField)
         addSubview(nextButton)
         addSubview(timeLabel)
@@ -58,8 +57,6 @@ class EnterVerifyCodeView: UIView, BaseView {
         nextButton.setEnabled(false)
         
         resendCodeButton.setTitle("Resend code", for: .normal)
-        
-        errorMessageLabel.isHidden  = true
     }
     
     func positionSubviews() {
@@ -68,10 +65,7 @@ class EnterVerifyCodeView: UIView, BaseView {
         logoImageView.centerX(inView: self)
         
         titleLabel.anchor(top: logoImageView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 24, left: 70, bottom: 50, right: 70))
-        
-        errorMessageLabel.anchor(top: titleLabel.bottomAnchor, padding: UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0))
-        errorMessageLabel.centerXToSuperview()
-        
+                
         timeLabel.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 50, left: 30, bottom: 16, right: 30))
         timeLabel.constrainWidth(100)
         

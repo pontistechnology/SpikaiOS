@@ -162,7 +162,7 @@ class AlertView: UIView, BaseView {
         switch(alertViewState) {
             
         case .justMessage:
-            containerView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 60, left: 20, bottom: 0, right: 20))
+            containerView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 46, left: 24, bottom: 0, right: 24))
             
             imageView.anchor(leading: containerView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
             imageView.centerYToSuperview()
