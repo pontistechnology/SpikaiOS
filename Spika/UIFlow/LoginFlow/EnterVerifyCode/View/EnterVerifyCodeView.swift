@@ -11,7 +11,11 @@ class EnterVerifyCodeView: UIView, BaseView {
     
     let logoImageView = LogoImageView()
     let titleLabel = CustomLabel(text: "We sent you verification code.", fontName: .MontserratMedium, alignment: .center)
-    let verificationTextFieldView = VerificationTextFieldView(length: 6)
+    
+    let otpLength = 6
+    
+    lazy var otpTextField = OTPCodeTextField(otpLength: 6)
+    
     let nextButton = MainButton()
     let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)
     let resendCodeButton = ActionButton()
@@ -40,18 +44,16 @@ class EnterVerifyCodeView: UIView, BaseView {
         addSubview(logoImageView)
         addSubview(titleLabel)
         addSubview(errorMessageLabel)
-        addSubview(verificationTextFieldView)
+        addSubview(otpTextField)
         addSubview(nextButton)
         addSubview(timeLabel)
         addSubview(resendCodeButton)
     }
     
     func styleSubviews() {
-        
         titleLabel.numberOfLines = 2
         
-        verificationTextFieldView.delegate = self
-        
+        otpTextField.otpDelegate = self
         nextButton.setTitle("Next", for: .normal)
         nextButton.setEnabled(false)
         
@@ -77,10 +79,10 @@ class EnterVerifyCodeView: UIView, BaseView {
         resendCodeButton.constrainWidth(100)
         resendCodeButton.centerY(inView: timeLabel)
         
-        verificationTextFieldView.anchor(top: timeLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 16, left: 30, bottom: 14, right: 30))
-        verificationTextFieldView.constrainHeight(44)
+        otpTextField.anchor(top: timeLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 16, left: 30, bottom: 14, right: 30))
+        otpTextField.constrainHeight(44)
         
-        nextButton.anchor(top: verificationTextFieldView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 14, left: 30, bottom: 0, right: 30))
+        nextButton.anchor(top: otpTextField.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 14, left: 30, bottom: 0, right: 30))
         nextButton.constrainHeight(50)
     }
     
@@ -105,10 +107,8 @@ class EnterVerifyCodeView: UIView, BaseView {
     }
 }
 
-extension EnterVerifyCodeView: VerificationTextFieldViewDelegate {
-    func verificationTextFieldView(_ verificationTextFieldView: VerificationTextFieldView, valueDidChange code: String) -> Bool {
-        
-        nextButton.setEnabled(code.count == verificationTextFieldView.length)
-        return true
+extension EnterVerifyCodeView: OTPCodeTextFieldDelegate {
+    func textFieldDidChange(_ textField: UITextField, entryGood: Bool) {
+        nextButton.setEnabled(entryGood)
     }
 }
