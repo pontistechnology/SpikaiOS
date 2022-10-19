@@ -47,7 +47,7 @@ class AlertView: UIView, BaseView {
     let containerView = UIView()
     let descriptionLabel = CustomLabel(text: "For copy and favorite", textSize: 11, textColor: .textSecondary, fontName: .MontserratMedium, alignment: .center)
     let messageLabel = CustomLabel(text: "message message", textSize: 13, textColor: .appRed, fontName: .MontserratMedium, alignment: .center)
-    let imageView = UIImageView(image: UIImage(named: "error"))
+    let imageView = UIImageView(image: UIImage(safeImage: .error))
     let titleLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
     let buttonsStackView = UIStackView()
     
@@ -69,7 +69,7 @@ class AlertView: UIView, BaseView {
             button.setTitle(text, for: .normal)
             button.addTarget(self, action: #selector(testis), for: .touchUpInside)
             button.setTitleColor(i == buttonTexts.count - 1 ? .red : .primaryColor, for: .normal)
-            button.titleLabel?.customFont(name: i == buttonTexts.count - 1 ? .MontserratMedium : .MontserratSemiBold)
+            button.titleLabel?.font = .customFont(name: i == buttonTexts.count - 1 ? .MontserratMedium : .MontserratSemiBold)
             button.backgroundColor = .white
             buttonsStackView.addArrangedSubview(button)
         }
@@ -152,7 +152,7 @@ class AlertView: UIView, BaseView {
             buttonsStackView.layer.borderColor = UIColor.gray.cgColor
         case .staticInfo:
             containerView.backgroundColor = .whiteAndDarkBackground
-            imageView.image = UIImage(named: "sent")
+            imageView.image = UIImage(safeImage: .sent)
             descriptionLabel.text = staticChoice.description
         }
     }
@@ -162,7 +162,7 @@ class AlertView: UIView, BaseView {
         switch(alertViewState) {
             
         case .justMessage:
-            containerView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 60, left: 20, bottom: 0, right: 20))
+            containerView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 46, left: 24, bottom: 0, right: 24))
             
             imageView.anchor(leading: containerView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
             imageView.centerYToSuperview()

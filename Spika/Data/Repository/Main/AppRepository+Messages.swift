@@ -15,7 +15,7 @@ extension AppRepository {
     
     // MARK: Network
     
-    func sendTextMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -40,6 +40,7 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
+        print("message id u repos: ", messageIds)
         
         let resources = Resources<DeliveredResponseModel, DeliveredRequestModel>(
             path: Constants.Endpoints.deliveredStatus,
@@ -73,16 +74,20 @@ extension AppRepository {
     
     // MARK: Database
     
-    func saveMessage(message: Message, roomId: Int64) -> Future<Message, Error> {
-        return databaseService.messageEntityService.saveMessage(message: message, roomId: roomId)
+    func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
+        return databaseService.messageEntityService.saveMessages(messages)
     }
     
     func getMessages(forRoomId roomId: Int64) -> Future<[Message], Error> {
         self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
     }
+
+    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
+        self.databaseService.messageEntityService.saveMessageRecords(messageRecords)
+    }
     
-    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error> {
-        self.databaseService.messageEntityService.saveMessageRecord(messageRecord: messageRecord)
+    func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error> {
+        self.databaseService.messageEntityService.getNotificationInfoForMessage(message: message)
     }
 
 }

@@ -22,11 +22,11 @@ class ChatsAssembly: Assembly {
             return SelectUsersViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
-        container.register(SelectUsersViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let controller = SelectUsersViewController()
-            controller.viewModel = container.resolve(SelectUsersViewModel.self, argument: coordinator)
-            return controller
-        }.inObjectScope(.transient)
+//        container.register(SelectUsersViewController.self) { (resolver, coordinator: AppCoordinator) in
+//            let controller = SelectUsersViewController()
+//            controller.viewModel = container.resolve(SelectUsersViewModel.self, argument: coordinator)
+//            return controller
+//        }.inObjectScope(.transient)
     }
     
     private func assembleCurrentChatViewController(_ container: Container) {

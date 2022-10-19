@@ -15,7 +15,7 @@ class ErrorView: UIView, BaseView {
     private let errorImageView = UIImageView()
     private let errorLabel = CustomLabel(text: "", textSize: 13, textColor: .appRed, fontName: .MontserratMedium)
     
-    init(message: String, errorImage: UIImage = UIImage(named: "error")!) {
+    init(message: String, errorImage: UIImage = UIImage(safeImage: .error)) {
         self.message = message
         self.errorImage = errorImage
         super.init(frame: .zero)

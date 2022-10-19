@@ -11,4 +11,5 @@ struct SSENewMessage: Codable {
     let type: SSEEventType?
     let message: Message?
     let messageRecord: MessageRecord?
+    let room: Room?
 }

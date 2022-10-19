@@ -50,4 +50,8 @@ extension String {
             return Constants.Networking.baseUrl + self
         }
     }
+    
+    func firstLetter() -> String {
+        String(self.first ?? "#")
+    }
 }

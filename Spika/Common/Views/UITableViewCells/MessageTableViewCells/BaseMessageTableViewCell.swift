@@ -17,27 +17,31 @@ enum MessageSender {
 class BaseMessageTableViewCell: UITableViewCell {
     
     let containerView = UIView()
-    let senderNameLabel = CustomLabel(text: "Matej Vida", textSize: 12, textColor: .textTertiary, fontName: .MontserratRegular, alignment: .left)
-    let senderPhotoImageview = UIImageView(image: UIImage(named: "matejVida"))
-    let timeLabel = CustomLabel(text: "11:54", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
-    let messageStateView = MessageStateView(state: .waiting)
-    let replyView = ReplyMessageView()
+    private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary, fontName: .MontserratRegular, alignment: .left)
+    private let senderPhotoImageview = UIImageView(image: UIImage(safeImage: .userImage))
+    private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
+    private let messageStateView = MessageStateView(state: .waiting)
+    private let senderNameBottomConstraint = NSLayoutConstraint()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
-        
-        if let reuseIdentifier = reuseIdentifier {
-            if reuseIdentifier == TextMessageTableViewCell.myTextReuseIdentifier ||
-                reuseIdentifier == ImageMessageTableViewCell.myImageReuseIdentifier {
-                setupContainer(sender: .me)
-            } else if reuseIdentifier == TextMessageTableViewCell.friendTextReuseIdentifier ||
-                reuseIdentifier == ImageMessageTableViewCell.friendImageReuseIdentifier {
-                setupContainer(sender: .friend)
-            } else if reuseIdentifier == TextMessageTableViewCell.groupTextReuseIdentifier ||
-                reuseIdentifier == ImageMessageTableViewCell.groupImageReuseIdentifier {
-                setupContainer(sender: .group)
-            }
+        guard let reuseIdentifier = reuseIdentifier else { return }
+        let myReuseIdentifiers = [TextMessageTableViewCell.myTextReuseIdentifier,
+                                  ImageMessageTableViewCell.myImageReuseIdentifier,
+                                  FileMessageTableViewCell.myFileReuseIdentifier]
+        let friendReuseIdentifiers = [TextMessageTableViewCell.friendTextReuseIdentifier,
+                                      ImageMessageTableViewCell.friendImageReuseIdentifier,
+                                      FileMessageTableViewCell.friendFileReuseIdentifier]
+        let groupReuseIdentifiers = [TextMessageTableViewCell.groupTextReuseIdentifier,
+                                     ImageMessageTableViewCell.groupImageReuseIdentifier,
+                                     FileMessageTableViewCell.groupFileReuseIdentifier]
+        if myReuseIdentifiers.contains(reuseIdentifier) {
+            setupContainer(sender: .me)
+        } else if friendReuseIdentifiers.contains(reuseIdentifier) {
+            setupContainer(sender: .friend)
+        } else if groupReuseIdentifiers.contains(reuseIdentifier) {
+            setupContainer(sender: .group)
         }
     }
     
@@ -56,19 +60,21 @@ extension BaseMessageTableViewCell: BaseView {
     func styleSubviews() {
         containerView.layer.cornerRadius = 10
         containerView.layer.masksToBounds = true
-        
+        senderPhotoImageview.layer.cornerRadius = 10
+        senderPhotoImageview.clipsToBounds = true
+        senderPhotoImageview.isHidden = true
         timeLabel.isHidden = true
     }
     
     func positionSubviews() {
         
         containerView.widthAnchor.constraint(lessThanOrEqualToConstant: 276).isActive = true
-        timeLabel.centerYToSuperview()
+        timeLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
     }
     
     func setupContainer(sender: MessageSender) {
         containerView.backgroundColor = sender == .me ?  UIColor(hexString: "C8EBFE") : .chatBackground // TODO: ask nika for color
-        messageStateView.isHidden = !(sender == .me)
+        messageStateView.isHidden = sender != .me
         
         switch sender {
         case .me:
@@ -85,15 +91,12 @@ extension BaseMessageTableViewCell: BaseView {
             contentView.addSubview(senderNameLabel)
             contentView.addSubview(senderPhotoImageview)
             
-            senderPhotoImageview.layer.cornerRadius = 10
-            senderPhotoImageview.clipsToBounds = true
-            
-            senderNameLabel.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 6, left: 68, bottom: 0, right: 0))
-            
-            containerView.anchor(top: senderNameLabel.bottomAnchor, leading: contentView.leadingAnchor, bottom: contentView.bottomAnchor, padding: UIEdgeInsets(top: 8, left: 60, bottom: 2, right: 0))
-            
-            senderPhotoImageview.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 28, left: 24, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
+            senderNameLabel.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: containerView.topAnchor, padding: UIEdgeInsets(top: 2, left: 68, bottom: 4, right: 0))
+
+            containerView.anchor(leading: contentView.leadingAnchor, bottom: contentView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 60, bottom: 2, right: 0))
     
+            senderPhotoImageview.anchor(bottom: containerView.bottomAnchor, trailing: containerView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 14), size: CGSize(width: 20, height: 20))
+            
             timeLabel.anchor(leading: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
         }
     }
@@ -103,6 +106,9 @@ extension BaseMessageTableViewCell {
     
     override func prepareForReuse() {
         timeLabel.isHidden = true
+        senderNameLabel.text = ""
+        senderPhotoImageview.image = UIImage(safeImage: .userImage)
+        senderPhotoImageview.isHidden = true
     }
     
     func updateCellState(to state: MessageState) {
@@ -113,12 +119,20 @@ extension BaseMessageTableViewCell {
         timeLabel.text = timestamp.convert(to: .HHmm)
     }
     
-    func updateSenderInfo(name: String, photoUrl: URL?) {
+    func updateSender(name: String) {
         senderNameLabel.text = name
+    }
+    
+    func updateSender(photoUrl: URL?) {
+        senderPhotoImageview.isHidden = false
         senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(systemName: "apple")) // TODO: Change apple
     }
     
     func tapHandler() {
         timeLabel.isHidden.toggle()
+    }
+    
+    func setTimeLabelVisible(_ value: Bool) {
+        timeLabel.isHidden = !value
     }
 }

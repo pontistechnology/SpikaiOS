@@ -24,42 +24,48 @@ public class UserEntity: NSManagedObject {
         self.telephoneNumber = user.telephoneNumber
         self.displayName = user.displayName
         
-        self.givenName = user.givenName
-        self.familyName = user.familyName
+        self.contactsName = user.contactsName ?? user.displayName
     }
     
-    convenience init(insertInto context: NSManagedObjectContext?, user: User) {
-        guard let context = context,
-            let entity = NSEntityDescription.entity(forEntityName: Constants.Database.userEntity, in: context)
-        else {
-            self.init()
-            return
-        }
-        self.init(entity: entity, insertInto: context)
-        
-        self.id = user.id
-        self.displayName = user.displayName
-        self.avatarUrl = user.avatarUrl
-        self.telephoneNumber = user.telephoneNumber
-        self.emailAddress = user.emailAddress
-        self.createdAt = user.createdAt!
-        
-        self.givenName = user.givenName
-        self.familyName = user.familyName
-    }
+//    convenience init(insertInto context: NSManagedObjectContext?, user: User) {
+//        guard let context = context,
+//            let entity = NSEntityDescription.entity(forEntityName: Constants.Database.userEntity, in: context)
+//        else {
+//            self.init()
+//            return
+//        }
+//        self.init(entity: entity, insertInto: context)
+//
+//        self.id = user.id
+//        self.displayName = user.displayName
+//        self.avatarUrl = user.avatarUrl
+//        self.telephoneNumber = user.telephoneNumber
+//        self.emailAddress = user.emailAddress
+//        self.createdAt = user.createdAt!
+//
+//        self.givenName = user.givenName
+//        self.familyName = user.familyName
+//    }
     
-    func getDisplayName() -> String {
-        var displayNameResult: String
-        
-        displayNameResult = [givenName, familyName]
-            .compactMap { $0 }
-            .joined(separator: " ")
-            .trimmingCharacters(in: .whitespaces)
-        
-        if displayNameResult.isEmpty {
-            displayNameResult = displayName ?? "noname"
+//    func getDisplayName() -> String {
+//        var displayNameResult: String
+//
+//        displayNameResult = [givenName, familyName]
+//            .compactMap { $0 }
+//            .joined(separator: " ")
+//            .trimmingCharacters(in: .whitespaces)
+//
+//        if displayNameResult.isEmpty {
+//            displayNameResult = displayName ?? "noname"
+//        }
+//
+//        return displayNameResult
+//    }
+    
+    @objc public var sectionName: String {
+        guard let contactsName = contactsName else {
+            return "###"
         }
-        
-        return displayNameResult
+        return String(contactsName.first?.uppercased() ?? "#")
     }
 }

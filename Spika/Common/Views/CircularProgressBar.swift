@@ -33,7 +33,7 @@ class CircularProgressBar: UIView, BaseView {
     
     func styleSubviews() {
         backgroundView.backgroundColor = .darkGray.withAlphaComponent(0.5)
-        containerView.backgroundColor = .systemRed
+        containerView.backgroundColor = .clear
         
         let circularPath = UIBezierPath(arcCenter: CGPoint(x: width/2, y: width/2),
                                         radius: width/2 - lineWidth/2,

@@ -11,7 +11,7 @@ import UIKit
 class NewGroupChatView: UIView, BaseView {
     
     let newGroupLabel = CustomLabel(text: "New Group", textSize: 28, textColor: .textPrimaryAndWhite, fontName: .MontserratSemiBold)
-    let avatarPictureView = ImageViewWithIcon(image: UIImage(named: "logo")!, size: CGSize(width: 100, height: 100))
+    let avatarPictureView = ImageViewWithIcon(image: UIImage(safeImage: .logo), size: CGSize(width: 100, height: 100))
     let usernameTextfield = TextField(textPlaceholder: "Group name...")
     let numberOfUsersLabel = CustomLabel(text: "people selected", textSize: 16, textColor: .textPrimaryAndWhite, fontName: .MontserratSemiBold)
     let selectedUsersTableView = ContactsTableView()

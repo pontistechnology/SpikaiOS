@@ -12,9 +12,9 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     
     let nameLabel = CustomLabel(text: "", fontName: .MontserratSemiBold)
     let descriptionLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary)
-    let leftImageView = UIImageView(image: UIImage(named: "user_image"))
-    let timeLabel = CustomLabel(text: "Yesterday", textSize: 10, textColor: .textTertiary)
-    let messagesNumberLabel = CustomLabel(text: "2", textSize: 10, textColor: .white, fontName: .MontserratSemiBold, alignment: .center)
+    let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
+    let timeLabel = CustomLabel(text: "", textSize: 10, textColor: .textTertiary)
+    let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .white, fontName: .MontserratSemiBold, alignment: .center)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,11 +26,11 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     }
     
     func addSubviews() {
-        addSubview(leftImageView)
-        addSubview(nameLabel)
-        addSubview(descriptionLabel)
-        addSubview(timeLabel)
-        addSubview(messagesNumberLabel)
+        contentView.addSubview(leftImageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(descriptionLabel)
+        contentView.addSubview(timeLabel)
+        contentView.addSubview(messagesNumberLabel)
     }
     
     func styleSubviews() {
@@ -43,34 +43,37 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.backgroundColor = .primaryColor
         messagesNumberLabel.layer.cornerRadius = 10
         messagesNumberLabel.clipsToBounds = true
+        messagesNumberLabel.isHidden = true
     }
     
     func positionSubviews() {
         leftImageView.centerYToSuperview()
-        leftImageView.anchor(leading: leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0), size: CGSize(width: 48, height: 48))
+        leftImageView.anchor(leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0), size: CGSize(width: 48, height: 48))
         
-        nameLabel.anchor(top: topAnchor, leading: leftImageView.trailingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 14, left: 12, bottom: 0, right: 100))
-        descriptionLabel.anchor(leading: nameLabel.leadingAnchor, bottom: bottomAnchor, trailing: nameLabel.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0))
+        nameLabel.anchor(top: contentView.topAnchor, leading: leftImageView.trailingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 14, left: 12, bottom: 0, right: 100))
+        descriptionLabel.anchor(leading: nameLabel.leadingAnchor, bottom: contentView.bottomAnchor, trailing: nameLabel.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0))
         
-        timeLabel.anchor(top: topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 18, left: 0, bottom: 0, right: 20))
+        timeLabel.anchor(top: contentView.topAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 18, left: 0, bottom: 0, right: 20))
         
         messagesNumberLabel.anchor(top: timeLabel.bottomAnchor, trailing: timeLabel.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
     }
     
-    func configureCell(avatarUrl: String?, name: String, description: String, time: String) {
+    func configureCell(avatarUrl: String?, name: String, description: String, time: String, badgeNumber: Int) {
         if let avatarUrl = avatarUrl,
            let realUrl = URL(string: avatarUrl)
         {
             leftImageView.kf.setImage(with: realUrl,
-                                      placeholder: UIImage(named: "user_image"))
+                                      placeholder: UIImage(safeImage: .userImage))
         }
         nameLabel.text = name
         descriptionLabel.text = description
         timeLabel.text = time
+        messagesNumberLabel.text = "\(badgeNumber)"
+        messagesNumberLabel.isHidden = badgeNumber == 0
     }
     
     override func prepareForReuse() {
-        leftImageView.image = UIImage(named: "user_image")
+        leftImageView.image = UIImage(safeImage: .userImage)
         nameLabel.text = ""
         descriptionLabel.text = ""
     }

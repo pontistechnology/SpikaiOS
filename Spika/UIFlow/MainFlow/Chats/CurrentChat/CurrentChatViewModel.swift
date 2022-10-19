@@ -12,9 +12,11 @@ import IKEventSource
 
 class CurrentChatViewModel: BaseViewModel {
     
-    let friendUser: User
+    let friendUser: User?
     var room: Room?
     let roomPublisher = PassthroughSubject<Room, Error>()
+    let selectedFiles = CurrentValueSubject<[SelectedFile], Never>([])
+    let uploadProgressPublisher = PassthroughSubject<(Int, CGFloat), Never>()
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
@@ -24,14 +26,8 @@ class CurrentChatViewModel: BaseViewModel {
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
         
-        guard let roomUsers = room.users,
-           let friendRoomUser = roomUsers.first(where: { roomUser in
-            roomUser.user!.id != repository.getMyUserId()
-        }),
-           let friendUser = friendRoomUser.user else {
-            fatalError()
-        }
-        self.friendUser = friendUser
+        let roomUsers = room.users
+        self.friendUser = room.getFriendUserInPrivateRoom(myUserId: repository.getMyUserId())
         super.init(repository: repository, coordinator: coordinator)
     }
 }
@@ -58,7 +54,7 @@ extension CurrentChatViewModel {
     func checkLocalRoom() {
         if let room = room {
             roomPublisher.send(room)
-        } else {
+        } else if let friendUser = friendUser {
             repository.checkLocalRoom(forUserId: friendUser.id).sink { [weak self] completion in
                 guard let self = self else { return }
                 switch completion {
@@ -77,6 +73,7 @@ extension CurrentChatViewModel {
     }
     
     func checkOnlineRoom()  {
+        guard let friendUser = friendUser else { return }
         networkRequestState.send(.started())
         
         repository.checkOnlineRoom(forUserId: friendUser.id).sink { [weak self] completion in
@@ -99,13 +96,13 @@ extension CurrentChatViewModel {
                 self.networkRequestState.send(.finished)
             } else {
                 print("There is no online room, creating started...")
-                self.createRoom(userId: self.friendUser.id)
+                self.createRoom(userId: friendUser.id)
             }
         }.store(in: &subscriptions)
     }
     
     func saveLocalRoom(room: Room) {
-        repository.saveLocalRoom(room: room).sink { [weak self] completion in
+        repository.saveLocalRooms(rooms: [room]).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 
@@ -114,8 +111,10 @@ extension CurrentChatViewModel {
             case .failure(_):
                 print("saving to local DB failed")
             }
-        } receiveValue: { [weak self] room in
-            guard let self = self else { return }
+        } receiveValue: { [weak self] rooms in
+            guard let self = self,
+                  let room = rooms.first
+            else { return }
             self.room = room
             self.roomPublisher.send(room)
         }.store(in: &subscriptions)
@@ -147,21 +146,6 @@ extension CurrentChatViewModel {
         }.store(in: &subscriptions)
     }
     
-    func loadMessages() {
-        guard let room = room else { return }
-        print("u loag messages stiglo: ", room)
-        repository.getMessages(forRoomId: room.id).sink { completion in
-            switch completion {
-            case .finished:
-                break
-            case .failure(_):
-                break
-            }
-        } receiveValue: { [weak self] messages in
-            guard let self = self else { return }
-        }.store(in: &subscriptions)
-    }
-    
     func roomVisited(roomId: Int64) {
         repository.roomVisited(roomId: roomId)
     }
@@ -171,6 +155,7 @@ extension CurrentChatViewModel {
     
     func trySendMessage(text: String) {
         guard let room = self.room else { return }
+        sendSelectedFiles(files: selectedFiles.value)
         print("ROOM: ", room)
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
@@ -178,13 +163,12 @@ extension CurrentChatViewModel {
                               roomId: room.id, type: .text,
                               body: MessageBody(text: text, file: nil, fileId: nil, thumbId: nil), localId: uuid)
         
-        repository.saveMessage(message: message, roomId: room.id).sink { completion in
-            print("save message c: ", completion)
-        } receiveValue: { [weak self] message in
-            guard let self = self else { return }
-            guard let body = message.body else {
-                print("GUARD trySendMessage body missing")
-                return }
+        repository.saveMessages([message]).sink { c in
+            
+        } receiveValue: { [weak self] messages in
+            guard let self = self,
+                  let body = message.body
+            else { return }
             self.sendMessage(body: body, localId: uuid, type: .text)
         }.store(in: &subscriptions)
     }
@@ -193,7 +177,7 @@ extension CurrentChatViewModel {
     func sendMessage(body: MessageBody, localId: String, type: MessageType) {
         guard let room = self.room else { return }
         
-        self.repository.sendTextMessage(body: body, type: type, roomId: room.id, localId: localId).sink { [weak self] completion in
+        self.repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 
@@ -212,7 +196,7 @@ extension CurrentChatViewModel {
     }
     
     func saveMessage(message: Message, room: Room) {
-        repository.saveMessage(message: message, roomId: room.id).sink { c in
+        repository.saveMessages([message]).sink { c in
             print(c)
         } receiveValue: { _ in
             
@@ -222,10 +206,11 @@ extension CurrentChatViewModel {
 
 // MARK: Image
 extension CurrentChatViewModel {
-    func sendImage(data: Data) {
+    private func sendImage(data: Data) {
         repository.uploadWholeFile(data: data).sink { c in
             print(c)
-        } receiveValue: { (file, uploadPercent) in
+        } receiveValue: { [weak self] (file, uploadPercent) in
+            guard let self = self else { return }
             print("PERCENT: ", uploadPercent, ", file: ", file)
             
             if let file = file {
@@ -235,12 +220,52 @@ extension CurrentChatViewModel {
         }.store(in: &subscriptions)
     }
     
-    
+    func sendSelectedFiles(files: [SelectedFile]) {
+        files.forEach { selectedFile in
+            if selectedFile.fileType == .image {
+                repository.uploadWholeFile(fromUrl: selectedFile.fileUrl).sink { c in
+                    
+                } receiveValue: { [weak self] (file, uploadPercent) in
+                    guard let self = self else { return }
+                    if let index = files.firstIndex(where: { sf in
+                        sf.fileUrl == selectedFile.fileUrl
+                    }) {
+                        self.uploadProgressPublisher.send((index, uploadPercent))
+                    }
+                    
+                    print("NOVA: ", uploadPercent)
+                    if let file = file {
+                        print("UPLOADANO : ", file)
+//                        self.selectedFiles.value.removeAll { sf in
+//                            sf.fileUrl == selectedFile.fileUrl
+//                        }
+                        self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: file.id), localId: UUID().uuidString, type: .image)
+                    }
+                }.store(in: &subscriptions)
+            } else {
+                repository.uploadWholeFile(fromUrl: selectedFile.fileUrl).sink { c in
+                    
+                } receiveValue: { [weak self] (file, uploadPercent) in
+                    guard let self = self else { return }
+                    if let index = files.firstIndex(where: { sf in
+                        sf.fileUrl == selectedFile.fileUrl
+                    }) {
+                        self.uploadProgressPublisher.send((index, uploadPercent))
+                    }
+                    
+                    if let file = file {
+                        self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: nil), localId: UUID().uuidString, type: .file)
+                    }
+                }.store(in: &subscriptions)
+
+            }
+        }
+    }
 }
 
 extension CurrentChatViewModel {
-    func getUser(for id: Int64) -> User? {
-        return room?.users?.first(where: { roomUser in
+    func getUser(for id: Int64) -> User? {
+        return room?.users.first(where: { roomUser in
             roomUser.userId == id
         })?.user
     }

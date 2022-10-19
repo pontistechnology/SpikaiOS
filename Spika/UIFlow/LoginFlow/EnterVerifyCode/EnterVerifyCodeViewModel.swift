@@ -38,10 +38,13 @@ class EnterVerifyCodeViewModel: BaseViewModel {
             else {
                 PopUpManager.shared.presentAlert(errorMessage: "No user or device response.")
                 return
-                
             }
             self?.repository.saveUserInfo(user: user, device: device)
-            self?.presentEnterUsernameScreen()
+            if user.displayName != "" && user.avatarUrl != "" {
+                self?.presentHomeScreen()
+            } else {
+                self?.presentEnterUsernameScreen()
+            }
         }.store(in: &subscriptions)
 
     }
@@ -60,8 +63,12 @@ class EnterVerifyCodeViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
-    func presentEnterUsernameScreen() {
+    private func presentEnterUsernameScreen() {
         getAppCoordinator()?.presentEnterUsernameScreen()
+    }
+    
+    private func presentHomeScreen() {
+        getAppCoordinator()?.presentHomeScreen()
     }
     
 }

@@ -130,8 +130,9 @@ class UserEntityService {
                                                          lastName: contactEntity.familyName,
                                                          telephone: contactEntity.phoneNumber)
                             print("contatct found: ", contact)
-                            user.givenName = contact.firstName
-                            user.familyName = contact.lastName
+                            user.contactsName = contact.firstName ?? ""
+                            + " "
+                            + (contact.lastName ?? "")
                         }
                         self?.saveUser(user)
                     } catch {
@@ -158,11 +159,12 @@ class UserEntityService {
                     } else if dbUsers.count > 1 {
                         promise(.failure(DatabseError.moreThanOne))
                     } else {
-                        guard let user = User(entity: dbUsers.first) else {
+                        guard let userEntity = dbUsers.first else {
                             print("GUARD getUser(UserEntityService) error: ")
                             promise(.failure(DatabseError.unknown))
                             return
                         }
+                        let user = User(entity: userEntity)
                         promise(.success(user))
                     }
                 } catch {

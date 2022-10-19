@@ -19,7 +19,7 @@ open class VerificationTextField: UITextField {
         super.init(frame: frame)
         textAlignment = .center
         autocapitalizationType = .none
-        self.customFont(name: .MontserratMedium, size: 26)
+        self.font = .customFont(name: .MontserratMedium, size: 26)
         textColor = .textPrimary
 //        textContentType = .oneTimeCode
     }

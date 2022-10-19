@@ -16,17 +16,18 @@ class AppCoordinator: Coordinator {
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        navigationController.navigationBar.backgroundColor = .brown
+    }
+    
+    func syncAndStartSSE() {
+        let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
+        sse?.syncAndStartSSE()
     }
     
     func start() {
         // TODO: check display name.isEmpty()
         if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
            let _ = userDefaults.string(forKey: Constants.UserDefaults.displayName){
-            let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
-            sse?.syncAndStartSSE()
             presentHomeScreen()
-            // TODO: for now disabled
         } else if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken){
             presentEnterUsernameScreen()
         } else {
@@ -58,6 +59,7 @@ class AppCoordinator: Coordinator {
     // MARK: MAIN FLOW
     func presentHomeScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
+        syncAndStartSSE()
         self.navigationController.setViewControllers([viewController], animated: true)
     }
     
@@ -110,23 +112,21 @@ class AppCoordinator: Coordinator {
     }
     
     func presentSelectUserScreen() {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(SelectUsersViewController.self, argument: self)!
-        let navC = UINavigationController(rootViewController: viewController)
-        navigationController.present(navC, animated: true, completion: nil)
+//        let viewController = Assembler.sharedAssembler.resolver.resolve(SelectUsersViewController.self, argument: self)!
+//        let navC = UINavigationController(rootViewController: viewController)
+//        navigationController.present(navC, animated: true, completion: nil)
     }
     
     func presentCurrentChatScreen(user: User) {
-        let homeViewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
         let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, user)!
         
-        navigationController.setViewControllers([homeViewController, currentChatViewController], animated: true)
+        navigationController.pushViewController(currentChatViewController, animated: true)
     }
     
     func presentCurrentChatScreen(room: Room) {
-        let homeViewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
         let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, room)!
         
-        navigationController.setViewControllers([homeViewController, currentChatViewController], animated: true)
+        navigationController.pushViewController(currentChatViewController, animated: true)
     }
     
     func presentNewGroupChatScreen(selectedMembers: [User]) {
@@ -146,6 +146,7 @@ class AppCoordinator: Coordinator {
             }
         } else {
             // Fallback on earlier versions
+            // TODO: fix for ios 14
         }
         navigationController.present(viewControllerToPresent, animated: true)
 //        present(viewControllerToPresent, animated: true, completion: nil)

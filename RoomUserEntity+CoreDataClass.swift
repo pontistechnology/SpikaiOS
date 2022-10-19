@@ -20,6 +20,6 @@ public class RoomUserEntity: NSManagedObject {
         self.userId = roomUser.userId
         self.isAdmin = roomUser.isAdmin ?? false // TODO: check always?
         self.roomId = roomId
-        self.user = UserEntity(user: roomUser.user!, context: context)
+        self.user = UserEntity(user: roomUser.user, context: context)
     }
 }

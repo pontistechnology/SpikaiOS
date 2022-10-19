@@ -25,8 +25,12 @@ class EnterNumberViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         enterNumberView.nextButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            guard let fullNumber = self.enterNumberView.getFullNumber(), let uuid = UIDevice.current.identifierForVendor?.uuidString else { return }
+            guard let self = self,
+                  let fullNumber = self.enterNumberView.getFullNumber(),
+                  let uuid = UIDevice.current.identifierForVendor?.uuidString
+            else { return }
+            print("UUID: ", uuid)
+            
             self.viewModel.authenticateWithNumber(
                 number: fullNumber,
                 deviceId: uuid)

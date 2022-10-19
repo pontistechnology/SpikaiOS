@@ -12,7 +12,7 @@ class DocsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "DocsTableViewCell"
     
     let docNameLabel = CustomLabel(text: "this is default text for cell")
-    let leftImageView = UIImageView(image: UIImage(named: "docs"))
+    let leftImageView = UIImageView(image: UIImage(safeImage: .docs))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -50,7 +50,7 @@ class DocsTableViewCell: UITableViewCell, BaseView {
     }
     
     override func prepareForReuse() {
-        leftImageView.image = UIImage(named: "docs")
+        leftImageView.image = UIImage(safeImage: .docs)
         docNameLabel.text = ""
     }
 }

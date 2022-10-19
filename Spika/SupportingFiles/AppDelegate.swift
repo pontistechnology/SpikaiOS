@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         configureNotifications(app: application)
         customization()
-        
+        test()
         return true
     }
     
@@ -43,13 +43,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
     
-//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-//        
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("NOTIFICATION: ", userInfo)
 //        let m = userInfo["message"] as! String
 //        let jsonData = m.data(using: .utf8)
 //        let a = try! JSONDecoder().decode(Message.self, from: jsonData as! Data)
 //        print("a je :" , a)
-//    }
+    }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         messaging.token { token, _ in
@@ -76,8 +76,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
 extension AppDelegate {
     
     func test() {
-        let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
-        userDefaults.set("fich0x3WTUwjlGF5", forKey: Constants.UserDefaults.accessToken)
+//        let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
+//        userDefaults.set("fich0x3WTUwjlGF5", forKey: Constants.UserDefaults.accessToken)
     }
     
     func allroomsprinter() {

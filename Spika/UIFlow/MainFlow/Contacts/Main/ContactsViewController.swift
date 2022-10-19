@@ -27,36 +27,16 @@ class ContactsViewController: BaseViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    var testC = 0
     
     func setupBindings() {
         contactsView.tableView.dataSource = self
         contactsView.tableView.delegate   = self
         contactsView.searchBar.delegate = self
         
-        contactsView.titleLabel.tap().sink { [weak self] tap in
-            guard let _ = self else { return }
-            PopUpManager.shared.presentAlert(errorMessage: "tititi")
-        }.store(in: &subscriptions)
-        
-        //TODO: check this cooments
-//        contactsView.detailsButton.tap().sink { [weak self] _ in
-//        guard let self = self else { return }
-//            self.viewModel.showDetailsScreen(id: 3)
-    //        viewModel.createChat(name: "first chat", type: "group", id: 1)
-    //        let user1 = User(loginName: "Marko", avatarUrl: nil, localName: "Marko", id: 1, blocked: false)
-    //        viewModel.repository.saveUser(user1)
-    //        let chat = Chat(name: "first chat", id: 1, type: "group")
-    //        let message = Message(chat: chat, user: user1, message: "SecondMEssage", id: 1)
-    //        viewModel.saveMessage(message: message)
-    //        viewModel.getUsersForChat(chat: chat)
-    //        viewModel.getMessagesForChat(chat: chat)
+//        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] contacts in
+//            guard let self = self else { return }
+//            self.contactsView.tableView.reloadData()
 //        }.store(in: &subscriptions)
-        
-        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] contacts in
-            guard let self = self else { return }
-            self.contactsView.tableView.reloadData()
-        }.store(in: &subscriptions)
         
 //        viewModel.getUsersAndUpdateUI()
         viewModel.getContacts()
@@ -68,49 +48,67 @@ extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         64
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.font = .customFont(name: .MontserratSemiBold, size: 16)
+        header.textLabel?.textColor = .textPrimary
+    }
 }
 
 extension ContactsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let char = viewModel.contactsSubject.value[section].first?.getDisplayName().prefix(1) {
-            return char.localizedUppercase
-        } else {
-            return "@"
-        }
+        guard let sections = self.frc?.sections else { return "nil" }
+        return sections[section].name
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.contactsSubject.value.count
+        frc?.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.contactsSubject.value[section].count
+        guard let sections = self.frc?.sections else { return 0 }
+        return sections[section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
-        cell?.configureCell(viewModel.contactsSubject.value[indexPath.section][indexPath.row])
+        guard let userEntity = frc?.object(at: indexPath) else {
+            return UITableViewCell()
+        }
+        let user = User(entity: userEntity)
+        cell?.configureCell(user)
         return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("t: ", indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
-        let user = viewModel.contactsSubject.value[indexPath.section][indexPath.row]
+        guard let userEntity = frc?.object(at: indexPath) else { return }
+        let user = User(entity: userEntity)
         viewModel.showDetailsScreen(user: user)
     }
 }
 
+// MARK: - Search bar
 extension ContactsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
         if let value = value {
-            viewModel.filterContactsUI(filter: value)
+            changePredicate(to: value)
         }
     }
     
     func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
-        viewModel.filterContactsUI(filter: "")
+        changePredicate(to: "")
+    }
+    
+    func changePredicate(to newString: String) {
+        self.frc?.fetchRequest.predicate = newString.isEmpty
+        ? nil : NSPredicate(format: "contactsName CONTAINS '\(newString)'")
+        // TODO: better search, begins or something like that
+        try? self.frc?.performFetch()
+        self.contactsView.tableView.reloadData()
     }
 }
 
@@ -122,8 +120,10 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = UserEntity.fetchRequest()
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(UserEntity.displayName), ascending: true)]
-            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
+            fetchRequest.sortDescriptors = [
+                NSSortDescriptor(key: "contactsName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:))),
+                NSSortDescriptor(key: #keyPath(UserEntity.displayName), ascending: true)]
+            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: "sectionName", cacheName: nil)
             self.frc?.delegate = self
             do {
                 try self.frc?.performFetch()
@@ -134,57 +134,8 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
         }
     }
     
-//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        currentChatView.messagesTableView.beginUpdates()
-//    }
-//
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-//        print("TYPE: ", type.rawValue)
-//        switch type {
-//        case .insert:
-//            guard let newIndexPath = newIndexPath else {
-//                return
-//            }
-//            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-//
-//        case .delete:
-//            guard let indexPath = indexPath else {
-//                return
-//            }
-//            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-//        case .move:
-//            guard let indexPath = indexPath,
-//                  let newIndexPath = newIndexPath
-//            else {
-//                return
-//            }
-//            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
-//
-//        case .update:
-//            guard let indexPath = indexPath else {
-//                return
-//            }
-////            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-////            currentChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
-//
-//            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .fade)
-//
-////            let cell = currentChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
-////            let entity = frc?.object(at: indexPath)
-////            let message = Message(messageEntity: entity!)
-////            cell?.updateCell(message: message)
-//            break
-//        default:
-//            break
-//        }
-//    }
-//
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
-        self.viewModel.updateUsersFromFrc(controller.fetchedObjects! as! [UserEntity])
+        contactsView.tableView.reloadData()
     }
 }
 

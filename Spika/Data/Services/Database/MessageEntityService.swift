@@ -56,72 +56,113 @@ class MessageEntityService {
             }
         }
     }
-    // TODO: use roomId from message?
-    func saveMessage(message: Message, roomId: Int64) -> Future<Message, Error> {
+
+    func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
             
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
-                let roomEntityFR = RoomEntity.fetchRequest()
-                roomEntityFR.predicate = NSPredicate(format: "id == %d", roomId)
-                do {
-                    let rooms = try context.fetch(roomEntityFR)
-                    print("RC: ", rooms.count)
-                    if rooms.count == 1 {
-                        let messageEntity = MessageEntity(message: message, context: context)
-                        rooms.first!.lastMessageTimestamp = Int64(message.createdAt ?? 0)
-                        rooms.first!.addToMessages(messageEntity)
-                        print("saved message:", message)
-                        do {
-                            try context.save()
-                            promise(.success(Message(messageEntity: messageEntity)))
-                        } catch {
-                            promise(.failure(DatabseError.savingError))
+                for i in 0..<messages.count {
+                    let roomId = messages[i].roomId
+                    let roomEntityFR = RoomEntity.fetchRequest()
+                    roomEntityFR.predicate = NSPredicate(format: "id == %d", roomId)
+                    do {
+                        let rooms = try context.fetch(roomEntityFR)
+                        if rooms.count == 1 {
+                            let messageEntity = MessageEntity(message: messages[i], context: context)
+                            rooms.first!.lastMessageTimestamp = messages[i].createdAt ?? 0
+                            rooms.first!.addToMessages(messageEntity)
+                        } else {
+                            promise(.failure(DatabseError.moreThanOne))
                         }
-                    } else {
-                        promise(.failure(DatabseError.moreThanOne))
+                        
+                    } catch {
+                        promise(.failure(DatabseError.requestFailed))
                     }
+                }
+                do {
+                    try context.save()
+                    promise(.success(messages))
                 } catch {
-                    promise(.failure(DatabseError.requestFailed))
+                    promise(.failure(DatabseError.savingError))
                 }
             }
         }
     }
-    
-    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error> {
+    // TODO: - check for failures
+    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                
-                let messageFR = MessageEntity.fetchRequest()
-                guard let messageId = messageRecord.messageId else { return }
-                messageFR.predicate = NSPredicate(format: "id == %d", messageId)
-                
-                do {
-                    let messages = try context.fetch(messageFR)
-                    
-                    if messages.count == 1 {
-                        let recordEntity = MessageRecordEntity(record: messageRecord, context: context)
-                        messages.first!.addToRecords(recordEntity)
-                        do {
-                            try context.save()
-                            promise(.success(messageRecord))
-                        } catch {
-                            promise(.failure(DatabseError.savingError))
-                        }
-                    } else {
-                        if messages.count != 0 {
-                            print("more than one: ", messages)
-                        }
-                        promise(.failure(DatabseError.moreThanOne))
+                for i in 0 ..< messageRecords.count {
+                    let messageId = messageRecords[i].messageId
+                    let messageFR = MessageEntity.fetchRequest()
+                    messageFR.predicate = NSPredicate(format: "id == %d", messageId)
+                    guard let messages = try? context.fetch(messageFR)
+                    else {
+                        print("DATABASE: Message is missing for MessageRecord.")
+                        continue
                     }
+                    if messages.count == 1 {
+                        let recordEntity = MessageRecordEntity(record: messageRecords[i], context: context)
+                        messages.first!.addToRecords(recordEntity)
+                    } else {
+                        print("DATABASE: More than one message for messageRecord id.")
+                        continue
+                    }
+                }
+                do {
+                    try context.save()
+                    promise(.success(messageRecords))
                 } catch {
-                    promise(.failure(DatabseError.requestFailed))
+                    promise(.failure(DatabseError.savingError))
                 }
             }
         }
     }
+}
+
+extension MessageEntityService {
+    
+    func getNotificationInfoForMessage(message: Message) -> Future<MessageNotificationInfo, Error> {
+        return Future { [weak self] promise in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                let roomId = message.roomId
+                
+                let roomEntiryFR = RoomEntity.fetchRequest()
+                roomEntiryFR.predicate = NSPredicate(format: "id == %d", roomId)
+                
+                do {
+                    let rooms = try context.fetch(roomEntiryFR)
+                    if rooms.count == 1 {
+                        let room = Room(roomEntity: rooms.first!)
+                        let rU = room.users.first(where: { roomUser in
+                            roomUser.userId == message.fromUserId
+                        })
+                        let info: MessageNotificationInfo
+                        
+                        if room.type == .privateRoom {
+                            info = MessageNotificationInfo(title: rU?.user.getDisplayName() ?? "no name",
+                                                           photoUrl: rU?.user.getAvatarUrl() ?? "",
+                                                           messageText: message.body?.text ?? " ")
+                        } else {
+                            info = MessageNotificationInfo(title: room.name ?? "no name",
+                                                           photoUrl: room.getAvatarUrl() ?? "",
+                                                           messageText: "\(rU?.user.getDisplayName() ?? "_"): " + (message.body?.text ?? ""))
+                        }
+                        promise(.success(info))
+                    }
+                } catch {
+                    promise(.failure(DatabseError.unknown))
+                }
+                
+            }
+        }
+
+    }
+    
 }

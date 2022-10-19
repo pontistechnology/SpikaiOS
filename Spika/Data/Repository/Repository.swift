@@ -37,6 +37,7 @@ protocol Repository {
     
     // MARK: NETWORKING: File upload
     
+    @available(iOSApplicationExtension 13.4, *) func uploadWholeFile(fromUrl url: URL) -> (AnyPublisher<(File?, CGFloat), Error>)
     func uploadWholeFile(data: Data) -> (AnyPublisher<(File?, CGFloat), Error>)
     func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error>
     func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int) -> AnyPublisher<VerifyFileResponseModel, Error>
@@ -60,7 +61,7 @@ protocol Repository {
     
     // MARK: NETWORKING: Message
     
-    func sendTextMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error>
+    func sendMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error>
     func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error>
     
     // MARK: NETWORKING: Sync
@@ -88,16 +89,15 @@ protocol Repository {
     
     // MARK: COREDATA: Messages
     
-    func saveMessage(message: Message, roomId: Int64) -> Future<Message, Error>
-    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error>
+    func saveMessages(_ messages: [Message]) -> Future<[Message], Error>
+    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error>
     func getMessages(forRoomId: Int64) -> Future<[Message], Error>
     func printAllMessages()
-//    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error>
+    func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error>
     
     // MARK: COREDATA: Room
     
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>
-    func saveLocalRoom(room: Room) -> Future<Room, Error>
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error>
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error>
     func roomVisited(roomId: Int64)
@@ -108,14 +108,8 @@ protocol Repository {
     func getMyUserId() -> Int64
     func getAccessToken() -> String?
     func getMyDeviceId() -> Int64
-    func getUsersSyncTimestamp() -> Int64
-    func getRoomsSyncTimestamp() -> Int64
-    func getMessagesSyncTimestamp() -> Int64
-    func getMessageRecordsSyncTimestamp() -> Int64
-    func setUsersSyncTimestamp(_ timestamp: Int64)
-    func setRoomsSyncTimestamp(_ timestamp: Int64)
-    func setMessagesSyncTimestamp(_ timestamp: Int64)
-    func setMessageRecordsSyncTimestamp(_ timestamp: Int64)
+    func getSyncTimestamp(for type: SyncType) -> Int64
+    func setSyncTimestamp(for type: SyncType, timestamp: Int64)
     
     // MARK: COREDATA: Contacts
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error>

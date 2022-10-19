@@ -9,9 +9,9 @@ import UIKit
 
 class CurrentChatView: UIView, BaseView {
     
-    let messagesTableView = UITableView()
+    let messagesTableView = UITableView(frame: .zero, style: .grouped)
     let messageInputView = MessageInputView()
-    let downArrowImageView = UIImageView(image: UIImage(named: "downArrow"))
+    let downArrowImageView = UIImageView(image: UIImage(safeImage: .downArrow))
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
     
@@ -32,13 +32,15 @@ class CurrentChatView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        messagesTableView.backgroundColor = .blue
         messagesTableView.separatorStyle  = .none
         messagesTableView.keyboardDismissMode = .interactive
         messagesTableView.rowHeight = UITableView.automaticDimension
         messagesTableView.estimatedRowHeight = 5
+        messagesTableView.backgroundColor = .clear
         
         downArrowImageView.isHidden = true
+        
+        backgroundColor = .white
     }
     
     func positionSubviews() {        
@@ -68,15 +70,10 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.register(ImageMessageTableViewCell.self,
                                    forCellReuseIdentifier: ImageMessageTableViewCell.groupImageReuseIdentifier)
         
-        
-        
-        messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: "imageLeft")
-        messagesTableView.register(ImageMessageTableViewCell.self, forCellReuseIdentifier: "imageRight")
+        messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.myFileReuseIdentifier)
+        messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.friendFileReuseIdentifier)
+        messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.groupFileReuseIdentifier)
 
-        
-        messagesTableView.register(MediaMessageTableViewCell.self, forCellReuseIdentifier: MediaMessageTableViewCell.reuseIdentifier)
-        messagesTableView.register(VoiceMessageTableViewCell.self, forCellReuseIdentifier: VoiceMessageTableViewCell.reuseIdentifier)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }

@@ -20,7 +20,7 @@ class MessageNotificationView: UIView {
         descriptionLabel = CustomLabel(text: textOrDescription, textSize: 11, textColor: .white)
         
         avatarImageView = UIImageView()
-        avatarImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "user_image"))
+        avatarImageView.kf.setImage(with: imageUrl, placeholder: UIImage(safeImage: .userImage))
         super.init(frame: .zero)
         setupView()
     }

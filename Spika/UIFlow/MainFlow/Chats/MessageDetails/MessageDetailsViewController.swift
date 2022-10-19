@@ -56,7 +56,7 @@ extension MessageDetailsViewController: UITableViewDelegate {
         if let headerView = view as? UITableViewHeaderFooterView {
             headerView.contentView.backgroundColor = .white
             headerView.textLabel?.textColor = .textPrimary
-            headerView.textLabel?.customFont(name: .MontserratRegular, size: 12)
+            headerView.textLabel?.font = .customFont(name: .MontserratRegular, size: 12)
         }
     }
 }
@@ -85,7 +85,7 @@ extension MessageDetailsViewController: UITableViewDataSource {
             
             cell?.configureCell(avatarUrl: user.getAvatarUrl(),
                                 name: user.getDisplayName(),
-                                time: seenRecords[indexPath.row].createdAt?.convert(to: .allChatsTimeFormat) ?? "")
+                                time: seenRecords[indexPath.row].createdAt.convert(to: .allChatsTimeFormat))
         case 1:
             guard let user = users.first(where: { user in
                 deliveredRecords[indexPath.row].userId == user.id
@@ -93,7 +93,7 @@ extension MessageDetailsViewController: UITableViewDataSource {
             
             cell?.configureCell(avatarUrl: user.getAvatarUrl(),
                                 name: user.getDisplayName(),
-                                time: deliveredRecords[indexPath.row].createdAt?.convert(to: .allChatsTimeFormat) ?? "")
+                                time: deliveredRecords[indexPath.row].createdAt.convert(to: .allChatsTimeFormat))
         case 2:
             cell?.configureCell(avatarUrl: remainingUsers[indexPath.row].getAvatarUrl(),
                                 name: remainingUsers[indexPath.row].getDisplayName(),

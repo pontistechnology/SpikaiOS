@@ -19,7 +19,7 @@ class ActionButton: UIButton {
     }
     
     private func setupButton() {
-        titleLabel?.customFont(name: .MontserratSemiBold)
+        titleLabel?.font = .customFont(name: .MontserratSemiBold)
         setTitleColor(.primaryColor, for: .normal)
     }
     

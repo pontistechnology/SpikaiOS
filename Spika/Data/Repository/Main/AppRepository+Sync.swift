@@ -58,7 +58,7 @@ extension AppRepository {
         }
         
         let resources = Resources<SyncMessagesResponseModel, EmptyRequestBody>(
-            path: Constants.Endpoints.syncMessages, //for now: + "/\(timestamp)",
+            path: Constants.Endpoints.syncMessages + "/\(timestamp)",
             requestType: .GET,
             bodyParameters: nil,
             httpHeaderFields: ["accesstoken" : accessToken])
@@ -89,36 +89,34 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func getRoomsSyncTimestamp() -> Int64 {
-        Int64(userDefaults.integer(forKey: Constants.UserDefaults.roomsSyncTimestamp))
+    func getSyncTimestamp(for type: SyncType) -> Int64 {
+        switch type {
+            
+        case .rooms:
+            return Int64(userDefaults.integer(forKey: Constants.UserDefaults.roomsSyncTimestamp))
+        case .users:
+            return Int64(userDefaults.integer(forKey: Constants.UserDefaults.usersSyncTimestamp))
+        case .messages:
+            let timestamp = Int64(userDefaults.integer(forKey: Constants.UserDefaults.messagesSyncTimestamp))
+            return timestamp == 0 ? Date().currentTimeMillis() : timestamp
+        case .messageRecords:
+            let timestamp = Int64(userDefaults.integer(forKey: Constants.UserDefaults.messageRecordsSyncTimestamp))
+            return timestamp == 0 ? Date().currentTimeMillis() : timestamp
+        }
     }
     
-    func getUsersSyncTimestamp() -> Int64 {
-        Int64(userDefaults.integer(forKey: Constants.UserDefaults.usersSyncTimestamp))
-    }
-    
-    func getMessagesSyncTimestamp() -> Int64 {
-        Int64(userDefaults.integer(forKey: Constants.UserDefaults.messagesSyncTimestamp))
-    }
-    
-    func getMessageRecordsSyncTimestamp() -> Int64 {
-        Int64(userDefaults.integer(forKey: Constants.UserDefaults.messageRecordsSyncTimestamp))
-    }
-    
-    func setRoomsSyncTimestamp(_ timestamp: Int64) {
-        userDefaults.set(timestamp, forKey: Constants.UserDefaults.roomsSyncTimestamp)
-    }
-    
-    func setUsersSyncTimestamp(_ timestamp: Int64) {
-        userDefaults.set(timestamp, forKey: Constants.UserDefaults.usersSyncTimestamp)
-    }
-    
-    func setMessagesSyncTimestamp(_ timestamp: Int64) {
-        userDefaults.set(timestamp, forKey: Constants.UserDefaults.messagesSyncTimestamp)
-    }
-    
-    func setMessageRecordsSyncTimestamp(_ timestamp: Int64) {
-        userDefaults.set(timestamp, forKey: Constants.UserDefaults.messageRecordsSyncTimestamp)
+    func setSyncTimestamp(for type: SyncType, timestamp: Int64) {
+        switch type {
+            
+        case .users:
+            userDefaults.set(timestamp, forKey: Constants.UserDefaults.usersSyncTimestamp)
+        case .rooms:
+            userDefaults.set(timestamp, forKey: Constants.UserDefaults.roomsSyncTimestamp)
+        case .messageRecords:
+            userDefaults.set(timestamp, forKey: Constants.UserDefaults.messageRecordsSyncTimestamp)
+        case .messages:
+            userDefaults.set(timestamp, forKey: Constants.UserDefaults.messagesSyncTimestamp)
+        }
     }
 }
 

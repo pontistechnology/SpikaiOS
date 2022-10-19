@@ -31,7 +31,7 @@ class EnterVerifyCodeViewController: BaseViewController {
     func setupBindings() {
         enterVerifyCodeView.nextButton.tap().sink { [weak self] _ in
             guard let self = self else { return }
-            self.viewModel.verifyCode(code: self.enterVerifyCodeView.verificationTextFieldView.code)
+            self.viewModel.verifyCode(code: self.enterVerifyCodeView.otpTextField.text!)
         }.store(in: &subscriptions)
         
         enterVerifyCodeView.resendCodeButton.tap().sink { [weak self] _ in

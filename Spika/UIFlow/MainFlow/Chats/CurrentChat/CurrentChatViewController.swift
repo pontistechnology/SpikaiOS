@@ -9,13 +9,21 @@ import Foundation
 import UIKit
 import CoreData
 import PhotosUI
+import Combine
+import UniformTypeIdentifiers
+
+struct SelectedFile {
+    let fileType: UTType
+    let name: String?
+    let fileUrl: URL
+    let thumbnail: UIImage
+}
 
 class CurrentChatViewController: BaseViewController {
     
     private let currentChatView = CurrentChatView()
     var viewModel: CurrentChatViewModel!
     let friendInfoView = ChatNavigationBarView()
-    var i = 1
     var frc: NSFetchedResultsController<MessageEntity>?
     
     override func viewDidLoad() {
@@ -25,9 +33,14 @@ class CurrentChatViewController: BaseViewController {
         setupBindings()
         checkRoom()
     }
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let room = viewModel.room else { return }
+        viewModel.roomVisited(roomId: room.id)
     }
     
     deinit {
@@ -41,15 +54,16 @@ extension CurrentChatViewController {
     func checkRoom() {
         viewModel.checkLocalRoom()
     }
-
+    
     func setupBindings() {
         currentChatView.messageInputView.delegate = self
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
         
-        viewModel.roomPublisher.sink { completion in
+        viewModel.roomPublisher.receive(on: DispatchQueue.main).sink { [weak self] completion in
             // TODO: pop vc?, presentAlert?
+            guard let self = self else { return }
             switch completion {
                 
             case .finished:
@@ -62,10 +76,42 @@ extension CurrentChatViewController {
         } receiveValue: { [weak self] room in
             guard let self = self else { return }
             self.setFetch(room: room)
+            self.setupNavigationItems()
         }.store(in: &subscriptions)
         
         currentChatView.downArrowImageView.tap().sink { [weak self] _ in
             self?.currentChatView.messagesTableView.scrollToBottom()
+        }.store(in: &subscriptions)
+        
+        viewModel.selectedFiles.receive(on: DispatchQueue.main).sink { [weak self] files in
+            guard let self = self else { return }
+            if files.isEmpty {
+                self.currentChatView.messageInputView.hideSelectedFiles()
+            } else {
+                print("FILES COUNT: ", files.count)
+                self.currentChatView.messageInputView.showSelectedFiles(files)
+                
+                let arrangedSubviews = self.currentChatView.messageInputView.selectedFilesView.itemsStackView.arrangedSubviews
+                
+                arrangedSubviews.forEach { view in
+                    if let iw = view as? SelectedFileImageView {
+                        iw.deleteImageView.tap().sink { [weak self] _ in
+                            guard let self = self,
+                                  let index =  arrangedSubviews.firstIndex(of: view)
+                            else { return }
+                            self.viewModel.selectedFiles.value.remove(at: index)
+                        }.store(in: &self.subscriptions)
+                    }
+                }
+            }
+        }.store(in: &subscriptions)
+        
+        viewModel.uploadProgressPublisher.sink { [weak self] (index, progress) in
+            guard let self = self else { return }
+            if let arrangedSubviews = self.currentChatView.messageInputView.selectedFilesView.itemsStackView.arrangedSubviews as? [SelectedFileImageView] {
+                arrangedSubviews[index].showUploadProgress(progress: progress)
+            }
+            
         }.store(in: &subscriptions)
     }
 }
@@ -75,19 +121,20 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     func setFetch(room: Room) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            let fetchRequest = MessageEntity.fetchRequest()
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
-            fetchRequest.predicate = NSPredicate(format: "room.id == %d", room.id)
-            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
-            self.frc?.delegate = self
-            do {
-                try self.frc?.performFetch()
-                self.currentChatView.messagesTableView.reloadData()
-            } catch {
-                fatalError("Failed to fetch entities: \(error)") // TODO: handle error
-            }
+        let fetchRequest = MessageEntity.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "createdDate", ascending: true),
+            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "room.id == %d", room.id)
+        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: "sectionName", cacheName: nil)
+        self.frc?.delegate = self
+        do {
+            try self.frc?.performFetch()
+            self.currentChatView.messagesTableView.reloadData()
+            self.currentChatView.messagesTableView.layoutIfNeeded()
+            self.currentChatView.messagesTableView.scrollToBottom()
+        } catch {
+            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
         }
         
         viewModel.roomVisited(roomId: room.id)
@@ -97,21 +144,44 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         currentChatView.messagesTableView.beginUpdates()
     }
     
+    // MARK: - sections
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert:
+            print("DIDCHANGE: sections insert")
+            currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .delete:
+            print("DIDCHANGE: sections delete")
+            currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .move:
+            print("DIDCHANGE: sections move")
+            break
+        case .update:
+            print("DIDCHANGE: sections update")
+            break
+        @unknown default:
+            break
+        }
+    }
+    
+    // MARK: - rows
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         print("TYPE: ", type.rawValue)
         switch type {
         case .insert:
+            print("DIDCHANGE: rows insert")
             guard let newIndexPath = newIndexPath else {
                 return
             }
             currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-            
         case .delete:
+            print("DIDCHANGE: rows delete")
             guard let indexPath = indexPath else {
                 return
             }
-            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
+            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .none)
         case .move:
+            print("DIDCHANGE: rows move")
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath
             else {
@@ -120,19 +190,13 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
             
         case .update:
+            print("DIDCHANGE: rows update")
             guard let indexPath = indexPath else {
                 return
             }
-//            currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .left)
-//            currentChatView.messagesTableView.insertRows(at: [newIndexPath!], with: .left)
-            
-            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
-            
-//            let cell = currentChatView.messagesTableView.cellForRow(at: indexPath) as? TextMessageTableViewCell
-//            let entity = frc?.object(at: indexPath)
-//            let message = Message(messageEntity: entity!)
-//            cell?.updateCell(message: message)
-            break
+            UIView.performWithoutAnimation {
+                currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
+            }
         default:
             break
         }
@@ -142,12 +206,6 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         currentChatView.messagesTableView.endUpdates()
         currentChatView.messagesTableView.scrollToBottom()
     }
-    
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
-//        print("snapshot begi: ", snapshot)
-//        currentChatView.messagesTableView.reloadData()
-//        currentChatView.messagesTableView.scrollToBottom()
-//    }
 }
 
 
@@ -155,22 +213,11 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
 
 extension CurrentChatViewController: MessageInputViewDelegate {
     
-    func messageInputView(_ messageView: MessageInputView, didPressSend message: String, id: Int) {
-        print("send in ccVC with ID, this id is from array not message Id")
-        
-        viewModel.trySendMessage(text: message)
-        
-        currentChatView.messageInputView.clearTextField()
-        currentChatView.messageInputView.hideReplyView()
-    }
-    
     func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String) {
         print("send in ccVC ")
         
         viewModel.trySendMessage(text: message)
-
         currentChatView.messageInputView.clearTextField()
-        currentChatView.messageInputView.hideReplyView()
     }
     
     func messageInputView(didPressCameraButton messageVeiw: MessageInputView) {
@@ -181,8 +228,12 @@ extension CurrentChatViewController: MessageInputViewDelegate {
         print("mic in ccVC")
     }
     
-    func messageInputView(didPressPlusButton messageVeiw: MessageInputView) {
+    func messageInputView(didPressLibraryButton messageVeiw: MessageInputView) {
         presentLibraryPicker()
+    }
+    
+    func messageInputView(didPressFilesButton messageVeiw: MessageInputView) {
+        presentFilePicker()
     }
     
     func messageInputView(didPressEmojiButton messageVeiw: MessageInputView) {
@@ -196,30 +247,25 @@ extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? TextMessageTableViewCell else { return }
-        (tableView.visibleCells as? [TextMessageTableViewCell])?.forEach{ $0.timeLabel.isHidden = true}
+        (tableView.visibleCells as? [TextMessageTableViewCell])?.forEach{ $0.setTimeLabelVisible(false)}
         cell.tapHandler()
         tableView.deselectRow(at: indexPath, animated: true)
-        friendInfoView.changeStatus(to: "\(i)")
-        i += 1
-        navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        guard let totalSections = self.frc?.sections?.count,
-              let totalRowsInLastSection = self.frc?.sections?[totalSections - 1].numberOfObjects,
-              let isLastRowVisible = tableView.indexPathsForVisibleRows?.contains(IndexPath(row: totalRowsInLastSection - 1, section: totalSections - 1)) else {
-            return
-        }
-        
-        currentChatView.hideScrollToBottomButton(should: isLastRowVisible)
-
+        guard let lastIndexPath = tableView.lastCellIndexPath,
+              let shouldHide = tableView.indexPathsForVisibleRows?.contains(lastIndexPath)
+        else { return }
+        currentChatView.hideScrollToBottomButton(should: shouldHide)
     }
-    
-    
 }
 
 extension CurrentChatViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.frc?.sections?.count ?? 0
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = self.frc?.sections else { return 0 }
@@ -227,56 +273,101 @@ extension CurrentChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let myUserId = viewModel.repository.getMyUserId()
         guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
-        
-        for rec in entity.records! {
-            print("rrec: ", (rec as! MessageRecordEntity).type)
-        }
-        
         let message = Message(messageEntity: entity)
+        guard let identifier = getIdentifierFor(message: message) else { return UITableViewCell() }
+        let myUserId = viewModel.repository.getMyUserId()
         
-        if message.type == "text" {
-            var identifier = ""
-            
-            if myUserId == message.fromUserId! {
-                identifier = TextMessageTableViewCell.myTextReuseIdentifier
-            } else if viewModel.room?.type == "private" {
-                identifier = TextMessageTableViewCell.friendTextReuseIdentifier
-            } else {
-                identifier = TextMessageTableViewCell.groupTextReuseIdentifier
-            }
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
-            
-            cell?.updateCell(message: message)
-            cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
-            if let user = viewModel.getUser(for: message.fromUserId!) {
-                
-                cell?.updateSenderInfo(name: user.getDisplayName(), photoUrl: URL(string: user.getAvatarUrl() ?? ""))
-            }
-            return cell ?? UITableViewCell()
+        var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
+        
+        switch message.type {
+        case .text:
+            (cell as? TextMessageTableViewCell)?.updateCell(message: message)
+        case .image:
+            (cell as? ImageMessageTableViewCell)?.updateCell(message: message)
+        case .file:
+            (cell as? FileMessageTableViewCell)?.updateCell(message: message)
+        case .unknown, .video, .voice, .none:
+            break
         }
         
-        if message.type == "image" {
-            var identifier = ""
-            
-            if myUserId == message.fromUserId! {
-                identifier = ImageMessageTableViewCell.myImageReuseIdentifier
-            } else if viewModel.room?.type == "private" {
-                identifier = ImageMessageTableViewCell.friendImageReuseIdentifier
-            } else {
-                identifier = ImageMessageTableViewCell.groupImageReuseIdentifier
+        cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        if let user = viewModel.getUser(for: message.fromUserId) {
+            if shouldDisplaySenderName(for: indexPath) {
+                cell?.updateSender(name: user.getDisplayName())
             }
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? ImageMessageTableViewCell
-            cell?.updateCell(message: message)
-            cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
-            
-            return cell ?? UITableViewCell()
+            if shouldDisplaySenderPhoto(for: indexPath) {
+                cell?.updateSender(photoUrl: URL(string: user.getAvatarUrl() ?? ""))
+            }
         }
-        
-        return UITableViewCell()
+        return cell ?? UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let sections = self.frc?.sections else { return nil }
+        var name = sections[section].name
+        if let time = (sections[section].objects?.first as? MessageEntity)?.createdAt {
+            name.append(", ")
+            name.append(time.convert(to: .HHmm))
+        }
+        let dateLabel = CustomLabel(text: name, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
+        return dateLabel
+    }
+    
+    func shouldDisplaySenderName(for indexPath: IndexPath) -> Bool {
+        let previousRow = indexPath.row - 1
+        if previousRow >= 0 {
+            let currentMessageEntity  = frc?.object(at: indexPath)
+            let previousMessageEntity = frc?.object(at: IndexPath(row: previousRow,
+                                                                  section: indexPath.section))
+            return currentMessageEntity?.fromUserId != previousMessageEntity?.fromUserId
+        }
+        return true
+    }
+    
+    func shouldDisplaySenderPhoto(for indexPath: IndexPath) -> Bool {
+        guard let sections = frc?.sections else { return true }
+        let maxRowsIndex = sections[indexPath.section].numberOfObjects - 1
+        let nextRow = indexPath.row + 1
+        if nextRow <= maxRowsIndex {
+            let currentMessageEntity  = frc?.object(at: indexPath)
+            let nextMessageEntity = frc?.object(at: IndexPath(row: nextRow,
+                                                              section: indexPath.section))
+            return currentMessageEntity?.fromUserId != nextMessageEntity?.fromUserId
+        }
+        return true
+    }
+    
+    func getIdentifierFor(message: Message) -> String? {
+        let myUserId = viewModel.repository.getMyUserId()
+        switch message.type {
+        case .text:
+            if myUserId == message.fromUserId {
+                return TextMessageTableViewCell.myTextReuseIdentifier
+            } else if viewModel.room?.type == .privateRoom {
+                return TextMessageTableViewCell.friendTextReuseIdentifier
+            } else {
+                return TextMessageTableViewCell.groupTextReuseIdentifier
+            }
+        case .image:
+            if myUserId == message.fromUserId {
+                return ImageMessageTableViewCell.myImageReuseIdentifier
+            } else if viewModel.room?.type == .privateRoom {
+                return ImageMessageTableViewCell.friendImageReuseIdentifier
+            } else {
+                return ImageMessageTableViewCell.groupImageReuseIdentifier
+            }
+        case .file:
+            if myUserId == message.fromUserId {
+                return FileMessageTableViewCell.myFileReuseIdentifier
+            } else if viewModel.room?.type == .privateRoom {
+                return FileMessageTableViewCell.friendFileReuseIdentifier
+            } else {
+                return FileMessageTableViewCell.groupFileReuseIdentifier
+            }
+        case .unknown, .voice, .video, .none:
+            return nil
+        }
     }
 }
 
@@ -284,14 +375,14 @@ extension CurrentChatViewController: UITableViewDataSource {
 
 extension CurrentChatViewController {
     func setupNavigationItems() {
-        let videoCallButton = UIBarButtonItem(image: UIImage(named: "videoCall"), style: .plain, target: self, action: #selector(videoCallActionHandler))
-        let audioCallButton = UIBarButtonItem(image: UIImage(named: "phoneCall"), style: .plain, target: self, action: #selector(phoneCallActionHandler))
+        let videoCallButton = UIBarButtonItem(image: UIImage(safeImage: .videoCall), style: .plain, target: self, action: #selector(videoCallActionHandler))
+        let audioCallButton = UIBarButtonItem(image: UIImage(safeImage: .phoneCall), style: .plain, target: self, action: #selector(phoneCallActionHandler))
         
         navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
-
-        if viewModel.room?.type == RoomType.privateRoom.rawValue {
-            friendInfoView.change(avatarUrl: viewModel.friendUser.getAvatarUrl(), name: viewModel.friendUser.getDisplayName(), lastSeen: "yesterday")
+        
+        if viewModel.room?.type == .privateRoom {
+            friendInfoView.change(avatarUrl: viewModel.friendUser?.getAvatarUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: "yesterday")
         } else {
             friendInfoView.change(avatarUrl: viewModel.room?.getAvatarUrl(),
                                   name: viewModel.room?.name,
@@ -313,14 +404,6 @@ extension CurrentChatViewController {
 // MARK: - swipe gestures on cells
 
 extension CurrentChatViewController {
-//        func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//            let firstLeft = UIContextualAction(style: .normal, title: "Reply") { (action, view, completionHandler) in
-//                self.currentChatView.messageInputView.showReplyView(view: ReplyMessageView(message: self.viewModel.messagesSubject.value[indexPath.row]), id: indexPath.row)
-//                    completionHandler(true)
-//                }
-//            firstLeft.backgroundColor = .systemBlue
-//            return UISwipeActionsConfiguration(actions: [firstLeft])
-//        }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let firstRight = UIContextualAction(style: .normal, title: "Details") { (action, view, completionHandler) in
@@ -336,15 +419,16 @@ extension CurrentChatViewController {
     
 }
 
+// MARK: - Photo Video picker
+
 extension CurrentChatViewController: PHPickerViewControllerDelegate {
     
     func presentLibraryPicker() {
         var configuration = PHPickerConfiguration(photoLibrary: .shared())
         
-        configuration.filter = .any(of: [.images, .livePhotos, .videos])
+        configuration.filter = .any(of: [.images, .livePhotos, .videos]) // TODO: check
         configuration.preferredAssetRepresentationMode = .current
         configuration.selectionLimit = 30
-        //        configuration.selection = .ordered // iOS 15 required
         
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
@@ -353,17 +437,69 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
-        
+        print("RESULTS COUNT: ", results.count)
         for result in results {
+            
             if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
-                result.itemProvider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier) { data, error in
-                    guard let data = data else { return }
-                    print(data)
-                    self.viewModel.sendImage(data: data)
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { url, error in
+                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+                    guard let url = url,
+                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
+                          url.copyFileFromURL(to: targetURL) == true
+                    else { return }
+                    let thumbnail = targetURL.imageThumbnail()
+                    let file = SelectedFile(fileType: .image, name: nil,
+                                            fileUrl: targetURL, thumbnail: thumbnail)
+                    self.viewModel.selectedFiles.value.append(file)
+                }
+            }
+            
+            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { url, error in
+                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+                    guard let url = url,
+                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
+                          url.copyFileFromURL(to: targetURL) == true
+                    else { return }
+                    let thumb = url.videoThumbnail()
+                    let file  = SelectedFile(fileType: .movie, name: "video",
+                                             fileUrl: targetURL, thumbnail: thumb)
+                    self.viewModel.selectedFiles.value.append(file)
                 }
             }
         }
+    }
+}
+
+// MARK: - File picker
+
+extension CurrentChatViewController: UIDocumentPickerDelegate {
+    func presentFilePicker() {
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.item], asCopy: true)
+        documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = true
+        present(documentPicker, animated: true, completion: nil)
+    }
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        controller.dismiss(animated: true)
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         
-        print("PHPICKER: ", results)
+        for url in urls {
+            guard let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
+                  url.copyFileFromURL(to: targetURL) == true,
+                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey]),
+                  let fileName = resourceValues.name,
+                  let type = resourceValues.contentType
+            else { return }
+            
+            let file = SelectedFile(fileType: type, name: fileName,
+                                    fileUrl: targetURL, thumbnail: type.thumbnail())
+            self.viewModel.selectedFiles.value.append(file)
+        }
+    }
+    
+    public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        controller.dismiss(animated: true)
     }
 }

@@ -16,9 +16,9 @@ protocol SearchBarDelegate: AnyObject {
 class SearchBar: UIView, BaseView {
     
     let searchView = UIView()
-    let searchImage = UIImageView(image: UIImage(named: "search"))
+    let searchImage = UIImageView(image: UIImage(safeImage: .search))
     let searchTextField = UITextField()
-    let deleteImage = UIImageView(image: UIImage(named: "delete"))
+    let deleteImage = UIImageView(image: UIImage(safeImage: .delete))
     let cancelButton = UIButton()
     
     weak var delegate: SearchBarDelegate?
@@ -54,7 +54,7 @@ class SearchBar: UIView, BaseView {
         deleteImage.isHidden = true
         
         searchTextField.textColor = .textPrimaryAndWhite
-        searchTextField.customFont(name: .MontserratMedium, size: 14)
+        searchTextField.font = .customFont(name: .MontserratMedium, size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
         
@@ -64,7 +64,7 @@ class SearchBar: UIView, BaseView {
         
         cancelButton.setTitle(Constants.Strings.cancel, for: .normal)
         cancelButton.setTitleColor(.primaryColor, for: .normal)
-        cancelButton.titleLabel?.customFont(name: .MontserratMedium, size: 14)
+        cancelButton.titleLabel?.font = .customFont(name: .MontserratMedium, size: 14)
     }
     
     func positionSubviews() {

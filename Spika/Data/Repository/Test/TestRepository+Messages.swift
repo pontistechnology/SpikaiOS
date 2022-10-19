@@ -9,11 +9,13 @@ import CoreData
 import Combine
 
 extension TestRepository {
-    func saveMessage(message: Message, roomId: Int64) -> Future<Message, Error> {
-        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+    func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
+        Future { promise in
+            promise(.failure(DatabseError.savingError))
+        }
     }
     
-    func sendTextMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String) -> AnyPublisher<SendMessageResponse, Error> {
        return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -35,7 +37,7 @@ extension TestRepository {
         }
     }
     
-    func saveMessageRecord(messageRecord: MessageRecord) -> Future<MessageRecord, Error> {
+    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
         Future { p in
             p(.failure(DatabseError.unknown))
         }
@@ -43,5 +45,11 @@ extension TestRepository {
     
     func printAllMessages() {
         databaseService.messageEntityService.printAllMessages()
+    }
+    
+    func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error> {
+        Future { p in
+            p(.failure(DatabseError.requestFailed))
+        }
     }
 }

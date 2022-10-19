@@ -9,27 +9,12 @@ import Combine
 
 class ContactsViewModel: BaseViewModel {
     
-    let contactsSubject = CurrentValueSubject<[[User]], Never>([])
-    var users = Array<User>()
-        
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
     }
     
     func showDetailsScreen(user: User) {
         getAppCoordinator()?.presentDetailsScreen(user: user)
-    }
-    
-    func updateUsersFromFrc(_ userEntities: [UserEntity]) {
-        print (userEntities)
-        
-        self.users = []
-        for userEntity in userEntities {
-            if let user = User(entity: userEntity) {
-                users.append(user)
-            }
-        }
-        self.updateContactsUI(list: users)
     }
     
     func saveUsers(_ users: [User]) {
@@ -40,9 +25,7 @@ class ContactsViewModel: BaseViewModel {
                 print("Could not save user: \(error)")
             default: break
             }
-        } receiveValue: { [weak self] users in
-            guard let _ = self else { return }
-//            print("Saved users to DB: \(users)")
+        } receiveValue: { users in
         }.store(in: &subscriptions)
     }
     
@@ -109,32 +92,5 @@ class ContactsViewModel: BaseViewModel {
                 }
             }
         }.store(in: &subscriptions)
-    }
-    
-    func updateContactsUI(list: [User]) {
-        //TODO: check if sort needed
-        let sortedList = list.sorted()
-          
-        var tableAppUsers = Array<Array<User>>()
-        for user in sortedList {
-            let char1 = user.getDisplayName().prefix(1)
-            if let char2 = tableAppUsers.last?.last?.getDisplayName().prefix(1), char1.localizedLowercase == char2.localizedLowercase {
-                tableAppUsers[tableAppUsers.count - 1].append(user)
-            } else {
-                tableAppUsers.append([user])
-            }
-        }
-        
-        contactsSubject.send(tableAppUsers)
-        
-    }
-    
-    func filterContactsUI(filter: String) {
-        if filter.isEmpty {
-            updateContactsUI(list: users)
-        } else {
-            let filteredContacts = users.filter{ $0.getDisplayName().localizedStandardContains(filter) }
-            updateContactsUI(list: filteredContacts)
-        }
     }
 }

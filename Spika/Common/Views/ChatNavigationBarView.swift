@@ -31,7 +31,7 @@ class ChatNavigationBarView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        avatarImageView.image = UIImage(named: "user_image")
+        avatarImageView.image = UIImage(safeImage: .userImage)
         avatarImageView.layer.cornerRadius = 19
         avatarImageView.layer.masksToBounds = true
     }
@@ -53,7 +53,7 @@ class ChatNavigationBarView: UIView, BaseView {
     
     func change(avatarUrl: String?, name: String?, lastSeen status: String) {
         let url = URL(string: avatarUrl ?? "noUrl")
-        avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "user_image"))
+        avatarImageView.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
         nameLabel.text = name
         statusLabel.text = status
     }

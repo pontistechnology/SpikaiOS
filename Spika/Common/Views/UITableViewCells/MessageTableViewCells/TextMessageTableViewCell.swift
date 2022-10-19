@@ -14,7 +14,7 @@ class TextMessageTableViewCell: BaseMessageTableViewCell {
     static let friendTextReuseIdentifier = "FriendTextMessageTableViewCell"
     static let groupTextReuseIdentifier = "GroupTextMessageTableViewCell"
     
-    let messageLabel = CustomLabel(text: "u cant see me", textSize: 14, textColor: .logoBlue)
+    let messageTextView = CustomTextView(text: "", textSize: 14, textColor: .logoBlue, fontName: .MontserratMedium)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,12 +32,9 @@ class TextMessageTableViewCell: BaseMessageTableViewCell {
     }
     
     func setupTextCell() {
-        containerView.addSubview(messageLabel)
+        containerView.addSubview(messageTextView)
         
-        messageLabel.numberOfLines = 0
-        
-        messageLabel.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-
+        messageTextView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
     }
 }
 
@@ -47,24 +44,24 @@ extension TextMessageTableViewCell {
     
     func updateCell(message: Message) {
         
-        messageLabel.text = message.body?.text
-        """
-        text: \(message.body?.text),
-        id: \(message.id),
-        from id: \(message.fromUserId),
-        roomId: \(message.roomId),
-        createdAt: \(message.createdAt),
-        localId: \(message.localId),
-        \n
-        """
+        messageTextView.text = message.body?.text
+//        """
+//        text: \(message.body?.text),
+//        id: \(message.id),
+//        from id: \(message.fromUserId),
+//        roomId: \(message.roomId),
+//        totalUsers: \(message.totalUserCount),
+//        createdAt: \(message.createdAt),
+//        localId: \(message.localId),
+//        \n
+//        """
         
-//        for record in message.records! {
-//            messageLabel.text?.append("\n\n")
-//            messageLabel.text?.append("record: \(record)")
+        
+//        for record in message.records ?? [] {
+//            messageTextView.text?.append("\n\n")
+//            messageTextView.text?.append("record: \(record)")
 //        }
         
-        if let createdAt = message.createdAt {
-            updateTime(to: createdAt)
-        }
+        updateTime(to: message.createdAt)
     }
 }

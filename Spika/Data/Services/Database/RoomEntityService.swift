@@ -62,36 +62,7 @@ extension RoomEntityService {
             }
         }
     }
-    
-    func saveRoom(_ room: Room) -> Future<Room, Error> {
-        print("room in service: ", room)
-        return Future { [weak self] promise in
-            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                let a = RoomEntity(room: room, context: context)
-                do {
-                    try context.save()
-                    
-                    
-                    self!.coreDataStack.persistantContainer.viewContext.performAndWait {
-                        let fr = RoomEntity.fetchRequest()
-                        fr.predicate = NSPredicate(format: "id == %d", room.id)
-                        let rooms = try! self?.coreDataStack.persistantContainer.viewContext.fetch(fr)
-                        
-                        
-                    print("DOHVACENe: ", rooms!.count)
-                    print("USERA U DOHV: ", rooms!.first?.users!.count)
-                    }
-                    print("this room is saved: ", room)
-                    promise(.success(room))
-                } catch {
-                    print("Error saving: ", error)
-                    promise(.failure(DatabseError.savingError))
-                }
-            }
-        }
-    }
-    
+        
     func saveRooms(_ rooms: [Room]) -> Future<[Room], Error> {
         Future { [weak self] promise in
             guard let self = self else { return }
@@ -120,6 +91,8 @@ extension RoomEntityService {
             
             if rooms.count == 1 {
                 rooms.first!.visitedRoom = Date().currentTimeMillis()
+            } else {
+                print("MORE THAN ONE ROOM.")
             }
             
             try? context.save()
