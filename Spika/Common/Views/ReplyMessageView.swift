@@ -62,7 +62,7 @@ class ReplyMessageView: UIView, BaseView {
     func updateReplyView(message: Message) {
 //        senderNameLabel.text = "user with id: \(message.id)"
         
-        guard let messageType = MessageType(rawValue: message.type!) else { return }
+        guard let messageType = message.type else { return }
         
         switch messageType {
         case .text:
@@ -78,6 +78,8 @@ class ReplyMessageView: UIView, BaseView {
             leftImageView.image = UIImage(systemName: "music.note")
             messageLabel.text = "Voice message"
         case .file:
+            break
+        case .unknown:
             break
         }
     }

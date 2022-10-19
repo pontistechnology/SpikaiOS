@@ -69,7 +69,7 @@ class AlertView: UIView, BaseView {
             button.setTitle(text, for: .normal)
             button.addTarget(self, action: #selector(testis), for: .touchUpInside)
             button.setTitleColor(i == buttonTexts.count - 1 ? .red : .primaryColor, for: .normal)
-            button.titleLabel?.customFont(name: i == buttonTexts.count - 1 ? .MontserratMedium : .MontserratSemiBold)
+            button.titleLabel?.font = .customFont(name: i == buttonTexts.count - 1 ? .MontserratMedium : .MontserratSemiBold)
             button.backgroundColor = .white
             buttonsStackView.addArrangedSubview(button)
         }

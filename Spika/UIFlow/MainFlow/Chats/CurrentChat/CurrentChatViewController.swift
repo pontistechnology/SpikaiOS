@@ -24,7 +24,6 @@ class CurrentChatViewController: BaseViewController {
     private let currentChatView = CurrentChatView()
     var viewModel: CurrentChatViewModel!
     let friendInfoView = ChatNavigationBarView()
-    var i = 1
     var frc: NSFetchedResultsController<MessageEntity>?
     
     override func viewDidLoad() {
@@ -62,8 +61,9 @@ extension CurrentChatViewController {
         currentChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
         
-        viewModel.roomPublisher.receive(on: DispatchQueue.main).sink { completion in
+        viewModel.roomPublisher.receive(on: DispatchQueue.main).sink { [weak self] completion in
             // TODO: pop vc?, presentAlert?
+            guard let self = self else { return }
             switch completion {
                 
             case .finished:
@@ -106,11 +106,12 @@ extension CurrentChatViewController {
             }
         }.store(in: &subscriptions)
         
-        viewModel.uploadProgressPublisher.sink { (index, progress) in
+        viewModel.uploadProgressPublisher.sink { [weak self] (index, progress) in
+            guard let self = self else { return }
             if let arrangedSubviews = self.currentChatView.messageInputView.selectedFilesView.itemsStackView.arrangedSubviews as? [SelectedFileImageView] {
                 arrangedSubviews[index].showUploadProgress(progress: progress)
             }
-                
+            
         }.store(in: &subscriptions)
     }
 }
@@ -130,6 +131,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         do {
             try self.frc?.performFetch()
             self.currentChatView.messagesTableView.reloadData()
+            self.currentChatView.messagesTableView.layoutIfNeeded()
             self.currentChatView.messagesTableView.scrollToBottom()
         } catch {
             fatalError("Failed to fetch entities: \(error)") // TODO: handle error
@@ -145,19 +147,19 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     // MARK: - sections
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
-            case .insert:
+        case .insert:
             print("DIDCHANGE: sections insert")
             currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-            case .delete:
+        case .delete:
             print("DIDCHANGE: sections delete")
-                currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-            case .move:
+            currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .move:
             print("DIDCHANGE: sections move")
-                break
-            case .update:
+            break
+        case .update:
             print("DIDCHANGE: sections update")
-                break
-            @unknown default:
+            break
+        @unknown default:
             break
         }
     }
@@ -186,7 +188,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
                 return
             }
             currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
-
+            
         case .update:
             print("DIDCHANGE: rows update")
             guard let indexPath = indexPath else {
@@ -245,27 +247,18 @@ extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? TextMessageTableViewCell else { return }
-        (tableView.visibleCells as? [TextMessageTableViewCell])?.forEach{ $0.timeLabel.isHidden = true}
+        (tableView.visibleCells as? [TextMessageTableViewCell])?.forEach{ $0.setTimeLabelVisible(false)}
         cell.tapHandler()
         tableView.deselectRow(at: indexPath, animated: true)
-        friendInfoView.changeStatus(to: "\(i)")
-        i += 1
-        navigationController?.navigationBar.backItem?.backButtonTitle = "\(i)"
     }
-        
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        guard let totalSections = self.frc?.sections?.count,
-              let totalRowsInLastSection = self.frc?.sections?[totalSections - 1].numberOfObjects,
-              let isLastRowVisible = tableView.indexPathsForVisibleRows?.contains(IndexPath(row: totalRowsInLastSection - 1, section: totalSections - 1)) else {
-            return
-        }
-        
-        currentChatView.hideScrollToBottomButton(should: isLastRowVisible)
-        
+        guard let lastIndexPath = tableView.lastCellIndexPath,
+              let shouldHide = tableView.indexPathsForVisibleRows?.contains(lastIndexPath)
+        else { return }
+        currentChatView.hideScrollToBottomButton(should: shouldHide)
     }
-    
-    
 }
 
 extension CurrentChatViewController: UITableViewDataSource {
@@ -280,74 +273,34 @@ extension CurrentChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let myUserId = viewModel.repository.getMyUserId()
         guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
-        
-        for rec in entity.records! {
-            print("rrec: ", (rec as! MessageRecordEntity).type)
-        }
-        
         let message = Message(messageEntity: entity)
+        guard let identifier = getIdentifierFor(message: message) else { return UITableViewCell() }
+        let myUserId = viewModel.repository.getMyUserId()
         
-        if message.type == "text" {
-            var identifier = ""
-            
-            if myUserId == message.fromUserId {
-                identifier = TextMessageTableViewCell.myTextReuseIdentifier
-            } else if viewModel.room?.type == .privateRoom {
-                identifier = TextMessageTableViewCell.friendTextReuseIdentifier
-            } else {
-                identifier = TextMessageTableViewCell.groupTextReuseIdentifier
-            }
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TextMessageTableViewCell
-            
-            cell?.updateCell(message: message)
-            cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
-            if let user = viewModel.getUser(for: message.fromUserId) {
-                
-                cell?.updateSenderInfo(name: user.getDisplayName(), photoUrl: URL(string: user.getAvatarUrl() ?? ""))
-            }
-            return cell ?? UITableViewCell()
+        var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
+        
+        switch message.type {
+        case .text:
+            (cell as? TextMessageTableViewCell)?.updateCell(message: message)
+        case .image:
+            (cell as? ImageMessageTableViewCell)?.updateCell(message: message)
+        case .file:
+            (cell as? FileMessageTableViewCell)?.updateCell(message: message)
+        case .unknown, .video, .voice, .none:
+            break
         }
         
-        if message.type == "image" {
-            var identifier = ""
-            
-            if myUserId == message.fromUserId {
-                identifier = ImageMessageTableViewCell.myImageReuseIdentifier
-            } else if viewModel.room?.type == .privateRoom {
-                identifier = ImageMessageTableViewCell.friendImageReuseIdentifier
-            } else {
-                identifier = ImageMessageTableViewCell.groupImageReuseIdentifier
+        cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        if let user = viewModel.getUser(for: message.fromUserId) {
+            if shouldDisplaySenderName(for: indexPath) {
+                cell?.updateSender(name: user.getDisplayName())
             }
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? ImageMessageTableViewCell
-            cell?.updateCell(message: message)
-            cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
-            
-            return cell ?? UITableViewCell()
-        }
-        
-        if message.type == "file" {
-            var identifier = ""
-            
-            if myUserId == message.fromUserId {
-                identifier = FileMessageTableViewCell.myFileReuseIdentifier
-            } else if viewModel.room?.type == .privateRoom {
-                identifier = FileMessageTableViewCell.friendFileReuseIdentifier
-            } else {
-                identifier = FileMessageTableViewCell.groupFileReuseIdentifier
+            if shouldDisplaySenderPhoto(for: indexPath) {
+                cell?.updateSender(photoUrl: URL(string: user.getAvatarUrl() ?? ""))
             }
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? FileMessageTableViewCell
-            cell?.updateCell(message: message)
-            cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
-            
-            return cell ?? UITableViewCell()
         }
-        
-        return UITableViewCell()
+        return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -359,6 +312,62 @@ extension CurrentChatViewController: UITableViewDataSource {
         }
         let dateLabel = CustomLabel(text: name, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
         return dateLabel
+    }
+    
+    func shouldDisplaySenderName(for indexPath: IndexPath) -> Bool {
+        let previousRow = indexPath.row - 1
+        if previousRow >= 0 {
+            let currentMessageEntity  = frc?.object(at: indexPath)
+            let previousMessageEntity = frc?.object(at: IndexPath(row: previousRow,
+                                                                  section: indexPath.section))
+            return currentMessageEntity?.fromUserId != previousMessageEntity?.fromUserId
+        }
+        return true
+    }
+    
+    func shouldDisplaySenderPhoto(for indexPath: IndexPath) -> Bool {
+        guard let sections = frc?.sections else { return true }
+        let maxRowsIndex = sections[indexPath.section].numberOfObjects - 1
+        let nextRow = indexPath.row + 1
+        if nextRow <= maxRowsIndex {
+            let currentMessageEntity  = frc?.object(at: indexPath)
+            let nextMessageEntity = frc?.object(at: IndexPath(row: nextRow,
+                                                              section: indexPath.section))
+            return currentMessageEntity?.fromUserId != nextMessageEntity?.fromUserId
+        }
+        return true
+    }
+    
+    func getIdentifierFor(message: Message) -> String? {
+        let myUserId = viewModel.repository.getMyUserId()
+        switch message.type {
+        case .text:
+            if myUserId == message.fromUserId {
+                return TextMessageTableViewCell.myTextReuseIdentifier
+            } else if viewModel.room?.type == .privateRoom {
+                return TextMessageTableViewCell.friendTextReuseIdentifier
+            } else {
+                return TextMessageTableViewCell.groupTextReuseIdentifier
+            }
+        case .image:
+            if myUserId == message.fromUserId {
+                return ImageMessageTableViewCell.myImageReuseIdentifier
+            } else if viewModel.room?.type == .privateRoom {
+                return ImageMessageTableViewCell.friendImageReuseIdentifier
+            } else {
+                return ImageMessageTableViewCell.groupImageReuseIdentifier
+            }
+        case .file:
+            if myUserId == message.fromUserId {
+                return FileMessageTableViewCell.myFileReuseIdentifier
+            } else if viewModel.room?.type == .privateRoom {
+                return FileMessageTableViewCell.friendFileReuseIdentifier
+            } else {
+                return FileMessageTableViewCell.groupFileReuseIdentifier
+            }
+        case .unknown, .voice, .video, .none:
+            return nil
+        }
     }
 }
 

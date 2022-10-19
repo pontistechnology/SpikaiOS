@@ -16,7 +16,7 @@ struct Message: Codable {
     let totalUserCount: Int64?
     let deliveredCount: Int64?
     let seenCount: Int64?
-    let type: String?
+    let type: MessageType?
     let body: MessageBody?
     let records: [MessageRecord]?
 }
@@ -27,11 +27,11 @@ extension Message {
         self.id = nil
         self.localId = localId
         self.fromUserId = fromUserId
-        self.totalUserCount = nil
+        self.totalUserCount = -1
         self.deliveredCount = -1
         self.seenCount = -1
         self.roomId = roomId
-        self.type = type.rawValue
+        self.type = type
         self.createdAt = createdAt
         self.records = nil
     }
@@ -53,7 +53,7 @@ extension Message {
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
-                  type: messageEntity.type, // check
+                  type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "", file: FileData(fileName: nil, mimeType: nil, path: messageEntity.imagePath, size: nil), fileId: nil, thumbId: nil),
                   records: messageRecords)
     }
@@ -69,25 +69,17 @@ extension Message {
         
         print("RECORDS: ", records)
         
-        if records.filter { $0.type == "seen" && $0.userId != myUserId}.count == totalUserCount - 1 {
+        if records.filter({ $0.type == "seen"}).count == totalUserCount {
             return .seen
         }
         
-        if records.filter { $0.type == "delivered" && $0.userId != myUserId}.count == totalUserCount - 1 {
+        if records.filter({ $0.type == "delivered"}).count == totalUserCount {
             return .delivered
         }
         
-//        if(deliveredCount == totalUserCount) {
-//            return .delivered
-//        }
-//
-//        if(deliveredCount == 0) {
-//            return .sent
-//        }
-//
-//        if seenCount == nil || deliveredCount == nil {
-//            return .fail
-//        }
+        if records.filter({ $0.type == "delivered"}).count > 0 {
+            return .sent
+        }
         
         return .waiting
     }
@@ -113,6 +105,7 @@ enum MessageType: String, Codable {
     case video
     case voice
     case file
+    case unknown
 }
 
 enum MessageState {

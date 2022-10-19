@@ -71,8 +71,27 @@ class NetworkService {
         request.addValue((Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown", forHTTPHeaderField: "app-version")
         request.addValue(Locale.current.languageCode ?? "unknown", forHTTPHeaderField: "language")
         
+//        return URLSession.shared.dataTaskPublisher(for: request)
+//                    .map(\.data)
+//                    .decode(type: T.self, decoder: JSONDecoder())
+//                    .receive(on: DispatchQueue.main)
+//                    .eraseToAnyPublisher()
+        
         return URLSession.shared.dataTaskPublisher(for: request)
-                    .map(\.data)
+            .map({ (data, response) in
+                let statusCode = (response as? HTTPURLResponse)?.statusCode
+                switch statusCode {
+                case 200:
+                    print("STATUS CODE 200")
+                case 401:
+                    break // TODO: - sign out
+                case 404:
+                    print("STATUS CODE 404: ", response.url)
+                default:
+                    print("STATUS CODE ", statusCode, "for url: ", request.url)
+                }
+                return data
+            })
                     .decode(type: T.self, decoder: JSONDecoder())
                     .receive(on: DispatchQueue.main)
                     .eraseToAnyPublisher()

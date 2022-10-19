@@ -209,7 +209,8 @@ extension CurrentChatViewModel {
     private func sendImage(data: Data) {
         repository.uploadWholeFile(data: data).sink { c in
             print(c)
-        } receiveValue: { (file, uploadPercent) in
+        } receiveValue: { [weak self] (file, uploadPercent) in
+            guard let self = self else { return }
             print("PERCENT: ", uploadPercent, ", file: ", file)
             
             if let file = file {
@@ -244,7 +245,8 @@ extension CurrentChatViewModel {
             } else {
                 repository.uploadWholeFile(fromUrl: selectedFile.fileUrl).sink { c in
                     
-                } receiveValue: { (file, uploadPercent) in
+                } receiveValue: { [weak self] (file, uploadPercent) in
+                    guard let self = self else { return }
                     if let index = files.firstIndex(where: { sf in
                         sf.fileUrl == selectedFile.fileUrl
                     }) {

@@ -102,13 +102,9 @@ extension SSE {
                 guard let record = sseNewMessage.messageRecord else { return }
                 print("SSE: MESSAGE RECORD ON SSE: ", record)
                 self.saveMessageRecords([record])
-            case .newRoom:
+            case .newRoom, .updateRoom:
                 guard let room = sseNewMessage.room else { return }
-                print("SSE: NEW ROOM: ", room)
-                self.saveLocalRooms([room])
-            case .updateRoom:
-                guard let room = sseNewMessage.room else { return }
-                print("SSE: UPDATE ROOM: ", room)
+                print("SSE: \(type.rawValue): ", room)
                 self.saveLocalRooms([room])
             default:
                 break
@@ -213,16 +209,14 @@ extension SSE {
             if isSync {
                 self?.repository.setSyncTimestamp(for: .messages, timestamp: Date().currentTimeMillis())
                 if !messages.isEmpty {
-                    let timestamp = messages.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
+                    let timestamp = messages.max{ ($0.createdAt ) < ($1.createdAt ) }?.createdAt ?? 0
                     self?.repository.setSyncTimestamp(for: .messages, timestamp: timestamp)
                 }
                 self?.finishedSyncPublisher.send(.messages)
-            }
-            // TODO: - call delivered
-            self?.sendDeliveredStatus(messages: messages)
-            if let lastMessage = messages.last {
+            } else if let lastMessage = messages.last {
                 self?.getMessageNotificationInfo(message: lastMessage)
             }
+            self?.sendDeliveredStatus(messages: messages)
         }.store(in: &subs)
     }
     
@@ -234,7 +228,7 @@ extension SSE {
             if isSync {
                 self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: Date().currentTimeMillis())
                 if !records.isEmpty {
-                    let timestamp = records.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
+                    let timestamp = records.max{ ($0.createdAt) < ($1.createdAt) }?.createdAt ?? 0
                     self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: timestamp)
                 }
                 self?.finishedSyncPublisher.send(.messageRecords)

@@ -29,7 +29,7 @@ class TextField: UITextField {
         layer.cornerRadius = 10
         
         textColor = .textPrimaryAndWhite
-        self.customFont(name: .MontserratMedium, size: 14)
+        self.font = .customFont(name: .MontserratMedium, size: 14)
         attributedPlaceholder = NSAttributedString(string: textPlaceholder,
                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
     }
