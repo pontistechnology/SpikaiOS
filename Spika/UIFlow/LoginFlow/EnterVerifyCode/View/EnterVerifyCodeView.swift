@@ -11,11 +11,15 @@ class EnterVerifyCodeView: UIView, BaseView {
     
     let logoImageView = LogoImageView()
     let titleLabel = CustomLabel(text: "We sent you verification code.", fontName: .MontserratMedium, alignment: .center)
-    let verificationTextFieldView = VerificationTextFieldView(length: 6)
+    
+    let otpLength = 6
+    
+    lazy var otpTextField = OTPCodeTextField(otpLength: 6)
+    
     let nextButton = MainButton()
     let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)
     let resendCodeButton = ActionButton()
-    let errorMessageLabel = CustomLabel(text: "The code is incorrect!", textSize: 14, textColor: .appRed, fontName: .MontserratMedium, alignment: .center)
+
     var timer: Timer?
     var timeCounter: Int = 120
     
@@ -39,25 +43,20 @@ class EnterVerifyCodeView: UIView, BaseView {
     func addSubviews() {
         addSubview(logoImageView)
         addSubview(titleLabel)
-        addSubview(errorMessageLabel)
-        addSubview(verificationTextFieldView)
+        addSubview(otpTextField)
         addSubview(nextButton)
         addSubview(timeLabel)
         addSubview(resendCodeButton)
     }
     
     func styleSubviews() {
-        
         titleLabel.numberOfLines = 2
         
-        verificationTextFieldView.delegate = self
-        
+        otpTextField.otpDelegate = self
         nextButton.setTitle("Next", for: .normal)
         nextButton.setEnabled(false)
         
         resendCodeButton.setTitle("Resend code", for: .normal)
-        
-        errorMessageLabel.isHidden  = true
     }
     
     func positionSubviews() {
@@ -66,10 +65,7 @@ class EnterVerifyCodeView: UIView, BaseView {
         logoImageView.centerX(inView: self)
         
         titleLabel.anchor(top: logoImageView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 24, left: 70, bottom: 50, right: 70))
-        
-        errorMessageLabel.anchor(top: titleLabel.bottomAnchor, padding: UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0))
-        errorMessageLabel.centerXToSuperview()
-        
+                
         timeLabel.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 50, left: 30, bottom: 16, right: 30))
         timeLabel.constrainWidth(100)
         
@@ -77,10 +73,10 @@ class EnterVerifyCodeView: UIView, BaseView {
         resendCodeButton.constrainWidth(100)
         resendCodeButton.centerY(inView: timeLabel)
         
-        verificationTextFieldView.anchor(top: timeLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 16, left: 30, bottom: 14, right: 30))
-        verificationTextFieldView.constrainHeight(44)
+        otpTextField.anchor(top: timeLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 16, left: 30, bottom: 14, right: 30))
+        otpTextField.constrainHeight(44)
         
-        nextButton.anchor(top: verificationTextFieldView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 14, left: 30, bottom: 0, right: 30))
+        nextButton.anchor(top: otpTextField.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 14, left: 30, bottom: 0, right: 30))
         nextButton.constrainHeight(50)
     }
     
@@ -105,10 +101,8 @@ class EnterVerifyCodeView: UIView, BaseView {
     }
 }
 
-extension EnterVerifyCodeView: VerificationTextFieldViewDelegate {
-    func verificationTextFieldView(_ verificationTextFieldView: VerificationTextFieldView, valueDidChange code: String) -> Bool {
-        
-        nextButton.setEnabled(code.count == verificationTextFieldView.length)
-        return true
+extension EnterVerifyCodeView: OTPCodeTextFieldDelegate {
+    func textFieldDidChange(_ textField: UITextField, entryGood: Bool) {
+        nextButton.setEnabled(entryGood)
     }
 }

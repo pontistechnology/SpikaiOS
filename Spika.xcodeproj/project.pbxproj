@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C326A6728FECAAE00E00A59 /* OTPCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C326A6628FECAAE00E00A59 /* OTPCodeTextField.swift */; };
 		6E1AA22EBF32F5F6B1E36042 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5B9AC9482808B0DB202E82 /* Pods_Spika.framework */; };
 		93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
 		930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BB27A9FB180064BED1 /* UserRequestModel.swift */; };
@@ -259,7 +260,6 @@
 		AD9BFD4E272B10AF00736318 /* EnterVerifyCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4D272B10AF00736318 /* EnterVerifyCodeView.swift */; };
 		AD9BFD51272B17B100736318 /* VerificationTextFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD50272B17B100736318 /* VerificationTextFieldItem.swift */; };
 		AD9BFD53272B184E00736318 /* VerificationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD52272B184E00736318 /* VerificationTextField.swift */; };
-		AD9BFD55272B1A0200736318 /* VerificationTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD54272B1A0200736318 /* VerificationTextFieldView.swift */; };
 		AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E38FC2725B2D900DC5D43 /* SearchBar.swift */; };
 		AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E38FE2726B2AA00DC5D43 /* TextField.swift */; };
 		AD9E39052726CD2000DC5D43 /* MessageTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E39042726CD2000DC5D43 /* MessageTextField.swift */; };
@@ -339,6 +339,7 @@
 		334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
 		400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
 		583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C326A6628FECAAE00E00A59 /* OTPCodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPCodeTextField.swift; sourceTree = "<group>"; };
 		93017B1627F8D1EC00A0582D /* SSENewMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSENewMessage.swift; sourceTree = "<group>"; };
 		930290BB27A9FB180064BED1 /* UserRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestModel.swift; sourceTree = "<group>"; };
 		930290BD27A9FCE30064BED1 /* UserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseModel.swift; sourceTree = "<group>"; };
@@ -1187,6 +1188,7 @@
 				AD9BFD50272B17B100736318 /* VerificationTextFieldItem.swift */,
 				AD9BFD52272B184E00736318 /* VerificationTextField.swift */,
 				AD9BFD54272B1A0200736318 /* VerificationTextFieldView.swift */,
+				6C326A6628FECAAE00E00A59 /* OTPCodeTextField.swift */,
 			);
 			path = VerificationTextFieldView;
 			sourceTree = "<group>";
@@ -1811,7 +1813,6 @@
 				9364873528B8E5D00069D538 /* FileMessageTableViewCell.swift in Sources */,
 				9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */,
 				93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */,
-				AD9BFD55272B1A0200736318 /* VerificationTextFieldView.swift in Sources */,
 				93227E9827D6ED70002E3DED /* SendMessageRequest.swift in Sources */,
 				939AAE4228F6308100DD5142 /* MessageRecord.swift in Sources */,
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
@@ -1918,6 +1919,7 @@
 				AD81924F2721A89A00D5BE48 /* TabBarItem.swift in Sources */,
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
 				93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */,
+				6C326A6728FECAAE00E00A59 /* OTPCodeTextField.swift in Sources */,
 				AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */,
 				930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */,
 				ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */,
