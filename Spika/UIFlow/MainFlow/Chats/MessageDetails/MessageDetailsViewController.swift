@@ -56,7 +56,7 @@ extension MessageDetailsViewController: UITableViewDelegate {
         if let headerView = view as? UITableViewHeaderFooterView {
             headerView.contentView.backgroundColor = .white
             headerView.textLabel?.textColor = .textPrimary
-            headerView.textLabel?.customFont(name: .MontserratRegular, size: 12)
+            headerView.textLabel?.font = .customFont(name: .MontserratRegular, size: 12)
         }
     }
 }

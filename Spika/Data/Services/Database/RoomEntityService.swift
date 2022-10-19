@@ -91,6 +91,8 @@ extension RoomEntityService {
             
             if rooms.count == 1 {
                 rooms.first!.visitedRoom = Date().currentTimeMillis()
+            } else {
+                print("MORE THAN ONE ROOM.")
             }
             
             try? context.save()

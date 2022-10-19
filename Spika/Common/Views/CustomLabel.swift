@@ -35,7 +35,7 @@ class CustomLabel: UILabel {
         text = title
         textAlignment = alignment
         textColor = titleColor
-        self.customFont(name: fontName, size: titleSize)
+        font = .customFont(name: fontName, size: titleSize)
     }
     
     func setText(text: String) {

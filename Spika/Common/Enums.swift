@@ -30,8 +30,21 @@ enum RoomType: String, Codable {
     case groupRoom = "group"
 }
 
+// TODO: move this
 struct MessageNotificationInfo {
     let title: String
     let photoUrl: String
     let messageText: String
+}
+
+enum CustomFontName: String {
+    case MontserratRegular = "Montserrat-Regular"
+    case MontserratBold = "Montserrat-Bold"
+    case MontserratBlack = "Montserrat-Black"
+    case MontserratExtraBold = "Montserrat-ExtraBold"
+    case MontserratExtraLight = "Montserrat-ExtraLight"
+    case MontserratLight = "Montserrat-Light"
+    case MontserratMedium = "Montserrat-Medium"
+    case MontserratSemiBold = "Montserrat-SemiBold"
+    case MontserratThin = "Montserrat-Thin"
 }

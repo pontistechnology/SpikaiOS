@@ -20,7 +20,7 @@ class SecondaryButton: UIButton {
     private func setupButton() {
         setTitleColor(.primaryColor, for: .normal)
         layer.cornerRadius = 10
-        titleLabel?.customFont(name: .MontserratSemiBold, size: 14)
+        titleLabel?.font = .customFont(name: .MontserratSemiBold, size: 14)
         layer.borderColor = UIColor.primaryColor.cgColor
         layer.borderWidth = 1
     }

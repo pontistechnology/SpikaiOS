@@ -47,7 +47,7 @@ public class MessageEntity: NSManagedObject {
         roomId = message.roomId
 
         if let type = message.type {
-            self.type = type
+            self.type = type.rawValue
         }
         
         if let bodyText = message.body?.text {

@@ -32,6 +32,7 @@ public class RoomEntity: NSManagedObject {
 
 extension RoomEntity {
     func numberOfUnreadMessages() -> Int{
+        print("visitedRoom is: ", visitedRoom)
         return (messages?.array as! [MessageEntity]).filter{$0.createdAt > visitedRoom}.count
 //            && $0.fromUserId != viewModel.getMyUserId()}
     }

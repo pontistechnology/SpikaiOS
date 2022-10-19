@@ -60,7 +60,7 @@ class EnterNumberTextField: UIView, BaseView {
         textField.keyboardType = .phonePad
         textField.placeholder = placeholder
         textField.textColor = .textPrimaryAndWhite
-        textField.customFont(name: .MontserratMedium)
+        textField.font = .customFont(name: .MontserratMedium)
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
         
