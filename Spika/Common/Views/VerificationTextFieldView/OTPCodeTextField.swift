@@ -6,56 +6,58 @@
 //
 
 import UIKit
+import Combine
 
-protocol OTPCodeTextFieldDelegate: AnyObject {
-    func textFieldDidChange(_ textField: UITextField, entryGood: Bool)
-}
-
-final class OTPCodeTextField: UITextField, UITextFieldDelegate {
+final class OTPCodeTextField: UITextField {
     
-    let otpLength: Int
-    
-    weak var otpDelegate: OTPCodeTextFieldDelegate?
+    private let otpLength: Int
+    private var subs = Set<AnyCancellable>()
+    let isEntryGood = PassthroughSubject<Bool, Never>()
     
     init(otpLength: Int) {
         self.otpLength = otpLength
         super.init(frame: CGRectZero)
-        self.setup()
-        self.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        setupView()
+        setupBindings()
     }
     
     required init?(coder: NSCoder) {
         self.otpLength = 0
         super.init(coder: coder)
     }
+}
+
+extension OTPCodeTextField: BaseView {
+    func addSubviews() {}
     
-    func setup() {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.keyboardType = .numberPad
-        self.textContentType = .oneTimeCode
-        self.backgroundColor = .whiteAndDarkBackground2
-        self.textAlignment = .center
-        self.autocapitalizationType = .none
-        self.layer.borderColor = UIColor.textTertiaryAndDarkBackground2.cgColor
-        self.layer.borderWidth = 1
-        self.layer.masksToBounds = false
-        self.layer.cornerRadius = 10
-        self.font = .customFont(name: .MontserratMedium, size: 26)
-        self.textColor = .textPrimary
-        self.delegate = self
+    func styleSubviews() {
+        keyboardType = .numberPad
+        textContentType = .oneTimeCode
+        backgroundColor = .whiteAndDarkBackground2
+        textAlignment = .center
+        autocapitalizationType = .none
+        layer.borderColor = UIColor.textTertiaryAndDarkBackground2.cgColor
+        layer.borderWidth = 1
+        layer.masksToBounds = false
+        layer.cornerRadius = 10
+        font = .customFont(name: .MontserratMedium, size: 26)
+        textColor = .textPrimary
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        if textField.text?.count ?? 0 > self.otpLength {
-        let text = textField.text ?? ""
-        let index = text.index(text.startIndex, offsetBy: 6)
-            textField.text = String(text[..<index])
-        }
-        
-        let entryGood = textField.text?.count == self.otpLength
-        self.layer.borderColor = entryGood ? UIColor.textTertiaryAndDarkBackground2.cgColor : UIColor.red.cgColor
-        
-        self.otpDelegate?.textFieldDidChange(textField, entryGood: entryGood)
+    func positionSubviews() {}
+}
+
+extension OTPCodeTextField {
+    func setupBindings() {
+        self.publisher(for: [.editingChanged]).receive(on: DispatchQueue.main).sink { [weak self] _ in
+            guard let self = self, var inputText = self.text, inputText.isNumber
+            else { self?.text = ""; return }
+            
+            inputText = String(inputText.prefix(self.otpLength))
+            self.text = inputText
+            let entryGood = inputText.count == self.otpLength
+            self.layer.borderColor = entryGood ? UIColor.textTertiaryAndDarkBackground2.cgColor : UIColor.red.cgColor
+            self.isEntryGood.send(entryGood)
+        }.store(in: &subs)
     }
-    
 }

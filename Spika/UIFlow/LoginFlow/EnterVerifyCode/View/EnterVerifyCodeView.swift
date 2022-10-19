@@ -6,13 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 class EnterVerifyCodeView: UIView, BaseView {
     
     let logoImageView = LogoImageView()
-    let titleLabel = CustomLabel(text: "We sent you verification code.", fontName: .MontserratMedium, alignment: .center)
-    
-    let otpLength = 6
+    let titleLabel = CustomLabel(text: "We sent you 6 digit verification code.", fontName: .MontserratMedium, alignment: .center)
     
     lazy var otpTextField = OTPCodeTextField(otpLength: 6)
     
@@ -23,11 +22,13 @@ class EnterVerifyCodeView: UIView, BaseView {
     var timer: Timer?
     var timeCounter: Int = 120
     
+    var subs = Set<AnyCancellable>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
         setupTimer()
+        setupBindings()
     }
     
     deinit {
@@ -52,7 +53,6 @@ class EnterVerifyCodeView: UIView, BaseView {
     func styleSubviews() {
         titleLabel.numberOfLines = 2
         
-        otpTextField.otpDelegate = self
         nextButton.setTitle("Next", for: .normal)
         nextButton.setEnabled(false)
         
@@ -101,8 +101,10 @@ class EnterVerifyCodeView: UIView, BaseView {
     }
 }
 
-extension EnterVerifyCodeView: OTPCodeTextFieldDelegate {
-    func textFieldDidChange(_ textField: UITextField, entryGood: Bool) {
-        nextButton.setEnabled(entryGood)
+extension EnterVerifyCodeView {
+    func setupBindings() {
+        otpTextField.isEntryGood.sink { [weak self] isEntryGood in
+            self?.nextButton.setEnabled(isEntryGood)
+        }.store(in: &subs)
     }
 }

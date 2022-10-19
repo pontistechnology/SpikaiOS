@@ -54,4 +54,10 @@ extension String {
     func firstLetter() -> String {
         String(self.first ?? "#")
     }
+    
+    var isNumber: Bool {
+        return self.allSatisfy { character in
+            character.isNumber
+        }
+    }
 }
