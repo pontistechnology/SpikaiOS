@@ -168,6 +168,7 @@
 		93BF627628EB9B7900B48BBF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* Enums.swift */; };
 		93BFA3722857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */; };
 		93BFA3732857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */; };
+		93C07A89290127FD003DFD61 /* EmptyMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C07A88290127FD003DFD61 /* EmptyMessageTableViewCell.swift */; };
 		93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */; };
 		93C714A12815F888008BBA33 /* Int64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int64+Extensions.swift */; };
 		93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
@@ -438,6 +439,7 @@
 		93BD5B3B27FB83A400240331 /* RoomEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomEntityService.swift; sourceTree = "<group>"; };
 		93BF627428EB9B7900B48BBF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		93C07A88290127FD003DFD61 /* EmptyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageTableViewCell.swift; sourceTree = "<group>"; };
 		93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewWithIcon.swift; sourceTree = "<group>"; };
 		93C714A02815F888008BBA33 /* Int64+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int64+Extensions.swift"; sourceTree = "<group>"; };
 		93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -633,6 +635,7 @@
 				9361E5A72879B4760049F218 /* ImageMessageTableViewCell.swift */,
 				939260E7287E619100CF6497 /* BaseMessageTableViewCell.swift */,
 				9364873428B8E5D00069D538 /* FileMessageTableViewCell.swift */,
+				93C07A88290127FD003DFD61 /* EmptyMessageTableViewCell.swift */,
 			);
 			path = MessageTableViewCells;
 			sourceTree = "<group>";
@@ -1833,6 +1836,7 @@
 				AD9BFD342729AE8300736318 /* CountryTableViewCell.swift in Sources */,
 				93D86DB827BAA15900F275B0 /* DocsTableView.swift in Sources */,
 				AD8192552721C00D00D5BE48 /* UIColor+Extensions.swift in Sources */,
+				93C07A89290127FD003DFD61 /* EmptyMessageTableViewCell.swift in Sources */,
 				AD81926B2721D5DE00D5BE48 /* SettingsViewModel.swift in Sources */,
 				939AAE3C28F62F6600DD5142 /* Room.swift in Sources */,
 				AD9A68182739084A00BDC439 /* ActionButton.swift in Sources */,

@@ -273,12 +273,12 @@ extension CurrentChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
+        guard let entity = frc?.object(at: indexPath) else { return EmptyMessageTableViewCell()}
         let message = Message(messageEntity: entity)
-        guard let identifier = getIdentifierFor(message: message) else { return UITableViewCell() }
+        guard let identifier = getIdentifierFor(message: message) else { return EmptyMessageTableViewCell() }
         let myUserId = viewModel.repository.getMyUserId()
         
-        var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
         
         switch message.type {
         case .text:
@@ -287,7 +287,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             (cell as? ImageMessageTableViewCell)?.updateCell(message: message)
         case .file:
             (cell as? FileMessageTableViewCell)?.updateCell(message: message)
-        case .unknown, .video, .voice, .audio, .none:
+        case .unknown, .video, .audio, .none:
             break
         }
         
@@ -300,7 +300,7 @@ extension CurrentChatViewController: UITableViewDataSource {
                 cell?.updateSender(photoUrl: URL(string: user.getAvatarUrl() ?? ""))
             }
         }
-        return cell ?? UITableViewCell()
+        return cell ?? EmptyMessageTableViewCell()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -365,7 +365,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             } else {
                 return FileMessageTableViewCell.groupFileReuseIdentifier
             }
-        case .unknown, .voice, .audio, .video, .none:
+        case .unknown, .video, .audio, .none:
             return nil
         }
     }

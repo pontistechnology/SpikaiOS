@@ -103,10 +103,13 @@ enum MessageType: String, Codable {
     case text
     case image
     case video
-    case voice
     case file
-    case unknown
     case audio
+    case unknown
+    
+    public init(from decoder: Decoder) throws {
+        self = try MessageType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
+    }
 }
 
 enum MessageState {
