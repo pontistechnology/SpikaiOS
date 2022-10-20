@@ -169,6 +169,7 @@
 		93BFA3722857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */; };
 		93BFA3732857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */; };
 		93C07A89290127FD003DFD61 /* EmptyMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C07A88290127FD003DFD61 /* EmptyMessageTableViewCell.swift */; };
+		93C07A9C290139B5003DFD61 /* Message+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C07A9B290139B5003DFD61 /* Message+Extensions.swift */; };
 		93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */; };
 		93C714A12815F888008BBA33 /* Int64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int64+Extensions.swift */; };
 		93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
@@ -440,6 +441,7 @@
 		93BF627428EB9B7900B48BBF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		93C07A88290127FD003DFD61 /* EmptyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageTableViewCell.swift; sourceTree = "<group>"; };
+		93C07A9B290139B5003DFD61 /* Message+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+Extensions.swift"; sourceTree = "<group>"; };
 		93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewWithIcon.swift; sourceTree = "<group>"; };
 		93C714A02815F888008BBA33 /* Int64+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int64+Extensions.swift"; sourceTree = "<group>"; };
 		93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -1484,6 +1486,7 @@
 				939AAE3B28F62F6600DD5142 /* Room.swift */,
 				939AAE3E28F62FFF00DD5142 /* RoomUser.swift */,
 				939AAE4128F6308100DD5142 /* MessageRecord.swift */,
+				93C07A9B290139B5003DFD61 /* Message+Extensions.swift */,
 			);
 			path = ServerModels;
 			sourceTree = "<group>";
@@ -1946,6 +1949,7 @@
 				938D053027D59DC1002E5CE5 /* NewGroupChatViewController.swift in Sources */,
 				933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */,
 				934087BA27EBAE6F00209571 /* TestRepository+Tests.swift in Sources */,
+				93C07A9C290139B5003DFD61 /* Message+Extensions.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
 				93A76B2C27F6789500B6A03E /* MessageNotificationView.swift in Sources */,
 				AD8192532721A92700D5BE48 /* StackItemView.swift in Sources */,

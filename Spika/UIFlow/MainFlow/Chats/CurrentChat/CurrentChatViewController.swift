@@ -273,10 +273,13 @@ extension CurrentChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let entity = frc?.object(at: indexPath) else { return EmptyMessageTableViewCell()}
+        guard let entity = frc?.object(at: indexPath),
+              let roomType = viewModel.room?.type
+        else { return EmptyMessageTableViewCell()}
+        
         let message = Message(messageEntity: entity)
-        guard let identifier = getIdentifierFor(message: message) else { return EmptyMessageTableViewCell() }
         let myUserId = viewModel.repository.getMyUserId()
+        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType) else { return EmptyMessageTableViewCell() }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
         
@@ -336,38 +339,6 @@ extension CurrentChatViewController: UITableViewDataSource {
             return currentMessageEntity?.fromUserId != nextMessageEntity?.fromUserId
         }
         return true
-    }
-    
-    func getIdentifierFor(message: Message) -> String? {
-        let myUserId = viewModel.repository.getMyUserId()
-        switch message.type {
-        case .text:
-            if myUserId == message.fromUserId {
-                return TextMessageTableViewCell.myTextReuseIdentifier
-            } else if viewModel.room?.type == .privateRoom {
-                return TextMessageTableViewCell.friendTextReuseIdentifier
-            } else {
-                return TextMessageTableViewCell.groupTextReuseIdentifier
-            }
-        case .image:
-            if myUserId == message.fromUserId {
-                return ImageMessageTableViewCell.myImageReuseIdentifier
-            } else if viewModel.room?.type == .privateRoom {
-                return ImageMessageTableViewCell.friendImageReuseIdentifier
-            } else {
-                return ImageMessageTableViewCell.groupImageReuseIdentifier
-            }
-        case .file:
-            if myUserId == message.fromUserId {
-                return FileMessageTableViewCell.myFileReuseIdentifier
-            } else if viewModel.room?.type == .privateRoom {
-                return FileMessageTableViewCell.friendFileReuseIdentifier
-            } else {
-                return FileMessageTableViewCell.groupFileReuseIdentifier
-            }
-        case .unknown, .video, .audio, .none:
-            return nil
-        }
     }
 }
 
