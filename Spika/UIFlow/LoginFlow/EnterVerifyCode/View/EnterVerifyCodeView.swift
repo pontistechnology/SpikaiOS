@@ -12,9 +12,7 @@ class EnterVerifyCodeView: UIView, BaseView {
     
     let logoImageView = LogoImageView()
     let titleLabel = CustomLabel(text: "We sent you 6 digit verification code.", fontName: .MontserratMedium, alignment: .center)
-    
-    lazy var otpTextField = OTPCodeTextField(otpLength: 6)
-    
+    let otpTextField = OTPCodeTextField(otpLength: 6)
     let nextButton = MainButton()
     let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)
     let resendCodeButton = ActionButton()
