@@ -287,7 +287,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             (cell as? ImageMessageTableViewCell)?.updateCell(message: message)
         case .file:
             (cell as? FileMessageTableViewCell)?.updateCell(message: message)
-        case .unknown, .video, .voice, .none:
+        case .unknown, .video, .voice, .audio, .none:
             break
         }
         
@@ -365,7 +365,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             } else {
                 return FileMessageTableViewCell.groupFileReuseIdentifier
             }
-        case .unknown, .voice, .video, .none:
+        case .unknown, .voice, .audio, .video, .none:
             return nil
         }
     }

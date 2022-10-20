@@ -60,27 +60,5 @@ class ReplyMessageView: UIView, BaseView {
     }
     
     func updateReplyView(message: Message) {
-//        senderNameLabel.text = "user with id: \(message.id)"
-        
-        guard let messageType = message.type else { return }
-        
-        switch messageType {
-        case .text:
-            leftImageView.image = UIImage(systemName: "textformat")
-            messageLabel.text = message.body!.text
-        case .image:
-            leftImageView.image = UIImage(systemName: "photo")
-            messageLabel.text = "Photo message"
-        case .video:
-            leftImageView.image = UIImage(systemName: "video")
-            messageLabel.text = "Video message"
-        case .voice:
-            leftImageView.image = UIImage(systemName: "music.note")
-            messageLabel.text = "Voice message"
-        case .file:
-            break
-        case .unknown:
-            break
-        }
     }
 }

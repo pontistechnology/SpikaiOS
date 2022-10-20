@@ -106,6 +106,7 @@ enum MessageType: String, Codable {
     case voice
     case file
     case unknown
+    case audio
 }
 
 enum MessageState {
