@@ -39,6 +39,13 @@ class EnterVerifyCodeViewController: BaseViewController {
             self.viewModel.resendCode()
         }.store(in: &subscriptions)
         
+        enterVerifyCodeView
+            .isEntryGood
+            .sink(receiveValue: { [weak self] otpCode in
+                print("Entry good: \(otpCode)")
+                self?.viewModel.verifyCode(code: otpCode)
+            }).store(in: &subscriptions)
+        
         viewModel.resendSubject.sink { [weak self] resended in
             guard let self = self else { return }
             if resended {

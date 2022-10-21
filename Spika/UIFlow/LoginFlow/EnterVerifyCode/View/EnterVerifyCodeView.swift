@@ -16,6 +16,8 @@ class EnterVerifyCodeView: UIView, BaseView {
     let nextButton = MainButton()
     let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)
     let resendCodeButton = ActionButton()
+    
+    var isEntryGood = PassthroughSubject<String,Never>()
 
     var timer: Timer?
     var timeCounter: Int = 120
@@ -101,8 +103,17 @@ class EnterVerifyCodeView: UIView, BaseView {
 
 extension EnterVerifyCodeView {
     func setupBindings() {
-        otpTextField.isEntryGood.sink { [weak self] isEntryGood in
+        self.otpTextField.isEntryGood.sink { [weak self] isEntryGood in
             self?.nextButton.setEnabled(isEntryGood)
         }.store(in: &subs)
+        
+        self.otpTextField.isEntryGood
+            .filter { $0 }
+            .map({ [unowned self] _ in
+                return self.otpTextField.text ?? ""
+            })
+            .throttle(for: .seconds(2), scheduler: DispatchQueue.main, latest: false)
+            .subscribe(self.isEntryGood)
+            .store(in: &self.subs)
     }
 }
