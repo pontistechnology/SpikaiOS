@@ -35,6 +35,8 @@ class EnterUsernameView: UIView, BaseView {
     func styleSubviews() {
         nextButton.setTitle("Next", for: .normal)
         nextButton.setEnabled(false)
+        
+        usernameTextfield.autocorrectionType = .no
     }
     
     func positionSubviews() {

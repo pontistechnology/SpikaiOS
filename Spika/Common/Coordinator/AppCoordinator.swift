@@ -25,14 +25,14 @@ class AppCoordinator: Coordinator {
     
     func start() {
         // TODO: check display name.isEmpty()
-        if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
-           let _ = userDefaults.string(forKey: Constants.UserDefaults.displayName){
-            presentHomeScreen()
-        } else if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken){
+//        if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
+//           let _ = userDefaults.string(forKey: Constants.UserDefaults.displayName){
+//            presentHomeScreen()
+//        } else if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken){
             presentEnterUsernameScreen()
-        } else {
-            presentEnterNumberScreen()
-        }
+//        } else {
+//            presentEnterNumberScreen()
+//        }
     }
     
     // MARK: LOGIN FLOW
