@@ -17,7 +17,7 @@ class EnterVerifyCodeView: UIView, BaseView {
     let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)
     let resendCodeButton = ActionButton()
     
-    var isEntryGood = PassthroughSubject<String,Never>()
+    var otpCodePublisher = PassthroughSubject<String,Never>()
 
     var timer: Timer?
     var timeCounter: Int = 120
@@ -113,7 +113,7 @@ extension EnterVerifyCodeView {
                 return self.otpTextField.text ?? ""
             })
             .throttle(for: .seconds(2), scheduler: DispatchQueue.main, latest: false)
-            .subscribe(self.isEntryGood)
+            .subscribe(self.otpCodePublisher)
             .store(in: &self.subs)
     }
 }

@@ -40,7 +40,7 @@ class EnterVerifyCodeViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         enterVerifyCodeView
-            .isEntryGood
+            .otpCodePublisher
             .sink(receiveValue: { [weak self] otpCode in
                 self?.viewModel.verifyCode(code: otpCode)
             }).store(in: &subscriptions)
