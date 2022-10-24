@@ -72,9 +72,10 @@ class MessageEntityService {
                         let rooms = try context.fetch(roomEntityFR)
                         if rooms.count == 1 {
                             let messageEntity = MessageEntity(message: messages[i], context: context)
-                            rooms.first!.lastMessageTimestamp = messages[i].createdAt ?? 0
+                            rooms.first!.lastMessageTimestamp = messages[i].createdAt
                             rooms.first!.addToMessages(messageEntity)
                         } else {
+                            print(" 0 or more than one room for roomId: ", roomId, "and message is: ", messages[i].body?.text)
                             promise(.failure(DatabseError.moreThanOne))
                         }
                         
@@ -97,26 +98,28 @@ class MessageEntityService {
             guard let self = self else { return }
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                for i in 0 ..< messageRecords.count {
-                    let messageId = messageRecords[i].messageId
+                var savedRecords: [MessageRecord] = []
+                messageRecords.forEach({ record in
+                    let messageId = record.messageId
                     let messageFR = MessageEntity.fetchRequest()
-                    messageFR.predicate = NSPredicate(format: "id == %d", messageId)
+                    messageFR.predicate = NSPredicate(format: "id == '\(messageId)'")
+                    
                     guard let messages = try? context.fetch(messageFR)
                     else {
-                        print("DATABASE: Message is missing for MessageRecord.")
-                        continue
+                        print("DATABASE: Message fetch error?.")
+                        return
                     }
-                    if messages.count == 1 {
-                        let recordEntity = MessageRecordEntity(record: messageRecords[i], context: context)
-                        messages.first!.addToRecords(recordEntity)
-                    } else {
-                        print("DATABASE: More than one message for messageRecord id.")
-                        continue
+                    guard messages.count == 1 else {
+                        print("0 or 1+ records for message id.")
+                        return
                     }
-                }
+                    let recordEntity = MessageRecordEntity(record: record, context: context)
+                    messages.first?.addToRecords(recordEntity)
+                    savedRecords.append(record)
+                })
                 do {
                     try context.save()
-                    promise(.success(messageRecords))
+                    promise(.success(savedRecords))
                 } catch {
                     promise(.failure(DatabseError.savingError))
                 }

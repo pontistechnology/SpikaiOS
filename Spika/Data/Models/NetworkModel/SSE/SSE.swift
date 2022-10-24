@@ -172,7 +172,7 @@ extension SSE {
             print("SSE: save users success")
             if isSync {
                 if !users.isEmpty {
-                    let timestamp = users.max{ ($0.createdAt ?? 0) < ($1.createdAt ?? 0) }?.createdAt ?? 0
+                    let timestamp = users.max{ $0.createdAt < $1.createdAt }?.createdAt ?? 0
                     self?.repository.setSyncTimestamp(for: .users, timestamp: timestamp)
                 }
                 self?.finishedSyncPublisher.send(.users)
@@ -207,10 +207,10 @@ extension SSE {
         } receiveValue: { [weak self] messages in
             print("SSE: SAVED MESSAGES: ", messages.count)
             if isSync {
-                self?.repository.setSyncTimestamp(for: .messages, timestamp: Date().currentTimeMillis())
-                if !messages.isEmpty {
-                    let timestamp = messages.max{ ($0.createdAt ) < ($1.createdAt ) }?.createdAt ?? 0
-                    self?.repository.setSyncTimestamp(for: .messages, timestamp: timestamp)
+                if let maxTimestamp = messages.max(by: {$0.createdAt < $1.createdAt })?.createdAt,
+                   let minTimestamp = messages.min(by: {$0.createdAt < $1.createdAt})?.createdAt {
+                    self?.repository.setSyncTimestamp(for: .messages, timestamp: maxTimestamp)
+                    self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: minTimestamp)
                 }
                 self?.finishedSyncPublisher.send(.messages)
             } else if let lastMessage = messages.last {
@@ -221,18 +221,12 @@ extension SSE {
     }
     
     func saveMessageRecords(_ records: [MessageRecord], isSync: Bool = false) {
+        print("SSE: message records recieved: ", records.count)
         repository.saveMessageRecords(records).sink { c in
             print("SSE: save message records c: ", c)
         } receiveValue: { [weak self] records in
-            print("SSE: saved records")
-            if isSync {
-                self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: Date().currentTimeMillis())
-                if !records.isEmpty {
-                    let timestamp = records.max{ ($0.createdAt) < ($1.createdAt) }?.createdAt ?? 0
-                    self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: timestamp)
-                }
-                self?.finishedSyncPublisher.send(.messageRecords)
-            }
+            print("SSE: saved records: ", records.count)
+            self?.finishedSyncPublisher.send(.messageRecords)
         }.store(in: &subs)
     }
 }
