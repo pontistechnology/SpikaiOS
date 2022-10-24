@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "ic_phone_24px.png",
+      "filename" : "ic_phone_24px.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ic_phone_24px@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ic_phone_24px@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
