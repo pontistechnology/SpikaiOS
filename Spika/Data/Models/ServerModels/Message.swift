@@ -40,15 +40,14 @@ extension Message {
         var messageRecords: [MessageRecord] = []
         
         if let records = messageEntity.records?.allObjects as? [MessageRecordEntity] {
-            for messageRecordEntity in records {
-                let record = MessageRecord(messageRecordEntity: messageRecordEntity)
-                messageRecords.append(record)
-            }
+            messageRecords = records.map({ entity in
+                MessageRecord(messageRecordEntity: entity)
+            })
         }
         self.init(createdAt: messageEntity.createdAt,
                   fromUserId: messageEntity.fromUserId,
                   roomId: messageEntity.roomId,
-                  id: Int64(messageEntity.id ?? "-2"),
+                  id: Int64(messageEntity.id ?? "-2"), // TODO: - check
                   localId: messageEntity.localId,
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
