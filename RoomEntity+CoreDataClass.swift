@@ -32,6 +32,7 @@ public class RoomEntity: NSManagedObject {
 
 extension RoomEntity {
     func numberOfUnreadMessages(myUserId: Int64) -> Int{
+        // TODO: check this after seen implementation, improve logic, refactor
         let test2 = (messages?.array as! [MessageEntity])
             .filter { messageEntity in
                 messageEntity.fromUserId != myUserId }
