@@ -31,9 +31,17 @@ class SSE {
     deinit {
         print("SSE: deinit")
     }
+    
+    func syncAndStartSSE() {
+        syncRooms()
+    }
+    
+    func stopSSE() {
+        eventSource?.disconnect()
+    }
 }
 
-extension SSE {
+private extension SSE {
     
     func setupBindings() {
         finishedSyncPublisher.sink { [weak self] finished in
@@ -52,14 +60,12 @@ extension SSE {
     }
 }
 
-extension SSE {
-    
-    func syncAndStartSSE() {
-        syncRooms()
-    }
+private extension SSE {
     
     func startSSEConnection(){
-        eventSource?.connect()
+        if eventSource?.readyState == .closed {
+            eventSource?.connect()
+        }
     }
     
     func setupSSE() {
@@ -101,7 +107,7 @@ extension SSE {
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
                 print("SSE: MESSAGE RECORD ON SSE: ", record)
-                self.saveMessageRecords([record])
+                self.saveMessageRecords([record]) // TODO: - delay or something
             case .newRoom, .updateRoom:
                 guard let room = sseNewMessage.room else { return }
                 print("SSE: \(type.rawValue): ", room)
@@ -115,7 +121,7 @@ extension SSE {
 
 // MARK: - Sync api calls
 
-extension SSE {
+private extension SSE {
     func syncRooms() {
         repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { c in
             print("SSE: sync rooms c: ", c)
@@ -164,7 +170,7 @@ extension SSE {
 
 // MARK: - Saving to local database
 
-extension SSE {
+private extension SSE {
     func saveUsers(_ users: [User], isSync: Bool = false) {
         repository.saveUsers(users).sink { c in
             print("SSE: save _ c: ", c)
@@ -207,11 +213,12 @@ extension SSE {
         } receiveValue: { [weak self] messages in
             print("SSE: SAVED MESSAGES: ", messages.count)
             if isSync {
-                if let maxTimestamp = messages.max(by: {$0.createdAt < $1.createdAt })?.createdAt,
-                   let minTimestamp = messages.min(by: {$0.createdAt < $1.createdAt})?.createdAt {
-                    self?.repository.setSyncTimestamp(for: .messages, timestamp: maxTimestamp)
-                    self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: minTimestamp)
-                }
+                let currentTimestamp = Date().currentTimeMillis()
+                let maxTimestamp = messages.max(by: {$0.createdAt < $1.createdAt})?.createdAt ?? currentTimestamp
+                let minTimestamp = messages.min(by: {$0.createdAt < $1.createdAt})?.createdAt ?? currentTimestamp
+                
+                self?.repository.setSyncTimestamp(for: .messages, timestamp: maxTimestamp)
+                self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: minTimestamp)
                 self?.finishedSyncPublisher.send(.messages)
             } else if let lastMessage = messages.last {
                 self?.getMessageNotificationInfo(message: lastMessage)
@@ -226,13 +233,15 @@ extension SSE {
             print("SSE: save message records c: ", c)
         } receiveValue: { [weak self] records in
             print("SSE: saved records: ", records.count)
-            self?.finishedSyncPublisher.send(.messageRecords)
+            if isSync {
+                self?.finishedSyncPublisher.send(.messageRecords)
+            }
         }.store(in: &subs)
     }
 }
 
 // MARK: - sending delivered ids
-extension SSE {
+private extension SSE {
     
     func sendDeliveredStatus(messages: [Message]) {
         print("message id in sse: ", messages)
@@ -249,7 +258,7 @@ extension SSE {
 
 // MARK: - Notification show
 
-extension SSE {
+private extension SSE {
     
     func getMessageNotificationInfo(message: Message) {
         repository.getNotificationInfoForMessage(message).sink { c in
