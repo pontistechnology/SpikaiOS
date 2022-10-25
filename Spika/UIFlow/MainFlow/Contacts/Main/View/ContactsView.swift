@@ -33,6 +33,7 @@ class ContactsView: UIView, BaseView {
     func styleSubviews() {
         detailsButton.setTitle("Details", for: .normal)
         detailsButton.setTitleColor(UIColor.systemTeal, for: .normal)
+        searchBar.searchTextField.autocorrectionType = .no
     }
     
     func positionSubviews() {

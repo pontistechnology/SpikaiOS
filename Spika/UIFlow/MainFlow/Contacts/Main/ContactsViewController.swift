@@ -55,7 +55,7 @@ extension ContactsViewController: UITableViewDelegate {
                                      textColor: .textPrimary,
                                      fontName: .MontserratSemiBold,
                                      alignment: .left,
-        labelMargins: UIEdgeInsets(top: 14, left: 18, bottom: 14, right: 14))
+                                     labelMargins: UIEdgeInsets(top: 8, left: 18, bottom: 8, right: 14))
     }
 }
 
@@ -103,7 +103,7 @@ extension ContactsViewController: SearchBarDelegate {
     
     func changePredicate(to newString: String) {
         self.frc?.fetchRequest.predicate = newString.isEmpty
-        ? nil : NSPredicate(format: "contactsName CONTAINS '\(newString)'")
+        ? nil : NSPredicate(format: "contactsName CONTAINS[c] '\(newString)' OR telephoneNumber CONTAINS[c] '\(newString)'")
         // TODO: better search, begins or something like that
         try? self.frc?.performFetch()
         self.contactsView.tableView.reloadData()
