@@ -49,19 +49,17 @@ extension ContactsViewController: UITableViewDelegate {
         64
     }
     
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let header = view as? UITableViewHeaderFooterView else { return }
-        header.textLabel?.font = .customFont(name: .MontserratSemiBold, size: 16)
-        header.textLabel?.textColor = .textPrimary
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return CustomTableViewHeader(text: self.frc?.sections?[section].name ?? "-",
+                                     textSize: 18,
+                                     textColor: .textPrimary,
+                                     fontName: .MontserratSemiBold,
+                                     alignment: .left,
+        labelMargins: UIEdgeInsets(top: 14, left: 18, bottom: 14, right: 14))
     }
 }
 
 extension ContactsViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let sections = self.frc?.sections else { return "nil" }
-        return sections[section].name
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         frc?.sections?.count ?? 0
