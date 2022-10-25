@@ -42,6 +42,10 @@ class ContactsViewController: BaseViewController {
         viewModel.getContacts()
         viewModel.getOnlineContacts(page: 1)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+    }
 }
 
 extension ContactsViewController: UITableViewDelegate {
