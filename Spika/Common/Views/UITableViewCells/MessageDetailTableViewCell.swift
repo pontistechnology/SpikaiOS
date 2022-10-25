@@ -59,6 +59,7 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         userNameLabel.text = ""
         timeLabel.text = ""
         leftImageView.image = UIImage(safeImage: .userImage)
