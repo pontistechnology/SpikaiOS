@@ -125,7 +125,7 @@ extension BaseMessageTableViewCell {
     
     func updateSender(photoUrl: URL?) {
         senderPhotoImageview.isHidden = false
-        senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(systemName: "apple")) // TODO: Change apple
+        senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(safeImage: .userImage))
     }
     
     func tapHandler() {
