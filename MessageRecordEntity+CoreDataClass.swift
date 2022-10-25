@@ -24,7 +24,7 @@ public class MessageRecordEntity: NSManagedObject {
         self.userId = record.userId
         
         if let type = record.type {
-            self.type = type
+            self.type = type.rawValue
         }
         
         if let reaction = record.reaction {

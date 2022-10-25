@@ -52,7 +52,7 @@ extension Message {
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
-                  type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
+                  type: MessageType(rawValue: messageEntity.type ?? ""), // check
                   body: MessageBody(text: messageEntity.bodyText ?? "", file: FileData(fileName: nil, mimeType: nil, path: messageEntity.imagePath, size: nil), fileId: nil, thumbId: nil),
                   records: messageRecords)
     }
@@ -68,15 +68,15 @@ extension Message {
         
         print("RECORDS: ", records)
         
-        if records.filter({ $0.type == "seen"}).count == totalUserCount {
+        if records.filter({ $0.type == .seen}).count == totalUserCount {
             return .seen
         }
         
-        if records.filter({ $0.type == "delivered"}).count == totalUserCount {
+        if records.filter({ $0.type == .delivered}).count == totalUserCount {
             return .delivered
         }
         
-        if records.filter({ $0.type == "delivered"}).count > 0 {
+        if records.filter({ $0.type == .delivered}).count > 0 {
             return .sent
         }
         
