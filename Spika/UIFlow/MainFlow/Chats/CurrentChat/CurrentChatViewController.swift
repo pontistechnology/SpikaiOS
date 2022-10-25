@@ -204,7 +204,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         currentChatView.messagesTableView.endUpdates()
-        currentChatView.messagesTableView.scrollToBottom()
+//        currentChatView.messagesTableView.scrollToBottom()
     }
 }
 
