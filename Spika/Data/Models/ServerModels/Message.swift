@@ -72,11 +72,13 @@ extension Message {
             return .seen
         }
         
-        if records.filter({ $0.type == .delivered}).count == totalUserCount {
+        let deliveredCount = records.filter({ $0.type == .delivered}).count
+        
+        if deliveredCount == totalUserCount {
             return .delivered
         }
         
-        if records.filter({ $0.type == .delivered}).count > 0 {
+        if deliveredCount > 0 {
             return .sent
         }
         
