@@ -12,8 +12,8 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "MessageDetailTableViewCell"
     
     let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
-    let userNameLabel = CustomLabel(text: "Marko Marić", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
-    let timeLabel  = CustomLabel(text: "05.09.2020. 23:95", textSize: 12, textColor: .textSecondary, fontName: .MontserratRegular, alignment: .right)
+    let userNameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
+    let timeLabel  = CustomLabel(text: "", textSize: 12, textColor: .textSecondary, fontName: .MontserratRegular, alignment: .right)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -61,5 +61,6 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
     override func prepareForReuse() {
         userNameLabel.text = ""
         timeLabel.text = ""
+        leftImageView.image = UIImage(safeImage: .userImage)
     }
 }
