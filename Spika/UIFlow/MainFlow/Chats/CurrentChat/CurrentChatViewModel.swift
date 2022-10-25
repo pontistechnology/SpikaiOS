@@ -159,7 +159,7 @@ extension CurrentChatViewModel {
         print("ROOM: ", room)
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: repository.getMyUserId(),
+                              fromUserId: getMyUserId(),
                               roomId: room.id, type: .text,
                               body: MessageBody(text: text, file: nil, fileId: nil, thumbId: nil), localId: uuid)
         
