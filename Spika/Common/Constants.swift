@@ -33,6 +33,7 @@ struct Constants {
         static let getAllRooms = "api/messenger/rooms"
         static let updatePush = "api/messenger/device"
         static let deliveredStatus = "api/messenger/messages/delivered"
+        static let seenStatus = "api/messenger/messages/roomId/seen" // TODO: check roomId
         static let syncRooms = "api/messenger/rooms/sync"
         static let syncMessages = "api/messenger/messages/sync"
         static let syncMessageRecords = "api/messenger/message-records/sync"

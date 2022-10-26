@@ -77,6 +77,7 @@ extension CurrentChatViewController {
             guard let self = self else { return }
             self.setFetch(room: room)
             self.setupNavigationItems()
+            self.viewModel.sendSeenStatus()
         }.store(in: &subscriptions)
         
         currentChatView.downArrowImageView.tap().sink { [weak self] _ in
@@ -204,6 +205,10 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         currentChatView.messagesTableView.endUpdates()
+        viewModel.sendSeenStatus()
+//        UIView.performWithoutAnimation {
+//            currentChatView.messagesTableView.reloadRows(at: currentChatView.messagesTableView.indexPathsForVisibleRows ?? [], with: .none)
+//        }
 //        currentChatView.messagesTableView.scrollToBottom()
     }
 }

@@ -270,3 +270,15 @@ extension CurrentChatViewModel {
         })?.user
     }
 }
+
+extension CurrentChatViewModel {
+    func sendSeenStatus() {
+        guard let roomId = room?.id else { return }
+        repository.sendSeenStatus(roomId: roomId).sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let messageRecords = response.data?.messageRecords else { return }
+            self?.repository.saveMessageRecords(messageRecords)
+        }.store(in: &subscriptions)
+    }
+}
