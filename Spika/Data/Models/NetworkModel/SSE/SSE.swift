@@ -91,7 +91,7 @@ extension SSE {
                   let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData),
                   let type = sseNewMessage.type
             else {
-                print("SSE: decoding error")
+//                print("SSE: decoding error")
                 return
             }
             switch type {
@@ -249,7 +249,7 @@ extension SSE {
         repository.sendDeliveredStatus(messageIds: messages.compactMap{$0.id}).sink { c in
             
         } receiveValue: { [weak self] response in
-            print("SSE: send delivered status sse response: ", response)
+//            print("SSE: send delivered status sse response: ", response)
         }.store(in: &subs)
     }
 }

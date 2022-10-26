@@ -18,7 +18,7 @@ struct Room: Codable {
 
 extension Room {
     init(roomEntity: RoomEntity) {
-        print("INIT ROOM ENTITY: ", roomEntity.id, roomEntity.users?.count)
+//        print("INIT ROOM ENTITY: ", roomEntity.id, roomEntity.users?.count)
         let roomUsers = roomEntity.users?.allObjects.compactMap{ RoomUser(roomUserEntity: $0 as! RoomUserEntity)} ?? []
         
         self.init(id: roomEntity.id,
