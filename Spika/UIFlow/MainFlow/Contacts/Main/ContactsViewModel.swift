@@ -30,7 +30,7 @@ class ContactsViewModel: BaseViewModel {
     }
     
     func getContacts() {
-        ContactsUtils.getContacts().sink { [weak self] completion in
+        ContactsUtils().getContacts().sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
             case let .failure(error):
