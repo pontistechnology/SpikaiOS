@@ -100,12 +100,10 @@ class UserEntityService {
                 fetchRequest.predicate = NSPredicate(format: "phoneNumber = %@", phoneNumber)
                 do {
                     let fetchResult = try context.fetch(fetchRequest)
-                    print("alo")
                     if let contactEntity = fetchResult.first {
                         let contact = FetchedContact(firstName: contactEntity.givenName,
                                                      lastName: contactEntity.familyName,
                                                      telephone: contactEntity.phoneNumber)
-                        print("contatct found: ", contact)
                         promise(.success(contact))
                     }
                 } catch {
@@ -129,7 +127,6 @@ class UserEntityService {
                             let contact = FetchedContact(firstName: contactEntity.givenName,
                                                          lastName: contactEntity.familyName,
                                                          telephone: contactEntity.phoneNumber)
-                            print("contatct found: ", contact)
                             user.contactsName = contact.firstName ?? ""
                             + " "
                             + (contact.lastName ?? "")

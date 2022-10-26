@@ -298,8 +298,8 @@ extension AppRepository {
                             print("verifyUpload error: ", error)
                             somePublisher.send(completion: .failure(NetworkError.verifyFileFail))
                         }
-                    } receiveValue: { [weak self] verifyFileResponse in
-                        print("verifyFile response", verifyFileResponse)
+                    } receiveValue: {  verifyFileResponse in
+//                        print("verifyFile response", verifyFileResponse)
                         guard let file = verifyFileResponse.data?.file else { return }
                         somePublisher.send((file, 1))
                     }.store(in: &self.subs)

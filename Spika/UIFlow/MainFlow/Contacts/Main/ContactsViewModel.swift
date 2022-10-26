@@ -43,11 +43,11 @@ class ContactsViewModel: BaseViewModel {
             self.repository.saveContacts(contacts).sink { completion in
                 
             } receiveValue: { contactss in
-                print("saved contatssssss", contactss)
+//                print("saved contatssssss", contactss)
             }.store(in: &self.subscriptions)
 
             let phoneHashes = contacts.map { $0.telephone.getSHA256() }
-            print(phoneHashes)
+//            print(phoneHashes)
             self.postContacts(hashes: phoneHashes)
         }.store(in: &subscriptions)
     }

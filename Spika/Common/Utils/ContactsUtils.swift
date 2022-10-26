@@ -53,7 +53,7 @@ class ContactsUtils {
                         promise(.success(contacts))
                     }
                 } else {
-                    print("access denied")
+//                    print("access denied")
                     promise(.success([]))
                 }
             }

@@ -25,7 +25,7 @@ class SSE {
         self.coordinator = coordinator
         setupBindings()
         setupSSE()
-        print("SSE: init")
+//        print("SSE: init")
     }
     
     deinit {
