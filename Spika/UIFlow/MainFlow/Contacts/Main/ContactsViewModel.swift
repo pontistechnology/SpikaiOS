@@ -39,7 +39,6 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] contacts in
             guard let self = self else { return }
-            print(contacts)
             self.repository.saveContacts(contacts).sink { completion in
                 
             } receiveValue: { contactss in
