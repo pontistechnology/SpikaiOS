@@ -8,7 +8,7 @@
 import Contacts
 import CoreTelephony
 import Combine
-import libPhoneNumber_iOS
+import PhoneNumberKit
 
 class ContactsUtils {
     
@@ -30,22 +30,13 @@ class ContactsUtils {
                         do {
                             try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
                                 
-                                guard let phoneUtil = NBPhoneNumberUtil.sharedInstance(), let defaultRegionCode = defaultRegionCode() else {
-                                    return
-                                }
+                                let phoneNumberKit = PhoneNumberKit()
                                 
-                                for phoneNumber in contact.phoneNumbers {
-                                    
-                                    do {
-                                        let parsedPhoneNumber: NBPhoneNumber = try phoneUtil.parse(phoneNumber.value.stringValue, defaultRegion: defaultRegionCode)
-                                        let formattedString: String = try phoneUtil.format(parsedPhoneNumber, numberFormat: .E164)
-                                        
-                                        contacts.append(FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: formattedString))
-                                    }
-                                    catch let error as NSError {
-                                        print(error.localizedDescription)
-                                    }
-                                }
+                                let fetchedContacts = phoneNumberKit.parse(contact.phoneNumbers.map { $0.value.stringValue })
+                                    .map { $0.numberString }
+                                    .map { FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: $0) }
+                                
+                                contacts.append(contentsOf: fetchedContacts)
                             })
                         } catch let error {
                             print("Failed to enumerate contact", error)

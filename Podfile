@@ -7,7 +7,8 @@ target 'Spika' do
 
   # Pods for Spika
   pod 'Swinject'
-  pod 'libPhoneNumber-iOS', '~> 0.8'
+  source 'https://github.com/CocoaPods/Specs.git'
+  pod 'PhoneNumberKit', :git => 'https://github.com/marmelroy/PhoneNumberKit'
   pod 'Kingfisher', '~> 7.0'
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
