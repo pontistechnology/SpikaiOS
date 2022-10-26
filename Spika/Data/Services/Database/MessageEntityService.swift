@@ -110,7 +110,7 @@ class MessageEntityService {
                         let recordEntity = MessageRecordEntity(record: messageRecords[i], context: context)
                         messages.first!.addToRecords(recordEntity)
                     } else {
-                        print("DATABASE: More than one message for messageRecord id.")
+//                        print("DATABASE: More than one message for messageRecord id.")
                         continue
                     }
                 }
