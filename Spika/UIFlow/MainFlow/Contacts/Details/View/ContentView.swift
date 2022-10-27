@@ -10,7 +10,7 @@ import UIKit
 class ContentView: UIView, BaseView {
     
     let profilePhoto = UIImageView()
-    let nameLabel = CustomLabel(text: "Name and Surname")
+    let nameLabel = CustomLabel(text: "Name and Surname", fontName: .MontserratSemiBold)
     let messageButton = ImageButton(image: UIImage(safeImage: .chatBubble))
     let phoneCallButton = ImageButton(image: UIImage(safeImage: .phoneCall))
     let videoCallButton = ImageButton(image: UIImage(safeImage: .videoCall))
