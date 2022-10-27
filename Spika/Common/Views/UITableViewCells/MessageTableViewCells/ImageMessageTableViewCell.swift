@@ -50,7 +50,5 @@ extension ImageMessageTableViewCell {
     
     func updateCell(message: Message) {
         photoImageView.kf.setImage(with: URL(string: message.body?.file?.path?.getAvatarUrl() ?? "error"), placeholder: UIImage(systemName: "arrow.counterclockwise")?.withTintColor(.gray, renderingMode: .alwaysOriginal))
-        
-        updateTime(to: message.createdAt)
     }
 }

@@ -61,7 +61,5 @@ extension TextMessageTableViewCell {
 //            messageTextView.text?.append("\n\n")
 //            messageTextView.text?.append("record: \(record)")
 //        }
-        
-        updateTime(to: message.createdAt)
     }
 }
