@@ -42,6 +42,7 @@ class EnterVerifyCodeViewModel: BaseViewModel {
             self?.repository.saveUserInfo(user: user, device: device)
             if user.displayName != "" {
                 self?.presentHomeScreen()
+                self?.getAppCoordinator()?.syncAndStartSSE()
             } else {
                 self?.presentEnterUsernameScreen()
             }
