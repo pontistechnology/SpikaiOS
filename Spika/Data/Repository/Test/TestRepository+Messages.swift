@@ -27,6 +27,12 @@ extension TestRepository {
                  .eraseToAnyPublisher()
     }
     
+    func sendSeenStatus(roomId: Int64) -> AnyPublisher<SeenResponseModel, Error> {
+        return Fail<SeenResponseModel, Error>(error: NetworkError.noAccessToken)
+                 .receive(on: DispatchQueue.main)
+                 .eraseToAnyPublisher()
+    }
+    
     func getMessages(forRoomId: Int64) -> Future<[Message], Error> {
         Future { promise in promise(.failure(DatabseError.noSuchRecord))}
     }

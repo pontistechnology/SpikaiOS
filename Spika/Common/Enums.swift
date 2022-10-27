@@ -30,6 +30,27 @@ enum RoomType: String, Codable {
     case groupRoom = "group"
 }
 
+enum MessageRecordType: String, Codable {
+    case seen = "seen"
+    case delivered = "delivered"
+    case reaction = "reaction"
+    case unknown = "unknown"
+    
+    public init(from decoder: Decoder) throws {
+        self = try MessageRecordType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
+    }
+}
+
+enum ScrollToBottomType {
+    case ifLastCellVisible
+    case force
+}
+
+enum FRCChangeType {
+    case insert(indexPath: IndexPath)
+    case other
+}
+
 // TODO: move this
 struct MessageNotificationInfo {
     let title: String

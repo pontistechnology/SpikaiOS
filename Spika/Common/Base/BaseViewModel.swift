@@ -23,4 +23,7 @@ class BaseViewModel {
         return coordinator as? AppCoordinator
     }
     
+    func getMyUserId() -> Int64 {
+        return repository.getMyUserId()
+    }
 }

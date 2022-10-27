@@ -40,20 +40,19 @@ extension Message {
         var messageRecords: [MessageRecord] = []
         
         if let records = messageEntity.records?.allObjects as? [MessageRecordEntity] {
-            for messageRecordEntity in records {
-                let record = MessageRecord(messageRecordEntity: messageRecordEntity)
-                messageRecords.append(record)
-            }
+            messageRecords = records.map({ entity in
+                MessageRecord(messageRecordEntity: entity)
+            })
         }
         self.init(createdAt: messageEntity.createdAt,
                   fromUserId: messageEntity.fromUserId,
                   roomId: messageEntity.roomId,
-                  id: Int64(messageEntity.id ?? "-2"),
+                  id: Int64(messageEntity.id ?? "-2"), // TODO: - check
                   localId: messageEntity.localId,
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
-                  type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
+                  type: MessageType(rawValue: messageEntity.type ?? ""), // check
                   body: MessageBody(text: messageEntity.bodyText ?? "", file: FileData(fileName: nil, mimeType: nil, path: messageEntity.imagePath, size: nil), fileId: nil, thumbId: nil),
                   records: messageRecords)
     }
@@ -69,15 +68,17 @@ extension Message {
         
         print("RECORDS: ", records)
         
-        if records.filter({ $0.type == "seen"}).count == totalUserCount {
+        if records.filter({ $0.type == .seen}).count == totalUserCount {
             return .seen
         }
         
-        if records.filter({ $0.type == "delivered"}).count == totalUserCount {
+        let deliveredCount = records.filter({ $0.type == .delivered}).count
+        
+        if deliveredCount == totalUserCount {
             return .delivered
         }
         
-        if records.filter({ $0.type == "delivered"}).count > 0 {
+        if deliveredCount > 0 {
             return .sent
         }
         

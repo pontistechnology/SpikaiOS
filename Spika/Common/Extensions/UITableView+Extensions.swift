@@ -8,16 +8,21 @@
 import UIKit
 
 extension UITableView {
-    func scrollToBottom(){
+    
+    func scrollToBottom(_ type: ScrollToBottomType){
         guard let lastCellIndexPath else { return }
-        if !isCompletlyVisibleCell(at: lastCellIndexPath) {
-            print("Tableview scrollToBottom executed.")
+        switch type {
+        case .ifLastCellVisible:
+            if isCellVisible(at: lastCellIndexPath) {
+                self.scrollToRow(at: lastCellIndexPath, at: .bottom, animated: false)
+            }
+        case .force:
             self.scrollToRow(at: lastCellIndexPath, at: .bottom, animated: false)
         }
     }
     
-    func isCompletlyVisibleCell(at indexPath: IndexPath) -> Bool {
-        return self.bounds.contains(self.rectForRow(at: indexPath))
+    func isCellVisible(at indexPath: IndexPath) -> Bool {
+        return cellForRow(at: indexPath) != nil
     }
     
     var lastCellIndexPath: IndexPath? {
@@ -27,5 +32,14 @@ extension UITableView {
         if lastRowIndex < 0 { return nil}
         let lastCellIndexPath = IndexPath(row: lastRowIndex, section: lastSectionIndex)
         return lastCellIndexPath
+    }
+    
+    func reloadPreviousRow(for indexPath: IndexPath) {
+        let currentRow = indexPath.row
+        guard currentRow > 0 else { return }
+        let previousCellIndexPath = IndexPath(row: currentRow - 1, section: indexPath.section)
+        UIView.performWithoutAnimation {
+            self.reloadRows(at: [previousCellIndexPath], with: .none)
+        }
     }
 }

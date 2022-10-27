@@ -36,7 +36,7 @@ extension AppRepository {
     
     func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error> {
         guard let accessToken = getAccessToken()
-        else {return Fail<DeliveredResponseModel, Error>(error: NetworkError.noAccessToken)
+        else { return Fail<DeliveredResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
@@ -46,6 +46,23 @@ extension AppRepository {
             path: Constants.Endpoints.deliveredStatus,
             requestType: .POST,
             bodyParameters: DeliveredRequestModel(messagesIds: messageIds),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func sendSeenStatus(roomId: Int64) -> AnyPublisher<SeenResponseModel, Error> {
+        guard let accessToken = getAccessToken()
+        else {
+            return Fail(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<SeenResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.seenStatus.replacingOccurrences(of: "roomId", with: "\(roomId)"),
+            requestType: .POST,
+            bodyParameters: nil,
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)

@@ -26,6 +26,9 @@ class CurrentChatViewController: BaseViewController {
     let friendInfoView = ChatNavigationBarView()
     var frc: NSFetchedResultsController<MessageEntity>?
     
+    private let frcIsChangingPublisher = PassthroughSubject<FRCChangeType, Never>()
+    private let frcDidChangePublisher = PassthroughSubject<Bool, Never>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(currentChatView)
@@ -77,10 +80,11 @@ extension CurrentChatViewController {
             guard let self = self else { return }
             self.setFetch(room: room)
             self.setupNavigationItems()
+            self.viewModel.sendSeenStatus()
         }.store(in: &subscriptions)
         
         currentChatView.downArrowImageView.tap().sink { [weak self] _ in
-            self?.currentChatView.messagesTableView.scrollToBottom()
+            self?.currentChatView.messagesTableView.scrollToBottom(.force)
         }.store(in: &subscriptions)
         
         viewModel.selectedFiles.receive(on: DispatchQueue.main).sink { [weak self] files in
@@ -113,6 +117,25 @@ extension CurrentChatViewController {
             }
             
         }.store(in: &subscriptions)
+        
+        Publishers
+            .Zip(frcIsChangingPublisher, frcDidChangePublisher)
+            .filter{$1}
+            .sink { [weak self] (frcChange, frcDidChange) in
+                guard let self = self else { return }
+                
+                switch frcChange {
+                case .insert(indexPath: let indexPath):
+                    guard let messageEntity = self.frc?.object(at: indexPath) else { return }
+                    handleScroll(isMyMessage: messageEntity.fromUserId == self.viewModel.getMyUserId())
+                case .other:
+                    break
+                }
+            }.store(in: &subscriptions)
+        
+        func handleScroll(isMyMessage: Bool) {
+            currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force : .ifLastCellVisible)
+        }
     }
 }
 
@@ -132,7 +155,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             try self.frc?.performFetch()
             self.currentChatView.messagesTableView.reloadData()
             self.currentChatView.messagesTableView.layoutIfNeeded()
-            self.currentChatView.messagesTableView.scrollToBottom()
+            self.currentChatView.messagesTableView.scrollToBottom(.force)
         } catch {
             fatalError("Failed to fetch entities: \(error)") // TODO: handle error
         }
@@ -173,13 +196,19 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             guard let newIndexPath = newIndexPath else {
                 return
             }
+            viewModel.sendSeenStatus()
             currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
+            currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
+            frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
+            
         case .delete:
             print("DIDCHANGE: rows delete")
             guard let indexPath = indexPath else {
                 return
             }
             currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .none)
+            frcIsChangingPublisher.send(.other)
+        
         case .move:
             print("DIDCHANGE: rows move")
             guard let indexPath = indexPath,
@@ -188,7 +217,8 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
                 return
             }
             currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
-            
+            frcIsChangingPublisher.send(.other)
+        
         case .update:
             print("DIDCHANGE: rows update")
             guard let indexPath = indexPath else {
@@ -197,14 +227,17 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             UIView.performWithoutAnimation {
                 currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
             }
+            frcIsChangingPublisher.send(.other)
+        
         default:
+            frcIsChangingPublisher.send(.other)
             break
         }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         currentChatView.messagesTableView.endUpdates()
-        currentChatView.messagesTableView.scrollToBottom()
+        frcDidChangePublisher.send(true)
     }
 }
 
@@ -295,11 +328,12 @@ extension CurrentChatViewController: UITableViewDataSource {
         }
         
         cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        cell?.updateTime(to: message.createdAt)
         if let user = viewModel.getUser(for: message.fromUserId) {
-            if shouldDisplaySenderName(for: indexPath) {
+            if !isPreviousCellMine(for: indexPath) {
                 cell?.updateSender(name: user.getDisplayName())
             }
-            if shouldDisplaySenderPhoto(for: indexPath) {
+            if !isNextCellMine(for: indexPath) {
                 cell?.updateSender(photoUrl: URL(string: user.getAvatarUrl() ?? ""))
             }
         }
@@ -317,18 +351,18 @@ extension CurrentChatViewController: UITableViewDataSource {
         return dateLabel
     }
     
-    func shouldDisplaySenderName(for indexPath: IndexPath) -> Bool {
+    func isPreviousCellMine(for indexPath: IndexPath) -> Bool {
         let previousRow = indexPath.row - 1
         if previousRow >= 0 {
             let currentMessageEntity  = frc?.object(at: indexPath)
             let previousMessageEntity = frc?.object(at: IndexPath(row: previousRow,
                                                                   section: indexPath.section))
-            return currentMessageEntity?.fromUserId != previousMessageEntity?.fromUserId
+            return currentMessageEntity?.fromUserId == previousMessageEntity?.fromUserId
         }
-        return true
+        return false
     }
     
-    func shouldDisplaySenderPhoto(for indexPath: IndexPath) -> Bool {
+    func isNextCellMine(for indexPath: IndexPath) -> Bool {
         guard let sections = frc?.sections else { return true }
         let maxRowsIndex = sections[indexPath.section].numberOfObjects - 1
         let nextRow = indexPath.row + 1
@@ -336,9 +370,9 @@ extension CurrentChatViewController: UITableViewDataSource {
             let currentMessageEntity  = frc?.object(at: indexPath)
             let nextMessageEntity = frc?.object(at: IndexPath(row: nextRow,
                                                               section: indexPath.section))
-            return currentMessageEntity?.fromUserId != nextMessageEntity?.fromUserId
+            return currentMessageEntity?.fromUserId == nextMessageEntity?.fromUserId
         }
-        return true
+        return false
     }
 }
 

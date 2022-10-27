@@ -18,9 +18,15 @@ class AppCoordinator: Coordinator {
         self.navigationController = navigationController
     }
     
+    //  This can be in scene delegate?
     func syncAndStartSSE() {
         let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
         sse?.syncAndStartSSE()
+    }
+    //  This can be in scene delegate?
+    func stopSSE() {
+        let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
+        sse?.stopSSE()
     }
     
     func start() {
@@ -59,7 +65,7 @@ class AppCoordinator: Coordinator {
     // MARK: MAIN FLOW
     func presentHomeScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
-        syncAndStartSSE()
+//        syncAndStartSSE()
         self.navigationController.setViewControllers([viewController], animated: true)
     }
     

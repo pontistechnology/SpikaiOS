@@ -22,8 +22,8 @@ class MessageDetailsViewController: BaseViewController {
     
     init(users: [User], records: [MessageRecord]) {
         self.users = users
-        self.seenRecords = records.filter{$0.type == "seen"}
-        self.deliveredRecords = records.filter{$0.type == "delivered"}
+        self.seenRecords = records.filter{$0.type == .seen}
+        self.deliveredRecords = records.filter{$0.type == .delivered}
         self.remainingUsers = users.filter({ user in
             !records.contains { record in
                 record.userId == user.id

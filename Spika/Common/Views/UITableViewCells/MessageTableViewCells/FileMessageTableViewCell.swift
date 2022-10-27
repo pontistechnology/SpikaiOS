@@ -50,7 +50,5 @@ extension FileMessageTableViewCell {
     func updateCell(message: Message) {
         photoImageView.image = UIImage(systemName: "doc")
         nameLabel.text = message.body?.file?.fileName ?? "fileName"
-        
-        updateTime(to: message.createdAt)
     }
 }

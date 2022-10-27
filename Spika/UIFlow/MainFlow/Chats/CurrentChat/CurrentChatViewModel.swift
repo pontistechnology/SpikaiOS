@@ -159,7 +159,7 @@ extension CurrentChatViewModel {
         print("ROOM: ", room)
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: repository.getMyUserId(),
+                              fromUserId: getMyUserId(),
                               roomId: room.id, type: .text,
                               body: MessageBody(text: text, file: nil, fileId: nil, thumbId: nil), localId: uuid)
         
@@ -268,5 +268,17 @@ extension CurrentChatViewModel {
         return room?.users.first(where: { roomUser in
             roomUser.userId == id
         })?.user
+    }
+}
+
+extension CurrentChatViewModel {
+    func sendSeenStatus() {
+        guard let roomId = room?.id else { return }
+        repository.sendSeenStatus(roomId: roomId).sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let messageRecords = response.data?.messageRecords else { return }
+            self?.repository.saveMessageRecords(messageRecords)
+        }.store(in: &subscriptions)
     }
 }

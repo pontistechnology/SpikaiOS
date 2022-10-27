@@ -15,16 +15,10 @@ struct User: Codable {
     var telephoneNumber: String?
     var telephoneNumberHashed: String?
     var emailAddress: String?
-    var createdAt: Int64?
+    var createdAt: Int64
     
     var contactsName: String?
-    
-    init(id: Int64, displayName: String, avatarUrl: String? = nil) {
-        self.id = id
-        self.displayName = displayName
-        self.avatarUrl = avatarUrl
-    }
-    
+        
     init(entity: UserEntity) {
         self.id = entity.id
         self.displayName = entity.displayName

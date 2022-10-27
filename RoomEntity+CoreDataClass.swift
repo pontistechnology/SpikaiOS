@@ -31,10 +31,18 @@ public class RoomEntity: NSManagedObject {
 }
 
 extension RoomEntity {
-    func numberOfUnreadMessages() -> Int{
-//        print("visitedRoom is: ", visitedRoom)
-        return (messages?.array as! [MessageEntity]).filter{$0.createdAt > visitedRoom}.count
-//            && $0.fromUserId != viewModel.getMyUserId()}
+    func numberOfUnreadMessages(myUserId: Int64) -> Int{
+        // TODO: check this after seen implementation, improve logic, refactor
+        let test2 = (messages?.array as! [MessageEntity])
+            .filter { messageEntity in
+                messageEntity.fromUserId != myUserId }
+            .filter { notMyMessages in
+                (notMyMessages.records?.allObjects as! [MessageRecordEntity])
+                    .filter { recordEntity in
+                        recordEntity.type == "seen" && recordEntity.userId == myUserId
+                    }.count == 0
+            }.count
+        return test2
     }
     
     func lastMessageText() -> String {

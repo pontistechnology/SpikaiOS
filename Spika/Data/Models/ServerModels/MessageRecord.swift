@@ -12,7 +12,7 @@ struct MessageRecord: Codable {
     let messageId: Int64
     let userId: Int64
     let createdAt: Int64
-    let type: String?
+    let type: MessageRecordType?
     let reaction: String?
     let modifiedAt: Int64?
 }
@@ -23,7 +23,7 @@ extension MessageRecord {
                   messageId: messageRecordEntity.messageId,
                   userId: messageRecordEntity.userId,
                   createdAt: messageRecordEntity.createdAt,
-                  type: messageRecordEntity.type,
+                  type: MessageRecordType(rawValue: messageRecordEntity.type ?? ""),
                   reaction: messageRecordEntity.reaction,
                   modifiedAt: messageRecordEntity.modifiedAt)
     }
