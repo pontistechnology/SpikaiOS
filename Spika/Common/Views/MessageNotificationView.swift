@@ -30,7 +30,7 @@ class MessageNotificationView: UIView {
     }
     
     deinit {
-        print("notificaiton deinit")
+//        print("notificaiton deinit")
     }
 }
 

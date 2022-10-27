@@ -19,11 +19,11 @@ class AppRepository: Repository {
     init(networkService: NetworkService, databaseService: DatabaseService) {
         self.networkService = networkService
         self.databaseService = databaseService
-        print("repo init")
+//        print("repo init")
     }
     
     deinit {
-        print("repo deinit")
+//        print("repo deinit")
     }
     
     func getAccessToken() -> String? {

@@ -14,7 +14,7 @@ public class RoomEntity: NSManagedObject {
     
     convenience init(room: Room, context: NSManagedObjectContext) {
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.roomEntity, in: context) else {
-            fatalError("shit, do something")
+            fatalError("error, MessageRecordEntity")
         }
         self.init(entity: entity, insertInto: context)
         self.id = room.id
@@ -32,7 +32,7 @@ public class RoomEntity: NSManagedObject {
 
 extension RoomEntity {
     func numberOfUnreadMessages() -> Int{
-        print("visitedRoom is: ", visitedRoom)
+//        print("visitedRoom is: ", visitedRoom)
         return (messages?.array as! [MessageEntity]).filter{$0.createdAt > visitedRoom}.count
 //            && $0.fromUserId != viewModel.getMyUserId()}
     }

@@ -30,7 +30,7 @@ class ContactsViewModel: BaseViewModel {
     }
     
     func getContacts() {
-        ContactsUtils.getContacts().sink { [weak self] completion in
+        ContactsUtils().getContacts().sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
             case let .failure(error):
@@ -39,15 +39,14 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] contacts in
             guard let self = self else { return }
-            print(contacts)
             self.repository.saveContacts(contacts).sink { completion in
                 
             } receiveValue: { contactss in
-                print("saved contatssssss", contactss)
+//                print("saved contatssssss", contactss)
             }.store(in: &self.subscriptions)
 
             let phoneHashes = contacts.map { $0.telephone.getSHA256() }
-            print(phoneHashes)
+//            print(phoneHashes)
             self.postContacts(hashes: phoneHashes)
         }.store(in: &subscriptions)
     }

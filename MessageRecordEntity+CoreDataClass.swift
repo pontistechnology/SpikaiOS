@@ -14,7 +14,7 @@ public class MessageRecordEntity: NSManagedObject {
     
     convenience init(record: MessageRecord, context: NSManagedObjectContext) {
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.messageRecordEntity, in: context) else {
-            fatalError("shit, do something")
+            fatalError("Error, MessageRecordEntity")
         }
         self.init(entity: entity, insertInto: context)
         

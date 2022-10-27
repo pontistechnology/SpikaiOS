@@ -28,7 +28,7 @@ class ImageMessageTableViewCell: BaseMessageTableViewCell {
     }
     
     deinit {
-        print("textcell deinit")
+//        print("textcell deinit")
     }
     
     func setupImageCell() {

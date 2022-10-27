@@ -15,7 +15,7 @@ public class MessageEntity: NSManagedObject {
       // TODO: think about making everything optional before response
     convenience init(message: Message, context: NSManagedObjectContext) {
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.messageEntity, in: context) else {
-            fatalError("shit, do something")
+            fatalError("Error, init Message entity")
         }
         self.init(entity: entity, insertInto: context)
         
