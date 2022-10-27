@@ -26,29 +26,40 @@ class BaseMessageTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
-        guard let reuseIdentifier = reuseIdentifier else { return }
-        let myReuseIdentifiers = [TextMessageTableViewCell.myTextReuseIdentifier,
-                                  ImageMessageTableViewCell.myImageReuseIdentifier,
-                                  FileMessageTableViewCell.myFileReuseIdentifier]
-        let friendReuseIdentifiers = [TextMessageTableViewCell.friendTextReuseIdentifier,
-                                      ImageMessageTableViewCell.friendImageReuseIdentifier,
-                                      FileMessageTableViewCell.friendFileReuseIdentifier]
-        let groupReuseIdentifiers = [TextMessageTableViewCell.groupTextReuseIdentifier,
-                                     ImageMessageTableViewCell.groupImageReuseIdentifier,
-                                     FileMessageTableViewCell.groupFileReuseIdentifier]
-        if myReuseIdentifiers.contains(reuseIdentifier) {
-            setupContainer(sender: .me)
-        } else if friendReuseIdentifiers.contains(reuseIdentifier) {
-            setupContainer(sender: .friend)
-        } else if groupReuseIdentifiers.contains(reuseIdentifier) {
-            setupContainer(sender: .group)
-        }
+        guard let reuseIdentifier = reuseIdentifier,
+              let sender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
+        else { return }
+        setupContainer(sender: sender)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension BaseMessageTableViewCell {
+    static let myReuseIdentifiers = [TextMessageTableViewCell.myTextReuseIdentifier,
+                              ImageMessageTableViewCell.myImageReuseIdentifier,
+                              FileMessageTableViewCell.myFileReuseIdentifier]
+    static let friendReuseIdentifiers = [TextMessageTableViewCell.friendTextReuseIdentifier,
+                                  ImageMessageTableViewCell.friendImageReuseIdentifier,
+                                  FileMessageTableViewCell.friendFileReuseIdentifier]
+    static let groupReuseIdentifiers = [TextMessageTableViewCell.groupTextReuseIdentifier,
+                                 ImageMessageTableViewCell.groupImageReuseIdentifier,
+                                 FileMessageTableViewCell.groupFileReuseIdentifier]
+    
+    func getMessageSenderType(reuseIdentifier: String) -> MessageSender? {
+        if BaseMessageTableViewCell.myReuseIdentifiers.contains(reuseIdentifier) {
+            return .me
+        } else if BaseMessageTableViewCell.friendReuseIdentifiers.contains(reuseIdentifier) {
+            return .friend
+        } else if BaseMessageTableViewCell.groupReuseIdentifiers.contains(reuseIdentifier) {
+            return .group
+        }
+        return nil
+    }
+}
+
 // TODO: - MY VS OTHER
 extension BaseMessageTableViewCell: BaseView {
     func addSubviews() {
@@ -67,7 +78,6 @@ extension BaseMessageTableViewCell: BaseView {
     }
     
     func positionSubviews() {
-        
         containerView.widthAnchor.constraint(lessThanOrEqualToConstant: 276).isActive = true
         timeLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
     }
@@ -105,10 +115,11 @@ extension BaseMessageTableViewCell: BaseView {
 extension BaseMessageTableViewCell {
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         timeLabel.isHidden = true
         senderNameLabel.text = ""
-        senderPhotoImageview.image = UIImage(safeImage: .userImage)
-        senderPhotoImageview.isHidden = true
+        senderPhotoImageview.image = nil
+//        senderPhotoImageview.isHidden = true
     }
     
     func updateCellState(to state: MessageState) {
