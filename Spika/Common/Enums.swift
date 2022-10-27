@@ -41,6 +41,11 @@ enum MessageRecordType: String, Codable {
     }
 }
 
+enum ScrollToBottomType {
+    case ifLastCellVisible
+    case force
+}
+
 // TODO: move this
 struct MessageNotificationInfo {
     let title: String
