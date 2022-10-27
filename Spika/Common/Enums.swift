@@ -46,6 +46,11 @@ enum ScrollToBottomType {
     case force
 }
 
+enum FRCChangeType {
+    case insert(indexPath: IndexPath)
+    case other
+}
+
 // TODO: move this
 struct MessageNotificationInfo {
     let title: String
