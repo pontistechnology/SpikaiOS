@@ -20,6 +20,7 @@ class AppCoordinator: Coordinator {
     
     //  This can be in scene delegate?
     func syncAndStartSSE() {
+        guard let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken) else { return }
         let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
         sse?.syncAndStartSSE()
     }
@@ -33,7 +34,7 @@ class AppCoordinator: Coordinator {
         if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
            let userName = userDefaults.string(forKey: Constants.UserDefaults.displayName),
            !userName.isEmpty {
-            presentHomeScreen()
+            presentHomeScreen(startSyncAndSSE: false)
         } else if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken){
             presentEnterUsernameScreen()
         } else {
@@ -63,9 +64,11 @@ class AppCoordinator: Coordinator {
     }
     
     // MARK: MAIN FLOW
-    func presentHomeScreen() {
+    func presentHomeScreen(startSyncAndSSE: Bool) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
-//        syncAndStartSSE()
+        if startSyncAndSSE {
+            syncAndStartSSE()            
+        }
         self.navigationController.setViewControllers([viewController], animated: true)
     }
     

@@ -33,6 +33,9 @@ class SSE {
     }
     
     func syncAndStartSSE() {
+        if eventSource == nil {
+            setupSSE()
+        }
         syncRooms()
     }
     

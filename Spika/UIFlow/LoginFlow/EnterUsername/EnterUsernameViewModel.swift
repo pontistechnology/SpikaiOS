@@ -48,7 +48,6 @@ class EnterUsernameViewModel: BaseViewModel {
                 PopUpManager.shared.presentAlert(errorMessage: "Username error: \(error)")
             case .finished:
                 self.presentHomeScreen()
-                self.getAppCoordinator()?.syncAndStartSSE()
             }
         } receiveValue: { [weak self] response in
             guard let self = self,
@@ -59,6 +58,6 @@ class EnterUsernameViewModel: BaseViewModel {
     }
     
     private func presentHomeScreen() {
-        getAppCoordinator()?.presentHomeScreen()
+        getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true)
     }
 }

@@ -42,7 +42,6 @@ class EnterVerifyCodeViewModel: BaseViewModel {
             self?.repository.saveUserInfo(user: user, device: device)
             if user.displayName != "" {
                 self?.presentHomeScreen()
-                self?.getAppCoordinator()?.syncAndStartSSE()
             } else {
                 self?.presentEnterUsernameScreen()
             }
@@ -69,7 +68,7 @@ class EnterVerifyCodeViewModel: BaseViewModel {
     }
     
     private func presentHomeScreen() {
-        getAppCoordinator()?.presentHomeScreen()
+        getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true)
     }
     
 }
