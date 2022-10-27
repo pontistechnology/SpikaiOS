@@ -42,6 +42,11 @@ class TextMessageTableViewCell: BaseMessageTableViewCell {
 
 extension TextMessageTableViewCell {
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        messageTextView.text = ""
+    }
+    
     func updateCell(message: Message) {
         
         messageTextView.text = message.body?.text
