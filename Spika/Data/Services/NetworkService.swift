@@ -50,7 +50,7 @@ class NetworkService {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        print("REQUEST URL: ", url)
+//        print("REQUEST URL: ", url)
         var request = URLRequest(url: url)
 
         if let bodyParameters = resources.bodyParameters {
@@ -82,13 +82,16 @@ class NetworkService {
                 let statusCode = (response as? HTTPURLResponse)?.statusCode
                 switch statusCode {
                 case 200:
-                    print("STATUS CODE 200")
+                    break
+//                    print("STATUS CODE 200")
                 case 401:
                     break // TODO: - sign out
                 case 404:
-                    print("STATUS CODE 404: ", response.url)
+                    break
+//                    print("STATUS CODE 404: ", response.url)
                 default:
-                    print("STATUS CODE ", statusCode, "for url: ", request.url)
+                    break
+//                    print("STATUS CODE ", statusCode, "for url: ", request.url)
                 }
                 return data
             })

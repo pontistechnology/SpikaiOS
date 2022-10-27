@@ -74,7 +74,7 @@ class DetailsViewController: BaseViewController {
     
     
     deinit {
-        print("DetailsViewController deinit")
+//        print("DetailsViewController deinit")
     }
     
 }

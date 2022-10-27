@@ -23,7 +23,7 @@ class BaseViewController: UIViewController {
     }
     
     deinit {
-        print("baseVC deinit")
+//        print("baseVC deinit")
     }
     
     override func viewWillAppear(_ animated: Bool) {

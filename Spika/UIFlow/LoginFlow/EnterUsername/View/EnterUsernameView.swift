@@ -35,11 +35,12 @@ class EnterUsernameView: UIView, BaseView {
     func styleSubviews() {
         nextButton.setTitle("Next", for: .normal)
         nextButton.setEnabled(false)
+        
+        usernameTextfield.autocorrectionType = .no
     }
     
     func positionSubviews() {
-        
-        profilePictureView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 75, left: 0, bottom: 0, right: 0))
+        profilePictureView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 45, left: 0, bottom: 0, right: 0))
         profilePictureView.centerXToSuperview()
         
         usernameLabel.anchor(top: profilePictureView.bottomAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 30, left: 30, bottom: 0, right: 0))

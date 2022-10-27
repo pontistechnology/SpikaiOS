@@ -44,6 +44,7 @@ protocol Repository {
     
     // MARK: NETWORKING: User
     
+    func fetchMyUserDetails() -> AnyPublisher<AuthResponseModel, Error>
     func updateUser(username: String?, avatarURL: String?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>
     
     // MARK: NETWORKING: Contacts
@@ -115,5 +116,5 @@ protocol Repository {
     // MARK: COREDATA: Contacts
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error>
     func getContact(phoneNumber: String) -> Future<FetchedContact, Error>
-    func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error>    
+    @discardableResult func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error>
 }

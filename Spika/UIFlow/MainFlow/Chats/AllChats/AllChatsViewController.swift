@@ -88,7 +88,7 @@ extension AllChatsViewController: UITableViewDataSource {
         guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
     
         let room = Room(roomEntity: entity)
-        print("room at indexpath: ", indexPath, room)
+//        print("room at indexpath: ", indexPath, room)
         
         let badgeNumber = entity.numberOfUnreadMessages(myUserId: viewModel.getMyUserId())
         if room.type == .privateRoom,

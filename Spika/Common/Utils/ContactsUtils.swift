@@ -8,11 +8,13 @@
 import Contacts
 import CoreTelephony
 import Combine
-import libPhoneNumber_iOS
+import PhoneNumberKit
 
 class ContactsUtils {
     
-    class func getContacts() -> Future<[FetchedContact], Error> {
+    let phoneNumberKit = PhoneNumberKit()
+    
+    func getContacts() -> Future<[FetchedContact], Error> {
         return Future() { promise in
             let store = CNContactStore()
             var contacts = [FetchedContact]()
@@ -27,33 +29,22 @@ class ContactsUtils {
                     let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
                     let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
                     DispatchQueue.global(qos: .background).async {
+//                        let timer = ParkBenchTimer()
                         do {
                             try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
+                                let fetchedContacts = self.phoneNumberKit.parse(contact.phoneNumbers.map { $0.value.stringValue })
+                                    .map {  self.phoneNumberKit.format($0, toType: .e164, withPrefix: true) }
+                                    .map { FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: $0) }
                                 
-                                guard let phoneUtil = NBPhoneNumberUtil.sharedInstance(), let defaultRegionCode = defaultRegionCode() else {
-                                    return
-                                }
-                                
-                                for phoneNumber in contact.phoneNumbers {
-                                    
-                                    do {
-                                        let parsedPhoneNumber: NBPhoneNumber = try phoneUtil.parse(phoneNumber.value.stringValue, defaultRegion: defaultRegionCode)
-                                        let formattedString: String = try phoneUtil.format(parsedPhoneNumber, numberFormat: .E164)
-                                        
-                                        contacts.append(FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: formattedString))
-                                    }
-                                    catch let error as NSError {
-                                        print(error.localizedDescription)
-                                    }
-                                }
+                                contacts.append(contentsOf: fetchedContacts)
                             })
                         } catch let error {
                             print("Failed to enumerate contact", error)
                         }
+//                        print("Contact Pull finished: \(contacts.count), duration: \(timer.stop())")
                         promise(.success(contacts))
                     }
                 } else {
-                    print("access denied")
                     promise(.success([]))
                 }
             }

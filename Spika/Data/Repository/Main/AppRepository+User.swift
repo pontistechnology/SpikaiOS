@@ -28,6 +28,17 @@ extension AppRepository {
     
     // MARK: Network
     
+    func fetchMyUserDetails() -> AnyPublisher<AuthResponseModel, Error> {
+        let resources = Resources<AuthResponseModel, AuthRequestModel>(
+            path: Constants.Endpoints.getUserDetails,
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: nil,
+            queryParameters: nil
+        )
+        return networkService.performRequest(resources: resources)
+    }
+    
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
         print("Phone number SHA256: ", telephoneNumber.getSHA256())
         let resources = Resources<AuthResponseModel, AuthRequestModel>(
@@ -287,8 +298,8 @@ extension AppRepository {
                             print("verifyUpload error: ", error)
                             somePublisher.send(completion: .failure(NetworkError.verifyFileFail))
                         }
-                    } receiveValue: { [weak self] verifyFileResponse in
-                        print("verifyFile response", verifyFileResponse)
+                    } receiveValue: {  verifyFileResponse in
+//                        print("verifyFile response", verifyFileResponse)
                         guard let file = verifyFileResponse.data?.file else { return }
                         somePublisher.send((file, 1))
                     }.store(in: &self.subs)

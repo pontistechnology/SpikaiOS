@@ -30,9 +30,9 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        // TODO: check display name.isEmpty()
         if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
-           let _ = userDefaults.string(forKey: Constants.UserDefaults.displayName){
+           let userName = userDefaults.string(forKey: Constants.UserDefaults.displayName),
+           !userName.isEmpty {
             presentHomeScreen()
         } else if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken){
             presentEnterUsernameScreen()
@@ -71,9 +71,9 @@ class AppCoordinator: Coordinator {
     
     func getHomeTabBarItems() -> [TabBarItem] {
         return [
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(ContactsViewController.self, argument: self)!, title: "Contacts", image: "contacts", position: 0, isSelected: false),
+            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(AllChatsViewController.self, argument: self)!, title: "Chats", image: "chats", position: 0, isSelected: true),
             TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(CallHistoryViewController.self, argument: self)!, title: "Call History", image: "callHistory", position: 1, isSelected: false),
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(AllChatsViewController.self, argument: self)!, title: "Chats", image: "chats", position: 2, isSelected: true),
+            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(ContactsViewController.self, argument: self)!, title: "Contacts", image: "contacts", position: 2, isSelected: false),
             TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(SettingsViewController.self, argument: self)!, title: "Settings", image: "settings", position: 3, isSelected: false)
         ]
     }

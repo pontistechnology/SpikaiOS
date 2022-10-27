@@ -47,7 +47,7 @@ class CurrentChatViewController: BaseViewController {
     }
     
     deinit {
-        print("currentChatVC deinit")
+//        print("currentChatVC deinit")
     }
 }
 

@@ -40,7 +40,7 @@ class EnterVerifyCodeViewModel: BaseViewModel {
                 return
             }
             self?.repository.saveUserInfo(user: user, device: device)
-            if user.displayName != "" && user.avatarUrl != "" {
+            if user.displayName != "" {
                 self?.presentHomeScreen()
             } else {
                 self?.presentEnterUsernameScreen()

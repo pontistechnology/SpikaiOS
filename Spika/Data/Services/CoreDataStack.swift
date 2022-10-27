@@ -13,11 +13,11 @@ class CoreDataStack: NSObject {
     private let moduleName = "CoreDatabase"
     
     override init() {
-        print("CoredataStack init")
+//        print("CoredataStack init")
     }
     
     deinit {
-        print("CoredataStack deinit")
+//        print("CoredataStack deinit")
     }
     
 //    lazy var persistentContainer: NSPersistentContainer = {

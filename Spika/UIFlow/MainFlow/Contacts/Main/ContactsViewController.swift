@@ -42,6 +42,10 @@ class ContactsViewController: BaseViewController {
         viewModel.getContacts()
         viewModel.getOnlineContacts(page: 1)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+    }
 }
 
 extension ContactsViewController: UITableViewDelegate {
@@ -49,19 +53,17 @@ extension ContactsViewController: UITableViewDelegate {
         64
     }
     
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let header = view as? UITableViewHeaderFooterView else { return }
-        header.textLabel?.font = .customFont(name: .MontserratSemiBold, size: 16)
-        header.textLabel?.textColor = .textPrimary
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return CustomTableViewHeader(text: self.frc?.sections?[section].name ?? "-",
+                                     textSize: 18,
+                                     textColor: .textPrimary,
+                                     fontName: .MontserratSemiBold,
+                                     alignment: .left,
+                                     labelMargins: UIEdgeInsets(top: 8, left: 18, bottom: 8, right: 14))
     }
 }
 
 extension ContactsViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let sections = self.frc?.sections else { return "nil" }
-        return sections[section].name
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         frc?.sections?.count ?? 0
@@ -83,7 +85,7 @@ extension ContactsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("t: ", indexPath)
+//        print("t: ", indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
         guard let userEntity = frc?.object(at: indexPath) else { return }
         let user = User(entity: userEntity)
@@ -105,7 +107,7 @@ extension ContactsViewController: SearchBarDelegate {
     
     func changePredicate(to newString: String) {
         self.frc?.fetchRequest.predicate = newString.isEmpty
-        ? nil : NSPredicate(format: "contactsName CONTAINS '\(newString)'")
+        ? nil : NSPredicate(format: "contactsName CONTAINS[c] '\(newString)' OR telephoneNumber CONTAINS[c] '\(newString)'")
         // TODO: better search, begins or something like that
         try? self.frc?.performFetch()
         self.contactsView.tableView.reloadData()

@@ -27,7 +27,7 @@ class FileMessageTableViewCell: BaseMessageTableViewCell {
     }
     
     deinit {
-        print("textcell deinit")
+//        print("textcell deinit")
     }
     
     func setupFileCell() {

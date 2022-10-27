@@ -25,11 +25,11 @@ class SSE {
         self.coordinator = coordinator
         setupBindings()
         setupSSE()
-        print("SSE: init")
+//        print("SSE: init")
     }
     
     deinit {
-        print("SSE: deinit")
+//        print("SSE: deinit")
     }
     
     func syncAndStartSSE() {
@@ -74,43 +74,44 @@ private extension SSE {
                                   + "api/sse/"
                                   + "?accesstoken=" + accessToken)
         else {
-            print("SSE: AccessToken is missing.")
-            return }
+//            print("SSE: AccessToken is missing.")
+            return
+        }
         eventSource = EventSource(url: serverURL)
         
         eventSource?.onOpen {
-            print("SSE: CONNECTED")
+//            print("SSE: CONNECTED")
         }
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
-            print("SSE: DISCONNECTED")
+//            print("SSE: DISCONNECTED")
 //            guard reconnect ?? false else { return } // if server wants to control reconnecting
             self?.syncAndStartSSE()
 //            let retryTime = self?.eventSource?.retryTime ?? 1500
         }
         
         eventSource?.onMessage { [weak self] id, event, data in
-            print("SSE: without decoding: ", data ?? "")
+//            print("SSE: without decoding: ", data ?? "")
             guard let self = self,
                   let jsonData = data?.data(using: .utf8),
                   let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData),
                   let type = sseNewMessage.type
             else {
-                print("SSE: decoding error")
+//                print("SSE: decoding error")
                 return
             }
             switch type {
             case .newMessage:
                 guard let message = sseNewMessage.message else { return }
-                print("SSE: new message _ ", message)
+//                print("SSE: new message _ ", message)
                 self.saveMessages([message])
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
-                print("SSE: MESSAGE RECORD ON SSE: ", record)
+//                print("SSE: MESSAGE RECORD ON SSE: ", record)
                 self.saveMessageRecords([record]) // TODO: - delay or something
             case .newRoom, .updateRoom:
                 guard let room = sseNewMessage.room else { return }
-                print("SSE: \(type.rawValue): ", room)
+//                print("SSE: \(type.rawValue): ", room)
                 self.saveLocalRooms([room])
             default:
                 break
@@ -124,9 +125,9 @@ private extension SSE {
 private extension SSE {
     func syncRooms() {
         repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { c in
-            print("SSE: sync rooms c: ", c)
+//            print("SSE: sync rooms c: ", c)
         } receiveValue: { [weak self] response in
-            print("SSE: sync rooms response: ", response)
+//            print("SSE: sync rooms response: ", response)
             guard let rooms = response.data?.rooms else { return }
             self?.saveLocalRooms(rooms, isSync: true)
         }.store(in: &subs)
@@ -135,9 +136,9 @@ private extension SSE {
     // TODO: - check local DB for all roomIds, and fetch the missing ones
     func syncMessages() {
         repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { c in
-            print("SSE: sync messages c: ", c)
+//            print("SSE: sync messages c: ", c)
         } receiveValue: { [weak self] response in
-            print("SSE: sync messages response: ", response)
+//            print("SSE: sync messages response: ", response)
             guard let self = self,
                   let messages = response.data?.messages
             else { return }
@@ -147,9 +148,9 @@ private extension SSE {
     
     func syncUsers() {
         repository.syncUsers(timestamp: repository.getSyncTimestamp(for: .users)).sink { [weak self] c in
-            print("SSE: sync users C: ", c)
+//            print("SSE: sync users C: ", c)
         } receiveValue: { [weak self] response in
-            print("SSE: sync users response: ", response)
+//            print("SSE: sync users response: ", response)
             guard let users = response.data?.users else { return }
             self?.saveUsers(users, isSync: true)
         }.store(in: &subs)
@@ -157,12 +158,12 @@ private extension SSE {
     
     func syncMessageRecords() {
         repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { [weak self] c in
-            print("SSE: sync message records C: ", c)
+//            print("SSE: sync message records C: ", c)
         } receiveValue: { [weak self] response in
-            print("SSE: sync message records response", response)
+//            print("SSE: sync message records response", response)
             guard let self = self else { return }
             guard let records = response.data?.messageRecords else { return }
-            print("SSE: records before: ", records.count)
+//            print("SSE: records before: ", records.count)
             self.saveMessageRecords(records, isSync: true)
         }.store(in: &subs)
     }
@@ -173,9 +174,9 @@ private extension SSE {
 private extension SSE {
     func saveUsers(_ users: [User], isSync: Bool = false) {
         repository.saveUsers(users).sink { c in
-            print("SSE: save _ c: ", c)
+//            print("SSE: save _ c: ", c)
         } receiveValue: { [weak self] users in
-            print("SSE: save users success")
+//            print("SSE: save users success")
             if isSync {
                 if !users.isEmpty {
                     let timestamp = users.max{ $0.createdAt < $1.createdAt }?.createdAt ?? 0
@@ -188,7 +189,7 @@ private extension SSE {
     
     func saveLocalRooms(_ rooms: [Room], isSync: Bool = false) {
         repository.saveLocalRooms(rooms: rooms).sink { c in
-            print("SSE: save rooms c: ", c)
+//            print("SSE: save rooms c: ", c)
             switch c {
             case .finished:
                 break
@@ -196,7 +197,7 @@ private extension SSE {
                 break
             }
         } receiveValue: { [weak self] rooms in
-            print("SSE: save rooms success")
+//            print("SSE: save rooms success")
             if isSync {
                 if !rooms.isEmpty {
                     let timestamp = rooms.max{ ($0.createdAt) < ($1.createdAt) }?.createdAt ?? 0
@@ -209,9 +210,9 @@ private extension SSE {
     
     func saveMessages(_ messages: [Message], isSync: Bool = false) {
         repository.saveMessages(messages).sink { c in
-            print("SSE: save message c: ", c)
+//            print("SSE: save message c: ", c)
         } receiveValue: { [weak self] messages in
-            print("SSE: SAVED MESSAGES: ", messages.count)
+//            print("SSE: SAVED MESSAGES: ", messages.count)
             if isSync {
                 let currentTimestamp = Date().currentTimeMillis()
                 let maxTimestamp = messages.max(by: {$0.createdAt < $1.createdAt})?.createdAt ?? currentTimestamp
@@ -230,9 +231,9 @@ private extension SSE {
     func saveMessageRecords(_ records: [MessageRecord], isSync: Bool = false) {
         print("SSE: message records recieved: ", records.count)
         repository.saveMessageRecords(records).sink { c in
-            print("SSE: save message records c: ", c)
+//            print("SSE: save message records c: ", c)
         } receiveValue: { [weak self] records in
-            print("SSE: saved records: ", records.count)
+//            print("SSE: saved records: ", records.count)
             if isSync {
                 self?.finishedSyncPublisher.send(.messageRecords)
             }
@@ -244,14 +245,14 @@ private extension SSE {
 private extension SSE {
     
     func sendDeliveredStatus(messages: [Message]) {
-        print("message id in sse: ", messages)
+//        print("message id in sse: ", messages)
         windowWorkItem?.cancel()
         windowWorkItem = nil
         
         repository.sendDeliveredStatus(messageIds: messages.compactMap{$0.id}).sink { c in
             
         } receiveValue: { [weak self] response in
-            print("SSE: send delivered status sse response: ", response)
+//            print("SSE: send delivered status sse response: ", response)
         }.store(in: &subs)
     }
 }

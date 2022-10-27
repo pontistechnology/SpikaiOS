@@ -14,7 +14,7 @@ public class RoomEntity: NSManagedObject {
     
     convenience init(room: Room, context: NSManagedObjectContext) {
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.roomEntity, in: context) else {
-            fatalError("shit, do something")
+            fatalError("error, MessageRecordEntity")
         }
         self.init(entity: entity, insertInto: context)
         self.id = room.id
