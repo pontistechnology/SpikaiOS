@@ -120,10 +120,9 @@ extension CurrentChatViewController {
         
         Publishers
             .Zip(frcIsChangingPublisher, frcDidChangePublisher)
+            .filter{$1}
             .sink { [weak self] (frcChange, frcDidChange) in
-                guard let self = self,
-                        frcDidChange
-                else { return }
+                guard let self = self else { return }
                 
                 switch frcChange {
                 case .insert(indexPath: let indexPath):
