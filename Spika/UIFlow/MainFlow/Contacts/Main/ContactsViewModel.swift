@@ -4,17 +4,31 @@
 //  Created by Marko on 21.10.2021..
 //
 
-import Foundation
+import UIKit
 import Combine
 
 class ContactsViewModel: BaseViewModel {
     
+    let contactStoreChangePublisher = NotificationCenter.default.publisher(for: NSNotification.Name.CNContactStoreDidChange).share()
+    let willEnterForegroundPublisher = NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
+    
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
+        self.setupContactFetch()
     }
     
     func showDetailsScreen(user: User) {
         getAppCoordinator()?.presentDetailsScreen(user: user)
+    }
+    
+    func setupContactFetch() {
+        let state = Publishers.Merge(self.willEnterForegroundPublisher.map { _ in false },
+                                     self.contactStoreChangePublisher.map { _ in true })
+        state.removeDuplicates()
+            .filter { $0 }
+            .sink { [weak self] bool in
+                self?.getContacts()
+            }.store(in: &self.subscriptions)
     }
     
     func saveUsers(_ users: [User]) {
