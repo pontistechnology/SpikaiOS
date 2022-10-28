@@ -75,6 +75,10 @@ extension AllChatsViewController: UITableViewDelegate {
         print("ROOM selected: ", room)
         viewModel.presentCurrentChatScreen(room: room)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+    }
 }
 
 extension AllChatsViewController: UITableViewDataSource {
