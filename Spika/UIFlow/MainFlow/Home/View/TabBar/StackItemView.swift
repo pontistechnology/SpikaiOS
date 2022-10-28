@@ -17,6 +17,16 @@ class StackItemView: UIView, BaseView {
     var imageView = UIImageView()
     var highlightsView = UIView()
     
+//    var counterView: UIView?
+    lazy var counterLabel: CustomLabel = {
+        let label = CustomLabel(text: "", textSize: 10, textColor: .white, fontName: .MontserratSemiBold, alignment: .center)
+        label.backgroundColor = .appRed
+        label.layer.cornerRadius = 10
+        label.clipsToBounds = true
+        label.isHidden = true
+        return label
+    } ()
+    
     private let higlightBGColor = UIColor.appBlueLight
     private let selectedImageColor = UIColor.primaryColor
     private let defualtImageColor = UIColor.navigation
@@ -80,6 +90,7 @@ class StackItemView: UIView, BaseView {
         addSubview(highlightsView)
         addSubview(imageView)
         addSubview(titleLbl)
+        addSubview(counterLabel)
     }
     
     func styleSubviews() {
@@ -99,6 +110,10 @@ class StackItemView: UIView, BaseView {
         
         titleLbl.anchor(left: imageView.rightAnchor, right: self.rightAnchor, paddingLeft: 5, paddingRight: 0)
         titleLbl.centerY(inView: self)
+        
+        counterLabel.centerXToSuperview(offset: 18)
+        counterLabel.centerYToSuperview(offset: -18)
+        counterLabel.anchor(size: CGSize(width: 20, height: 20))
     }
     
 }
