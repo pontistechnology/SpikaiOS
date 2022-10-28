@@ -33,6 +33,7 @@ class SSE {
     }
     
     func syncAndStartSSE() {
+        WindowManager.shared.showGreen()
         if eventSource == nil {
             setupSSE()
         }

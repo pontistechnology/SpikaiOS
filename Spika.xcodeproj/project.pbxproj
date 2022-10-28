@@ -168,6 +168,9 @@
 		93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916E27CD578F000F94B0 /* Data+Extension.swift */; };
 		93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */; };
 		93BD5B3C27FB83A400240331 /* RoomEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BD5B3B27FB83A400240331 /* RoomEntityService.swift */; };
+		93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3CF290C519900DEE9D1 /* WindowManager.swift */; };
+		93BED3D2290C541D00DEE9D1 /* ConnectionIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D1290C541D00DEE9D1 /* ConnectionIndicatorViewController.swift */; };
+		93BED3D5290C54E800DEE9D1 /* ConnectionIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D4290C54E800DEE9D1 /* ConnectionIndicatorView.swift */; };
 		93BF627528EB9B7900B48BBF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* Enums.swift */; };
 		93BF627628EB9B7900B48BBF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* Enums.swift */; };
 		93BFA3722857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */; };
@@ -445,6 +448,9 @@
 		93B8916E27CD578F000F94B0 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		93BD5B3B27FB83A400240331 /* RoomEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomEntityService.swift; sourceTree = "<group>"; };
+		93BED3CF290C519900DEE9D1 /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
+		93BED3D1290C541D00DEE9D1 /* ConnectionIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionIndicatorViewController.swift; sourceTree = "<group>"; };
+		93BED3D4290C54E800DEE9D1 /* ConnectionIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionIndicatorView.swift; sourceTree = "<group>"; };
 		93BF627428EB9B7900B48BBF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		93C07A88290127FD003DFD61 /* EmptyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -798,6 +804,24 @@
 				938D052D27D59D83002E5CE5 /* NewGroupChatView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		93BED3CE290C513100DEE9D1 /* WindowManager */ = {
+			isa = PBXGroup;
+			children = (
+				93BED3D3290C54D300DEE9D1 /* ConnectionIndicator */,
+				93BED3CF290C519900DEE9D1 /* WindowManager.swift */,
+			);
+			path = WindowManager;
+			sourceTree = "<group>";
+		};
+		93BED3D3290C54D300DEE9D1 /* ConnectionIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				93BED3D1290C541D00DEE9D1 /* ConnectionIndicatorViewController.swift */,
+				93BED3D4290C54E800DEE9D1 /* ConnectionIndicatorView.swift */,
+			);
+			path = ConnectionIndicator;
 			sourceTree = "<group>";
 		};
 		93D86DBE27BAB47700F275B0 /* UITableViewCells */ = {
@@ -1269,6 +1293,7 @@
 		ADD503CA270DD2E9009D50CB /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				93BED3CE290C513100DEE9D1 /* WindowManager */,
 				9367455A27C71CE500F43CCD /* PopUpManager */,
 				ADD503E6270DD849009D50CB /* Views */,
 				ADD503DD270DD723009D50CB /* Base */,
@@ -1884,6 +1909,7 @@
 				AD9BFD272729955200736318 /* EnterNumberView.swift in Sources */,
 				933BE86A27B671B30099BA9E /* NotesView.swift in Sources */,
 				AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */,
+				93BED3D2290C541D00DEE9D1 /* ConnectionIndicatorViewController.swift in Sources */,
 				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
 				9325720A28B8F0140078D489 /* UTType+Extensions.swift in Sources */,
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
@@ -1940,6 +1966,7 @@
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
 				93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */,
 				6C326A6728FECAAE00E00A59 /* OTPCodeTextField.swift in Sources */,
+				93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */,
 				AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */,
 				930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */,
 				ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */,
@@ -2031,6 +2058,7 @@
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,
 				EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */,
 				9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */,
+				93BED3D5290C54E800DEE9D1 /* ConnectionIndicatorView.swift in Sources */,
 				EAC81D782810422F0004D835 /* FetchedContact.swift in Sources */,
 				937AA7532899440700B65494 /* AdditionalOptionsView.swift in Sources */,
 				AD81925C2721D45100D5BE48 /* ContactsView.swift in Sources */,
