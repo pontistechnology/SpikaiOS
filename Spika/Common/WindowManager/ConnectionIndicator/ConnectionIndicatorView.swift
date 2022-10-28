@@ -13,7 +13,7 @@ class ConnectionIndicatorView: UIView {
         layer.cornerRadius = 5
         constrainWidth(10)
         constrainHeight(10)
-        changeColor(to: .purple)
+        changeColor(to: .appRed)
     }
     
     required init?(coder: NSCoder) {

@@ -23,8 +23,9 @@ extension WindowManager {
         guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
         else { return }
         indicatorWindow = UIWindow(windowScene: windowScene)
-        indicatorWindow?.frame = CGRect(x: 30, y: 30, width: 130, height: 130)
-        indicatorWindow?.backgroundColor = .green
+        let x = windowScene.screen.bounds.width / 2 - 5
+        indicatorWindow?.frame = CGRect(x: x, y: 60, width: 10, height: 10)
+        indicatorWindow?.backgroundColor = .green // TODO: - delete
         indicatorWindow?.rootViewController = ConnectionIndicatorViewController()
         indicatorWindow?.isHidden = false
     }
