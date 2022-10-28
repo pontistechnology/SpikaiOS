@@ -33,7 +33,7 @@ class SSE {
     }
     
     func syncAndStartSSE() {
-        WindowManager.shared.showGreen()
+        WindowManager.shared.changeIndicatorColor(to: .orange)
         if eventSource == nil {
             setupSSE()
         }
@@ -85,9 +85,11 @@ private extension SSE {
         
         eventSource?.onOpen {
 //            print("SSE: CONNECTED")
+            WindowManager.shared.changeIndicatorColor(to: .appGreen)
         }
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
+            WindowManager.shared.changeIndicatorColor(to: .appRed)
 //            print("SSE: DISCONNECTED")
 //            guard reconnect ?? false else { return } // if server wants to control reconnecting
             self?.syncAndStartSSE()

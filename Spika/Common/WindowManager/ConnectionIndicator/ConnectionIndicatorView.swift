@@ -10,9 +10,9 @@ import UIKit
 class ConnectionIndicatorView: UIView {
     init() {
         super.init(frame: .zero)
-        layer.cornerRadius = 5
-        constrainWidth(10)
-        constrainHeight(10)
+        layer.cornerRadius = 4
+        constrainWidth(8)
+        constrainHeight(8)
         changeColor(to: .appRed)
     }
     
