@@ -27,6 +27,7 @@ class AllChatsViewController: BaseViewController {
     func setupBindings() {
         allChatsView.allChatsTableView.delegate = self
         allChatsView.allChatsTableView.dataSource = self
+        allChatsView.searchBar.delegate = self
         
         allChatsView.pencilImageView.tap().sink { [weak self] _ in
             self?.viewModel.presentSelectUserScreen()
@@ -44,7 +45,7 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = RoomEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
+            fetchRequest.predicate = self.viewModel.defaultChatsPredicate
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp),
                                                              ascending: false),
                                             NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
@@ -157,5 +158,24 @@ extension AllChatsViewController {
         secondRightAction.backgroundColor = .systemRed
         
         return UISwipeActionsConfiguration(actions: [secondRightAction, firstRightAction])
+    }
+}
+
+extension AllChatsViewController: SearchBarDelegate {
+    func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
+        if let value = value {
+            changePredicate(to: value)
+        }
+    }
+    
+    func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
+        changePredicate(to: "")
+    }
+    
+    func changePredicate(to newString: String) {
+        let searchPredicate = newString.isEmpty ? self.viewModel.defaultChatsPredicate : NSPredicate(format: "name CONTAINS[c] '\(newString)'")
+        self.frc?.fetchRequest.predicate = searchPredicate
+        try? self.frc?.performFetch()
+        self.allChatsView.allChatsTableView.reloadData()
     }
 }

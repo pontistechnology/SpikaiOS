@@ -10,6 +10,8 @@ import Combine
 
 class AllChatsViewModel: BaseViewModel {
     
+    let defaultChatsPredicate = NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
+    
     func presentSelectUserScreen() {
         getAppCoordinator()?.presentSelectUserScreen()
     }
