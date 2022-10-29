@@ -18,17 +18,11 @@ extension ConnectionIndicatorViewController {
     }
 }
 
-extension ConnectionIndicatorViewController {
+private extension ConnectionIndicatorViewController {
     func setupView() {
         view.addSubview(indicatorView)
         indicatorView.anchor(top: view.topAnchor,
                              leading: view.leadingAnchor,
                              padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-    }
-}
-
-extension ConnectionIndicatorViewController {
-    func changeIndicatorColor(to color: UIColor) {
-        indicatorView.changeColor(to: color)
     }
 }

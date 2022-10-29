@@ -252,8 +252,7 @@ private extension SSE {
     
     func sendDeliveredStatus(messages: [Message]) {
 //        print("message id in sse: ", messages)
-        windowWorkItem?.cancel()
-        windowWorkItem = nil
+        
         
         repository.sendDeliveredStatus(messageIds: messages.compactMap{$0.id}).sink { c in
             
@@ -271,53 +270,27 @@ private extension SSE {
         repository.getNotificationInfoForMessage(message).sink { c in
             
         } receiveValue: { [weak self] info in
-            self?.showNotification(imageUrl: info.photoUrl, name: info.title, text: info.messageText)
+            self?.showNotification(info: info)
         }.store(in: &subs)
     }
     
-    func showNotification(imageUrl: String?, name: String, text: String) {
+    func showNotification(info: MessageNotificationInfo) {
         DispatchQueue.main.async {
+            WindowManager.shared.showNotification(info: info)
             
-            guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
-            else { return }
-            for window in windowScene.windows {
-                for vc in window.rootViewController?.children ?? [] {
-                    if vc is CurrentChatViewController {
-                        return
-                    }
-                }
-            }
-            
-            self.alertWindow = nil
-            let alertWindow = UIWindow(windowScene: windowScene)
-            alertWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150)
-            alertWindow.rootViewController = UIViewController()
-            alertWindow.isHidden = false
-            alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors
-            
-            let messageNotificationView = MessageNotificationView(imageUrl: URL(string: imageUrl ?? ""), senderName: name, textOrDescription: text)
-            
-            alertWindow.rootViewController?.view.addSubview(messageNotificationView)
-            messageNotificationView.anchor(top: alertWindow.rootViewController?.view.safeAreaLayoutGuide.topAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
-            messageNotificationView.centerXToSuperview()
-            
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleGesture(_:)))
-            messageNotificationView.addGestureRecognizer(tapGesture)
-           
-            self.alertWindow = alertWindow
-            
-            let workItem = DispatchWorkItem { [weak self] in
-                guard let self = self else { return }
-                self.alertWindow = nil
-            }
-            self.windowWorkItem = workItem
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: workItem)
+//            
+//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleGesture(_:)))
+//            messageNotificationView.addGestureRecognizer(tapGesture)
+//
+//            self.alertWindow = alertWindow
+//
+//            let workItem = DispatchWorkItem { [weak self] in
+//                guard let self = self else { return }
+//                self.alertWindow = nil
+//            }
+//            self.windowWorkItem = workItem
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: workItem)
         }
         
-    }
-    
-    @objc func handleGesture(_ sender: UITapGestureRecognizer) {
-        // TODO: handle tap
-        alertWindow = nil
     }
 }

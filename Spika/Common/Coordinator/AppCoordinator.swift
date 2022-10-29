@@ -7,15 +7,18 @@
 
 import UIKit
 import Swinject
+import Combine
 
 class AppCoordinator: Coordinator {
     
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
+    var subs = Set<AnyCancellable>()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        setupBindings()
     }
     
     //  This can be in scene delegate?
@@ -178,5 +181,19 @@ class AppCoordinator: Coordinator {
             // Fallback on earlier versions
         }
         navigationController.present(viewControllerToPresent, animated: true)
+    }
+}
+
+extension AppCoordinator {
+    func setupBindings() {
+        WindowManager.shared.notificationPublisher
+            .sink { type in
+                switch type {
+                case .show(info: _):
+                    break
+                case .tap(info: _):
+                    print("navigacija")
+                }
+            }.store(in: &subs)
     }
 }

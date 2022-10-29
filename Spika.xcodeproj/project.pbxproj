@@ -171,6 +171,8 @@
 		93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3CF290C519900DEE9D1 /* WindowManager.swift */; };
 		93BED3D2290C541D00DEE9D1 /* ConnectionIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D1290C541D00DEE9D1 /* ConnectionIndicatorViewController.swift */; };
 		93BED3D5290C54E800DEE9D1 /* ConnectionIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D4290C54E800DEE9D1 /* ConnectionIndicatorView.swift */; };
+		93BED3D8290C746000DEE9D1 /* NotificationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */; };
+		93BED3DA290C746B00DEE9D1 /* NotificationAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D9290C746B00DEE9D1 /* NotificationAlertView.swift */; };
 		93BF627528EB9B7900B48BBF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* Enums.swift */; };
 		93BF627628EB9B7900B48BBF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* Enums.swift */; };
 		93BFA3722857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */; };
@@ -451,6 +453,8 @@
 		93BED3CF290C519900DEE9D1 /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		93BED3D1290C541D00DEE9D1 /* ConnectionIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionIndicatorViewController.swift; sourceTree = "<group>"; };
 		93BED3D4290C54E800DEE9D1 /* ConnectionIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionIndicatorView.swift; sourceTree = "<group>"; };
+		93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertViewController.swift; sourceTree = "<group>"; };
+		93BED3D9290C746B00DEE9D1 /* NotificationAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertView.swift; sourceTree = "<group>"; };
 		93BF627428EB9B7900B48BBF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		93C07A88290127FD003DFD61 /* EmptyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -809,8 +813,9 @@
 		93BED3CE290C513100DEE9D1 /* WindowManager */ = {
 			isa = PBXGroup;
 			children = (
-				93BED3D3290C54D300DEE9D1 /* ConnectionIndicator */,
 				93BED3CF290C519900DEE9D1 /* WindowManager.swift */,
+				93BED3D6290C73B700DEE9D1 /* NotificationAlert */,
+				93BED3D3290C54D300DEE9D1 /* ConnectionIndicator */,
 			);
 			path = WindowManager;
 			sourceTree = "<group>";
@@ -822,6 +827,15 @@
 				93BED3D4290C54E800DEE9D1 /* ConnectionIndicatorView.swift */,
 			);
 			path = ConnectionIndicator;
+			sourceTree = "<group>";
+		};
+		93BED3D6290C73B700DEE9D1 /* NotificationAlert */ = {
+			isa = PBXGroup;
+			children = (
+				93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */,
+				93BED3D9290C746B00DEE9D1 /* NotificationAlertView.swift */,
+			);
+			path = NotificationAlert;
 			sourceTree = "<group>";
 		};
 		93D86DBE27BAB47700F275B0 /* UITableViewCells */ = {
@@ -1891,6 +1905,7 @@
 				938D053A27D5C524002E5CE5 /* TestRepository+Rooms.swift in Sources */,
 				934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */,
 				934F2EE3281735590086C343 /* TestRepository+Device.swift in Sources */,
+				93BED3D8290C746000DEE9D1 /* NotificationAlertViewController.swift in Sources */,
 				933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */,
 				93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
@@ -1947,6 +1962,7 @@
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
 				93E4F6F027C2BB9700432CFA /* SelectUsersView.swift in Sources */,
 				AD9BFD4B272B107500736318 /* EnterVerifyCodeViewModel.swift in Sources */,
+				93BED3DA290C746B00DEE9D1 /* NotificationAlertView.swift in Sources */,
 				AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */,
 				9323EC6B27B3E8D500FA0EB1 /* NavView.swift in Sources */,
 				93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */,
