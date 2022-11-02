@@ -24,10 +24,6 @@ final class WindowManager {
         setupIndicatorWindow()
         setupBindings()
     }
-    
-    func foo() {
-        print("SSS")
-    }
 }
 
 // MARK: - Indicator Window
@@ -36,11 +32,14 @@ private extension WindowManager {
         guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
         else { return }
         indicatorWindow = UIWindow(windowScene: windowScene)
-        let x = windowScene.screen.bounds.width - 15
-        indicatorWindow?.frame = CGRect(x: x, y: 60, width: 8, height: 8)
-//        indicatorWindow?.backgroundColor = .appRed
-//        indicatorWindow?.rootViewController = ConnectionIndicatorViewController()
+        let width = 8.0
+        indicatorWindow?.frame = CGRect(x: windowScene.screen.bounds.width - width,
+                                        y: 60,
+                                        width: width,
+                                        height: width)
+        indicatorWindow?.backgroundColor = .appRed
         indicatorWindow?.isHidden = false
+        indicatorWindow?.layer.cornerRadius = width / 2
         indicatorWindow?.clipsToBounds = true
         indicatorWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
     }
@@ -78,11 +77,8 @@ extension WindowManager {
             }
         }.store(in: &subs)
         
-        indicatorColorPublisher.sink { [weak self] colora in
-            self?.indicatorWindow?.backgroundColor = colora
-            self?.indicatorWindow?.layer.cornerRadius = 4
-            
-//            (self?.indicatorWindow?.rootViewController as? ConnectionIndicatorViewController)?.changeColor(to: colora)
+        indicatorColorPublisher.sink { [weak self] color in
+            self?.indicatorWindow?.backgroundColor = color
         }.store(in: &subs)
     }
 }
