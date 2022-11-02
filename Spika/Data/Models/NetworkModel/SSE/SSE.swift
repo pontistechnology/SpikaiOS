@@ -25,16 +25,10 @@ class SSE {
         self.coordinator = coordinator
         setupBindings()
         setupSSE()
-//        print("SSE: init")
-    }
-    
-    deinit {
-//        print("SSE: deinit")
     }
     
     func syncAndStartSSE() {
-//        WindowManager.shared.tasd()
-        WindowManager.shared.indicatorColorPublisher.send(.orange)
+        WindowManager.shared.indicatorColorPublisher.send(.appOrange)
         if eventSource == nil {
             setupSSE()
         }
@@ -85,40 +79,35 @@ private extension SSE {
         eventSource = EventSource(url: serverURL)
         
         eventSource?.onOpen {
-//            print("SSE: CONNECTED")
             WindowManager.shared.indicatorColorPublisher.send(.appGreen)
         }
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
             WindowManager.shared.indicatorColorPublisher.send(.appRed)
-//            print("SSE: DISCONNECTED")
-//            guard reconnect ?? false else { return } // if server wants to control reconnecting
             self?.syncAndStartSSE()
+
+//            guard reconnect ?? false else { return }
+//            if server wants to control reconnecting
 //            let retryTime = self?.eventSource?.retryTime ?? 1500
         }
         
         eventSource?.onMessage { [weak self] id, event, data in
-//            print("SSE: without decoding: ", data ?? "")
             guard let self = self,
                   let jsonData = data?.data(using: .utf8),
                   let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData),
                   let type = sseNewMessage.type
             else {
-//                print("SSE: decoding error")
                 return
             }
             switch type {
             case .newMessage:
                 guard let message = sseNewMessage.message else { return }
-//                print("SSE: new message _ ", message)
                 self.saveMessages([message])
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
-//                print("SSE: MESSAGE RECORD ON SSE: ", record)
                 self.saveMessageRecords([record]) // TODO: - delay or something
             case .newRoom, .updateRoom:
                 guard let room = sseNewMessage.room else { return }
-//                print("SSE: \(type.rawValue): ", room)
                 self.saveLocalRooms([room])
             default:
                 break
@@ -132,9 +121,7 @@ private extension SSE {
 private extension SSE {
     func syncRooms() {
         repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { c in
-//            print("SSE: sync rooms c: ", c)
         } receiveValue: { [weak self] response in
-//            print("SSE: sync rooms response: ", response)
             guard let rooms = response.data?.rooms else { return }
             self?.saveLocalRooms(rooms, isSync: true)
         }.store(in: &subs)
@@ -143,9 +130,7 @@ private extension SSE {
     // TODO: - check local DB for all roomIds, and fetch the missing ones
     func syncMessages() {
         repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { c in
-//            print("SSE: sync messages c: ", c)
         } receiveValue: { [weak self] response in
-//            print("SSE: sync messages response: ", response)
             guard let self = self,
                   let messages = response.data?.messages
             else { return }
@@ -155,9 +140,7 @@ private extension SSE {
     
     func syncUsers() {
         repository.syncUsers(timestamp: repository.getSyncTimestamp(for: .users)).sink { [weak self] c in
-//            print("SSE: sync users C: ", c)
         } receiveValue: { [weak self] response in
-//            print("SSE: sync users response: ", response)
             guard let users = response.data?.users else { return }
             self?.saveUsers(users, isSync: true)
         }.store(in: &subs)
@@ -165,12 +148,10 @@ private extension SSE {
     
     func syncMessageRecords() {
         repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { [weak self] c in
-//            print("SSE: sync message records C: ", c)
         } receiveValue: { [weak self] response in
-//            print("SSE: sync message records response", response)
-            guard let self = self else { return }
-            guard let records = response.data?.messageRecords else { return }
-//            print("SSE: records before: ", records.count)
+            guard let self = self,
+                  let records = response.data?.messageRecords
+            else { return }
             self.saveMessageRecords(records, isSync: true)
         }.store(in: &subs)
     }
@@ -278,20 +259,6 @@ private extension SSE {
     func showNotification(info: MessageNotificationInfo) {
         DispatchQueue.main.async {
             WindowManager.shared.notificationPublisher.send(.show(info: info))
-            
-//            
-//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleGesture(_:)))
-//            messageNotificationView.addGestureRecognizer(tapGesture)
-//
-//            self.alertWindow = alertWindow
-//
-//            let workItem = DispatchWorkItem { [weak self] in
-//                guard let self = self else { return }
-//                self.alertWindow = nil
-//            }
-//            self.windowWorkItem = workItem
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: workItem)
         }
-        
     }
 }
