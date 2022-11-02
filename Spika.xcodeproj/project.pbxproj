@@ -161,7 +161,7 @@
 		939B304D2850E01800FFA537 /* SyncUsersResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B30492850DE9200FFA537 /* SyncUsersResponseModel.swift */; };
 		939B304E2850E01800FFA537 /* SyncMessageRecordsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B30472850DE4300FFA537 /* SyncMessageRecordsResponseModel.swift */; };
 		939B304F2850E16400FFA537 /* AppRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */; };
-		93A76B2C27F6789500B6A03E /* MessageNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A76B2B27F6789500B6A03E /* MessageNotificationView.swift */; };
+		93A76B2C27F6789500B6A03E /* NotificationAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A76B2B27F6789500B6A03E /* NotificationAlertView.swift */; };
 		93AE06EF290892B90009A50C /* SeenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AE06EE290892B90009A50C /* SeenResponseModel.swift */; };
 		93B4A9EE27DB3AB000DC52F6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */; };
 		93B8916D27CD4536000F94B0 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916C27CD4536000F94B0 /* MessageTableViewCell.swift */; };
@@ -170,7 +170,6 @@
 		93BD5B3C27FB83A400240331 /* RoomEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BD5B3B27FB83A400240331 /* RoomEntityService.swift */; };
 		93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3CF290C519900DEE9D1 /* WindowManager.swift */; };
 		93BED3D8290C746000DEE9D1 /* NotificationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */; };
-		93BED3DA290C746B00DEE9D1 /* NotificationAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D9290C746B00DEE9D1 /* NotificationAlertView.swift */; };
 		93BF627528EB9B7900B48BBF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* Enums.swift */; };
 		93BF627628EB9B7900B48BBF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* Enums.swift */; };
 		93BFA3722857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */; };
@@ -441,7 +440,7 @@
 		939B30452850DDE700FFA537 /* SyncMessagesResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMessagesResponseModel.swift; sourceTree = "<group>"; };
 		939B30472850DE4300FFA537 /* SyncMessageRecordsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMessageRecordsResponseModel.swift; sourceTree = "<group>"; };
 		939B30492850DE9200FFA537 /* SyncUsersResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncUsersResponseModel.swift; sourceTree = "<group>"; };
-		93A76B2B27F6789500B6A03E /* MessageNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageNotificationView.swift; sourceTree = "<group>"; };
+		93A76B2B27F6789500B6A03E /* NotificationAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertView.swift; sourceTree = "<group>"; };
 		93AE06EE290892B90009A50C /* SeenResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeenResponseModel.swift; sourceTree = "<group>"; };
 		93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		93B8916C27CD4536000F94B0 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -450,7 +449,6 @@
 		93BD5B3B27FB83A400240331 /* RoomEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomEntityService.swift; sourceTree = "<group>"; };
 		93BED3CF290C519900DEE9D1 /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertViewController.swift; sourceTree = "<group>"; };
-		93BED3D9290C746B00DEE9D1 /* NotificationAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertView.swift; sourceTree = "<group>"; };
 		93BF627428EB9B7900B48BBF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		93C07A88290127FD003DFD61 /* EmptyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -819,7 +817,7 @@
 			isa = PBXGroup;
 			children = (
 				93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */,
-				93BED3D9290C746B00DEE9D1 /* NotificationAlertView.swift */,
+				93A76B2B27F6789500B6A03E /* NotificationAlertView.swift */,
 			);
 			path = NotificationAlert;
 			sourceTree = "<group>";
@@ -1394,7 +1392,6 @@
 				931E23A827D2DCDA0065FFFC /* MessageStateView.swift */,
 				93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */,
 				938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */,
-				93A76B2B27F6789500B6A03E /* MessageNotificationView.swift */,
 				932462D928FCBF0400E8C1B9 /* CustomTextView.swift */,
 				6C2638942907DB4400E7E79E /* CustomTableViewHeader.swift */,
 			);
@@ -1947,7 +1944,6 @@
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
 				93E4F6F027C2BB9700432CFA /* SelectUsersView.swift in Sources */,
 				AD9BFD4B272B107500736318 /* EnterVerifyCodeViewModel.swift in Sources */,
-				93BED3DA290C746B00DEE9D1 /* NotificationAlertView.swift in Sources */,
 				AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */,
 				9323EC6B27B3E8D500FA0EB1 /* NavView.swift in Sources */,
 				93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */,
@@ -1990,7 +1986,7 @@
 				934087BA27EBAE6F00209571 /* TestRepository+Tests.swift in Sources */,
 				93C07A9C290139B5003DFD61 /* Message+Extensions.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
-				93A76B2C27F6789500B6A03E /* MessageNotificationView.swift in Sources */,
+				93A76B2C27F6789500B6A03E /* NotificationAlertView.swift in Sources */,
 				AD8192532721A92700D5BE48 /* StackItemView.swift in Sources */,
 				939B30482850DE4300FFA537 /* SyncMessageRecordsResponseModel.swift in Sources */,
 				ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */,

@@ -13,6 +13,7 @@ class NotificationAlertViewController: BaseViewController {
     init(info: MessageNotificationInfo) {
         notificationAlertView = NotificationAlertView(info: info)
         super.init(nibName: nil, bundle: nil)
+        setupBindings(info: info)
     }
     
     required init?(coder: NSCoder) {
@@ -30,6 +31,15 @@ extension NotificationAlertViewController {
 private extension NotificationAlertViewController {
     func setupView() {
         view.addSubview(notificationAlertView)
-        notificationAlertView.fillSuperview()
+        notificationAlertView.centerXToSuperview()
+        notificationAlertView.centerYToSuperview()
+    }
+    
+    func setupBindings(info: MessageNotificationInfo) {
+        notificationAlertView
+            .tap()
+            .sink { _ in
+//                WindowManager.shared.notificationPublisher.send(.tap(info: info))
+            }.store(in: &subscriptions)
     }
 }

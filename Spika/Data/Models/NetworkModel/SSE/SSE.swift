@@ -28,7 +28,7 @@ class SSE {
     }
     
     func syncAndStartSSE() {
-        WindowManager.shared.indicatorColorPublisher.send(.appOrange)
+//        WindowManager.shared.indicatorColorPublisher.send(.appOrange)
         if eventSource == nil {
             setupSSE()
         }
@@ -79,11 +79,11 @@ private extension SSE {
         eventSource = EventSource(url: serverURL)
         
         eventSource?.onOpen {
-            WindowManager.shared.indicatorColorPublisher.send(.appGreen)
+//            WindowManager.shared.indicatorColorPublisher.send(.appGreen)
         }
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
-            WindowManager.shared.indicatorColorPublisher.send(.appRed)
+//            WindowManager.shared.indicatorColorPublisher.send(.appRed)
             self?.syncAndStartSSE()
 
 //            guard reconnect ?? false else { return }
@@ -258,7 +258,7 @@ private extension SSE {
     
     func showNotification(info: MessageNotificationInfo) {
         DispatchQueue.main.async {
-            WindowManager.shared.notificationPublisher.send(.show(info: info))
+//            WindowManager.shared.notificationPublisher.send(.show(info: info))
         }
     }
 }

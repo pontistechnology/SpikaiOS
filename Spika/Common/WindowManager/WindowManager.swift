@@ -12,15 +12,16 @@ import Combine
 // TODO: check Main thread
 final class WindowManager {
 
-    static let shared = WindowManager()
-    
+    private let scene: UIWindowScene
     private var subs = Set<AnyCancellable>()
     private var indicatorWindow: UIWindow?
     private var notificationWindow: UIWindow?
+    private var errorWindow: UIWindow?
     let notificationPublisher = PassthroughSubject<NotificationType, Never>()
     let indicatorColorPublisher  = PassthroughSubject<UIColor, Never>()
     
-    private init() {
+    init(scene: UIWindowScene) {
+        self.scene = scene
         setupIndicatorWindow()
         setupBindings()
     }
@@ -29,11 +30,9 @@ final class WindowManager {
 // MARK: - Indicator Window
 private extension WindowManager {
     func setupIndicatorWindow() {
-        guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
-        else { return }
-        indicatorWindow = UIWindow(windowScene: windowScene)
+        indicatorWindow = UIWindow(windowScene: scene)
         let width = 8.0
-        indicatorWindow?.frame = CGRect(x: windowScene.screen.bounds.width - width - 10,
+        indicatorWindow?.frame = CGRect(x: scene.screen.bounds.width - width - 10,
                                         y: 60,
                                         width: width,
                                         height: width)
@@ -50,13 +49,11 @@ private extension WindowManager {
 private extension WindowManager {
     func setupNotificationWindow(info: MessageNotificationInfo) {
         notificationWindow = nil
-        guard let windowScene = UIApplication.shared.connectedScenes.filter({ $0.activationState == .foregroundActive }).first as? UIWindowScene
-        else { return }
-        notificationWindow = UIWindow(windowScene: windowScene)
+        notificationWindow = UIWindow(windowScene: scene)
         let padding = 15.0
         notificationWindow?.frame = CGRect(x: padding,
                                            y: 60,
-                                           width: windowScene.screen.bounds.width - padding * 2,
+                                           width: scene.screen.bounds.width - padding * 2,
                                            height: 150)
         notificationWindow?.clipsToBounds = true
         notificationWindow?.rootViewController = NotificationAlertViewController(info: info)
@@ -66,9 +63,34 @@ private extension WindowManager {
     }
 }
 
+// MARK: - Error window
+
+private extension WindowManager {
+    func setupErrorWindow(something: String) {
+        errorWindow = nil
+        guard let windowScene = UIApplication.shared.connectedScenes
+            .filter({ $0.activationState == .foregroundActive })
+            .first as? UIWindowScene
+        else { return }
+        errorWindow = UIWindow(windowScene: windowScene)
+        let padding = 15.0
+        errorWindow?.frame = CGRect(x: padding,
+                                           y: 60,
+                                           width: windowScene.screen.bounds.width - padding * 2,
+                                           height: 150)
+        errorWindow?.clipsToBounds = true
+//        errorWindow?.rootViewController = TODO: d o
+        errorWindow?.backgroundColor = .red
+        errorWindow?.isHidden = false
+        errorWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
+    }
+}
+
 extension WindowManager {
     func setupBindings() {
-        notificationPublisher.sink { [weak self] type in
+        notificationPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] type in
             switch type {
             case .show(info: let info):
                 self?.setupNotificationWindow(info: info)
@@ -82,5 +104,11 @@ extension WindowManager {
             .sink { [weak self] color in
                 self?.indicatorWindow?.backgroundColor = color
             }.store(in: &subs)
+    }
+}
+
+extension WindowManager {
+    func testn() {
+        print("RADI")
     }
 }

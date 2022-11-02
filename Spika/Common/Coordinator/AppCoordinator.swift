@@ -14,12 +14,13 @@ class AppCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
+    let windowScene: UIWindowScene
     var subs = Set<AnyCancellable>()
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, windowScene: UIWindowScene) {
+        self.windowScene = windowScene
         self.navigationController = navigationController
-//        setupBindings()
-        
+        getWindowManager().testn()
     }
     
     //  This can be in scene delegate?
@@ -186,15 +187,7 @@ class AppCoordinator: Coordinator {
 }
 
 extension AppCoordinator {
-    func setupBindings() {
-        WindowManager.shared.notificationPublisher
-            .sink { type in
-                switch type {
-                case .show(info: _):
-                    break
-                case .tap(info: _):
-                    print("navigacija")
-                }
-            }.store(in: &subs)
+    func getWindowManager() -> WindowManager {
+        Assembler.sharedAssembler.resolver.resolve(WindowManager.self, argument: windowScene)! as! WindowManager
     }
 }
