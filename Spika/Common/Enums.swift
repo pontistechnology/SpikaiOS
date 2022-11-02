@@ -51,11 +51,6 @@ enum FRCChangeType {
     case other
 }
 
-enum NotificationType {
-    case show(info: MessageNotificationInfo)
-    case  tap(info: MessageNotificationInfo)
-}
-
 // TODO: move this
 struct MessageNotificationInfo {
     let title: String

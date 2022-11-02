@@ -194,7 +194,7 @@ extension AppCoordinator {
     func showNotification(info: MessageNotificationInfo) {
         DispatchQueue.main.async { [weak self] in
             if (self?.navigationController.viewControllers.last as? CurrentChatViewController) == nil {
-                self?.getWindowManager().setupNotificationWindow(info: info)
+                self?.getWindowManager().showNotificationWindow(info: info)
             }
         }
     }
@@ -207,15 +207,10 @@ extension AppCoordinator {
     
     func setupBindings() {
         getWindowManager()
-            .notificationPublisher
+            .notificationTapPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] type in
-            switch type {
-            case .show(info: let info):
-                break
-            case .tap(info: let info):
+            .sink { [weak self] info in
                 self?.presentCurrentChatScreen(room: info.room)
-            }
-        }.store(in: &subs)
+            }.store(in: &subs)
     }
 }

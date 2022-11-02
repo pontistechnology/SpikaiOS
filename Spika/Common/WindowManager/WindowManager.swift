@@ -19,7 +19,7 @@ final class WindowManager {
     private var notificationWindow: UIWindow?
     private var errorWindow: UIWindow?
     
-    let notificationPublisher = PassthroughSubject<NotificationType, Never>()
+    let notificationTapPublisher = PassthroughSubject<MessageNotificationInfo, Never>()
     let indicatorColorPublisher  = PassthroughSubject<UIColor, Never>()
     
     init(scene: UIWindowScene) {
@@ -49,7 +49,7 @@ private extension WindowManager {
 // MARK: - Notification window
 
 extension WindowManager {
-    func setupNotificationWindow(info: MessageNotificationInfo) {
+    func showNotificationWindow(info: MessageNotificationInfo) {
         notificationWindow = nil
         notificationWindow = UIWindow(windowScene: scene)
         let padding = 15.0
@@ -58,7 +58,7 @@ extension WindowManager {
                                            width: scene.screen.bounds.width - padding * 2,
                                            height: 150)
         notificationWindow?.clipsToBounds = true
-        notificationWindow?.rootViewController = NotificationAlertViewController(info: info, tapPublisher: notificationPublisher)
+        notificationWindow?.rootViewController = NotificationAlertViewController(info: info, tapPublisher: notificationTapPublisher)
         notificationWindow?.backgroundColor = .blue
         notificationWindow?.isHidden = false
         notificationWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
@@ -86,16 +86,11 @@ private extension WindowManager {
 
 extension WindowManager {
     func setupBindings() {
-        notificationPublisher
+        notificationTapPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] type in
-            switch type {
-            case .show(info: let info):
-                self?.setupNotificationWindow(info: info)
-            case .tap(info: _):
+            .sink { [weak self] _ in
                 self?.notificationWindow = nil
-            }
-        }.store(in: &subs)
+            }.store(in: &subs)
         
         indicatorColorPublisher
             .receive(on: DispatchQueue.main)

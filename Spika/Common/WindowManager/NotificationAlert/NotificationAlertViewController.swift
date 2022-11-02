@@ -10,9 +10,9 @@ import Combine
 
 class NotificationAlertViewController: BaseViewController {
     private let notificationAlertView: NotificationAlertView
-    private let tapPublisher: PassthroughSubject<NotificationType, Never>
+    private let tapPublisher: PassthroughSubject<MessageNotificationInfo, Never>
     
-    init(info: MessageNotificationInfo, tapPublisher: PassthroughSubject<NotificationType, Never>) {
+    init(info: MessageNotificationInfo, tapPublisher: PassthroughSubject<MessageNotificationInfo, Never>) {
         self.tapPublisher = tapPublisher
         notificationAlertView = NotificationAlertView(info: info)
         super.init(nibName: nil, bundle: nil)
@@ -42,7 +42,7 @@ private extension NotificationAlertViewController {
         notificationAlertView
             .tap()
             .sink { [weak self] _ in
-                self?.tapPublisher.send(.tap(info: info))
+                self?.tapPublisher.send(info)
             }.store(in: &subscriptions)
     }
 }
