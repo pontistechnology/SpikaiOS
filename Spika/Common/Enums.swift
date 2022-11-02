@@ -61,6 +61,7 @@ struct MessageNotificationInfo {
     let title: String
     let photoUrl: String
     let messageText: String
+    let room: Room
 }
 
 enum CustomFontName: String {

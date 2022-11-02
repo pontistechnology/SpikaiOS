@@ -192,11 +192,15 @@ extension AppCoordinator {
     }
     
     func setupBindings() {
-        getWindowManager().notificationPublisher.sink { type in
+        getWindowManager()
+            .notificationPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] type in
             switch type {
             case .show(info: let info):
                 break
             case .tap(info: let info):
+                self?.presentCurrentChatScreen(room: info.room)
                 print("NAVIGACIJA")
             }
         }.store(in: &subs)
