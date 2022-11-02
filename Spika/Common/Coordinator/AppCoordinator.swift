@@ -191,6 +191,15 @@ extension AppCoordinator {
         Assembler.sharedAssembler.resolver.resolve(WindowManager.self, argument: windowScene)!
     }
     
+    private func setupBindings() {
+        getWindowManager()
+            .notificationTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] info in
+                self?.presentCurrentChatScreen(room: info.room)
+            }.store(in: &subs)
+    }
+    
     func showNotification(info: MessageNotificationInfo) {
         DispatchQueue.main.async { [weak self] in
             if (self?.navigationController.viewControllers.last as? CurrentChatViewController) == nil {
@@ -200,17 +209,6 @@ extension AppCoordinator {
     }
     
     func changeIndicatorColor(to color: UIColor) {
-        getWindowManager()
-            .indicatorColorPublisher
-            .send(color)
-    }
-    
-    func setupBindings() {
-        getWindowManager()
-            .notificationTapPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] info in
-                self?.presentCurrentChatScreen(room: info.room)
-            }.store(in: &subs)
+        getWindowManager().changeIndicatorColor(to: color)
     }
 }

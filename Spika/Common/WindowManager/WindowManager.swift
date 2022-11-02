@@ -20,7 +20,6 @@ final class WindowManager {
     private var errorWindow: UIWindow?
     
     let notificationTapPublisher = PassthroughSubject<MessageNotificationInfo, Never>()
-    let indicatorColorPublisher  = PassthroughSubject<UIColor, Never>()
     
     init(scene: UIWindowScene) {
         self.scene = scene
@@ -30,8 +29,8 @@ final class WindowManager {
 }
 
 // MARK: - Indicator Window
-private extension WindowManager {
-    func setupIndicatorWindow() {
+extension WindowManager {
+    private func setupIndicatorWindow() {
         indicatorWindow = UIWindow(windowScene: scene)
         let width = 8.0
         indicatorWindow?.frame = CGRect(x: scene.screen.bounds.width - width - 10,
@@ -43,6 +42,12 @@ private extension WindowManager {
         indicatorWindow?.layer.cornerRadius = width / 2
         indicatorWindow?.clipsToBounds = true
         indicatorWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
+    }
+    
+    func changeIndicatorColor(to color: UIColor) {
+        DispatchQueue.main.async { [weak self] in
+            self?.indicatorWindow?.backgroundColor = color
+        }
     }
 }
 
@@ -90,12 +95,6 @@ extension WindowManager {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.notificationWindow = nil
-            }.store(in: &subs)
-        
-        indicatorColorPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] color in
-                self?.indicatorWindow?.backgroundColor = color
             }.store(in: &subs)
     }
 }
