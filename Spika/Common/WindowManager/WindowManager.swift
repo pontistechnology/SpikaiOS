@@ -33,7 +33,7 @@ private extension WindowManager {
         else { return }
         indicatorWindow = UIWindow(windowScene: windowScene)
         let width = 8.0
-        indicatorWindow?.frame = CGRect(x: windowScene.screen.bounds.width - width,
+        indicatorWindow?.frame = CGRect(x: windowScene.screen.bounds.width - width - 10,
                                         y: 60,
                                         width: width,
                                         height: width)
@@ -77,15 +77,10 @@ extension WindowManager {
             }
         }.store(in: &subs)
         
-        indicatorColorPublisher.sink { [weak self] color in
-            self?.indicatorWindow?.backgroundColor = color
-        }.store(in: &subs)
+        indicatorColorPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] color in
+                self?.indicatorWindow?.backgroundColor = color
+            }.store(in: &subs)
     }
 }
-
-// Remember
-//windowWorkItem?.cancel()
-
-//if vc is CurrentChatViewController {
-//    return
-//}
