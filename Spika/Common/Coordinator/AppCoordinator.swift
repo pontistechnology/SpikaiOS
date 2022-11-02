@@ -18,7 +18,8 @@ class AppCoordinator: Coordinator {
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        setupBindings()
+//        setupBindings()
+        
     }
     
     //  This can be in scene delegate?

@@ -14,6 +14,7 @@ class ConnectionIndicatorView: UIView {
     init() {
         super.init(frame: .zero)
         layer.cornerRadius = 4
+        backgroundColor = .appRed
         constrainWidth(8)
         constrainHeight(8)
         setupBindings()
@@ -25,9 +26,10 @@ class ConnectionIndicatorView: UIView {
 }
 
 extension ConnectionIndicatorView {
+    func changeColor(to color: UIColor) {
+        backgroundColor = color
+    }
     func setupBindings() {
-        WindowManager.shared.indicatorColorPublisher.sink { [weak self] color in
-            self?.backgroundColor = color
-        }.store(in: &subs)
+        
     }
 }

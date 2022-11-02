@@ -8,9 +8,10 @@
 import UIKit
 
 class NotificationAlertViewController: BaseViewController {
-    private let notificationAlertView = NotificationAlertView()
+    private let notificationAlertView: NotificationAlertView
     
-    init() {
+    init(info: MessageNotificationInfo) {
+        notificationAlertView = NotificationAlertView(info: info)
         super.init(nibName: nil, bundle: nil)
     }
     
