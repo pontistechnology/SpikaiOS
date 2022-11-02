@@ -253,19 +253,14 @@ private extension SSE {
             self?.showNotification(info: info)
         }.store(in: &subs)
     }
-    
-    func showNotification(info: MessageNotificationInfo) {
-        DispatchQueue.main.async { [weak self] in
-            (self?.coordinator as? AppCoordinator)?.getWindowManager().notificationPublisher.send(.show(info: info))
-        }
-    }
 }
 
 private extension SSE {
     func changeIndicatorColor(to color: UIColor) {
-        (coordinator as? AppCoordinator)?
-            .getWindowManager()
-            .indicatorColorPublisher
-            .send(color)
+        (coordinator as? AppCoordinator)?.changeIndicatorColor(to: color)
+    }
+    
+    func showNotification(info: MessageNotificationInfo) {
+        (coordinator as? AppCoordinator)?.showNotification(info: info)
     }
 }

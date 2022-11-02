@@ -48,7 +48,7 @@ private extension WindowManager {
 
 // MARK: - Notification window
 
-private extension WindowManager {
+extension WindowManager {
     func setupNotificationWindow(info: MessageNotificationInfo) {
         notificationWindow = nil
         notificationWindow = UIWindow(windowScene: scene)
@@ -70,15 +70,11 @@ private extension WindowManager {
 private extension WindowManager {
     func setupErrorWindow(something: String) {
         errorWindow = nil
-        guard let windowScene = UIApplication.shared.connectedScenes
-            .filter({ $0.activationState == .foregroundActive })
-            .first as? UIWindowScene
-        else { return }
-        errorWindow = UIWindow(windowScene: windowScene)
+        errorWindow = UIWindow(windowScene: scene)
         let padding = 15.0
         errorWindow?.frame = CGRect(x: padding,
                                            y: 60,
-                                           width: windowScene.screen.bounds.width - padding * 2,
+                                           width: scene.screen.bounds.width - padding * 2,
                                            height: 150)
         errorWindow?.clipsToBounds = true
 //        errorWindow?.rootViewController = TODO: d o

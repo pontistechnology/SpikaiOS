@@ -187,8 +187,22 @@ class AppCoordinator: Coordinator {
 }
 
 extension AppCoordinator {
-    func getWindowManager() -> WindowManager {
+    private func getWindowManager() -> WindowManager {
         Assembler.sharedAssembler.resolver.resolve(WindowManager.self, argument: windowScene)!
+    }
+    
+    func showNotification(info: MessageNotificationInfo) {
+        DispatchQueue.main.async { [weak self] in
+            if (self?.navigationController.viewControllers.last as? CurrentChatViewController) == nil {
+                self?.getWindowManager().setupNotificationWindow(info: info)
+            }
+        }
+    }
+    
+    func changeIndicatorColor(to color: UIColor) {
+        getWindowManager()
+            .indicatorColorPublisher
+            .send(color)
     }
     
     func setupBindings() {
@@ -201,7 +215,6 @@ extension AppCoordinator {
                 break
             case .tap(info: let info):
                 self?.presentCurrentChatScreen(room: info.room)
-                print("NAVIGACIJA")
             }
         }.store(in: &subs)
     }
