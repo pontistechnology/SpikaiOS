@@ -20,7 +20,7 @@ class AppCoordinator: Coordinator {
     init(navigationController: UINavigationController, windowScene: UIWindowScene) {
         self.windowScene = windowScene
         self.navigationController = navigationController
-        getWindowManager().testn()
+        setupBindings()
     }
     
     //  This can be in scene delegate?
@@ -188,6 +188,17 @@ class AppCoordinator: Coordinator {
 
 extension AppCoordinator {
     func getWindowManager() -> WindowManager {
-        Assembler.sharedAssembler.resolver.resolve(WindowManager.self, argument: windowScene)! as! WindowManager
+        Assembler.sharedAssembler.resolver.resolve(WindowManager.self, argument: windowScene)!
+    }
+    
+    func setupBindings() {
+        getWindowManager().notificationPublisher.sink { type in
+            switch type {
+            case .show(info: let info):
+                break
+            case .tap(info: let info):
+                print("NAVIGACIJA")
+            }
+        }.store(in: &subs)
     }
 }

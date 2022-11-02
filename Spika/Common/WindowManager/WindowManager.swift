@@ -14,9 +14,11 @@ final class WindowManager {
 
     private let scene: UIWindowScene
     private var subs = Set<AnyCancellable>()
+    
     private var indicatorWindow: UIWindow?
     private var notificationWindow: UIWindow?
     private var errorWindow: UIWindow?
+    
     let notificationPublisher = PassthroughSubject<NotificationType, Never>()
     let indicatorColorPublisher  = PassthroughSubject<UIColor, Never>()
     
@@ -56,7 +58,7 @@ private extension WindowManager {
                                            width: scene.screen.bounds.width - padding * 2,
                                            height: 150)
         notificationWindow?.clipsToBounds = true
-        notificationWindow?.rootViewController = NotificationAlertViewController(info: info)
+        notificationWindow?.rootViewController = NotificationAlertViewController(info: info, tapPublisher: notificationPublisher)
         notificationWindow?.backgroundColor = .blue
         notificationWindow?.isHidden = false
         notificationWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready

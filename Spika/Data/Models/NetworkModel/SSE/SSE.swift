@@ -11,9 +11,7 @@ import IKEventSource
 import UIKit
 
 class SSE {
-    private var windowWorkItem: DispatchWorkItem?
     private var eventSource: EventSource?
-    private var alertWindow: UIWindow?
     private let repository: Repository
     private let coordinator: Coordinator
     private var subs = Set<AnyCancellable>()
@@ -28,7 +26,7 @@ class SSE {
     }
     
     func syncAndStartSSE() {
-//        WindowManager.shared.indicatorColorPublisher.send(.appOrange)
+        changeIndicatorColor(to: .appOrange)
         if eventSource == nil {
             setupSSE()
         }
@@ -78,12 +76,12 @@ private extension SSE {
         }
         eventSource = EventSource(url: serverURL)
         
-        eventSource?.onOpen {
-//            WindowManager.shared.indicatorColorPublisher.send(.appGreen)
+        eventSource?.onOpen { [weak self] in
+            self?.changeIndicatorColor(to: .appGreen)
         }
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
-//            WindowManager.shared.indicatorColorPublisher.send(.appRed)
+            self?.changeIndicatorColor(to: .appRed)
             self?.syncAndStartSSE()
 
 //            guard reconnect ?? false else { return }
@@ -257,8 +255,17 @@ private extension SSE {
     }
     
     func showNotification(info: MessageNotificationInfo) {
-        DispatchQueue.main.async {
-//            WindowManager.shared.notificationPublisher.send(.show(info: info))
+        DispatchQueue.main.async { [weak self] in
+            (self?.coordinator as? AppCoordinator)?.getWindowManager().notificationPublisher.send(.show(info: info))
         }
+    }
+}
+
+private extension SSE {
+    func changeIndicatorColor(to color: UIColor) {
+        (coordinator as? AppCoordinator)?
+            .getWindowManager()
+            .indicatorColorPublisher
+            .send(color)
     }
 }

@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 class NotificationAlertViewController: BaseViewController {
     private let notificationAlertView: NotificationAlertView
+    private let tapPublisher: PassthroughSubject<NotificationType, Never>
     
-    init(info: MessageNotificationInfo) {
+    init(info: MessageNotificationInfo, tapPublisher: PassthroughSubject<NotificationType, Never>) {
+        self.tapPublisher = tapPublisher
         notificationAlertView = NotificationAlertView(info: info)
         super.init(nibName: nil, bundle: nil)
         setupBindings(info: info)
@@ -38,8 +41,8 @@ private extension NotificationAlertViewController {
     func setupBindings(info: MessageNotificationInfo) {
         notificationAlertView
             .tap()
-            .sink { _ in
-//                WindowManager.shared.notificationPublisher.send(.tap(info: info))
+            .sink { [weak self] _ in
+                self?.tapPublisher.send(.tap(info: info))
             }.store(in: &subscriptions)
     }
 }
