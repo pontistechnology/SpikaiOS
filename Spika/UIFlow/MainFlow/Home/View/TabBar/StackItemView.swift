@@ -18,20 +18,8 @@ class StackItemView: UIView, BaseView {
     var imageView = UIImageView()
     var highlightsView = UIView()
     
-    var indicationPublisher: AnyPublisher<String,Never>? {
-        didSet {
-            self.indicationPublisher?
-                .sink(receiveValue: { string in
-                    let hide = string == "0" || string.isEmpty
-                    self.counterLabel.text = string
-                    self.counterLabel.isHidden = hide
-                }).store(in: &subscriptions)
-        }
-    }
-    
     var subscriptions = Set<AnyCancellable>()
     
-//    var counterView: UIView?
     lazy var counterLabel: CustomLabel = {
         let label = CustomLabel(text: "", textSize: 10, textColor: .white, fontName: .MontserratSemiBold, alignment: .center)
         label.backgroundColor = .appRed

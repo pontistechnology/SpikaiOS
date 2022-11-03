@@ -125,14 +125,14 @@ extension AllChatsViewController {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstLeft = UIContextualAction(style: .normal, title: "First left") { (action, view, completionHandler) in
-                self.printSwipe()
+        let firstLeft = UIContextualAction(style: .normal, title: "First left") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         firstLeft.backgroundColor = .systemBlue
         
-        let secondLeft = UIContextualAction(style: .normal, title: "Second left") { (action, view, completionHandler) in
-                self.printSwipe()
+        let secondLeft = UIContextualAction(style: .normal, title: "Second left") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         secondLeft.backgroundColor = .systemPink
@@ -144,14 +144,14 @@ extension AllChatsViewController {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstRightAction = UIContextualAction(style: .normal, title: "First Right") { (action, view, completionHandler) in
-                self.printSwipe()
+        let firstRightAction = UIContextualAction(style: .normal, title: "First Right") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         firstRightAction.backgroundColor = .systemGreen
         
-        let secondRightAction = UIContextualAction(style: .destructive, title: "Second Right") { (action, view, completionHandler) in
-                self.printSwipe()
+        let secondRightAction = UIContextualAction(style: .destructive, title: "Second Right") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         secondRightAction.backgroundColor = .systemRed

@@ -15,4 +15,5 @@ struct TabBarItem {
     let position: Int
     var isSelected: Bool
     var indicationPublisher: AnyPublisher<String,Never>?
+    var subscriptions = Set<AnyCancellable>()
 }

@@ -47,7 +47,12 @@ class HomeTabBar: UIView, BaseView {
             self.tabBarItems[i].isSelected = i == 0
             tabView.item = self.tabBarItems[i]
             tabView.delegate = self
-            tabView.indicationPublisher = self.tabBarItems[i].indicationPublisher
+            self.tabBarItems[i].indicationPublisher?
+                .sink { value in
+                    let hide = value == "0" || value.isEmpty
+                    tabView.counterLabel.text = value
+                    tabView.counterLabel.isHidden = hide
+                }.store(in: &self.tabBarItems[i].subscriptions)
             self.tabStackView.addArrangedSubview(tabView)
         }
     }
