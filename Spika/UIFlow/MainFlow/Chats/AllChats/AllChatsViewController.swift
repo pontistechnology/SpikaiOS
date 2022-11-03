@@ -34,6 +34,13 @@ class AllChatsViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         setRoomsFetch()
+        
+        self.viewModel.repository
+            .unreadRoomsPublisher
+            .sink { string in
+                self.navigationController?.navigationItem.backBarButtonItem =
+                UIBarButtonItem(title:"Title", style:.plain, target:nil, action:nil)
+            }.store(in: &self.subscriptions)
     }
 }
 
