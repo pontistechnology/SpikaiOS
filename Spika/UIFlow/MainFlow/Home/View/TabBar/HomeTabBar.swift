@@ -47,6 +47,7 @@ class HomeTabBar: UIView, BaseView {
             self.tabBarItems[i].isSelected = i == 0
             tabView.item = self.tabBarItems[i]
             tabView.delegate = self
+            tabView.indicationPublisher = self.tabBarItems[i].indicationPublisher
             self.tabStackView.addArrangedSubview(tabView)
         }
     }

@@ -59,6 +59,7 @@ protocol Repository {
     func checkOnlineRoom(forUserId userId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func checkOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
+    var unreadRoomsPublisher: PassthroughSubject<Int,Never> { get }
     
     // MARK: NETWORKING: Message
     

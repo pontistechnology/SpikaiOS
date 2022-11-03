@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol StackItemViewDelegate: AnyObject {
     func handleTap(_ view: StackItemView)
@@ -16,6 +17,18 @@ class StackItemView: UIView, BaseView {
     var titleLbl = UILabel()
     var imageView = UIImageView()
     var highlightsView = UIView()
+    
+    var indicationPublisher: AnyPublisher<String,Never>? {
+        didSet {
+            self.indicationPublisher?
+                .sink(receiveValue: { string in
+                    self.counterLabel.text = string
+                    self.counterLabel.isHidden = string.isEmpty
+                }).store(in: &subscriptions)
+        }
+    }
+    
+    var subscriptions = Set<AnyCancellable>()
     
 //    var counterView: UIView?
     lazy var counterLabel: CustomLabel = {

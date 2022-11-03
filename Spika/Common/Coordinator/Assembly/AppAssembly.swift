@@ -5,7 +5,7 @@
 //  Created by Marko on 06.10.2021..
 //
 
-import Foundation
+import Combine
 import Swinject
 
 final class AppAssembly: Assembly {
