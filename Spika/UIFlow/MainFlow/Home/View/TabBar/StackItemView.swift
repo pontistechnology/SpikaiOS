@@ -22,8 +22,9 @@ class StackItemView: UIView, BaseView {
         didSet {
             self.indicationPublisher?
                 .sink(receiveValue: { string in
+                    let hide = string == "0" || string.isEmpty
                     self.counterLabel.text = string
-                    self.counterLabel.isHidden = string.isEmpty
+                    self.counterLabel.isHidden = hide
                 }).store(in: &subscriptions)
         }
     }
@@ -125,7 +126,7 @@ class StackItemView: UIView, BaseView {
         titleLbl.centerY(inView: self)
         
         counterLabel.centerXToSuperview(offset: 18)
-        counterLabel.centerYToSuperview(offset: -18)
+        counterLabel.centerYToSuperview(offset: -14)
         counterLabel.anchor(size: CGSize(width: 20, height: 20))
     }
     

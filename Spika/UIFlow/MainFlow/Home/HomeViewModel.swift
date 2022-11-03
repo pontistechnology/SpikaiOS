@@ -10,20 +10,12 @@ import CoreData
 
 class HomeViewModel: BaseViewModel {
     
-//    let unreadChats: PassthroughSubject<Int,Never>
-    
     var frc: NSFetchedResultsController<RoomEntity>?
     
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
         self.setupUnreadMessagesFrc()
     }
-    
-//    init(repository: Repository, coordinator: Coordinator, unreadChats: PassthroughSubject<Int,Never>) {
-//        self.unreadChats = unreadChats
-//        super.init(repository: repository, coordinator: coordinator)
-//        self.setupUnreadMessagesFrc()
-//    }
     
     func setupUnreadMessagesFrc() {
         let fetchRequest = RoomEntity.fetchRequest()

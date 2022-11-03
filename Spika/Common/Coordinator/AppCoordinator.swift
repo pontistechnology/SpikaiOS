@@ -14,8 +14,6 @@ class AppCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
-    
-//    let unreadChats = PassthroughSubject<Int,Never>()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
