@@ -17,9 +17,10 @@ final class WindowManager {
     
     private var indicatorWindow: UIWindow?
     private var notificationWindow: UIWindow?
-    private var errorWindow: UIWindow?
+    private var popUpWindow: UIWindow?
     
     let notificationTapPublisher = PassthroughSubject<MessageNotificationInfo, Never>()
+    let popUpPublisher = PassthroughSubject<PopUpPublisherType, Never>()
     
     init(scene: UIWindowScene) {
         self.scene = scene
@@ -57,35 +58,34 @@ extension WindowManager {
     func showNotificationWindow(info: MessageNotificationInfo) {
         notificationWindow = nil
         notificationWindow = UIWindow(windowScene: scene)
-        let padding = 15.0
-        notificationWindow?.frame = CGRect(x: padding,
-                                           y: 60,
-                                           width: scene.screen.bounds.width - padding * 2,
-                                           height: 150)
+        notificationWindow?.frame = CGRect(x: 0, y: 60,
+                                           width: scene.screen.bounds.width, height: 100)
         notificationWindow?.clipsToBounds = true
         notificationWindow?.rootViewController = NotificationAlertViewController(info: info, tapPublisher: notificationTapPublisher)
-        notificationWindow?.backgroundColor = .blue
+//        notificationWindow?.backgroundColor = .blue
         notificationWindow?.isHidden = false
         notificationWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
     }
 }
 
-// MARK: - Error window
+// MARK: - PopUp window
 
-private extension WindowManager {
-    func setupErrorWindow(something: String) {
-        errorWindow = nil
-        errorWindow = UIWindow(windowScene: scene)
-        let padding = 15.0
-        errorWindow?.frame = CGRect(x: padding,
-                                           y: 60,
-                                           width: scene.screen.bounds.width - padding * 2,
-                                           height: 150)
-        errorWindow?.clipsToBounds = true
-//        errorWindow?.rootViewController = TODO: d o
-        errorWindow?.backgroundColor = .red
-        errorWindow?.isHidden = false
-        errorWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
+enum PopUpPublisherType {
+    case dismiss(after: Int)
+    case alertViewTap(Int)
+}
+
+extension WindowManager {
+    func showPopUp(for type: PopUpType) {
+        // Check is error or popup presented 
+        popUpWindow = nil
+        popUpWindow = UIWindow(windowScene: scene)
+        popUpWindow?.frame = type.frame(for: scene)
+        popUpWindow?.clipsToBounds = true
+        popUpWindow?.rootViewController = PopUpViewController(type, publisher: popUpPublisher)
+        popUpWindow?.backgroundColor = type.isBlockingUI ? .gray.withAlphaComponent(0.5) : .clear
+        popUpWindow?.isHidden = false
+        popUpWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
     }
 }
 
@@ -96,11 +96,30 @@ extension WindowManager {
             .sink { [weak self] _ in
                 self?.notificationWindow = nil
             }.store(in: &subs)
+        
+        popUpPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] type in
+                switch type {
+                case .dismiss(after: let seconds):
+                    self?.dismissPopUpWindowAfter(seconds: seconds)
+                case .alertViewTap(_):
+                    break
+                }
+            }.store(in: &subs)
     }
 }
 
 extension WindowManager {
-    func testn() {
-        print("RADI")
+    func dismissNotificationWindowAfter(seconds: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(seconds)) { [weak self] in
+            self?.notificationWindow = nil
+        }
+    }
+    
+    func dismissPopUpWindowAfter(seconds: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(seconds)) { [weak self] in
+            self?.popUpWindow = nil
+        }
     }
 }

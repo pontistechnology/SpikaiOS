@@ -82,7 +82,7 @@ extension CurrentChatViewModel {
             case .finished:
                 print("online check finished")
             case .failure(let error):
-                PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
+                self.showError(error.localizedDescription)
                 self.networkRequestState.send(.finished)
                 // TODO: publish error
             }
@@ -130,16 +130,16 @@ extension CurrentChatViewModel {
             case .finished:
                 print("private room created")
             case .failure(let error):
-                PopUpManager.shared.presentAlert(errorMessage: error.localizedDescription)
+                self.showError(error.localizedDescription)
                 // TODO: present dialog and return? publish error
             }
         } receiveValue: { [weak self] response in
             guard let self = self else { return }
             print("creating room response: ", response)
             if let errorMessage = response.message {
-                PopUpManager.shared.presentAlert(with: (title: "Error", message: errorMessage), orientation: .horizontal, closures: [("Ok", {
-                    self.getAppCoordinator()?.popTopViewController()
-                })])
+//                PopUpManager.shared.presentAlert(with: (title: "Error", message: errorMessage), orientation: .horizontal, closures: [("Ok", {
+//                    self.getAppCoordinator()?.popTopViewController()
+//                })]) // TODO: - check
             }
             guard let room = response.data?.room else { return }
             self.saveLocalRoom(room: room)

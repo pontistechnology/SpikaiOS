@@ -45,6 +45,10 @@ class AppCoordinator: Coordinator {
         } else {
             presentEnterNumberScreen()
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.getWindowManager().showPopUp(for: .oneSec(.copy))
+        }
     }
     
     // MARK: LOGIN FLOW
@@ -210,5 +214,15 @@ extension AppCoordinator {
     
     func changeIndicatorColor(to color: UIColor) {
         getWindowManager().changeIndicatorColor(to: color)
+    }
+    
+    func showError(message: String) {
+        getWindowManager().showPopUp(for: .errorMessage(message))
+    }
+    
+    func showAlertView(title: String, message: String, buttons: [AlertViewButton]) {
+        getWindowManager().showPopUp(for: .alertView(title: title,
+                                                     message: message,
+                                                     buttons: buttons))
     }
 }
