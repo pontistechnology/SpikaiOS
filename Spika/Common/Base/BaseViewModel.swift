@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class BaseViewModel {
+class BaseViewModel: NSObject {
     let coordinator: Coordinator
     let repository: Repository
     var subscriptions = Set<AnyCancellable>()
@@ -17,6 +17,7 @@ class BaseViewModel {
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
         self.coordinator = coordinator
+        super.init()
     }
     
     func getAppCoordinator() -> AppCoordinator? {

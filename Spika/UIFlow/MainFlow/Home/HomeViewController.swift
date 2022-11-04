@@ -6,15 +6,17 @@
 //
 
 import UIKit
+import Combine
 
 class HomeViewController: UIPageViewController {
     
     var homeTabBar: HomeTabBar!
     var viewModel: HomeViewModel!
     
+    var subscriptions = Set<AnyCancellable>()
+    
     override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
         super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
-        title = ""
     }
     
     required init?(coder: NSCoder) {
@@ -33,6 +35,13 @@ class HomeViewController: UIPageViewController {
         super.viewDidLoad()
         configurePageViewController()
 //        homeTabBar.handleTap(homeTabBar.tabs[2])
+        
+        self.viewModel.repository
+            .unreadRoomsPublisher
+            .sink { value in
+                let stringValue = value > 0 ? String(value) : ""
+                self.title = stringValue
+            }.store(in: &self.subscriptions)
        }
     
     func configurePageViewController() {

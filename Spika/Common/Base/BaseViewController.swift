@@ -15,7 +15,6 @@ class BaseViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        title = " "
     }
     
     required init?(coder: NSCoder) {
@@ -23,7 +22,8 @@ class BaseViewController: UIViewController {
     }
     
     deinit {
-//        print("baseVC deinit")
+//        let name = String(describing: self.self)
+//        print("\(name) deinit")
     }
     
     override func viewWillAppear(_ animated: Bool) {

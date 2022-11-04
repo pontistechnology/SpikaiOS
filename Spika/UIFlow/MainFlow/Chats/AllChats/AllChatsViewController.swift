@@ -27,12 +27,20 @@ class AllChatsViewController: BaseViewController {
     func setupBindings() {
         allChatsView.allChatsTableView.delegate = self
         allChatsView.allChatsTableView.dataSource = self
+        allChatsView.searchBar.delegate = self
         
         allChatsView.pencilImageView.tap().sink { [weak self] _ in
             self?.viewModel.presentSelectUserScreen()
         }.store(in: &subscriptions)
         
         setRoomsFetch()
+        
+        self.viewModel.repository
+            .unreadRoomsPublisher
+            .sink { string in
+                self.navigationController?.navigationItem.backBarButtonItem =
+                UIBarButtonItem(title:"Title", style:.plain, target:nil, action:nil)
+            }.store(in: &self.subscriptions)
     }
 }
 
@@ -44,7 +52,7 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = RoomEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
+            fetchRequest.predicate = self.viewModel.defaultChatsPredicate
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp),
                                                              ascending: false),
                                             NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
@@ -75,6 +83,10 @@ extension AllChatsViewController: UITableViewDelegate {
         print("ROOM selected: ", room)
         viewModel.presentCurrentChatScreen(room: room)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+    }
 }
 
 extension AllChatsViewController: UITableViewDataSource {
@@ -92,8 +104,7 @@ extension AllChatsViewController: UITableViewDataSource {
         
         let badgeNumber = entity.numberOfUnreadMessages(myUserId: viewModel.getMyUserId())
         if room.type == .privateRoom,
-           let friendUser = room.getFriendUserInPrivateRoom(myUserId: viewModel.getMyUserId())
-        {
+           let friendUser = room.getFriendUserInPrivateRoom(myUserId: viewModel.getMyUserId()) {
             cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
                                 name: friendUser.getDisplayName(),
                                 description: entity.lastMessageText(),
@@ -121,14 +132,14 @@ extension AllChatsViewController {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstLeft = UIContextualAction(style: .normal, title: "First left") { (action, view, completionHandler) in
-                self.printSwipe()
+        let firstLeft = UIContextualAction(style: .normal, title: "First left") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         firstLeft.backgroundColor = .systemBlue
         
-        let secondLeft = UIContextualAction(style: .normal, title: "Second left") { (action, view, completionHandler) in
-                self.printSwipe()
+        let secondLeft = UIContextualAction(style: .normal, title: "Second left") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         secondLeft.backgroundColor = .systemPink
@@ -140,18 +151,37 @@ extension AllChatsViewController {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstRightAction = UIContextualAction(style: .normal, title: "First Right") { (action, view, completionHandler) in
-                self.printSwipe()
+        let firstRightAction = UIContextualAction(style: .normal, title: "First Right") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         firstRightAction.backgroundColor = .systemGreen
         
-        let secondRightAction = UIContextualAction(style: .destructive, title: "Second Right") { (action, view, completionHandler) in
-                self.printSwipe()
+        let secondRightAction = UIContextualAction(style: .destructive, title: "Second Right") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         secondRightAction.backgroundColor = .systemRed
         
         return UISwipeActionsConfiguration(actions: [secondRightAction, firstRightAction])
+    }
+}
+
+extension AllChatsViewController: SearchBarDelegate {
+    func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
+        if let value = value {
+            changePredicate(to: value)
+        }
+    }
+    
+    func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
+        changePredicate(to: "")
+    }
+    
+    func changePredicate(to newString: String) {
+        let searchPredicate = newString.isEmpty ? self.viewModel.defaultChatsPredicate : NSPredicate(format: "name CONTAINS[c] '\(newString)'")
+        self.frc?.fetchRequest.predicate = searchPredicate
+        try? self.frc?.performFetch()
+        self.allChatsView.allChatsTableView.reloadData()
     }
 }

@@ -16,6 +16,8 @@ class AppRepository: Repository {
     var subs = Set<AnyCancellable>()
     let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
     
+    let unreadRoomsPublisher = PassthroughSubject<Int,Never>()
+    
     init(networkService: NetworkService, databaseService: DatabaseService) {
         self.networkService = networkService
         self.databaseService = databaseService

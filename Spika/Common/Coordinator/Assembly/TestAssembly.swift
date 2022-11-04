@@ -5,10 +5,12 @@
 //  Created by Marko on 27.10.2021..
 //
 
-import Foundation
+import Combine
 import Swinject
 
 class TestAssembly: Assembly {
+    let unreadChats = PassthroughSubject<Int,Never>()
+    
     func assemble(container: Container) {
         assembleTestRepository(container)
         assembleHomeViewModel(container)

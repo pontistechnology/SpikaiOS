@@ -5,9 +5,33 @@
 //  Created by Marko on 06.10.2021..
 //
 
-import Foundation
+import Combine
+import CoreData
 
 class HomeViewModel: BaseViewModel {
+    
+    var frc: NSFetchedResultsController<RoomEntity>?
+    
+    override init(repository: Repository, coordinator: Coordinator) {
+        super.init(repository: repository, coordinator: coordinator)
+        self.setupUnreadMessagesFrc()
+    }
+    
+    func setupUnreadMessagesFrc() {
+        let fetchRequest = RoomEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp),
+                                                         ascending: false),
+                                        NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
+        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                              managedObjectContext: self.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
+        self.frc?.delegate = self
+        do {
+            try self.frc?.performFetch()
+        } catch {
+            fatalError("Failed to fetch entities: \(error)")
+        }
+    }
     
     func getHomeTabBarItems() -> [TabBarItem] {
         return getAppCoordinator()!.getHomeTabBarItems()
@@ -28,5 +52,13 @@ class HomeViewModel: BaseViewModel {
                 return
             }
         }.store(in: &subscriptions)
+    }
+}
+
+extension HomeViewModel: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        let allObjects = controller.sections?.first?.objects as? [RoomEntity]
+        let count = allObjects?.filter { $0.numberOfUnreadMessages(myUserId: self.getMyUserId()) != 0 }.count ?? 0
+        self.repository.unreadRoomsPublisher.send(count)
     }
 }

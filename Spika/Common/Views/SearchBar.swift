@@ -53,6 +53,7 @@ class SearchBar: UIView, BaseView {
         
         deleteImage.isHidden = true
         
+        searchTextField.autocorrectionType = .no
         searchTextField.textColor = .textPrimaryAndWhite
         searchTextField.font = .customFont(name: .MontserratMedium, size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 struct TabBarItem {
     let viewController: BaseViewController
@@ -13,4 +14,6 @@ struct TabBarItem {
     let image: String
     let position: Int
     var isSelected: Bool
+    var indicationPublisher: AnyPublisher<String,Never>?
+    var subscriptions = Set<AnyCancellable>()
 }

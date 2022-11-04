@@ -7,6 +7,7 @@
 
 import UIKit
 import Swinject
+import Combine
 
 class AppCoordinator: Coordinator {
     
@@ -73,11 +74,33 @@ class AppCoordinator: Coordinator {
     }
     
     func getHomeTabBarItems() -> [TabBarItem] {
+        let repository = Assembler.sharedAssembler.resolver.resolve(Repository.self, name: RepositoryType.production.name)!
+        
         return [
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(AllChatsViewController.self, argument: self)!, title: "Chats", image: "chats", position: 0, isSelected: true),
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(CallHistoryViewController.self, argument: self)!, title: "Call History", image: "callHistory", position: 1, isSelected: false),
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(ContactsViewController.self, argument: self)!, title: "Contacts", image: "contacts", position: 2, isSelected: false),
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(SettingsViewController.self, argument: self)!, title: "Settings", image: "settings", position: 3, isSelected: false)
+            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(AllChatsViewController.self, argument: self)!,
+                       title: "Chats",
+                       image: "chats",
+                       position: 0,
+                       isSelected: true,
+                       indicationPublisher: repository.unreadRoomsPublisher.map { String($0) }.eraseToAnyPublisher()),
+            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(CallHistoryViewController.self, argument: self)!,
+                       title: "Call History",
+                       image: "callHistory",
+                       position: 1,
+                       isSelected: false,
+                       indicationPublisher: nil),
+            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(ContactsViewController.self, argument: self)!,
+                       title: "Contacts",
+                       image: "contacts",
+                       position: 2,
+                       isSelected: false,
+                       indicationPublisher: nil),
+            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(SettingsViewController.self, argument: self)!,
+                       title: "Settings",
+                       image: "settings",
+                       position: 3,
+                       isSelected: false,
+                       indicationPublisher: nil)
         ]
     }
     

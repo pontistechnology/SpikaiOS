@@ -29,6 +29,8 @@ protocol Repository {
     
     var subs: Set<AnyCancellable>{ get set}
     
+    var unreadRoomsPublisher: PassthroughSubject<Int,Never> { get }
+    
     
     // MARK: - NETWORKING: Auth
     

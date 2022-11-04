@@ -10,10 +10,10 @@ import UIKit
 class AllChatsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "AllChatsTableViewCell"
     
-    let nameLabel = CustomLabel(text: "", fontName: .MontserratSemiBold)
-    let descriptionLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary)
+    let nameLabel = CustomLabel(text: "", textSize: 14, fontName: .MontserratSemiBold)
+    let descriptionLabel = CustomLabel(text: "", textSize: 14, textColor: .textTertiary)
     let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
-    let timeLabel = CustomLabel(text: "", textSize: 10, textColor: .textTertiary)
+    let timeLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary)
     let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .white, fontName: .MontserratSemiBold, alignment: .center)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -35,7 +35,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     
     func styleSubviews() {
         leftImageView.clipsToBounds = true
-        leftImageView.layer.cornerRadius = 24
+        leftImageView.layer.cornerRadius = 27
         nameLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 1
         timeLabel.numberOfLines = 1
@@ -48,7 +48,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     
     func positionSubviews() {
         leftImageView.centerYToSuperview()
-        leftImageView.anchor(leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0), size: CGSize(width: 48, height: 48))
+        leftImageView.anchor(leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0), size: CGSize(width: 54, height: 54))
         
         nameLabel.anchor(top: contentView.topAnchor, leading: leftImageView.trailingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 14, left: 12, bottom: 0, right: 100))
         descriptionLabel.anchor(leading: nameLabel.leadingAnchor, bottom: contentView.bottomAnchor, trailing: nameLabel.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0))
