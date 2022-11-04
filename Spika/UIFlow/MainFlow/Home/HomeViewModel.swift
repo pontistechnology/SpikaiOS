@@ -33,8 +33,8 @@ class HomeViewModel: BaseViewModel {
         }
     }
     
-    func getHomeTabBarItems() -> [TabBarItem] {
-        return getAppCoordinator()!.getHomeTabBarItems()
+    func getHomeTabBarItems(startingTab: Int) -> [TabBarItem] {
+        return getAppCoordinator()!.getHomeTabBarItems(startingTab: startingTab)
     }
     
     func updatePush() {
