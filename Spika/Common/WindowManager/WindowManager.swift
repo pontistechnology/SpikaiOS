@@ -32,17 +32,20 @@ final class WindowManager {
 // MARK: - Indicator Window
 extension WindowManager {
     private func setupIndicatorWindow() {
-        indicatorWindow = UIWindow(windowScene: scene)
-        let width = 8.0
-        indicatorWindow?.frame = CGRect(x: scene.screen.bounds.width - width - 10,
-                                        y: 60,
-                                        width: width,
-                                        height: width)
-        indicatorWindow?.backgroundColor = .appRed
-        indicatorWindow?.isHidden = false
-        indicatorWindow?.layer.cornerRadius = width / 2
-        indicatorWindow?.clipsToBounds = true
-        indicatorWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.indicatorWindow = UIWindow(windowScene: self.scene)
+            let width = 8.0
+            self.indicatorWindow?.frame = CGRect(x: self.scene.screen.bounds.width - width - 10,
+                                            y: 60,
+                                            width: width,
+                                            height: width)
+            self.indicatorWindow?.backgroundColor = .appRed
+            self.indicatorWindow?.isHidden = false
+            self.indicatorWindow?.layer.cornerRadius = width / 2
+            self.indicatorWindow?.clipsToBounds = true
+            self.indicatorWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
+        }
     }
     
     func changeIndicatorColor(to color: UIColor) {
@@ -56,15 +59,18 @@ extension WindowManager {
 
 extension WindowManager {
     func showNotificationWindow(info: MessageNotificationInfo) {
-        notificationWindow = nil
-        notificationWindow = UIWindow(windowScene: scene)
-        notificationWindow?.frame = CGRect(x: 0, y: 60,
-                                           width: scene.screen.bounds.width, height: 100)
-        notificationWindow?.clipsToBounds = true
-        notificationWindow?.rootViewController = NotificationAlertViewController(info: info, tapPublisher: notificationTapPublisher)
-//        notificationWindow?.backgroundColor = .blue
-        notificationWindow?.isHidden = false
-        notificationWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.notificationWindow = nil
+            self.notificationWindow = UIWindow(windowScene: self.scene)
+            self.notificationWindow?.frame = CGRect(x: 0, y: 60,
+                                                    width: self.scene.screen.bounds.width, height: 100)
+            self.notificationWindow?.clipsToBounds = true
+            self.notificationWindow?.rootViewController = NotificationAlertViewController(info: info, tapPublisher: self.notificationTapPublisher)
+            //        self.notificationWindow?.backgroundColor = .blue
+            self.notificationWindow?.isHidden = false
+            self.notificationWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
+        }
     }
 }
 
@@ -77,19 +83,22 @@ enum PopUpPublisherType {
 
 extension WindowManager {
     func showPopUp(for type: PopUpType) {
-        // Check is error or popup presented 
-        popUpWindow = nil
-        popUpWindow = UIWindow(windowScene: scene)
-        popUpWindow?.frame = type.frame(for: scene)
-        popUpWindow?.clipsToBounds = true
-        popUpWindow?.rootViewController = PopUpViewController(type, publisher: popUpPublisher)
-        popUpWindow?.backgroundColor = type.isBlockingUI ? .gray.withAlphaComponent(0.5) : .clear
-        popUpWindow?.isHidden = false
-        popUpWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
+        // Check is error or popup presented
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.popUpWindow = nil
+            self.popUpWindow = UIWindow(windowScene: self.scene)
+            self.popUpWindow?.frame = type.frame(for: self.scene)
+            self.popUpWindow?.rootViewController = PopUpViewController(type, publisher: self.popUpPublisher)
+            self.popUpWindow?.backgroundColor = type.isBlockingUI ? .gray.withAlphaComponent(0.5) : .clear
+            self.popUpWindow?.clipsToBounds = true
+            self.popUpWindow?.isHidden = false
+            self.popUpWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
+        }
     }
 }
 
-extension WindowManager {
+private extension WindowManager {
     func setupBindings() {
         notificationTapPublisher
             .receive(on: DispatchQueue.main)
@@ -104,13 +113,13 @@ extension WindowManager {
                 case .dismiss(after: let seconds):
                     self?.dismissPopUpWindowAfter(seconds: seconds)
                 case .alertViewTap(_):
-                    break
+                    self?.dismissPopUpWindowAfter(seconds: 0)
                 }
             }.store(in: &subs)
     }
 }
 
-extension WindowManager {
+private extension WindowManager {
     func dismissNotificationWindowAfter(seconds: Int) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(seconds)) { [weak self] in
             self?.notificationWindow = nil

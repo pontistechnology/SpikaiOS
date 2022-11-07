@@ -45,10 +45,6 @@ class AppCoordinator: Coordinator {
         } else {
             presentEnterNumberScreen()
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.getWindowManager().showPopUp(for: .oneSec(.copy))
-        }
     }
     
     // MARK: LOGIN FLOW
@@ -220,9 +216,10 @@ extension AppCoordinator {
         getWindowManager().showPopUp(for: .errorMessage(message))
     }
     
-    func showAlertView(title: String, message: String, buttons: [AlertViewButton]) {
+    func showAlertView(title: String, message: String, buttons: [AlertViewButton]) -> PassthroughSubject<PopUpPublisherType, Never> {
         getWindowManager().showPopUp(for: .alertView(title: title,
                                                      message: message,
                                                      buttons: buttons))
+        return getWindowManager().popUpPublisher
     }
 }

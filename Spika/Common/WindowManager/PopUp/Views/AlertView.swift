@@ -6,14 +6,17 @@
 //
 
 import UIKit
+import Combine
 
 class AlertView: UIView {
     private let titleLabel: CustomLabel
     private let messageLabel: CustomLabel
     private let buttonsStackView = UIStackView()
     private let dividerLine = UIView(backgroundColor: .gray) // TODO: - check color
+    private var subs = Set<AnyCancellable>()
+    let tapPublisher = PassthroughSubject<Int, Never>()
     
-    init(title: String, message: String, buttons: [AlertViewButton] = []) {
+    init(title: String, message: String, buttons: [AlertViewButton]) {
         titleLabel = CustomLabel(text: message, textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
         messageLabel = CustomLabel(text: message, textSize: 12, textColor: .textTertiary, fontName: .MontserratMedium, alignment: .center)
         super.init(frame: .zero)
@@ -25,18 +28,21 @@ class AlertView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupButtonsStackView(_ buttons: [AlertViewButton]) {
+    private func setupButtonsStackView(_ buttons: [AlertViewButton]) {
         buttonsStackView.distribution = .fillEqually
         buttonsStackView.axis = buttons.count > 2 ? .vertical : .horizontal
         buttonsStackView.backgroundColor = .gray // TODO: - check color
         buttonsStackView.spacing = 0.5
-        buttons.forEach { item in
+        buttons.enumerated().forEach { (index, item) in
             let button = UIButton()
             button.constrainHeight(40)
             button.setTitle(item.title, for: .normal)
             button.setTitleColor(item.color, for: .normal)
             button.titleLabel?.font = .customFont(name: .MontserratSemiBold)
             button.backgroundColor = .white
+            button.tap().sink { [weak self] _ in
+                self?.tapPublisher.send(index)
+            }.store(in: &subs)
             buttonsStackView.addArrangedSubview(button)
         }
     }

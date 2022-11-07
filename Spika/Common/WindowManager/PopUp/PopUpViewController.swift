@@ -25,9 +25,11 @@ class PopUpViewController: BaseViewController {
             popUpView = AlertView(title: title, message: message, buttons: buttons)
         }
         super.init(nibName: nil, bundle: nil)
-        
+
         view.addSubview(popUpView)
         popUpView.centerInSuperview()
+        
+        setupBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -36,5 +38,11 @@ class PopUpViewController: BaseViewController {
 }
 
 extension PopUpViewController {
-    
+    func setupBindings() {
+        (popUpView as? AlertView)?
+            .tapPublisher
+            .sink(receiveValue: { [weak self] selectedIndex in
+                self?.publisher.send(.alertViewTap(selectedIndex))
+            }).store(in: &subscriptions)
+    }
 }
