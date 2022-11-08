@@ -120,7 +120,7 @@ class UserEntityService {
                 for var user in users {
 //                    saveUsers(users)
                     let fetchRequest = ContactEntity.fetchRequest()
-                    fetchRequest.predicate = NSPredicate(format: "phoneNumber = %@", user.telephoneNumber!)
+                    fetchRequest.predicate = NSPredicate(format: "phoneNumber = %@", user.telephoneNumber ?? "")
                     do {
                         let fetchResult = try context.fetch(fetchRequest)
                         if let contactEntity = fetchResult.first {
