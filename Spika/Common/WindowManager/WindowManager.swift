@@ -70,6 +70,7 @@ extension WindowManager {
             //        self.notificationWindow?.backgroundColor = .blue
             self.notificationWindow?.isHidden = false
             self.notificationWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
+            self.dismissNotificationWindowAfter(seconds: 3)
         }
     }
 }

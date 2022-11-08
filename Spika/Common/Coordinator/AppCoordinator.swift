@@ -202,7 +202,8 @@ extension AppCoordinator {
     
     func showNotification(info: MessageNotificationInfo) {
         DispatchQueue.main.async { [weak self] in
-            if (self?.navigationController.viewControllers.last as? CurrentChatViewController) == nil {
+            if let lastVC = self?.navigationController.viewControllers.last,
+               !lastVC.isKind(of: CurrentChatViewController.self) {
                 self?.getWindowManager().showNotificationWindow(info: info)
             }
         }

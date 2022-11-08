@@ -118,7 +118,8 @@ private extension SSE {
 
 private extension SSE {
     func syncRooms() {
-        repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { c in
+        repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { [weak self] completion in
+            self?.checkError(completion: completion)
         } receiveValue: { [weak self] response in
             guard let rooms = response.data?.rooms else { return }
             self?.saveLocalRooms(rooms, isSync: true)
@@ -127,7 +128,8 @@ private extension SSE {
     
     // TODO: - check local DB for all roomIds, and fetch the missing ones
     func syncMessages() {
-        repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { c in
+        repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { [weak self] completion in
+            self?.checkError(completion: completion)
         } receiveValue: { [weak self] response in
             guard let self = self,
                   let messages = response.data?.messages
@@ -137,7 +139,8 @@ private extension SSE {
     }
     
     func syncUsers() {
-        repository.syncUsers(timestamp: repository.getSyncTimestamp(for: .users)).sink { [weak self] c in
+        repository.syncUsers(timestamp: repository.getSyncTimestamp(for: .users)).sink { [weak self] completion in
+            self?.checkError(completion: completion)
         } receiveValue: { [weak self] response in
             guard let users = response.data?.users else { return }
             self?.saveUsers(users, isSync: true)
@@ -145,7 +148,8 @@ private extension SSE {
     }
     
     func syncMessageRecords() {
-        repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { [weak self] c in
+        repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { [weak self] completion in
+            self?.checkError(completion: completion)
         } receiveValue: { [weak self] response in
             guard let self = self,
                   let records = response.data?.messageRecords
@@ -159,7 +163,8 @@ private extension SSE {
 
 private extension SSE {
     func saveUsers(_ users: [User], isSync: Bool = false) {
-        repository.saveUsers(users).sink { c in
+        repository.saveUsers(users).sink { [weak self] completion in
+            self?.checkError(completion: completion)
 //            print("SSE: save _ c: ", c)
         } receiveValue: { [weak self] users in
 //            print("SSE: save users success")
@@ -174,14 +179,9 @@ private extension SSE {
     }
     
     func saveLocalRooms(_ rooms: [Room], isSync: Bool = false) {
-        repository.saveLocalRooms(rooms: rooms).sink { c in
+        repository.saveLocalRooms(rooms: rooms).sink { [weak self] completion in
+            self?.checkError(completion: completion)
 //            print("SSE: save rooms c: ", c)
-            switch c {
-            case .finished:
-                break
-            case .failure(_):
-                break
-            }
         } receiveValue: { [weak self] rooms in
 //            print("SSE: save rooms success")
             if isSync {
@@ -195,7 +195,8 @@ private extension SSE {
     }
     
     func saveMessages(_ messages: [Message], isSync: Bool = false) {
-        repository.saveMessages(messages).sink { c in
+        repository.saveMessages(messages).sink { [weak self] completion in
+            self?.checkError(completion: completion)
 //            print("SSE: save message c: ", c)
         } receiveValue: { [weak self] messages in
 //            print("SSE: SAVED MESSAGES: ", messages.count)
@@ -216,7 +217,8 @@ private extension SSE {
     
     func saveMessageRecords(_ records: [MessageRecord], isSync: Bool = false) {
         print("SSE: message records recieved: ", records.count)
-        repository.saveMessageRecords(records).sink { c in
+        repository.saveMessageRecords(records).sink { [weak self] completion in
+            self?.checkError(completion: completion)
 //            print("SSE: save message records c: ", c)
         } receiveValue: { [weak self] records in
 //            print("SSE: saved records: ", records.count)
@@ -232,8 +234,6 @@ private extension SSE {
     
     func sendDeliveredStatus(messages: [Message]) {
 //        print("message id in sse: ", messages)
-        
-        
         repository.sendDeliveredStatus(messageIds: messages.compactMap{$0.id}).sink { c in
             
         } receiveValue: { [weak self] response in
@@ -247,8 +247,8 @@ private extension SSE {
 private extension SSE {
     
     func getMessageNotificationInfo(message: Message) {
-        repository.getNotificationInfoForMessage(message).sink { c in
-            
+        repository.getNotificationInfoForMessage(message).sink { [weak self] completion in
+            self?.checkError(completion: completion)
         } receiveValue: { [weak self] info in
             self?.showNotification(info: info)
         }.store(in: &subs)
@@ -256,6 +256,16 @@ private extension SSE {
 }
 
 private extension SSE {
+    func checkError(completion: Subscribers.Completion<any Error>) {
+        switch completion {
+        case .finished:
+            break
+        case .failure(let error):
+            print("SSE FAILURE SOMEWHERE: ", error)
+            changeIndicatorColor(to: .appRed)
+        }
+    }
+    
     func changeIndicatorColor(to color: UIColor) {
         (coordinator as? AppCoordinator)?.changeIndicatorColor(to: color)
     }
