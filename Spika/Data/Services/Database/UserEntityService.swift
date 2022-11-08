@@ -131,7 +131,7 @@ class UserEntityService {
                             + " "
                             + (contact.lastName ?? "")
                         }
-                        self?.saveUser(user)
+                        _ = self?.saveUser(user)
                     } catch {
                         print("Error loading: ", error)
                         promise(.failure(DatabseError.requestFailed))

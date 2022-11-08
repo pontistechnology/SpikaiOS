@@ -236,7 +236,7 @@ private extension SSE {
 //        print("message id in sse: ", messages)
         repository.sendDeliveredStatus(messageIds: messages.compactMap{$0.id}).sink { c in
             
-        } receiveValue: { [weak self] response in
+        } receiveValue: { response in
 //            print("SSE: send delivered status sse response: ", response)
         }.store(in: &subs)
     }

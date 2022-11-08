@@ -15,7 +15,10 @@ class HomeViewController: UIPageViewController {
     
     var subscriptions = Set<AnyCancellable>()
     
-    override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
+    let startingTab: Int
+    
+    init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil, startingTab: Int) {
+        self.startingTab = startingTab
         super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
     }
     
@@ -34,7 +37,6 @@ class HomeViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageViewController()
-//        homeTabBar.handleTap(homeTabBar.tabs[2])
         
         self.viewModel.repository
             .unreadRoomsPublisher
@@ -45,15 +47,18 @@ class HomeViewController: UIPageViewController {
        }
     
     func configurePageViewController() {
-        homeTabBar = HomeTabBar(tabBarItems: viewModel.getHomeTabBarItems())
-    
+        homeTabBar = HomeTabBar(tabBarItems: viewModel.getHomeTabBarItems(startingTab: self.startingTab))
         homeTabBar.delegate = self
         
         view.addSubview(homeTabBar)
         homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
         homeTabBar.constrainHeight(HomeTabBar.tabBarHeight)
-        if let vc = homeTabBar.getViewController(index: 0) {
+        
+        if let vc = homeTabBar.getViewController(index: self.startingTab) {
             self.setViewControllers([vc], direction: .forward, animated: true)
+            self.homeTabBar.tabs.forEach{$0.isSelected = false}
+            self.homeTabBar.tabs[self.startingTab].isSelected = true
+            self.homeTabBar.currentViewControllerIndex = self.startingTab
         }
     }
     

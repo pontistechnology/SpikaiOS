@@ -69,43 +69,43 @@ class AppCoordinator: Coordinator {
     }
     
     // MARK: MAIN FLOW
-    func presentHomeScreen(startSyncAndSSE: Bool) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, argument: self)!
+    func presentHomeScreen(startSyncAndSSE: Bool, startingTab: Int = 2) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startingTab)!
         if startSyncAndSSE {
             syncAndStartSSE()            
         }
         self.navigationController.setViewControllers([viewController], animated: true)
     }
     
-    func getHomeTabBarItems() -> [TabBarItem] {
+    func getHomeTabBarItems(startingTab: Int) -> [TabBarItem] {
         let repository = Assembler.sharedAssembler.resolver.resolve(Repository.self, name: RepositoryType.production.name)!
         
-        return [
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(AllChatsViewController.self, argument: self)!,
-                       title: "Chats",
-                       image: "chats",
-                       position: 0,
-                       isSelected: true,
-                       indicationPublisher: repository.unreadRoomsPublisher.map { String($0) }.eraseToAnyPublisher()),
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(CallHistoryViewController.self, argument: self)!,
-                       title: "Call History",
-                       image: "callHistory",
-                       position: 1,
-                       isSelected: false,
-                       indicationPublisher: nil),
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(ContactsViewController.self, argument: self)!,
-                       title: "Contacts",
-                       image: "contacts",
-                       position: 2,
-                       isSelected: false,
-                       indicationPublisher: nil),
-            TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(SettingsViewController.self, argument: self)!,
-                       title: "Settings",
-                       image: "settings",
-                       position: 3,
-                       isSelected: false,
-                       indicationPublisher: nil)
-        ]
+        var tabs = [TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(AllChatsViewController.self, argument: self)!,
+                           title: "Chats",
+                           image: "chats",
+                           position: 0,
+                           isSelected: false,
+                           indicationPublisher: repository.unreadRoomsPublisher.map { String($0) }.eraseToAnyPublisher()),
+                TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(CallHistoryViewController.self, argument: self)!,
+                           title: "Call History",
+                           image: "callHistory",
+                           position: 1,
+                           isSelected: false,
+                           indicationPublisher: nil),
+                TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(ContactsViewController.self, argument: self)!,
+                           title: "Contacts",
+                           image: "contacts",
+                           position: 2,
+                           isSelected: false,
+                           indicationPublisher: nil),
+                TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(SettingsViewController.self, argument: self)!,
+                           title: "Settings",
+                           image: "settings",
+                           position: 3,
+                           isSelected: false,
+                           indicationPublisher: nil)]
+        tabs[startingTab].isSelected = true
+        return tabs
     }
     
     func presentDetailsScreen(user: User) {
@@ -185,7 +185,6 @@ class AppCoordinator: Coordinator {
             // TODO: fix for ios 14
         }
         navigationController.present(viewControllerToPresent, animated: true)
-//        present(viewControllerToPresent, animated: true, completion: nil)
     }
     
     func dismissViewController() {
