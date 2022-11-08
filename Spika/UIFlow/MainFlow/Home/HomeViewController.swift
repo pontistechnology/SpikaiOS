@@ -10,16 +10,24 @@ import Combine
 
 class HomeViewController: UIPageViewController {
     
-    var homeTabBar: HomeTabBar!
-    var viewModel: HomeViewModel!
+    struct HomeViewControllerStartConfig {
+        let startingTab: Int
+        let startWithMessage: Message?
+        static func defaultConfig() -> HomeViewControllerStartConfig {
+            return HomeViewControllerStartConfig(startingTab: 0, startWithMessage: nil)
+        }
+    }
     
+    var homeTabBar: HomeTabBar!
+    let viewModel: HomeViewModel
+    let startConfig: HomeViewControllerStartConfig
+
     var subscriptions = Set<AnyCancellable>()
     
-    let startingTab: Int
-    
-    init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil, startingTab: Int) {
-        self.startingTab = startingTab
-        super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
+    init(viewModel:HomeViewModel, startConfig: HomeViewControllerStartConfig) {
+        self.startConfig = startConfig
+        self.viewModel = viewModel
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }
     
     required init?(coder: NSCoder) {
@@ -44,21 +52,30 @@ class HomeViewController: UIPageViewController {
                 let stringValue = value > 0 ? String(value) : ""
                 self.title = stringValue
             }.store(in: &self.subscriptions)
-       }
+        
+        if let message = self.startConfig.startWithMessage {
+            self.viewModel.presentChat(message: message)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
     
     func configurePageViewController() {
-        homeTabBar = HomeTabBar(tabBarItems: viewModel.getHomeTabBarItems(startingTab: self.startingTab))
+        homeTabBar = HomeTabBar(tabBarItems: viewModel.getHomeTabBarItems(startingTab: self.startConfig.startingTab))
         homeTabBar.delegate = self
         
         view.addSubview(homeTabBar)
         homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
         homeTabBar.constrainHeight(HomeTabBar.tabBarHeight)
         
-        if let vc = homeTabBar.getViewController(index: self.startingTab) {
+        if let vc = homeTabBar.getViewController(index: self.startConfig.startingTab) {
             self.setViewControllers([vc], direction: .forward, animated: true)
             self.homeTabBar.tabs.forEach{$0.isSelected = false}
-            self.homeTabBar.tabs[self.startingTab].isSelected = true
-            self.homeTabBar.currentViewControllerIndex = self.startingTab
+            self.homeTabBar.tabs[self.startConfig.startingTab].isSelected = true
+            self.homeTabBar.currentViewControllerIndex = self.startConfig.startingTab
         }
     }
     

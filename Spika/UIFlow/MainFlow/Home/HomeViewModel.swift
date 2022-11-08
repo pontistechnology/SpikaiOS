@@ -33,6 +33,15 @@ class HomeViewModel: BaseViewModel {
         }
     }
     
+    func presentChat(message: Message) {
+        repository.getNotificationInfoForMessage(message)
+            .receive(on: DispatchQueue.main)
+            .sink { c in
+            } receiveValue: { [weak self] messageInfo in
+                self?.getAppCoordinator()?.presentCurrentChatScreen(room: messageInfo.room)
+            }.store(in: &self.subscriptions)
+    }
+    
     func getHomeTabBarItems(startingTab: Int) -> [TabBarItem] {
         return getAppCoordinator()!.getHomeTabBarItems(startingTab: startingTab)
     }
