@@ -29,6 +29,7 @@ class AppCoordinator: Coordinator {
         let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
         sse?.syncAndStartSSE()
     }
+    
     //  This can be in scene delegate?
     func stopSSE() {
         let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
@@ -69,8 +70,9 @@ class AppCoordinator: Coordinator {
     }
     
     // MARK: MAIN FLOW
-    func presentHomeScreen(startSyncAndSSE: Bool, startingTab: Int = 2) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startingTab)!
+    func presentHomeScreen(startSyncAndSSE: Bool,
+                           startConfig: HomeViewController.HomeViewControllerStartConfig = HomeViewController.HomeViewControllerStartConfig.defaultConfig()) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startConfig)!
         if startSyncAndSSE {
             syncAndStartSSE()            
         }

@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         configureNotifications(app: application)
         customization()
-        test()
         return true
     }
     
@@ -42,13 +41,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: Push notifications
 
 extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print("NOTIFICATION: ", userInfo)
-//        let m = userInfo["message"] as! String
-//        let jsonData = m.data(using: .utf8)
-//        let a = try! JSONDecoder().decode(Message.self, from: jsonData as! Data)
-//        print("a je :" , a)
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        guard let messageData = userInfo["message"] as? String,
+              let jsonData = messageData.data(using: .utf8),
+              let message = try? JSONDecoder().decode(Message.self, from: jsonData) else {
+            completionHandler()
+            return
+        }
+        
+        let scene = UIApplication.shared.connectedScenes.first
+        guard let sd : SceneDelegate = (scene?.delegate as? SceneDelegate) else {
+            completionHandler()
+            return
+        }
+        
+        DispatchQueue.main.async {
+            let config = HomeViewController.HomeViewControllerStartConfig(startingTab: 0, startWithMessage: message)
+            sd.appCoordinator?.presentHomeScreen(startSyncAndSSE: true, startConfig: config)
+            completionHandler()
+        }
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
@@ -74,12 +89,6 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
 // MARK: CoreData, testing, TODO: delete later
 
 extension AppDelegate {
-    
-    func test() {
-//        let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
-//        userDefaults.set("fich0x3WTUwjlGF5", forKey: Constants.UserDefaults.accessToken)
-    }
-    
     func allroomsprinter() {
         let coreDataStack = CoreDataStack()
 

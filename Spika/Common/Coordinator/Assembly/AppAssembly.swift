@@ -69,9 +69,10 @@ final class AppAssembly: Assembly {
             return HomeViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
-        container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator, startingTab: Int) in
-            let controller = HomeViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil, startingTab: startingTab)
-            controller.viewModel = container.resolve(HomeViewModel.self, argument: coordinator)
+        container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator, startParameters: HomeViewController.HomeViewControllerStartConfig) in
+            let controller = HomeViewController(viewModel: container.resolve(HomeViewModel.self, argument: coordinator)!,
+                                                startConfig: startParameters)
+//            controller.viewModel = container.resolve(HomeViewModel.self, argument: coordinator)
             return controller
         }.inObjectScope(.transient)
     }
