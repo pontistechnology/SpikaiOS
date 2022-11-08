@@ -150,7 +150,7 @@ private extension SSE {
     }
     
     func syncUsers() {
-        repository.syncUsers(timestamp: repository.getSyncTimestamp(for: .users)).sink { [weak self] c in
+        repository.syncUsers(timestamp: repository.getSyncTimestamp(for: .users)).sink { c in
 //            print("SSE: sync users C: ", c)
         } receiveValue: { [weak self] response in
 //            print("SSE: sync users response: ", response)
@@ -160,7 +160,7 @@ private extension SSE {
     }
     
     func syncMessageRecords() {
-        repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { [weak self] c in
+        repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { c in
 //            print("SSE: sync message records C: ", c)
         } receiveValue: { [weak self] response in
 //            print("SSE: sync message records response", response)
@@ -254,7 +254,7 @@ private extension SSE {
         
         repository.sendDeliveredStatus(messageIds: messages.compactMap{$0.id}).sink { c in
             
-        } receiveValue: { [weak self] response in
+        } receiveValue: { response in
 //            print("SSE: send delivered status sse response: ", response)
         }.store(in: &subs)
     }
