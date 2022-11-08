@@ -14,9 +14,13 @@ class AppCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
+    let windowScene: UIWindowScene
+    var subs = Set<AnyCancellable>()
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, windowScene: UIWindowScene) {
+        self.windowScene = windowScene
         self.navigationController = navigationController
+        setupBindings()
     }
     
     //  This can be in scene delegate?
@@ -201,5 +205,44 @@ class AppCoordinator: Coordinator {
             // Fallback on earlier versions
         }
         navigationController.present(viewControllerToPresent, animated: true)
+    }
+}
+
+extension AppCoordinator {
+    private func getWindowManager() -> WindowManager {
+        Assembler.sharedAssembler.resolver.resolve(WindowManager.self, argument: windowScene)!
+    }
+    
+    private func setupBindings() {
+        getWindowManager()
+            .notificationTapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] info in
+                self?.presentCurrentChatScreen(room: info.room)
+            }.store(in: &subs)
+    }
+    
+    func showNotification(info: MessageNotificationInfo) {
+        DispatchQueue.main.async { [weak self] in
+            if let lastVC = self?.navigationController.viewControllers.last,
+               !lastVC.isKind(of: CurrentChatViewController.self) {
+                self?.getWindowManager().showNotificationWindow(info: info)
+            }
+        }
+    }
+    
+    func changeIndicatorColor(to color: UIColor) {
+        getWindowManager().changeIndicatorColor(to: color)
+    }
+    
+    func showError(message: String) {
+        getWindowManager().showPopUp(for: .errorMessage(message))
+    }
+    
+    func showAlertView(title: String, message: String, buttons: [AlertViewButton]) -> PassthroughSubject<PopUpPublisherType, Never> {
+        getWindowManager().showPopUp(for: .alertView(title: title,
+                                                     message: message,
+                                                     buttons: buttons))
+        return getWindowManager().popUpPublisher
     }
 }

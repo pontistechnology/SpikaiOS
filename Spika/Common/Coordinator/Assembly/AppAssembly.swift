@@ -14,6 +14,7 @@ final class AppAssembly: Assembly {
         self.assembleCoreDataStack(container)
         self.assembleMainRepository(container)
         self.assembleSSE(container)
+        self.assembleWindowManager(container)
         self.assembleHomeViewController(container)
         self.assembleContactsViewController(container)
         self.assembleCallHistoryViewController(container)
@@ -53,6 +54,12 @@ final class AppAssembly: Assembly {
         container.register(SSE.self) { (r, coordinator: AppCoordinator) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return SSE(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.container)
+    }
+    
+    private func assembleWindowManager(_ container: Container) {
+        container.register(WindowManager.self) { (r, scene: UIWindowScene) in
+            return WindowManager(scene: scene)
         }.inObjectScope(.container)
     }
     

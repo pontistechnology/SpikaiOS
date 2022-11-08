@@ -43,6 +43,7 @@ extension UIColor {
     static let appBlueLight = safeColor(named: "appBlueLight")
     static let appGreen = safeColor(named: "appGreen")
     static let appRed = safeColor(named: "appRed")
+    static let appOrange = safeColor(named: "appOrange")
     static let appWhite = safeColor(named: "appWhite")
     static let borderColor = safeColor(named: "borderColor")
     static let chatBackground = safeColor(named: "chatBackground")

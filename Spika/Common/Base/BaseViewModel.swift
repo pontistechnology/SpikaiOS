@@ -27,4 +27,8 @@ class BaseViewModel: NSObject {
     func getMyUserId() -> Int64 {
         return repository.getMyUserId()
     }
+    
+    func showError(_ message: String) {
+        getAppCoordinator()?.showError(message: message)
+    }
 }
