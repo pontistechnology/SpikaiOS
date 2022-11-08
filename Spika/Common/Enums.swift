@@ -5,7 +5,7 @@
 //  Created by Nikola Barbarić on 04.10.2022..
 //
 
-import Foundation
+import UIKit
 
 
 enum SyncType {
@@ -56,6 +56,7 @@ struct MessageNotificationInfo {
     let title: String
     let photoUrl: String
     let messageText: String
+    let room: Room
 }
 
 enum CustomFontName: String {

@@ -72,9 +72,10 @@ extension CurrentChatViewController {
             case .finished:
                 break
             case let .failure(error):
-                PopUpManager.shared.presentAlert(with: (title: "Error", message: error.localizedDescription), orientation: .horizontal, closures: [("Ok", {
-                    self.viewModel.getAppCoordinator()?.popTopViewController()
-                })])
+                break
+//                PopUpManager.shared.presentAlert(with: (title: "Error", message: error.localizedDescription), orientation: .horizontal, closures: [("Ok", {
+//                    self.viewModel.getAppCoordinator()?.popTopViewController()
+//                })]) // TODO: - check
             }
         } receiveValue: { [weak self] room in
             guard let self = self else { return }

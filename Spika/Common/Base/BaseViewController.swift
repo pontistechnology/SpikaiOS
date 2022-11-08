@@ -44,6 +44,7 @@ class BaseViewController: UIViewController {
         hideKeyboardWhenTappedAround()
     }
     
+    // TODO: - move
     private func showLoading(progress: CGFloat?) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }

@@ -24,7 +24,7 @@ class EnterUsernameViewModel: BaseViewModel {
                     break
                 case let .failure(error):
                     self.uploadProgressPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
-                    PopUpManager.shared.presentAlert(errorMessage: "Error with file upload: \(error)")
+                    self.showError("Error with file upload: \(error)")
                 }
             } receiveValue: { [weak self] (file, percent) in
                 guard let self = self else { return }
@@ -45,7 +45,7 @@ class EnterUsernameViewModel: BaseViewModel {
             switch completion {
             case let .failure(error):
                 print("ERROR: ", error)
-                PopUpManager.shared.presentAlert(errorMessage: "Username error: \(error)")
+                self.showError("Username error: \(error)")
             case .finished:
                 self.presentHomeScreen()
             }

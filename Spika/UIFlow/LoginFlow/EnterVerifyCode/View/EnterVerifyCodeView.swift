@@ -96,7 +96,7 @@ class EnterVerifyCodeView: UIView, BaseView {
         
         if timeCounter <= 0 {
             timer.invalidate()
-            PopUpManager.shared.presentAlert(errorMessage: "Time expired. You will be returned.") // TODO: change
+//            PopUpManager.shared.presentAlert(errorMessage: "Time expired. You will be returned.") // TODO: change and move?
         }
     }
 }

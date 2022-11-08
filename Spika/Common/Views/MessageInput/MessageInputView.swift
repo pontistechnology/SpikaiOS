@@ -180,15 +180,15 @@ class MessageInputView: UIView, BaseView {
     
     func animateMessageView(isEmpty: Bool) {
         self.messageTextViewTrailingConstraint.constant = isEmpty ? -95 : -60
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             UIView.animate(withDuration: 0.3) {
-                self.plusButton.alpha = isEmpty ? 1 : 0
-                self.closeButton.alpha = isEmpty ? 0 : 1
-                self.sendButton.alpha = isEmpty ? 0 : 1
-                self.cameraButton.alpha = isEmpty ? 1 : 0
-                self.microphoneButton.alpha = isEmpty ? 1 : 0
+                self?.plusButton.alpha = isEmpty ? 1 : 0
+                self?.closeButton.alpha = isEmpty ? 0 : 1
+                self?.sendButton.alpha = isEmpty ? 0 : 1
+                self?.cameraButton.alpha = isEmpty ? 1 : 0
+                self?.microphoneButton.alpha = isEmpty ? 1 : 0
                 
-                self.layoutIfNeeded()
+                self?.layoutIfNeeded()
             }
         }
     }
@@ -267,9 +267,9 @@ extension MessageInputView: UITextViewDelegate {
         + ((selectedFilesView.superview != nil) ? selectedFilesView.height : 0.0)
         
         messageTextViewHeightConstraint.constant = heightOfTextView
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.3) {
-                self.superview?.layoutIfNeeded()
+        DispatchQueue.main.async { [weak self] in
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.superview?.layoutIfNeeded()
             }
         }
     }
