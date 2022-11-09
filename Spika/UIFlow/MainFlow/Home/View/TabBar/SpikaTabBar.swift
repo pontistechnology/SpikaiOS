@@ -41,6 +41,19 @@ enum SpikaTabBar: Equatable {
         }
     }
     
+    var imageFull: UIImage {
+        switch self {
+        case .chat:
+            return UIImage(safeImage: .chatsTabFull)
+        case .phoneCalls:
+            return UIImage(safeImage: .callHistoryTabFull)
+        case .contacts:
+            return UIImage(safeImage: .contactsTabFull)
+        case .settings:
+            return UIImage(safeImage: .settingsTabFull)
+        }
+    }
+    
     static func allTabs() -> [SpikaTabBar] {
         return [.chat(withChatId: nil), .phoneCalls, .contacts, .settings]
     }
@@ -81,6 +94,22 @@ enum SpikaTabBar: Equatable {
         return allTabs.firstIndex { tab in
             viewController.isKind(of: tab.classForTab())
         } ?? 0
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        if case .chat = lhs, case .chat = rhs {
+            return true
+        }
+        if case .phoneCalls = lhs, case .phoneCalls = rhs {
+            return true
+        }
+        if case .contacts = lhs, case .contacts = rhs {
+            return true
+        }
+        if case .settings = lhs, case .settings = rhs {
+            return true
+        }
+        return false
     }
     
 }

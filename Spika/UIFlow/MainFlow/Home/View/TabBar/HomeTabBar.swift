@@ -39,7 +39,7 @@ class HomeTabBar: UIView, BaseView {
         
         for tab in self.tabs {
             self.tabStackView.addArrangedSubview(tab)
-            tab.imageView.publisher(for: .touchUpInside)
+            tab.button.publisher(for: .touchUpInside)
                 .sink { _ in
                     self.delegate?.tabSelected(tab.tab)
                 }.store(in: &self.subscriptions)

@@ -9,9 +9,9 @@ import UIKit
 
 class TabBarItemView: UIView, BaseView {
     
-    lazy var imageView: UIButton = {
-        let imageView = UIButton()
-        return imageView
+    lazy var button: UIButton = {
+        let button = UIButton()
+        return button
     } ()
     
     lazy var highlightsView: UIView = {
@@ -35,8 +35,7 @@ class TabBarItemView: UIView, BaseView {
     init(tabBarItem: SpikaTabBar) {
         self.tab = tabBarItem
         super.init(frame: CGRectZero)
-        self.imageView .setImage(tabBarItem.image.withRenderingMode(.alwaysTemplate), for: .normal)
-        self.imageView.tintColor = UIColor.navigation
+        self.button.setImage(tabBarItem.image, for: .normal)
         
         self.addSubviews()
         self.styleSubviews()
@@ -52,10 +51,10 @@ class TabBarItemView: UIView, BaseView {
                        initialSpringVelocity: 0.5,
                        options: options,
                        animations: {
-                        let color = isSelected ? UIColor.appBlueLight : UIColor.clear
-                        self.highlightsView.backgroundColor = color
-                        self.imageView.tintColor = isSelected ? UIColor.primaryColor : UIColor.navigation
-                        (self.superview as? UIStackView)?.layoutIfNeeded()
+            let color = isSelected ? UIColor.appBlueLight : UIColor.clear
+            self.highlightsView.backgroundColor = color
+            self.button.setImage(isSelected ? self.tab.imageFull : self.tab.image, for: .normal)
+            (self.superview as? UIStackView)?.layoutIfNeeded()
         }, completion: nil)
     }
     
@@ -76,7 +75,7 @@ class TabBarItemView: UIView, BaseView {
     
     func addSubviews() {
         addSubview(highlightsView)
-        addSubview(imageView)
+        addSubview(button)
         addSubview(counterLabel)
     }
     
@@ -84,7 +83,7 @@ class TabBarItemView: UIView, BaseView {
     
     func positionSubviews() {
         highlightsView.centerInSuperview()
-        imageView.fillSuperview()
+        button.fillSuperview()
         
         highlightsView.anchor(size: CGSize(width: 46, height: 46))
         
