@@ -6,26 +6,29 @@
 //
 
 import UIKit
+import Swinject
 import Combine
 
 class HomeViewController: UIPageViewController {
     
-    struct HomeViewControllerStartConfig {
-        let startingTab: Int
-        let startWithMessage: Message?
-        static func defaultConfig() -> HomeViewControllerStartConfig {
-            return HomeViewControllerStartConfig(startingTab: 0, startWithMessage: nil)
-        }
-    }
+//    struct HomeViewControllerStartConfig {
+//        let startingTab: Int
+//        let startWithMessage: Message?
+//        static func defaultConfig() -> HomeViewControllerStartConfig {
+//            return HomeViewControllerStartConfig(startingTab: 0, startWithMessage: nil)
+//        }
+//    }
     
     var homeTabBar: HomeTabBar!
     let viewModel: HomeViewModel
-    let startConfig: HomeViewControllerStartConfig
+    let startTab: SpikaTabBar
+    
+    var tabViewControllers: [UIViewController]!
 
     var subscriptions = Set<AnyCancellable>()
     
-    init(viewModel:HomeViewModel, startConfig: HomeViewControllerStartConfig) {
-        self.startConfig = startConfig
+    init(viewModel:HomeViewModel, startTab: SpikaTabBar) {
+        self.startTab = startTab
         self.viewModel = viewModel
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }
@@ -45,54 +48,60 @@ class HomeViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageViewController()
+        setupBinding()
         
+//        self.switchToController(index: SpikaTabBar.allTabs().firstIndex(where: <#T##(SpikaTabBar) throws -> Bool#>))
+//        if let message = self.startConfig.startWithMessage {
+//            self.viewModel.presentChat(message: message)
+//        }
+    }
+    
+    func setupBinding() {
         self.viewModel.repository
             .unreadRoomsPublisher
             .sink { value in
                 let stringValue = value > 0 ? String(value) : ""
                 self.title = stringValue
             }.store(in: &self.subscriptions)
+        self.switchToController(tab: self.startTab)
         
-        if let message = self.startConfig.startWithMessage {
-            self.viewModel.presentChat(message: message)
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+        self.viewModel.repository.unreadRoomsPublisher
+            .subscribe(self.homeTabBar.unreadRoomsPublisher)
+            .store(in: &self.subscriptions)
     }
     
     func configurePageViewController() {
-        homeTabBar = HomeTabBar(tabBarItems: viewModel.getHomeTabBarItems(startingTab: self.startConfig.startingTab))
+        self.tabViewControllers = SpikaTabBar.allTabs().map { $0.viewControllerForTab(assembler: Assembler.sharedAssembler,
+                                                                                      appCoordinator: self.viewModel.getAppCoordinator()!) }
+        homeTabBar = HomeTabBar(tabBarItems: SpikaTabBar.allTabs())
         homeTabBar.delegate = self
         
         view.addSubview(homeTabBar)
-        homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor,
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                          trailing: view.safeAreaLayoutGuide.trailingAnchor)
         homeTabBar.constrainHeight(HomeTabBar.tabBarHeight)
-        
-        if let vc = homeTabBar.getViewController(index: self.startConfig.startingTab) {
-            self.setViewControllers([vc], direction: .forward, animated: true)
-            self.homeTabBar.tabs.forEach{$0.isSelected = false}
-            self.homeTabBar.tabs[self.startConfig.startingTab].isSelected = true
-            self.homeTabBar.currentViewControllerIndex = self.startConfig.startingTab
-        }
     }
     
-    private func switchToController(index: Int) {
-        if let vc = homeTabBar.getViewController(index: index) {
-            if index < homeTabBar.currentViewControllerIndex {
-                setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
-            } else {
-                setViewControllers([vc], direction: .forward, animated: true, completion: nil)
-            }
+    private func switchToController(tab: SpikaTabBar) {
+        let newIndex = SpikaTabBar.indexForTab(tab: tab)
+        
+        var direction: NavigationDirection = .forward
+        if let current = self.viewControllers?.first {
+            let index = SpikaTabBar.indexOfViewController(viewController: current)
+            direction = newIndex > index ? .forward : .reverse
         }
+        
+        let viewController = self.tabViewControllers[newIndex]
+        
+        setViewControllers([viewController], direction: direction, animated: true, completion: nil)
+        self.homeTabBar.updateSelectedTab(selectedTab: tab)
     }
     
 }
 
 extension HomeViewController: HomeTabBarViewDelegate {
-    func tabSelected(_ tabBar: HomeTabBar, at index: Int) {
-        self.switchToController(index: index)
+    func tabSelected(_ tab: SpikaTabBar) {
+        self.switchToController(tab: tab)
     }
 }

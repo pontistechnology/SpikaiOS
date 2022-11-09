@@ -71,43 +71,12 @@ class AppCoordinator: Coordinator {
     
     // MARK: MAIN FLOW
     func presentHomeScreen(startSyncAndSSE: Bool,
-                           startConfig: HomeViewController.HomeViewControllerStartConfig = HomeViewController.HomeViewControllerStartConfig.defaultConfig()) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startConfig)!
+                           startTab: SpikaTabBar = .chat(withChatId: nil)) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startTab)!
         if startSyncAndSSE {
             syncAndStartSSE()            
         }
         self.navigationController.setViewControllers([viewController], animated: true)
-    }
-    
-    func getHomeTabBarItems(startingTab: Int) -> [TabBarItem] {
-        let repository = Assembler.sharedAssembler.resolver.resolve(Repository.self, name: RepositoryType.production.name)!
-        
-        var tabs = [TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(AllChatsViewController.self, argument: self)!,
-                           title: "Chats",
-                           image: "chats",
-                           position: 0,
-                           isSelected: false,
-                           indicationPublisher: repository.unreadRoomsPublisher.map { String($0) }.eraseToAnyPublisher()),
-                TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(CallHistoryViewController.self, argument: self)!,
-                           title: "Call History",
-                           image: "callHistory",
-                           position: 1,
-                           isSelected: false,
-                           indicationPublisher: nil),
-                TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(ContactsViewController.self, argument: self)!,
-                           title: "Contacts",
-                           image: "contacts",
-                           position: 2,
-                           isSelected: false,
-                           indicationPublisher: nil),
-                TabBarItem(viewController: Assembler.sharedAssembler.resolver.resolve(SettingsViewController.self, argument: self)!,
-                           title: "Settings",
-                           image: "settings",
-                           position: 3,
-                           isSelected: false,
-                           indicationPublisher: nil)]
-        tabs[startingTab].isSelected = true
-        return tabs
     }
     
     func presentDetailsScreen(user: User) {

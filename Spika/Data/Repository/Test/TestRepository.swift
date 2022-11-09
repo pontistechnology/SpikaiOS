@@ -15,7 +15,7 @@ class TestRepository: Repository {
     let databaseService: DatabaseService
     var subs = Set<AnyCancellable>()
     
-    let unreadRoomsPublisher = PassthroughSubject<Int,Never>()
+    let unreadRoomsPublisher = CurrentValueSubject<Int,Never>(0)
     
     init(networkService: NetworkService, databaseService: DatabaseService) {
         self.networkService = networkService

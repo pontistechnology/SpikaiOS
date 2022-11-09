@@ -29,7 +29,7 @@ protocol Repository {
     
     var subs: Set<AnyCancellable>{ get set}
     
-    var unreadRoomsPublisher: PassthroughSubject<Int,Never> { get }
+    var unreadRoomsPublisher: CurrentValueSubject<Int,Never> { get }
     
     
     // MARK: - NETWORKING: Auth

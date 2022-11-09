@@ -15,11 +15,12 @@ class HomeViewModel: BaseViewModel {
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
         self.setupUnreadMessagesFrc()
+        self.updateUnreadMessages()
     }
     
     func setupUnreadMessagesFrc() {
         let fetchRequest = RoomEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
+        fetchRequest.predicate = NSPredicate(format: "messages.@count > 0")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp),
                                                          ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
@@ -42,10 +43,6 @@ class HomeViewModel: BaseViewModel {
             }.store(in: &self.subscriptions)
     }
     
-    func getHomeTabBarItems(startingTab: Int) -> [TabBarItem] {
-        return getAppCoordinator()!.getHomeTabBarItems(startingTab: startingTab)
-    }
-    
     func updatePush() {
         repository.updatePushToken().sink { completion in
             switch completion {
@@ -66,7 +63,11 @@ class HomeViewModel: BaseViewModel {
 
 extension HomeViewModel: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        let allObjects = controller.sections?.first?.objects as? [RoomEntity]
+        self.updateUnreadMessages()
+    }
+    
+    func updateUnreadMessages() {
+        let allObjects = self.frc?.sections?.first?.objects as? [RoomEntity]
         let count = allObjects?.filter { $0.numberOfUnreadMessages(myUserId: self.getMyUserId()) != 0 }.count ?? 0
         self.repository.unreadRoomsPublisher.send(count)
     }
