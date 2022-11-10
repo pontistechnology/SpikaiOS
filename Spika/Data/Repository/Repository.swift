@@ -29,7 +29,7 @@ protocol Repository {
     
     var subs: Set<AnyCancellable>{ get set}
     
-    var unreadRoomsPublisher: PassthroughSubject<Int,Never> { get }
+    var unreadRoomsPublisher: CurrentValueSubject<Int,Never> { get }
     
     
     // MARK: - NETWORKING: Auth
@@ -102,6 +102,7 @@ protocol Repository {
     // MARK: COREDATA: Room
     
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>
+    func getRoomWithId(forRoomId id: Int64) -> Future<Room, Error>
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error>
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error>
     func roomVisited(roomId: Int64)

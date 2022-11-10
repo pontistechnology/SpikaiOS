@@ -60,8 +60,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
         }
         
         DispatchQueue.main.async {
-            let config = HomeViewController.HomeViewControllerStartConfig(startingTab: 0, startWithMessage: message)
-            sd.appCoordinator?.presentHomeScreen(startSyncAndSSE: true, startConfig: config)
+//            let config = HomeViewController.HomeViewControllerStartConfig(startingTab: 0, startWithMessage: message)
+            sd.appCoordinator?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: message.roomId))
             completionHandler()
         }
     }

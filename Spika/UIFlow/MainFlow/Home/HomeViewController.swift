@@ -6,26 +6,21 @@
 //
 
 import UIKit
+import Swinject
 import Combine
 
 class HomeViewController: UIPageViewController {
     
-    struct HomeViewControllerStartConfig {
-        let startingTab: Int
-        let startWithMessage: Message?
-        static func defaultConfig() -> HomeViewControllerStartConfig {
-            return HomeViewControllerStartConfig(startingTab: 0, startWithMessage: nil)
-        }
-    }
-    
     var homeTabBar: HomeTabBar!
     let viewModel: HomeViewModel
-    let startConfig: HomeViewControllerStartConfig
+    let startTab: TabBarItem
+    
+    var tabViewControllers: [UIViewController]!
 
     var subscriptions = Set<AnyCancellable>()
     
-    init(viewModel:HomeViewModel, startConfig: HomeViewControllerStartConfig) {
-        self.startConfig = startConfig
+    init(viewModel:HomeViewModel, startTab: TabBarItem) {
+        self.startTab = startTab
         self.viewModel = viewModel
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }
@@ -45,54 +40,60 @@ class HomeViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageViewController()
+        setupBinding()
         
-        self.viewModel.repository
-            .unreadRoomsPublisher
-            .sink { value in
-                let stringValue = value > 0 ? String(value) : ""
-                self.title = stringValue
-            }.store(in: &self.subscriptions)
+        self.switchToController(tab: self.startTab)
         
-        if let message = self.startConfig.startWithMessage {
-            self.viewModel.presentChat(message: message)
+        if case .chat(let roomId) = self.startTab,
+           let id = roomId {
+            self.viewModel.presentChat(roomId: id)
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    func setupBinding() {
+        self.viewModel.repository
+            .unreadRoomsPublisher
+            .sink { [weak self] value in // Todo weak
+                let stringValue = value > 0 ? String(value) : ""
+                self?.title = stringValue
+            }.store(in: &self.subscriptions)
         
+        self.viewModel.repository.unreadRoomsPublisher
+            .subscribe(self.homeTabBar.unreadRoomsPublisher)
+            .store(in: &self.subscriptions)
+        
+        self.homeTabBar
+            .tabSelectedPublisher
+            .sink { [weak self] tab in
+                self?.switchToController(tab: tab)
+            }.store(in: &self.subscriptions)
     }
     
     func configurePageViewController() {
-        homeTabBar = HomeTabBar(tabBarItems: viewModel.getHomeTabBarItems(startingTab: self.startConfig.startingTab))
-        homeTabBar.delegate = self
+        self.tabViewControllers = TabBarItem.allTabs().map { $0.viewControllerForTab(assembler: Assembler.sharedAssembler,
+                                                                                     appCoordinator: self.viewModel.getAppCoordinator()!) }
+        homeTabBar = HomeTabBar(tabBarItems: TabBarItem.allTabs())
         
         view.addSubview(homeTabBar)
-        homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor,
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                          trailing: view.safeAreaLayoutGuide.trailingAnchor)
         homeTabBar.constrainHeight(HomeTabBar.tabBarHeight)
+    }
+    
+    private func switchToController(tab: TabBarItem) {
+        let newIndex = TabBarItem.indexForTab(tab: tab)
         
-        if let vc = homeTabBar.getViewController(index: self.startConfig.startingTab) {
-            self.setViewControllers([vc], direction: .forward, animated: true)
-            self.homeTabBar.tabs.forEach{$0.isSelected = false}
-            self.homeTabBar.tabs[self.startConfig.startingTab].isSelected = true
-            self.homeTabBar.currentViewControllerIndex = self.startConfig.startingTab
+        var direction: NavigationDirection = .forward
+        if let current = self.viewControllers?.first {
+            let index = TabBarItem.indexOfViewController(viewController: current)
+            direction = newIndex > index ? .forward : .reverse
         }
+        
+        let viewController = self.tabViewControllers[newIndex]
+        
+        setViewControllers([viewController], direction: direction, animated: true, completion: nil)
+        self.homeTabBar.updateSelectedTab(selectedTab: tab)
     }
     
-    private func switchToController(index: Int) {
-        if let vc = homeTabBar.getViewController(index: index) {
-            if index < homeTabBar.currentViewControllerIndex {
-                setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
-            } else {
-                setViewControllers([vc], direction: .forward, animated: true, completion: nil)
-            }
-        }
-    }
-    
-}
-
-extension HomeViewController: HomeTabBarViewDelegate {
-    func tabSelected(_ tabBar: HomeTabBar, at index: Int) {
-        self.switchToController(index: index)
-    }
 }

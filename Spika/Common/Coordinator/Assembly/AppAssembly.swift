@@ -69,10 +69,9 @@ final class AppAssembly: Assembly {
             return HomeViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
-        container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator, startParameters: HomeViewController.HomeViewControllerStartConfig) in
+        container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator, startTab: TabBarItem) in
             let controller = HomeViewController(viewModel: container.resolve(HomeViewModel.self, argument: coordinator)!,
-                                                startConfig: startParameters)
-//            controller.viewModel = container.resolve(HomeViewModel.self, argument: coordinator)
+                                                startTab: startTab)
             return controller
         }.inObjectScope(.transient)
     }
@@ -128,22 +127,5 @@ final class AppAssembly: Assembly {
             return controller
         }.inObjectScope(.transient)
     }
-    
-    
-    //      select _____ command option E and change name
-    //
-//        private func assemble_____ViewController(_ container: Container) {
-//            container.register(_____ViewModel.self) { (resolver, coordinator: AppCoordinator) in
-//                let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-//                return _____ViewModel(repository: repository, coordinator: coordinator)
-//            }.inObjectScope(.transient)
-//
-//            container.register(_____ViewController.self) { (resolver, coordinator: AppCoordinator) in
-//                let controller = _____ViewController()
-//                controller.viewModel = container.resolve(_____ViewModel.self, argument: coordinator)
-//                return controller
-//            }.inObjectScope(.transient)
-//        }
-    
    
 }

@@ -42,6 +42,17 @@ enum AssetName: String {
     case waiting = "waiting"
     case pdfThumbnail = "pdfThumbnail"
     case unknownFileThumbnail = "unknownFileThumbnail"
+    
+    // Tabs
+    case callHistoryTab = "callHistoryTab"
+    case chatsTab = "chatsTab"
+    case contactsTab = "contactsTab"
+    case settingsTab = "settingsTab"
+    
+    case callHistoryTabFull = "callHistoryTabFull"
+    case chatsTabFull = "chatsTabFull"
+    case contactsTabFull = "contactsTabFull"
+    case settingsTabFull = "settingsTabFull"
 }
 
 extension UIImage {
