@@ -13,7 +13,6 @@ class ChatDetailsViewModel: BaseViewModel {
     
     init(repository: Repository, coordinator: Coordinator, chat: Room) {
         self.chat = chat
-//        self.userSubject = CurrentValueSubject<User, Never>(user)
         super.init(repository: repository, coordinator: coordinator)
     }
     

@@ -136,7 +136,7 @@ extension CurrentChatViewController {
         
         self.viewModel.repository
             .unreadRoomsPublisher
-            .sink { [weak self] value in 
+            .sink { [weak self] value in
                 let stringValue = value > 0 ? String(value) : ""
                 self?.title = stringValue
             }.store(in: &self.subscriptions)
@@ -402,6 +402,7 @@ extension CurrentChatViewController {
                                   lastSeen: "today")
         }
         
+        self.navigationItem.titleView = UIView(frame: .zero)
         let vtest = UIBarButtonItem(customView: friendInfoView)
         friendInfoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onChatDetails)))
         navigationItem.leftBarButtonItem = vtest

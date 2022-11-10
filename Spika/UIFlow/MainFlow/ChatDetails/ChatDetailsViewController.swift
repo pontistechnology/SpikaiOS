@@ -10,6 +10,7 @@ import UIKit
 final class ChatDetailsViewController: BaseViewController {
     
     let viewModel: ChatDetailsViewModel
+    let chatDetailView = ChatDetailsView(frame: CGRectZero)
     
     init(viewModel: ChatDetailsViewModel) {
         self.viewModel = viewModel
@@ -22,7 +23,11 @@ final class ChatDetailsViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .blue
+        setupView(chatDetailView)
+        setupBindings()
+    }
+    
+    private func setupBindings() {
     }
     
 }
