@@ -42,6 +42,8 @@ class HomeViewController: UIPageViewController {
         configurePageViewController()
         setupBinding()
         
+        self.switchToController(tab: self.startTab)
+        
         if case .chat(let roomId) = self.startTab,
            let id = roomId {
             self.viewModel.presentChat(roomId: id)
@@ -51,22 +53,26 @@ class HomeViewController: UIPageViewController {
     func setupBinding() {
         self.viewModel.repository
             .unreadRoomsPublisher
-            .sink { value in
+            .sink { [weak self] value in // Todo weak
                 let stringValue = value > 0 ? String(value) : ""
-                self.title = stringValue
+                self?.title = stringValue
             }.store(in: &self.subscriptions)
-        self.switchToController(tab: self.startTab)
         
         self.viewModel.repository.unreadRoomsPublisher
             .subscribe(self.homeTabBar.unreadRoomsPublisher)
             .store(in: &self.subscriptions)
+        
+        self.homeTabBar
+            .tabSelectedPublisher
+            .sink { [weak self] tab in
+                self?.switchToController(tab: tab)
+            }.store(in: &self.subscriptions)
     }
     
     func configurePageViewController() {
         self.tabViewControllers = TabBarItem.allTabs().map { $0.viewControllerForTab(assembler: Assembler.sharedAssembler,
                                                                                      appCoordinator: self.viewModel.getAppCoordinator()!) }
         homeTabBar = HomeTabBar(tabBarItems: TabBarItem.allTabs())
-        homeTabBar.delegate = self
         
         view.addSubview(homeTabBar)
         homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor,
@@ -90,10 +96,4 @@ class HomeViewController: UIPageViewController {
         self.homeTabBar.updateSelectedTab(selectedTab: tab)
     }
     
-}
-
-extension HomeViewController: HomeTabBarViewDelegate {
-    func tabSelected(_ tab: TabBarItem) {
-        self.switchToController(tab: tab)
-    }
 }

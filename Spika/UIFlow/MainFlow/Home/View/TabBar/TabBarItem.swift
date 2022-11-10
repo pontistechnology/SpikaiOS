@@ -71,7 +71,7 @@ enum TabBarItem: Equatable {
         }
     }
     
-    func classForTab() -> AnyClass {
+    private func classForTab() -> AnyClass {
         switch self {
         case .chat:
             return AllChatsViewController.self

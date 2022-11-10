@@ -48,8 +48,7 @@ extension RoomEntityService {
         Future { promise in
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = RoomEntity.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
-                // TODO: change predicate if
+                fetchRequest.predicate = NSPredicate(format: "id == %d", id)
                 do {
                     let rooms = try context.fetch(fetchRequest)
                     

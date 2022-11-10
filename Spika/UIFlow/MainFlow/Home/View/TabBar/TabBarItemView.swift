@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 class TabBarItemView: UIView, BaseView {
+    
+    let tabSelectedPublisher = PassthroughSubject<TabBarItem,Never>()
+    var subscriptions = Set<AnyCancellable>()
     
     lazy var button: UIButton = {
         let button = UIButton()
@@ -40,6 +44,13 @@ class TabBarItemView: UIView, BaseView {
         self.addSubviews()
         self.styleSubviews()
         self.positionSubviews()
+        
+        self.button
+            .publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                guard let tab = self?.tab else { return }
+                self?.tabSelectedPublisher.send(tab)
+            }.store(in: &self.subscriptions)
     }
     
     func updateIsSelected(isSelected: Bool) {

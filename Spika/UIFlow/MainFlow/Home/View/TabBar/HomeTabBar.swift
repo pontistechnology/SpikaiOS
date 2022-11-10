@@ -8,10 +8,6 @@
 import UIKit
 import Combine
 
-protocol HomeTabBarViewDelegate: AnyObject {
-    func tabSelected(_ tab: TabBarItem)
-}
-
 class HomeTabBar: UIView, BaseView {
     
     private let tabContainer = UIView()
@@ -21,13 +17,13 @@ class HomeTabBar: UIView, BaseView {
     let tabBarItems: [TabBarItem]
     let tabs: [TabBarItemView]
     
-    var unreadRoomsPublisher = PassthroughSubject<Int,Never>()
+    let unreadRoomsPublisher = PassthroughSubject<Int,Never>()
+    
+    let tabSelectedPublisher = PassthroughSubject<TabBarItem,Never>()
     
     var subscriptions = Set<AnyCancellable>()
     
     static let tabBarHeight: CGFloat = 65.0
-    
-    weak var delegate: HomeTabBarViewDelegate?
     
     init(tabBarItems: [TabBarItem]) {
         self.tabBarItems = tabBarItems
@@ -38,16 +34,15 @@ class HomeTabBar: UIView, BaseView {
         
         for tab in self.tabs {
             self.tabStackView.addArrangedSubview(tab)
-            tab.button.publisher(for: .touchUpInside)
-                .sink { _ in
-                    self.delegate?.tabSelected(tab.tab)
-                }.store(in: &self.subscriptions)
+            tab.tabSelectedPublisher
+                .subscribe(self.tabSelectedPublisher)
+                .store(in: &self.subscriptions)
         }
         
         self.unreadRoomsPublisher
-            .sink { unreadRooms in
+            .sink { [weak self] unreadRooms in
                 let message = unreadRooms > 0 ? String(unreadRooms) : nil
-                self.tabs.first { tab in
+                self?.tabs.first { tab in
                     tab.tab == .chat(withChatId: nil)
                 }?.updateMessage(message: message)
             }.store(in: &self.subscriptions)
