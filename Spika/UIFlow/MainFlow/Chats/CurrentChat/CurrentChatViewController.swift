@@ -134,6 +134,13 @@ extension CurrentChatViewController {
                 }
             }.store(in: &subscriptions)
         
+        self.viewModel.repository
+            .unreadRoomsPublisher
+            .sink { [weak self] value in 
+                let stringValue = value > 0 ? String(value) : ""
+                self?.title = stringValue
+            }.store(in: &self.subscriptions)
+        
         func handleScroll(isMyMessage: Bool) {
             currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force : .ifLastCellVisible)
         }
@@ -396,7 +403,13 @@ extension CurrentChatViewController {
         }
         
         let vtest = UIBarButtonItem(customView: friendInfoView)
+        friendInfoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onChatDetails)))
         navigationItem.leftBarButtonItem = vtest
+    }
+    
+    @objc func onChatDetails() {
+        guard let room = self.viewModel.room else { return }
+        self.viewModel.getAppCoordinator()?.presentCatDetailsScreen(roomModel: room)
     }
     
     @objc func videoCallActionHandler() {
