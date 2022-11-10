@@ -50,10 +50,10 @@ class HomeViewController: UIPageViewController {
         configurePageViewController()
         setupBinding()
         
-//        self.switchToController(index: SpikaTabBar.allTabs().firstIndex(where: <#T##(SpikaTabBar) throws -> Bool#>))
-//        if let message = self.startConfig.startWithMessage {
-//            self.viewModel.presentChat(message: message)
-//        }
+        if case .chat(let roomId) = self.startTab,
+           let id = roomId {
+            self.viewModel.presentChat(roomId: id)
+        }
     }
     
     func setupBinding() {

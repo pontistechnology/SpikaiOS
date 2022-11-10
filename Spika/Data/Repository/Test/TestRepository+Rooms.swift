@@ -40,6 +40,12 @@ extension TestRepository {
         }
     }
     
+    func getRoomWithId(forRoomId id: Int64) -> Future<Room, Error> {
+        return Future { promise in
+            promise(.failure(DatabseError.unknown))
+        }
+    }
+    
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))

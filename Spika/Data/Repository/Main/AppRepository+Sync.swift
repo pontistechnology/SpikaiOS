@@ -20,12 +20,6 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    
-    
-    
-    
-    
-    
     func syncUsers(timestamp: Int64) -> AnyPublisher<SyncUsersResponseModel, Error> {
         guard let accessToken = getAccessToken() else { return
             Fail<SyncUsersResponseModel, Error>(error: NetworkError.noAccessToken)
@@ -43,13 +37,6 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    
-    
-    
-    
-    
-    
-    
     func syncMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error> {
         guard let accessToken = getAccessToken() else { return
             Fail<SyncMessagesResponseModel, Error>(error: NetworkError.noAccessToken)
@@ -65,12 +52,6 @@ extension AppRepository {
         
         return networkService.performRequest(resources: resources)
     }
-    
-    
-    
-    
-    
-    
     
     func syncMessageRecords(timestamp: Int64) -> AnyPublisher<SyncMessageRecordsResponseModel, Error> {
         guard let accessToken = getAccessToken() else { return

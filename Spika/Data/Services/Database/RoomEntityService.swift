@@ -44,6 +44,28 @@ extension RoomEntityService {
         }
     }
     
+    func getRoom(forRoomId id: Int64) -> Future<Room, Error> {
+        Future { promise in
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
+                let fetchRequest = RoomEntity.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
+                // TODO: change predicate if
+                do {
+                    let rooms = try context.fetch(fetchRequest)
+                    
+                    if rooms.count == 1 {
+                        let r = Room(roomEntity: rooms.first!)
+                        promise(.success(r))
+                    } else {
+                        promise(.failure(DatabseError.moreThanOne))
+                    }
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+    }
+    
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error> {
         Future { promise in
             self.coreDataStack.persistantContainer.performBackgroundTask { context in

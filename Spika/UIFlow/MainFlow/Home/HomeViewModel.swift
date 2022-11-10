@@ -34,12 +34,12 @@ class HomeViewModel: BaseViewModel {
         }
     }
     
-    func presentChat(message: Message) {
-        repository.getNotificationInfoForMessage(message)
+    func presentChat(roomId: Int64) {
+        self.repository.getRoomWithId(forRoomId: roomId)
             .receive(on: DispatchQueue.main)
             .sink { c in
-            } receiveValue: { [weak self] messageInfo in
-                self?.getAppCoordinator()?.presentCurrentChatScreen(room: messageInfo.room)
+            } receiveValue: { [weak self] room in
+                self?.getAppCoordinator()?.presentCurrentChatScreen(room: room)
             }.store(in: &self.subscriptions)
     }
     
