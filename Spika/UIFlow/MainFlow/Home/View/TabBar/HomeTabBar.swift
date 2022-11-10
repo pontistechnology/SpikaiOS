@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 protocol HomeTabBarViewDelegate: AnyObject {
-    func tabSelected(_ tab: SpikaTabBar)
+    func tabSelected(_ tab: TabBarItem)
 }
 
 class HomeTabBar: UIView, BaseView {
@@ -18,19 +18,18 @@ class HomeTabBar: UIView, BaseView {
     let tabStackView = UIStackView()
     private let topBorderView  = UIView()
     
-    let tabBarItems: [SpikaTabBar]
+    let tabBarItems: [TabBarItem]
     let tabs: [TabBarItemView]
     
     var unreadRoomsPublisher = PassthroughSubject<Int,Never>()
     
     var subscriptions = Set<AnyCancellable>()
     
-    var currentViewControllerIndex: Int = 0
     static let tabBarHeight: CGFloat = 65.0
     
     weak var delegate: HomeTabBarViewDelegate?
     
-    init(tabBarItems: [SpikaTabBar]) {
+    init(tabBarItems: [TabBarItem]) {
         self.tabBarItems = tabBarItems
         self.tabs = tabBarItems.map { TabBarItemView(tabBarItem: $0) }
         
@@ -54,7 +53,7 @@ class HomeTabBar: UIView, BaseView {
             }.store(in: &self.subscriptions)
     }
     
-    func updateSelectedTab(selectedTab: SpikaTabBar) {
+    func updateSelectedTab(selectedTab: TabBarItem) {
         for tab in self.tabs {
             tab.updateIsSelected(isSelected: tab.tab == selectedTab)
         }

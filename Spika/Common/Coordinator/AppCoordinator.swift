@@ -71,7 +71,7 @@ class AppCoordinator: Coordinator {
     
     // MARK: MAIN FLOW
     func presentHomeScreen(startSyncAndSSE: Bool,
-                           startTab: SpikaTabBar = .chat(withChatId: nil)) {
+                           startTab: TabBarItem = .chat(withChatId: nil)) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startTab)!
         if startSyncAndSSE {
             syncAndStartSSE()            

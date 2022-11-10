@@ -15,7 +15,7 @@ class HomeViewModel: BaseViewModel {
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
         self.setupUnreadMessagesFrc()
-        self.updateUnreadMessages()
+        self.updateUnreadMessages() // Frc can have results even without fetch being called!
     }
     
     func setupUnreadMessagesFrc() {

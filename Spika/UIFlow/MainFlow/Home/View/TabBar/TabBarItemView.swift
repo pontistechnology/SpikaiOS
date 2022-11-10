@@ -30,12 +30,12 @@ class TabBarItemView: UIView, BaseView {
         return label
     } ()
     
-    let tab: SpikaTabBar
+    let tab: TabBarItem
     
-    init(tabBarItem: SpikaTabBar) {
+    init(tabBarItem: TabBarItem) {
         self.tab = tabBarItem
         super.init(frame: CGRectZero)
-        self.button.setImage(tabBarItem.image, for: .normal)
+        self.button.setImage(tabBarItem.imageNormal, for: .normal)
         
         self.addSubviews()
         self.styleSubviews()
@@ -53,7 +53,7 @@ class TabBarItemView: UIView, BaseView {
                        animations: {
             let color = isSelected ? UIColor.appBlueLight : UIColor.clear
             self.highlightsView.backgroundColor = color
-            self.button.setImage(isSelected ? self.tab.imageFull : self.tab.image, for: .normal)
+            self.button.setImage(isSelected ? self.tab.imageSelected : self.tab.imageNormal, for: .normal)
             (self.superview as? UIStackView)?.layoutIfNeeded()
         }, completion: nil)
     }

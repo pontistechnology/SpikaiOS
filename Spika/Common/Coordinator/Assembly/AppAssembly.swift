@@ -69,7 +69,7 @@ final class AppAssembly: Assembly {
             return HomeViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
-        container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator, startTab: SpikaTabBar) in
+        container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator, startTab: TabBarItem) in
             let controller = HomeViewController(viewModel: container.resolve(HomeViewModel.self, argument: coordinator)!,
                                                 startTab: startTab)
 //            controller.viewModel = container.resolve(HomeViewModel.self, argument: coordinator)
