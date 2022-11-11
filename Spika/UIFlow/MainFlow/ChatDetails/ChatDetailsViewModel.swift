@@ -15,6 +15,8 @@ class ChatDetailsViewModel: BaseViewModel {
     let groupImagePublisher = CurrentValueSubject<String?,Never>(nil)
     let groupNamePublisher = CurrentValueSubject<String?,Never>(nil)
     
+    let groupContacts = CurrentValueSubject<[RoomUser],Never>([])
+    
     init(repository: Repository, coordinator: Coordinator, chat: Room) {
         self.chat = chat
         super.init(repository: repository, coordinator: coordinator)
@@ -25,8 +27,10 @@ class ChatDetailsViewModel: BaseViewModel {
         if let avatarUrl = chat.getAvatarUrl() {
             groupImagePublisher.send(avatarUrl)
         }
-    
+        
         self.groupNamePublisher.send(chat.name)
+        
+        self.groupContacts.send(self.chat.users)
     }
     
 }

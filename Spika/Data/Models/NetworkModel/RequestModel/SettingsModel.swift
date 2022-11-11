@@ -12,5 +12,4 @@ struct SettingsModel: Codable {
     var id: Int64?
     var userid: Int64?
     
-    
 }

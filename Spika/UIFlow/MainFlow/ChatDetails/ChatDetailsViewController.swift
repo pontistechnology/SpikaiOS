@@ -41,6 +41,11 @@ final class ChatDetailsViewController: BaseViewController {
             .sink { chatName in
                 self.chatDetailView.contentView.chatName.text = chatName
             }.store(in: &self.subscriptions)
+        
+        self.viewModel.groupContacts
+            .sink { users in
+                self.chatDetailView.contentView.chatMembersView.updateWithUsers(users: users)
+            }.store(in: &self.subscriptions)
     }
     
 }
