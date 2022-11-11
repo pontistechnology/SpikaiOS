@@ -28,6 +28,19 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     private func setupBindings() {
+        self.viewModel.groupImagePublisher
+            .compactMap{ urlString in
+                return URL(string: urlString ?? "")
+            }
+            .subscribe(on: DispatchQueue.main)
+            .sink { [weak self] url in
+                self?.chatDetailView.contentView.chatImage.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
+            }.store(in: &self.subscriptions)
+        
+        self.viewModel.groupNamePublisher
+            .sink { chatName in
+                self.chatDetailView.contentView.chatName.text = chatName
+            }.store(in: &self.subscriptions)
     }
     
 }

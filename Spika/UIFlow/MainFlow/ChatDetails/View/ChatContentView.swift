@@ -10,7 +10,7 @@ import UIKit
 class ChatContentView: UIView, BaseView {
     
     let chatImage = UIImageView()
-    let chatName = CustomLabel(text: "Group", fontName: .MontserratSemiBold)
+    let chatName = CustomLabel(text: "Group", textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
     
     let sharedMediaOptionButton = NavView(text: "Shared Media, Links and Docs")
     let chatSearchOptionButton = NavView(text: "Chat search")
@@ -21,6 +21,9 @@ class ChatContentView: UIView, BaseView {
     
     let pinChatSwitchView = SwitchView(text: "Pin chat")
     let muteSwitchView = SwitchView(text: "Mute")
+    
+    let chatMembersView = ChatMembersView(contactsEditable: true)
+    
     let blockLabel = CustomLabel(text: "Block", textSize: 14, textColor: .appRed)
     let reportLabel = CustomLabel(text: "Report", textSize: 14, textColor: .appRed)
     
@@ -66,6 +69,8 @@ class ChatContentView: UIView, BaseView {
         
         mainStackView.addArrangedSubview(pinChatSwitchView)
         mainStackView.addArrangedSubview(muteSwitchView)
+        
+        mainStackView.addArrangedSubview(chatMembersView)
         
         mainStackView.addArrangedSubview(self.labelStackView)
         labelStackView.addArrangedSubview(blockLabel)
