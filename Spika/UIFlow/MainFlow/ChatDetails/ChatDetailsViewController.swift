@@ -56,6 +56,17 @@ final class ChatDetailsViewController: BaseViewController {
                 print("")
             }.store(in: &self.chatDetailView.contentView
                 .chatMembersView.subscriptions)
+        
+        self.chatDetailView.contentView
+            .muteSwitchView
+            .stateSwitch
+            .publisher(for: .touchUpInside)
+            .compactMap { [weak self] _ in
+                self?.chatDetailView.contentView.muteSwitchView.stateSwitch.isOn
+            }
+            .sink { [weak self] value in
+                self?.viewModel.muteUnmute(mute: value)
+            }.store(in: &self.subscriptions)
     }
     
 }

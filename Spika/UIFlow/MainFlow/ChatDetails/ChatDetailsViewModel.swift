@@ -33,4 +33,22 @@ class ChatDetailsViewModel: BaseViewModel {
         self.groupContacts.send(self.chat.users)
     }
     
+    func muteUnmute(mute: Bool) {
+        self.repository
+            .muteUnmuteRoom(roomId: chat.id, mute: mute)
+            .sink { [weak self] completion in
+                guard let `self` = self else { return }
+                let roomName = self.chat.name ?? String(self.chat.id)
+                
+                switch completion {
+                case .finished:
+                    break
+                case .failure(_):
+                    self.getAppCoordinator()?.showError(message: "Something went wrong \(mute ? "Muting" : "Unmuting") the room \(roomName)")
+                    //TODO: Reset Room muted state & observer
+                }
+            } receiveValue: { _ in }
+            .store(in: &self.subscriptions)
+    }
+    
 }
