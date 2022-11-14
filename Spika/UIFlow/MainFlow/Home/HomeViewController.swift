@@ -53,7 +53,7 @@ class HomeViewController: UIPageViewController {
     func setupBinding() {
         self.viewModel.repository
             .unreadRoomsPublisher
-            .sink { [weak self] value in // Todo weak
+            .sink { [weak self] value in
                 let stringValue = value > 0 ? String(value) : ""
                 self?.title = stringValue
             }.store(in: &self.subscriptions)

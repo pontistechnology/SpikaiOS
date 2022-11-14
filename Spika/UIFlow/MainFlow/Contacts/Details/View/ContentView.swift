@@ -14,7 +14,7 @@ class ContentView: UIView, BaseView {
     let messageButton = ImageButton(image: UIImage(safeImage: .chatBubble))
     let phoneCallButton = ImageButton(image: UIImage(safeImage: .phoneCall))
     let videoCallButton = ImageButton(image: UIImage(safeImage: .videoCall))
-    let testLabel = CustomLabel(text: "Test")
+//    let testLabel = CustomLabel(text: "Test")
     let optionButtonsStackView = UIStackView()
     let switchStackView = UIStackView()
     let labelsStackView = UIStackView()
@@ -44,7 +44,7 @@ class ContentView: UIView, BaseView {
         addSubview(messageButton)
         addSubview(phoneCallButton)
         addSubview(videoCallButton)
-        addSubview(testLabel)
+//        addSubview(testLabel)
         addSubview(optionButtonsStackView)
         optionButtonsStackView.addArrangedSubview(sharedMediaOptionButton)
         optionButtonsStackView.addArrangedSubview(chatSearchOptionButton)
@@ -68,17 +68,13 @@ class ContentView: UIView, BaseView {
         profilePhoto.clipsToBounds = true
         
         optionButtonsStackView.axis = .vertical
-        optionButtonsStackView.distribution = .fillEqually
+        optionButtonsStackView.distribution = .fill
         
         switchStackView.axis = .vertical
-        switchStackView.distribution = .fillEqually
+        switchStackView.distribution = .fill
         
         labelsStackView.axis = .vertical
         labelsStackView.distribution = .fillEqually
-        
-
-        
-
     }
     
     func positionSubviews() {
@@ -97,13 +93,14 @@ class ContentView: UIView, BaseView {
         messageButton.anchor(top: phoneCallButton.topAnchor, trailing: phoneCallButton.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 24))
         
         optionButtonsStackView.anchor(top: messageButton.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0))
-        optionButtonsStackView.constrainHeight(300)
+//        optionButtonsStackView.constrainHeight(300)
         
         switchStackView.anchor(top: optionButtonsStackView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
-        switchStackView.constrainHeight(120)
+//        switchStackView.constrainHeight(120)
         
-        labelsStackView.anchor(top: switchStackView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 0))
-        labelsStackView.constrainHeight(120)
+        labelsStackView.anchor(top: switchStackView.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 0))
+//        labelsStackView.constrainHeight(120)
+        blockLabel.constrainHeight(80)
         
     }
 }
