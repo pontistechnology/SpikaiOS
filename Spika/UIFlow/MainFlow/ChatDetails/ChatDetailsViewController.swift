@@ -28,6 +28,7 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     private func setupBindings() {
+        // View Model Binding
         self.viewModel.groupImagePublisher
             .compactMap{ urlString in
                 return URL(string: urlString ?? "")
@@ -35,17 +36,26 @@ final class ChatDetailsViewController: BaseViewController {
             .subscribe(on: DispatchQueue.main)
             .sink { [weak self] url in
                 self?.chatDetailView.contentView.chatImage.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
-            }.store(in: &self.subscriptions)
-        
+            }.store(in: &self.viewModel.subscriptions)
+//
         self.viewModel.groupNamePublisher
-            .sink { chatName in
-                self.chatDetailView.contentView.chatName.text = chatName
-            }.store(in: &self.subscriptions)
-        
+            .sink { [weak self] chatName in
+                self?.chatDetailView.contentView.chatName.text = chatName
+            }.store(in: &self.viewModel.subscriptions)
+
         self.viewModel.groupContacts
-            .sink { users in
-                self.chatDetailView.contentView.chatMembersView.updateWithUsers(users: users)
-            }.store(in: &self.subscriptions)
+            .sink { [weak self] users in
+                self?.chatDetailView.contentView.chatMembersView.updateWithUsers(users: users)
+            }.store(in: &self.viewModel.subscriptions)
+        
+        // UI Binding
+        self.chatDetailView.contentView
+            .chatMembersView
+            .onRemoveUser
+            .sink { user in
+                print("")
+            }.store(in: &self.chatDetailView.contentView
+                .chatMembersView.subscriptions)
     }
     
 }

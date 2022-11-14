@@ -8,9 +8,14 @@
 import Foundation
 import UIKit
 import Kingfisher
+import Combine
 
 class ContactsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "ContactsTableViewCell"
+    var user: User?
+    let onRemoveUser = PassthroughSubject<User?,Never>()
+    var subscriptions = Set<AnyCancellable>()
+    
     let nameLabel = CustomLabel(text: "*Contact Name*", textSize: 14, fontName: .MontserratMedium)
     let descriptionLabel = CustomLabel(text: "CTO", textSize: 12, fontName: .MontserratRegular)
     let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
@@ -19,6 +24,10 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(safeImage: .close), for: .normal)
         button.setContentHuggingPriority(.required, for: .horizontal)
+        button.publisher(for: .touchUpInside)
+            .map { [weak self] _ in self?.user }
+            .subscribe(self.onRemoveUser)
+            .store(in: &subscriptions)
         return button
     } ()
     
@@ -32,10 +41,10 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     }
     
     func addSubviews() {
-        addSubview(leftImageView)
-        addSubview(nameLabel)
-        addSubview(descriptionLabel)
-        addSubview(removeButton)
+        self.contentView.addSubview(leftImageView)
+        self.contentView.addSubview(nameLabel)
+        self.contentView.addSubview(descriptionLabel)
+        self.contentView.addSubview(removeButton)
     }
     
     func styleSubviews() {
@@ -49,13 +58,13 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     
     func positionSubviews() {
         leftImageView.centerYToSuperview()
-        leftImageView.anchor(leading: leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0), size: CGSize(width: 42, height: 42))
+        leftImageView.anchor(leading: self.contentView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0), size: CGSize(width: 42, height: 42))
         
-        nameLabel.anchor(top: topAnchor, leading: leftImageView.trailingAnchor, trailing: self.removeButton.leadingAnchor, padding: UIEdgeInsets(top: 12, left: 16, bottom: 0, right: 20))
-        descriptionLabel.anchor(leading: leftImageView.trailingAnchor, bottom: bottomAnchor, trailing: self.removeButton.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 16, bottom: 13, right: 20))
+        nameLabel.anchor(top: self.contentView.topAnchor, leading: leftImageView.trailingAnchor, trailing: self.removeButton.leadingAnchor, padding: UIEdgeInsets(top: 12, left: 16, bottom: 0, right: 20))
+        descriptionLabel.anchor(leading: leftImageView.trailingAnchor, bottom: self.contentView.bottomAnchor, trailing: self.removeButton.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 16, bottom: 13, right: 20))
         
         self.removeButton.centerYToSuperview()
-        self.removeButton.anchor(trailing: trailingAnchor, padding: UIEdgeInsets(top: 12, left: 16, bottom: 0, right: 14), size: CGSize(width: 50, height: 50))
+        self.removeButton.anchor(trailing: self.contentView.trailingAnchor, padding: UIEdgeInsets(top: 12, left: 16, bottom: 0, right: 14), size: CGSize(width: 50, height: 50))
     }
     
     func configureCell(image: UIImage, name: String, desc: String) {
@@ -65,8 +74,9 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     }
     
     func configureCell(_ model: User, isEditable: Bool = false) {
-        nameLabel.text = model.getDisplayName()
-        descriptionLabel.text = model.telephoneNumber
+        self.nameLabel.text = model.getDisplayName()
+        self.descriptionLabel.text = model.telephoneNumber
+        self.user = model
         
         let url = URL(string: model.getAvatarUrl() ?? "")
         leftImageView.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
@@ -75,8 +85,8 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     }
     
     override func prepareForReuse() {
-        leftImageView.image = UIImage(safeImage: .userImage)
-        nameLabel.text = ""
-        descriptionLabel.text = ""
+        self.leftImageView.image = UIImage(safeImage: .userImage)
+        self.nameLabel.text = ""
+        self.descriptionLabel.text = ""
     }
 }

@@ -6,17 +6,26 @@
 //
 
 import UIKit
+import Combine
 
 final class ChatMembersView: UIView, BaseView {
     
+    //MARK: - Variables
     let contactsEditable: Bool
     
     let cellHeight: CGFloat = 80
     
     var viewIsExpanded = false
     
+    var users: [RoomUser] = []
+    
     var tableViewHeightConstraint: NSLayoutConstraint!
     
+    let onRemoveUser = PassthroughSubject<User?,Never>()
+    
+    var subscriptions = Set<AnyCancellable>()
+    
+    //MARK: - UI
     lazy var mainStackView: UIStackView = {
        let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,10 +64,15 @@ final class ChatMembersView: UIView, BaseView {
         return button
     } ()
     
-    let tableView = ContactsTableView()
+    lazy var tableView: ContactsTableView = {
+        let tableView = ContactsTableView()
+        tableView.isScrollEnabled = false
+//        tableView.allowsSelection = false
+        return tableView
+    } ()
     
-    var users: [RoomUser] = []
     
+    //MARK: - Methods
     init(contactsEditable: Bool) {
         self.contactsEditable = contactsEditable
         super.init(frame: CGRectZero)
@@ -99,7 +113,6 @@ final class ChatMembersView: UIView, BaseView {
         self.showMoreButton.setTitle(NSLocalizedString("Show less", comment: "Show more"), for: .normal)
     }
     
-    
     func addSubviews() {
         self.addSubview(self.mainStackView)
         
@@ -123,6 +136,7 @@ final class ChatMembersView: UIView, BaseView {
     
     func positionSubviews() {
         self.mainStackView.fillSuperview()
+        self.horizontalTitleStackView.constrainHeight(cellHeight)
     }
     
     @objc func onShowMore() {
@@ -136,6 +150,7 @@ final class ChatMembersView: UIView, BaseView {
     
 }
 
+//MARK: - Table View
 extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.cellHeight
@@ -149,6 +164,9 @@ extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier,
                                                  for: indexPath) as! ContactsTableViewCell
         cell.configureCell(self.users[indexPath.row].user, isEditable: true)
+        cell.onRemoveUser
+            .subscribe(self.onRemoveUser)
+            .store(in: &cell.subscriptions)
         return cell
     }
 }
