@@ -102,16 +102,16 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<RoomMuteUnmuteresponseModel,Error> {
+    func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<EmptyResponse,Error> {
         guard let accessToken = getAccessToken()
-        else {return Fail<RoomMuteUnmuteresponseModel, Error>(error: NetworkError.noAccessToken)
+        else {return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
         
         let url = Constants.Endpoints.getAllRooms + "/\(roomId)" + (mute ? "/mute" : "/unmute")
         
-        let resources = Resources<RoomMuteUnmuteresponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyResponse, EmptyRequestBody>(
             path: url,
             requestType: .POST,
             bodyParameters: nil,

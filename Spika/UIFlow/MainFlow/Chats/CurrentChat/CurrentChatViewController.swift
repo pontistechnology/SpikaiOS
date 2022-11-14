@@ -411,7 +411,7 @@ extension CurrentChatViewController {
     
     @objc func onChatDetails() {
         guard let room = self.viewModel.room else { return }
-        self.viewModel.getAppCoordinator()?.presentCatDetailsScreen(roomModel: room)
+        self.viewModel.getAppCoordinator()?.presentChatDetailsScreen(roomModel: room)
     }
     
     @objc func videoCallActionHandler() {

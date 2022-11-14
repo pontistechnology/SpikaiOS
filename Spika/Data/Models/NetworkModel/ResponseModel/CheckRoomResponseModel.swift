@@ -13,5 +13,3 @@ struct CheckRoomResponseModel: Codable {
     let error: String?
     let message: String?
 }
-
-struct RoomMuteUnmuteresponseModel: Codable {}

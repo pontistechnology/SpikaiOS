@@ -68,8 +68,8 @@ extension TestRepository {
         
     }
     
-    func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<RoomMuteUnmuteresponseModel,Error> {
-        return Fail<RoomMuteUnmuteresponseModel, Error>(error: NetworkError.noAccessToken)
+    func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<EmptyResponse,Error> {
+        return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }

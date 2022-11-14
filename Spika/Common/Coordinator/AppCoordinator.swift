@@ -130,7 +130,7 @@ class AppCoordinator: Coordinator {
         navigationController.pushViewController(currentChatViewController, animated: true)
     }
     
-    func presentCatDetailsScreen(roomModel: Room) {
+    func presentChatDetailsScreen(roomModel: Room) {
         let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetailsViewController.self, arguments: self, roomModel)!
         
         navigationController.pushViewController(roomDetailsViewController, animated: true)
