@@ -46,7 +46,7 @@ class CurrentChatView: UIView, BaseView {
     func positionSubviews() {        
         messagesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: messageInputView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left:0, bottom: 0, right: 0))
         
-        downArrowImageView.anchor(bottom: messagesTableView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 9))
+        downArrowImageView.anchor(bottom: messagesTableView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0))
         downArrowImageView.centerXToSuperview()
     
         messageInputView.anchor(leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
@@ -73,6 +73,10 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.myFileReuseIdentifier)
         messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.friendFileReuseIdentifier)
         messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.groupFileReuseIdentifier)
+        
+        messagesTableView.register(AudioMessageTableViewCell.self, forCellReuseIdentifier: AudioMessageTableViewCell.myAudioReuseIdentifier)
+        messagesTableView.register(AudioMessageTableViewCell.self, forCellReuseIdentifier: AudioMessageTableViewCell.friendAudioReuseIdentifier)
+        messagesTableView.register(AudioMessageTableViewCell.self, forCellReuseIdentifier: AudioMessageTableViewCell.groupAudioReuseIdentifier)
 
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)

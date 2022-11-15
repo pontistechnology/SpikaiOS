@@ -40,13 +40,13 @@ class BaseMessageTableViewCell: UITableViewCell {
 extension BaseMessageTableViewCell {
     static let myReuseIdentifiers = [TextMessageTableViewCell.myTextReuseIdentifier,
                               ImageMessageTableViewCell.myImageReuseIdentifier,
-                              FileMessageTableViewCell.myFileReuseIdentifier]
+                                     FileMessageTableViewCell.myFileReuseIdentifier, AudioMessageTableViewCell.myAudioReuseIdentifier]
     static let friendReuseIdentifiers = [TextMessageTableViewCell.friendTextReuseIdentifier,
                                   ImageMessageTableViewCell.friendImageReuseIdentifier,
-                                  FileMessageTableViewCell.friendFileReuseIdentifier]
+                                         FileMessageTableViewCell.friendFileReuseIdentifier, AudioMessageTableViewCell.friendAudioReuseIdentifier]
     static let groupReuseIdentifiers = [TextMessageTableViewCell.groupTextReuseIdentifier,
                                  ImageMessageTableViewCell.groupImageReuseIdentifier,
-                                 FileMessageTableViewCell.groupFileReuseIdentifier]
+                                        FileMessageTableViewCell.groupFileReuseIdentifier, AudioMessageTableViewCell.groupAudioReuseIdentifier]
     
     func getMessageSenderType(reuseIdentifier: String) -> MessageSender? {
         if BaseMessageTableViewCell.myReuseIdentifiers.contains(reuseIdentifier) {

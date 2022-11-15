@@ -34,7 +34,15 @@ extension Message {
             } else {
                 return FileMessageTableViewCell.groupFileReuseIdentifier
             }
-        case .unknown, .video, .audio, .none:
+        case .audio:
+            if myUserId == fromUserId{
+                return AudioMessageTableViewCell.myAudioReuseIdentifier
+            } else if roomType == .privateRoom {
+                return AudioMessageTableViewCell.friendAudioReuseIdentifier
+            } else {
+                return AudioMessageTableViewCell.groupAudioReuseIdentifier
+            }
+        case .unknown, .video, .none:
             return nil
         }
     }

@@ -316,7 +316,9 @@ extension CurrentChatViewController: UITableViewDataSource {
             (cell as? ImageMessageTableViewCell)?.updateCell(message: message)
         case .file:
             (cell as? FileMessageTableViewCell)?.updateCell(message: message)
-        case .unknown, .video, .audio, .none:
+        case .audio:
+            (cell as? AudioMessageTableViewCell)?.updateCell(message: message)
+        case .unknown, .video, .none:
             break
         }
         
