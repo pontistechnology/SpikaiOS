@@ -106,6 +106,7 @@ protocol Repository {
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error>
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error>
     func roomVisited(roomId: Int64)
+    func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<EmptyResponse,Error>
 
     // MARK: - USERDEFAULTS: User
     

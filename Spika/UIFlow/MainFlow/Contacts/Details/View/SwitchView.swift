@@ -39,5 +39,7 @@ class SwitchView: UIView, BaseView {
         
         stateSwitch.anchor(trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
         stateSwitch.centerYToSuperview()
+        
+        self.constrainHeight(80)
     }
 }

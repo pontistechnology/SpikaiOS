@@ -64,11 +64,13 @@ extension CurrentChatViewController {
         currentChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
         
+
         currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
             self?.handleInput(state)
         }.store(in: &subscriptions)
         
-        viewModel.roomPublisher.receive(on: DispatchQueue.main).sink { [weak self] completion in
+        viewModel.roomPublisher.receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
             // TODO: pop vc?, presentAlert?
             guard let self = self else { return }
             switch completion {
@@ -86,11 +88,11 @@ extension CurrentChatViewController {
             self.setFetch(room: room)
             self.setupNavigationItems()
             self.viewModel.sendSeenStatus()
-        }.store(in: &subscriptions)
+        }.store(in: &self.subscriptions)
         
         currentChatView.downArrowImageView.tap().sink { [weak self] _ in
             self?.currentChatView.messagesTableView.scrollToBottom(.force)
-        }.store(in: &subscriptions)
+        }.store(in: &self.subscriptions)
         
         viewModel.selectedFiles.receive(on: DispatchQueue.main).sink { [weak self] files in
             guard let self = self else { return }
@@ -132,15 +134,22 @@ extension CurrentChatViewController {
                 switch frcChange {
                 case .insert(indexPath: let indexPath):
                     guard let messageEntity = self.frc?.object(at: indexPath) else { return }
-                    handleScroll(isMyMessage: messageEntity.fromUserId == self.viewModel.getMyUserId())
+                    self.handleScroll(isMyMessage: messageEntity.fromUserId == self.viewModel.getMyUserId())
                 case .other:
                     break
                 }
             }.store(in: &subscriptions)
         
-        func handleScroll(isMyMessage: Bool) {
-            currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force : .ifLastCellVisible)
-        }
+        self.viewModel.repository
+            .unreadRoomsPublisher
+            .sink { [weak self] value in
+                let stringValue = value > 0 ? String(value) : ""
+                self?.title = stringValue
+            }.store(in: &self.subscriptions)
+    }
+    
+    func handleScroll(isMyMessage: Bool) {
+        currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force : .ifLastCellVisible)
     }
 }
 
@@ -387,8 +396,15 @@ extension CurrentChatViewController {
                                   lastSeen: "today")
         }
         
+        self.navigationItem.titleView = UIView(frame: .zero)
         let vtest = UIBarButtonItem(customView: friendInfoView)
+        friendInfoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onChatDetails)))
         navigationItem.leftBarButtonItem = vtest
+    }
+    
+    @objc func onChatDetails() {
+        guard let room = self.viewModel.room else { return }
+        self.viewModel.getAppCoordinator()?.presentChatDetailsScreen(roomModel: room)
     }
     
     @objc func videoCallActionHandler() {
@@ -404,10 +420,10 @@ extension CurrentChatViewController {
 extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstRight = UIContextualAction(style: .normal, title: "Details") { (action, view, completionHandler) in
-            if let messageEntity = self.frc?.object(at: indexPath),
+        let firstRight = UIContextualAction(style: .normal, title: "Details") { [weak self] (action, view, completionHandler) in
+            if let messageEntity = self?.frc?.object(at: indexPath),
                let records = Message(messageEntity: messageEntity).records {
-                self.viewModel.presentMessageDetails(records: records)
+                self?.viewModel.presentMessageDetails(records: records)
                 completionHandler(true)
             }
         }
@@ -439,7 +455,7 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
         for result in results {
             
             if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { url, error in
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { [weak self] url, error in
                     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
                     guard let url = url,
                           let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
@@ -448,12 +464,12 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
                     let thumbnail = targetURL.imageThumbnail()
                     let file = SelectedFile(fileType: .image, name: nil,
                                             fileUrl: targetURL, thumbnail: thumbnail)
-                    self.viewModel.selectedFiles.value.append(file)
+                    self?.viewModel.selectedFiles.value.append(file)
                 }
             }
             
             if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { url, error in
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
                     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
                     guard let url = url,
                           let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
@@ -462,7 +478,7 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
                     let thumb = url.videoThumbnail()
                     let file  = SelectedFile(fileType: .movie, name: "video",
                                              fileUrl: targetURL, thumbnail: thumb)
-                    self.viewModel.selectedFiles.value.append(file)
+                    self?.viewModel.selectedFiles.value.append(file)
                 }
             }
         }

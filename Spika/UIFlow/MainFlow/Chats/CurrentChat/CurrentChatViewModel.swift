@@ -211,8 +211,6 @@ extension CurrentChatViewModel {
             print(c)
         } receiveValue: { [weak self] (file, uploadPercent) in
             guard let self = self else { return }
-            print("PERCENT: ", uploadPercent, ", file: ", file)
-            
             if let file = file {
                 print("UPLOADANO : ", file)
                 self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: nil), localId: UUID().uuidString, type: .image)
