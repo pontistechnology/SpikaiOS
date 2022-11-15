@@ -9,37 +9,33 @@ import Foundation
 import UIKit
 import Combine
 
-protocol MessageInputViewDelegate: AnyObject {
-    func messageInputView(_ messageView: MessageInputView, didPressSend message: String)
-    func messageInputView(didPressCameraButton messageVeiw: MessageInputView)
-    func messageInputView(didPressMicrophoneButton messageVeiw: MessageInputView)
-    func messageInputView(didPressLibraryButton messageVeiw: MessageInputView)
-    func messageInputView(didPressFilesButton messageVeiw: MessageInputView)
-    func messageInputView(didPressEmojiButton messageVeiw: MessageInputView)
+enum MessageInputViewState {
+    case send(message: String)
+    case camera
+    case microphone
+    case emoji
+    case files
+    case library
 }
 
 class MessageInputView: UIView, BaseView {
     
-    private let topLine = UIView()
+    private let dividerLine = UIView()
     private let plusButton = UIButton()
     private let closeButton = UIButton()
     private let sendButton = UIButton()
     private let cameraButton = UIButton()
     private let microphoneButton = UIButton()
     private let emojiButton = UIButton()
-    private let messageTextView = UITextView()
-    private let placeholderLabel = CustomLabel(text: "Type here...", textSize: 14, textColor: .textTertiary, fontName: .MontserratMedium)
+    private let messageTextView = ExpandableTextView()
     private let additionalOptionsView = AdditionalOptionsView()
     let selectedFilesView = SelectedFilesView()
     
-    private var messageTextViewHeightConstraint = NSLayoutConstraint()
     private var messageTextViewTrailingConstraint = NSLayoutConstraint()
-    private var heightConstraint = NSLayoutConstraint()
     
-    weak var delegate: MessageInputViewDelegate?
+    let inputViewTapPublisher = PassthroughSubject<MessageInputViewState, Never>()
+    
     private var subscriptions = Set<AnyCancellable>()
-    private var wasMessageTextViewEmpty = true
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,7 +48,7 @@ class MessageInputView: UIView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(topLine)
+        addSubview(dividerLine)
         addSubview(plusButton)
         addSubview(closeButton)
         addSubview(messageTextView)
@@ -60,19 +56,10 @@ class MessageInputView: UIView, BaseView {
         addSubview(cameraButton)
         addSubview(emojiButton)
         addSubview(sendButton)
-        messageTextView.addSubview(placeholderLabel)
     }
     
     func styleSubviews() {
-        topLine.backgroundColor = .navigation
-        
-        messageTextView.textContainerInset.left = 10
-        messageTextView.textContainerInset.right = 36
-        messageTextView.layer.cornerRadius = 10
-        messageTextView.clipsToBounds = true
-        messageTextView.layer.borderColor = UIColor.borderColor.cgColor
-        messageTextView.layer.borderWidth = 1
-        messageTextView.customFont(name: .MontserratMedium)
+        dividerLine.backgroundColor = .navigation
         
         plusButton.setImage(UIImage(safeImage: .plus), for: .normal)
         sendButton.setImage(UIImage(safeImage: .send), for: .normal)
@@ -81,17 +68,14 @@ class MessageInputView: UIView, BaseView {
         cameraButton.setImage(UIImage(safeImage: .camera), for: .normal)
         microphoneButton.setImage(UIImage(safeImage: .microphone), for: .normal)
         
-        self.closeButton.alpha = 0
-        self.sendButton.alpha = 0
+        closeButton.alpha = 0
+        sendButton.alpha = 0
     }
     
     func positionSubviews() {
         
-        topLine.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-        topLine.constrainHeight(0.5)
-        
-        heightConstraint = heightAnchor.constraint(equalToConstant: 56)
-        heightConstraint.isActive = true
+        dividerLine.anchor(leading: leadingAnchor, bottom: messageTextView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 0))
+        dividerLine.constrainHeight(0.5)
         
         plusButton.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 0), size: CGSize(width: 16, height: 16))
         
@@ -105,19 +89,17 @@ class MessageInputView: UIView, BaseView {
         
         emojiButton.anchor(bottom: messageTextView.bottomAnchor, trailing: messageTextView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 13), size: CGSize(width: 20, height: 20))
         
-        messageTextView.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 56, bottom: 12, right: 0))
-        messageTextViewHeightConstraint = messageTextView.heightAnchor.constraint(equalToConstant: 32)
+        messageTextView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 12, left: 56, bottom: 12, right: 0))
         messageTextViewTrailingConstraint = messageTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -95)
-        messageTextViewHeightConstraint.isActive = true
         messageTextViewTrailingConstraint.isActive = true
-        
-        placeholderLabel.anchor(leading: messageTextView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
-        placeholderLabel.centerYToSuperview()
     }
+}
+
+// MARK: - Bindings
+
+extension MessageInputView {
     
     func setupBindings() {
-        messageTextView.delegate = self
-        
         plusButton.tap().sink { [weak self] _ in
             guard let self = self else { return }
             if self.additionalOptionsView.superview == nil {
@@ -131,53 +113,45 @@ class MessageInputView: UIView, BaseView {
             }
         }.store(in: &subscriptions)
         
-        additionalOptionsView.libraryImageView.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            self.hideAdditionalOptions()
-            self.delegate?.messageInputView(didPressLibraryButton: self)
-        }.store(in: &subscriptions)
-        
-        additionalOptionsView.filesImageView.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            self.hideAdditionalOptions()
-            self.delegate?.messageInputView(didPressFilesButton: self)
+        additionalOptionsView.publisher.sink { [weak self] state in
+            self?.handleAdditionalOptions(state)
         }.store(in: &subscriptions)
         
         closeButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            self.messageTextView.text = ""
-            self.textViewDidChange(self.messageTextView)
-            self.messageTextView.resignFirstResponder()
+            self?.messageTextView.clearTextField(closeKeyboard: true)
         }.store(in: &subscriptions)
         
         emojiButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            self.delegate?.messageInputView(didPressEmojiButton: self)
+            self?.inputViewTapPublisher.send(.emoji)
         }.store(in: &subscriptions)
 
         sendButton.tap().sink { [weak self] _ in
             guard let self = self else { return }
             let text = self.messageTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty else { return }
-            self.delegate?.messageInputView(self, didPressSend: text)
+            self.inputViewTapPublisher.send(.send(message: text))
+            self.messageTextView.clearTextField()
         }.store(in: &subscriptions)
         
         microphoneButton.tap().sink { [weak self] _ in
             guard let self = self else { return }
-            self.delegate?.messageInputView(didPressMicrophoneButton: self)
+            self.inputViewTapPublisher.send(.microphone)
         }.store(in: &subscriptions)
         
         cameraButton.tap().sink { [weak self] _ in
             guard let self = self else { return }
-            self.delegate?.messageInputView(didPressCameraButton: self)
+            self.inputViewTapPublisher.send(.camera)
+        }.store(in: &subscriptions)
+        
+        messageTextView.textViewIsEmptyPublisher.sink { [weak self] state in
+            self?.animateMessageView(isEmpty: state)
         }.store(in: &subscriptions)
     }
-    
-    func clearTextField() {
-        messageTextView.text = ""
-        textViewDidChange(self.messageTextView)
-    }
-    
+}
+
+// MARK: - Animations
+
+private extension MessageInputView {
     func animateMessageView(isEmpty: Bool) {
         self.messageTextViewTrailingConstraint.constant = isEmpty ? -95 : -60
         DispatchQueue.main.async { [weak self] in
@@ -197,20 +171,30 @@ class MessageInputView: UIView, BaseView {
 // MARK: - Additional options view
 
 extension MessageInputView {
+    func handleAdditionalOptions(_ state: AdditionalOptionsViewState) {
+        self.hideAdditionalOptions()
+        
+        switch state {
+        case .files:
+            inputViewTapPublisher.send(.files)
+        case .library:
+            inputViewTapPublisher.send(.library)
+        case .location:
+            break
+        case .contact:
+            break
+        }
+    }
     func showAdditionalOptions() {
         if additionalOptionsView.superview == nil {
             addSubview(additionalOptionsView)
-            
-            additionalOptionsView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-            additionalOptionsView.constrainHeight(152)
-            heightConstraint.constant += 152
+            additionalOptionsView.anchor(leading: leadingAnchor, bottom: dividerLine.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         }
     }
     
     func hideAdditionalOptions() {
         if additionalOptionsView.superview != nil {
             additionalOptionsView.removeFromSuperview()
-            heightConstraint.constant -= 152            
         }
     }
 }
@@ -224,7 +208,6 @@ extension MessageInputView {
             
             selectedFilesView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
             selectedFilesView.constrainHeight(120)
-            heightConstraint.constant += selectedFilesView.height            
         }
         selectedFilesView.showFiles(files)
     }
@@ -232,45 +215,6 @@ extension MessageInputView {
     func hideSelectedFiles() {
         if selectedFilesView.superview != nil {
             selectedFilesView.removeFromSuperview()
-            heightConstraint.constant -= selectedFilesView.height
-        }
-    }
-}
-
-extension MessageInputView: UITextViewDelegate {
-    
-    func textViewDidChange(_ textView: UITextView) {
-        
-        if textView.text.count == 0 {
-            self.animateMessageView(isEmpty: true)
-            wasMessageTextViewEmpty = true
-            placeholderLabel.isHidden = false
-        } else if wasMessageTextViewEmpty {
-            self.animateMessageView(isEmpty: false)
-            wasMessageTextViewEmpty = false
-            placeholderLabel.isHidden = true
-        }
-        
-        var heightOfTextView: CGFloat = 32
-        let numberOfLines = textView.numberOfLines()
-        
-        switch numberOfLines {
-        case 0:
-            heightOfTextView = 32
-        case 1...5:
-            heightOfTextView = 32 + (textView.font?.lineHeight ?? 0) * CGFloat(numberOfLines - 1)
-        default:
-            heightOfTextView = 32 + 5 * (textView.font?.lineHeight ?? 0)
-        }
-        
-        heightConstraint.constant = heightOfTextView + 24
-        + ((selectedFilesView.superview != nil) ? selectedFilesView.height : 0.0)
-        
-        messageTextViewHeightConstraint.constant = heightOfTextView
-        DispatchQueue.main.async { [weak self] in
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.superview?.layoutIfNeeded()
-            }
         }
     }
 }
