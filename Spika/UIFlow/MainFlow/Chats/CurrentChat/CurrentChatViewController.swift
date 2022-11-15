@@ -38,6 +38,7 @@ class CurrentChatViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -59,10 +60,13 @@ extension CurrentChatViewController {
     }
     
     func setupBindings() {
-        currentChatView.messageInputView.delegate = self
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
+        
+        currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
+            self?.handleInput(state)
+        }.store(in: &subscriptions)
         
         viewModel.roomPublisher.receive(on: DispatchQueue.main).sink { [weak self] completion in
             // TODO: pop vc?, presentAlert?
@@ -245,33 +249,21 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
 
 // MARK: - MessageInputView actions
 
-extension CurrentChatViewController: MessageInputViewDelegate {
+extension CurrentChatViewController {
     
-    func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String) {
-        print("send in ccVC ")
-        
-        viewModel.trySendMessage(text: message)
-        currentChatView.messageInputView.clearTextField()
-    }
-    
-    func messageInputView(didPressCameraButton messageVeiw: MessageInputView) {
-        print("camera in ccVC")
-    }
-    
-    func messageInputView(didPressMicrophoneButton messageVeiw: MessageInputView) {
-        print("mic in ccVC")
-    }
-    
-    func messageInputView(didPressLibraryButton messageVeiw: MessageInputView) {
-        presentLibraryPicker()
-    }
-    
-    func messageInputView(didPressFilesButton messageVeiw: MessageInputView) {
-        presentFilePicker()
-    }
-    
-    func messageInputView(didPressEmojiButton messageVeiw: MessageInputView) {
-        print("emoji in ccVC")
+    func handleInput(_ state: MessageInputViewState) {
+        switch state {
+        case .send(let message):
+            viewModel.trySendMessage(text: message)
+        case .camera, .microphone:
+            print(state, " in ccVC")
+        case .emoji:
+            print("emoji in ccvc")
+        case .files:
+            presentFilePicker()
+        case .library:
+            presentLibraryPicker()
+        }
     }
 }
 
