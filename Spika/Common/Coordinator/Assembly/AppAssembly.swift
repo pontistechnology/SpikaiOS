@@ -19,6 +19,7 @@ final class AppAssembly: Assembly {
         self.assembleContactsViewController(container)
         self.assembleCallHistoryViewController(container)
         self.assembleAllChatsViewController(container)
+        self.assembleChatDetailsViewController(container)
         self.assembleSettingsViewController(container)
     }
     
@@ -111,6 +112,18 @@ final class AppAssembly: Assembly {
         container.register(AllChatsViewController.self) { (resolver, coordinator: AppCoordinator) in
             let controller = AllChatsViewController()
             controller.viewModel = container.resolve(AllChatsViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleChatDetailsViewController(_ container: Container) {
+        container.register(ChatDetailsViewModel.self) { (resolver, coordinator: AppCoordinator, roomModel: Room) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return ChatDetailsViewModel(repository: repository, coordinator: coordinator, chat: roomModel)
+        }.inObjectScope(.transient)
+        
+        container.register(ChatDetailsViewController.self) { (resolver, coordinator: AppCoordinator, roomModel: Room) in
+            let controller = ChatDetailsViewController(viewModel: resolver.resolve(ChatDetailsViewModel.self, arguments: coordinator, roomModel)!)
             return controller
         }.inObjectScope(.transient)
     }

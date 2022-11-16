@@ -37,8 +37,8 @@ class AllChatsViewController: BaseViewController {
         
         self.viewModel.repository
             .unreadRoomsPublisher
-            .sink { string in
-                self.navigationController?.navigationItem.backBarButtonItem =
+            .sink { [weak self] string in
+                self?.navigationController?.navigationItem.backBarButtonItem =
                 UIBarButtonItem(title:"Title", style:.plain, target:nil, action:nil)
             }.store(in: &self.subscriptions)
     }
@@ -100,7 +100,6 @@ extension AllChatsViewController: UITableViewDataSource {
         guard let entity = frc?.object(at: indexPath) else { return EmptyTableViewCell()}
     
         let room = Room(roomEntity: entity)
-//        print("room at indexpath: ", indexPath, room)
         
         let badgeNumber = entity.numberOfUnreadMessages(myUserId: viewModel.getMyUserId())
         if room.type == .privateRoom,
@@ -170,12 +169,12 @@ extension AllChatsViewController {
 extension AllChatsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
         if let value = value {
-            changePredicate(to: value)
+            self.changePredicate(to: value)
         }
     }
     
     func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
-        changePredicate(to: "")
+        self.changePredicate(to: "")
     }
     
     func changePredicate(to newString: String) {
