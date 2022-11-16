@@ -42,6 +42,7 @@ enum AssetName: String {
     case waiting = "waiting"
     case pdfThumbnail = "pdfThumbnail"
     case unknownFileThumbnail = "unknownFileThumbnail"
+    case playVideo = "playVideo"
     
     // Tabs
     case callHistoryTab = "callHistoryTab"
