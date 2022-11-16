@@ -134,6 +134,21 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
+        let resources = Resources<CreateRoomResponseModel, EditRoomAdminsRequestModel>(
+            path: url,
+            requestType: .PUT,
+            bodyParameters: EditRoomAdminsRequestModel(adminUserIds: adminIds),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        return networkService.performRequest(resources: resources)
+    }
+    
     // MARK: Database
     
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>{
