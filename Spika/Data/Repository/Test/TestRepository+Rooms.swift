@@ -74,4 +74,10 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
+    func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error> {
+        return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
 }
