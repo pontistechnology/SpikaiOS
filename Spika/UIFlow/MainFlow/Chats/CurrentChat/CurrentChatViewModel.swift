@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import CoreData
 import IKEventSource
+import AVFoundation
 
 class CurrentChatViewModel: BaseViewModel {
     
@@ -48,8 +49,13 @@ extension CurrentChatViewModel {
         getAppCoordinator()?.presentMessageDetails(users: users, records: records)
     }
     
-    func playVideo(link: URL) {
-        getAppCoordinator()?.presentAVVideoController(link: link)
+    func playVideo(message: Message) {
+        guard let urlString = message.body?.file?.path?.getAvatarUrl(),
+              let url = URL(string: urlString),
+              let mimeType = message.body?.file?.mimeType
+        else { return }
+        let asset = AVURLAsset(url: url, mimeType: mimeType)
+        getAppCoordinator()?.presentAVVideoController(asset: asset)
     }
 }
 

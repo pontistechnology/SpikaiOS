@@ -185,8 +185,8 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewControllerToPresent, animated: true)
     }
     
-    func presentAVVideoController(link: URL) {
-        let avPlayer = AVPlayer(url: link)
+    func presentAVVideoController(asset: AVAsset) {
+        let avPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
         let avPlayerVC = AVPlayerViewController()
         avPlayerVC.player = avPlayer
         navigationController.present(avPlayerVC, animated: true) { [weak self] in

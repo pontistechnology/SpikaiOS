@@ -281,10 +281,7 @@ extension CurrentChatViewController {
     func handleCellTap(_ state: MessageCellTaps, message: Message) {
         switch state {
         case .playVideo:
-            guard let urlString = message.body?.file?.path?.getAvatarUrl(),
-                  let url = URL(string: urlString + ".mp4")
-            else { return }
-            viewModel.playVideo(link: url)
+            viewModel.playVideo(message: message)
         }
     }
 }
