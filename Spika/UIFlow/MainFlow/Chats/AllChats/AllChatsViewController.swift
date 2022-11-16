@@ -97,7 +97,7 @@ extension AllChatsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
-        guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
+        guard let entity = frc?.object(at: indexPath) else { return EmptyTableViewCell()}
     
         let room = Room(roomEntity: entity)
         
@@ -119,7 +119,7 @@ extension AllChatsViewController: UITableViewDataSource {
                                 badgeNumber: badgeNumber)
         }
         
-        return cell ?? UITableViewCell()
+        return cell ?? EmptyTableViewCell()
     }
 }
 

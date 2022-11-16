@@ -47,6 +47,10 @@ extension CurrentChatViewModel {
         }
         getAppCoordinator()?.presentMessageDetails(users: users, records: records)
     }
+    
+    func playVideo(link: URL) {
+        getAppCoordinator()?.presentAVVideoController(link: link)
+    }
 }
 
 extension CurrentChatViewModel {

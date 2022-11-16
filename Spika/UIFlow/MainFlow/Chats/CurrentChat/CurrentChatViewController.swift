@@ -38,6 +38,7 @@ class CurrentChatViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -59,10 +60,13 @@ extension CurrentChatViewController {
     }
     
     func setupBindings() {
-        currentChatView.messageInputView.delegate = self
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
+        
+        currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
+            self?.handleInput(state)
+        }.store(in: &subscriptions)
         
         viewModel.roomPublisher.receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
@@ -253,33 +257,35 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
 
 // MARK: - MessageInputView actions
 
-extension CurrentChatViewController: MessageInputViewDelegate {
+extension CurrentChatViewController {
     
-    func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String) {
-        print("send in ccVC ")
-        
-        viewModel.trySendMessage(text: message)
-        currentChatView.messageInputView.clearTextField()
+    func handleInput(_ state: MessageInputViewState) {
+        switch state {
+        case .send(let message):
+            viewModel.trySendMessage(text: message)
+        case .camera, .microphone:
+            print(state, " in ccVC")
+        case .emoji:
+            print("emoji in ccvc")
+        case .files:
+            presentFilePicker()
+        case .library:
+            presentLibraryPicker()
+        }
     }
-    
-    func messageInputView(didPressCameraButton messageVeiw: MessageInputView) {
-        print("camera in ccVC")
-    }
-    
-    func messageInputView(didPressMicrophoneButton messageVeiw: MessageInputView) {
-        print("mic in ccVC")
-    }
-    
-    func messageInputView(didPressLibraryButton messageVeiw: MessageInputView) {
-        presentLibraryPicker()
-    }
-    
-    func messageInputView(didPressFilesButton messageVeiw: MessageInputView) {
-        presentFilePicker()
-    }
-    
-    func messageInputView(didPressEmojiButton messageVeiw: MessageInputView) {
-        print("emoji in ccVC")
+}
+
+// MARK: - MessageCell actions
+
+extension CurrentChatViewController {
+    func handleCellTap(_ state: MessageCellTaps, message: Message) {
+        switch state {
+        case .playVideo:
+            guard let urlString = message.body?.file?.path?.getAvatarUrl(),
+                  let url = URL(string: urlString + ".mp4")
+            else { return }
+            viewModel.playVideo(link: url)
+        }
     }
 }
 
@@ -317,11 +323,11 @@ extension CurrentChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let entity = frc?.object(at: indexPath),
               let roomType = viewModel.room?.type
-        else { return EmptyMessageTableViewCell()}
+        else { return EmptyTableViewCell()}
         
         let message = Message(messageEntity: entity)
         let myUserId = viewModel.repository.getMyUserId()
-        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType) else { return EmptyMessageTableViewCell() }
+        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType) else { return EmptyTableViewCell() }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
         
@@ -332,9 +338,17 @@ extension CurrentChatViewController: UITableViewDataSource {
             (cell as? ImageMessageTableViewCell)?.updateCell(message: message)
         case .file:
             (cell as? FileMessageTableViewCell)?.updateCell(message: message)
-        case .unknown, .video, .audio, .none:
+        case .audio:
+            (cell as? AudioMessageTableViewCell)?.updateCell(message: message)
+        case .video:
+            (cell as? VideoMessageTableViewCell)?.updateCell(message: message)
+        case .unknown, .none:
             break
         }
+        
+        cell?.tapPublisher.sink(receiveValue: { [weak self] state in
+            self?.handleCellTap(state, message: message)
+        }).store(in: &subscriptions)
         
         cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
         cell?.updateTime(to: message.createdAt)
@@ -346,7 +360,7 @@ extension CurrentChatViewController: UITableViewDataSource {
                 cell?.updateSender(photoUrl: URL(string: user.getAvatarUrl() ?? ""))
             }
         }
-        return cell ?? EmptyMessageTableViewCell()
+        return cell ?? EmptyTableViewCell()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -7,17 +7,12 @@
 
 import UIKit
 
-class FileMessageTableViewCell: BaseMessageTableViewCell {
-    static let myFileReuseIdentifier = "MyFileMessageTableViewCell"
-    static let friendFileReuseIdentifier = "FriendFileMessageTableViewCell"
-    static let groupFileReuseIdentifier = "GroupFileMessageTableViewCell"
+final class FileMessageTableViewCell: BaseMessageTableViewCell {
     
     private let photoImageView = UIImageView()
     private let nameLabel = CustomLabel(text: "fileName", textSize: 14, textColor: .textPrimary, fontName: .MontserratBold, alignment: .center)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        print("text cell init")
-
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupFileCell()
     }

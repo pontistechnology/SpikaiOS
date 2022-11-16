@@ -120,7 +120,7 @@
 //    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier) as? ContactsTableViewCell
 //        cell?.configureCell(viewModel.contactsSubject.value[indexPath.section][indexPath.row])
-//        return cell ?? UITableViewCell()
+//        return cell ?? EmptyTableViewCell()
 //    }
 //    
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

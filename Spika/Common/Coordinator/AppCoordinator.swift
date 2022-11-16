@@ -8,6 +8,8 @@
 import UIKit
 import Swinject
 import Combine
+import AVKit
+import AVFoundation
 
 class AppCoordinator: Coordinator {
     
@@ -181,6 +183,15 @@ class AppCoordinator: Coordinator {
             // Fallback on earlier versions
         }
         navigationController.present(viewControllerToPresent, animated: true)
+    }
+    
+    func presentAVVideoController(link: URL) {
+        let avPlayer = AVPlayer(url: link)
+        let avPlayerVC = AVPlayerViewController()
+        avPlayerVC.player = avPlayer
+        navigationController.present(avPlayerVC, animated: true) { [weak self] in
+            avPlayer.play()
+        }
     }
 }
 

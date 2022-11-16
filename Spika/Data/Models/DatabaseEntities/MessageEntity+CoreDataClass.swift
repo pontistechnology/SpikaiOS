@@ -54,8 +54,8 @@ public class MessageEntity: NSManagedObject {
             self.bodyText = bodyText
         }
         
-        if let imagePath = message.body?.file?.path {
-            self.imagePath = imagePath
+        if let filePath = message.body?.file?.path {
+            self.filePath = filePath
         }
     }
 }

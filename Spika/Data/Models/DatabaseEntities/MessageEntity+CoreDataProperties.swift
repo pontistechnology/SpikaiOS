@@ -21,7 +21,7 @@ extension MessageEntity {
     @NSManaged public var deliveredCount: Int64
     @NSManaged public var fromUserId: Int64
     @NSManaged public var id: String?
-    @NSManaged public var imagePath: String?
+    @NSManaged public var filePath: String?
     @NSManaged public var localId: String?
     @NSManaged public var roomId: Int64
     @NSManaged public var seenCount: Int64

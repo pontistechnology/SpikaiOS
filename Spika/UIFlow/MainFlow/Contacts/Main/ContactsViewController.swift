@@ -77,11 +77,11 @@ extension ContactsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
         guard let userEntity = frc?.object(at: indexPath) else {
-            return UITableViewCell()
+            return EmptyTableViewCell()
         }
         let user = User(entity: userEntity)
         cell?.configureCell(user)
-        return cell ?? UITableViewCell()
+        return cell ?? EmptyTableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

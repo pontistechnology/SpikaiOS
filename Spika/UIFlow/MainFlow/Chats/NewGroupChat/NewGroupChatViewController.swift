@@ -64,6 +64,6 @@ extension NewGroupChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
         cell?.configureCell(viewModel.selectedUsers[indexPath.row])
-        return cell ?? UITableViewCell()
+        return cell ?? EmptyTableViewCell()
     }
 }
