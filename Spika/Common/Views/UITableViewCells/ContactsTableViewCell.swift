@@ -39,6 +39,10 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+//        self.backgroundColor = selected ? .orange : .white
+        self.accessoryType = selected ? .checkmark : .none
+    }
     
     func addSubviews() {
         self.contentView.addSubview(leftImageView)
@@ -53,7 +57,6 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         leftImageView.contentMode = .scaleAspectFill
         nameLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 1
-        
     }
     
     func positionSubviews() {

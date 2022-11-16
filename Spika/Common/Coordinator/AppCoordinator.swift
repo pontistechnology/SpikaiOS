@@ -126,6 +126,12 @@ class AppCoordinator: Coordinator {
 //        navigationController.present(navC, animated: true, completion: nil)
     }
     
+    func presentUserSelection(behavior: UserSelectionViewController.UserSelectionBehaviour, completion: @escaping UserSelectionViewModel.Completion) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(UserSelectionViewController.self, arguments: self, behavior,completion)!
+        let navC = UINavigationController(rootViewController: viewController)
+        navigationController.present(navC, animated: true, completion: nil)
+    }
+    
     func presentCurrentChatScreen(user: User) {
         let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, user)!
         

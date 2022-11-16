@@ -22,6 +22,7 @@ final class AppAssembly: Assembly {
         self.assembleChatDetailsViewController(container)
         self.assembleSettingsViewController(container)
         self.assembleImageViewerViewController(container)
+        self.assembleUserSelectionViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
@@ -125,6 +126,24 @@ final class AppAssembly: Assembly {
         
         container.register(ChatDetailsViewController.self) { (resolver, coordinator: AppCoordinator, roomModel: Room) in
             let controller = ChatDetailsViewController(viewModel: resolver.resolve(ChatDetailsViewModel.self, arguments: coordinator, roomModel)!)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleUserSelectionViewController(_ container: Container) {
+        container.register(UserSelectionViewModel.self) { (resolver,
+                                                           coordinator: AppCoordinator,
+                                                           behavior:UserSelectionViewController.UserSelectionBehaviour,
+                                                           completion: @escaping UserSelectionViewModel.Completion) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return UserSelectionViewModel(repository: repository, coordinator: coordinator, behavior: behavior, completion: completion)
+        }.inObjectScope(.transient)
+        
+        container.register(UserSelectionViewController.self) { (resolver,
+                                                                coordinator: AppCoordinator,
+                                                                behavior:UserSelectionViewController.UserSelectionBehaviour,
+                                                                completion: @escaping UserSelectionViewModel.Completion) in
+            let controller = UserSelectionViewController(viewModel: resolver.resolve(UserSelectionViewModel.self, arguments: coordinator, behavior, completion)!)
             return controller
         }.inObjectScope(.transient)
     }

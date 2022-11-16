@@ -65,6 +65,14 @@ final class ChatDetailsViewController: BaseViewController {
             .sink { [weak self] value in
                 self?.viewModel.muteUnmute(mute: value)
             }.store(in: &self.subscriptions)
+        
+        self.chatDetailView.contentView
+            .chatMembersView
+            .addContactButton
+            .publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.onAddNewUser()
+            }.store(in: &self.subscriptions)
     }
     
 }

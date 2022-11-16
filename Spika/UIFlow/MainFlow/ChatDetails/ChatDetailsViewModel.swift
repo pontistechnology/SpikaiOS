@@ -15,12 +15,15 @@ class ChatDetailsViewModel: BaseViewModel {
     let groupImagePublisher = CurrentValueSubject<URL?,Never>(nil)
     let groupNamePublisher = CurrentValueSubject<String?,Never>(nil)
     
+    let isAdmin = CurrentValueSubject<Bool,Never>(false)
+    
     let groupContacts = CurrentValueSubject<[RoomUser],Never>([])
     
     init(repository: Repository, coordinator: Coordinator, chat: Room) {
         self.chat = chat
         super.init(repository: repository, coordinator: coordinator)
         self.setupBindings()
+        self.updateIsadmin()
     }
     
     func setupBindings() {
@@ -31,6 +34,11 @@ class ChatDetailsViewModel: BaseViewModel {
         self.groupNamePublisher.send(chat.name)
         
         self.groupContacts.send(self.chat.users)
+    }
+    
+    func updateIsadmin() {
+        let isAdmin = self.chat.users.filter { $0.userId == self.getMyUserId() }.first?.isAdmin ?? false
+        self.isAdmin.send(isAdmin)
     }
     
     func muteUnmute(mute: Bool) {
@@ -49,6 +57,13 @@ class ChatDetailsViewModel: BaseViewModel {
                 }
             } receiveValue: { _ in }
             .store(in: &self.subscriptions)
+    }
+    
+    func onAddNewUser() {
+        self.getAppCoordinator()?.presentUserSelection(behavior: .selectUsers(preselectedUsers: chat.users.map { $0.user }),
+                                                       completion: { newUsers in
+            
+        })
     }
     
 }

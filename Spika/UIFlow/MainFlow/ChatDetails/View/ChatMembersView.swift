@@ -17,13 +17,15 @@ final class ChatMembersView: UIView, BaseView {
     
     var viewIsExpanded = false
     
-    var users: [RoomUser] = []
+    var users: [RoomUser] = [] //TODO:  Add sort
     
     var tableViewHeightConstraint: NSLayoutConstraint!
     
     let onRemoveUser = PassthroughSubject<User?,Never>()
     
     var subscriptions = Set<AnyCancellable>()
+    
+    let isAdmin = CurrentValueSubject<Bool,Never>(false)
     
     //MARK: - UI
     lazy var mainStackView: UIStackView = {
@@ -163,7 +165,7 @@ extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier,
                                                  for: indexPath) as! ContactsTableViewCell
-        cell.configureCell(self.users[indexPath.row].user, isEditable: true)
+        cell.configureCell(self.users[indexPath.row].user, isEditable: self.isAdmin.value)
         cell.onRemoveUser
             .subscribe(self.onRemoveUser)
             .store(in: &cell.subscriptions)
