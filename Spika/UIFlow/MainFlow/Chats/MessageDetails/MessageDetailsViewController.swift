@@ -102,7 +102,7 @@ extension MessageDetailsViewController: UITableViewDataSource {
             break
         }
         
-        return cell ?? UITableViewCell()
+        return cell ?? EmptyTableViewCell()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

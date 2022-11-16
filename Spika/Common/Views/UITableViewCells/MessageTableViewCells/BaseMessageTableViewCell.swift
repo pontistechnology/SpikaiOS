@@ -7,12 +7,7 @@
 
 import Foundation
 import UIKit
-
-enum MessageSender {
-    case me
-    case friend
-    case group
-}
+import Combine
 
 class BaseMessageTableViewCell: UITableViewCell {
     
@@ -22,6 +17,9 @@ class BaseMessageTableViewCell: UITableViewCell {
     private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
     private let messageStateView = MessageStateView(state: .waiting)
     private let senderNameBottomConstraint = NSLayoutConstraint()
+    
+    let tapPublisher = PassthroughSubject<MessageCellTaps, Never>()
+    var subs = Set<AnyCancellable>()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -38,22 +36,12 @@ class BaseMessageTableViewCell: UITableViewCell {
 }
 
 extension BaseMessageTableViewCell {
-    static let myReuseIdentifiers = [TextMessageTableViewCell.myTextReuseIdentifier,
-                              ImageMessageTableViewCell.myImageReuseIdentifier,
-                                     FileMessageTableViewCell.myFileReuseIdentifier, AudioMessageTableViewCell.myAudioReuseIdentifier]
-    static let friendReuseIdentifiers = [TextMessageTableViewCell.friendTextReuseIdentifier,
-                                  ImageMessageTableViewCell.friendImageReuseIdentifier,
-                                         FileMessageTableViewCell.friendFileReuseIdentifier, AudioMessageTableViewCell.friendAudioReuseIdentifier]
-    static let groupReuseIdentifiers = [TextMessageTableViewCell.groupTextReuseIdentifier,
-                                 ImageMessageTableViewCell.groupImageReuseIdentifier,
-                                        FileMessageTableViewCell.groupFileReuseIdentifier, AudioMessageTableViewCell.groupAudioReuseIdentifier]
-    
     func getMessageSenderType(reuseIdentifier: String) -> MessageSender? {
-        if BaseMessageTableViewCell.myReuseIdentifiers.contains(reuseIdentifier) {
+        if reuseIdentifier.starts(with: MessageSender.me.reuseIdentifierPrefix) {
             return .me
-        } else if BaseMessageTableViewCell.friendReuseIdentifiers.contains(reuseIdentifier) {
+        } else if reuseIdentifier.starts(with: MessageSender.friend.reuseIdentifierPrefix) {
             return .friend
-        } else if BaseMessageTableViewCell.groupReuseIdentifiers.contains(reuseIdentifier) {
+        } else if reuseIdentifier.starts(with: MessageSender.group.reuseIdentifierPrefix) {
             return .group
         }
         return nil

@@ -55,30 +55,18 @@ class CurrentChatView: UIView, BaseView {
     }
     
     func setupBindings() {
-        messagesTableView.register(TextMessageTableViewCell.self,
-                                   forCellReuseIdentifier: TextMessageTableViewCell.myTextReuseIdentifier)
-        messagesTableView.register(TextMessageTableViewCell.self,
-                                   forCellReuseIdentifier: TextMessageTableViewCell.friendTextReuseIdentifier)
-        messagesTableView.register(TextMessageTableViewCell.self,
-                                   forCellReuseIdentifier: TextMessageTableViewCell.groupTextReuseIdentifier)
+        let cells = [TextMessageTableViewCell.self,
+                     ImageMessageTableViewCell.self,
+                     FileMessageTableViewCell.self,
+                     AudioMessageTableViewCell.self,
+                     VideoMessageTableViewCell.self]
         
+        cells.forEach { cell in
+            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.me.reuseIdentifierPrefix + String(describing: cell))
+            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.friend.reuseIdentifierPrefix + String(describing: cell))
+            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.group.reuseIdentifierPrefix + String(describing: cell))
+        }
         
-        messagesTableView.register(ImageMessageTableViewCell.self,
-                                   forCellReuseIdentifier: ImageMessageTableViewCell.myImageReuseIdentifier)
-        messagesTableView.register(ImageMessageTableViewCell.self,
-                                   forCellReuseIdentifier: ImageMessageTableViewCell.friendImageReuseIdentifier)
-        messagesTableView.register(ImageMessageTableViewCell.self,
-                                   forCellReuseIdentifier: ImageMessageTableViewCell.groupImageReuseIdentifier)
-        
-        messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.myFileReuseIdentifier)
-        messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.friendFileReuseIdentifier)
-        messagesTableView.register(FileMessageTableViewCell.self, forCellReuseIdentifier: FileMessageTableViewCell.groupFileReuseIdentifier)
-        
-        messagesTableView.register(AudioMessageTableViewCell.self, forCellReuseIdentifier: AudioMessageTableViewCell.myAudioReuseIdentifier)
-        messagesTableView.register(AudioMessageTableViewCell.self, forCellReuseIdentifier: AudioMessageTableViewCell.friendAudioReuseIdentifier)
-        messagesTableView.register(AudioMessageTableViewCell.self, forCellReuseIdentifier: AudioMessageTableViewCell.groupAudioReuseIdentifier)
-
-
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }

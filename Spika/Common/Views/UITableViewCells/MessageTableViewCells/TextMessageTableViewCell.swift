@@ -8,17 +8,12 @@
 import Foundation
 import UIKit
 
-class TextMessageTableViewCell: BaseMessageTableViewCell {
-    
-    static let myTextReuseIdentifier = "MyTextMessageTableViewCell"
-    static let friendTextReuseIdentifier = "FriendTextMessageTableViewCell"
-    static let groupTextReuseIdentifier = "GroupTextMessageTableViewCell"
+final class TextMessageTableViewCell: BaseMessageTableViewCell {
     
     let messageTextView = CustomTextView(text: "", textSize: 14, textColor: .logoBlue, fontName: .MontserratMedium)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        print("CELL INTI: ", style.rawValue, "reuse identifieer: ", reuseIdentifier)
         setupTextCell()
     }
     

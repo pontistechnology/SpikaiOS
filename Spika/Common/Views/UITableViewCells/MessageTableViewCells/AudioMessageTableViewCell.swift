@@ -9,16 +9,10 @@ import UIKit
 import AVFoundation
 import Combine
 
-class AudioMessageTableViewCell: BaseMessageTableViewCell {
-    
-    static let myAudioReuseIdentifier = "MyAudioMessageTableViewCell"
-    static let friendAudioReuseIdentifier = "FriendAudioMessageTableViewCell"
-    static let groupAudioReuseIdentifier = "GroupAudioMessageTableViewCell"
+final class AudioMessageTableViewCell: BaseMessageTableViewCell {
     
     var audioPlayer: AVPlayer?
     private let voiceView = VoiceMessageView(duration: 55)
-    
-    private var subs = Set<AnyCancellable>()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

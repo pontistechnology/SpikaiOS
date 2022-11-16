@@ -53,7 +53,13 @@ extension Message {
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
                   type: MessageType(rawValue: messageEntity.type ?? ""), // check
-                  body: MessageBody(text: messageEntity.bodyText ?? "", file: FileData(fileName: nil, mimeType: nil, path: messageEntity.imagePath, size: nil), fileId: nil, thumbId: nil),
+                  body: MessageBody(text: messageEntity.bodyText ?? "",
+                                    file: FileData(fileName: nil,
+                                                   mimeType: nil,
+                                                   path: messageEntity.filePath,
+                                                   size: nil),
+                                    fileId: nil,
+                                    thumbId: nil),
                   records: messageRecords)
     }
     
@@ -101,6 +107,7 @@ struct FileData: Codable {
 }
 
 enum MessageType: String, Codable {
+    // Type is used for MessageCells reuseIdentifier too
     case text
     case image
     case video

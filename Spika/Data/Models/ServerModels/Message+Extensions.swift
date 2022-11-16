@@ -9,41 +9,17 @@ import Foundation
 
 extension Message {
     func getReuseIdentifier(myUserId: Int64, roomType: RoomType) -> String? {
-        switch type {
-        case .text:
-            if myUserId == fromUserId{
-                return TextMessageTableViewCell.myTextReuseIdentifier
-            } else if roomType == .privateRoom {
-                return TextMessageTableViewCell.friendTextReuseIdentifier
-            } else {
-                return TextMessageTableViewCell.groupTextReuseIdentifier
-            }
-        case .image:
-            if myUserId == fromUserId{
-                return ImageMessageTableViewCell.myImageReuseIdentifier
-            } else if roomType == .privateRoom {
-                return ImageMessageTableViewCell.friendImageReuseIdentifier
-            } else {
-                return ImageMessageTableViewCell.groupImageReuseIdentifier
-            }
-        case .file:
-            if myUserId == fromUserId{
-                return FileMessageTableViewCell.myFileReuseIdentifier
-            } else if roomType == .privateRoom {
-                return FileMessageTableViewCell.friendFileReuseIdentifier
-            } else {
-                return FileMessageTableViewCell.groupFileReuseIdentifier
-            }
-        case .audio:
-            if myUserId == fromUserId{
-                return AudioMessageTableViewCell.myAudioReuseIdentifier
-            } else if roomType == .privateRoom {
-                return AudioMessageTableViewCell.friendAudioReuseIdentifier
-            } else {
-                return AudioMessageTableViewCell.groupAudioReuseIdentifier
-            }
-        case .unknown, .video, .none:
-            return nil
+        var identifier = ""
+        
+        if myUserId == fromUserId {
+            identifier = MessageSender.me.reuseIdentifierPrefix
+        } else if roomType == .privateRoom {
+            identifier = MessageSender.friend.reuseIdentifierPrefix
+        } else {
+            identifier = MessageSender.group.reuseIdentifierPrefix
         }
+        
+        guard let type = type?.rawValue.capitalized else { return nil }
+        return identifier + type + "MessageTableViewCell"
     }
 }

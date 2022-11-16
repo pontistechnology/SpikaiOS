@@ -267,6 +267,20 @@ extension CurrentChatViewController {
     }
 }
 
+// MARK: - MessageCell actions
+
+extension CurrentChatViewController {
+    func handleCellTap(_ state: MessageCellTaps, message: Message) {
+        switch state {
+        case .playVideo:
+            guard let urlString = message.body?.file?.path?.getAvatarUrl(),
+                  let url = URL(string: urlString + ".mp4")
+            else { return }
+            viewModel.playVideo(link: url)
+        }
+    }
+}
+
 // MARK: - UITableView
 
 extension CurrentChatViewController: UITableViewDelegate {
@@ -301,11 +315,11 @@ extension CurrentChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let entity = frc?.object(at: indexPath),
               let roomType = viewModel.room?.type
-        else { return EmptyMessageTableViewCell()}
+        else { return EmptyTableViewCell()}
         
         let message = Message(messageEntity: entity)
         let myUserId = viewModel.repository.getMyUserId()
-        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType) else { return EmptyMessageTableViewCell() }
+        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType) else { return EmptyTableViewCell() }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
         
@@ -318,9 +332,15 @@ extension CurrentChatViewController: UITableViewDataSource {
             (cell as? FileMessageTableViewCell)?.updateCell(message: message)
         case .audio:
             (cell as? AudioMessageTableViewCell)?.updateCell(message: message)
-        case .unknown, .video, .none:
+        case .video:
+            (cell as? VideoMessageTableViewCell)?.updateCell(message: message)
+        case .unknown, .none:
             break
         }
+        
+        cell?.tapPublisher.sink(receiveValue: { [weak self] state in
+            self?.handleCellTap(state, message: message)
+        }).store(in: &subscriptions)
         
         cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
         cell?.updateTime(to: message.createdAt)
@@ -332,7 +352,7 @@ extension CurrentChatViewController: UITableViewDataSource {
                 cell?.updateSender(photoUrl: URL(string: user.getAvatarUrl() ?? ""))
             }
         }
-        return cell ?? EmptyMessageTableViewCell()
+        return cell ?? EmptyTableViewCell()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

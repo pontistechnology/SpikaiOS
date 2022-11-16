@@ -8,17 +8,11 @@
 import Foundation
 import UIKit
 
-class ImageMessageTableViewCell: BaseMessageTableViewCell {
+final class ImageMessageTableViewCell: BaseMessageTableViewCell {
     
-    static let myImageReuseIdentifier = "MyImageMessageTableViewCell"
-    static let friendImageReuseIdentifier = "FriendImageMessageTableViewCell"
-    static let groupImageReuseIdentifier = "GroupImageMessageTableViewCell"
-    
-    let photoImageView = UIImageView()
+    private let photoImageView = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        print("text cell init")
-
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupImageCell()
     }
