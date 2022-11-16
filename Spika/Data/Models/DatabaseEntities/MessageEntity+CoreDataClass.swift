@@ -55,7 +55,19 @@ public class MessageEntity: NSManagedObject {
         }
         
         if let filePath = message.body?.file?.path {
-            self.filePath = filePath
+            self.bodyFilePath = filePath
+        }
+        
+        if let mimeType = message.body?.file?.mimeType {
+            self.bodyFileMimeType = mimeType
+        }
+        
+        if let fileSize = message.body?.file?.size {
+            self.bodyFileSize = fileSize
+        }
+        
+        if let fileName = message.body?.file?.fileName {
+            self.bodyFileName = fileName
         }
     }
 }

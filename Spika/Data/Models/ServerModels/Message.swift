@@ -54,10 +54,10 @@ extension Message {
                   seenCount: messageEntity.seenCount,
                   type: MessageType(rawValue: messageEntity.type ?? ""), // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
-                                    file: FileData(fileName: nil,
-                                                   mimeType: nil,
-                                                   path: messageEntity.filePath,
-                                                   size: nil),
+                                    file: FileData(fileName: messageEntity.bodyFileName,
+                                                   mimeType: messageEntity.bodyFileMimeType,
+                                                   path: messageEntity.bodyFilePath,
+                                                   size: messageEntity.bodyFileSize),
                                     fileId: nil,
                                     thumbId: nil),
                   records: messageRecords)
@@ -103,7 +103,7 @@ struct FileData: Codable {
     let fileName: String?
     let mimeType: String?
     let path: String?
-    let size: Int?
+    let size: Int64?
 }
 
 enum MessageType: String, Codable {
