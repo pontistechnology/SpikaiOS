@@ -52,7 +52,7 @@ final class ChatDetailsViewController: BaseViewController {
         
         self.viewModel.isAdmin
             .sink(receiveValue: { [weak self] isAdmin in
-                self?.chatDetailView.contentView.chatMembersView
+                self?.chatDetailView.contentView.chatMembersView.addContactButton.isHidden = !isAdmin
             })
             .store(in: &self.viewModel.subscriptions)
         
@@ -60,10 +60,10 @@ final class ChatDetailsViewController: BaseViewController {
         self.chatDetailView.contentView
             .chatMembersView
             .onRemoveUser
-            .sink { user in
-                print("")
-            }.store(in: &self.chatDetailView.contentView
-                .chatMembersView.subscriptions)
+            .sink { [weak self] user in
+                guard let user = user else { return }
+                self?.viewModel.removeUser(user: user)
+            }.store(in: &self.chatDetailView.contentView.chatMembersView.subscriptions)
         
         self.chatDetailView.contentView
             .muteSwitchView

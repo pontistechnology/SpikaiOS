@@ -10,7 +10,7 @@ import Combine
 
 class ChatDetailsViewModel: BaseViewModel {
  
-    let chat: Room
+    var chat: Room
     
     let groupImagePublisher = CurrentValueSubject<URL?,Never>(nil)
     let groupNamePublisher = CurrentValueSubject<String?,Never>(nil)
@@ -64,9 +64,49 @@ class ChatDetailsViewModel: BaseViewModel {
         self.getAppCoordinator()?.presentUserSelection(preselectedUsers: chat.users.map { $0.user }, usersSelectedPublisher: usersSelected)
         
         usersSelected
-            .sink { users in
-                print("")
+            .sink { [unowned self] users in
+                self.updateWithNewUsers(users: users)
             }.store(in: &self.subscriptions)
+    }
+    
+    func updateWithNewUsers(users: [User]) {
+        let userIds = chat.users.map { $0.userId } + users.map { $0.id }
+        self.repository.updateRoomUsers(roomId: self.chat.id, userIds: userIds)
+            .sink { c in
+                switch c {
+                case .failure(_):
+                    self.getAppCoordinator()?.showError(message: "Something went wrong trying to add new users")
+                case.finished:
+                    return
+                }
+            } receiveValue: { [weak self] responseModel in
+                guard let room = responseModel.data?.room else { return }
+                self?.storeRoom(room: room)
+                self?.chat = room
+                self?.groupContacts.send(room.users)
+            }.store(in: &self.subscriptions)
+    }
+    
+    func removeUser(user: User) {
+        var userIds = chat.users.map { $0.userId }
+        userIds.removeAll(where: { $0 == user.id })
+        self.repository.updateRoomUsers(roomId: self.chat.id, userIds: userIds)
+            .sink { c in
+                switch c {
+                case .failure(_):
+                    self.getAppCoordinator()?.showError(message: "Something went wrong trying to add new users")
+                case.finished:
+                    return
+                }
+            } receiveValue: { [weak self] responseModel in
+                guard let room = responseModel.data?.room else { return }
+                self?.storeRoom(room: room)
+                self?.chat = room
+                self?.groupContacts.send(room.users)
+            }.store(in: &self.subscriptions)
+    }
+    
+    func storeRoom(room: Room) {
     }
     
 }
