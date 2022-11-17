@@ -11,11 +11,12 @@ import Combine
 
 final class AudioMessageTableViewCell: BaseMessageTableViewCell {
     
-    var audioPlayer: AVPlayer?
     private let playButton = UIImageView(image: UIImage(safeImage: .play))
     private let lineView = UIView(backgroundColor: .logoBlue)
     private let sliderView = UIView(backgroundColor: .logoBlue)
-    private let durationLabel = CustomLabel(text: "00:23", textSize: 12, textColor: .logoBlue, fontName: .MontserratRegular)
+    private let durationLabel = CustomLabel(text: "02:23", textSize: 12, textColor: .logoBlue, fontName: .MontserratRegular)
+    private var sliderLeadingConstraint = NSLayoutConstraint()
+    private let timePublisher = PassthroughSubject<Double, Never>()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -43,7 +44,11 @@ final class AudioMessageTableViewCell: BaseMessageTableViewCell {
         lineView.constrainWidth(138)
         lineView.centerYToSuperview()
         
-        sliderView.anchor(leading: lineView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: -9, bottom: 0, right: 0), size: CGSize(width: 18, height: 18))
+        sliderLeadingConstraint = sliderView.leadingAnchor.constraint(equalTo: lineView.leadingAnchor, constant: -9)
+        sliderLeadingConstraint.isActive = true
+        
+        sliderView.constrainWidth(18)
+        sliderView.constrainHeight(18)
         sliderView.centerYToSuperview()
         
         durationLabel.anchor(leading: lineView.trailingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
@@ -54,15 +59,28 @@ final class AudioMessageTableViewCell: BaseMessageTableViewCell {
 
 extension AudioMessageTableViewCell {
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        sliderLeadingConstraint.isActive = false
+    }
+    
     func updateCell(message: Message) {
-        let link = URL(string: "https://clover.spika.chat/api/upload/files/2110.mp3")!
-        audioPlayer = AVPlayer(url: link)
         setupBindings()
+    }
+    
+    func setAt(percent: Double) {
+        let perPercent = 138.0 / 100
+        sliderLeadingConstraint.constant = -9 + percent * perPercent * 100
     }
     
     func setupBindings() {
         playButton.tap().sink { [weak self] _ in
-            self?.audioPlayer?.play()
+            guard let self = self else { return }
+            self.tapPublisher.send(.playAudio(self.timePublisher))
+        }.store(in: &subs)
+        
+        timePublisher.sink { [weak self] percent in
+            self?.setAt(percent: percent)
         }.store(in: &subs)
     }
 }

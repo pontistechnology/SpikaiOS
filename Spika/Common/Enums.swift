@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Combine
 
 enum OneSecPopUpType {
     case copy
@@ -127,4 +127,5 @@ enum CustomFontName: String {
 
 enum MessageCellTaps {
     case playVideo
+    case playAudio(PassthroughSubject<Double, Never>)
 }

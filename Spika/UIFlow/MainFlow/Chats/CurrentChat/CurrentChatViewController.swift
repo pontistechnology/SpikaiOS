@@ -23,8 +23,10 @@ class CurrentChatViewController: BaseViewController {
     
     private let currentChatView = CurrentChatView()
     var viewModel: CurrentChatViewModel!
-    let friendInfoView = ChatNavigationBarView()
-    var frc: NSFetchedResultsController<MessageEntity>?
+    private let friendInfoView = ChatNavigationBarView()
+    private var frc: NSFetchedResultsController<MessageEntity>?
+    private let audioPlayer = AudioPlayer()
+    private var audioSubscribe: AnyCancellable?
     
     private let frcIsChangingPublisher = PassthroughSubject<FRCChangeType, Never>()
     private let frcDidChangePublisher = PassthroughSubject<Bool, Never>()
@@ -282,6 +284,16 @@ extension CurrentChatViewController {
         switch state {
         case .playVideo:
             viewModel.playVideo(message: message)
+        case let .playAudio(publis):
+            guard let path = message.body?.file?.path,
+                  let mimeType = message.body?.file?.mimeType
+            else { return }
+            audioSubscribe?.cancel()
+            audioSubscribe = audioPlayer.playAudio(path: path.getAvatarUrl() ?? "",
+                                  mimeType: mimeType)?.sink { [weak self] percent in
+                publis.send(percent)
+            }
+            audioSubscribe?.store(in: &subscriptions)
         }
     }
 }
