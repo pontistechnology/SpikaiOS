@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_drive_zip_24px.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
