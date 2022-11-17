@@ -56,14 +56,14 @@ class UserSelectionViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         viewModel.reloadUsers
-            .sink { _ in
-                self.userSelectionView.contactsTableView.reloadData()
+            .sink { [weak self] _ in
+                self?.userSelectionView.contactsTableView.reloadData()
                 
             }.store(in: &subscriptions)
         
         viewModel.numberOfSelectedUsers
-            .sink { number in
-                self.userSelectionView.numberSelectedUsersLabel.text = "\(number) selected"
+            .sink { [weak self]  number in
+                self?.userSelectionView.numberSelectedUsersLabel.text = "\(number) selected"
             }.store(in: &subscriptions)
     }
     

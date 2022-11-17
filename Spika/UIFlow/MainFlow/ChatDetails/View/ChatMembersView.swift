@@ -79,11 +79,19 @@ final class ChatMembersView: UIView, BaseView {
         self.contactsEditable = contactsEditable
         super.init(frame: CGRectZero)
         setupView()
+        self.setupBinding()
         self.setupForInitialHeight()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupBinding() {
+        self.isAdmin
+            .sink { [weak self] isAdmin in
+                self?.addContactButton.isHidden = !isAdmin
+            }.store(in: &self.subscriptions)
     }
     
     func updateWithUsers(users: [RoomUser]) {

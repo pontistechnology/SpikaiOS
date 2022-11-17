@@ -102,4 +102,3 @@ extension UserSelectionViewModel: NSFetchedResultsControllerDelegate {
         self.updateAllContacts()
     }
 }
-

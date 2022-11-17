@@ -46,6 +46,16 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.chatDetailView.contentView.chatMembersView.updateWithUsers(users: users)
             }.store(in: &self.viewModel.subscriptions)
         
+        self.viewModel.isAdmin
+            .subscribe(self.chatDetailView.contentView.chatMembersView.isAdmin)
+            .store(in: &self.viewModel.subscriptions)
+        
+        self.viewModel.isAdmin
+            .sink(receiveValue: { [weak self] isAdmin in
+                self?.chatDetailView.contentView.chatMembersView
+            })
+            .store(in: &self.viewModel.subscriptions)
+        
         // UI Binding
         self.chatDetailView.contentView
             .chatMembersView
