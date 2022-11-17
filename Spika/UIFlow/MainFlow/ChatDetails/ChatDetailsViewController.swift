@@ -9,8 +9,8 @@ import UIKit
 
 final class ChatDetailsViewController: BaseViewController {
     
-    let viewModel: ChatDetailsViewModel
-    let chatDetailView = ChatDetailsView(frame: CGRectZero)
+    private let viewModel: ChatDetailsViewModel
+    private let chatDetailView = ChatDetailsView(frame: CGRectZero)
     
     init(viewModel: ChatDetailsViewModel) {
         self.viewModel = viewModel
@@ -35,7 +35,7 @@ final class ChatDetailsViewController: BaseViewController {
             .sink { [weak self] url in
                 self?.chatDetailView.contentView.chatImage.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
             }.store(in: &self.viewModel.subscriptions)
-//
+
         self.viewModel.groupNamePublisher
             .sink { [weak self] chatName in
                 self?.chatDetailView.contentView.chatName.text = chatName

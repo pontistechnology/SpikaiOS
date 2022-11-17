@@ -133,17 +133,20 @@ final class AppAssembly: Assembly {
     private func assembleUserSelectionViewController(_ container: Container) {
         container.register(UserSelectionViewModel.self) { (resolver,
                                                            coordinator: AppCoordinator,
-                                                           behavior:UserSelectionViewController.UserSelectionBehaviour,
-                                                           completion: @escaping UserSelectionViewModel.Completion) in
+                                                           preselectedUsers: [User],
+                                                           usersSelectedPublisher: PassthroughSubject<[User],Never>) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return UserSelectionViewModel(repository: repository, coordinator: coordinator, behavior: behavior, completion: completion)
+            return UserSelectionViewModel(repository: repository,
+                                          coordinator: coordinator,
+                                          preselectedUsers: preselectedUsers,
+                                          usersSelectedPublisher: usersSelectedPublisher)
         }.inObjectScope(.transient)
         
         container.register(UserSelectionViewController.self) { (resolver,
                                                                 coordinator: AppCoordinator,
-                                                                behavior:UserSelectionViewController.UserSelectionBehaviour,
-                                                                completion: @escaping UserSelectionViewModel.Completion) in
-            let controller = UserSelectionViewController(viewModel: resolver.resolve(UserSelectionViewModel.self, arguments: coordinator, behavior, completion)!)
+                                                                preselectedUsers: [User],
+                                                                usersSelectedPublisher: PassthroughSubject<[User],Never>) in
+            let controller = UserSelectionViewController(viewModel: resolver.resolve(UserSelectionViewModel.self, arguments: coordinator, preselectedUsers, usersSelectedPublisher)!)
             return controller
         }.inObjectScope(.transient)
     }

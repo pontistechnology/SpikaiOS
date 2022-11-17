@@ -21,6 +21,8 @@
 		6C769036291D36B5007F13D2 /* ChatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */; };
 		6C769038291D36BF007F13D2 /* ChatDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */; };
 		6C76903B291D451A007F13D2 /* ChatDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C76903A291D451A007F13D2 /* ChatDetailsView.swift */; };
+		6C9C5C7C29262610009D3E2B /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */; };
+		6C9C5C7E29262657009D3E2B /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7D29262657009D3E2B /* CustomStackView.swift */; };
 		6C9C7242291E743A0089AB4C /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C7241291E743A0089AB4C /* SettingsModel.swift */; };
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
@@ -387,6 +389,8 @@
 		6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewController.swift; sourceTree = "<group>"; };
 		6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewModel.swift; sourceTree = "<group>"; };
 		6C76903A291D451A007F13D2 /* ChatDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsView.swift; sourceTree = "<group>"; };
+		6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
+		6C9C5C7D29262657009D3E2B /* CustomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
 		6C9C7241291E743A0089AB4C /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		6CD30FF22922865D0017918B /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		93017B1627F8D1EC00A0582D /* SSENewMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSENewMessage.swift; sourceTree = "<group>"; };
@@ -1453,6 +1457,7 @@
 		ADD503CC270DD302009D50CB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */,
 				ADD503CD270DD31D009D50CB /* UIView+Extensions.swift */,
 				AD8192542721C00D00D5BE48 /* UIColor+Extensions.swift */,
 				AD81926C2721E2E400D5BE48 /* UIControl+Combine.swift */,
@@ -1529,6 +1534,7 @@
 				938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */,
 				932462D928FCBF0400E8C1B9 /* CustomTextView.swift */,
 				6C2638942907DB4400E7E79E /* CustomTableViewHeader.swift */,
+				6C9C5C7D29262657009D3E2B /* CustomStackView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2048,12 +2054,14 @@
 				933BE86E27B677BC0099BA9E /* FavoritesViewController.swift in Sources */,
 				AD9BFD272729955200736318 /* EnterNumberView.swift in Sources */,
 				933BE86A27B671B30099BA9E /* NotesView.swift in Sources */,
+				6C9C5C7E29262657009D3E2B /* CustomStackView.swift in Sources */,
 				AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */,
 				6C2497E12924FB3700594A55 /* UserSelectionViewModel.swift in Sources */,
 				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
 				9325720A28B8F0140078D489 /* UTType+Extensions.swift in Sources */,
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
 				934F2EDD28172BD10086C343 /* UpdatePushResponseModel.swift in Sources */,
+				6C9C5C7C29262610009D3E2B /* UIView+NSLayoutConstraint.swift in Sources */,
 				93E4F6EB27C2BB6D00432CFA /* SelectUsersViewController.swift in Sources */,
 				93C77B702923396200F676C5 /* AudioMessageTableViewCell.swift in Sources */,
 				93F4A8A0282DF1B500CEA637 /* MessageDetailTableViewCell.swift in Sources */,

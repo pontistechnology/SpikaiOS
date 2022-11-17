@@ -10,39 +10,46 @@ import Combine
 
 class UserSelectionViewModel: BaseViewModel {
     
-    typealias Completion = ([User]) -> Void
+    let preselectedUsers = CurrentValueSubject<[User],Never>([])
     
-    let preselectedUsers: [User]?
+    private var selectedUsers = CurrentValueSubject<[User],Never>([])
     
-//    let allUsers = CurrentValueSubject<[User],Never>([])
     let reloadUsers = PassthroughSubject<Void,Never>()
     
-    let completion: Completion
+    let numberOfSelectedUsers = CurrentValueSubject<Int,Never>(0)
     
-    let behaviour = CurrentValueSubject<UserSelectionViewController.UserSelectionBehaviour, Never>(.createNewChat)
-    
+    private let usersSelectedPublisher: PassthroughSubject<[User],Never>
+            
     var frc: NSFetchedResultsController<UserEntity>?
     
-    init(repository: Repository, coordinator: Coordinator, behavior:UserSelectionViewController.UserSelectionBehaviour, completion: @escaping Completion) {
-        if case .selectUsers(let preselectedUsers) = behavior {
-            self.preselectedUsers = preselectedUsers
-        } else {
-            self.preselectedUsers = nil
-        }
-        self.behaviour.send(behavior)
-        self.completion = completion
+    init(repository: Repository, coordinator: Coordinator, preselectedUsers: [User], usersSelectedPublisher: PassthroughSubject<[User],Never>) {
+        self.preselectedUsers.send(preselectedUsers)
+        
+        self.usersSelectedPublisher = usersSelectedPublisher
+        
         super.init(repository: repository, coordinator: coordinator)
         
-        self.setFetch()
+        self.setFetch(withSearch: nil)
+        self.setupBinding()
     }
     
-    func setFetch() {
+    func setupBinding() {
+        self.preselectedUsers.combineLatest(self.selectedUsers)
+            .map { $0.0.count + $0.1.count }
+            .subscribe(self.numberOfSelectedUsers)
+            .store(in: &self.subscriptions)
+    }
+    
+    func setFetch(withSearch search: String?) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let fetchRequest = UserEntity.fetchRequest()
             fetchRequest.sortDescriptors = [
                 NSSortDescriptor(key: "contactsName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:))),
                 NSSortDescriptor(key: #keyPath(UserEntity.displayName), ascending: true)]
+            if let search = search, !search.isEmpty {
+                fetchRequest.predicate = NSPredicate(format: "contactsName CONTAINS[c] '\(search)' OR telephoneNumber CONTAINS[c] '\(search)'")
+            }
             self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.repository.getMainContext(), sectionNameKeyPath: "sectionName", cacheName: nil)
             self.frc?.delegate = self
             do {
@@ -54,21 +61,40 @@ class UserSelectionViewModel: BaseViewModel {
         }
     }
     
-    func updateAllContacts() {
+    private func updateAllContacts() {
         self.reloadUsers.send(Void())
-//        self.frc?.sections
-//        let allObjects = self.frc?.sections?.first?.objects as? [UserEntity]
-//        let users = allObjects?.map { User(entity: $0) }
-////        let count = allObjects?.filter { $0.numberOfUnreadMessages(myUserId: self.getMyUserId()) != 0 }.count ?? 0
-//        self.allUsers.send(users ?? [])
     }
     
-    func userAlreadySelected(user: User) -> Bool {
-        return self.preselectedUsers?.contains(where: { preselectedUser in
+    func userSelectionDisabled(user: User) -> Bool {
+        return self.preselectedUsers.value.contains(where: { preselectedUser in
             preselectedUser.id == user.id
-        }) ?? false
+        })
     }
     
+    func userSelected(user: User) -> Bool {
+        return self.selectedUsers.value.contains(where: { preselectedUser in
+            preselectedUser.id == user.id
+        })
+        
+    }
+    
+    func selectUser(at indexPath: IndexPath) {
+        guard let userEntity = self.frc?.object(at: indexPath) else {
+            return
+        }
+        
+        if let index = self.selectedUsers.value.firstIndex(where: { user in
+            user.id == userEntity.id
+        }) {
+            self.selectedUsers.value.remove(at: index)
+        } else {
+            self.selectedUsers.value.append(User(entity: userEntity))
+        }
+    }
+    
+    func onDone() {
+        self.usersSelectedPublisher.send(self.selectedUsers.value)
+    }
 }
 
 extension UserSelectionViewModel: NSFetchedResultsControllerDelegate {

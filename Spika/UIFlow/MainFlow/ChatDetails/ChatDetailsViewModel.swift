@@ -60,10 +60,13 @@ class ChatDetailsViewModel: BaseViewModel {
     }
     
     func onAddNewUser() {
-        self.getAppCoordinator()?.presentUserSelection(behavior: .selectUsers(preselectedUsers: chat.users.map { $0.user }),
-                                                       completion: { newUsers in
-            
-        })
+        let usersSelected = PassthroughSubject<[User],Never>()
+        self.getAppCoordinator()?.presentUserSelection(preselectedUsers: chat.users.map { $0.user }, usersSelectedPublisher: usersSelected)
+        
+        usersSelected
+            .sink { users in
+                print("")
+            }.store(in: &self.subscriptions)
     }
     
 }

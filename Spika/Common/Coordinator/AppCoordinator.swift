@@ -126,8 +126,8 @@ class AppCoordinator: Coordinator {
 //        navigationController.present(navC, animated: true, completion: nil)
     }
     
-    func presentUserSelection(behavior: UserSelectionViewController.UserSelectionBehaviour, completion: @escaping UserSelectionViewModel.Completion) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(UserSelectionViewController.self, arguments: self, behavior,completion)!
+    func presentUserSelection(preselectedUsers: [User], usersSelectedPublisher: PassthroughSubject<[User],Never>) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(UserSelectionViewController.self, arguments: self, preselectedUsers,usersSelectedPublisher)!
         let navC = UINavigationController(rootViewController: viewController)
         navigationController.present(navC, animated: true, completion: nil)
     }

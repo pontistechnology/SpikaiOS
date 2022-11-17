@@ -10,16 +10,10 @@ import UIKit
 import CoreData
 
 class UserSelectionViewController: BaseViewController {
- 
-    enum UserSelectionBehaviour {
-        case selectUsers(preselectedUsers: [User])
-        case createNewChat
-        case createNewGroup
-    }
     
-    let viewModel: UserSelectionViewModel
+    private let viewModel: UserSelectionViewModel
     
-    let userSelectionView = UserSelectionView(frame: CGRectZero)
+    private let userSelectionView = UserSelectionView(frame: CGRectZero)
     
     init(viewModel: UserSelectionViewModel) {
         self.viewModel = viewModel
@@ -36,49 +30,45 @@ class UserSelectionViewController: BaseViewController {
         self.setupBindings()
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         self.view.addSubview(self.userSelectionView)
     }
     
-    func positionSubviews() {
+    private func positionSubviews() {
         self.userSelectionView.fillSuperview()
     }
     
-    func setupBindings() {
-//        userSelectionView.searchBar.delegate = self
+    private func setupBindings() {
+        userSelectionView.searchBar.delegate = self
         userSelectionView.contactsTableView.delegate = self
         userSelectionView.contactsTableView.dataSource = self
-//        userSelectionView.groupUsersCollectionView.delegate = self
-//        userSelectionView.groupUsersCollectionView.dataSource = self
+        
+        self.userSelectionView
+            .doneLabel
+            .tap()
+            .sink { [weak self] _ in
+                self?.onNext()
+                self?.dismiss(animated: true, completion: nil)
+            }.store(in: &self.subscriptions)
         
         userSelectionView.cancelLabel.tap().sink { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
         }.store(in: &subscriptions)
         
-//        userSelectionView.chatOptionLabel.tap().sink { [weak self] _ in
-//            guard let self = self else { return }
-//            self.userSelectionView.setGroupUserVisible(self.userSelectionView.groupUsersCollectionView.isHidden ? true : false)
-//        }.store(in: &subscriptions)
-        
-//        userSelectionView.nextLabel.tap().sink { [weak self] _ in
-//            guard let self = self else { return }
-////            self.viewModel.presentNewGroupScreen()
-//        }.store(in: &subscriptions)
-        
         viewModel.reloadUsers
             .sink { _ in
                 self.userSelectionView.contactsTableView.reloadData()
+                
             }.store(in: &subscriptions)
-//        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] _ in
-//            guard let self = self else { return }
-//            self.userSelectionView.contactsTableView.reloadData()
-//        }.store(in: &subscriptions)
-//
-//        viewModel.selectedUsersSubject.receive(on: DispatchQueue.main).sink { [weak self] selectedContacts in
-//            guard let self = self else { return }
-//            self.userSelectionView.numberSelectedUsersLabel.text = "\(selectedContacts.count) / 100 selected"
-//            self.userSelectionView.groupUsersCollectionView.reloadData()
-//        }.store(in: &subscriptions)
+        
+        viewModel.numberOfSelectedUsers
+            .sink { number in
+                self.userSelectionView.numberSelectedUsersLabel.text = "\(number) selected"
+            }.store(in: &subscriptions)
+    }
+    
+    private func onNext() {
+        self.viewModel.onDone()
     }
     
 }
@@ -95,6 +85,15 @@ extension UserSelectionViewController: UITableViewDelegate {
                                      fontName: .MontserratSemiBold,
                                      alignment: .left,
                                      labelMargins: UIEdgeInsets(top: 8, left: 18, bottom: 8, right: 14))
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.viewModel.selectUser(at: indexPath)
+        self.userSelectionView.contactsTableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
     }
 }
 
@@ -115,10 +114,28 @@ extension UserSelectionViewController: UITableViewDataSource {
         }
         let user = User(entity: userEntity)
         
-        cell?.backgroundColor = self.viewModel.userAlreadySelected(user: user) ? .lightGray : .white
-        cell?.isUserInteractionEnabled = !self.viewModel.userAlreadySelected(user: user)
+        cell?.selectionStyle = .none
+        // User Preselected - selection disabled
+        cell?.backgroundColor = self.viewModel.userSelectionDisabled(user: user) ? .lightGray : .white
+        cell?.isUserInteractionEnabled = !self.viewModel.userSelectionDisabled(user: user)
+        // User was selected
+        cell?.accessoryType = self.viewModel.userSelected(user: user) ? .checkmark : .none
         
         cell?.configureCell(user)
         return cell ?? UITableViewCell()
+    }
+}
+
+// MARK: - Search bar
+extension UserSelectionViewController: SearchBarDelegate {
+    func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
+        if let value = value {
+            self.viewModel.setFetch(withSearch: value)
+        }
+    }
+    
+    func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
+        self.viewModel.setFetch(withSearch: nil)
+        self.view.endEditing(true)
     }
 }
