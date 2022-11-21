@@ -33,7 +33,6 @@ final class ChatDetailsViewController: BaseViewController {
             .compactMap{ room in
                 return room.avatarUrl?.getFullUrl()
             }
-            .subscribe(on: DispatchQueue.main)
             .sink { [weak self] url in
                 self?.chatDetailView.contentView.chatImage.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
             }.store(in: &self.viewModel.subscriptions)
