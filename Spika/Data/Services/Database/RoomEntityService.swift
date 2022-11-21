@@ -118,6 +118,8 @@ extension RoomEntityService {
                     roomEntity.removeFromUsers(usr)
                 }
                 
+                try? context.save()
+                
                 for usr in room.users {
                     let r = RoomUserEntity(roomUser: usr, roomId: room.id, insertInto: context)
                     roomEntity.addToUsers(r)
@@ -125,7 +127,7 @@ extension RoomEntityService {
                 
                 do {
                     try context.save()
-                    promise(.success(room))
+                    promise(.success(Room(roomEntity: roomEntity)))
                 } catch {
                     promise(.failure(DatabseError.savingError))
                 }

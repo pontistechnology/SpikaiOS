@@ -138,8 +138,8 @@ class AppCoordinator: Coordinator {
         navigationController.pushViewController(currentChatViewController, animated: true)
     }
     
-    func presentChatDetailsScreen(roomModel: Room) {
-        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetailsViewController.self, arguments: self, roomModel)!
+    func presentChatDetailsScreen(room: CurrentValueSubject<Room,Never>) {
+        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetailsViewController.self, arguments: self, room)!
         
         navigationController.pushViewController(roomDetailsViewController, animated: true)
     }

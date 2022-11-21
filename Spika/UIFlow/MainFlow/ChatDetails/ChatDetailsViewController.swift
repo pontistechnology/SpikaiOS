@@ -29,19 +29,23 @@ final class ChatDetailsViewController: BaseViewController {
     
     private func setupBindings() {
         // View Model Binding
-        self.viewModel.groupImagePublisher
-            .compactMap{ $0 }
+        self.viewModel.room
+            .compactMap{ room in
+                return room.avatarUrl?.getFullUrl()
+            }
             .subscribe(on: DispatchQueue.main)
             .sink { [weak self] url in
                 self?.chatDetailView.contentView.chatImage.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
             }.store(in: &self.viewModel.subscriptions)
 
-        self.viewModel.groupNamePublisher
+        self.viewModel.room
+            .map { $0.name }
             .sink { [weak self] chatName in
                 self?.chatDetailView.contentView.chatName.text = chatName
             }.store(in: &self.viewModel.subscriptions)
 
-        self.viewModel.groupContacts
+        self.viewModel.room
+            .map { $0.users }
             .sink { [weak self] users in
                 self?.chatDetailView.contentView.chatMembersView.updateWithUsers(users: users)
             }.store(in: &self.viewModel.subscriptions)
