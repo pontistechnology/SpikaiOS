@@ -12,6 +12,9 @@ final class ChatDetailsViewController: BaseViewController {
     private let viewModel: ChatDetailsViewModel
     private let chatDetailView = ChatDetailsView(frame: CGRectZero)
     
+    let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    private let imagePicker = UIImagePickerController()
+    
     init(viewModel: ChatDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -25,6 +28,8 @@ final class ChatDetailsViewController: BaseViewController {
         super.viewDidLoad()
         setupView(chatDetailView)
         setupBindings()
+        setupActionSheet()
+        setupImagePicker()
     }
     
     private func setupBindings() {
@@ -56,6 +61,7 @@ final class ChatDetailsViewController: BaseViewController {
         self.viewModel.isAdmin
             .sink(receiveValue: { [weak self] isAdmin in
                 self?.chatDetailView.contentView.chatMembersView.addContactButton.isHidden = !isAdmin
+                self?.chatDetailView.contentView.cameraIcon.isHidden = !isAdmin
             })
             .store(in: &self.viewModel.subscriptions)
         
@@ -86,6 +92,74 @@ final class ChatDetailsViewController: BaseViewController {
             .sink { [weak self] _ in
                 self?.viewModel.onAddNewUser()
             }.store(in: &self.subscriptions)
+        
+        self.chatDetailView.contentView
+            .chatImage
+            .tap()
+            .combineLatest(self.viewModel.isAdmin)
+            .map { $0.1 }
+            .filter { $0 }
+            .sink { [weak self] _ in
+                self?.onChangeImage()
+            }.store(in: &self.subscriptions)
     }
     
+    func onChangeImage() {
+        self.present(self.actionSheet, animated: true, completion: nil)
+    }
+    
+    func setupActionSheet() {
+        actionSheet.addAction(UIAlertAction(title: "Take a photo", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.imagePicker.sourceType = .camera
+            self.imagePicker.cameraCaptureMode = .photo
+            self.imagePicker.cameraDevice = .front
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Choose from gallery", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Remove photo", style: .destructive, handler: { [weak self] _ in
+            guard let self = self else { return }
+//            self.fileData = nil
+//            self.enterUsernameView.profilePictureView.deleteMainImage()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    }
+    
+}
+
+extension ChatDetailsViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func setupImagePicker() {
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            
+            let widhtInPixels  = pickedImage.size.width * UIScreen.main.scale
+            let heightInPixels = pickedImage.size.height * UIScreen.main.scale
+            
+            
+            if widhtInPixels < 512 || heightInPixels < 512 {
+                viewModel.showError("Please use better quality.")
+            } else if abs(widhtInPixels - heightInPixels) > 20 {
+                viewModel.showError("Please select a square")
+            } else {
+                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
+//                enterUsernameView.profilePictureView.showImage(resizedImage)
+//                fileData = resizedImage.jpegData(compressionQuality: 1)
+            }
+            dismiss(animated: true, completion: nil)
+        }
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
 }

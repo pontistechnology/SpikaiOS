@@ -10,6 +10,11 @@ import UIKit
 class ChatContentView: UIView, BaseView {
     
     let chatImage = UIImageView()
+    lazy var cameraIcon: ImageButton = {
+        let button = ImageButton(image: UIImage(safeImage: .camera), size: CGSize(width: 28, height: 28))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    } ()
     let chatName = CustomLabel(text: "Group", textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
     
     let sharedMediaOptionButton = NavView(text: "Shared Media, Links and Docs")
@@ -57,6 +62,7 @@ class ChatContentView: UIView, BaseView {
     
     func addSubviews() {
         self.addSubview(chatImage)
+        self.chatImage.addSubview(self.cameraIcon)
         self.addSubview(chatName)
         self.addSubview(mainStackView)
         
@@ -87,6 +93,9 @@ class ChatContentView: UIView, BaseView {
     func positionSubviews() {
         chatImage.anchor(top: self.topAnchor, padding: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0), size: CGSize(width: 100, height: 100))
         chatImage.centerXToSuperview()
+        
+        cameraIcon.centerX(nil, constant: 34)
+        cameraIcon.centerY(nil, constant: 34)
         
         chatName.anchor(top: chatImage.bottomAnchor, padding: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0))
         chatName.centerXToSuperview()

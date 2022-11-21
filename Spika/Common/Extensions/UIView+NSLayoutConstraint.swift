@@ -105,18 +105,18 @@ public extension UIView {
         widthAnchor.constraint(equalToConstant: constant).isActive = true
     }
     
-    func centerX(_ view: UIView? = nil) {
+    func centerX(_ view: UIView? = nil, constant: CGFloat = 0) {
         guard let view = view ?? superview else {
             fatalError("Undefined view")
         }
-        centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: constant).isActive = true
     }
     
-    func centerY(_ view: UIView? = nil) {
+    func centerY(_ view: UIView? = nil, constant: CGFloat = 0) {
         guard let view = view ?? superview else {
             fatalError("Undefined view")
         }
-        centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: constant).isActive = true
     }
 }
 
