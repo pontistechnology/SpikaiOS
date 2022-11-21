@@ -5,7 +5,7 @@
 //  Created by Vedran Vugrin on 10.11.2022..
 //
 
-import Foundation
+import UIKit
 import Combine
 
 class ChatDetailsViewModel: BaseViewModel {
@@ -18,6 +18,8 @@ class ChatDetailsViewModel: BaseViewModel {
     let isAdmin = CurrentValueSubject<Bool,Never>(false)
     
     let groupContacts = CurrentValueSubject<[RoomUser],Never>([])
+    
+    private let updateContacts = PassthroughSubject<[Int64],Never>()
     
     init(repository: Repository, coordinator: Coordinator, chat: Room) {
         self.chat = chat
@@ -34,6 +36,25 @@ class ChatDetailsViewModel: BaseViewModel {
         self.groupNamePublisher.send(chat.name)
         
         self.groupContacts.send(self.chat.users)
+        
+        self.updateContacts
+            .flatMap { [weak self] userIds in
+                guard let `self` = self else {
+                    return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken).eraseToAnyPublisher()
+                }
+                return self.repository.updateRoomUsers(roomId: self.chat.id, userIds: userIds)
+            }
+            .sink { [weak self] c in
+                switch c {
+                case .failure(_):
+                    self?.getAppCoordinator()?.showError(message: "Something went wrong trying to add new users")
+                case.finished:
+                    return
+                }
+            } receiveValue: { [weak self] responseModel in
+                guard let room = responseModel.data?.room else { return }
+                self?.updateRoom(room: room)
+            }.store(in: &self.subscriptions)
     }
     
     func updateIsadmin() {
@@ -52,7 +73,8 @@ class ChatDetailsViewModel: BaseViewModel {
                 case .finished:
                     break
                 case .failure(_):
-                    self.getAppCoordinator()?.showError(message: "Something went wrong \(mute ? "Muting" : "Unmuting") the room \(roomName)")
+                    self.getAppCoordinator()?
+                        .showError(message: "Something went wrong \(mute ? "Muting" : "Unmuting") the room \(roomName)")
                     //TODO: Reset Room muted state & observer
                 }
             } receiveValue: { _ in }
@@ -64,49 +86,41 @@ class ChatDetailsViewModel: BaseViewModel {
         self.getAppCoordinator()?.presentUserSelection(preselectedUsers: chat.users.map { $0.user }, usersSelectedPublisher: usersSelected)
         
         usersSelected
-            .sink { [unowned self] users in
-                self.updateWithNewUsers(users: users)
-            }.store(in: &self.subscriptions)
-    }
-    
-    func updateWithNewUsers(users: [User]) {
-        let userIds = chat.users.map { $0.userId } + users.map { $0.id }
-        self.repository.updateRoomUsers(roomId: self.chat.id, userIds: userIds)
-            .sink { c in
-                switch c {
-                case .failure(_):
-                    self.getAppCoordinator()?.showError(message: "Something went wrong trying to add new users")
-                case.finished:
-                    return
-                }
-            } receiveValue: { [weak self] responseModel in
-                guard let room = responseModel.data?.room else { return }
-                self?.storeRoom(room: room)
-                self?.chat = room
-                self?.groupContacts.send(room.users)
-            }.store(in: &self.subscriptions)
+            .map { [unowned self] newUsers in
+                return self.chat.users.map { $0.userId } + newUsers.map { $0.id }
+            }
+            .subscribe(self.updateContacts)
+            .store(in: &self.subscriptions)
     }
     
     func removeUser(user: User) {
         var userIds = chat.users.map { $0.userId }
         userIds.removeAll(where: { $0 == user.id })
-        self.repository.updateRoomUsers(roomId: self.chat.id, userIds: userIds)
-            .sink { c in
-                switch c {
-                case .failure(_):
-                    self.getAppCoordinator()?.showError(message: "Something went wrong trying to add new users")
-                case.finished:
-                    return
-                }
-            } receiveValue: { [weak self] responseModel in
-                guard let room = responseModel.data?.room else { return }
-                self?.storeRoom(room: room)
-                self?.chat = room
-                self?.groupContacts.send(room.users)
-            }.store(in: &self.subscriptions)
+        self.updateContacts.send(userIds)
     }
     
-    func storeRoom(room: Room) {
+    func updateRoom(room: Room) {
+        self.chat = room
+        self.repository
+            .updateLocalRoom(room: room )
+            .receive(on: DispatchQueue.main)
+            .sink { c in
+                switch c {
+                case .finished:
+                    let delegate = UIApplication.shared.delegate as! AppDelegate
+                    delegate.allroomsprinter()
+                case .failure(_):
+                    break
+                }
+            } receiveValue: { room in
+
+            }.store(in: &self.subscriptions)
+
+        self.groupContacts.send(room.users)
+    }
+    
+    deinit {
+        print("Deinit Works")
     }
     
 }

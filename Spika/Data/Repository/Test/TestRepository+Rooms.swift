@@ -28,7 +28,7 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
-    func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error> {
+    func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error> { //TODO: - remove
         return Fail<GetAllRoomsResponseModel, Error>(error: NetworkError.noAccessToken)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
@@ -59,6 +59,12 @@ extension TestRepository {
     }
     
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error> {
+        return Future { promise in
+            promise(.failure(DatabseError.unknown))
+        }
+    }
+    
+    func updateLocalRoom(room: Room) -> Future<Room, Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))
         }

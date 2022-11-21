@@ -102,6 +102,37 @@ extension RoomEntityService {
         }
     }
     
+    func updateRoom(_ room: Room) -> Future<Room, Error> {
+        Future { [weak self] promise in
+            guard let self = self else { return }
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                
+                let fr = RoomEntity.fetchRequest()
+                fr.predicate = NSPredicate(format: "id == %d", room.id)
+                guard let roomEntity = try? context.fetch(fr).first else { return }
+                
+                let users = roomEntity.users?.allObjects as! [RoomUserEntity]
+                
+                for usr in users {
+                    roomEntity.removeFromUsers(usr)
+                }
+                
+                for usr in room.users {
+                    let r = RoomUserEntity(roomUser: usr, roomId: room.id, insertInto: context)
+                    roomEntity.addToUsers(r)
+                }
+                
+                do {
+                    try context.save()
+                    promise(.success(room))
+                } catch {
+                    promise(.failure(DatabseError.savingError))
+                }
+            }
+        }
+    }
+    
     func roomVisited(roomId: Int64) {
         coreDataStack.persistantContainer.performBackgroundTask { context in
             context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy

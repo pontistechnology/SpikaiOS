@@ -23,7 +23,7 @@ public class RoomEntity: NSManagedObject {
         self.createdAt = room.createdAt
         self.type = room.type.rawValue
         
-        for roomUser in room.users { 
+        for roomUser in room.users {
             let r = RoomUserEntity(roomUser: roomUser, roomId: room.id, insertInto: context)
             self.addToUsers(r)
         }
