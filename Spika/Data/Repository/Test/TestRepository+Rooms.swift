@@ -64,7 +64,7 @@ extension TestRepository {
         }
     }
     
-    func updateLocalRoom(room: Room) -> Future<Room, Error> {
+    func updateRoomUsers(room: Room) -> Future<Room, Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))
         }

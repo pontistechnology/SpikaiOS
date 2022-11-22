@@ -11,8 +11,6 @@ import Combine
 class ChatDetailsViewModel: BaseViewModel {
     let room: CurrentValueSubject<Room,Never>
     
-    let isAdmin = CurrentValueSubject<Bool,Never>(false)
-    
     private let updateContacts = PassthroughSubject<[Int64],Never>()
     
     init(repository: Repository, coordinator: Coordinator, room: CurrentValueSubject<Room,Never>) {
@@ -22,16 +20,9 @@ class ChatDetailsViewModel: BaseViewModel {
     }
     
     func setupBindings() {
-        self.room
-            .map { [weak self] room in
-                guard let `self` = self else { return false }
-                return room.users.filter { $0.userId == self.getMyUserId() }.first?.isAdmin ?? false
-            }.subscribe(self.isAdmin)
-            .store(in: &self.subscriptions)
-        
         self.updateContacts
             .flatMap { [weak self] userIds in
-                guard let `self` = self else {
+                guard let self = self else {
                     return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken).eraseToAnyPublisher()
                 }
                 return self.repository.updateRoomUsers(roomId: self.room.value.id, userIds: userIds)
@@ -89,7 +80,7 @@ class ChatDetailsViewModel: BaseViewModel {
     
     func updateRoom(room: Room) {
         self.repository
-            .updateLocalRoom(room: room )
+            .updateRoomUsers(room: room )
             .receive(on: DispatchQueue.main)
             .sink { c in
                 switch c {

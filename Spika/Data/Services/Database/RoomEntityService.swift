@@ -102,7 +102,7 @@ extension RoomEntityService {
         }
     }
     
-    func updateRoom(_ room: Room) -> Future<Room, Error> {
+    func updateRoomUsers(_ room: Room) -> Future<Room, Error> {
         Future { [weak self] promise in
             guard let self = self else { return }
             self.coreDataStack.persistantContainer.performBackgroundTask { context in

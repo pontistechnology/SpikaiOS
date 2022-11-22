@@ -163,8 +163,8 @@ extension AppRepository {
         databaseService.roomEntityService.saveRooms(rooms)
     }
     
-    func updateLocalRoom(room: Room) -> Future<Room, Error> {
-        databaseService.roomEntityService.updateRoom(room)
+    func updateRoomUsers(room: Room) -> Future<Room, Error> {
+        databaseService.roomEntityService.updateRoomUsers(room)
     }
     
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error> {

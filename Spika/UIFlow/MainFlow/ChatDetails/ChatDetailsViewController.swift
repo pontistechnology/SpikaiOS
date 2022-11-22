@@ -33,6 +33,11 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     private func setupBindings() {
+        let isAdmin = self.viewModel.room.map { [weak self] room in
+            guard let self = self else { return false }
+            return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
+        }
+        
         // View Model Binding
         self.viewModel.room
             .compactMap{ room in
@@ -54,11 +59,11 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.chatDetailView.contentView.chatMembersView.updateWithUsers(users: users)
             }.store(in: &self.viewModel.subscriptions)
         
-        self.viewModel.isAdmin
+        isAdmin
             .subscribe(self.chatDetailView.contentView.chatMembersView.isAdmin)
             .store(in: &self.viewModel.subscriptions)
         
-        self.viewModel.isAdmin
+        isAdmin
             .sink(receiveValue: { [weak self] isAdmin in
                 self?.chatDetailView.contentView.chatMembersView.addContactButton.isHidden = !isAdmin
                 self?.chatDetailView.contentView.cameraIcon.isHidden = !isAdmin
@@ -96,7 +101,7 @@ final class ChatDetailsViewController: BaseViewController {
         self.chatDetailView.contentView
             .chatImage
             .tap()
-            .combineLatest(self.viewModel.isAdmin)
+            .combineLatest(isAdmin)
             .map { $0.1 }
             .filter { $0 }
             .sink { [weak self] _ in
