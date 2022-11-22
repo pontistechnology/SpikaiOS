@@ -41,18 +41,4 @@ struct User: Codable {
         
         return displayNameResult
     }
-    
-    func getAvatarUrl() -> String? {
-        if let avatarUrl = avatarUrl, !avatarUrl.isEmpty {
-            if avatarUrl.starts(with: "http") {
-                return avatarUrl
-            } else if avatarUrl.starts(with: "/") {
-                return Constants.Networking.baseUrl + avatarUrl.dropFirst()
-            } else {
-                return Constants.Networking.baseUrl + avatarUrl
-            }
-        } else {
-            return nil
-        }
-    }
 }

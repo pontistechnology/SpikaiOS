@@ -12,11 +12,10 @@ import Combine
 final class AudioMessageTableViewCell: BaseMessageTableViewCell {
     
     private let playButton = UIImageView(image: UIImage(safeImage: .play))
-    private let lineView = UIView(backgroundColor: .logoBlue)
-    private let sliderView = UIView(backgroundColor: .logoBlue)
     private let durationLabel = CustomLabel(text: "02:23", textSize: 12, textColor: .logoBlue, fontName: .MontserratRegular)
-    private var sliderLeadingConstraint = NSLayoutConstraint()
-    private let timePublisher = PassthroughSubject<Double, Never>()
+    private let slider = UISlider()
+    
+    private let timePublisher = PassthroughSubject<Float, Never>()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,29 +28,24 @@ final class AudioMessageTableViewCell: BaseMessageTableViewCell {
     
     private func setupAudioCell() {
         containerView.addSubview(playButton)
-        containerView.addSubview(lineView)
-        lineView.addSubview(sliderView)
-        containerView.addSubview(sliderView)
         containerView.addSubview(durationLabel)
+        containerView.addSubview(slider)
         
-        sliderView.layer.cornerRadius = 9
-        sliderView.layer.masksToBounds = true
+        slider.thumbTintColor = .logoBlue
+        slider.minimumTrackTintColor = .logoBlue
+        slider.setThumbImage(UIImage(safeImage: .thumb), for: .normal)
+        slider.setThumbImage(UIImage(safeImage: .thumb), for: .highlighted)
+        slider.minimumValue = 0
+        slider.maximumValue = 1
+        slider.isContinuous = false
         
         playButton.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, padding: UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 0), size: CGSize(width: 24, height: 24))
+
+        slider.anchor(leading: playButton.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        slider.constrainWidth(138)
+        slider.centerYToSuperview()
         
-        lineView.anchor(leading: playButton.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 10))
-        lineView.constrainHeight(2)
-        lineView.constrainWidth(138)
-        lineView.centerYToSuperview()
-        
-        sliderLeadingConstraint = sliderView.leadingAnchor.constraint(equalTo: lineView.leadingAnchor, constant: -9)
-        sliderLeadingConstraint.isActive = true
-        
-        sliderView.constrainWidth(18)
-        sliderView.constrainHeight(18)
-        sliderView.centerYToSuperview()
-        
-        durationLabel.anchor(leading: lineView.trailingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        durationLabel.anchor(leading: slider.trailingAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         durationLabel.centerYToSuperview()
     }
 }
@@ -61,16 +55,15 @@ extension AudioMessageTableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        sliderLeadingConstraint.isActive = false
+        slider.value = 0
     }
     
     func updateCell(message: Message) {
         setupBindings()
     }
     
-    func setAt(percent: Double) {
-        let perPercent = 138.0 / 100
-        sliderLeadingConstraint.constant = -9 + percent * perPercent * 100
+    func setAt(percent: Float) {
+        slider.value = percent
     }
     
     func setupBindings() {
@@ -81,6 +74,14 @@ extension AudioMessageTableViewCell {
         
         timePublisher.sink { [weak self] percent in
             self?.setAt(percent: percent)
+        }.store(in: &subs)
+        
+        slider.publisher(for: .valueChanged).sink { [weak self] _ in
+            print("Value: ", self?.slider.value)
+        }.store(in: &subs)
+        
+        slider.publisher(for: .editingDidBegin).sink { _ in
+            print("NOW start")
         }.store(in: &subs)
     }
 }

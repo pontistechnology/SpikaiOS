@@ -30,9 +30,7 @@ final class ChatDetailsViewController: BaseViewController {
     private func setupBindings() {
         // View Model Binding
         self.viewModel.groupImagePublisher
-            .compactMap{ urlString in
-                return URL(string: urlString ?? "")
-            }
+            .compactMap{ $0 }
             .subscribe(on: DispatchQueue.main)
             .sink { [weak self] url in
                 self?.chatDetailView.contentView.chatImage.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))

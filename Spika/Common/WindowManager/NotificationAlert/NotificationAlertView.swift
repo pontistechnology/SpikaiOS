@@ -18,7 +18,7 @@ class NotificationAlertView: UIView {
         descriptionLabel = CustomLabel(text: info.messageText, textSize: 11, textColor: .white)
         
         avatarImageView = UIImageView()
-        avatarImageView.kf.setImage(with: URL(string: info.photoUrl), placeholder: UIImage(safeImage: .userImage))
+        avatarImageView.kf.setImage(with: info.photoUrl, placeholder: UIImage(safeImage: .userImage))
         super.init(frame: .zero)
         setupView()
     }

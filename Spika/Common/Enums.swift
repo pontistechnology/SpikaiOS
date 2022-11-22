@@ -127,5 +127,6 @@ enum CustomFontName: String {
 
 enum MessageCellTaps {
     case playVideo
-    case playAudio(PassthroughSubject<Double, Never>)
+    case playAudio(PassthroughSubject<Float, Never>)
+    case openImage
 }

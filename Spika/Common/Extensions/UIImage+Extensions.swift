@@ -61,6 +61,8 @@ enum AssetName: String {
     case chatsTabFull = "chatsTabFull"
     case contactsTabFull = "contactsTabFull"
     case settingsTabFull = "settingsTabFull"
+    
+    case thumb = "thumb"
 }
 
 extension UIImage {

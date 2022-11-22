@@ -12,7 +12,7 @@ import Combine
 class AudioPlayer {
     private var audioPlayer: AVPlayer?
     private var timeObserverToken: Any?
-    private let publisher = PassthroughSubject<Double, Never>()
+    private let publisher = PassthroughSubject<Float, Never>()
     
     deinit {
         removeObserver()
@@ -24,9 +24,8 @@ class AudioPlayer {
         self.timeObserverToken = nil
     }
     
-    func playAudio(path: String, mimeType: String) -> PassthroughSubject<Double, Never>? {
+    func playAudio(url: URL, mimeType: String) -> PassthroughSubject<Float, Never>? {
         removeObserver()
-        guard let url = URL(string: path) else { return nil}
         let asset = AVURLAsset(url: url, mimeType: mimeType)
         audioPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
         audioPlayer?.play()
@@ -43,7 +42,7 @@ class AudioPlayer {
                       let duration = self.audioPlayer?.currentItem?.duration.seconds,
                       duration > 0
                 else { return }
-                self.publisher.send(time.seconds / duration)
+                self.publisher.send(Float(time.seconds / duration))
             })
     }
 }

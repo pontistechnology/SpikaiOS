@@ -193,6 +193,12 @@ class AppCoordinator: Coordinator {
             avPlayer.play()
         }
     }
+    
+    func presentImageViewer(link: URL) {
+        let imageViewerViewController = Assembler.sharedAssembler.resolver
+            .resolve(ImageViewerViewController.self, arguments: self, link)!
+        navigationController.pushViewController(imageViewerViewController, animated: true)
+    }
 }
 
 extension AppCoordinator {

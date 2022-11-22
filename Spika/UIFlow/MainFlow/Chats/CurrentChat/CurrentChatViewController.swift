@@ -285,15 +285,18 @@ extension CurrentChatViewController {
         case .playVideo:
             viewModel.playVideo(message: message)
         case let .playAudio(publis):
-            guard let path = message.body?.file?.path,
+            guard let url = message.body?.file?.path?.getFullUrl(),
                   let mimeType = message.body?.file?.mimeType
             else { return }
             audioSubscribe?.cancel()
-            audioSubscribe = audioPlayer.playAudio(path: path.getAvatarUrl() ?? "",
+            audioSubscribe = audioPlayer.playAudio(url: url,
                                   mimeType: mimeType)?.sink { [weak self] percent in
                 publis.send(percent)
             }
             audioSubscribe?.store(in: &subscriptions)
+        case .openImage:
+            guard let url = message.body?.file?.path?.getFullUrl() else { return }
+            viewModel.showImage(link: url)
         }
     }
 }
@@ -336,9 +339,9 @@ extension CurrentChatViewController: UITableViewDataSource {
         
         let message = Message(messageEntity: entity)
         let myUserId = viewModel.repository.getMyUserId()
-        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType) else { return EmptyTableViewCell() }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
+        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
+              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
+        else { return EmptyTableViewCell() }
         
         switch message.type {
         case .text:
@@ -355,21 +358,23 @@ extension CurrentChatViewController: UITableViewDataSource {
             break
         }
         
-        cell?.tapPublisher.sink(receiveValue: { [weak self] state in
-            self?.handleCellTap(state, message: message)
-        }).store(in: &subscriptions)
+        print("TESYTIN: ", cell.subs.count)
         
-        cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
-        cell?.updateTime(to: message.createdAt)
+        cell.tapPublisher.sink(receiveValue: { [weak self] state in
+            self?.handleCellTap(state, message: message)
+        }).store(in: &cell.subs)
+        
+        cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        cell.updateTime(to: message.createdAt)
         if let user = viewModel.getUser(for: message.fromUserId) {
             if !isPreviousCellMine(for: indexPath) {
-                cell?.updateSender(name: user.getDisplayName())
+                cell.updateSender(name: user.getDisplayName())
             }
             if !isNextCellMine(for: indexPath) {
-                cell?.updateSender(photoUrl: URL(string: user.getAvatarUrl() ?? ""))
+                cell.updateSender(photoUrl: user.avatarUrl?.getFullUrl())
             }
         }
-        return cell ?? EmptyTableViewCell()
+        return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -419,9 +424,9 @@ extension CurrentChatViewController {
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room?.type == .privateRoom {
-            friendInfoView.change(avatarUrl: viewModel.friendUser?.getAvatarUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: "yesterday")
+            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarUrl?.getFullUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: "yesterday")
         } else {
-            friendInfoView.change(avatarUrl: viewModel.room?.getAvatarUrl(),
+            friendInfoView.change(avatarUrl: viewModel.room?.avatarUrl?.getFullUrl(),
                                   name: viewModel.room?.name,
                                   lastSeen: "today")
         }

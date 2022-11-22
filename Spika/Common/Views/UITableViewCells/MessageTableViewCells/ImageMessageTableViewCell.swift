@@ -15,6 +15,7 @@ final class ImageMessageTableViewCell: BaseMessageTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupImageCell()
+        setupBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +44,14 @@ final class ImageMessageTableViewCell: BaseMessageTableViewCell {
 extension ImageMessageTableViewCell {
     
     func updateCell(message: Message) {
-        photoImageView.kf.setImage(with: URL(string: message.body?.file?.path?.getAvatarUrl() ?? "error"), placeholder: UIImage(systemName: "arrow.counterclockwise")?.withTintColor(.gray, renderingMode: .alwaysOriginal))
+        photoImageView.kf.setImage(with: message.body?.file?.path?.getFullUrl(), placeholder: UIImage(systemName: "arrow.counterclockwise")?.withTintColor(.gray, renderingMode: .alwaysOriginal)) // TODO: change image
+        
+        photoImageView.tap().sink { [weak self] _ in
+            self?.tapPublisher.send(.openImage)
+        }.store(in: &subs)
+    }
+    
+    func setupBindings() {
+        
     }
 }

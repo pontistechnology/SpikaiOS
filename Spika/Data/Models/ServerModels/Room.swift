@@ -32,21 +32,6 @@ extension Room {
 }
 
 extension Room {
-    // TODO: there is a same function in User model
-    func getAvatarUrl() -> String? {
-        if let avatarUrl = avatarUrl, !avatarUrl.isEmpty {
-            if avatarUrl.starts(with: "http") {
-                return avatarUrl
-            } else if avatarUrl.starts(with: "/") {
-                return Constants.Networking.baseUrl + avatarUrl.dropFirst()
-            } else {
-                return Constants.Networking.baseUrl + avatarUrl
-            }
-        } else {
-            return nil
-        }
-    }
-    
     func getFriendUserInPrivateRoom(myUserId: Int64) -> User? {
         if type == .privateRoom {
             return users.first(where: { $0.user.id != myUserId })?.user

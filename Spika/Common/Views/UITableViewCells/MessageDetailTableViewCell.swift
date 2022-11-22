@@ -49,11 +49,8 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
         timeLabel.anchor(trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
     }
     
-    func configureCell(avatarUrl: String?, name: String, time: String) {
-        if let url = URL(string: avatarUrl ?? "") {
-            leftImageView.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
-        }
-        
+    func configureCell(avatarUrl: URL?, name: String, time: String) {
+        leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(safeImage: .userImage))
         userNameLabel.text = name
         timeLabel.text = time
     }

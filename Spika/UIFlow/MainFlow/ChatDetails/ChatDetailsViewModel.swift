@@ -12,7 +12,7 @@ class ChatDetailsViewModel: BaseViewModel {
  
     let chat: Room
     
-    let groupImagePublisher = CurrentValueSubject<String?,Never>(nil)
+    let groupImagePublisher = CurrentValueSubject<URL?,Never>(nil)
     let groupNamePublisher = CurrentValueSubject<String?,Never>(nil)
     
     let groupContacts = CurrentValueSubject<[RoomUser],Never>([])
@@ -24,7 +24,7 @@ class ChatDetailsViewModel: BaseViewModel {
     }
     
     func setupBindings() {
-        if let avatarUrl = chat.getAvatarUrl() {
+        if let avatarUrl = chat.avatarUrl?.getFullUrl() {
             groupImagePublisher.send(avatarUrl)
         }
         

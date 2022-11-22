@@ -50,12 +50,15 @@ extension CurrentChatViewModel {
     }
     
     func playVideo(message: Message) {
-        guard let urlString = message.body?.file?.path?.getAvatarUrl(),
-              let url = URL(string: urlString),
+        guard let url = message.body?.file?.path?.getFullUrl(),
               let mimeType = message.body?.file?.mimeType
         else { return }
         let asset = AVURLAsset(url: url, mimeType: mimeType)
         getAppCoordinator()?.presentAVVideoController(asset: asset)
+    }
+    
+    func showImage(link: URL) {
+        getAppCoordinator()?.presentImageViewer(link: link)
     }
 }
 
