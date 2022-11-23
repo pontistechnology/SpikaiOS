@@ -107,6 +107,7 @@ extension BaseMessageTableViewCell {
         timeLabel.isHidden = true
         senderNameLabel.text = ""
         senderPhotoImageview.image = nil
+        subs.removeAll()
 //        senderPhotoImageview.isHidden = true
     }
     

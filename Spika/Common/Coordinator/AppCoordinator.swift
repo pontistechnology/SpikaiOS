@@ -185,13 +185,19 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewControllerToPresent, animated: true)
     }
     
-    func presentAVVideoController(link: URL) {
-        let avPlayer = AVPlayer(url: link)
+    func presentAVVideoController(asset: AVAsset) {
+        let avPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
         let avPlayerVC = AVPlayerViewController()
         avPlayerVC.player = avPlayer
         navigationController.present(avPlayerVC, animated: true) { [weak self] in
             avPlayer.play()
         }
+    }
+    
+    func presentImageViewer(link: URL) {
+        let imageViewerViewController = Assembler.sharedAssembler.resolver
+            .resolve(ImageViewerViewController.self, arguments: self, link)!
+        navigationController.pushViewController(imageViewerViewController, animated: true)
     }
 }
 

@@ -21,6 +21,7 @@ final class AppAssembly: Assembly {
         self.assembleAllChatsViewController(container)
         self.assembleChatDetailsViewController(container)
         self.assembleSettingsViewController(container)
+        self.assembleImageViewerViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
@@ -140,5 +141,19 @@ final class AppAssembly: Assembly {
             return controller
         }.inObjectScope(.transient)
     }
-   
+    
+    private func assembleImageViewerViewController(_ container: Container) {
+        container.register(ImageViewerViewModel.self) { (resolver, coordinator: AppCoordinator, link: URL) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            let viewModel = ImageViewerViewModel(repository: repository, coordinator: coordinator)
+            viewModel.link = link
+            return viewModel
+        }.inObjectScope(.transient)
+        
+        container.register(ImageViewerViewController.self) { (resolver, coordinator: AppCoordinator, link: URL) in
+            let controller = ImageViewerViewController()
+            controller.viewModel = container.resolve(ImageViewerViewModel.self, arguments: coordinator, link)
+            return controller
+        }
+    }
 }

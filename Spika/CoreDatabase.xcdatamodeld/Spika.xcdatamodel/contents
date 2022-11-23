@@ -11,11 +11,14 @@
         </uniquenessConstraints>
     </entity>
     <entity name="MessageEntity" representedClassName="MessageEntity" syncable="YES">
+        <attribute name="bodyFileMimeType" optional="YES" attributeType="String"/>
+        <attribute name="bodyFileName" optional="YES" attributeType="String"/>
+        <attribute name="bodyFilePath" optional="YES" attributeType="String"/>
+        <attribute name="bodyFileSize" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="bodyText" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="deliveredCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="filePath" optional="YES" attributeType="String"/>
         <attribute name="fromUserId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="localId" optional="YES" attributeType="String"/>

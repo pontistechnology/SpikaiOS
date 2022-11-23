@@ -40,8 +40,16 @@ enum AssetName: String {
     case seen = "seen"
     case fail = "fail"
     case waiting = "waiting"
+    
+    // File icons Ken
     case pdfThumbnail = "pdfThumbnail"
     case unknownFileThumbnail = "unknownFileThumbnail"
+    case playVideo = "playVideo"
+    
+    // File icons design
+    case pdfFile = "pdfFile"
+    case wordFile = "wordFile"
+    case zipFile = "zipFile"
     
     // Tabs
     case callHistoryTab = "callHistoryTab"
@@ -53,6 +61,8 @@ enum AssetName: String {
     case chatsTabFull = "chatsTabFull"
     case contactsTabFull = "contactsTabFull"
     case settingsTabFull = "settingsTabFull"
+    
+    case thumb = "thumb"
 }
 
 extension UIImage {
@@ -72,5 +82,19 @@ extension UIImage {
     
     convenience init(safeImage: AssetName) {
         self.init(named: safeImage.rawValue)!
+    }
+}
+
+extension UIImage {
+    static func imageFor(mimeType: String) -> UIImage {
+        if mimeType.contains("application/pdf") {
+            return UIImage(safeImage: .pdfFile)
+        } else if mimeType.contains("application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+            return UIImage(safeImage: .wordFile)
+        } else if mimeType.contains("application/zip") {
+            return UIImage(safeImage: .zipFile)
+        } else {
+            return UIImage(safeImage: .unknownFileThumbnail)
+        }
     }
 }

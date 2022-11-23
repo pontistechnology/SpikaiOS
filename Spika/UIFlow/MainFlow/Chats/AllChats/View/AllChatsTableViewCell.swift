@@ -58,13 +58,9 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.anchor(top: timeLabel.bottomAnchor, trailing: timeLabel.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
     }
     
-    func configureCell(avatarUrl: String?, name: String, description: String, time: String, badgeNumber: Int) {
-        if let avatarUrl = avatarUrl,
-           let realUrl = URL(string: avatarUrl)
-        {
-            leftImageView.kf.setImage(with: realUrl,
-                                      placeholder: UIImage(safeImage: .userImage))
-        }
+    func configureCell(avatarUrl: URL?, name: String, description: String, time: String, badgeNumber: Int) {
+        leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(safeImage: .userImage))
+
         nameLabel.text = name
         descriptionLabel.text = description
         timeLabel.text = time
