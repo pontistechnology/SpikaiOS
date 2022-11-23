@@ -12,6 +12,7 @@ struct Constants {
         static let appName = "Spika"
         static let cancel = "Cancel"
         static let appGroupName = "group.studio.clover.Spika.groupSpika"
+        static let userIds = "userIds"
     }
     
     struct Networking {

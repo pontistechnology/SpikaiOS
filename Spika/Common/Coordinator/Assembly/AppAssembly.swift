@@ -22,6 +22,7 @@ final class AppAssembly: Assembly {
         self.assembleChatDetailsViewController(container)
         self.assembleSettingsViewController(container)
         self.assembleImageViewerViewController(container)
+        self.assembleUserSelectionViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
@@ -118,13 +119,34 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleChatDetailsViewController(_ container: Container) {
-        container.register(ChatDetailsViewModel.self) { (resolver, coordinator: AppCoordinator, roomModel: Room) in
+        container.register(ChatDetailsViewModel.self) { (resolver, coordinator: AppCoordinator, room: CurrentValueSubject<Room,Never>) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return ChatDetailsViewModel(repository: repository, coordinator: coordinator, chat: roomModel)
+            return ChatDetailsViewModel(repository: repository, coordinator: coordinator, room: room)
         }.inObjectScope(.transient)
         
-        container.register(ChatDetailsViewController.self) { (resolver, coordinator: AppCoordinator, roomModel: Room) in
-            let controller = ChatDetailsViewController(viewModel: resolver.resolve(ChatDetailsViewModel.self, arguments: coordinator, roomModel)!)
+        container.register(ChatDetailsViewController.self) { (resolver, coordinator: AppCoordinator, room: CurrentValueSubject<Room,Never>) in
+            let controller = ChatDetailsViewController(viewModel: resolver.resolve(ChatDetailsViewModel.self, arguments: coordinator, room)!)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleUserSelectionViewController(_ container: Container) {
+        container.register(UserSelectionViewModel.self) { (resolver,
+                                                           coordinator: AppCoordinator,
+                                                           preselectedUsers: [User],
+                                                           usersSelectedPublisher: PassthroughSubject<[User],Never>) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return UserSelectionViewModel(repository: repository,
+                                          coordinator: coordinator,
+                                          preselectedUsers: preselectedUsers,
+                                          usersSelectedPublisher: usersSelectedPublisher)
+        }.inObjectScope(.transient)
+        
+        container.register(UserSelectionViewController.self) { (resolver,
+                                                                coordinator: AppCoordinator,
+                                                                preselectedUsers: [User],
+                                                                usersSelectedPublisher: PassthroughSubject<[User],Never>) in
+            let controller = UserSelectionViewController(viewModel: resolver.resolve(UserSelectionViewModel.self, arguments: coordinator, preselectedUsers, usersSelectedPublisher)!)
             return controller
         }.inObjectScope(.transient)
     }

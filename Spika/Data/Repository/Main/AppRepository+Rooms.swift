@@ -119,6 +119,36 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
+        let resources = Resources<CreateRoomResponseModel, EditRoomUsersRequestModel>(
+            path: url,
+            requestType: .PUT,
+            bodyParameters: EditRoomUsersRequestModel(userIds: userIds),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
+        let resources = Resources<CreateRoomResponseModel, EditRoomAdminsRequestModel>(
+            path: url,
+            requestType: .PUT,
+            bodyParameters: EditRoomAdminsRequestModel(adminUserIds: adminIds),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        return networkService.performRequest(resources: resources)
+    }
+    
     // MARK: Database
     
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>{
@@ -131,6 +161,10 @@ extension AppRepository {
     
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error> {
         databaseService.roomEntityService.saveRooms(rooms)
+    }
+    
+    func updateRoomUsers(room: Room) -> Future<Room, Error> {
+        databaseService.roomEntityService.updateRoomUsers(room)
     }
     
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error> {

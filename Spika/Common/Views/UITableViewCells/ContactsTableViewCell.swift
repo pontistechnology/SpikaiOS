@@ -53,7 +53,6 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         leftImageView.contentMode = .scaleAspectFill
         nameLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 1
-        
     }
     
     func positionSubviews() {

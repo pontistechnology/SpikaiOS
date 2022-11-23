@@ -104,9 +104,12 @@ protocol Repository {
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>
     func getRoomWithId(forRoomId id: Int64) -> Future<Room, Error>
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error>
+    func updateRoomUsers(room: Room) -> Future<Room, Error>
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error>
     func roomVisited(roomId: Int64)
     func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<EmptyResponse,Error>
+    func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
+    func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
 
     // MARK: - USERDEFAULTS: User
     

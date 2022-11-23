@@ -28,7 +28,7 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
-    func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error> {
+    func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error> { //TODO: - remove
         return Fail<GetAllRoomsResponseModel, Error>(error: NetworkError.noAccessToken)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
@@ -64,12 +64,30 @@ extension TestRepository {
         }
     }
     
+    func updateRoomUsers(room: Room) -> Future<Room, Error> {
+        return Future { promise in
+            promise(.failure(DatabseError.unknown))
+        }
+    }
+    
     func roomVisited(roomId: Int64) {
         
     }
     
     func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<EmptyResponse,Error> {
         return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error> {
+        return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error> {
+        return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }

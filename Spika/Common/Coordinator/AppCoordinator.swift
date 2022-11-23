@@ -126,14 +126,20 @@ class AppCoordinator: Coordinator {
 //        navigationController.present(navC, animated: true, completion: nil)
     }
     
+    func presentUserSelection(preselectedUsers: [User], usersSelectedPublisher: PassthroughSubject<[User],Never>) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(UserSelectionViewController.self, arguments: self, preselectedUsers,usersSelectedPublisher)!
+        let navC = UINavigationController(rootViewController: viewController)
+        navigationController.present(navC, animated: true, completion: nil)
+    }
+    
     func presentCurrentChatScreen(user: User) {
         let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, user)!
         
         navigationController.pushViewController(currentChatViewController, animated: true)
     }
     
-    func presentChatDetailsScreen(roomModel: Room) {
-        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetailsViewController.self, arguments: self, roomModel)!
+    func presentChatDetailsScreen(room: CurrentValueSubject<Room,Never>) {
+        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetailsViewController.self, arguments: self, room)!
         
         navigationController.pushViewController(roomDetailsViewController, animated: true)
     }
