@@ -69,7 +69,7 @@ extension AudioMessageTableViewCell {
     func setupBindings() {
         playButton.tap().sink { [weak self] _ in
             guard let self = self else { return }
-            self.tapPublisher.send(.playAudio(self.timePublisher))
+            self.tapPublisher.send(.playAudio(playedPercentPublisher: self.timePublisher))
         }.store(in: &subs)
         
         timePublisher.sink { [weak self] percent in
@@ -78,10 +78,6 @@ extension AudioMessageTableViewCell {
         
         slider.publisher(for: .valueChanged).sink { [weak self] _ in
             print("Value: ", self?.slider.value)
-        }.store(in: &subs)
-        
-        slider.publisher(for: .editingDidBegin).sink { _ in
-            print("NOW start")
         }.store(in: &subs)
     }
 }

@@ -18,12 +18,6 @@ class AudioPlayer {
         removeObserver()
     }
     
-    func removeObserver() {
-        guard let timeObserverToken = timeObserverToken else { return }
-        audioPlayer?.removeTimeObserver(timeObserverToken)
-        self.timeObserverToken = nil
-    }
-    
     func playAudio(url: URL, mimeType: String) -> PassthroughSubject<Float, Never>? {
         removeObserver()
         let asset = AVURLAsset(url: url, mimeType: mimeType)
@@ -33,7 +27,7 @@ class AudioPlayer {
         return publisher
     }
     
-    func addObserver() {
+    private func addObserver() {
         removeObserver()
         timeObserverToken = audioPlayer?
             .addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 4),
@@ -44,5 +38,11 @@ class AudioPlayer {
                 else { return }
                 self.publisher.send(Float(time.seconds / duration))
             })
+    }
+    
+    private func removeObserver() {
+        guard let timeObserverToken = timeObserverToken else { return }
+        audioPlayer?.removeTimeObserver(timeObserverToken)
+        self.timeObserverToken = nil
     }
 }

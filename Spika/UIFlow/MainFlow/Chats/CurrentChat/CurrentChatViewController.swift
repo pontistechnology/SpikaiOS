@@ -284,14 +284,15 @@ extension CurrentChatViewController {
         switch state {
         case .playVideo:
             viewModel.playVideo(message: message)
-        case let .playAudio(publis):
+        case let .playAudio(playedPercentPublisher):
             guard let url = message.body?.file?.path?.getFullUrl(),
                   let mimeType = message.body?.file?.mimeType
             else { return }
             audioSubscribe?.cancel()
-            audioSubscribe = audioPlayer.playAudio(url: url,
-                                  mimeType: mimeType)?.sink { [weak self] percent in
-                publis.send(percent)
+            audioSubscribe = audioPlayer
+                .playAudio(url: url, mimeType: mimeType)?
+                .sink { [weak self] percent in
+                playedPercentPublisher.send(percent)
             }
             audioSubscribe?.store(in: &subscriptions)
         case .openImage:
@@ -357,8 +358,6 @@ extension CurrentChatViewController: UITableViewDataSource {
         case .unknown, .none:
             break
         }
-        
-        print("TESYTIN: ", cell.subs.count)
         
         cell.tapPublisher.sink(receiveValue: { [weak self] state in
             self?.handleCellTap(state, message: message)

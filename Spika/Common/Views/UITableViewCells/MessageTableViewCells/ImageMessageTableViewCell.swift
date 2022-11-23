@@ -15,7 +15,6 @@ final class ImageMessageTableViewCell: BaseMessageTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupImageCell()
-        setupBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -49,9 +48,5 @@ extension ImageMessageTableViewCell {
         photoImageView.tap().sink { [weak self] _ in
             self?.tapPublisher.send(.openImage)
         }.store(in: &subs)
-    }
-    
-    func setupBindings() {
-        
     }
 }
