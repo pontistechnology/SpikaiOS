@@ -82,7 +82,7 @@ class ChatDetailsViewModel: BaseViewModel {
         self.repository
             .updateRoomUsers(room: room )
             .receive(on: DispatchQueue.main)
-            .sink { c in
+            .sink { [weak self] c in
                 switch c {
                 case .finished:
                     let delegate = UIApplication.shared.delegate as! AppDelegate

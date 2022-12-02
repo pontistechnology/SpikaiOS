@@ -343,7 +343,7 @@ extension CurrentChatViewController: UITableViewDataSource {
         guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
               let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
         else { return EmptyTableViewCell() }
-        
+        cell.showReplyView(senderName: "Jozo", iconAndText: "gfsa", thumbnail: nil)
         switch message.type {
         case .text:
             (cell as? TextMessageTableViewCell)?.updateCell(message: message)
