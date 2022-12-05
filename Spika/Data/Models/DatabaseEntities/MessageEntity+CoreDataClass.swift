@@ -46,9 +46,7 @@ public class MessageEntity: NSManagedObject {
         
         roomId = message.roomId
 
-        if let type = message.type {
-            self.type = type.rawValue
-        }
+        self.type = message.type.rawValue
         
         if let bodyText = message.body?.text {
             self.bodyText = bodyText
@@ -68,6 +66,10 @@ public class MessageEntity: NSManagedObject {
         
         if let fileName = message.body?.file?.fileName {
             self.bodyFileName = fileName
+        }
+        
+        if let referenceMessageId = message.body?.referenceMessage?.id {
+            self.referenceMessageId = "\(referenceMessageId)"
         }
     }
 }

@@ -16,7 +16,8 @@ struct Message: Codable {
     let totalUserCount: Int64?
     let deliveredCount: Int64?
     let seenCount: Int64?
-    let type: MessageType?
+    let reply: Bool
+    let type: MessageType
     let body: MessageBody?
     let records: [MessageRecord]?
 }
@@ -52,14 +53,16 @@ extension Message {
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
-                  type: MessageType(rawValue: messageEntity.type ?? ""), // check
+                  reply: messageEntity.reply,
+                  type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
                                     file: FileData(fileName: messageEntity.bodyFileName,
                                                    mimeType: messageEntity.bodyFileMimeType,
                                                    path: messageEntity.bodyFilePath,
                                                    size: messageEntity.bodyFileSize),
                                     fileId: nil,
-                                    thumbId: nil),
+                                    thumbId: nil,
+                                    referenceMessage: ReferenceMessage(id: Int64(messageEntity.referenceMessageId ?? "-2"))),
                   records: messageRecords)
     }
     
@@ -97,6 +100,11 @@ struct MessageBody: Codable {
     let file: FileData?
     let fileId: Int?
     let thumbId: Int?
+    let referenceMessage: ReferenceMessage?
+}
+
+struct ReferenceMessage: Codable {
+    let id: Int64?
 }
 
 struct FileData: Codable {

@@ -42,4 +42,11 @@ extension UITableView {
             self.reloadRows(at: [previousCellIndexPath], with: .none)
         }
     }
+    
+    func blinkRow(at indexPath: IndexPath) {
+        selectRow(at: indexPath, animated: true, scrollPosition: .middle)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.deselectRow(at: indexPath, animated: true)
+        }
+    }
 }

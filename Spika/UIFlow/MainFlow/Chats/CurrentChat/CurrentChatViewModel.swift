@@ -174,7 +174,8 @@ extension CurrentChatViewModel {
         let message = Message(createdAt: Date().currentTimeMillis(),
                               fromUserId: getMyUserId(),
                               roomId: room.id, type: .text,
-                              body: MessageBody(text: text, file: nil, fileId: nil, thumbId: nil), localId: uuid)
+                              body: MessageBody(text: text, file: nil, fileId: nil, thumbId: nil, referenceMessage: nil),
+                              localId: uuid)
         
         repository.saveMessages([message]).sink { c in
             
@@ -226,7 +227,7 @@ extension CurrentChatViewModel {
             guard let self = self else { return }
             if let file = file {
                 print("UPLOADANO : ", file)
-                self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: nil), localId: UUID().uuidString, type: .image)
+                self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: nil, referenceMessage: nil), localId: UUID().uuidString, type: .image)
             }
         }.store(in: &subscriptions)
     }
@@ -250,7 +251,7 @@ extension CurrentChatViewModel {
 //                        self.selectedFiles.value.removeAll { sf in
 //                            sf.fileUrl == selectedFile.fileUrl
 //                        }
-                        self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: file.id), localId: UUID().uuidString, type: .image)
+                        self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: file.id, referenceMessage: nil), localId: UUID().uuidString, type: .image)
                     }
                 }.store(in: &subscriptions)
             } else {
@@ -265,7 +266,7 @@ extension CurrentChatViewModel {
                     }
                     
                     if let file = file {
-                        self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: nil), localId: UUID().uuidString, type: .file)
+                        self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: nil, referenceMessage: nil), localId: UUID().uuidString, type: .file)
                     }
                 }.store(in: &subscriptions)
 

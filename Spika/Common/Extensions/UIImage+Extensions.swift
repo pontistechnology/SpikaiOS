@@ -63,6 +63,13 @@ enum AssetName: String {
     case settingsTabFull = "settingsTabFull"
     
     case thumb = "thumb"
+    
+    // reply view icons
+    case contactIcon = "contactIcon"
+    case gifIcon = "gifIcon"
+    case micIcon = "micIcon"
+    case photoIcon = "photoIcon"
+    case videoIcon = "videoIcon"
 }
 
 extension UIImage {

@@ -273,6 +273,8 @@ extension CurrentChatViewController {
             presentFilePicker()
         case .library:
             presentLibraryPicker()
+        case .scrollToReply(let indexPath):
+            currentChatView.messagesTableView.blinkRow(at: indexPath)
         }
     }
 }
@@ -298,6 +300,8 @@ extension CurrentChatViewController {
         case .openImage:
             guard let url = message.body?.file?.path?.getFullUrl() else { return }
             viewModel.showImage(link: url)
+        case .scrollToReply(let indexPath):
+            currentChatView.messagesTableView.blinkRow(at: indexPath)
         }
     }
 }
@@ -307,8 +311,8 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? TextMessageTableViewCell else { return }
-        (tableView.visibleCells as? [TextMessageTableViewCell])?.forEach{ $0.setTimeLabelVisible(false)}
+        guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell else { return }
+        (tableView.visibleCells as? [BaseMessageTableViewCell])?.forEach{ $0.setTimeLabelVisible(false)}
         cell.tapHandler()
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -343,7 +347,19 @@ extension CurrentChatViewController: UITableViewDataSource {
         guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
               let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
         else { return EmptyTableViewCell() }
-        cell.showReplyView(senderName: "Jozo", iconAndText: "gfsa", thumbnail: nil)
+        
+        if let replyId = message.body?.referenceMessage?.id,
+           replyId >= 0,
+           let repliedMessageEntity = frc?.fetchedObjects?.first(where: { $0.id == "\(replyId)" })
+        {
+            let repliedMessage = Message(messageEntity: repliedMessageEntity)
+            let senderName = viewModel.room?.getDisplayNameFor(userId: repliedMessage.fromUserId)
+            
+            cell.showReplyView(senderName: senderName ?? "Unknown", message: repliedMessage,
+                               sender: cell.getMessageSenderType(reuseIdentifier: identifier),
+                               indexPath: frc?.indexPath(forObject: repliedMessageEntity))
+        }
+        
         switch message.type {
         case .text:
             (cell as? TextMessageTableViewCell)?.updateCell(message: message)
@@ -355,7 +371,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             (cell as? AudioMessageTableViewCell)?.updateCell(message: message)
         case .video:
             (cell as? VideoMessageTableViewCell)?.updateCell(message: message)
-        case .unknown, .none:
+        case .unknown:
             break
         }
         
@@ -469,6 +485,21 @@ extension CurrentChatViewController {
         }
         firstRight.backgroundColor = .systemBlue
         return UISwipeActionsConfiguration(actions: [firstRight])
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { [weak self] (action, view, completionHandler) in
+            
+            guard let messageEntity = self?.frc?.object(at: indexPath) else { return }
+            let message = Message(messageEntity: messageEntity)
+            let senderName = self?.viewModel.room?.getDisplayNameFor(userId: message.fromUserId)
+            
+            self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? "Unknown", message: message, indexPath: indexPath)
+            
+            completionHandler(true)
+        }
+        firstLeft.backgroundColor = .logoBlue
+        return UISwipeActionsConfiguration(actions: [firstLeft])
     }
     
 }

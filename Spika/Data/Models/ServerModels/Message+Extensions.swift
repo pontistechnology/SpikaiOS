@@ -19,7 +19,6 @@ extension Message {
             identifier = MessageSender.group.reuseIdentifierPrefix
         }
         
-        guard let type = type?.rawValue.capitalized else { return nil }
-        return identifier + type + "MessageTableViewCell"
+        return identifier + type.rawValue.capitalized + "MessageTableViewCell"
     }
 }

@@ -37,7 +37,7 @@ extension MessageVideoView: BaseView {
     }
     
     func positionSubviews() {
-        thumbnailImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        thumbnailImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
         thumbnailImageView.constrainHeight(256)
         thumbnailImageView.constrainWidth(256)
         

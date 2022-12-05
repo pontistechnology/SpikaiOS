@@ -35,7 +35,7 @@ extension MessageImageView: BaseView {
     }
     
     func positionSubviews() {
-        imageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        imageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
         imageView.constrainWidth(256)
         imageView.constrainHeight(256)
     }

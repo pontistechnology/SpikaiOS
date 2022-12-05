@@ -111,10 +111,8 @@ extension BaseMessageTableViewCell {
         senderNameLabel.text = ""
         senderPhotoImageview.image = nil
         subs.removeAll()
-        if let replyView = replyView {
-            replyView.removeFromSuperview()
-            self.replyView = nil
-        }
+        replyView?.removeFromSuperview()
+        self.replyView = nil
 //        senderPhotoImageview.isHidden = true
     }
     
@@ -143,10 +141,21 @@ extension BaseMessageTableViewCell {
         timeLabel.isHidden = !value
     }
     
-    func showReplyView(senderName: String, iconAndText: String, thumbnail: URL?) {
-        if replyView == nil {
-            self.replyView = MessageReplyView(senderName: senderName, iconAndText: iconAndText, thumbnail: thumbnail)
+    func showReplyView(senderName: String, message: Message, sender: MessageSender?, indexPath: IndexPath?) {
+        if replyView == nil, let sender = sender {
+            
+            let containerColor = sender == .me ? .chatBackground : UIColor(hexString: "C8EBFE")
+            
+            self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: containerColor, indexPath: indexPath)
+            
             containerStackView.insertArrangedSubview(replyView!, at: 0)
+            
+            replyView?.tap().sink(receiveValue: { [weak self] _ in
+                guard let self = self,
+                      let indexPath = self.replyView?.indexPath
+                else { return }
+                self.tapPublisher.send(.scrollToReply(indexPath))
+            }).store(in: &subs)
         }
     }
 }
