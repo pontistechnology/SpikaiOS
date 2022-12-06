@@ -264,7 +264,18 @@ extension CurrentChatViewController {
     func handleInput(_ state: MessageInputViewState) {
         switch state {
         case .send(let message):
-            viewModel.trySendMessage(text: message)
+            var referenceMessage: ReferenceMessage?
+            
+            if let reference = currentChatView.messageInputView.replyView?.message {
+                referenceMessage = ReferenceMessage(id: reference.id,
+                                                    body: ReferenceBody(text: reference.body?.text),
+                                                    fromUserId: reference.fromUserId,
+                                                    roomId: reference.roomId,
+                                                    type: reference.type)
+            }
+            
+            viewModel.trySendMessage(text: message, referenceMessage: referenceMessage)
+            currentChatView.messageInputView.clean()
         case .camera, .microphone:
             print(state, " in ccVC")
         case .emoji:

@@ -28,7 +28,7 @@ class MessageInputView: UIStackView, BaseView {
     private lazy var inputTextAndControlsView = InputTextAndControlsView(publisher: inputViewTapPublisher)
     private let additionalOptionsView    = AdditionalOptionsView()
     let selectedFilesView = SelectedFilesView()
-    private var replyView: MessageReplyView?
+    var replyView: MessageReplyView?
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,6 +65,12 @@ extension MessageInputView {
         additionalOptionsView.publisher.sink { [weak self] state in
 //            self?.handleAdditionalOptions(state)
         }.store(in: &subscriptions)
+    }
+    
+    func clean() {
+        hideReplyView()
+        hideSelectedFiles()
+        hideAdditionalOptions()
     }
 }
 

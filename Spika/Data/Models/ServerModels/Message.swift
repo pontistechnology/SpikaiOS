@@ -23,7 +23,7 @@ struct Message: Codable {
 }
 
 extension Message {
-    init(createdAt: Int64, fromUserId: Int64, roomId: Int64, type: MessageType, body: MessageBody, localId: String) {
+    init(createdAt: Int64, fromUserId: Int64, roomId: Int64, type: MessageType, body: MessageBody, reply: Bool, localId: String) {
         self.body = body
         self.id = nil
         self.localId = localId
@@ -31,6 +31,7 @@ extension Message {
         self.totalUserCount = -1
         self.deliveredCount = -1
         self.seenCount = -1
+        self.reply = reply
         self.roomId = roomId
         self.type = type
         self.createdAt = createdAt
@@ -62,7 +63,11 @@ extension Message {
                                                    size: messageEntity.bodyFileSize),
                                     fileId: nil,
                                     thumbId: nil,
-                                    referenceMessage: ReferenceMessage(id: Int64(messageEntity.referenceMessageId ?? "-2"))),
+                                    referenceMessage: ReferenceMessage(id: Int64(messageEntity.referenceMessageId ?? "-2"),
+                                                                       body: nil,
+                                                                       fromUserId: nil,
+                                                                       roomId: nil,
+                                                                       type: nil)),
                   records: messageRecords)
     }
     
@@ -105,6 +110,14 @@ struct MessageBody: Codable {
 
 struct ReferenceMessage: Codable {
     let id: Int64?
+    let body: ReferenceBody?
+    let fromUserId: Int64?
+    let roomId: Int64?
+    let type: MessageType?
+}
+
+struct ReferenceBody: Codable {
+    let text: String?
 }
 
 struct FileData: Codable {

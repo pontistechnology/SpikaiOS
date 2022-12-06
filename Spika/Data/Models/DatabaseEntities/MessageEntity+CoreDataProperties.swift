@@ -29,6 +29,7 @@ extension MessageEntity {
     @NSManaged public var localId: String?
     @NSManaged public var roomId: Int64
     @NSManaged public var seenCount: Int64
+    @NSManaged public var reply: Bool
     @NSManaged public var totalUserCount: Int64
     @NSManaged public var type: String?
     @NSManaged public var createdDate: Date?

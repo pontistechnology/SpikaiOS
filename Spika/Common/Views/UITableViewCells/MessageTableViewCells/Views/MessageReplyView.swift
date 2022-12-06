@@ -15,8 +15,10 @@ class MessageReplyView: UIView {
     let closeButton = UIButton()
     var indexPath: IndexPath?
     private var showCloseButton = false
+    let message: Message
     
     init(senderName: String, message: Message, backgroundColor: UIColor, indexPath: IndexPath?, showCloseButton: Bool = false) {
+        self.message = message
         self.indexPath = indexPath
         self.showCloseButton = showCloseButton
         containerView.backgroundColor = backgroundColor
@@ -53,7 +55,11 @@ extension MessageReplyView: BaseView {
     }
     
     func positionSubviews() {
-        containerView.constrainHeight(54)
+        
+        let heightConstraint = containerView.heightAnchor.constraint(equalToConstant: 54)
+        heightConstraint.priority = .defaultLow // This is needed because reply will be reused in cells
+        heightConstraint.isActive = true
+        
         containerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 140).isActive = true
         containerView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 8, left: 10, bottom: 0, right: 0))
         
