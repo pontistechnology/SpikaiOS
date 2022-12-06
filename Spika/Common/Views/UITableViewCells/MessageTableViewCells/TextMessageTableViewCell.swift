@@ -10,7 +10,7 @@ import UIKit
 
 final class TextMessageTableViewCell: BaseMessageTableViewCell {
     
-    let messageTextView = CustomTextView(text: "", textSize: 14, textColor: .logoBlue, fontName: .MontserratMedium)
+    private let plainTextView = MessageTextView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,9 +27,7 @@ final class TextMessageTableViewCell: BaseMessageTableViewCell {
     }
     
     func setupTextCell() {
-        containerView.addSubview(messageTextView)
-        
-        messageTextView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        containerStackView.addArrangedSubview(plainTextView)
     }
 }
 
@@ -39,12 +37,11 @@ extension TextMessageTableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        messageTextView.text = ""
+        plainTextView.reset()
     }
     
     func updateCell(message: Message) {
-        
-        messageTextView.text = message.body?.text
+        plainTextView.setup(text: message.body?.text)
 //        """
 //        text: \(message.body?.text),
 //        id: \(message.id),

@@ -78,8 +78,8 @@ class NetworkService {
 //                    .eraseToAnyPublisher()
         
         return URLSession.shared.dataTaskPublisher(for: request)
-            .map({ (data, response) in
-//                DebugUtils.printRequestAndResponse(request: request, data: data)
+            .map({ [weak self] (data, response) in
+                DebugUtils.printRequestAndResponse(request: request, data: data)
                 let statusCode = (response as? HTTPURLResponse)?.statusCode
                 switch statusCode {
                 case 200:
