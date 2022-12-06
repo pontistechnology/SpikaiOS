@@ -9,7 +9,7 @@ import UIKit
 
 class MessageReplyView: UIView {
     private let senderNameLabel: CustomLabel
-    private let iconAndTextView: IconAndTextView
+    private let iconAndTextView: IconAndLabelView
     private let thumbnailImageView = UIImageView()
     let containerView = UIView()
     let closeButton = UIButton()
@@ -23,7 +23,7 @@ class MessageReplyView: UIView {
         self.showCloseButton = showCloseButton
         containerView.backgroundColor = backgroundColor
         senderNameLabel = CustomLabel(text: senderName, textSize: 9, textColor: .textPrimary, fontName: .MontserratMedium)
-        iconAndTextView = IconAndTextView(messageType: message.type, text: message.body?.text)
+        iconAndTextView = IconAndLabelView(messageType: message.type, text: message.body?.text)
         super.init(frame: .zero)
         thumbnailImageView.kf.setImage(with: message.body?.file?.path?.getFullUrl())
         setupView()
