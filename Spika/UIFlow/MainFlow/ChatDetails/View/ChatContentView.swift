@@ -15,22 +15,22 @@ class ChatContentView: UIView, BaseView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     } ()
-    let chatName = CustomLabel(text: "Group", textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
+    let chatName = CustomLabel(text: .getStringFor(.group), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
     
-    let sharedMediaOptionButton = NavView(text: "Shared Media, Links and Docs")
-    let chatSearchOptionButton = NavView(text: "Chat search")
-    let callHistoryOptionButton = NavView(text: "Call history")
+    let sharedMediaOptionButton = NavView(text: .getStringFor(.shareMediaLinksDocs))
+    let chatSearchOptionButton = NavView(text: .getStringFor(.chatSearch))
+    let callHistoryOptionButton = NavView(text: .getStringFor(.callHistory))
     
-    let notesOptionButton = NavView(text: "Notes")
-    let favoriteMessagesOptionButton = NavView(text: "Favorites")
+    let notesOptionButton = NavView(text: .getStringFor(.notes))
+    let favoriteMessagesOptionButton = NavView(text: .getStringFor(.favorites))
     
-    let pinChatSwitchView = SwitchView(text: "Pin chat")
-    let muteSwitchView = SwitchView(text: "Mute")
+    let pinChatSwitchView = SwitchView(text: .getStringFor(.pinchat))
+    let muteSwitchView = SwitchView(text: .getStringFor(.mute))
     
     let chatMembersView = ChatMembersView(contactsEditable: true)
     
-    let blockLabel = CustomLabel(text: "Block", textSize: 14, textColor: .appRed)
-    let reportLabel = CustomLabel(text: "Report", textSize: 14, textColor: .appRed)
+    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: .appRed)
+    let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .appRed)
     
     lazy var mainStackView: UIStackView = {
        let stackView = UIStackView()

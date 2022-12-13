@@ -13,6 +13,9 @@ public extension Constants {
         case appName = "Spika"
         case cancel = "Cancel"
         case next = "Next"
+        case showMore = "Show more"
+        case showLess = "Show less"
+        case members = "Members"
 
         //MARK: - CountryPickerViewController
         case search = "Search"
@@ -37,7 +40,17 @@ public extension Constants {
         case weSentYou6DigitCode = "We sent you 6 digit verification code."
         case resendCode = "Resend code"
         
-        //MARK: - ViewController
+        //MARK: - ChatDetailsViewController
+        case group = "Group"
+        case shareMediaLinksDocs = "Shared Media, Links and Docs"
+        case chatSearch = "Chat search"
+        case callHistory = "Call history"
+        case notes = "Notes"
+        case favorites = "Favorites"
+        case pinchat = "Pin chat"
+        case mute = "Mute"
+        case block = "Block"
+        case report = "Report"
         
         //MARK: - ViewController
         

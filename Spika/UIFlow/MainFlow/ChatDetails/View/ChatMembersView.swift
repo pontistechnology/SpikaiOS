@@ -60,7 +60,7 @@ final class ChatMembersView: UIView, BaseView {
     lazy var showMoreButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(NSLocalizedString("Show more", comment: "Show more"), for: .normal)
+        button.setTitle(.getStringFor(.showMore), for: .normal)
         button.setTitleColor(UIColor.primaryColor, for: .normal)
         button.addTarget(self, action: #selector(onShowMore), for: .touchUpInside)
         return button
@@ -97,7 +97,7 @@ final class ChatMembersView: UIView, BaseView {
     func updateWithUsers(users: [RoomUser]) {
         self.users = users
 
-        self.titleLabel.text = "\(users.count) Members"
+        self.titleLabel.text = "\(users.count)" + .getStringFor(.members)
         self.tableView.reloadData()
         
         if self.viewIsExpanded {
@@ -115,12 +115,12 @@ final class ChatMembersView: UIView, BaseView {
             self.tableViewHeightConstraint.constant = 3 * self.cellHeight
             self.showMoreButton.isHidden = false
         }
-        self.showMoreButton.setTitle(NSLocalizedString("Show more", comment: "Show more"), for: .normal)
+        self.showMoreButton.setTitle(.getStringFor(.showMore), for: .normal)
     }
     
     func setupExpandedView() {
         self.tableViewHeightConstraint.constant = CGFloat(self.users.count) * self.cellHeight
-        self.showMoreButton.setTitle(NSLocalizedString("Show less", comment: "Show more"), for: .normal)
+        self.showMoreButton.setTitle(.getStringFor(.showLess), for: .normal)
     }
     
     func addSubviews() {

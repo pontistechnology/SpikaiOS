@@ -11,7 +11,7 @@ import UIKit
 
 extension String {
     static func getStringFor(_ value: Constants.Strings) -> String {
-        return value.rawValue
+        return NSLocalizedString(value.rawValue, comment: value.rawValue)
     }
     
     func getSHA256() -> String {
