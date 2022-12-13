@@ -18,13 +18,13 @@ enum TabBarItem: Equatable {
     var title: String {
         switch self {
         case .chat:
-            return NSLocalizedString("Chat", comment: "Chat")
+            return .getStringFor(.chat)
         case .phoneCalls:
-            return NSLocalizedString("Call History", comment: "Call History")
+            return .getStringFor(.callHistory)
         case .contacts:
-            return NSLocalizedString("Contacts", comment: "Contacts")
+            return .getStringFor(.contacts)
         case .settings:
-            return NSLocalizedString("Settings", comment: "Settings")
+            return .getStringFor(.settings)
         }
     }
     

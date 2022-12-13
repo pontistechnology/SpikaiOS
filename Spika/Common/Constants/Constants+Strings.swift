@@ -40,11 +40,16 @@ public extension Constants {
         case weSentYou6DigitCode = "We sent you 6 digit verification code."
         case resendCode = "Resend code"
         
+        //MARK: - HomeViewController
+        case chat = "Chat"
+        case callHistory = "Call History"
+        case contacts = "Contacts"
+        case settings = "Settings"
+        
         //MARK: - ChatDetailsViewController
         case group = "Group"
         case shareMediaLinksDocs = "Shared Media, Links and Docs"
         case chatSearch = "Chat search"
-        case callHistory = "Call history"
         case notes = "Notes"
         case favorites = "Favorites"
         case pinchat = "Pin chat"
