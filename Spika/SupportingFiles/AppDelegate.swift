@@ -23,7 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func customization() {
-        print("TOKEN: ", UserDefaults(suiteName: Constants.Strings.appGroupName)?.string(forKey: Constants.UserDefaults.accessToken))
+        if let token = UserDefaults(suiteName: Constants.Networking.appGroupName)?.string(forKey: Constants.Database.accessToken) as? String {
+            print("TOKEN: ", token)
+        }
         
         guard let font =  UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14) else { return }
         UIBarButtonItem.appearance().setTitleTextAttributes(
@@ -70,8 +72,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
         messaging.token { token, _ in
             guard let token = token else { return }
             print("New Push fcmToken: ", token)
-            let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
-            userDefaults.set(token, forKey: Constants.UserDefaults.pushToken)
+            let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)!
+            userDefaults.set(token, forKey: Constants.Database.pushToken)
         }
     }
     

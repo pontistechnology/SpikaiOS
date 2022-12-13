@@ -63,7 +63,7 @@ class SearchBar: UIView, BaseView {
         searchView.layer.cornerRadius = 10
         searchView.clipsToBounds = true
         
-        cancelButton.setTitle(Constants.Strings.cancel, for: .normal)
+        cancelButton.setTitle(.getStringFor(.cancel), for: .normal)
         cancelButton.setTitleColor(.primaryColor, for: .normal)
         cancelButton.titleLabel?.font = .customFont(name: .MontserratMedium, size: 14)
     }

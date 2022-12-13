@@ -85,7 +85,6 @@ class ChatContentView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        chatImage.translatesAutoresizingMaskIntoConstraints = false
         chatImage.image = UIImage(safeImage: .testImage)
         chatImage.layer.cornerRadius = 60
         chatImage.contentMode = .scaleAspectFill

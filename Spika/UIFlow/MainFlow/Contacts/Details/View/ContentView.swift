@@ -57,7 +57,7 @@ class ContentView: UIView, BaseView {
         addSubview(labelsStackView)
         labelsStackView.addArrangedSubview(blockLabel)
         labelsStackView.addArrangedSubview(reportLabel)
-
+        
     }
     
     func styleSubviews() {

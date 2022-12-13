@@ -14,7 +14,7 @@ extension AppRepository {
     
     func updatePushToken() -> AnyPublisher<UpdatePushResponseModel, Error> {
         guard let accessToken = getAccessToken(),
-              let token = userDefaults.string(forKey: Constants.UserDefaults.pushToken)
+              let token = userDefaults.string(forKey: Constants.Database.pushToken)
         else {return Fail<UpdatePushResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()

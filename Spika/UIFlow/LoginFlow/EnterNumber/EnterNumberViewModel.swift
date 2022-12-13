@@ -16,7 +16,7 @@ class EnterNumberViewModel: BaseViewModel {
             self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
-                self?.showError("Could not auth user: \(error)")
+                self?.showError("\(Constants.Strings.couldNotAuthUser): \(error)")
             default: break
             }
         } receiveValue: { [weak self] authResponse in

@@ -15,7 +15,7 @@ class AppCoordinator: Coordinator {
     
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
-    let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
+    let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)!
     let windowScene: UIWindowScene
     var subs = Set<AnyCancellable>()
 
@@ -27,7 +27,7 @@ class AppCoordinator: Coordinator {
     
     //  This can be in scene delegate?
     func syncAndStartSSE() {
-        guard let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken) else { return }
+        guard let _ = userDefaults.string(forKey: Constants.Database.accessToken) else { return }
         let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
         sse?.syncAndStartSSE()
     }
@@ -39,11 +39,11 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken),
-           let userName = userDefaults.string(forKey: Constants.UserDefaults.displayName),
+        if let _ = userDefaults.string(forKey: Constants.Database.accessToken),
+           let userName = userDefaults.string(forKey: Constants.Database.displayName),
            !userName.isEmpty {
             presentHomeScreen(startSyncAndSSE: false)
-        } else if let _ = userDefaults.string(forKey: Constants.UserDefaults.accessToken){
+        } else if let _ = userDefaults.string(forKey: Constants.Database.accessToken){
             presentEnterUsernameScreen()
         } else {
             presentEnterNumberScreen()
@@ -195,7 +195,7 @@ class AppCoordinator: Coordinator {
         let avPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
         let avPlayerVC = AVPlayerViewController()
         avPlayerVC.player = avPlayer
-        navigationController.present(avPlayerVC, animated: true) { [weak self] in
+        navigationController.present(avPlayerVC, animated: true) {
             avPlayer.play()
         }
     }

@@ -14,16 +14,16 @@ extension AppRepository {
     // MARK: UserDefaults
     
     func saveUserInfo(user: User, device: Device? = nil) {
-        userDefaults.set(user.id, forKey: Constants.UserDefaults.userId)
-        userDefaults.set(user.telephoneNumber, forKey: Constants.UserDefaults.userPhoneNumber)
-        userDefaults.set(user.displayName, forKey: Constants.UserDefaults.displayName)
+        userDefaults.set(user.id, forKey: Constants.Database.userId)
+        userDefaults.set(user.telephoneNumber, forKey: Constants.Database.userPhoneNumber)
+        userDefaults.set(user.displayName, forKey: Constants.Database.displayName)
         guard let device = device else { return }
-        userDefaults.set(device.id, forKey: Constants.UserDefaults.deviceId)
-        userDefaults.set(device.token, forKey: Constants.UserDefaults.accessToken)
+        userDefaults.set(device.id, forKey: Constants.Database.deviceId)
+        userDefaults.set(device.token, forKey: Constants.Database.accessToken)
     }
     
     func getMyUserId() -> Int64 {
-        return Int64(userDefaults.integer(forKey: Constants.UserDefaults.userId))
+        return Int64(userDefaults.integer(forKey: Constants.Database.userId))
     }
     
     // MARK: Network

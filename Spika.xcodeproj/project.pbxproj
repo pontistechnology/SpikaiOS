@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C153BEC2948693200D400A7 /* Constants+Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */; };
+		6C153BEE2948693B00D400A7 /* Constants+Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BED2948693B00D400A7 /* Constants+Database.swift */; };
+		6C153BF02948696A00D400A7 /* Constants+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEF2948696A00D400A7 /* Constants+Strings.swift */; };
+		6C153BF129486F2B00D400A7 /* Constants+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEF2948696A00D400A7 /* Constants+Strings.swift */; };
+		6C153BF229486F2B00D400A7 /* Constants+Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BED2948693B00D400A7 /* Constants+Database.swift */; };
+		6C153BF329486F2B00D400A7 /* Constants+Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */; };
 		6C2497DF2924FB3000594A55 /* UserSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497DE2924FB3000594A55 /* UserSelectionViewController.swift */; };
 		6C2497E12924FB3700594A55 /* UserSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497E02924FB3700594A55 /* UserSelectionViewModel.swift */; };
 		6C2497E42924FB4200594A55 /* UserSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497E32924FB4200594A55 /* UserSelectionView.swift */; };
@@ -381,6 +387,9 @@
 		334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
 		400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
 		583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Endpoints.swift"; sourceTree = "<group>"; };
+		6C153BED2948693B00D400A7 /* Constants+Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Database.swift"; sourceTree = "<group>"; };
+		6C153BEF2948696A00D400A7 /* Constants+Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Strings.swift"; sourceTree = "<group>"; };
 		6C2497DE2924FB3000594A55 /* UserSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionViewController.swift; sourceTree = "<group>"; };
 		6C2497E02924FB3700594A55 /* UserSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionViewModel.swift; sourceTree = "<group>"; };
 		6C2497E32924FB4200594A55 /* UserSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionView.swift; sourceTree = "<group>"; };
@@ -685,6 +694,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C153BEA2948691000D400A7 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503E7270DD87A009D50CB /* Constants.swift */,
+				6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */,
+				6C153BED2948693B00D400A7 /* Constants+Database.swift */,
+				6C153BEF2948696A00D400A7 /* Constants+Strings.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		6C2497DD2924FB1C00594A55 /* UserSelection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1463,7 +1483,7 @@
 				ADD503CC270DD302009D50CB /* Extensions */,
 				AD81928A2722FFD000D5BE48 /* Utils */,
 				AD8192722722D55100D5BE48 /* Fonts */,
-				ADD503E7270DD87A009D50CB /* Constants.swift */,
+				6C153BEA2948691000D400A7 /* Constants */,
 				93BF627428EB9B7900B48BBF /* EnumsShared.swift */,
 				937055DF2914C21E0052EC77 /* Enums.swift */,
 			);
@@ -1974,6 +1994,7 @@
 				931B14DF2821186000A0CD35 /* MessageEntityService.swift in Sources */,
 				936A28ED2926C8C100E7333D /* DebugUtils.swift in Sources */,
 				931B14D6281FD91100A0CD35 /* AppRepository+Tests.swift in Sources */,
+				6C153BF229486F2B00D400A7 /* Constants+Database.swift in Sources */,
 				931B14F828211AC100A0CD35 /* UpdatePushRequestModel.swift in Sources */,
 				931B150328211AC600A0CD35 /* UpdatePushResponseModel.swift in Sources */,
 				931B15192821295600A0CD35 /* DeliveredResponseModel.swift in Sources */,
@@ -1983,6 +2004,7 @@
 				9324B256281BE03800E7D76D /* Message.swift in Sources */,
 				931B150228211AC600A0CD35 /* UserResponseModel.swift in Sources */,
 				931B150128211AC600A0CD35 /* CheckRoomResponseModel.swift in Sources */,
+				6C153BF329486F2B00D400A7 /* Constants+Endpoints.swift in Sources */,
 				939B304D2850E01800FFA537 /* SyncUsersResponseModel.swift in Sources */,
 				931B14E2282118D700A0CD35 /* ChatEntityService.swift in Sources */,
 				9324B257281BE0D900E7D76D /* Constants.swift in Sources */,
@@ -1998,6 +2020,7 @@
 				931B14D7281FD91100A0CD35 /* AppRepository+Device.swift in Sources */,
 				93711DFC28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */,
+				6C153BF129486F2B00D400A7 /* Constants+Strings.swift in Sources */,
 				9347CCE4286457C900018AEB /* Date+Extensions.swift in Sources */,
 				931B150028211AC600A0CD35 /* SendMessageResponse.swift in Sources */,
 				931B14DE2821185300A0CD35 /* UserEntityService.swift in Sources */,
@@ -2147,6 +2170,7 @@
 				937055DD2914B2290052EC77 /* OneSecPopUpView.swift in Sources */,
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
 				93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */,
+				6C153BF02948696A00D400A7 /* Constants+Strings.swift in Sources */,
 				6C326A6728FECAAE00E00A59 /* OTPCodeTextField.swift in Sources */,
 				93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */,
 				AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */,
@@ -2248,6 +2272,7 @@
 				93E48EB027CEA6C3003B4188 /* Message.swift in Sources */,
 				934F036D282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
+				6C153BEE2948693B00D400A7 /* Constants+Database.swift in Sources */,
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,
 				EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */,
 				6C6AD21D291E41DD0026CDAC /* ChatMembersView.swift in Sources */,
@@ -2268,6 +2293,7 @@
 				93988D5F27D8701500DF6BF8 /* UIImage+Extensions.swift in Sources */,
 				933BE86427B667980099BA9E /* ContactsAssembly.swift in Sources */,
 				937FBE6728B52D8D00C3A888 /* URL+Extensions.swift in Sources */,
+				6C153BEC2948693200D400A7 /* Constants+Endpoints.swift in Sources */,
 				AD9BFD182729898C00736318 /* TestRepository.swift in Sources */,
 				9352641927F88937001434A3 /* SSE.swift in Sources */,
 			);

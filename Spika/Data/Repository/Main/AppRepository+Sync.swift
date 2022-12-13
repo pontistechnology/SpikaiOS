@@ -74,14 +74,14 @@ extension AppRepository {
         switch type {
             
         case .rooms:
-            return Int64(userDefaults.integer(forKey: Constants.UserDefaults.roomsSyncTimestamp))
+            return Int64(userDefaults.integer(forKey: Constants.Database.roomsSyncTimestamp))
         case .users:
-            return Int64(userDefaults.integer(forKey: Constants.UserDefaults.usersSyncTimestamp))
+            return Int64(userDefaults.integer(forKey: Constants.Database.usersSyncTimestamp))
         case .messages:
-            let timestamp = Int64(userDefaults.integer(forKey: Constants.UserDefaults.messagesSyncTimestamp))
+            let timestamp = Int64(userDefaults.integer(forKey: Constants.Database.messagesSyncTimestamp))
             return timestamp == 0 ? Date().currentTimeMillis() : timestamp
         case .messageRecords:
-            let timestamp = Int64(userDefaults.integer(forKey: Constants.UserDefaults.messageRecordsSyncTimestamp))
+            let timestamp = Int64(userDefaults.integer(forKey: Constants.Database.messageRecordsSyncTimestamp))
             return timestamp == 0 ? Date().currentTimeMillis() : timestamp
         }
     }
@@ -90,13 +90,13 @@ extension AppRepository {
         switch type {
             
         case .users:
-            userDefaults.set(timestamp, forKey: Constants.UserDefaults.usersSyncTimestamp)
+            userDefaults.set(timestamp, forKey: Constants.Database.usersSyncTimestamp)
         case .rooms:
-            userDefaults.set(timestamp, forKey: Constants.UserDefaults.roomsSyncTimestamp)
+            userDefaults.set(timestamp, forKey: Constants.Database.roomsSyncTimestamp)
         case .messageRecords:
-            userDefaults.set(timestamp, forKey: Constants.UserDefaults.messageRecordsSyncTimestamp)
+            userDefaults.set(timestamp, forKey: Constants.Database.messageRecordsSyncTimestamp)
         case .messages:
-            userDefaults.set(timestamp, forKey: Constants.UserDefaults.messagesSyncTimestamp)
+            userDefaults.set(timestamp, forKey: Constants.Database.messagesSyncTimestamp)
         }
     }
 }
