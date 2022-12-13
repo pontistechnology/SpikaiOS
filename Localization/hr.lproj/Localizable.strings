@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  Spika
+
+  Created by Vedran Vugrin on 13.12.2022..
+*/
+
+"Spika" = "- -";
+"Cancel" = "- -";
+"Next" = "- -";
+"Show more" = "- -";
+"Show less" = "- -";
+"Members" = "- -";
+ 
+ "Search" = "- -";
+ "ALL COUNTRIES" = "- -";
+ "Could not auth user" = "- -";
+ "Enter your phone number to start using Spika" = "- -";
+ "Eg. 98726123" = "- -";
+ "Phone number" = "- -";
+ 
+ "Username" = "- -";
+ "Enter username" = "- -";
+ "Take a photo" = "- -";
+ "Choose from gallery" = "- -";
+ "Remove photo" = "- -";
+ "Please use better quality." = "- -";
+ "Please select a square" = "- -";
+ 
+ "We sent you 6 digit verification code." = "- -";
+ "Resend code" = "- -";
+ 
+ "Chat" = "- -";
+ "Call History" = "- -";
+ "Contacts" = "- -";
+ "Settings" = "- -";
+ 
+ "Group" = "- -";
+ "Shared Media, Links and Docs" = "- -";
+ "Chat search" = "- -";
+ "Notes" = "- -";
+ "Favorites" = "- -";
+ "Pin chat" = "- -";
+ "Mute" = "- -";
+ "Block" = "- -";
+ "Report" = "- -";

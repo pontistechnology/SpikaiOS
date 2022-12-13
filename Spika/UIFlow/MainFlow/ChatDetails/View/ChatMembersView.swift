@@ -46,7 +46,7 @@ final class ChatMembersView: UIView, BaseView {
         return stackView
     } ()
     
-    let titleLabel = CustomLabel(text: "Members", textSize: 22,
+    let titleLabel = CustomLabel(text: .getStringFor(.members), textSize: 22,
                                  textColor: .textPrimaryAndWhite,
                                  fontName: .MontserratSemiBold)
     
@@ -97,7 +97,7 @@ final class ChatMembersView: UIView, BaseView {
     func updateWithUsers(users: [RoomUser]) {
         self.users = users
 
-        self.titleLabel.text = "\(users.count)" + .getStringFor(.members)
+        self.titleLabel.text = "\(users.count) " + .getStringFor(.members)
         self.tableView.reloadData()
         
         if self.viewIsExpanded {
