@@ -60,7 +60,17 @@ extension Message {
                                     file: FileData(fileName: messageEntity.bodyFileName,
                                                    mimeType: messageEntity.bodyFileMimeType,
                                                    path: messageEntity.bodyFilePath,
-                                                   size: messageEntity.bodyFileSize),
+                                                   size: messageEntity.bodyFileSize,
+                                                   metaData: MetaData(width: messageEntity.bodyThumbMetaDataWidth,
+                                                                      height: messageEntity.bodyThumbMetaDataHeight,
+                                                                      duration: messageEntity.bodyThumbMetaDataDuration)),
+                                    thumb: FileData(fileName: "thumb name",
+                                                    mimeType: messageEntity.bodyThumbMimeType,
+                                                    path: messageEntity.bodyThumbPath,
+                                                    size: 0,
+                                                    metaData: MetaData(width: messageEntity.bodyThumbMetaDataWidth,
+                                                                       height: messageEntity.bodyThumbMetaDataHeight,
+                                                                       duration: messageEntity.bodyThumbMetaDataDuration)),
                                     fileId: nil,
                                     thumbId: nil,
                                     referenceMessage: ReferenceMessage(id: Int64(messageEntity.referenceMessageId ?? "-2"),
@@ -103,6 +113,7 @@ extension Message {
 struct MessageBody: Codable {
     let text: String?
     let file: FileData?
+    let thumb: FileData?
     let fileId: Int?
     let thumbId: Int?
     let referenceMessage: ReferenceMessage?
@@ -125,6 +136,13 @@ struct FileData: Codable {
     let mimeType: String?
     let path: String?
     let size: Int64?
+    let metaData: MetaData?
+}
+
+struct MetaData: Codable {
+    let width: Int64
+    let height: Int64
+    let duration: Int64
 }
 
 enum MessageType: String, Codable {

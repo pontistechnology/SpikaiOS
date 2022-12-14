@@ -39,7 +39,7 @@ extension ImageMessageTableViewCell {
     }
     
     func updateCell(message: Message) {
-        photoImageView.setImage(url: message.body?.file?.path?.getFullUrl())
+        photoImageView.setImage(url: message.body?.thumb?.path?.getFullUrl())
         
         photoImageView.tap().sink { [weak self] _ in
             self?.tapPublisher.send(.openImage)

@@ -21,6 +21,11 @@ extension MessageEntity {
     @NSManaged public var bodyFileMimeType: String?
     @NSManaged public var bodyFileName: String?
     @NSManaged public var bodyFileSize: Int64
+    @NSManaged public var bodyThumbMimeType: String?
+    @NSManaged public var bodyThumbPath: String?
+    @NSManaged public var bodyThumbMetaDataWidth: Int64
+    @NSManaged public var bodyThumbMetaDataHeight: Int64
+    @NSManaged public var bodyThumbMetaDataDuration: Int64
     @NSManaged public var createdAt: Int64
     @NSManaged public var deliveredCount: Int64
     @NSManaged public var fromUserId: Int64

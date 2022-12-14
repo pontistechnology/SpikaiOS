@@ -33,8 +33,9 @@ extension VideoMessageTableViewCell {
     
     func updateCell(message: Message) {
         // TODO: Change to duration later, for now is size
-        let duration = "\((message.body?.file?.size ?? 0) / 1000000)" + " MB"
-        videoView.setup(duration: duration)
+        let duration = "\((message.body?.file?.metaData?.duration ?? 0))" + " s"
+        let thumbnailURL = message.body?.thumb?.path?.getFullUrl()
+        videoView.setup(duration: duration, thumbnailURL: thumbnailURL)
         
         videoView.thumbnailImageView.tap().sink { [weak self] _ in
             self?.tapPublisher.send(.playVideo)
