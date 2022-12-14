@@ -174,7 +174,7 @@ extension CurrentChatViewModel {
         let message = Message(createdAt: Date().currentTimeMillis(),
                               fromUserId: getMyUserId(),
                               roomId: room.id, type: .text,
-                              body: MessageBody(text: text, file: nil, fileId: nil, thumbId: nil, referenceMessage: referenceMessage),
+                              body: MessageBody(text: text, file: nil, thumb: nil, fileId: nil, thumbId: nil, referenceMessage: referenceMessage),
                               reply: referenceMessage != nil,
                               localId: uuid)
         

@@ -48,9 +48,10 @@ extension MessageVideoView: BaseView {
 }
 
 extension MessageVideoView {
-    func setup(duration: String) {
+    func setup(duration: String, thumbnailURL: URL?) {
         durationLabel.text = duration
         
+        thumbnailImageView.kf.setImage(with: thumbnailURL)
         // TODO: handle thumbnail when is ready on server
 //        thumbnailImageView.kf.setImage(with: URL(string: message.body?.file?.path?.getAvatarUrl() ?? "error"), placeholder: UIImage(systemName: "arrow.counterclockwise")?.withTintColor(.gray, renderingMode: .alwaysOriginal))
     }

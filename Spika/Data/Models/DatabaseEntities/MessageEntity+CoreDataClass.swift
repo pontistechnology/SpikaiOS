@@ -57,8 +57,8 @@ public class MessageEntity: NSManagedObject {
             self.bodyFilePath = filePath
         }
         
-        if let mimeType = message.body?.file?.mimeType {
-            self.bodyFileMimeType = mimeType
+        if let fileMimeType = message.body?.file?.mimeType {
+            self.bodyFileMimeType = fileMimeType
         }
         
         if let fileSize = message.body?.file?.size {
@@ -71,6 +71,26 @@ public class MessageEntity: NSManagedObject {
         
         if let referenceMessageId = message.body?.referenceMessage?.id {
             self.referenceMessageId = "\(referenceMessageId)"
+        }
+        
+        if let thumbPath = message.body?.thumb?.path {
+            self.bodyThumbPath = thumbPath
+        }
+        
+        if let thumbMimeType = message.body?.thumb?.mimeType {
+            self.bodyThumbMimeType = thumbMimeType
+        }
+        
+        if let thumbWidth = message.body?.thumb?.metaData?.width {
+            self.bodyThumbMetaDataWidth = thumbWidth
+        }
+        
+        if let thumbHeight = message.body?.thumb?.metaData?.height {
+            self.bodyThumbMetaDataHeight = thumbHeight
+        }
+        
+        if let thumbDuration = message.body?.thumb?.metaData?.duration {
+            self.bodyThumbMetaDataDuration = thumbDuration
         }
     }
 }

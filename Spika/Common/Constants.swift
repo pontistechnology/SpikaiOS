@@ -16,7 +16,7 @@ struct Constants {
     }
     
     struct Networking {
-        static let baseUrl = "https://clover.spika.chat/"
+        static let baseUrl = "https://dev3.spika.chat/"
     }
     
     struct Endpoints {
