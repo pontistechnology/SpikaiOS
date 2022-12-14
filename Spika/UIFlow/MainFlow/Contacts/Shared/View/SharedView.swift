@@ -10,8 +10,8 @@ import UIKit
 
 class SharedView: UIView, BaseView {
     
-    let testLabel = CustomLabel(text: "shared")
-    let segmentedControl = SegmentedControl(items: ["Media", "Links", "Docs"])
+    let testLabel = CustomLabel(text: .getStringFor(.shared))
+    let segmentedControl = SegmentedControl(items: [String.getStringFor(.members), String.getStringFor(.links), String.getStringFor(.docs)])
     let mediaCollectionView = MediaCollectionView()
     let docsTableView = DocsTableView()
     let linksTableView = LinksTableView()

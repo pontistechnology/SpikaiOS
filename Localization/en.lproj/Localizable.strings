@@ -11,6 +11,8 @@
 "Show more" = "Show more";
 "Show less" = "Show less";
 "Members" = "Members";
+"Details" = "Details";
+"shared" = "shared";
  
  "Search" = "Search";
  "ALL COUNTRIES" = "ALL COUNTRIES";
@@ -45,3 +47,7 @@
  "Block" = "Block";
  "Report" = "Report";
 
+"Search for contact,message, file..." = "Search for contact,message, file...";
+"Media" = "Media";
+"Links" = "Links";
+"Docs" = "Docs";

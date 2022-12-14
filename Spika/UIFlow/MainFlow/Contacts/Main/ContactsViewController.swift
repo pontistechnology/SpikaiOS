@@ -33,12 +33,6 @@ class ContactsViewController: BaseViewController {
         contactsView.tableView.delegate   = self
         contactsView.searchBar.delegate = self
         
-//        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] contacts in
-//            guard let self = self else { return }
-//            self.contactsView.tableView.reloadData()
-//        }.store(in: &subscriptions)
-        
-//        viewModel.getUsersAndUpdateUI()
         viewModel.getContacts()
         viewModel.getOnlineContacts(page: 1)
     }

@@ -16,6 +16,9 @@ public extension Constants {
         case showMore = "Show more"
         case showLess = "Show less"
         case members = "Members"
+        case details = "Details"
+        case shared = "shared"
+        
 
         //MARK: - CountryPickerViewController
         case search = "Search"
@@ -48,7 +51,7 @@ public extension Constants {
         
         //MARK: - ChatDetailsViewController
         case group = "Group"
-        case shareMediaLinksDocs = "Shared Media, Links and Docs"
+        case sharedMediaLinksDocs = "Shared Media, Links and Docs"
         case chatSearch = "Chat search"
         case notes = "Notes"
         case favorites = "Favorites"
@@ -57,7 +60,12 @@ public extension Constants {
         case block = "Block"
         case report = "Report"
         
-        //MARK: - ViewController
+        //MARK: - ContactsViewController
+        case searchForContactsMessages = "Search for contact,message, file..."
         
+        //MARK: - SharedViewController
+        case media = "Media"
+        case links = "Links"
+        case docs = "Docs"
     }
 }

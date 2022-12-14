@@ -17,7 +17,7 @@ class ChatContentView: UIView, BaseView {
     } ()
     let chatName = CustomLabel(text: .getStringFor(.group), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
     
-    let sharedMediaOptionButton = NavView(text: .getStringFor(.shareMediaLinksDocs))
+    let sharedMediaOptionButton = NavView(text: .getStringFor(.sharedMediaLinksDocs))
     let chatSearchOptionButton = NavView(text: .getStringFor(.chatSearch))
     let callHistoryOptionButton = NavView(text: .getStringFor(.callHistory))
     

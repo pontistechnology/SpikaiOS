@@ -11,6 +11,8 @@
 "Show more" = "- -";
 "Show less" = "- -";
 "Members" = "- -";
+"Details" = "- -";
+"shared" = "- -";
  
  "Search" = "- -";
  "ALL COUNTRIES" = "- -";
@@ -44,3 +46,8 @@
  "Mute" = "- -";
  "Block" = "- -";
  "Report" = "- -";
+
+"Search for contact,message, file..." = "- -";
+"Media" = "- -";
+"Links" = "- -";
+"Docs" = "- -";
