@@ -73,6 +73,27 @@ public extension Constants {
         case selectUsers = "Select users"
         case searchForContact = "Search for contact"
         
+        //MARK: - MessageDetailsViewController
+        case readBy = "Read by"
+        case deliveredTo = "Delivered to"
+        case sentTo = "Sent to"
+        case waiting = "waiting"
         
+        //MARK: - NewGroupChatViewController
+        case create = "Create"
+        case peopleSelected = "people selected"
+        case newGroup = "New Group"
+        case groupName = "Group name..."
+        
+        //MARK: - AllChatsViewController
+        case title = "Title"
+        case noName = "noname"
+        
+        
+        //MARK: - CurrentChatViewController
+        case unknown = "Unknown"
+        case today = "Today"
+        case yesterday = "Yesterday"
+        case reply = "Reply"
     }
 }

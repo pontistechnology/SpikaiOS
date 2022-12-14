@@ -39,7 +39,7 @@ class AllChatsViewController: BaseViewController {
             .unreadRoomsPublisher
             .sink { [weak self] string in
                 self?.navigationController?.navigationItem.backBarButtonItem =
-                UIBarButtonItem(title:"Title", style:.plain, target:nil, action:nil)
+                UIBarButtonItem(title:.getStringFor(.title), style:.plain, target:nil, action:nil)
             }.store(in: &self.subscriptions)
     }
 }
@@ -113,7 +113,7 @@ extension AllChatsViewController: UITableViewDataSource {
         } else if room.type != .privateRoom {
             
             cell?.configureCell(avatarUrl: room.avatarUrl?.getFullUrl(),
-                                name: room.name ?? "noname",
+                                name: room.name ?? .getStringFor(.noName),
                                 description: entity.lastMessageText(),
                                 time: entity.lastMessageTime(),
                                 badgeNumber: badgeNumber)
