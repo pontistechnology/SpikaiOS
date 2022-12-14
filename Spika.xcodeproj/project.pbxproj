@@ -27,6 +27,7 @@
 		6C769036291D36B5007F13D2 /* ChatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */; };
 		6C769038291D36BF007F13D2 /* ChatDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */; };
 		6C76903B291D451A007F13D2 /* ChatDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C76903A291D451A007F13D2 /* ChatDetailsView.swift */; };
+		6C8FF1C32949D27000955592 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6C8FF1C52949D27000955592 /* InfoPlist.strings */; };
 		6C9C5C7C29262610009D3E2B /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */; };
 		6C9C5C7E29262657009D3E2B /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7D29262657009D3E2B /* CustomStackView.swift */; };
 		6C9C7242291E743A0089AB4C /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C7241291E743A0089AB4C /* SettingsModel.swift */; };
@@ -405,6 +406,8 @@
 		6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewController.swift; sourceTree = "<group>"; };
 		6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewModel.swift; sourceTree = "<group>"; };
 		6C76903A291D451A007F13D2 /* ChatDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsView.swift; sourceTree = "<group>"; };
+		6C8FF1C42949D27000955592 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6C8FF1C62949D27300955592 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		6C9C5C7D29262657009D3E2B /* CustomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
 		6C9C7241291E743A0089AB4C /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
@@ -751,6 +754,7 @@
 			isa = PBXGroup;
 			children = (
 				6CFB46C22948C1D7000D26BB /* Localizable.strings */,
+				6C8FF1C52949D27000955592 /* InfoPlist.strings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -1851,6 +1855,7 @@
 				AD8192842722D5AF00D5BE48 /* Montserrat-Light.ttf in Resources */,
 				AD81927E2722D5AF00D5BE48 /* Montserrat-Regular.ttf in Resources */,
 				6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */,
+				6C8FF1C32949D27000955592 /* InfoPlist.strings in Resources */,
 				AD8192802722D5AF00D5BE48 /* Montserrat-ExtraBold.ttf in Resources */,
 				ADD503C1270DC3CA009D50CB /* LaunchScreen.storyboard in Resources */,
 				AD8192812722D5AF00D5BE48 /* Montserrat-ExtraLight.ttf in Resources */,
@@ -2330,6 +2335,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		6C8FF1C52949D27000955592 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6C8FF1C42949D27000955592 /* en */,
+				6C8FF1C62949D27300955592 /* hr */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		6CFB46C22948C1D7000D26BB /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -20,7 +20,7 @@ class EnterVerifyCodeViewController: BaseViewController {
     }
     
     func setupUI() {
-        enterVerifyCodeView.titleLabel.text = "We sent you 6 digit verification code on \(viewModel.phoneNumber)."
+        enterVerifyCodeView.titleLabel.text = .getStringFor(.weSentYou6DigitOn) + " \(viewModel.phoneNumber)."
     }
     
     override func viewWillDisappear(_ animated: Bool) {
