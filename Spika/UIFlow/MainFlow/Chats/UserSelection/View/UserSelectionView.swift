@@ -21,11 +21,11 @@ class UserSelectionView: UIView, BaseView {
     
     let topHorizontalStackView = CustomStackView(axis:.horizontal)
     
-    let cancelLabel = CustomLabel(text: "Cancel", textSize: 18, textColor: .primaryColor, fontName: .MontserratSemiBold)
-    let doneLabel = CustomLabel(text: "Done", textSize: 18, textColor: .primaryColor, fontName: .MontserratSemiBold)
-    let titleLabel = CustomLabel(text: "Select users", textSize: 28, textColor: .textPrimaryAndWhite)
-    let numberSelectedUsersLabel = CustomLabel(text: "0/100 selected", textSize: 11, textColor: .textPrimaryAndWhite)
-    let searchBar = SearchBar(placeholder: "Search for contact", shouldShowCancel: false)
+    let cancelLabel = CustomLabel(text: .getStringFor(.cancel), textSize: 18, textColor: .primaryColor, fontName: .MontserratSemiBold)
+    let doneLabel = CustomLabel(text: .getStringFor(.done), textSize: 18, textColor: .primaryColor, fontName: .MontserratSemiBold)
+    let titleLabel = CustomLabel(text: .getStringFor(.selectUsers), textSize: 28, textColor: .textPrimaryAndWhite)
+    let numberSelectedUsersLabel = CustomLabel(text: "0/100 " + .getStringFor(.selected), textSize: 11, textColor: .textPrimaryAndWhite)
+    let searchBar = SearchBar(placeholder: .getStringFor(.searchForContact), shouldShowCancel: false)
     let contactsTableView = ContactsTableView()
     
     override init(frame: CGRect) {

@@ -12,6 +12,7 @@ public extension Constants {
         //MARK: - Common
         case appName = "Spika"
         case cancel = "Cancel"
+        case done = "Done"
         case next = "Next"
         case showMore = "Show more"
         case showLess = "Show less"
@@ -19,7 +20,6 @@ public extension Constants {
         case details = "Details"
         case shared = "shared"
         
-
         //MARK: - CountryPickerViewController
         case search = "Search"
         case allCountries = "ALL COUNTRIES"
@@ -67,5 +67,12 @@ public extension Constants {
         case media = "Media"
         case links = "Links"
         case docs = "Docs"
+        
+        //MARK: - UserSelectionViewController
+        case selected = "selected"
+        case selectUsers = "Select users"
+        case searchForContact = "Search for contact"
+        
+        
     }
 }

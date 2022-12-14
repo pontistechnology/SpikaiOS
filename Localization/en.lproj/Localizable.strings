@@ -7,6 +7,7 @@
   
 "Spika" = "Spika";
 "Cancel" = "Cancel";
+"Done" = "Done";
 "Next" = "Next";
 "Show more" = "Show more";
 "Show less" = "Show less";
@@ -51,3 +52,9 @@
 "Media" = "Media";
 "Links" = "Links";
 "Docs" = "Docs";
+
+"selected" = "selected";
+"Select users" = "Select users";
+"Search for contact" = "Search for contact";
+
+

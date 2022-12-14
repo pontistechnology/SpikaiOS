@@ -7,6 +7,7 @@
 
 "Spika" = "- -";
 "Cancel" = "- -";
+"Done" = "- -";
 "Next" = "- -";
 "Show more" = "- -";
 "Show less" = "- -";
@@ -51,3 +52,7 @@
 "Media" = "- -";
 "Links" = "- -";
 "Docs" = "- -";
+
+"selected" = "- -";
+"Select users" = "- -";
+"Search for contact" = "- -";
