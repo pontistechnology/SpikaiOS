@@ -95,5 +95,10 @@ public extension Constants {
         case today = "Today"
         case yesterday = "Yesterday"
         case reply = "Reply"
+        
+        //MARK: - SelectUsersViewController
+        case newChat = "New chat"
+        case newGroupChat = "New group chat"
+        case newPrivateChat = "New private chat"
     }
 }

@@ -25,7 +25,7 @@ class SettingsView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        titleLabel.text = "Settings"
+        titleLabel.text = .getStringFor(.settings)
     }
     
     func positionSubviews() {
