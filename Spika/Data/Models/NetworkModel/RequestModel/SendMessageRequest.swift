@@ -12,5 +12,5 @@ struct SendMessageRequest: Codable {
     let type: String
     let body: MessageBody
     let localId: String
-    let reply: Bool
+    let replyId: Int64?
 }

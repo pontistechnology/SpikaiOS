@@ -47,7 +47,6 @@ public class MessageEntity: NSManagedObject {
         roomId = message.roomId
 
         self.type = message.type.rawValue
-        self.reply = message.reply
         
         if let bodyText = message.body?.text {
             self.bodyText = bodyText
@@ -69,9 +68,9 @@ public class MessageEntity: NSManagedObject {
             self.bodyFileName = fileName
         }
         
-        if let referenceMessageId = message.body?.referenceMessage?.id {
-            self.referenceMessageId = "\(referenceMessageId)"
-        }
+        
+        self.replyId = "\(message.replyId ?? -1)"
+        
         
         if let thumbPath = message.body?.thumb?.path {
             self.bodyThumbPath = thumbPath
