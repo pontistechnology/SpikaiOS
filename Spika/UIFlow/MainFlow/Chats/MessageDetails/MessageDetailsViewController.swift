@@ -12,7 +12,7 @@ import UIKit
 
 class MessageDetailsViewController: BaseViewController {
     
-    let sectionTitles = ["Read by", "Delivered to", "Sent to"]
+    let sectionTitles:[String] = [.getStringFor(.readBy), .getStringFor(.deliveredTo), .getStringFor(.sentTo)]
     let seenRecords: [MessageRecord]
     let deliveredRecords: [MessageRecord]
     var remainingUsers: [User]
@@ -97,7 +97,7 @@ extension MessageDetailsViewController: UITableViewDataSource {
         case 2:
             cell?.configureCell(avatarUrl: remainingUsers[indexPath.row].avatarUrl?.getFullUrl(),
                                 name: remainingUsers[indexPath.row].getDisplayName(),
-                                time: "waiting")
+                                time: .getStringFor(.waiting))
         default:
             break
         }

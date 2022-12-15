@@ -16,7 +16,7 @@ class ChatSearchViewController: BaseViewController {
         super.viewDidLoad()
         setupView(chatSearchView)
         setupBindings()
-        navigationItem.title = "Chat Search"
+        navigationItem.title = .getStringFor(.chatSearch)
     }
     
     func setupBindings() {

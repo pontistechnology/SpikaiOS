@@ -9,9 +9,9 @@ import UIKit
 
 class ContactsView: UIView, BaseView {
     
-    let titleLabel = CustomLabel(text: "Contacts", textSize: 28, textColor: .textPrimaryAndWhite, fontName: .MontserratSemiBold)
+    let titleLabel = CustomLabel(text: .getStringFor(.contacts), textSize: 28, textColor: .textPrimaryAndWhite, fontName: .MontserratSemiBold)
     let detailsButton = UIButton()
-    let searchBar = SearchBar(placeholder: "Search for contact,message, file...")
+    let searchBar = SearchBar(placeholder: .getStringFor(.searchForContactsMessages))
     let tableView = ContactsTableView()
     
     override init(frame: CGRect) {
@@ -31,7 +31,7 @@ class ContactsView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        detailsButton.setTitle("Details", for: .normal)
+        detailsButton.setTitle(.getStringFor(.details), for: .normal)
         detailsButton.setTitleColor(UIColor.systemTeal, for: .normal)
     }
     

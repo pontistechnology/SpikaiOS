@@ -14,7 +14,7 @@ class AppRepository: Repository {
     let networkService: NetworkService
     let databaseService: DatabaseService
     var subs = Set<AnyCancellable>()
-    let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
+    let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)!
     
     let unreadRoomsPublisher = CurrentValueSubject<Int,Never>(0)
     
@@ -29,11 +29,11 @@ class AppRepository: Repository {
     }
     
     func getAccessToken() -> String? {
-        return userDefaults.string(forKey: Constants.UserDefaults.accessToken)
+        return userDefaults.string(forKey: Constants.Database.accessToken)
     }
     
     func getMyDeviceId() -> Int64 {
-        return Int64(userDefaults.integer(forKey: Constants.UserDefaults.deviceId))
+        return Int64(userDefaults.integer(forKey: Constants.Database.deviceId))
     }
     
     func getMainContext() -> NSManagedObjectContext {

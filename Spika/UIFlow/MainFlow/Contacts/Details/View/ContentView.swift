@@ -10,23 +10,22 @@ import UIKit
 class ContentView: UIView, BaseView {
     
     let profilePhoto = UIImageView()
-    let nameLabel = CustomLabel(text: "Name and Surname", fontName: .MontserratSemiBold)
+    let nameLabel = CustomLabel(text: .getStringFor(.nameAndSurname), fontName: .MontserratSemiBold)
     let messageButton = ImageButton(image: UIImage(safeImage: .chatBubble))
     let phoneCallButton = ImageButton(image: UIImage(safeImage: .phoneCall))
     let videoCallButton = ImageButton(image: UIImage(safeImage: .videoCall))
-//    let testLabel = CustomLabel(text: "Test")
     let optionButtonsStackView = UIStackView()
     let switchStackView = UIStackView()
     let labelsStackView = UIStackView()
-    let sharedMediaOptionButton = NavView(text: "Shared Media, Links and Docs")
-    let chatSearchOptionButton = NavView(text: "Chat search")
-    let callHistoryOptionButton = NavView(text: "Call history")
-    let notesOptionButton = NavView(text: "Notes")
-    let favoriteMessagesOptionButton = NavView(text: "Favorite messages")
-    let pinChatSwitchView = SwitchView(text: "Pin chat")
-    let muteSwitchView = SwitchView(text: "Mute")
-    let blockLabel = CustomLabel(text: "Block", textSize: 14, textColor: .appRed)
-    let reportLabel = CustomLabel(text: "Report", textSize: 14, textColor: .appRed)
+    let sharedMediaOptionButton = NavView(text: .getStringFor(.sharedMediaLinksDocs))
+    let chatSearchOptionButton = NavView(text: .getStringFor(.chatSearch))
+    let callHistoryOptionButton = NavView(text: .getStringFor(.callHistory))
+    let notesOptionButton = NavView(text: .getStringFor(.notes))
+    let favoriteMessagesOptionButton = NavView(text: .getStringFor(.favoriteMessages))
+    let pinChatSwitchView = SwitchView(text: .getStringFor(.pinchat))
+    let muteSwitchView = SwitchView(text: .getStringFor(.mute))
+    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: .appRed)
+    let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .appRed)
     
 
     override init(frame: CGRect) {
@@ -57,7 +56,7 @@ class ContentView: UIView, BaseView {
         addSubview(labelsStackView)
         labelsStackView.addArrangedSubview(blockLabel)
         labelsStackView.addArrangedSubview(reportLabel)
-
+        
     }
     
     func styleSubviews() {

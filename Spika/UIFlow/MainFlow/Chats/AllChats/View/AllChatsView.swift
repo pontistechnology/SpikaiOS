@@ -9,9 +9,9 @@ import UIKit
 
 class AllChatsView: UIView, BaseView {
     
-    let chatLabel = CustomLabel(text: "Chat", textSize: 28, textColor: .textPrimaryAndWhite)
+    let chatLabel = CustomLabel(text: .getStringFor(.chat), textSize: 28, textColor: .textPrimaryAndWhite)
     let pencilImageView = UIImageView()
-    let searchBar = SearchBar(placeholder: "Search for contact", shouldShowCancel: false)
+    let searchBar = SearchBar(placeholder: .getStringFor(.searchForContact), shouldShowCancel: false)
     let allChatsTableView = UITableView()
     
     override init(frame: CGRect) {

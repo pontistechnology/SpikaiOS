@@ -25,7 +25,7 @@ class NewGroupChatViewController: BaseViewController {
     func setupBindings() {
         newGroupChatView.selectedUsersTableView.delegate = self
         newGroupChatView.selectedUsersTableView.dataSource = self
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(createButtonHandler))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: .getStringFor(.create), style: .plain, target: self, action: #selector(createButtonHandler))
         navigationItem.rightBarButtonItem?.isEnabled = false
         
         newGroupChatView.usernameTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -57,7 +57,7 @@ extension NewGroupChatViewController: UITableViewDelegate {
 
 extension NewGroupChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        newGroupChatView.numberOfUsersLabel.text = "\(viewModel.selectedUsers.count) people selected"
+        newGroupChatView.numberOfUsersLabel.text = "\(viewModel.selectedUsers.count) " + .getStringFor(.peopleSelected)
         return viewModel.selectedUsers.count
     }
     

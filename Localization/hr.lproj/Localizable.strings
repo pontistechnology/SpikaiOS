@@ -1,0 +1,84 @@
+/* 
+  Localizable.strings
+  Spika
+
+  Created by Vedran Vugrin on 13.12.2022..
+*/
+
+"Spika" = "- -";
+"Cancel" = "- -";
+"Done" = "- -";
+"Next" = "- -";
+"Show more" = "- -";
+"Show less" = "- -";
+"Members" = "- -";
+"Details" = "- -";
+"shared" = "- -";
+ 
+ "Search" = "- -";
+ "ALL COUNTRIES" = "- -";
+ "Could not auth user" = "- -";
+ "Enter your phone number to start using Spika" = "- -";
+ "Eg. 98726123" = "- -";
+ "Phone number" = "- -";
+ "We sent you 6 digit verification code on" = "- -";
+ 
+ "Username" = "- -";
+ "Enter username" = "- -";
+ "Take a photo" = "- -";
+ "Choose from gallery" = "- -";
+ "Remove photo" = "- -";
+ "Please use better quality." = "- -";
+ "Please select a square" = "- -";
+ 
+ "We sent you 6 digit verification code." = "- -";
+ "Resend code" = "- -";
+ 
+ "Chat" = "- -";
+ "Call History" = "- -";
+ "Contacts" = "- -";
+ "Settings" = "- -";
+ 
+ "Group" = "- -";
+ "Shared Media, Links and Docs" = "- -";
+ "Chat search" = "- -";
+ "Notes" = "- -";
+ "Favorites" = "- -";
+ "Pin chat" = "- -";
+ "Mute" = "- -";
+ "Block" = "- -";
+ "Report" = "- -";
+
+"Search for contact,message, file..." = "- -";
+"Media" = "- -";
+"Links" = "- -";
+"Docs" = "- -";
+
+"selected" = "- -";
+"Select users" = "- -";
+"Search for contact" = "- -";
+
+"Read by" = "- -";
+"Delivered to" = "- -";
+"Sent to" = "- -";
+"waiting" = "- -";
+
+"Create" = "- -";
+"people selected" = "- -";
+"New Group" = "- -";
+"Group name..." = "- -";
+
+"Title" = "- -";
+"noname" = "- -";
+
+"Unknown" = "- -";
+"Today" = "- -";
+"Yesterday" = "- -";
+"Reply" = "- -";
+
+"New chat" = "- -";
+"New group chat" = "- -";
+"New private chat" = "- -";
+
+"Name and Surname" = "- -";
+"Favorite messages" = "- -";

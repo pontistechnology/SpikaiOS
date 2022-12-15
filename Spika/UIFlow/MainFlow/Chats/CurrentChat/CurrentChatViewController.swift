@@ -366,7 +366,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             let repliedMessage = Message(messageEntity: repliedMessageEntity)
             let senderName = viewModel.room?.getDisplayNameFor(userId: repliedMessage.fromUserId)
             
-            cell.showReplyView(senderName: senderName ?? "Unknown", message: repliedMessage,
+            cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: repliedMessage,
                                sender: cell.getMessageSenderType(reuseIdentifier: identifier),
                                indexPath: frc?.indexPath(forObject: repliedMessageEntity))
         }
@@ -450,11 +450,11 @@ extension CurrentChatViewController {
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room?.type == .privateRoom {
-            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarUrl?.getFullUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: "yesterday")
+            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarUrl?.getFullUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
         } else {
             friendInfoView.change(avatarUrl: viewModel.room?.avatarUrl?.getFullUrl(),
                                   name: viewModel.room?.name,
-                                  lastSeen: "today")
+                                  lastSeen: .getStringFor(.today))
         }
         
         self.navigationItem.titleView = UIView(frame: .zero)
@@ -487,7 +487,7 @@ extension CurrentChatViewController {
 extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstRight = UIContextualAction(style: .normal, title: "Details") { [weak self] (action, view, completionHandler) in
+        let firstRight = UIContextualAction(style: .normal, title: .getStringFor(.details)) { [weak self] (action, view, completionHandler) in
             if let messageEntity = self?.frc?.object(at: indexPath),
                let records = Message(messageEntity: messageEntity).records {
                 self?.viewModel.presentMessageDetails(records: records)
@@ -499,13 +499,13 @@ extension CurrentChatViewController {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { [weak self] (action, view, completionHandler) in
+        let firstLeft = UIContextualAction(style: .normal, title: .getStringFor(.reply)) { [weak self] (action, view, completionHandler) in
             
             guard let messageEntity = self?.frc?.object(at: indexPath) else { return }
             let message = Message(messageEntity: messageEntity)
             let senderName = self?.viewModel.room?.getDisplayNameFor(userId: message.fromUserId)
             
-            self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? "Unknown", message: message, indexPath: indexPath)
+            self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message, indexPath: indexPath)
             
             completionHandler(true)
         }

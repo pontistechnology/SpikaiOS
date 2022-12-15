@@ -24,24 +24,24 @@ class EnterUsernameViewController: BaseViewController {
     }
     
     func setupActionSheet() {
-        actionSheet.addAction(UIAlertAction(title: "Take a photo", style: .default, handler: { [weak self] _ in
+        actionSheet.addAction(UIAlertAction(title:  .getStringFor(.takeAPhoto), style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             self.imagePicker.sourceType = .camera
             self.imagePicker.cameraCaptureMode = .photo
             self.imagePicker.cameraDevice = .front
             self.present(self.imagePicker, animated: true, completion: nil)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Choose from gallery", style: .default, handler: { [weak self] _ in
+        actionSheet.addAction(UIAlertAction(title:  .getStringFor(.chooseFromHallery), style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             self.imagePicker.sourceType = .photoLibrary
             self.present(self.imagePicker, animated: true, completion: nil)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Remove photo", style: .destructive, handler: { [weak self] _ in
+        actionSheet.addAction(UIAlertAction(title:  .getStringFor(.removePhoto), style: .destructive, handler: { [weak self] _ in
             guard let self = self else { return }
             self.fileData = nil
             self.enterUsernameView.profilePictureView.deleteMainImage()
         }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: .getStringFor(.cancel), style: .cancel, handler: nil))
     }
     
     func setupBindings() {
@@ -74,7 +74,6 @@ class EnterUsernameViewController: BaseViewController {
             guard let self = self else { return }
             self.enterUsernameView.profilePictureView.showUploadProgress(progress: progress)
         }.store(in: &subscriptions)
-
     }
 }
 
@@ -93,9 +92,9 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
             
             
             if widhtInPixels < 512 || heightInPixels < 512 {
-                viewModel.showError("Please use better quality.")
+                viewModel.showError(.getStringFor(.pleaseUserBetterQuality))
             } else if abs(widhtInPixels - heightInPixels) > 20 {
-                viewModel.showError("Please select a square")
+                viewModel.showError(.getStringFor(.pleaseSelectASquare))
             } else {
                 guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
                 enterUsernameView.profilePictureView.showImage(resizedImage)
@@ -103,7 +102,6 @@ extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavig
             }
             dismiss(animated: true, completion: nil)
         }
-        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

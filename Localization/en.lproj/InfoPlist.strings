@@ -1,0 +1,13 @@
+/* 
+  InfoPlist.strings
+  Spika
+
+  Created by Vedran Vugrin on 14.12.2022..
+  
+*/
+
+"NSCameraUsageDescription" = "Can we use your microphone?";
+"NSContactsUsageDescription" = "Can we use your contacts?";
+"NSMicrophoneUsageDescription" = "Can we use your microphone?";
+
+

@@ -10,12 +10,12 @@ import UIKit
 
 class SelectUsersView: UIView, BaseView {
     
-    let numberSelectedUsersLabel = CustomLabel(text: "0/100 selected", textSize: 11, textColor: .textPrimaryAndWhite)
-    let cancelLabel = CustomLabel(text: "Cancel", textSize: 14, textColor: .primaryColor, fontName: .MontserratBold)
-    let nextLabel = CustomLabel(text: "Next", textSize: 14, textColor: .primaryColor, fontName: .MontserratSemiBold)
-    let chatLabel = CustomLabel(text: "New chat", textSize: 28, textColor: .textPrimaryAndWhite)
-    let searchBar = SearchBar(placeholder: "Search for contact", shouldShowCancel: false)
-    let chatOptionLabel = CustomLabel(text: "New group chat", textSize: 14, textColor: .primaryColor, fontName: .MontserratBold)
+    let numberSelectedUsersLabel = CustomLabel(text: "0/100 " + .getStringFor(.selected), textSize: 11, textColor: .textPrimaryAndWhite)
+    let cancelLabel = CustomLabel(text: .getStringFor(.cancel), textSize: 14, textColor: .primaryColor, fontName: .MontserratBold)
+    let nextLabel = CustomLabel(text: .getStringFor(.next), textSize: 14, textColor: .primaryColor, fontName: .MontserratSemiBold)
+    let chatLabel = CustomLabel(text: .getStringFor(.newChat), textSize: 28, textColor: .textPrimaryAndWhite)
+    let searchBar = SearchBar(placeholder: .getStringFor(.searchForContact), shouldShowCancel: false)
+    let chatOptionLabel = CustomLabel(text: .getStringFor(.newGroupChat), textSize: 14, textColor: .primaryColor, fontName: .MontserratBold)
     let contactsTableView = ContactsTableView()
     let groupUsersCollectionView = SelectedUsersCollectionView()
     var groupUsersCollectionViewHeightConstraint: NSLayoutConstraint?
@@ -71,8 +71,8 @@ class SelectUsersView: UIView, BaseView {
         groupUsersCollectionView.isHidden = !isVisible
         numberSelectedUsersLabel.isHidden = !isVisible
         nextLabel.isHidden = !isVisible
-        chatLabel.text = isVisible ? "New group" : "New chat"
-        chatOptionLabel.text = isVisible ? "New private chat" : "New group chat"
+        chatLabel.text = isVisible ? .getStringFor(.newGroup) : .getStringFor(.newChat)
+        chatOptionLabel.text = isVisible ? .getStringFor(.newPrivateChat) : .getStringFor(.newGroupChat)
     }
     
     

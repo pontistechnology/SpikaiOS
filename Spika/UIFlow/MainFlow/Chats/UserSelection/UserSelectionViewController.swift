@@ -63,7 +63,7 @@ class UserSelectionViewController: BaseViewController {
         
         viewModel.numberOfSelectedUsers
             .sink { [weak self]  number in
-                self?.userSelectionView.numberSelectedUsersLabel.text = "\(number) selected"
+                self?.userSelectionView.numberSelectedUsersLabel.text = "\(number) " + .getStringFor(.selected)
             }.store(in: &subscriptions)
     }
     

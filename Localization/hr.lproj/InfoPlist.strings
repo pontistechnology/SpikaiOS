@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  Spika
+
+  Created by Vedran Vugrin on 14.12.2022..
+  
+*/
+
+"NSCameraUsageDescription" = "- -";
+"NSContactsUsageDescription" = "- -";
+"NSMicrophoneUsageDescription" = "- -";

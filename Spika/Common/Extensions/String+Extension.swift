@@ -10,6 +10,10 @@ import CryptoKit
 import UIKit
 
 extension String {
+    static func getStringFor(_ value: Constants.Strings) -> String {
+        return NSLocalizedString(value.rawValue, comment: value.rawValue)
+    }
+    
     func getSHA256() -> String {
         let data = Data(self.utf8)
         let dataHashed = SHA256.hash(data: data)
