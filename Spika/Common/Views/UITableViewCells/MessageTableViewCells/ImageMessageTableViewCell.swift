@@ -39,10 +39,24 @@ extension ImageMessageTableViewCell {
     }
     
     func updateCell(message: Message) {
-        photoImageView.setImage(url: message.body?.thumb?.path?.getFullUrl())
+        let imageRatio: ImageRatio
+        let width = Float(message.body?.thumb?.metaData?.width ?? 1)
+        let height = Float(message.body?.thumb?.metaData?.height ?? 1)
+        let ratio = width / height
+        print("DIF: ", ratio, width, height)
+        if 0.75...1.25 ~= ratio {
+            imageRatio = .square
+        } else if ratio > 1.25 {
+            imageRatio = .landscape
+        } else {
+            imageRatio = .portrait
+        }
+        
+        photoImageView.setImage(url: message.body?.thumb?.path?.getFullUrl(), as: imageRatio)
         
         photoImageView.tap().sink { [weak self] _ in
             self?.tapPublisher.send(.openImage)
+            print("dif: ratio ", ratio, imageRatio)
         }.store(in: &subs)
     }
 }
