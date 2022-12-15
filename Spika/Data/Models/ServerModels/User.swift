@@ -44,8 +44,6 @@ struct User: Codable {
     
     func getAvatarUrl() -> URL? {
         let s = "api/upload/files/" + "\(avatarFileId ?? 0)"
-        let a = s.getFullUrl()
-        print("aaa ooo: ", a)
-        return a
+        return s.getFullUrl()
     }
 }

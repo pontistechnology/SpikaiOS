@@ -112,7 +112,7 @@ extension AllChatsViewController: UITableViewDataSource {
             
         } else if room.type != .privateRoom {
             
-            cell?.configureCell(avatarUrl: room.avatarUrl?.getFullUrl(),
+            cell?.configureCell(avatarUrl: room.getAvatarUrl(),
                                 name: room.name ?? "noname",
                                 description: entity.lastMessageText(),
                                 time: entity.lastMessageTime(),
