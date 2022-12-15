@@ -263,18 +263,9 @@ extension CurrentChatViewController {
     
     func handleInput(_ state: MessageInputViewState) {
         switch state {
-        case .send(let message):
-            var referenceMessage: ReferenceMessage?
-            
-            if let reference = currentChatView.messageInputView.replyView?.message {
-                referenceMessage = ReferenceMessage(id: reference.id,
-                                                    body: ReferenceBody(text: reference.body?.text),
-                                                    fromUserId: reference.fromUserId,
-                                                    roomId: reference.roomId,
-                                                    type: reference.type)
-            }
-            
-            viewModel.trySendMessage(text: message, referenceMessage: referenceMessage)
+        case .send(let inputText):
+            let replyId = currentChatView.messageInputView.replyView?.message.id
+            viewModel.trySendMessage(text: inputText, replyId: replyId)
             currentChatView.messageInputView.clean()
         case .camera, .microphone:
             print(state, " in ccVC")
@@ -359,7 +350,7 @@ extension CurrentChatViewController: UITableViewDataSource {
               let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
         else { return EmptyTableViewCell() }
         
-        if let replyId = message.body?.referenceMessage?.id,
+        if let replyId = message.replyId,
            replyId >= 0,
            let repliedMessageEntity = frc?.fetchedObjects?.first(where: { $0.id == "\(replyId)" })
         {

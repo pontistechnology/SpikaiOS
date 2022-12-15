@@ -27,8 +27,7 @@
         <attribute name="fromUserId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="localId" optional="YES" attributeType="String"/>
-        <attribute name="referenceMessageId" optional="YES" attributeType="String"/>
-        <attribute name="reply" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="replyId" optional="YES" attributeType="String"/>
         <attribute name="roomId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="seenCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="totalUserCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>

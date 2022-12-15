@@ -16,14 +16,14 @@ struct Message: Codable {
     let totalUserCount: Int64?
     let deliveredCount: Int64?
     let seenCount: Int64?
-    let reply: Bool
+    let replyId: Int64?
     let type: MessageType
     let body: MessageBody?
     let records: [MessageRecord]?
 }
 
 extension Message {
-    init(createdAt: Int64, fromUserId: Int64, roomId: Int64, type: MessageType, body: MessageBody, reply: Bool, localId: String) {
+    init(createdAt: Int64, fromUserId: Int64, roomId: Int64, type: MessageType, body: MessageBody, replyId: Int64?, localId: String) {
         self.body = body
         self.id = nil
         self.localId = localId
@@ -31,7 +31,7 @@ extension Message {
         self.totalUserCount = -1
         self.deliveredCount = -1
         self.seenCount = -1
-        self.reply = reply
+        self.replyId = replyId
         self.roomId = roomId
         self.type = type
         self.createdAt = createdAt
@@ -54,7 +54,7 @@ extension Message {
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
-                  reply: messageEntity.reply,
+                  replyId: Int64(messageEntity.replyId ?? "-1"),
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
                                     file: FileData(fileName: messageEntity.bodyFileName,
@@ -72,12 +72,7 @@ extension Message {
                                                                        height: messageEntity.bodyThumbMetaDataHeight,
                                                                        duration: messageEntity.bodyThumbMetaDataDuration)),
                                     fileId: nil,
-                                    thumbId: nil,
-                                    referenceMessage: ReferenceMessage(id: Int64(messageEntity.referenceMessageId ?? "-2"),
-                                                                       body: nil,
-                                                                       fromUserId: nil,
-                                                                       roomId: nil,
-                                                                       type: nil)),
+                                    thumbId: nil),
                   records: messageRecords)
     }
     
@@ -116,19 +111,6 @@ struct MessageBody: Codable {
     let thumb: FileData?
     let fileId: Int?
     let thumbId: Int?
-    let referenceMessage: ReferenceMessage?
-}
-
-struct ReferenceMessage: Codable {
-    let id: Int64?
-    let body: ReferenceBody?
-    let fromUserId: Int64?
-    let roomId: Int64?
-    let type: MessageType?
-}
-
-struct ReferenceBody: Codable {
-    let text: String?
 }
 
 struct FileData: Codable {
