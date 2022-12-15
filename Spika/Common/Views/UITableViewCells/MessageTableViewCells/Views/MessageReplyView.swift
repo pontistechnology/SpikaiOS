@@ -22,7 +22,7 @@ class MessageReplyView: UIView {
         self.indexPath = indexPath
         self.showCloseButton = showCloseButton
         containerView.backgroundColor = backgroundColor
-        senderNameLabel = CustomLabel(text: senderName, textSize: 9, textColor: .textPrimary, fontName: .MontserratMedium)
+        senderNameLabel = CustomLabel(text: senderName, textSize: 12, textColor: .textPrimary, fontName: .MontserratSemiBold)
         iconAndTextView = IconAndLabelView(messageType: message.type, text: message.body?.text)
         super.init(frame: .zero)
         thumbnailImageView.kf.setImage(with: message.body?.file?.path?.getFullUrl())
@@ -67,8 +67,10 @@ extension MessageReplyView: BaseView {
         
         iconAndTextView.anchor(leading: senderNameLabel.leadingAnchor, bottom: containerView.bottomAnchor, trailing: thumbnailImageView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 4))
         
-        thumbnailImageView.anchor(top: containerView.topAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        thumbnailImageView.anchor(trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         thumbnailImageView.constrainWidth(44)
+        thumbnailImageView.constrainHeight(54)
+        thumbnailImageView.centerYToSuperview()
         
         if showCloseButton {
             containerView.anchor(trailing: closeButton.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 160))

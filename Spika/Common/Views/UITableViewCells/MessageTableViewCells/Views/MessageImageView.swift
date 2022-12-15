@@ -72,4 +72,18 @@ enum ImageRatio {
     case portrait
     case landscape
     case square
+    
+    init(width: Int64, height: Int64) {
+        let width = Float(width)
+        let height = Float(height)
+        let ratio = width / height
+        print("DIF: ", ratio, width, height)
+        if 0.75...1.25 ~= ratio {
+            self = .square
+        } else if ratio > 1.25 {
+            self = .landscape
+        } else {
+            self = .portrait
+        }
+    }
 }
