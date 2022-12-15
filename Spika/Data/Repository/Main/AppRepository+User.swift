@@ -66,7 +66,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func updateUser(username: String?, avatarURL: String?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>{
+    func updateUser(username: String?, avatarFileId: Int64?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>{
         
         guard let accessToken = getAccessToken()
         else {return Fail<UserResponseModel, Error>(error: NetworkError.noAccessToken)
@@ -76,7 +76,7 @@ extension AppRepository {
         let resources = Resources<UserResponseModel, UserRequestModel>(
             path: Constants.Endpoints.userInfo,
             requestType: .PUT,
-            bodyParameters: UserRequestModel(telephoneNumber: telephoneNumber, emailAddress: email, displayName: username, avatarUrl: avatarURL),
+            bodyParameters: UserRequestModel(telephoneNumber: telephoneNumber, emailAddress: email, displayName: username, avatarFileId: avatarFileId),
             httpHeaderFields: ["accesstoken" : accessToken])
         return networkService.performRequest(resources: resources)
     }

@@ -104,7 +104,7 @@ extension AllChatsViewController: UITableViewDataSource {
         let badgeNumber = entity.numberOfUnreadMessages(myUserId: viewModel.getMyUserId())
         if room.type == .privateRoom,
            let friendUser = room.getFriendUserInPrivateRoom(myUserId: viewModel.getMyUserId()) {
-            cell?.configureCell(avatarUrl: friendUser.avatarUrl?.getFullUrl(),
+            cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
                                 name: friendUser.getDisplayName(),
                                 description: entity.lastMessageText(),
                                 time: entity.lastMessageTime(),

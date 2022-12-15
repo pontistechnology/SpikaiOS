@@ -47,7 +47,7 @@ protocol Repository {
     // MARK: NETWORKING: User
     
     func fetchMyUserDetails() -> AnyPublisher<AuthResponseModel, Error>
-    func updateUser(username: String?, avatarURL: String?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>
+    func updateUser(username: String?, avatarFileId: Int64?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>
     
     // MARK: NETWORKING: Contacts
     

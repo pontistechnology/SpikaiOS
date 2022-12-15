@@ -30,16 +30,16 @@ class EnterUsernameViewModel: BaseViewModel {
                 guard let self = self else { return }
                 self.uploadProgressPublisher.send(percent)
                 guard let file = file else { return }
-                self.updateInfo(username: username, avatarUrl: file.path)
+                self.updateInfo(username: username, avatarFileId: file.id ?? 0)
             }.store(in: &subscriptions)
         } else {
             self.updateInfo(username: username)
         }
     }
     
-    private func updateInfo(username: String, avatarUrl: String? = nil) {
+    private func updateInfo(username: String, avatarFileId: Int64? = nil) {
         networkRequestState.send(.started())
-        repository.updateUser(username: username, avatarURL: avatarUrl, telephoneNumber: nil, email: nil).sink { [weak self] completion in
+        repository.updateUser(username: username, avatarFileId: avatarFileId, telephoneNumber: nil, email: nil).sink { [weak self] completion in
             guard let self = self else { return }
             self.networkRequestState.send(.finished)
             switch completion {
