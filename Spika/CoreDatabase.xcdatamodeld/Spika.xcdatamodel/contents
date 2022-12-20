@@ -16,14 +16,18 @@
         <attribute name="bodyFilePath" optional="YES" attributeType="String"/>
         <attribute name="bodyFileSize" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="bodyText" optional="YES" attributeType="String"/>
+        <attribute name="bodyThumbMetaDataDuration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="bodyThumbMetaDataHeight" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="bodyThumbMetaDataWidth" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="bodyThumbMimeType" optional="YES" attributeType="String"/>
+        <attribute name="bodyThumbPath" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="deliveredCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="fromUserId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="localId" optional="YES" attributeType="String"/>
-        <attribute name="referenceMessageId" optional="YES" attributeType="String"/>
-        <attribute name="reply" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="replyId" optional="YES" attributeType="String"/>
         <attribute name="roomId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="seenCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="totalUserCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>

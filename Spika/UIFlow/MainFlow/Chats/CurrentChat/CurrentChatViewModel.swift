@@ -166,7 +166,7 @@ extension CurrentChatViewModel {
 
 extension CurrentChatViewModel {
     // Will be refactored, when server is ready with replyId
-    func trySendMessage(text: String, referenceMessage: ReferenceMessage?) {
+    func trySendMessage(text: String, replyId: Int64?) {
         guard let room = self.room else { return }
 //        sendSelectedFiles(files: selectedFiles.value)
         print("ROOM: ", room)
@@ -174,8 +174,8 @@ extension CurrentChatViewModel {
         let message = Message(createdAt: Date().currentTimeMillis(),
                               fromUserId: getMyUserId(),
                               roomId: room.id, type: .text,
-                              body: MessageBody(text: text, file: nil, fileId: nil, thumbId: nil, referenceMessage: referenceMessage),
-                              reply: referenceMessage != nil,
+                              body: MessageBody(text: text, file: nil, thumb: nil, fileId: nil, thumbId: nil),
+                              replyId: replyId,
                               localId: uuid)
         
         repository.saveMessages([message]).sink { c in
@@ -184,15 +184,15 @@ extension CurrentChatViewModel {
             guard let self = self,
                   let body = message.body
             else { return }
-            self.sendMessage(body: body, localId: uuid, type: .text, reply: referenceMessage != nil)
+            self.sendMessage(body: body, localId: uuid, type: .text, replyId: message.replyId)
         }.store(in: &subscriptions)
     }
     
     
-    func sendMessage(body: MessageBody, localId: String, type: MessageType, reply: Bool) {
+    func sendMessage(body: MessageBody, localId: String, type: MessageType, replyId: Int64?) {
         guard let room = self.room else { return }
         
-        self.repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, reply: reply).sink { [weak self] completion in
+        self.repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, replyId: replyId).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 

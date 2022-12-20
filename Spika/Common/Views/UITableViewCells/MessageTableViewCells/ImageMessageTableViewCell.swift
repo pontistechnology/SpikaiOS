@@ -39,7 +39,10 @@ extension ImageMessageTableViewCell {
     }
     
     func updateCell(message: Message) {
-        photoImageView.setImage(url: message.body?.file?.path?.getFullUrl())
+        let imageRatio = ImageRatio(width: message.body?.thumb?.metaData?.width ?? 1,
+                                    height: message.body?.thumb?.metaData?.height ?? 1)
+        
+        photoImageView.setImage(url: message.body?.thumb?.path?.getFullUrl(), as: imageRatio)
         
         photoImageView.tap().sink { [weak self] _ in
             self?.tapPublisher.send(.openImage)

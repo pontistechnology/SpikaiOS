@@ -15,7 +15,7 @@ extension AppRepository {
     
     // MARK: Network
     
-    func sendMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String, reply: Bool) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<SendMessageResponse, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -29,7 +29,7 @@ extension AppRepository {
                                                type: type.rawValue,
                                                body: body,
                                                localId: localId,
-                                               reply: reply),
+                                               replyId: replyId),
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
