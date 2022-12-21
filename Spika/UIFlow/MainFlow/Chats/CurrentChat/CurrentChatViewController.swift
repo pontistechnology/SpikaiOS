@@ -388,7 +388,7 @@ extension CurrentChatViewController: UITableViewDataSource {
                 cell.updateSender(name: user.getDisplayName())
             }
             if !isNextCellMine(for: indexPath) {
-                cell.updateSender(photoUrl: user.avatarUrl?.getFullUrl())
+                cell.updateSender(photoUrl: user.getAvatarUrl())
             }
         }
         return cell
@@ -441,7 +441,7 @@ extension CurrentChatViewController {
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room?.type == .privateRoom {
-            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarUrl?.getFullUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
+            friendInfoView.change(avatarUrl: viewModel.friendUser?.getAvatarUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
         } else {
             friendInfoView.change(avatarUrl: viewModel.room?.getAvatarUrl(),
                                   name: viewModel.room?.name,

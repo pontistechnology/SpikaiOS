@@ -86,7 +86,7 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
-    func updateUser(username: String?, avatarURL: String?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error> {
+    func updateUser(username: String?, avatarFileId: Int64?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error> {
         // TODO: - add tests
         return Fail<UserResponseModel, Error>(error: NetworkError.badURL)
             .receive(on: DispatchQueue.main)
