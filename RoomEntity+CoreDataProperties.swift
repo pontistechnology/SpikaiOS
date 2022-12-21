@@ -16,7 +16,7 @@ extension RoomEntity {
         return NSFetchRequest<RoomEntity>(entityName: "RoomEntity")
     }
 
-    @NSManaged public var avatarUrl: String?
+    @NSManaged public var avatarFileId: Int64
     @NSManaged public var createdAt: Int64
     @NSManaged public var id: Int64
     @NSManaged public var lastMessageTimestamp: Int64

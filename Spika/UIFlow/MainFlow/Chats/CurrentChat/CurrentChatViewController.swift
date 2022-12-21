@@ -443,7 +443,7 @@ extension CurrentChatViewController {
         if viewModel.room?.type == .privateRoom {
             friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarUrl?.getFullUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
         } else {
-            friendInfoView.change(avatarUrl: viewModel.room?.avatarUrl?.getFullUrl(),
+            friendInfoView.change(avatarUrl: viewModel.room?.getAvatarUrl(),
                                   name: viewModel.room?.name,
                                   lastSeen: .getStringFor(.today))
         }
