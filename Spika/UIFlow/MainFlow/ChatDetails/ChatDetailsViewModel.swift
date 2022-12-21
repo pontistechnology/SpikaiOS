@@ -45,7 +45,7 @@ class ChatDetailsViewModel: BaseViewModel {
             .muteUnmuteRoom(roomId: self.room.value.id, mute: mute)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 let roomName = self.room.value.name ?? String(self.room.value.id)
 
                 switch completion {
