@@ -59,6 +59,13 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.chatDetailView.contentView.chatMembersView.updateWithUsers(users: users)
             }.store(in: &self.viewModel.subscriptions)
         
+        self.viewModel.room
+            .map { $0.muted }
+            .sink { [weak self] isMuted in
+                self?.chatDetailView.contentView.muteSwitchView.stateSwitch.isOn = isMuted
+            }
+            .store(in: &self.viewModel.subscriptions)
+        
         isAdmin
             .subscribe(self.chatDetailView.contentView.chatMembersView.isAdmin)
             .store(in: &self.viewModel.subscriptions)
