@@ -11,5 +11,5 @@ struct UserRequestModel: Codable {
     var telephoneNumber: String?
     var emailAddress: String?
     var displayName: String?
-    var avatarUrl: String?
+    var avatarFileId: Int64?
 }

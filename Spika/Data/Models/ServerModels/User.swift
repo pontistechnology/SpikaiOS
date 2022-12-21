@@ -11,7 +11,7 @@ import Foundation
 struct User: Codable {
     let id: Int64
     var displayName: String?
-    var avatarUrl: String?
+    var avatarFileId: Int64?
     var telephoneNumber: String?
     var telephoneNumberHashed: String?
     var emailAddress: String?
@@ -22,7 +22,7 @@ struct User: Codable {
     init(entity: UserEntity) {
         self.id = entity.id
         self.displayName = entity.displayName
-        self.avatarUrl = entity.avatarUrl
+        self.avatarFileId = entity.avatarFileId
         self.telephoneNumber = entity.telephoneNumber
         self.emailAddress = entity.emailAddress
         self.createdAt = entity.createdAt
@@ -40,5 +40,10 @@ struct User: Codable {
         }
         
         return displayNameResult
+    }
+    
+    func getAvatarUrl() -> URL? {
+         let s = "api/upload/files/" + "\(avatarFileId ?? 0)"
+         return s.getFullUrl()
     }
 }

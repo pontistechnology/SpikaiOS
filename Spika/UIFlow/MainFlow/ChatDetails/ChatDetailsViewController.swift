@@ -41,7 +41,7 @@ final class ChatDetailsViewController: BaseViewController {
         // View Model Binding
         self.viewModel.room
             .compactMap{ room in
-                return room.avatarUrl?.getFullUrl()
+                return room.getAvatarUrl()
             }
             .sink { [weak self] url in
                 self?.chatDetailView.contentView.chatImage.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
@@ -58,6 +58,13 @@ final class ChatDetailsViewController: BaseViewController {
             .sink { [weak self] users in
                 self?.chatDetailView.contentView.chatMembersView.updateWithUsers(users: users)
             }.store(in: &self.viewModel.subscriptions)
+        
+        self.viewModel.room
+            .map { $0.muted }
+            .sink { [weak self] isMuted in
+                self?.chatDetailView.contentView.muteSwitchView.stateSwitch.isOn = isMuted
+            }
+            .store(in: &self.viewModel.subscriptions)
         
         isAdmin
             .subscribe(self.chatDetailView.contentView.chatMembersView.isAdmin)

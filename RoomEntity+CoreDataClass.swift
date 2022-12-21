@@ -19,9 +19,10 @@ public class RoomEntity: NSManagedObject {
         self.init(entity: entity, insertInto: context)
         self.id = room.id
         self.name = room.name
-        self.avatarUrl = room.avatarUrl
+        self.avatarFileId = room.avatarFileId ?? 0
         self.createdAt = room.createdAt
         self.type = room.type.rawValue
+        self.muted = room.muted
         
         for roomUser in room.users {
             let r = RoomUserEntity(roomUser: roomUser, roomId: room.id, insertInto: context)

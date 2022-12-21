@@ -150,12 +150,12 @@ extension MessageEntityService {
                         
                         if room.type == .privateRoom {
                             info = MessageNotificationInfo(title: rU?.user.getDisplayName() ?? "no name",
-                                                           photoUrl: rU?.user.avatarUrl?.getFullUrl(),
+                                                           photoUrl: rU?.user.getAvatarUrl(),
                                                            messageText: message.body?.text ?? " ",
                                                            room: room)
                         } else {
                             info = MessageNotificationInfo(title: room.name ?? "no name",
-                                                           photoUrl: room.avatarUrl?.getFullUrl(),
+                                                           photoUrl: room.getAvatarUrl(),
                                                            messageText: "\(rU?.user.getDisplayName() ?? "_"): " + (message.body?.text ?? ""),
                                                            room: room)
                         }
