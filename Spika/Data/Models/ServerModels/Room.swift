@@ -13,6 +13,7 @@ struct Room: Codable {
     let name: String?
     let avatarUrl: String?
     let createdAt: Int64
+    let muted: Bool
     let users: [RoomUser]
 }
 
@@ -26,6 +27,7 @@ extension Room {
                   name: roomEntity.name,
                   avatarUrl: roomEntity.avatarUrl,
                   createdAt: roomEntity.createdAt,
+                  muted: roomEntity.muted,
                   users: roomUsers
                   )
     }

@@ -23,6 +23,7 @@ extension RoomEntity {
     @NSManaged public var name: String?
     @NSManaged public var type: String?
     @NSManaged public var visitedRoom: Int64
+    @NSManaged public var muted: Bool
     @NSManaged public var messages: NSOrderedSet?
     @NSManaged public var users: NSSet?
 

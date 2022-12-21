@@ -22,6 +22,7 @@ public class RoomEntity: NSManagedObject {
         self.avatarUrl = room.avatarUrl
         self.createdAt = room.createdAt
         self.type = room.type.rawValue
+        self.muted = room.muted
         
         for roomUser in room.users {
             let r = RoomUserEntity(roomUser: roomUser, roomId: room.id, insertInto: context)
