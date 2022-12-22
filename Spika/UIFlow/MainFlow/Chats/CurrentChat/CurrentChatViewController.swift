@@ -240,6 +240,8 @@ extension CurrentChatViewController {
     
     func handleInput(_ state: MessageInputViewState) {
         switch state {
+        case .plus:
+            presentMoreActions()
         case .send(let inputText):
             let replyId = currentChatView.messageInputView.replyView?.message.id
             viewModel.trySendMessage(text: inputText, replyId: replyId)
@@ -482,6 +484,14 @@ extension CurrentChatViewController {
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }
     
+}
+
+// MARK: - More Actions Bottom Sheet
+
+private extension CurrentChatViewController {
+    func presentMoreActions() {
+        viewModel.presentMoreActions()
+    }
 }
 
 // MARK: - Photo Video picker

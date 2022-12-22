@@ -17,6 +17,7 @@ enum MessageInputViewState {
     case files
     case library
     case scrollToReply(IndexPath)
+    case plus
 }
 
 class MessageInputView: UIStackView, BaseView {
@@ -26,13 +27,11 @@ class MessageInputView: UIStackView, BaseView {
 
     private let dividerLine = UIView()
     private lazy var inputTextAndControlsView = InputTextAndControlsView(publisher: inputViewTapPublisher)
-    private let additionalOptionsView = AdditionalOptionsView()
     var replyView: MessageReplyView?
         
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        setupBindings()
     }
     
     required init(coder: NSCoder) {
@@ -58,48 +57,8 @@ class MessageInputView: UIStackView, BaseView {
 // MARK: - Bindings
 
 extension MessageInputView {
-    
-    func setupBindings() {
-        
-        additionalOptionsView.publisher.sink { [weak self] state in
-//            self?.handleAdditionalOptions(state)
-        }.store(in: &subscriptions)
-    }
-    
     func clean() {
         hideReplyView()
-        hideAdditionalOptions()
-    }
-}
-
-// MARK: - Additional options view
-
-extension MessageInputView {
-    func handleAdditionalOptions(_ state: AdditionalOptionsViewState) {
-        self.hideAdditionalOptions()
-        
-        switch state {
-        case .files:
-            inputViewTapPublisher.send(.files)
-        case .library:
-            inputViewTapPublisher.send(.library)
-        case .location:
-            break
-        case .contact:
-            break
-        }
-    }
-    func showAdditionalOptions() {
-        if additionalOptionsView.superview == nil {
-//            addSubview(additionalOptionsView)
-//            additionalOptionsView.anchor(leading: leadingAnchor, bottom: dividerLine.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-        }
-    }
-    
-    func hideAdditionalOptions() {
-        if additionalOptionsView.superview != nil {
-            additionalOptionsView.removeFromSuperview()
-        }
     }
 }
 

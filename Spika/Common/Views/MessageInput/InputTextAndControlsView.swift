@@ -101,6 +101,7 @@ private extension InputTextAndControlsView {
         
         plusButton.tap().sink { [weak self] _ in
             print("PLUS BUTTON")
+            self?.publisher.send(.plus)
         }.store(in: &subscriptions)
         
         closeButton.tap().sink { [weak self] _ in

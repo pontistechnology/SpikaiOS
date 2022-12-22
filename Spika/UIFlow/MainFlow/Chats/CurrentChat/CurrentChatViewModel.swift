@@ -49,6 +49,10 @@ extension CurrentChatViewModel {
         getAppCoordinator()?.presentMessageDetails(users: users, records: records)
     }
     
+    func presentMoreActions() {
+        getAppCoordinator()?.presentMoreActionsSheet()
+    }
+    
     func playVideo(message: Message) {
         guard let url = message.body?.file?.path?.getFullUrl(),
               let mimeType = message.body?.file?.mimeType

@@ -31,6 +31,7 @@ enum AssetName: String {
     case library = "library"
     case location = "location"
     case contact = "contact"
+    case closeMoreActions = "closeMoreActions"
     case house = "house"
     case docs = "docs"
     case search = "search"

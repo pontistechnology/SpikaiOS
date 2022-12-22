@@ -178,10 +178,10 @@ class AppCoordinator: Coordinator {
     }
     
     func presentMoreActionsSheet() {
-        let viewControllerToPresent = UIViewController()
+        let viewControllerToPresent = MoreActionsViewController()
         if #available(iOS 15.0, *) {
             if let sheet = viewControllerToPresent.sheetPresentationController {
-                sheet.detents = [.medium()]
+                sheet.detents = [.large()]
                 sheet.prefersGrabberVisible = false
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             }
