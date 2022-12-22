@@ -26,8 +26,7 @@ class MessageInputView: UIStackView, BaseView {
 
     private let dividerLine = UIView()
     private lazy var inputTextAndControlsView = InputTextAndControlsView(publisher: inputViewTapPublisher)
-    private let additionalOptionsView    = AdditionalOptionsView()
-    let selectedFilesView = SelectedFilesView()
+    private let additionalOptionsView = AdditionalOptionsView()
     var replyView: MessageReplyView?
         
     override init(frame: CGRect) {
@@ -69,7 +68,6 @@ extension MessageInputView {
     
     func clean() {
         hideReplyView()
-        hideSelectedFiles()
         hideAdditionalOptions()
     }
 }
@@ -101,26 +99,6 @@ extension MessageInputView {
     func hideAdditionalOptions() {
         if additionalOptionsView.superview != nil {
             additionalOptionsView.removeFromSuperview()
-        }
-    }
-}
-
-// MARK: - Selected files view
-
-extension MessageInputView {
-    func showSelectedFiles(_ files: [SelectedFile]) {
-        if selectedFilesView.superview == nil {
-            addSubview(selectedFilesView)
-            
-            selectedFilesView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-            selectedFilesView.constrainHeight(120)
-        }
-        selectedFilesView.showFiles(files)
-    }
-    
-    func hideSelectedFiles() {
-        if selectedFilesView.superview != nil {
-            selectedFilesView.removeFromSuperview()
         }
     }
 }

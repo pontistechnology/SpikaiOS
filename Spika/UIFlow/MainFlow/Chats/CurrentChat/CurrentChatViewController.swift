@@ -97,33 +97,10 @@ extension CurrentChatViewController {
         
         viewModel.selectedFiles.receive(on: DispatchQueue.main).sink { [weak self] files in
             guard let self = self else { return }
-            if files.isEmpty {
-                self.currentChatView.messageInputView.hideSelectedFiles()
-            } else {
-                print("FILES COUNT: ", files.count)
-                self.currentChatView.messageInputView.showSelectedFiles(files)
-                
-                let arrangedSubviews = self.currentChatView.messageInputView.selectedFilesView.itemsStackView.arrangedSubviews
-                
-                arrangedSubviews.forEach { view in
-                    if let iw = view as? SelectedFileImageView {
-                        iw.deleteImageView.tap().sink { [weak self] _ in
-                            guard let self = self,
-                                  let index =  arrangedSubviews.firstIndex(of: view)
-                            else { return }
-                            self.viewModel.selectedFiles.value.remove(at: index)
-                        }.store(in: &self.subscriptions)
-                    }
-                }
-            }
         }.store(in: &subscriptions)
         
         viewModel.uploadProgressPublisher.sink { [weak self] (index, progress) in
             guard let self = self else { return }
-            if let arrangedSubviews = self.currentChatView.messageInputView.selectedFilesView.itemsStackView.arrangedSubviews as? [SelectedFileImageView] {
-                arrangedSubviews[index].showUploadProgress(progress: progress)
-            }
-            
         }.store(in: &subscriptions)
         
         Publishers
