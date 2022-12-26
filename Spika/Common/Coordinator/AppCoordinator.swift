@@ -177,7 +177,7 @@ class AppCoordinator: Coordinator {
         currentVC?.dismiss(animated: true)
     }
     
-    func presentMoreActionsSheet() {
+    func presentMoreActionsSheet() -> PassthroughSubject<MoreActions, Never> {
         let viewControllerToPresent = MoreActionsViewController()
         if #available(iOS 15.0, *) {
             if let sheet = viewControllerToPresent.sheetPresentationController {
@@ -189,6 +189,7 @@ class AppCoordinator: Coordinator {
             // Fallback on earlier versions
         }
         navigationController.present(viewControllerToPresent, animated: true)
+        return viewControllerToPresent.moreActionsView.publisher
     }
     
     func presentAVVideoController(asset: AVAsset) {
