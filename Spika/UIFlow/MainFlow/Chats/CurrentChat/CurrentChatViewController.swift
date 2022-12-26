@@ -250,10 +250,6 @@ extension CurrentChatViewController {
             print(state, " in ccVC")
         case .emoji:
             print("emoji in ccvc")
-        case .files:
-            presentFilePicker()
-        case .library:
-            presentLibraryPicker()
         case .scrollToReply(let indexPath):
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         }

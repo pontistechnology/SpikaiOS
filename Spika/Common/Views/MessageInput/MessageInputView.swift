@@ -14,8 +14,6 @@ enum MessageInputViewState {
     case camera
     case microphone
     case emoji
-    case files
-    case library
     case scrollToReply(IndexPath)
     case plus
 }
