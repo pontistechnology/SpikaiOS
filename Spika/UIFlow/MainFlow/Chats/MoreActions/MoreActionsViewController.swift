@@ -8,7 +8,7 @@
 import UIKit
 
 class MoreActionsViewController: BaseViewController {
-    private let moreActionsView = MoreActionsView()
+    let moreActionsView = MoreActionsView()
     var viewModel: MoreActionsViewModel!
     
     override func viewDidLoad() {

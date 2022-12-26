@@ -49,8 +49,8 @@ extension CurrentChatViewModel {
         getAppCoordinator()?.presentMessageDetails(users: users, records: records)
     }
     
-    func presentMoreActions() {
-        getAppCoordinator()?.presentMoreActionsSheet()
+    func presentMoreActions() -> PassthroughSubject<MoreActions, Never>? {
+        return getAppCoordinator()?.presentMoreActionsSheet()
     }
     
     func playVideo(message: Message) {

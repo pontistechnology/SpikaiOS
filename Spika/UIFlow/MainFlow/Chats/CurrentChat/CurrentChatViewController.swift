@@ -486,7 +486,17 @@ extension CurrentChatViewController {
 
 private extension CurrentChatViewController {
     func presentMoreActions() {
-        viewModel.presentMoreActions()
+        viewModel.presentMoreActions()?.sink(receiveValue: { [weak self] state in
+            self?.dismiss(animated: true)
+            switch state {
+            case .files:
+                self?.presentFilePicker()
+            case .library:
+                self?.presentLibraryPicker()
+            case .location, .contact, .close:
+                break
+            }
+        }).store(in: &subscriptions)
     }
 }
 
