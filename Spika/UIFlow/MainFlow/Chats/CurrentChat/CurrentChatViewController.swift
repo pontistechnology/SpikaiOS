@@ -95,14 +95,6 @@ extension CurrentChatViewController {
             self?.currentChatView.messagesTableView.scrollToBottom(.force)
         }.store(in: &self.subscriptions)
         
-        viewModel.selectedFiles.receive(on: DispatchQueue.main).sink { [weak self] files in
-            guard let self = self else { return }
-        }.store(in: &subscriptions)
-        
-        viewModel.uploadProgressPublisher.sink { [weak self] (index, progress) in
-            guard let self = self else { return }
-        }.store(in: &subscriptions)
-        
         Publishers
             .Zip(frcIsChangingPublisher, frcDidChangePublisher)
             .filter{$1}
@@ -531,7 +523,7 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
                     let thumbnail = targetURL.imageThumbnail()
                     let file = SelectedFile(fileType: .image, name: nil,
                                             fileUrl: targetURL, thumbnail: thumbnail)
-                    self?.viewModel.selectedFiles.value.append(file)
+//                    self?.viewModel.selectedFiles.value.append(file)
                 }
             }
             
@@ -545,7 +537,7 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
                     let thumb = url.videoThumbnail()
                     let file  = SelectedFile(fileType: .movie, name: "video",
                                              fileUrl: targetURL, thumbnail: thumb)
-                    self?.viewModel.selectedFiles.value.append(file)
+//                    self?.viewModel.selectedFiles.value.append(file)
                 }
             }
         }

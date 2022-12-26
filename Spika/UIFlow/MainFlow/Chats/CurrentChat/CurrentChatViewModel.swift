@@ -16,8 +16,8 @@ class CurrentChatViewModel: BaseViewModel {
     let friendUser: User?
     var room: Room?
     let roomPublisher = PassthroughSubject<Room, Error>()
-    let selectedFiles = CurrentValueSubject<[SelectedFile], Never>([])
-    let uploadProgressPublisher = PassthroughSubject<(Int, CGFloat), Never>()
+//    let selectedFiles = CurrentValueSubject<[SelectedFile], Never>([])
+//    let uploadProgressPublisher = PassthroughSubject<(Int, CGFloat), Never>()
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
