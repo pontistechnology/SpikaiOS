@@ -7,7 +7,7 @@
 import Combine
 import UIKit
 
-enum MoreActions {
+enum MoreActions { // TODO: move
     case files
     case library
     case location
@@ -20,19 +20,15 @@ class MoreActionsView: UIView {
     
     private let moreActionsLabel = CustomLabel(text: "More actions", textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
     private let optionsStackView = CustomStackView(axis: .horizontal, distribution: .fillEqually, spacing: 12)
-    private let filesImageView = UIImageView(image: UIImage(safeImage: .files))
-    private let libraryImageView = UIImageView(image: UIImage(safeImage: .library))
-    private let locationImageView = UIImageView(image: UIImage(safeImage: .location))
-    private let contactImageView = UIImageView(image: UIImage(safeImage: .contact))
-    private let closeImageView = UIImageView(image: UIImage(safeImage: .closeMoreActions))
-    
-    let publisher = PassthroughSubject<MoreActions, Never>()
-    private var subs = Set<AnyCancellable>()
+    let filesImageView = UIImageView(image: UIImage(safeImage: .files))
+    let libraryImageView = UIImageView(image: UIImage(safeImage: .library))
+    let locationImageView = UIImageView(image: UIImage(safeImage: .location))
+    let contactImageView = UIImageView(image: UIImage(safeImage: .contact))
+    let closeImageView = UIImageView(image: UIImage(safeImage: .closeMoreActions))
     
     init() {
         super.init(frame: .zero)
         setupView()
-        setupBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -72,29 +68,5 @@ extension MoreActionsView: BaseView {
         
         optionsStackView.anchor(top: moreActionsLabel.bottomAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 18, left: 16, bottom: 74, right: 16))
         optionsStackView.constrainHeight(72)
-    }
-}
-
-private extension MoreActionsView {
-    func setupBindings() {
-        closeImageView.tap().sink { [weak self] _ in
-            self?.publisher.send(.close)
-        }.store(in: &subs)
-        
-        filesImageView.tap().sink { [weak self] _ in
-            self?.publisher.send(.files)
-        }.store(in: &subs)
-        
-        libraryImageView.tap().sink { [weak self] _ in
-            self?.publisher.send(.library)
-        }.store(in: &subs)
-        
-        contactImageView.tap().sink { [weak self] _ in
-            self?.publisher.send(.contact)
-        }.store(in: &subs)
-        
-        locationImageView.tap().sink { [weak self] _ in
-            self?.publisher.send(.location)
-        }.store(in: &subs)
     }
 }

@@ -186,10 +186,10 @@ class AppCoordinator: Coordinator {
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             }
         } else {
-            // Fallback on earlier versions
+            // TODO: Fallback on earlier versions
         }
         navigationController.present(viewControllerToPresent, animated: true)
-        return viewControllerToPresent.moreActionsView.publisher
+        return viewControllerToPresent.publisher
     }
     
     func presentAVVideoController(asset: AVAsset) {
