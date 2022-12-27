@@ -316,7 +316,7 @@ extension CurrentChatViewModel {
                 guard let thumbId = thumbTuple.0?.id,
                       let fileId  = fileTuple.0?.id
                 else { return }
-//                self?.sendMessage(body: MessageBody(text: nil, file: nil, thumb: nil, fileId: fileId, thumbId: thumbId), localId: UUID().uuidString, type: .image, replyId: nil)
+                self?.sendMessage(body: RequestMessageBody(text: nil, fileId: fileId, thumbId: thumbId), localId: UUID().uuidString, type: .image, replyId: nil)
             }.store(in: &subscriptions)
     }
     
