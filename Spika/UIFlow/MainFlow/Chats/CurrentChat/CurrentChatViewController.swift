@@ -511,36 +511,8 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
         print("RESULTS COUNT: ", results.count)
-        for result in results {
-            
-            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { [weak self] url, error in
-                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-                    guard let url = url,
-                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                          url.copyFileFromURL(to: targetURL) == true
-                    else { return }
-                    let thumbnail = targetURL.imageThumbnail()
-                    let file = SelectedFile(fileType: .image, name: nil,
-                                            fileUrl: targetURL, thumbnail: thumbnail)
-//                    self?.viewModel.selectedFiles.value.append(file)
-                }
-            }
-            
-            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
-                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-                    guard let url = url,
-                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                          url.copyFileFromURL(to: targetURL) == true
-                    else { return }
-                    let thumb = url.videoThumbnail()
-                    let file  = SelectedFile(fileType: .movie, name: "video",
-                                             fileUrl: targetURL, thumbnail: thumb)
-//                    self?.viewModel.selectedFiles.value.append(file)
-                }
-            }
-        }
+        viewModel.sendMultimedia(results)
+        
     }
 }
 
@@ -568,7 +540,7 @@ extension CurrentChatViewController: UIDocumentPickerDelegate {
             
             let file = SelectedFile(fileType: type, name: fileName,
                                     fileUrl: targetURL, thumbnail: type.thumbnail())
-            self.viewModel.selectedFiles.value.append(file)
+//            self.viewModel.selectedFiles.value.append(file)
         }
     }
     

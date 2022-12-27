@@ -109,8 +109,8 @@ struct MessageBody: Codable {
     let text: String?
     let file: FileData?
     let thumb: FileData?
-    let fileId: Int?
-    let thumbId: Int?
+    let fileId: Int64?
+    let thumbId: Int64?
 }
 
 struct FileData: Codable {

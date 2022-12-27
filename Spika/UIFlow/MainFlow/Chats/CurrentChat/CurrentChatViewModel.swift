@@ -10,6 +10,7 @@ import Combine
 import CoreData
 import IKEventSource
 import AVFoundation
+import PhotosUI
 
 class CurrentChatViewModel: BaseViewModel {
     
@@ -172,7 +173,6 @@ extension CurrentChatViewModel {
     // Will be refactored, when server is ready with replyId
     func trySendMessage(text: String, replyId: Int64?) {
         guard let room = self.room else { return }
-//        sendSelectedFiles(files: selectedFiles.value)
         print("ROOM: ", room)
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
@@ -297,5 +297,61 @@ extension CurrentChatViewModel {
             guard let messageRecords = response.data?.messageRecords else { return }
             self?.repository.saveMessageRecords(messageRecords)
         }.store(in: &subscriptions)
+    }
+}
+
+// MARK: - sending pictures/video
+
+extension CurrentChatViewModel {
+    
+    func sendImage(file: SelectedFile) {
+        guard let data = file.thumbnail.jpegData(compressionQuality: 1) else { return }
+        repository
+            .uploadWholeFile(data: data)
+            .combineLatest(repository.uploadWholeFile(fromUrl: file.fileUrl))
+            .sink { c in
+                
+            } receiveValue: { [weak self] (thumbTuple, fileTuple) in
+                print("jojxTHUMB: ", thumbTuple.0, "  ", thumbTuple.1)
+                print("jojxFile: ", fileTuple.0, "  ", fileTuple.1)
+                
+                guard let thumbId = thumbTuple.0?.id,
+                      let fileId  = fileTuple.0?.id
+                else { return }
+                self?.sendMessage(body: MessageBody(text: nil, file: nil, thumb: nil, fileId: fileId, thumbId: thumbId), localId: UUID().uuidString, type: .image, replyId: nil)
+            }.store(in: &subscriptions)
+    }
+    
+    func sendMultimedia(_ results: [PHPickerResult]) {
+        for result in results {
+            
+            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { [weak self] url, error in
+                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+                    guard let url = url,
+                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
+                          url.copyFileFromURL(to: targetURL) == true
+                    else { return }
+                    let thumbnail = targetURL.imageThumbnail()
+                    let file = SelectedFile(fileType: .image, name: nil,
+                                            fileUrl: targetURL, thumbnail: thumbnail)
+                    self?.sendImage(file: file)
+                }
+            }
+            
+//            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+//                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
+//                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+//                    guard let url = url,
+//                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
+//                          url.copyFileFromURL(to: targetURL) == true
+//                    else { return }
+//                    let thumb = url.videoThumbnail()
+//                    let file  = SelectedFile(fileType: .movie, name: "video",
+//                                             fileUrl: targetURL, thumbnail: thumb)
+////                    self?.viewModel.selectedFiles.value.append(file)
+//                }
+//            }
+        }
     }
 }
