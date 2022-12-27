@@ -104,7 +104,7 @@ extension AllChatsViewController: UITableViewDataSource {
         let badgeNumber = entity.numberOfUnreadMessages(myUserId: viewModel.getMyUserId())
         if room.type == .privateRoom,
            let friendUser = room.getFriendUserInPrivateRoom(myUserId: viewModel.getMyUserId()) {
-            cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
+            cell?.configureCell(avatarUrl: friendUser.avatarFileId.fullFilePathFromId(),
                                 name: friendUser.getDisplayName(),
                                 description: entity.lastMessageText(),
                                 time: entity.lastMessageTime(),
@@ -112,7 +112,7 @@ extension AllChatsViewController: UITableViewDataSource {
             
         } else if room.type != .privateRoom {
             
-            cell?.configureCell(avatarUrl: room.getAvatarUrl(),
+            cell?.configureCell(avatarUrl: room.avatarFileId.fullFilePathFromId(),
                                 name: room.name ?? .getStringFor(.noName),
                                 description: entity.lastMessageText(),
                                 time: entity.lastMessageTime(),

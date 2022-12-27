@@ -41,7 +41,7 @@ final class ChatDetailsViewController: BaseViewController {
         // View Model Binding
         self.viewModel.room
             .compactMap{ room in
-                return room.getAvatarUrl()
+                return room.avatarFileId.fullFilePathFromId()
             }
             .sink { [weak self] url in
                 self?.chatDetailView.contentView.chatImage.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))

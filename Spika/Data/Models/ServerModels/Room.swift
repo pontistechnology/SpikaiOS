@@ -45,9 +45,4 @@ extension Room {
     func getDisplayNameFor(userId: Int64) -> String {
         return users.first(where: { $0.userId == userId})?.user.getDisplayName() ?? "no name"
     }
-    
-    func getAvatarUrl() -> URL? {
-        let s = "api/upload/files/" + "\(avatarFileId ?? 0)"
-        return s.getFullUrl()
-    }
 }

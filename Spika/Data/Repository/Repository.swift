@@ -64,7 +64,7 @@ protocol Repository {
     
     // MARK: NETWORKING: Message
     
-    func sendMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<SendMessageResponse, Error>
+    func sendMessage(body: RequestMessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<SendMessageResponse, Error>
     func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error>
     func sendSeenStatus(roomId: Int64) -> AnyPublisher<SeenResponseModel, Error>
     

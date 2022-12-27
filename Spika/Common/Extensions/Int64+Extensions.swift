@@ -59,3 +59,12 @@ extension Int64 {
 //        return true // todo
 //    }
 }
+
+// MARK: - File path
+
+extension Int64? {
+    func fullFilePathFromId() -> URL? {
+        let s = "api/upload/files/" + "\(self ?? 0)"
+        return s.getFullUrl()
+    }
+}

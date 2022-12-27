@@ -83,7 +83,7 @@ extension MessageDetailsViewController: UITableViewDataSource {
                 seenRecords[indexPath.row].userId == user.id
             }) else { break }
             
-            cell?.configureCell(avatarUrl: user.getAvatarUrl(),
+            cell?.configureCell(avatarUrl: user.avatarFileId.fullFilePathFromId(),
                                 name: user.getDisplayName(),
                                 time: seenRecords[indexPath.row].createdAt.convert(to: .allChatsTimeFormat))
         case 1:
@@ -91,11 +91,11 @@ extension MessageDetailsViewController: UITableViewDataSource {
                 deliveredRecords[indexPath.row].userId == user.id
             }) else { break }
             
-            cell?.configureCell(avatarUrl: user.getAvatarUrl(),
+            cell?.configureCell(avatarUrl: user.avatarFileId.fullFilePathFromId(),
                                 name: user.getDisplayName(),
                                 time: deliveredRecords[indexPath.row].createdAt.convert(to: .allChatsTimeFormat))
         case 2:
-            cell?.configureCell(avatarUrl: remainingUsers[indexPath.row].getAvatarUrl(),
+            cell?.configureCell(avatarUrl: remainingUsers[indexPath.row].avatarFileId.fullFilePathFromId(),
                                 name: remainingUsers[indexPath.row].getDisplayName(),
                                 time: .getStringFor(.waiting))
         default:

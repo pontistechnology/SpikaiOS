@@ -55,7 +55,7 @@ extension CurrentChatViewModel {
     }
     
     func playVideo(message: Message) {
-        guard let url = message.body?.file?.path?.getFullUrl(),
+        guard let url = message.body?.file?.id.fullFilePathFromId(),
               let mimeType = message.body?.file?.mimeType
         else { return }
         let asset = AVURLAsset(url: url, mimeType: mimeType)
@@ -178,22 +178,20 @@ extension CurrentChatViewModel {
         let message = Message(createdAt: Date().currentTimeMillis(),
                               fromUserId: getMyUserId(),
                               roomId: room.id, type: .text,
-                              body: MessageBody(text: text, file: nil, thumb: nil, fileId: nil, thumbId: nil),
+                              body: MessageBody(text: text, file: nil, thumb: nil),
                               replyId: replyId,
                               localId: uuid)
         
         repository.saveMessages([message]).sink { c in
             
         } receiveValue: { [weak self] messages in
-            guard let self = self,
-                  let body = message.body
-            else { return }
-            self.sendMessage(body: body, localId: uuid, type: .text, replyId: message.replyId)
+            let body = RequestMessageBody(text: message.body?.text, fileId: message.body?.file?.id, thumbId: message.body?.thumb?.id)
+            self?.sendMessage(body: body, localId: uuid, type: .text, replyId: message.replyId)
         }.store(in: &subscriptions)
     }
     
     
-    func sendMessage(body: MessageBody, localId: String, type: MessageType, replyId: Int64?) {
+    func sendMessage(body: RequestMessageBody, localId: String, type: MessageType, replyId: Int64?) {
         guard let room = self.room else { return }
         
         self.repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, replyId: replyId).sink { [weak self] completion in
@@ -318,7 +316,7 @@ extension CurrentChatViewModel {
                 guard let thumbId = thumbTuple.0?.id,
                       let fileId  = fileTuple.0?.id
                 else { return }
-                self?.sendMessage(body: MessageBody(text: nil, file: nil, thumb: nil, fileId: fileId, thumbId: thumbId), localId: UUID().uuidString, type: .image, replyId: nil)
+//                self?.sendMessage(body: MessageBody(text: nil, file: nil, thumb: nil, fileId: fileId, thumbId: thumbId), localId: UUID().uuidString, type: .image, replyId: nil)
             }.store(in: &subscriptions)
     }
     

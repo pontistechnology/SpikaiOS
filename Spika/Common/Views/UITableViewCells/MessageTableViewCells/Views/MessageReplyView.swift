@@ -25,7 +25,7 @@ class MessageReplyView: UIView {
         senderNameLabel = CustomLabel(text: senderName, textSize: 12, textColor: .textPrimary, fontName: .MontserratSemiBold)
         iconAndTextView = IconAndLabelView(messageType: message.type, text: message.body?.text)
         super.init(frame: .zero)
-        thumbnailImageView.kf.setImage(with: message.body?.file?.path?.getFullUrl())
+        thumbnailImageView.kf.setImage(with: message.body?.thumb?.id.fullFilePathFromId())
         setupView()
     }
     
