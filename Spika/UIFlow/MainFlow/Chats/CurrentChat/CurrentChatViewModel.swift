@@ -55,7 +55,7 @@ extension CurrentChatViewModel {
     }
     
     func playVideo(message: Message) {
-        guard let url = message.body?.file?.id.fullFilePathFromId(),
+        guard let url = message.body?.file?.id?.fullFilePathFromId(),
               let mimeType = message.body?.file?.mimeType
         else { return }
         let asset = AVURLAsset(url: url, mimeType: mimeType)

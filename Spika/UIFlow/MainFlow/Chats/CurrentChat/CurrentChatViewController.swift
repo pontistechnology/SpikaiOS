@@ -256,7 +256,7 @@ extension CurrentChatViewController {
         case .playVideo:
             viewModel.playVideo(message: message)
         case let .playAudio(playedPercentPublisher):
-            guard let url = message.body?.file?.id.fullFilePathFromId(),
+            guard let url = message.body?.file?.id?.fullFilePathFromId(),
                   let mimeType = message.body?.file?.mimeType
             else { return }
             audioSubscribe?.cancel()
@@ -267,7 +267,7 @@ extension CurrentChatViewController {
             }
             audioSubscribe?.store(in: &subscriptions)
         case .openImage:
-            guard let url = message.body?.file?.id.fullFilePathFromId() else { return }
+            guard let url = message.body?.file?.id?.fullFilePathFromId() else { return }
             viewModel.showImage(link: url)
         case .scrollToReply(let indexPath):
             currentChatView.messagesTableView.blinkRow(at: indexPath)
@@ -355,7 +355,7 @@ extension CurrentChatViewController: UITableViewDataSource {
                 cell.updateSender(name: user.getDisplayName())
             }
             if !isNextCellMine(for: indexPath) {
-                cell.updateSender(photoUrl: user.avatarFileId.fullFilePathFromId())
+                cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
             }
         }
         return cell
@@ -408,9 +408,9 @@ extension CurrentChatViewController {
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room?.type == .privateRoom {
-            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarFileId.fullFilePathFromId(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
+            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarFileId?.fullFilePathFromId(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
         } else {
-            friendInfoView.change(avatarUrl: viewModel.room?.avatarFileId.fullFilePathFromId(),
+            friendInfoView.change(avatarUrl: viewModel.room?.avatarFileId?.fullFilePathFromId(),
                                   name: viewModel.room?.name,
                                   lastSeen: .getStringFor(.today))
         }

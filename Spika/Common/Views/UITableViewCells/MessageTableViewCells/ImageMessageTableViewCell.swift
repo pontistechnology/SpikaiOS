@@ -42,7 +42,7 @@ extension ImageMessageTableViewCell {
         let imageRatio = ImageRatio(width: message.body?.thumb?.metaData?.width ?? 1,
                                     height: message.body?.thumb?.metaData?.height ?? 1)
         
-        let path = message.body?.thumb?.id.fullFilePathFromId()
+        let path = message.body?.thumb?.id?.fullFilePathFromId()
         print("jojx ", path)
         photoImageView.setImage(url: path, as: imageRatio)
         

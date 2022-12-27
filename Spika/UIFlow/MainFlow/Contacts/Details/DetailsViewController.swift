@@ -67,7 +67,7 @@ class DetailsViewController: BaseViewController {
         viewModel.userSubject.receive(on: DispatchQueue.main).sink { [weak self] user in
             guard let self = self else { return }
             self.detailsView.contentView.nameLabel.text = user.getDisplayName()
-            let url = user.avatarFileId.fullFilePathFromId()
+            let url = user.avatarFileId?.fullFilePathFromId()
             self.detailsView.contentView.profilePhoto.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
         }.store(in: &subscriptions)
     }

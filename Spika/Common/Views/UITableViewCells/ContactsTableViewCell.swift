@@ -77,7 +77,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         self.descriptionLabel.text = model.telephoneNumber
         self.user = model
         
-        let url = model.avatarFileId.fullFilePathFromId()
+        let url = model.avatarFileId?.fullFilePathFromId()
         leftImageView.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
         
         self.removeButton.isHidden = !isEditable
