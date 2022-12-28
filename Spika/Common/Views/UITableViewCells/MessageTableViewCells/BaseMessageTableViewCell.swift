@@ -18,6 +18,7 @@ class BaseMessageTableViewCell: UITableViewCell {
     private let senderNameBottomConstraint = NSLayoutConstraint()
     let containerStackView = UIStackView()
     private var replyView: MessageReplyView?
+    let progressView = CircularProgressBar(spinnerWidth: 20)
     
     let tapPublisher = PassthroughSubject<MessageCellTaps, Never>()
     var subs = Set<AnyCancellable>()
@@ -55,6 +56,7 @@ extension BaseMessageTableViewCell: BaseView {
         contentView.addSubview(containerStackView)
         contentView.addSubview(timeLabel)
         contentView.addSubview(messageStateView)
+        containerStackView.addSubview(progressView)
     }
     
     func styleSubviews() {
@@ -71,6 +73,9 @@ extension BaseMessageTableViewCell: BaseView {
     func positionSubviews() {
         containerStackView.widthAnchor.constraint(lessThanOrEqualToConstant: 276).isActive = true
         timeLabel.centerYAnchor.constraint(equalTo: containerStackView.centerYAnchor).isActive = true
+        progressView.fillSuperview()
+        progressView.setProgress(to: 0.40)
+        containerStackView.bringSubviewToFront(progressView)
     }
     
     func setupContainer(sender: MessageSender) {

@@ -80,7 +80,7 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
-    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int) -> AnyPublisher<VerifyFileResponseModel, Error> {
+    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int, metaData: MetaData) -> AnyPublisher<VerifyFileResponseModel, Error> {
         return Fail<VerifyFileResponseModel, Error>(error: DatabseError.unknown)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()

@@ -221,63 +221,6 @@ extension CurrentChatViewModel {
     }
 }
 
-// MARK: Image
-extension CurrentChatViewModel {
-    private func sendImage(data: Data) {
-//        repository.uploadWholeFile(data: data).sink { c in
-//            print(c)
-//        } receiveValue: { [weak self] (file, uploadPercent) in
-//            guard let self = self else { return }
-//            if let file = file {
-//                print("UPLOADANO : ", file)
-//                self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: nil, referenceMessage: nil), localId: UUID().uuidString, type: .image)
-//            }
-//        }.store(in: &subscriptions)
-    }
-    
-    func sendSelectedFiles(files: [SelectedFile]) {
-//        files.forEach { selectedFile in
-//            if selectedFile.fileType == .image {
-//                repository.uploadWholeFile(fromUrl: selectedFile.fileUrl).sink { c in
-//
-//                } receiveValue: { [weak self] (file, uploadPercent) in
-//                    guard let self = self else { return }
-//                    if let index = files.firstIndex(where: { sf in
-//                        sf.fileUrl == selectedFile.fileUrl
-//                    }) {
-//                        self.uploadProgressPublisher.send((index, uploadPercent))
-//                    }
-//
-//                    print("NOVA: ", uploadPercent)
-//                    if let file = file {
-//                        print("UPLOADANO : ", file)
-////                        self.selectedFiles.value.removeAll { sf in
-////                            sf.fileUrl == selectedFile.fileUrl
-////                        }
-//                        self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: file.id, referenceMessage: nil), localId: UUID().uuidString, type: .image)
-//                    }
-//                }.store(in: &subscriptions)
-//            } else {
-//                repository.uploadWholeFile(fromUrl: selectedFile.fileUrl).sink { c in
-//
-//                } receiveValue: { [weak self] (file, uploadPercent) in
-//                    guard let self = self else { return }
-//                    if let index = files.firstIndex(where: { sf in
-//                        sf.fileUrl == selectedFile.fileUrl
-//                    }) {
-//                        self.uploadProgressPublisher.send((index, uploadPercent))
-//                    }
-//
-//                    if let file = file {
-//                        self.sendMessage(body: MessageBody(text: nil, file: nil, fileId: file.id, thumbId: nil, referenceMessage: nil), localId: UUID().uuidString, type: .file)
-//                    }
-//                }.store(in: &subscriptions)
-//
-//            }
-//        }
-    }
-}
-
 extension CurrentChatViewModel {
     func getUser(for id: Int64) -> User? {
         return room?.users.first(where: { roomUser in
@@ -304,6 +247,7 @@ extension CurrentChatViewModel {
     
     func sendImage(file: SelectedFile) {
         guard let data = file.thumbnail.jpegData(compressionQuality: 1) else { return }
+        
         repository
             .uploadWholeFile(data: data)
             .combineLatest(repository.uploadWholeFile(fromUrl: file.fileUrl))

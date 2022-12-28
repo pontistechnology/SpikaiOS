@@ -128,7 +128,7 @@ extension AppRepository {
                         return
                     }
                     
-                    self.verifyUpload(total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1).sink { [weak self] completion in
+                    self.verifyUpload(total: totalChunks, size: dataLen, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1, metaData: MetaData(width: 1, height: 1, duration: 1)).sink { [weak self] completion in
                         guard let _ = self else { return }
                         switch completion {
                             
@@ -167,7 +167,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int) -> AnyPublisher<VerifyFileResponseModel, Error>{
+    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int, metaData: MetaData) -> AnyPublisher<VerifyFileResponseModel, Error>{
         guard let accessToken = getAccessToken() else {
             return Fail<VerifyFileResponseModel, Error>(error: NetworkError.noAccessToken).receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -289,7 +289,7 @@ extension AppRepository {
                 if uploadedCount == totalChunks {
                     guard let hash = hash else { return }
                     
-                    self.verifyUpload(total: totalChunks, size: fileSize, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1).sink { [weak self] completion in
+                    self.verifyUpload(total: totalChunks, size: fileSize, mimeType: "image/*", fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1, metaData: MetaData(width: 2, height: 2, duration: 2)).sink { [weak self] completion in
                         switch completion {
                             
                         case .finished:

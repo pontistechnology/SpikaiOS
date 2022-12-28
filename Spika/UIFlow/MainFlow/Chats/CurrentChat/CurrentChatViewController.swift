@@ -13,7 +13,7 @@ import Combine
 import UniformTypeIdentifiers
 
 struct SelectedFile {
-    let fileType: UTType
+    let fileType: MessageType
     let name: String?
     let fileUrl: URL
     let thumbnail: UIImage
@@ -510,9 +510,7 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
-        print("RESULTS COUNT: ", results.count)
         viewModel.sendMultimedia(results)
-        
     }
 }
 
@@ -538,7 +536,7 @@ extension CurrentChatViewController: UIDocumentPickerDelegate {
                   let type = resourceValues.contentType
             else { return }
             
-            let file = SelectedFile(fileType: type, name: fileName,
+            let file = SelectedFile(fileType: .file, name: fileName,
                                     fileUrl: targetURL, thumbnail: type.thumbnail())
 //            self.viewModel.selectedFiles.value.append(file)
         }

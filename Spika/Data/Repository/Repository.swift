@@ -42,7 +42,7 @@ protocol Repository {
     @available(iOSApplicationExtension 13.4, *) func uploadWholeFile(fromUrl url: URL) -> (AnyPublisher<(File?, CGFloat), Error>)
     func uploadWholeFile(data: Data) -> (AnyPublisher<(File?, CGFloat), Error>)
     func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error>
-    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int) -> AnyPublisher<VerifyFileResponseModel, Error>
+    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int, metaData: MetaData) -> AnyPublisher<VerifyFileResponseModel, Error>
     
     // MARK: NETWORKING: User
     

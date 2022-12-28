@@ -27,6 +27,7 @@ final class ImageMessageTableViewCell: BaseMessageTableViewCell {
     
     func setupImageCell() {
         containerStackView.addArrangedSubview(photoImageView)
+        containerStackView.bringSubviewToFront(progressView)
     }
 }
 // MARK: Public Functions

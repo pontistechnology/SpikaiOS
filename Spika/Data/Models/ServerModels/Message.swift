@@ -62,13 +62,13 @@ extension Message {
                                                    size: messageEntity.bodyFileSize,
                                                    metaData: MetaData(width: messageEntity.bodyThumbMetaDataWidth,
                                                                       height: messageEntity.bodyThumbMetaDataHeight,
-                                                                      duration: messageEntity.bodyThumbMetaDataDuration)),
+                                                                      duration: messageEntity.bodyThumbMetaDataDuration), percentUploaded: messageEntity.percentUploaded),
                                     thumb: FileData(id: messageEntity.bodyThumbId, fileName: "thumb name",
                                                     mimeType: messageEntity.bodyThumbMimeType,
                                                     size: 0,
                                                     metaData: MetaData(width: messageEntity.bodyThumbMetaDataWidth,
                                                                        height: messageEntity.bodyThumbMetaDataHeight,
-                                                                       duration: messageEntity.bodyThumbMetaDataDuration))),
+                                                                       duration: messageEntity.bodyThumbMetaDataDuration), percentUploaded: messageEntity.percentUploaded)),
                   records: messageRecords)
     }
     
@@ -113,6 +113,7 @@ struct FileData: Codable {
     let mimeType: String?
     let size: Int64?
     let metaData: MetaData?
+    let percentUploaded: Int64?
 }
 
 struct MetaData: Codable {
