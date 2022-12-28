@@ -116,6 +116,15 @@ extension CurrentChatViewController {
                 let stringValue = value > 0 ? String(value) : ""
                 self?.title = stringValue
             }.store(in: &self.subscriptions)
+        
+        self.viewModel.uploadProgressPublisher.sink { [weak self] (uuid, percent) in
+            guard let entity = self?.frc?.fetchedObjects?.first(where: { [weak self] messageEntity in
+                messageEntity.localId == uuid
+            }),
+                  let indexPath = self?.frc?.indexPath(forObject: entity)
+            else { return }
+            (self?.currentChatView.messagesTableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell)?.showUploadProgress(at: percent)
+        }.store(in: &subscriptions)
     }
     
     func handleScroll(isMyMessage: Bool) {

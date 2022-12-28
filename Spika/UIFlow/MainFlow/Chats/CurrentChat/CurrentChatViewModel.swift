@@ -17,8 +17,7 @@ class CurrentChatViewModel: BaseViewModel {
     let friendUser: User?
     var room: Room?
     let roomPublisher = PassthroughSubject<Room, Error>()
-//    let selectedFiles = CurrentValueSubject<[SelectedFile], Never>([])
-//    let uploadProgressPublisher = PassthroughSubject<(Int, CGFloat), Never>()
+    let uploadProgressPublisher = PassthroughSubject<(String, CGFloat), Never>()
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
@@ -170,7 +169,6 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-    // Will be refactored, when server is ready with replyId
     func trySendMessage(text: String, replyId: Int64?) {
         guard let room = self.room else { return }
         print("ROOM: ", room)
@@ -247,21 +245,48 @@ extension CurrentChatViewModel {
     
     func sendImage(file: SelectedFile) {
         guard let data = file.thumbnail.jpegData(compressionQuality: 1) else { return }
+        guard let room = room else { return }
+        let uuid = UUID().uuidString
         
-        repository
-            .uploadWholeFile(data: data)
-            .combineLatest(repository.uploadWholeFile(fromUrl: file.fileUrl))
-            .sink { c in
+        let message = Message(createdAt: Date().currentTimeMillis(),
+                              fromUserId: getMyUserId(),
+                              roomId: room.id,
+                              type: .image,
+                              body: MessageBody(text: nil,
+                                                file: FileData(id: nil,
+                                                               fileName: "kasn",
+                                                               mimeType: "image/*",
+                                                               size: nil,
+                                                               metaData: nil),
+                                                thumb: FileData(id: nil,
+                                                                fileName: "kasn",
+                                                                mimeType: "image/*",
+                                                                size: nil,
+                                                                metaData: nil)),
+                              replyId: nil,
+                              localId: uuid)
+        
+        repository.saveMessages([message]).sink { c in
+            
+        } receiveValue: { [weak self] messages in
                 
-            } receiveValue: { [weak self] (thumbTuple, fileTuple) in
-                print("jojxTHUMB: ", thumbTuple.0, "  ", thumbTuple.1)
-                print("jojxFile: ", fileTuple.0, "  ", fileTuple.1)
-                
-                guard let thumbId = thumbTuple.0?.id,
-                      let fileId  = fileTuple.0?.id
-                else { return }
-                self?.sendMessage(body: RequestMessageBody(text: nil, fileId: fileId, thumbId: thumbId), localId: UUID().uuidString, type: .image, replyId: nil)
-            }.store(in: &subscriptions)
+            self?.repository
+                .uploadWholeFile(data: data)
+                .combineLatest(self!.repository.uploadWholeFile(fromUrl: file.fileUrl))
+                .sink { c in
+                    
+                } receiveValue: { [weak self] (thumbTuple, fileTuple) in
+                    print("jojxTHUMB: ", thumbTuple.0, "  ", thumbTuple.1)
+                    print("jojxFile: ", fileTuple.0, "  ", fileTuple.1)
+                    
+                    self?.uploadProgressPublisher.send((uuid, fileTuple.1))
+                    
+                    guard let thumbId = thumbTuple.0?.id,
+                          let fileId  = fileTuple.0?.id
+                    else { return }
+                    self?.sendMessage(body: RequestMessageBody(text: nil, fileId: fileId, thumbId: thumbId), localId: UUID().uuidString, type: .image, replyId: nil)
+                }.store(in: &self!.subscriptions)
+        }.store(in: &subscriptions)
     }
     
     func sendMultimedia(_ results: [PHPickerResult]) {
