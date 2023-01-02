@@ -49,7 +49,6 @@
 		931B14D7281FD91100A0CD35 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
 		931B14D8281FD91100A0CD35 /* AppRepository+Rooms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */; };
 		931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
-		931B14DB281FD91100A0CD35 /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DB270DD6DC009D50CB /* AppRepository.swift */; };
 		931B14DC2821182800A0CD35 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F2270DE39A009D50CB /* NetworkService.swift */; };
 		931B14DD2821182D00A0CD35 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040F27173FD9009D50CB /* DatabaseService.swift */; };
 		931B14DE2821185300A0CD35 /* UserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040A2716EB4B009D50CB /* UserEntityService.swift */; };
@@ -224,6 +223,10 @@
 		93C77B702923396200F676C5 /* AudioMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C77B6F2923396200F676C5 /* AudioMessageTableViewCell.swift */; };
 		93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
 		93CEF90227FD856A0038B7A9 /* RoomUserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */; };
+		93CF473D2963240200213DBE /* AppRepository+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF473C2963240200213DBE /* AppRepository+File.swift */; };
+		93CF473F2963241200213DBE /* TestRepository+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF473E2963241200213DBE /* TestRepository+File.swift */; };
+		93CF47402963286B00213DBE /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DB270DD6DC009D50CB /* AppRepository.swift */; };
+		93CF47412963287A00213DBE /* AppRepository+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF473C2963240200213DBE /* AppRepository+File.swift */; };
 		93CFFA4F293587EB001EBACF /* MessageReplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFFA4E293587EB001EBACF /* MessageReplyView.swift */; };
 		93CFFA5129358CCB001EBACF /* IconAndLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */; };
 		93D4034D29245B5400DC77D3 /* AppRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */; };
@@ -541,6 +544,8 @@
 		93C77B6F2923396200F676C5 /* AudioMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageTableViewCell.swift; sourceTree = "<group>"; };
 		93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomUserEntityService.swift; sourceTree = "<group>"; };
+		93CF473C2963240200213DBE /* AppRepository+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+File.swift"; sourceTree = "<group>"; };
+		93CF473E2963241200213DBE /* TestRepository+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+File.swift"; sourceTree = "<group>"; };
 		93CFFA4E293587EB001EBACF /* MessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyView.swift; sourceTree = "<group>"; };
 		93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconAndLabelView.swift; sourceTree = "<group>"; };
 		93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionView.swift; sourceTree = "<group>"; };
@@ -1275,6 +1280,7 @@
 				934087B727EBAD7100209571 /* AppRepository+Tests.swift */,
 				934F2EDE28172D150086C343 /* AppRepository+Device.swift */,
 				939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */,
+				93CF473C2963240200213DBE /* AppRepository+File.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1289,6 +1295,7 @@
 				934087B927EBAE6F00209571 /* TestRepository+Tests.swift */,
 				934F2EE2281735590086C343 /* TestRepository+Device.swift */,
 				939B30412850DC2D00FFA537 /* TestRepository+Sync.swift */,
+				93CF473E2963241200213DBE /* TestRepository+File.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -2003,6 +2010,7 @@
 				931B150728211AC600A0CD35 /* ContactsResponseModel.swift in Sources */,
 				939B304E2850E01800FFA537 /* SyncMessageRecordsResponseModel.swift in Sources */,
 				931B150828211AC600A0CD35 /* GetAllRoomsResponseModel.swift in Sources */,
+				93CF47402963286B00213DBE /* AppRepository.swift in Sources */,
 				9324B252281BDEFD00E7D76D /* CoreDataStack.swift in Sources */,
 				931B151328211B3F00A0CD35 /* String+Extension.swift in Sources */,
 				931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */,
@@ -2013,9 +2021,9 @@
 				931B150528211AC600A0CD35 /* UploadChunkResponseModel.swift in Sources */,
 				93BF627628EB9B7900B48BBF /* EnumsShared.swift in Sources */,
 				931B15162821291400A0CD35 /* DeliveredRequestModel.swift in Sources */,
+				93CF47412963287A00213DBE /* AppRepository+File.swift in Sources */,
 				939B304B2850E01800FFA537 /* SyncMessagesResponseModel.swift in Sources */,
 				93D4034D29245B5400DC77D3 /* AppRepository+Sync.swift in Sources */,
-				931B14DB281FD91100A0CD35 /* AppRepository.swift in Sources */,
 				931B151128211ACB00A0CD35 /* UserEntity+CoreDataProperties.swift in Sources */,
 				931B151228211B1300A0CD35 /* Repository.swift in Sources */,
 				93179C3D28B709B6006F928B /* AppRepository+User.swift in Sources */,
@@ -2210,6 +2218,7 @@
 				ADD503E8270DD87A009D50CB /* Constants.swift in Sources */,
 				AD8192632721D54A00D5BE48 /* AllChatsView.swift in Sources */,
 				938D053227D59DD3002E5CE5 /* NewGroupChatViewModel.swift in Sources */,
+				93CF473D2963240200213DBE /* AppRepository+File.swift in Sources */,
 				937055DD2914B2290052EC77 /* OneSecPopUpView.swift in Sources */,
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
 				93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */,
@@ -2276,6 +2285,7 @@
 				93E4F70127C468BB00432CFA /* CurrentChatView.swift in Sources */,
 				933BE85D27B65BDF0099BA9E /* SharedViewController.swift in Sources */,
 				6C6AD21B291E3B8E0026CDAC /* ChatContentView.swift in Sources */,
+				93CF473F2963241200213DBE /* TestRepository+File.swift in Sources */,
 				9396AB7127FED6F100696757 /* VerifyFileResponseModel.swift in Sources */,
 				AD819290272305D900D5BE48 /* TapUtils.swift in Sources */,
 				ADD5040127101B69009D50CB /* ContentView.swift in Sources */,

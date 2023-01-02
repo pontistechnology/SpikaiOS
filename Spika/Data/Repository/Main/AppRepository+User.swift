@@ -256,7 +256,8 @@ extension AppRepository {
         guard FileManager.default.fileExists(atPath: url.path),
               let outputFileHandle = try? FileHandle(forReadingFrom: url),
               let resources = try? url.resourceValues(forKeys:[.fileSizeKey]),
-              let fileSize = resources.fileSize
+              let fileSize = resources.fileSize,
+              let fileName = resources.name
         else {
             return somePublisher.eraseToAnyPublisher()
         }
