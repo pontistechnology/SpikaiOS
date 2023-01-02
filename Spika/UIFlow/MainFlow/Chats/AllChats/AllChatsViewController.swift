@@ -33,6 +33,12 @@ class AllChatsViewController: BaseViewController {
             self?.viewModel.presentSelectUserScreen()
         }.store(in: &subscriptions)
         
+        allChatsView.pencilImageView
+            .tap()
+            .sink { [weak self] _ in
+                self?.onCreateNewRoom()
+            }.store(in: &self.subscriptions)
+        
         setRoomsFetch()
         
         self.viewModel.repository
@@ -42,6 +48,11 @@ class AllChatsViewController: BaseViewController {
                 UIBarButtonItem(title:.getStringFor(.title), style:.plain, target:nil, action:nil)
             }.store(in: &self.subscriptions)
     }
+    
+    func onCreateNewRoom() {
+        self.viewModel.getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
+    }
+    
 }
 
 // MARK: - NSFetchedResultsController

@@ -10,7 +10,14 @@ import UIKit
 
 class NewGroupChatViewController: BaseViewController {
     
+    lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    } ()
+    
     private let newGroupChatView = NewGroupChatView()
+    
     var viewModel: NewGroupChatViewModel!
     private let imagePicker = UIImagePickerController()
     let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -23,16 +30,29 @@ class NewGroupChatViewController: BaseViewController {
     }
     
     func setupBindings() {
-        newGroupChatView.selectedUsersTableView.delegate = self
-        newGroupChatView.selectedUsersTableView.dataSource = self
+        self.viewModel.selectedUsers
+            .sink { [weak self] users in
+                self?.newGroupChatView.chatMembersView.updateWithUsers(users: users.map { RoomUser(user: $0) })
+            }.store(in: &self.viewModel.subscriptions)
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: .getStringFor(.create), style: .plain, target: self, action: #selector(createButtonHandler))
         navigationItem.rightBarButtonItem?.isEnabled = false
         
-        newGroupChatView.usernameTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        newGroupChatView.groupNameTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+    }
+    
+    override func setupView(_ view: UIView) {
+        self.view.backgroundColor = .white
+        self.view.addSubview(self.scrollView)
+        self.scrollView.constraint()
+        
+        self.scrollView.addSubview(view)
+        view.constraintToGuide(guide: self.scrollView.contentLayoutGuide)
+        view.equalWidth(to: self.view)
     }
     
     @objc func createButtonHandler() {
-        guard let name = newGroupChatView.usernameTextfield.text else { return }
+        guard let name = newGroupChatView.groupNameTextfield.text else { return }
         viewModel.createRoom(name: name)
     }
     
@@ -42,28 +62,5 @@ class NewGroupChatViewController: BaseViewController {
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
         }
-    }
-}
-
-extension NewGroupChatViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if viewModel.selectedUsers.count > 1 {
-            viewModel.selectedUsers.remove(at: indexPath.row)
-            tableView.reloadData()
-        }
-    }
-    
-}
-
-extension NewGroupChatViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        newGroupChatView.numberOfUsersLabel.text = "\(viewModel.selectedUsers.count) " + .getStringFor(.peopleSelected)
-        return viewModel.selectedUsers.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
-        cell?.configureCell(viewModel.selectedUsers[indexPath.row])
-        return cell ?? EmptyTableViewCell()
     }
 }

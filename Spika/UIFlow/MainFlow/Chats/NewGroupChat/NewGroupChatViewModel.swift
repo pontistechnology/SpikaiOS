@@ -6,18 +6,20 @@
 //
 
 import Foundation
+import Combine
 
 class NewGroupChatViewModel: BaseViewModel {
     
-    var selectedUsers: [User]
+    let selectedUsers: CurrentValueSubject<[User],Never>
     
     init(repository: Repository, coordinator: Coordinator, selectedUsers: [User]) {
-        self.selectedUsers = selectedUsers
+//        self.selectedUsers = selectedUsers
+        self.selectedUsers = CurrentValueSubject(selectedUsers)
         super.init(repository: repository, coordinator: coordinator)
     }
     
     func createRoom(name: String) {
-        repository.createOnlineRoom(name: name, users: selectedUsers).sink { [weak self] completion in
+        repository.createOnlineRoom(name: name, users: selectedUsers.value).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
             case let .failure(error):
@@ -31,6 +33,5 @@ class NewGroupChatViewModel: BaseViewModel {
             print("Create room response ", response)
             self?.getAppCoordinator()?.dismissViewController()
         }.store(in: &subscriptions)
-
     }
 }
