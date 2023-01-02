@@ -35,6 +35,13 @@ class NewGroupChatViewController: BaseViewController {
                 self?.newGroupChatView.chatMembersView.updateWithUsers(users: users.map { RoomUser(user: $0) })
             }.store(in: &self.viewModel.subscriptions)
         
+        self.newGroupChatView.chatMembersView
+            .onRemoveUser
+            .compactMap { $0 }
+            .sink { [weak self] user in
+                self?.viewModel.removeUser(user: user)
+            }.store(in: &self.viewModel.subscriptions)
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: .getStringFor(.create), style: .plain, target: self, action: #selector(createButtonHandler))
         navigationItem.rightBarButtonItem?.isEnabled = false
         

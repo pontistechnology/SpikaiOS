@@ -33,6 +33,7 @@ class NewGroupChatView: UIView, BaseView {
     }
     
     func styleSubviews() {
+        self.chatMembersView.isAdmin.send(true)
     }
     
     func positionSubviews() {

@@ -13,7 +13,6 @@ class NewGroupChatViewModel: BaseViewModel {
     let selectedUsers: CurrentValueSubject<[User],Never>
     
     init(repository: Repository, coordinator: Coordinator, selectedUsers: [User]) {
-//        self.selectedUsers = selectedUsers
         self.selectedUsers = CurrentValueSubject(selectedUsers)
         super.init(repository: repository, coordinator: coordinator)
     }
@@ -34,4 +33,11 @@ class NewGroupChatViewModel: BaseViewModel {
             self?.getAppCoordinator()?.dismissViewController()
         }.store(in: &subscriptions)
     }
+    
+    func removeUser(user: User) {
+        var currentUsers = selectedUsers.value
+        currentUsers.removeAll(where: { $0.id == user.id })
+        self.selectedUsers.send(currentUsers)
+    }
+    
 }
