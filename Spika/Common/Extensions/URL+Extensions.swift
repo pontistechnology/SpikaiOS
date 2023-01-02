@@ -12,10 +12,16 @@ extension URL {
     func imageThumbnail() -> UIImage {
         let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
         guard let imageSource = CGImageSourceCreateWithURL(self as CFURL, imageSourceOptions),
+              let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as Dictionary?,
               let thumbnail = downsample(imageSource: imageSource)
         else {
             return UIImage(systemName: "photo")!
         }
+        
+        
+        print("POKOJO: w ", imageProperties[kCGImagePropertyPixelWidth])
+        print("POKOJO: s ", imageProperties)
+        print("POKOJO: h ", imageProperties[kCGImagePropertyPixelHeight])
         return thumbnail
     }
     

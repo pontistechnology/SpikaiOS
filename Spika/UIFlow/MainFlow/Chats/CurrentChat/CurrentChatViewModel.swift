@@ -302,7 +302,7 @@ extension CurrentChatViewModel {
                     let thumbnail = targetURL.imageThumbnail()
                     let file = SelectedFile(fileType: .image, name: nil,
                                             fileUrl: targetURL, thumbnail: thumbnail)
-                    self?.sendImage(file: file)
+//                    self?.sendImage(file: file)
                 }
             }
             
