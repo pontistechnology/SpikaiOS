@@ -176,7 +176,7 @@ extension AppRepository {
         let resources = Resources<VerifyFileResponseModel, VerifyFileRequestModel>(
             path: Constants.Endpoints.verifyFile,
             requestType: .POST,
-            bodyParameters: VerifyFileRequestModel(total: total, size: size, mimeType: mimeType, fileName: fileName, type: type, fileHash: fileHash, relationId: relationId, clientId: clientId),
+            bodyParameters: VerifyFileRequestModel(total: total, size: size, mimeType: mimeType, fileName: fileName, type: type, fileHash: fileHash, relationId: relationId, clientId: clientId, metaData: metaData),
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)

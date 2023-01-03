@@ -251,18 +251,22 @@ extension CurrentChatViewModel {
             repository
                 .uploadAllChunks(fromUrl: file.fileUrl)
                 .combineLatest(repository.uploadAllChunks(fromData: data))
-                .sink { c in    
+                .sink { c in
                 } receiveValue: { [weak self] filePublisher, thumbPublisher in
-                    guard let self = self else { return }
-                    if let cc = thumbPublisher.chunksDataToVerify,
-                       let dd = filePublisher.chunksDataToVerify {
-                        self.verifyUpload(chunksDataToVerify: cc, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
-                            .combineLatest(self.verifyUpload(chunksDataToVerify: dd, mimeType: file.mimeType, metaData: file.metaData))
-                            .sink(receiveValue: { [weak self] thumb, file in
-                                guard let self = self else { return }
-                                self.sendMessage(body: RequestMessageBody(text: nil, fileId: file.id, thumbId: thumb.id), localId: localId, type: .image, replyId: nil)
-                            }).store(in: &self.subscriptions)
-                    }
+                    guard let self = self,
+                        let cc = thumbPublisher.chunksDataToVerify,
+                        let dd = filePublisher.chunksDataToVerify
+                    else { return }
+                    
+                    self.verifyUpload(chunksDataToVerify: cc,
+                                      mimeType: "image/*",
+                                      metaData: MetaData(width: 72, height: 72, duration: 0))
+                        .combineLatest(self.verifyUpload(chunksDataToVerify: dd,
+                                                         mimeType: file.mimeType,
+                                                         metaData: file.metaData))
+                        .sink(receiveValue: { [weak self] thumb, file in
+                            self?.sendMessage(body: RequestMessageBody(text: nil, fileId: file.id, thumbId: thumb.id), localId: localId, type: .image, replyId: nil)
+                        }).store(in: &self.subscriptions)
                 }.store(in: &subscriptions)
         default:
             repository
@@ -275,7 +279,7 @@ extension CurrentChatViewModel {
                         self.verifyUpload(chunksDataToVerify: dd, mimeType: file.mimeType, metaData: file.metaData)
                             .sink(receiveValue: { [weak self] file in
                                 guard let self = self else { return }
-                                self.sendMessage(body: RequestMessageBody(text: nil, fileId: file.id, thumbId: nil), localId: localId, type: .image, replyId: nil)
+                                self.sendMessage(body: RequestMessageBody(text: nil, fileId: file.id, thumbId: nil), localId: localId, type: .file, replyId: nil)
                             }).store(in: &self.subscriptions)
                     }
                 }.store(in: &subscriptions)
@@ -306,7 +310,6 @@ extension CurrentChatViewModel {
     }
     
     func sendImage(file: SelectedFile) {
-        guard let data = file.thumbnail?.jpegData(compressionQuality: 1) else { return }
         guard let room = room else { return }
         let uuid = UUID().uuidString
         
