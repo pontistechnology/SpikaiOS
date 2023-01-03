@@ -135,8 +135,6 @@ final class ChatDetailsViewController: BaseViewController {
         }))
         actionSheet.addAction(UIAlertAction(title: .getStringFor(.removePhoto), style: .destructive, handler: { [weak self] _ in
             guard let self = self else { return }
-//            self.fileData = nil
-//            self.enterUsernameView.profilePictureView.deleteMainImage()
         }))
         actionSheet.addAction(UIAlertAction(title: .getStringFor(.cancel), style: .cancel, handler: nil))
     }

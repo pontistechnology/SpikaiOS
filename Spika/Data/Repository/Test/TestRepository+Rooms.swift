@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 extension TestRepository {
-    func createOnlineRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
+    func createOnlineRoom(name: String, avatarId: Int64?, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
         return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()

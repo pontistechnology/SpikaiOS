@@ -11,7 +11,13 @@ import UIKit
 class NewGroupChatView: UIView, BaseView {
     
     let newGroupLabel = CustomLabel(text: .getStringFor(.newGroup), textSize: 28, textColor: .textPrimaryAndWhite, fontName: .MontserratSemiBold)
-    let avatarPictureView = ImageViewWithIcon(image: UIImage(safeImage: .logo), size: CGSize(width: 100, height: 100))
+    var avatarPictureView: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(safeImage: .cameraImage), for: .normal)
+        btn.layer.cornerRadius = 60
+        btn.layer.masksToBounds = true
+        return btn
+    } ()
     let groupNameTextfield = TextField(textPlaceholder: .getStringFor(.groupName))
     let chatMembersView = ChatMembersView(contactsEditable: false)
     
@@ -41,6 +47,8 @@ class NewGroupChatView: UIView, BaseView {
         
         avatarPictureView.anchor(top: newGroupLabel.bottomAnchor, padding: UIEdgeInsets(top: 34, left: 0, bottom: 0, right: 0))
         avatarPictureView.centerXToSuperview()
+        avatarPictureView.constrainWidth(120)
+        avatarPictureView.constrainHeight(120)
         
         groupNameTextfield.anchor(top: avatarPictureView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 23, left: 20, bottom: 0, right: 20))
         groupNameTextfield.constrainHeight(50)
