@@ -9,7 +9,7 @@ import Foundation
 
 struct CreateRoomRequestModel: Codable {
     var name: String?
-    var avatarId: Int64?
+    var avatarFileId: Int64?
     var userIds: [Int64]?
     var adminUserIds: [String]?
 }

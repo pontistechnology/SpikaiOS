@@ -17,7 +17,6 @@ extension AppRepository {
     // MARK: Network
     
     func createOnlineRoom(name: String, avatarId: Int64?, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
-
         guard let accessToken = getAccessToken()
         else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -30,7 +29,7 @@ extension AppRepository {
             path: Constants.Endpoints.createRoom,
             requestType: .POST,
             bodyParameters: CreateRoomRequestModel(name: name,
-                                                   avatarId: avatarId,
+                                                   avatarFileId: avatarId,
                                                    userIds: userIds,
                                                    adminUserIds: nil),
             httpHeaderFields: ["accesstoken" : accessToken])

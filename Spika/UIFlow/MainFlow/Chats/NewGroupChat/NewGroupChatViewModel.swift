@@ -35,12 +35,12 @@ class NewGroupChatViewModel: BaseViewModel {
                 } receiveValue: { [weak self] (file, percent) in
                     guard let self = self else { return }
                     self.uploadProgressPublisher.send(percent)
-                    self.finalizeRoomCreation(name: name, avatarId: file?.id)
+                    guard let id = file?.id else { return }
+                    self.finalizeRoomCreation(name: name, avatarId: id)
                 }.store(in: &subscriptions)
         } else {
             self.finalizeRoomCreation(name: name, avatarId: nil)
         }
-       
     }
     
     func finalizeRoomCreation(name: String, avatarId: Int64?) {
@@ -56,9 +56,29 @@ class NewGroupChatViewModel: BaseViewModel {
                 break
             }
         } receiveValue: { [weak self] response in
+            if let room = response.data?.room {
+                print("There is online room.")
+                self?.networkRequestState.send(.finished)
+                self?.saveLocalRoom(room: room)
+            }
+        }.store(in: &subscriptions)
+    }
+    
+    func saveLocalRoom(room: Room) {
+        repository.saveLocalRooms(rooms: [room])
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
             guard let _ = self else { return }
-            print("Create room response ", response)
+            switch completion {
+            case .finished:
+                print("saved to local DB")
+            case .failure(_):
+                print("saving to local DB failed")
+            }
+        } receiveValue: { [weak self] rooms in
+            guard let room = rooms.first else { return }
             self?.getAppCoordinator()?.dismissViewController()
+            self?.getAppCoordinator()?.presentCurrentChatScreen(room: room)
         }.store(in: &subscriptions)
     }
     
