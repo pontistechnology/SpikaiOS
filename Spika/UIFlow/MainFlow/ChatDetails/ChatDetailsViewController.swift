@@ -74,6 +74,7 @@ final class ChatDetailsViewController: BaseViewController {
             .sink(receiveValue: { [weak self] isAdmin in
                 self?.chatDetailView.contentView.chatMembersView.addContactButton.isHidden = !isAdmin
                 self?.chatDetailView.contentView.cameraIcon.isHidden = !isAdmin
+                self?.chatDetailView.contentView.deleteButton.isHidden = !isAdmin
             })
             .store(in: &self.viewModel.subscriptions)
         
@@ -113,6 +114,13 @@ final class ChatDetailsViewController: BaseViewController {
             .filter { $0 }
             .sink { [weak self] _ in
                 self?.onChangeImage()
+            }.store(in: &self.subscriptions)
+        
+        self.chatDetailView.contentView
+            .deleteButton
+            .tap()
+            .sink { [weak self] _ in
+                self?.viewModel.deleteRoom()
             }.store(in: &self.subscriptions)
     }
     

@@ -32,6 +32,16 @@ class ChatContentView: UIView, BaseView {
     let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: .appRed)
     let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .appRed)
     
+    var deleteButton: UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle(.getStringFor(.delete), for: .normal)
+        btn.setTitleColor(.appRed, for: .normal)
+        btn.contentHorizontalAlignment = .left
+        btn.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: 14)
+        return btn
+    } ()
+    
     lazy var mainStackView: UIStackView = {
        let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,6 +92,7 @@ class ChatContentView: UIView, BaseView {
         mainStackView.addArrangedSubview(self.labelStackView)
         labelStackView.addArrangedSubview(blockLabel)
         labelStackView.addArrangedSubview(reportLabel)
+        labelStackView.addArrangedSubview(deleteButton)
     }
     
     func styleSubviews() {

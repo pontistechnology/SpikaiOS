@@ -19,6 +19,7 @@ public extension Constants {
         case members = "Members"
         case details = "Details"
         case shared = "shared"
+        case delete = "Delete"
         
         //MARK: - CountryPickerViewController
         case search = "Search"

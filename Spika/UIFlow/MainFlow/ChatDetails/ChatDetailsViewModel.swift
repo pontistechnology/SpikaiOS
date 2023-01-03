@@ -95,6 +95,27 @@ class ChatDetailsViewModel: BaseViewModel {
             }.store(in: &self.subscriptions)
     }
     
+    func deleteLocalRoom(room: Room) {
+        
+    }
+    
+    func deleteRoom() {
+        print("")
+//        self.repository.deleteOnlineRoom(forRoomId: self.room.value.id)
+//            .sink { [weak self] completion in
+//                switch completion {
+//                case .failure(_):
+//                    self?.getAppCoordinator()?.showError(message: "Something went deleting the room")
+//                case.finished:
+//                    guard let room = self?.room.value else { return }
+//                    self?.deleteLocalRoom(room: room)
+//                    self?.getAppCoordinator()?.dismissViewController()
+//                    return
+//                }
+//            } receiveValue: { _ in }
+//            .store(in: &self.subscriptions)
+    }
+    
     deinit {
 //        print("Deinit Works")
     }

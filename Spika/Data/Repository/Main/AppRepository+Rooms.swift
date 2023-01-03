@@ -148,6 +148,22 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<EmptyResponse, EmptyRequestBody>(
+            path: Constants.Endpoints.checkRoomForRoomId + "/" + String(roomId),
+            requestType: .DELETE,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
     // MARK: Database
     
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>{
