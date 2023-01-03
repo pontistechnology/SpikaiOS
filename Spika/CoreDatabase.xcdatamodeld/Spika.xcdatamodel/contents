@@ -38,6 +38,8 @@
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
+            </uniquenessConstraint>
+            <uniquenessConstraint>
                 <constraint value="localId"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
