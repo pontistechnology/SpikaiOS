@@ -189,4 +189,8 @@ extension AppRepository {
     func roomVisited(roomId: Int64) {
         databaseService.roomEntityService.roomVisited(roomId: roomId)
     }
+    
+    func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error> {
+        return databaseService.roomEntityService.deleteRoom(roomId: roomId)
+    }
 }

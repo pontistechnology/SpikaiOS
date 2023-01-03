@@ -62,6 +62,7 @@ protocol Repository {
     func checkOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error>
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
+    func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
     
     // MARK: NETWORKING: Message
     

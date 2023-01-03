@@ -61,6 +61,8 @@ public extension Constants {
         case mute = "Mute"
         case block = "Block"
         case report = "Report"
+        case deleteTheRoom = "Delete the room?"
+        case somethingWentWrongDeletingTheRoom = "Something went wrong deleting the room"
         
         //MARK: - ContactsViewController
         case searchForContactsMessages = "Search for contact,message, file..."

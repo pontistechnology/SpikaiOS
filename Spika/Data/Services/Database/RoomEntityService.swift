@@ -152,5 +152,26 @@ extension RoomEntityService {
             try? context.save()
         }
     }
+    
+    func deleteRoom(roomId: Int64) -> Future<Bool, Error> {
+        Future { [weak self] promise in
+            guard let self = self else { return }
+            self.coreDataStack.persistantContainer.performBackgroundTask { context in
+                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                
+                let fr = RoomEntity.fetchRequest()
+                fr.predicate = NSPredicate(format: "id == %d", roomId)
+                guard let roomEntity = try? context.fetch(fr).first else { return }
+                
+                context.delete(roomEntity)
+                do {
+                    try context.save()
+                    promise(.success(true))
+                } catch {
+                    promise(.failure((DatabseError.savingError)))
+                }
+            }
+        }
+    }
 }
 

@@ -48,6 +48,8 @@
  "Mute" = "Mute";
  "Block" = "Block";
  "Report" = "Report";
+ "Delete the room?" = "Delete the room?";
+"Something went wrong deleting the room" = "Something went wrong deleting the room";
 
 "Search for contact,message, file..." = "Search for contact,message, file...";
 "Media" = "Media";

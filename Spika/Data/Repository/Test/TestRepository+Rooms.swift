@@ -98,4 +98,10 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
+    func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error> {
+        return Future { promise in
+            promise(.failure(DatabseError.unknown))
+        }
+    }
+    
 }

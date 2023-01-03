@@ -95,25 +95,52 @@ class ChatDetailsViewModel: BaseViewModel {
             }.store(in: &self.subscriptions)
     }
     
+    func deleteRoomComfirmed() {
+        self.repository.deleteOnlineRoom(forRoomId: self.room.value.id)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(_):
+                    self?.getAppCoordinator()?.showError(message: "Something went deleting the room")
+                case.finished:
+                    guard let room = self?.room.value else { return }
+                    self?.deleteLocalRoom(room: room)
+                    return
+                }
+            } receiveValue: { _ in }
+            .store(in: &self.subscriptions)
+    }
+    
     func deleteLocalRoom(room: Room) {
-        
+        self.repository.deleteLocalRoom(roomId: room.id)
+            .eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] c in
+                switch c {
+                case .failure(_):
+                    self?.getAppCoordinator()?.showError(message: .getStringFor(.somethingWentWrongDeletingTheRoom))
+                case.finished:
+                    self?.getAppCoordinator()?.popTopViewController()
+                    self?.getAppCoordinator()?.popTopViewController()
+                    return
+                }
+            } receiveValue: { _ in }
+            .store(in: &self.subscriptions)
     }
     
     func deleteRoom() {
-        print("")
-//        self.repository.deleteOnlineRoom(forRoomId: self.room.value.id)
-//            .sink { [weak self] completion in
-//                switch completion {
-//                case .failure(_):
-//                    self?.getAppCoordinator()?.showError(message: "Something went deleting the room")
-//                case.finished:
-//                    guard let room = self?.room.value else { return }
-//                    self?.deleteLocalRoom(room: room)
-//                    self?.getAppCoordinator()?.dismissViewController()
-//                    return
-//                }
-//            } receiveValue: { _ in }
-//            .store(in: &self.subscriptions)
+        self.getAppCoordinator()?.showAlertView(title: .getStringFor(.deleteTheRoom),
+                                                message: .getStringFor(.deleteTheRoom),
+                                                buttons: [AlertViewButton.regular(title: .getStringFor(.cancel)),
+                                                          AlertViewButton.regular(title: .getStringFor(.delete))])
+        .sink(receiveValue: { type in
+            switch type {
+            case .dismiss:
+                ()
+            case .alertViewTap(let index):
+                guard index == 1 else { return }
+                self.deleteRoomComfirmed()
+            }
+        }).store(in: &self.subscriptions)
     }
     
     deinit {
