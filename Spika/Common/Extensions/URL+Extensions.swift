@@ -17,12 +17,19 @@ extension URL {
         else {
             return UIImage(systemName: "photo")!
         }
-        
-        
-        print("POKOJO: w ", imageProperties[kCGImagePropertyPixelWidth])
-        print("POKOJO: s ", imageProperties)
-        print("POKOJO: h ", imageProperties[kCGImagePropertyPixelHeight])
         return thumbnail
+    }
+    
+    func imageMetaData() -> MetaData {
+        let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
+        guard let imageSource = CGImageSourceCreateWithURL(self as CFURL, imageSourceOptions),
+              let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as Dictionary?,
+              let width = imageProperties[kCGImagePropertyPixelWidth] as? Int64,
+              let height = imageProperties[kCGImagePropertyPixelHeight] as? Int64
+        else {
+            return MetaData(width: 0, height: 0, duration: 0)
+        }
+        return MetaData(width: width, height: height, duration: 0)
     }
     
     func videoThumbnail() -> UIImage {

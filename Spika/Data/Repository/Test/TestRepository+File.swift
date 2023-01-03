@@ -14,4 +14,10 @@ extension TestRepository {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
+    
+    func uploadAllChunks(fromData data: Data) -> AnyPublisher<(percentUploaded: CGFloat, chunksDataToVerify: ChunksDataToVerify?), Error> {
+        return Fail<(percentUploaded: CGFloat, chunksDataToVerify: ChunksDataToVerify?), Error>(error: DatabseError.unknown)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 }

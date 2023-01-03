@@ -16,7 +16,9 @@ struct SelectedFile {
     let fileType: MessageType
     let name: String?
     let fileUrl: URL
-    let thumbnail: UIImage
+    let thumbnail: UIImage?
+    let metaData: MetaData
+    let mimeType: String
 }
 
 class CurrentChatViewController: BaseViewController {
@@ -537,18 +539,18 @@ extension CurrentChatViewController: UIDocumentPickerDelegate {
         controller.dismiss(animated: true)
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         
-        for url in urls {
-            guard let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                  url.copyFileFromURL(to: targetURL) == true,
-                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey]),
-                  let fileName = resourceValues.name,
-                  let type = resourceValues.contentType
-            else { return }
-            
-            let file = SelectedFile(fileType: .file, name: fileName,
-                                    fileUrl: targetURL, thumbnail: type.thumbnail())
-//            self.viewModel.selectedFiles.value.append(file)
-        }
+//        for url in urls {
+//            guard let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
+//                  url.copyFileFromURL(to: targetURL) == true,
+//                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey]),
+//                  let fileName = resourceValues.name,
+//                  let type = resourceValues.contentType
+//            else { return }
+//            
+//            let file = SelectedFile(fileType: .file, name: fileName,
+//                                    fileUrl: targetURL, thumbnail: type.thumbnail())
+////            self.viewModel.selectedFiles.value.append(file)
+//        }
     }
     
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
