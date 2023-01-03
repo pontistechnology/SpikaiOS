@@ -119,7 +119,7 @@ extension CurrentChatViewController {
                 self?.title = stringValue
             }.store(in: &self.subscriptions)
         
-        self.viewModel.uploadProgressPublisher.sink { [weak self] (uuid, percent) in
+        self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (uuid, percent) in
             guard let entity = self?.frc?.fetchedObjects?.first(where: { [weak self] messageEntity in
                 messageEntity.localId == uuid
             }),

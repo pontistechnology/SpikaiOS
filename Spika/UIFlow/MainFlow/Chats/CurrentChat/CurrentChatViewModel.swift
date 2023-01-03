@@ -253,19 +253,25 @@ extension CurrentChatViewModel {
                 .combineLatest(repository.uploadAllChunks(fromData: data))
                 .sink { c in
                 } receiveValue: { [weak self] filePublisher, thumbPublisher in
+                    self?.uploadProgressPublisher.send((localId: localId, percentUploaded: filePublisher.percentUploaded))
                     guard let self = self,
-                        let cc = thumbPublisher.chunksDataToVerify,
-                        let dd = filePublisher.chunksDataToVerify
+                        let thumbChunksData = thumbPublisher.chunksDataToVerify,
+                        let fileChunksData = filePublisher.chunksDataToVerify
                     else { return }
                     
-                    self.verifyUpload(chunksDataToVerify: cc,
+                    self.verifyUpload(chunksDataToVerify: thumbChunksData,
                                       mimeType: "image/*",
                                       metaData: MetaData(width: 72, height: 72, duration: 0))
-                        .combineLatest(self.verifyUpload(chunksDataToVerify: dd,
+                        .combineLatest(self.verifyUpload(chunksDataToVerify: fileChunksData,
                                                          mimeType: file.mimeType,
                                                          metaData: file.metaData))
-                        .sink(receiveValue: { [weak self] thumb, file in
-                            self?.sendMessage(body: RequestMessageBody(text: nil, fileId: file.id, thumbId: thumb.id), localId: localId, type: .image, replyId: nil)
+                        .sink(receiveValue: { [weak self] uploadedThumb, uploadedFile in
+                            self?.sendMessage(body: RequestMessageBody(text: nil,
+                                                                       fileId: uploadedFile.id,
+                                                                       thumbId: uploadedThumb.id),
+                                              localId: localId,
+                                              type: file.fileType,
+                                              replyId: nil)
                         }).store(in: &self.subscriptions)
                 }.store(in: &subscriptions)
         default:
