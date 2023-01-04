@@ -129,7 +129,6 @@ extension NewGroupChatViewController: UIImagePickerControllerDelegate, UINavigat
             } else {
                 guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
                 self.newGroupChatView.avatarPictureView.setImage(resizedImage, for: .normal)
-//                enterUsernameView.profilePictureView.showImage(resizedImage)
                 self.viewModel.fileData = resizedImage.jpegData(compressionQuality: 1)
             }
             dismiss(animated: true, completion: nil)

@@ -30,7 +30,7 @@ class ChatDetailsViewModel: BaseViewModel {
             .sink { [weak self] c in
                 switch c {
                 case .failure(_):
-                    self?.getAppCoordinator()?.showError(message: "Something went wrong trying to add new users")
+                    self?.getAppCoordinator()?.showError(message: .getStringFor(.somethingWentWrongAddingUsers))
                 case.finished:
                     return
                 }
@@ -52,8 +52,9 @@ class ChatDetailsViewModel: BaseViewModel {
                 case .finished:
                     break
                 case .failure(_):
+                    let message: String = mute ? .getStringFor(.somethingWentWrongMutingRoom) : .getStringFor(.somethingWentWrongUnmutingRoom)
                     self.getAppCoordinator()?
-                        .showError(message: "Something went wrong \(mute ? "Muting" : "Unmuting") the room \(roomName)")
+                        .showError(message: message)
                     //TODO: Reset Room muted state & observer
                 }
             } receiveValue: { _ in }
@@ -82,7 +83,7 @@ class ChatDetailsViewModel: BaseViewModel {
         self.repository
             .updateRoomUsers(room: room )
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] c in
+            .sink { c in
                 switch c {
                 case .finished:
                     let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -100,7 +101,7 @@ class ChatDetailsViewModel: BaseViewModel {
             .sink { [weak self] completion in
                 switch completion {
                 case .failure(_):
-                    self?.getAppCoordinator()?.showError(message: "Something went deleting the room")
+                    self?.getAppCoordinator()?.showError(message: .getStringFor(.somethingWentWrongDeletingTheRoom))
                 case.finished:
                     guard let room = self?.room.value else { return }
                     self?.deleteLocalRoom(room: room)
