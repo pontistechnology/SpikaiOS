@@ -16,8 +16,7 @@ extension AppRepository {
     
     // MARK: Network
     
-    func createOnlineRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
-
+    func createOnlineRoom(name: String, avatarId: Int64?, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -30,7 +29,7 @@ extension AppRepository {
             path: Constants.Endpoints.createRoom,
             requestType: .POST,
             bodyParameters: CreateRoomRequestModel(name: name,
-                                                   avatarUrl: nil,
+                                                   avatarFileId: avatarId,
                                                    userIds: userIds,
                                                    adminUserIds: nil),
             httpHeaderFields: ["accesstoken" : accessToken])
@@ -149,6 +148,22 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<EmptyResponse, EmptyRequestBody>(
+            path: Constants.Endpoints.checkRoomForRoomId + "/" + String(roomId),
+            requestType: .DELETE,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
     // MARK: Database
     
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>{
@@ -173,5 +188,9 @@ extension AppRepository {
     
     func roomVisited(roomId: Int64) {
         databaseService.roomEntityService.roomVisited(roomId: roomId)
+    }
+    
+    func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error> {
+        return databaseService.roomEntityService.deleteRoom(roomId: roomId)
     }
 }

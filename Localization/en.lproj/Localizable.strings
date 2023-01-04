@@ -15,39 +15,44 @@
 "Details" = "Details";
 "shared" = "shared";
  
- "Search" = "Search";
- "ALL COUNTRIES" = "ALL COUNTRIES";
- "Could not auth user" = "Could not auth user";
- "Enter your phone number to start using Spika" = "Enter your phone number to start using Spika";
- "Eg. 98726123" = "Eg. 98726123";
- "Phone number" = "Phone number";
- "We sent you 6 digit verification code on" = "We sent you 6 digit verification code on";
- 
- "Username" = "Username";
- "Enter username" = "Enter username";
- "Take a photo" = "Take a photo";
- "Choose from gallery" = "Choose from gallery";
- "Remove photo" = "Remove photo";
- "Please use better quality." = "Please use better quality.";
- "Please select a square" = "Please select a square";
- 
- "We sent you 6 digit verification code." = "We sent you 6 digit verification code.";
- "Resend code" = "Resend code";
- 
- "Chat" = "Chat";
- "Call History" = "Call History";
- "Contacts" = "Contacts";
- "Settings" = "Settings";
- 
- "Group" = "Group";
- "Shared Media, Links and Docs" = "Shared Media, Links and Docs";
- "Chat search" = "Chat search";
- "Notes" = "Notes";
- "Favorites" = "Favorites";
- "Pin chat" = "Pin chat";
- "Mute" = "Mute";
- "Block" = "Block";
- "Report" = "Report";
+"Search" = "Search";
+"ALL COUNTRIES" = "ALL COUNTRIES";
+"Could not auth user" = "Could not auth user";
+"Enter your phone number to start using Spika" = "Enter your phone number to start using Spika";
+"Eg. 98726123" = "Eg. 98726123";
+"Phone number" = "Phone number";
+"We sent you 6 digit verification code on" = "We sent you 6 digit verification code on";
+
+"Username" = "Username";
+"Enter username" = "Enter username";
+"Take a photo" = "Take a photo";
+"Choose from gallery" = "Choose from gallery";
+"Remove photo" = "Remove photo";
+"Please use better quality." = "Please use better quality.";
+"Please select a square" = "Please select a square";
+
+"We sent you 6 digit verification code." = "We sent you 6 digit verification code.";
+"Resend code" = "Resend code";
+
+"Chat" = "Chat";
+"Call History" = "Call History";
+"Contacts" = "Contacts";
+"Settings" = "Settings";
+
+"Group" = "Group";
+"Shared Media, Links and Docs" = "Shared Media, Links and Docs";
+"Chat search" = "Chat search";
+"Notes" = "Notes";
+"Favorites" = "Favorites";
+"Pin chat" = "Pin chat";
+"Mute" = "Mute";
+"Block" = "Block";
+"Report" = "Report";
+"Delete the room?" = "Delete the room?";
+"Something went wrong deleting the room" = "Something went wrong deleting the room";
+"Something went wrong trying to add new users" = "Something went wrong trying to add new users";
+"Something went wrong muting the room" = "Something went wrong muting the room";
+"Something went wrong unmuting the room" = "Something went wrong unmuting the room";
 
 "Search for contact,message, file..." = "Search for contact,message, file...";
 "Media" = "Media";

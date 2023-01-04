@@ -74,6 +74,7 @@ final class ChatDetailsViewController: BaseViewController {
             .sink(receiveValue: { [weak self] isAdmin in
                 self?.chatDetailView.contentView.chatMembersView.addContactButton.isHidden = !isAdmin
                 self?.chatDetailView.contentView.cameraIcon.isHidden = !isAdmin
+                self?.chatDetailView.contentView.deleteButton.isHidden = !isAdmin
             })
             .store(in: &self.viewModel.subscriptions)
         
@@ -114,6 +115,13 @@ final class ChatDetailsViewController: BaseViewController {
             .sink { [weak self] _ in
                 self?.onChangeImage()
             }.store(in: &self.subscriptions)
+        
+        self.chatDetailView.contentView
+            .deleteButton
+            .tap()
+            .sink { [weak self] _ in
+                self?.viewModel.deleteRoom()
+            }.store(in: &self.subscriptions)
     }
     
     func onChangeImage() {
@@ -135,8 +143,6 @@ final class ChatDetailsViewController: BaseViewController {
         }))
         actionSheet.addAction(UIAlertAction(title: .getStringFor(.removePhoto), style: .destructive, handler: { [weak self] _ in
             guard let self = self else { return }
-//            self.fileData = nil
-//            self.enterUsernameView.profilePictureView.deleteMainImage()
         }))
         actionSheet.addAction(UIAlertAction(title: .getStringFor(.cancel), style: .cancel, handler: nil))
     }

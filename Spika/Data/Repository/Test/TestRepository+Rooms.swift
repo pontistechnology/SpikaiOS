@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 extension TestRepository {
-    func createOnlineRoom(name: String, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
+    func createOnlineRoom(name: String, avatarId: Int64?, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
         return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
@@ -58,6 +58,12 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
+    func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error> {
+        return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))
@@ -90,6 +96,12 @@ extension TestRepository {
         return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
+    }
+    
+    func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error> {
+        return Future { promise in
+            promise(.failure(DatabseError.unknown))
+        }
     }
     
 }

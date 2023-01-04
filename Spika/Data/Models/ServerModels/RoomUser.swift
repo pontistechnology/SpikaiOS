@@ -19,4 +19,8 @@ extension RoomUser {
                   isAdmin: roomUserEntity.isAdmin,
                   user: User(entity: roomUserEntity.user!)) // TODO: check !
     }
+    
+    init(user:User) {
+        self.init(userId: 0, isAdmin: false, user: user)
+    }
 }

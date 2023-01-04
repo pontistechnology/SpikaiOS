@@ -47,8 +47,9 @@ class UserSelectionViewController: BaseViewController {
             .doneLabel
             .tap()
             .sink { [weak self] _ in
-                self?.onNext()
-                self?.dismiss(animated: true, completion: nil)
+                self?.dismiss(animated: true, completion: {  [weak self] in
+                    self?.onNext()
+                })
             }.store(in: &self.subscriptions)
         
         userSelectionView.cancelLabel.tap().sink { [weak self] _ in
