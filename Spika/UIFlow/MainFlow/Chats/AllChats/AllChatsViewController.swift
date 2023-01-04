@@ -189,7 +189,7 @@ extension AllChatsViewController: SearchBarDelegate {
     }
     
     func changePredicate(to newString: String) {
-        let searchPredicate = newString.isEmpty ? self.viewModel.defaultChatsPredicate : NSPredicate(format: "name CONTAINS[c] '\(newString)'")
+        let searchPredicate = newString.isEmpty ? self.viewModel.defaultChatsPredicate : NSPredicate(format: "name CONTAINS[c] '\(newString)' and roomDeleted = false")
         self.frc?.fetchRequest.predicate = searchPredicate
         try? self.frc?.performFetch()
         self.allChatsView.allChatsTableView.reloadData()

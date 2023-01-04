@@ -62,7 +62,6 @@ protocol Repository {
     func checkOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error>
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
-    func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
     
     // MARK: NETWORKING: Message
     
@@ -112,6 +111,7 @@ protocol Repository {
     func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<EmptyResponse,Error>
     func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
     func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
+    func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
 
     // MARK: - USERDEFAULTS: User
     

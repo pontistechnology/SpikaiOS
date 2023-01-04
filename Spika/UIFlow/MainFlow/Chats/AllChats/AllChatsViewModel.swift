@@ -10,7 +10,11 @@ import Combine
 
 class AllChatsViewModel: BaseViewModel {
     
-    let defaultChatsPredicate = NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
+    var defaultChatsPredicate: NSPredicate = {
+        let predicate1 =  NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
+        let predicate2 = NSPredicate(format: "roomDeleted = false")
+        return NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
+    } ()
     
     func presentSelectUserScreen() {
         getAppCoordinator()?.presentSelectUserScreen()
