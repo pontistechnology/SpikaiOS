@@ -44,9 +44,6 @@ protocol Repository {
     func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error>
     func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int, metaData: MetaData) -> AnyPublisher<VerifyFileResponseModel, Error>
     
-//    @available(iOSApplicationExtension 13.4, *) func uploadAllChunks(fromUrl url: URL) -> AnyPublisher<(percentUploaded: CGFloat, chunksDataToVerify: ChunksDataToVerify?), Error>
-//    func uploadAllChunks(fromData data: Data) -> AnyPublisher<(percentUploaded: CGFloat, chunksDataToVerify: ChunksDataToVerify?), Error>
-    
     // MARK: NETWORKING: User
     
     func fetchMyUserDetails() -> AnyPublisher<AuthResponseModel, Error>

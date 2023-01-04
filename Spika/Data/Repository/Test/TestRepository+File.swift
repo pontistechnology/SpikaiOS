@@ -9,20 +9,6 @@ import Combine
 import Foundation
 
 extension TestRepository {
-    func uploadAllChunks(fromUrl url: URL, mimeType: String, metaData: MetaData) -> AnyPublisher<(percentUploaded: CGFloat, chunksDataToVerify: ChunksDataToVerify?), Error> {
-        return Fail<(percentUploaded: CGFloat, chunksDataToVerify: ChunksDataToVerify?), Error>(error: DatabseError.unknown)
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
-    
-    func uploadAllChunks(fromData data: Data, mimeType: String, metaData: MetaData) -> AnyPublisher<(percentUploaded: CGFloat, chunksDataToVerify: ChunksDataToVerify?), Error> {
-        return Fail<(percentUploaded: CGFloat, chunksDataToVerify: ChunksDataToVerify?), Error>(error: DatabseError.unknown)
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
-}
-
-extension TestRepository {
     func uploadWholeFile(data: Data, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>) {
         return Fail<(File?, CGFloat), Error>(error: DatabseError.unknown)
             .receive(on: DispatchQueue.main)
