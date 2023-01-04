@@ -249,7 +249,26 @@ extension CurrentChatViewModel {
         case .image, .video:
             guard let data = file.thumbnail?.jpegData(compressionQuality: 1) else { return }
             
-            
+            repository
+                .uploadWholeFile(data: data, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
+                .sink { c in
+                    
+                } receiveValue: { [weak self] filea, percent in
+                    guard let _ = filea else { return }
+                    guard let self = self else { return }
+                    self.repository
+                        .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData)
+                        .sink { c in
+                            
+                        } receiveValue: { [weak self] fileb, percent in
+                            guard let self = self else { return }
+                            self.uploadProgressPublisher.send((localId: localId, percentUploaded: percent))
+                            guard let fileb = fileb else { return }
+                            self.sendMessage(body: RequestMessageBody(text: nil, fileId: fileb.id, thumbId: filea?.id), localId: localId, type: file.fileType, replyId: nil)
+                        }.store(in: &self.subscriptions)
+
+                }.store(in: &subscriptions)
+
             
             
             
