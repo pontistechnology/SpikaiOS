@@ -10,7 +10,7 @@ import Combine
 import CoreData
 
 class TestRepository: Repository {
-   
+    
     let networkService: NetworkService
     let databaseService: DatabaseService
     var subs = Set<AnyCancellable>()

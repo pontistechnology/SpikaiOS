@@ -207,11 +207,11 @@ extension CurrentChatViewModel {
             guard let self = self,
                   let message = response.data?.message
             else { return }
-            self.saveMessage(message: message, room: room)
+            self.saveMessage(message: message)
         }.store(in: &self.subscriptions)
     }
     
-    func saveMessage(message: Message, room: Room) {
+    func saveMessage(message: Message) {
         repository.saveMessages([message]).sink { c in
             print(c)
         } receiveValue: { _ in
@@ -248,81 +248,25 @@ extension CurrentChatViewModel {
         switch file.fileType {
         case .image, .video:
             guard let data = file.thumbnail?.jpegData(compressionQuality: 1) else { return }
-            repository
-                .uploadAllChunks(fromUrl: file.fileUrl)
-                .combineLatest(repository.uploadAllChunks(fromData: data))
-                .sink { c in
-                } receiveValue: { [weak self] filePublisher, thumbPublisher in
-                    self?.uploadProgressPublisher.send((localId: localId, percentUploaded: filePublisher.percentUploaded))
-                    guard let self = self,
-                        let thumbChunksData = thumbPublisher.chunksDataToVerify,
-                        let fileChunksData = filePublisher.chunksDataToVerify
-                    else { return }
-                    
-                    self.verifyUpload(chunksDataToVerify: thumbChunksData,
-                                      mimeType: "image/*",
-                                      metaData: MetaData(width: 72, height: 72, duration: 0))
-                        .combineLatest(self.verifyUpload(chunksDataToVerify: fileChunksData,
-                                                         mimeType: file.mimeType,
-                                                         metaData: file.metaData))
-                        .sink(receiveValue: { [weak self] uploadedThumb, uploadedFile in
-                            self?.sendMessage(body: RequestMessageBody(text: nil,
-                                                                       fileId: uploadedFile.id,
-                                                                       thumbId: uploadedThumb.id),
-                                              localId: localId,
-                                              type: file.fileType,
-                                              replyId: nil)
-                        }).store(in: &self.subscriptions)
-                }.store(in: &subscriptions)
+            
+            
+            
+            
+            
         default:
-            repository
-                .uploadAllChunks(fromUrl: file.fileUrl)
-                .sink { c in
-                    
-                } receiveValue: { [weak self] filePublisher in
-                    guard let self = self else { return }
-                    if let dd = filePublisher.chunksDataToVerify {
-                        self.verifyUpload(chunksDataToVerify: dd, mimeType: file.mimeType, metaData: file.metaData)
-                            .sink(receiveValue: { [weak self] file in
-                                guard let self = self else { return }
-                                self.sendMessage(body: RequestMessageBody(text: nil, fileId: file.id, thumbId: nil), localId: localId, type: .file, replyId: nil)
-                            }).store(in: &self.subscriptions)
-                    }
-                }.store(in: &subscriptions)
+            break
         }
         
     }
     
-    func verifyUpload(chunksDataToVerify: ChunksDataToVerify, mimeType: String, metaData: MetaData) -> PassthroughSubject<File, Never> {
-        let publisher = PassthroughSubject<File, Never>()
-        
-        repository
-            .verifyUpload(total: chunksDataToVerify.totalChunks,
-                                size: chunksDataToVerify.size,
-                                mimeType: mimeType,
-                                fileName: chunksDataToVerify.fileName,
-                                clientId: chunksDataToVerify.clientId,
-                                fileHash: chunksDataToVerify.fileHash,
-                                type: "smt",
-                                relationId: 1,
-                                metaData: metaData)
-            .compactMap { $0.data?.file }
-            .sink { c in
-                
-            } receiveValue: { file in
-                publisher.send(file)
-            }.store(in: &subscriptions)
-        return publisher
-    }
-    
-    func sendImage(file: SelectedFile) {
+    func sendFile(file: SelectedFile) {
         guard let room = room else { return }
         let uuid = UUID().uuidString
         
         let message = Message(createdAt: Date().currentTimeMillis(),
                               fromUserId: getMyUserId(),
                               roomId: room.id,
-                              type: .image,
+                              type: file.fileType,
                               body: MessageBody(text: nil,
                                                 file: nil,
                                                 thumb: nil),
@@ -334,10 +278,6 @@ extension CurrentChatViewModel {
         } receiveValue: { [weak self] messages in
             self?.upload(file: file, localId: uuid)
         }.store(in: &subscriptions)
-    }
-    
-    func sendUploadedFiles() {
-        
     }
     
     func sendMultimedia(_ results: [PHPickerResult]) {
@@ -355,23 +295,27 @@ extension CurrentChatViewModel {
                     let file = SelectedFile(fileType: .image, name: nil,
                                             fileUrl: targetURL, thumbnail: thumbnail, metaData: metaData,
                                             mimeType: "image/*")
-                    self?.sendImage(file: file)
+                    self?.sendFile(file: file)
                 }
             }
             
-//            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-//                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
-//                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-//                    guard let url = url,
-//                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-//                          url.copyFileFromURL(to: targetURL) == true
-//                    else { return }
-//                    let thumb = url.videoThumbnail()
-//                    let file  = SelectedFile(fileType: .movie, name: "video",
-//                                             fileUrl: targetURL, thumbnail: thumb)
-////                    self?.viewModel.selectedFiles.value.append(file)
-//                }
-//            }
+            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
+                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+                    guard let url = url,
+                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
+                          url.copyFileFromURL(to: targetURL) == true
+                    else { return }
+                    let thumb = url.videoThumbnail()
+                    let file  = SelectedFile(fileType: .video,
+                                             name: nil,
+                                             fileUrl: targetURL,
+                                             thumbnail: thumb,
+                                             metaData: MetaData(width: 1, height: 2, duration: 3), // TODO: metadata
+                                             mimeType: "video/mp4") // TODO: determine
+                    self?.sendFile(file: file)
+                }
+            }
         }
     }
 }
