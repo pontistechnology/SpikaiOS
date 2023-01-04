@@ -119,13 +119,15 @@ extension CurrentChatViewController {
                 self?.title = stringValue
             }.store(in: &self.subscriptions)
         
-        self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (uuid, percent) in
+        self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (uuid, percent, url) in
             guard let entity = self?.frc?.fetchedObjects?.first(where: { [weak self] messageEntity in
                 messageEntity.localId == uuid
             }),
                   let indexPath = self?.frc?.indexPath(forObject: entity)
             else { return }
             (self?.currentChatView.messagesTableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell)?.showUploadProgress(at: percent)
+            guard let url = url else { return }
+            (self?.currentChatView.messagesTableView.cellForRow(at: indexPath) as? ImageMessageTableViewCell)?.setTempThumbnail(url: url)
         }.store(in: &subscriptions)
     }
     

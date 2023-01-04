@@ -128,7 +128,7 @@ extension AppRepository {
     func uploadWholeFile(data: Data, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>) {
         
         let dataLen: Int = data.count
-        let chunkSize: Int = ((1024) * 4)
+        let chunkSize: Int = ((1024) * 64)
         let fullChunks = Int(dataLen / chunkSize)
         let totalChunks: Int = fullChunks + (dataLen % 1024 != 0 ? 1 : 0)
         let clientId = UUID().uuidString
@@ -228,7 +228,7 @@ extension AppRepository {
     @available(iOSApplicationExtension 13.4, *)
     func uploadWholeFile(fromUrl url: URL, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>) {
         
-        let chunkSize: Int = 1024 * 4
+        let chunkSize: Int = 1024 * 64
         let clientId = UUID().uuidString
         var hasher = SHA256()
         var hash: String?

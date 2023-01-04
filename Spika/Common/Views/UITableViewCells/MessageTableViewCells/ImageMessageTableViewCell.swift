@@ -50,4 +50,8 @@ extension ImageMessageTableViewCell {
             self?.tapPublisher.send(.openImage)
         }.store(in: &subs)
     }
+    
+    func setTempThumbnail(url: URL?) {
+        photoImageView.setImage(url: url, as: .square)
+    }
 }
