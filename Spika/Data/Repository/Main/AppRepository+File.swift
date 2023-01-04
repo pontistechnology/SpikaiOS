@@ -122,11 +122,11 @@ extension AppRepository {
         guard FileManager.default.fileExists(atPath: url.path),
               let outputFileHandle = try? FileHandle(forReadingFrom: url),
               let resources = try? url.resourceValues(forKeys:[.fileSizeKey, .nameKey]),
-              let fileSize = resources.fileSize,
-              let fileName = resources.name
+              let fileSize = resources.fileSize
         else {
             return somePublisher.eraseToAnyPublisher()
         }
+        let fileName = resources.name ?? "unknownName"
         
         let totalChunks = fileSize / chunkSize + (fileSize % chunkSize != 0 ? 1 : 0)
         var chunk = try? outputFileHandle.read(upToCount: chunkSize)
