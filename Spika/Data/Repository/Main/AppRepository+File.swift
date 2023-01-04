@@ -121,9 +121,9 @@ extension AppRepository {
         
         guard FileManager.default.fileExists(atPath: url.path),
               let outputFileHandle = try? FileHandle(forReadingFrom: url),
-              let resources = try? url.resourceValues(forKeys:[.fileSizeKey]),
-              let fileSize = resources.fileSize
-//              let fileName = resources.name
+              let resources = try? url.resourceValues(forKeys:[.fileSizeKey, .nameKey]),
+              let fileSize = resources.fileSize,
+              let fileName = resources.name
         else {
             return somePublisher.eraseToAnyPublisher()
         }
@@ -156,7 +156,7 @@ extension AppRepository {
                 if uploadedCount == totalChunks {
                     guard let hash = hash else { return }
                     
-                    self.verifyUpload(total: totalChunks, size: fileSize, mimeType: mimeType, fileName: "fileName", clientId: clientId, fileHash: hash, type: hash, relationId: 1, metaData: metaData).sink { [weak self] completion in
+                    self.verifyUpload(total: totalChunks, size: fileSize, mimeType: mimeType, fileName: fileName, clientId: clientId, fileHash: hash, type: hash, relationId: 1, metaData: metaData).sink { [weak self] completion in
                         switch completion {
                             
                         case .finished:

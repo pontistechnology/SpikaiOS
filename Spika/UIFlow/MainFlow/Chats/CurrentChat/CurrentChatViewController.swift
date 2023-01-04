@@ -539,20 +539,7 @@ extension CurrentChatViewController: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         controller.dismiss(animated: true)
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        
-//        for url in urls {
-//            guard let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-//                  url.copyFileFromURL(to: targetURL) == true,
-//                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey]),
-//                  let fileName = resourceValues.name,
-//                  let type = resourceValues.contentType
-//            else { return }
-//            
-//            let file = SelectedFile(fileType: .file, name: fileName,
-//                                    fileUrl: targetURL, thumbnail: type.thumbnail())
-////            self.viewModel.selectedFiles.value.append(file)
-//        }
+        viewModel.sendDocuments(urls: urls)
     }
     
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
