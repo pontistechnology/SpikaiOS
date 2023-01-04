@@ -20,6 +20,12 @@ class NewGroupChatViewModel: BaseViewModel {
         super.init(repository: repository, coordinator: coordinator)
     }
     
+    func removeUser(user: User) {
+        var currentUsers = selectedUsers.value
+        currentUsers.removeAll(where: { $0.id == user.id })
+        self.selectedUsers.send(currentUsers)
+    }
+    
     func createRoom(name: String) {
         if let fileData = fileData {
             repository.uploadWholeFile(data: fileData)
@@ -80,12 +86,6 @@ class NewGroupChatViewModel: BaseViewModel {
             self?.getAppCoordinator()?.dismissViewController()
             self?.getAppCoordinator()?.presentCurrentChatScreen(room: room)
         }.store(in: &subscriptions)
-    }
-    
-    func removeUser(user: User) {
-        var currentUsers = selectedUsers.value
-        currentUsers.removeAll(where: { $0.id == user.id })
-        self.selectedUsers.send(currentUsers)
     }
     
 }

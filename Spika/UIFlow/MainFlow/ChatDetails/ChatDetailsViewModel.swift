@@ -46,8 +46,6 @@ class ChatDetailsViewModel: BaseViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let self = self else { return }
-                let roomName = self.room.value.name ?? String(self.room.value.id)
-
                 switch completion {
                 case .finished:
                     break
