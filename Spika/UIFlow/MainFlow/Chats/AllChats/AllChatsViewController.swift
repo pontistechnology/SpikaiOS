@@ -40,13 +40,6 @@ class AllChatsViewController: BaseViewController {
             }.store(in: &self.subscriptions)
         
         setRoomsFetch()
-        
-        self.viewModel.repository
-            .unreadRoomsPublisher
-            .sink { [weak self] string in
-                self?.navigationController?.navigationItem.backBarButtonItem =
-                UIBarButtonItem(title:.getStringFor(.title), style:.plain, target:nil, action:nil)
-            }.store(in: &self.subscriptions)
     }
     
     func onCreateNewRoom() {
