@@ -109,9 +109,8 @@ final class ChatDetailsViewController: BaseViewController {
         self.chatDetailView.contentView
             .chatImage
             .tap()
-            .combineLatest(isAdmin)
-            .map { $0.1 }
-            .filter { $0 }
+            .withLatestFrom(isAdmin)
+            .filter { $0.1 }
             .sink { [weak self] _ in
                 self?.onChangeImage()
             }.store(in: &self.subscriptions)
@@ -143,6 +142,7 @@ final class ChatDetailsViewController: BaseViewController {
         }))
         actionSheet.addAction(UIAlertAction(title: .getStringFor(.removePhoto), style: .destructive, handler: { [weak self] _ in
             guard let self = self else { return }
+            
         }))
         actionSheet.addAction(UIAlertAction(title: .getStringFor(.cancel), style: .cancel, handler: nil))
     }
@@ -150,7 +150,6 @@ final class ChatDetailsViewController: BaseViewController {
 }
 
 extension ChatDetailsViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     func setupImagePicker() {
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -169,12 +168,11 @@ extension ChatDetailsViewController : UIImagePickerControllerDelegate, UINavigat
                 viewModel.showError(.getStringFor(.pleaseSelectASquare))
             } else {
                 guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
-//                enterUsernameView.profilePictureView.showImage(resizedImage)
-//                fileData = resizedImage.jpegData(compressionQuality: 1)
+                guard let data = resizedImage.jpegData(compressionQuality: 1) else { return }
+                self.viewModel.changeAvatar(image: data)
             }
-            dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true)
         }
-        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

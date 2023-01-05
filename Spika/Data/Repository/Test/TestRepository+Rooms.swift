@@ -98,6 +98,12 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
+    func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error> {
+        return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))
