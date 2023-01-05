@@ -44,7 +44,7 @@ final class ChatDetailsViewController: BaseViewController {
                 return room.getAvatarUrl()
             }
             .sink { [weak self] url in
-                self?.chatDetailView.contentView.chatImage.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
+                self?.chatDetailView.contentView.chatImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
             }.store(in: &self.viewModel.subscriptions)
 
         self.viewModel.room
@@ -73,10 +73,18 @@ final class ChatDetailsViewController: BaseViewController {
         isAdmin
             .sink(receiveValue: { [weak self] isAdmin in
                 self?.chatDetailView.contentView.chatMembersView.addContactButton.isHidden = !isAdmin
-                self?.chatDetailView.contentView.cameraIcon.isHidden = !isAdmin
                 self?.chatDetailView.contentView.deleteButton.isHidden = !isAdmin
             })
             .store(in: &self.viewModel.subscriptions)
+        
+        self.viewModel
+            .uploadProgressPublisher
+            .sink { [weak self] completion in
+                self?.chatDetailView.contentView.chatImage.hideUploadProgress()
+            } receiveValue: { [weak self] progress in
+                guard let self = self else { return }
+                self.chatDetailView.contentView.chatImage.showUploadProgress(progress: progress)
+            }.store(in: &subscriptions)
         
         // UI Binding
         self.chatDetailView.contentView
