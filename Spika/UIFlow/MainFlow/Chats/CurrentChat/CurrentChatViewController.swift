@@ -19,6 +19,7 @@ struct SelectedFile {
     let thumbnail: UIImage?
     let metaData: MetaData
     let mimeType: String
+    let size: Int64?
 }
 
 class CurrentChatViewController: BaseViewController {
@@ -123,11 +124,16 @@ extension CurrentChatViewController {
             guard let entity = self?.frc?.fetchedObjects?.first(where: { [weak self] messageEntity in
                 messageEntity.localId == uuid
             }),
-                  let indexPath = self?.frc?.indexPath(forObject: entity)
+                  let indexPath = self?.frc?.indexPath(forObject: entity),
+                  let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
             else { return }
-            (self?.currentChatView.messagesTableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell)?.showUploadProgress(at: percent)
+            (cell as? BaseMessageTableViewCell)?.showUploadProgress(at: percent)
+            
+            if percent == 1.0 {
+                (cell as? BaseMessageTableViewCell)?.hideUploadProgress()
+            }
             guard let url = url else { return }
-            (self?.currentChatView.messagesTableView.cellForRow(at: indexPath) as? ImageMessageTableViewCell)?.setTempThumbnail(url: url)
+            (cell as? ImageMessageTableViewCell)?.setTempThumbnail(url: url)
         }.store(in: &subscriptions)
     }
     

@@ -115,6 +115,7 @@ extension BaseMessageTableViewCell {
         replyView?.removeFromSuperview()
         self.replyView = nil
         print("AA")
+        progressView.removeFromSuperview()
 //        senderPhotoImageview.isHidden = true
     }
     

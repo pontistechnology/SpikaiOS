@@ -297,10 +297,12 @@ extension CurrentChatViewModel {
                               roomId: room.id,
                               type: file.fileType,
                               body: MessageBody(text: nil,
-                                                file: nil,
-                                                thumb: FileData(id: nil, fileName: file.name,
+                                                file: FileData(id: nil,
+                                                                fileName: file.name,
                                                                 mimeType: file.mimeType,
-                                                                size: nil, metaData: file.metaData)),
+                                                                size: file.size,
+                                                               metaData: file.metaData),
+                                               thumb: nil),
                               replyId: nil,
                               localId: uuid)
         
@@ -325,7 +327,7 @@ extension CurrentChatViewModel {
                     let metaData = targetURL.imageMetaData()
                     let file = SelectedFile(fileType: .image, name: nil,
                                             fileUrl: targetURL, thumbnail: thumbnail, metaData: metaData,
-                                            mimeType: "image/*")
+                                            mimeType: "image/*", size: nil)
                     self?.sendFile(file: file)
                 }
             }
@@ -343,7 +345,8 @@ extension CurrentChatViewModel {
                                              fileUrl: targetURL,
                                              thumbnail: thumb,
                                              metaData: MetaData(width: 1, height: 2, duration: 3), // TODO: metadata
-                                             mimeType: "video/mp4") // TODO: determine
+                                             mimeType: "video/mp4", // TODO: determine
+                                             size: nil)
                     self?.sendFile(file: file)
                 }
             }
@@ -355,10 +358,11 @@ extension CurrentChatViewModel {
         for url in urls {
             guard let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
                   url.copyFileFromURL(to: targetURL) == true,
-                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey]),
-                  let fileName = resourceValues.name,
-                  let type = resourceValues.contentType
+                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey, .fileSizeKey]),
+                  let type = resourceValues.contentType,
+                  let size = resourceValues.fileSize
             else { return }
+            let fileName = resourceValues.name ?? "unknownName"
             
             print("TYPEE: ", type)
             let file = SelectedFile(fileType: .file,
@@ -366,9 +370,9 @@ extension CurrentChatViewModel {
                                     fileUrl: targetURL,
                                     thumbnail: nil,
                                     metaData: MetaData(width: 0, height: 0, duration: 0),
-                                    mimeType: "\(type)")
+                                    mimeType: "\(type)",
+                                    size: Int64(size))
             sendFile(file: file)
-            
         }
     }
 }
