@@ -57,22 +57,18 @@ extension Message {
                   replyId: Int64(messageEntity.replyId ?? "-1"),
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
-                                    file: FileData(fileName: messageEntity.bodyFileName,
+                                    file: FileData(id: messageEntity.bodyFileId, fileName: messageEntity.bodyFileName,
                                                    mimeType: messageEntity.bodyFileMimeType,
-                                                   path: messageEntity.bodyFilePath,
                                                    size: messageEntity.bodyFileSize,
-                                                   metaData: MetaData(width: messageEntity.bodyThumbMetaDataWidth,
-                                                                      height: messageEntity.bodyThumbMetaDataHeight,
-                                                                      duration: messageEntity.bodyThumbMetaDataDuration)),
-                                    thumb: FileData(fileName: "thumb name",
+                                                   metaData: MetaData(width: messageEntity.bodyFileMetaDataWidth,
+                                                                      height: messageEntity.bodyFileMetaDataHeight,
+                                                                      duration: messageEntity.bodyFileMetaDataDuration)),
+                                    thumb: FileData(id: messageEntity.bodyThumbId, fileName: "thumb name",
                                                     mimeType: messageEntity.bodyThumbMimeType,
-                                                    path: messageEntity.bodyThumbPath,
                                                     size: 0,
                                                     metaData: MetaData(width: messageEntity.bodyThumbMetaDataWidth,
                                                                        height: messageEntity.bodyThumbMetaDataHeight,
-                                                                       duration: messageEntity.bodyThumbMetaDataDuration)),
-                                    fileId: nil,
-                                    thumbId: nil),
+                                                                       duration: messageEntity.bodyThumbMetaDataDuration))),
                   records: messageRecords)
     }
     
@@ -109,14 +105,12 @@ struct MessageBody: Codable {
     let text: String?
     let file: FileData?
     let thumb: FileData?
-    let fileId: Int?
-    let thumbId: Int?
 }
 
 struct FileData: Codable {
+    let id: Int64?
     let fileName: String?
     let mimeType: String?
-    let path: String?
     let size: Int64?
     let metaData: MetaData?
 }

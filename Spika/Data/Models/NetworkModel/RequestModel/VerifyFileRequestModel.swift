@@ -16,4 +16,5 @@ struct VerifyFileRequestModel: Codable {
     let fileHash: String?
     let relationId: Int
     let clientId: String
+    let metaData: MetaData
 }

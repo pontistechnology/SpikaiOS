@@ -39,10 +39,10 @@ protocol Repository {
     
     // MARK: NETWORKING: File upload
     
-    @available(iOSApplicationExtension 13.4, *) func uploadWholeFile(fromUrl url: URL) -> (AnyPublisher<(File?, CGFloat), Error>)
-    func uploadWholeFile(data: Data) -> (AnyPublisher<(File?, CGFloat), Error>)
+    @available(iOSApplicationExtension 13.4, *) func uploadWholeFile(fromUrl url: URL, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>)
+    func uploadWholeFile(data: Data, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>)
     func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error>
-    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int) -> AnyPublisher<VerifyFileResponseModel, Error>
+    func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int, metaData: MetaData) -> AnyPublisher<VerifyFileResponseModel, Error>
     
     // MARK: NETWORKING: User
     
@@ -65,7 +65,7 @@ protocol Repository {
     
     // MARK: NETWORKING: Message
     
-    func sendMessage(body: MessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<SendMessageResponse, Error>
+    func sendMessage(body: RequestMessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<SendMessageResponse, Error>
     func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error>
     func sendSeenStatus(roomId: Int64) -> AnyPublisher<SeenResponseModel, Error>
     

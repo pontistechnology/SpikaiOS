@@ -37,7 +37,8 @@ extension FileMessageTableViewCell {
     func updateCell(message: Message) {
         let image = UIImage.imageFor(mimeType: message.body?.file?.mimeType ?? "unknown")
         let name  = message.body?.file?.fileName ?? "fileName"
-        let size  = "\((message.body?.file?.size ?? 0) / 1000000) MB"
-        fileView.setup(icon: image, name: name, size: size)
+        let size  = Float(message.body?.file?.size ?? 0) / 1000000
+        let s = String(format: "%.2f MB", size)
+        fileView.setup(icon: image, name: name, size: s)
     }
 }

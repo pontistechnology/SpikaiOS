@@ -12,6 +12,7 @@ extension URL {
     func imageThumbnail() -> UIImage {
         let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
         guard let imageSource = CGImageSourceCreateWithURL(self as CFURL, imageSourceOptions),
+              let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as Dictionary?,
               let thumbnail = downsample(imageSource: imageSource)
         else {
             return UIImage(systemName: "photo")!
@@ -19,13 +20,36 @@ extension URL {
         return thumbnail
     }
     
+    func imageMetaData() -> MetaData {
+        let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
+        guard let imageSource = CGImageSourceCreateWithURL(self as CFURL, imageSourceOptions),
+              let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as Dictionary?,
+              let width = imageProperties[kCGImagePropertyPixelWidth] as? Int64,
+              let height = imageProperties[kCGImagePropertyPixelHeight] as? Int64
+        else {
+            return MetaData(width: 0, height: 0, duration: 0)
+        }
+        return MetaData(width: width, height: height, duration: 0)
+    }
+    
     func videoThumbnail() -> UIImage {
         let asset = AVURLAsset(url: self)
-        let imgGenerator = AVAssetImageGenerator(asset: asset)
+        let imgGenerator = AVAssetImageGenerator(asset: asset) // TODO: will be deprecated ˇ
         guard let cgImage = try? imgGenerator.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 1), actualTime: nil)
         else { return UIImage(systemName: "video")!}
         
+        print("Video pokojo: ", asset.duration, cgImage.width, cgImage.height)
+        
         return UIImage(cgImage: cgImage)
+    }
+    
+    func videoMetaData() -> MetaData {
+        let asset = AVURLAsset(url: self)
+        let imgGenerator = AVAssetImageGenerator(asset: asset) // TODO: will be deprecated ˇ
+        guard let cgImage = try? imgGenerator.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 1), actualTime: nil)
+        else { return MetaData(width: 1, height: 1, duration: 1)}
+        
+        return MetaData(width: Int64(cgImage.width), height: Int64(cgImage.height), duration: Int64(asset.duration.seconds))
     }
     
     func downsample(imageSource: CGImageSource,

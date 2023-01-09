@@ -46,7 +46,7 @@ class SelectedUsersCollectionViewCell: UICollectionViewCell, BaseView {
     }
     
     func updateCell(user: User) {
-        let url = user.getAvatarUrl()
+        let url = user.avatarFileId?.fullFilePathFromId()
         imageView.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage), completionHandler: { [weak self] result in
             switch result {
             case .success:

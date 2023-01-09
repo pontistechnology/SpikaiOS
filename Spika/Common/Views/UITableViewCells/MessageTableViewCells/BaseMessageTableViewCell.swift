@@ -18,6 +18,7 @@ class BaseMessageTableViewCell: UITableViewCell {
     private let senderNameBottomConstraint = NSLayoutConstraint()
     let containerStackView = UIStackView()
     private var replyView: MessageReplyView?
+    private let progressView = CircularProgressBar(spinnerWidth: 20)
     
     let tapPublisher = PassthroughSubject<MessageCellTaps, Never>()
     var subs = Set<AnyCancellable>()
@@ -114,6 +115,7 @@ extension BaseMessageTableViewCell {
         replyView?.removeFromSuperview()
         self.replyView = nil
         print("AA")
+        progressView.removeFromSuperview()
 //        senderPhotoImageview.isHidden = true
     }
     
@@ -158,5 +160,18 @@ extension BaseMessageTableViewCell {
                 self.tapPublisher.send(.scrollToReply(indexPath))
             }).store(in: &subs)
         }
+    }
+    
+    func showUploadProgress(at percent: CGFloat) {
+        if progressView.superview == nil {
+            containerStackView.addSubview(progressView)
+            progressView.fillSuperview()
+            containerStackView.bringSubviewToFront(progressView)
+        }
+        progressView.setProgress(to: percent)
+    }
+    
+    func hideUploadProgress() {
+        progressView.removeFromSuperview()
     }
 }

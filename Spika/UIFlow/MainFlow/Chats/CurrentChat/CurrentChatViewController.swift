@@ -13,10 +13,13 @@ import Combine
 import UniformTypeIdentifiers
 
 struct SelectedFile {
-    let fileType: UTType
+    let fileType: MessageType
     let name: String?
     let fileUrl: URL
-    let thumbnail: UIImage
+    let thumbnail: UIImage?
+    let metaData: MetaData
+    let mimeType: String
+    let size: Int64?
 }
 
 class CurrentChatViewController: BaseViewController {
@@ -96,37 +99,6 @@ extension CurrentChatViewController {
             self?.currentChatView.messagesTableView.scrollToBottom(.force)
         }.store(in: &self.subscriptions)
         
-        viewModel.selectedFiles.receive(on: DispatchQueue.main).sink { [weak self] files in
-            guard let self = self else { return }
-            if files.isEmpty {
-                self.currentChatView.messageInputView.hideSelectedFiles()
-            } else {
-                print("FILES COUNT: ", files.count)
-                self.currentChatView.messageInputView.showSelectedFiles(files)
-                
-                let arrangedSubviews = self.currentChatView.messageInputView.selectedFilesView.itemsStackView.arrangedSubviews
-                
-                arrangedSubviews.forEach { view in
-                    if let iw = view as? SelectedFileImageView {
-                        iw.deleteImageView.tap().sink { [weak self] _ in
-                            guard let self = self,
-                                  let index =  arrangedSubviews.firstIndex(of: view)
-                            else { return }
-                            self.viewModel.selectedFiles.value.remove(at: index)
-                        }.store(in: &self.subscriptions)
-                    }
-                }
-            }
-        }.store(in: &subscriptions)
-        
-        viewModel.uploadProgressPublisher.sink { [weak self] (index, progress) in
-            guard let self = self else { return }
-            if let arrangedSubviews = self.currentChatView.messageInputView.selectedFilesView.itemsStackView.arrangedSubviews as? [SelectedFileImageView] {
-                arrangedSubviews[index].showUploadProgress(progress: progress)
-            }
-            
-        }.store(in: &subscriptions)
-        
         Publishers
             .Zip(frcIsChangingPublisher, frcDidChangePublisher)
             .filter{$1}
@@ -141,6 +113,23 @@ extension CurrentChatViewController {
                     break
                 }
             }.store(in: &subscriptions)
+            
+        self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (uuid, percent, file) in
+            guard let entity = self?.frc?.fetchedObjects?.first(where: { [weak self] messageEntity in
+                messageEntity.localId == uuid
+            }),
+                  let indexPath = self?.frc?.indexPath(forObject: entity),
+                  let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
+            else { return }
+            (cell as? BaseMessageTableViewCell)?.showUploadProgress(at: percent)
+            
+            if percent == 1.0 {
+                (cell as? BaseMessageTableViewCell)?.hideUploadProgress()
+            }
+            guard let file = file else { return }
+            (cell as? ImageMessageTableViewCell)?.setTempThumbnail(url: file.fileUrl, as: ImageRatio(width: file.metaData.width, height: file.metaData.height))
+            (cell as? VideoMessageTableViewCell)?.setTempThumbnail(duration: "\(file.metaData.duration) s", url: file.fileUrl)
+        }.store(in: &subscriptions)
     }
     
     func handleScroll(isMyMessage: Bool) {
@@ -257,6 +246,8 @@ extension CurrentChatViewController {
     
     func handleInput(_ state: MessageInputViewState) {
         switch state {
+        case .plus:
+            presentMoreActions()
         case .send(let inputText):
             let replyId = currentChatView.messageInputView.replyView?.message.id
             viewModel.trySendMessage(text: inputText, replyId: replyId)
@@ -265,10 +256,6 @@ extension CurrentChatViewController {
             print(state, " in ccVC")
         case .emoji:
             print("emoji in ccvc")
-        case .files:
-            presentFilePicker()
-        case .library:
-            presentLibraryPicker()
         case .scrollToReply(let indexPath):
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         }
@@ -283,7 +270,7 @@ extension CurrentChatViewController {
         case .playVideo:
             viewModel.playVideo(message: message)
         case let .playAudio(playedPercentPublisher):
-            guard let url = message.body?.file?.path?.getFullUrl(),
+            guard let url = message.body?.file?.id?.fullFilePathFromId(),
                   let mimeType = message.body?.file?.mimeType
             else { return }
             audioSubscribe?.cancel()
@@ -294,7 +281,7 @@ extension CurrentChatViewController {
             }
             audioSubscribe?.store(in: &subscriptions)
         case .openImage:
-            guard let url = message.body?.file?.path?.getFullUrl() else { return }
+            guard let url = message.body?.file?.id?.fullFilePathFromId() else { return }
             viewModel.showImage(link: url)
         case .scrollToReply(let indexPath):
             currentChatView.messagesTableView.blinkRow(at: indexPath)
@@ -382,7 +369,7 @@ extension CurrentChatViewController: UITableViewDataSource {
                 cell.updateSender(name: user.getDisplayName())
             }
             if !isNextCellMine(for: indexPath) {
-                cell.updateSender(photoUrl: user.getAvatarUrl())
+                cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
             }
         }
         return cell
@@ -435,9 +422,9 @@ extension CurrentChatViewController {
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room?.type == .privateRoom {
-            friendInfoView.change(avatarUrl: viewModel.friendUser?.getAvatarUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
+            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarFileId?.fullFilePathFromId(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
         } else {
-            friendInfoView.change(avatarUrl: viewModel.room?.getAvatarUrl(),
+            friendInfoView.change(avatarUrl: viewModel.room?.avatarFileId?.fullFilePathFromId(),
                                   name: viewModel.room?.name,
                                   lastSeen: .getStringFor(.today))
         }
@@ -500,6 +487,24 @@ extension CurrentChatViewController {
     
 }
 
+// MARK: - More Actions Bottom Sheet
+
+private extension CurrentChatViewController {
+    func presentMoreActions() {
+        viewModel.presentMoreActions()?.sink(receiveValue: { [weak self] state in
+            self?.dismiss(animated: true)
+            switch state {
+            case .files:
+                self?.presentFilePicker()
+            case .library:
+                self?.presentLibraryPicker()
+            case .location, .contact, .close:
+                break
+            }
+        }).store(in: &subscriptions)
+    }
+}
+
 // MARK: - Photo Video picker
 
 extension CurrentChatViewController: PHPickerViewControllerDelegate {
@@ -518,37 +523,7 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
-        print("RESULTS COUNT: ", results.count)
-        for result in results {
-            
-            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { [weak self] url, error in
-                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-                    guard let url = url,
-                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                          url.copyFileFromURL(to: targetURL) == true
-                    else { return }
-                    let thumbnail = targetURL.imageThumbnail()
-                    let file = SelectedFile(fileType: .image, name: nil,
-                                            fileUrl: targetURL, thumbnail: thumbnail)
-                    self?.viewModel.selectedFiles.value.append(file)
-                }
-            }
-            
-            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
-                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-                    guard let url = url,
-                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                          url.copyFileFromURL(to: targetURL) == true
-                    else { return }
-                    let thumb = url.videoThumbnail()
-                    let file  = SelectedFile(fileType: .movie, name: "video",
-                                             fileUrl: targetURL, thumbnail: thumb)
-                    self?.viewModel.selectedFiles.value.append(file)
-                }
-            }
-        }
+        viewModel.sendMultimedia(results)
     }
 }
 
@@ -564,20 +539,7 @@ extension CurrentChatViewController: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         controller.dismiss(animated: true)
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        
-        for url in urls {
-            guard let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                  url.copyFileFromURL(to: targetURL) == true,
-                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey]),
-                  let fileName = resourceValues.name,
-                  let type = resourceValues.contentType
-            else { return }
-            
-            let file = SelectedFile(fileType: type, name: fileName,
-                                    fileUrl: targetURL, thumbnail: type.thumbnail())
-            self.viewModel.selectedFiles.value.append(file)
-        }
+        viewModel.sendDocuments(urls: urls)
     }
     
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
