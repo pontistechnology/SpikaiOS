@@ -145,7 +145,7 @@ class ChatDetailsViewModel: BaseViewModel {
     }
     
     func changeAvatar(image: Data) {
-        repository.uploadWholeFile(data: image)
+        repository.uploadWholeFile(data: image, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
