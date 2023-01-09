@@ -39,8 +39,8 @@ extension ImageMessageTableViewCell {
     }
     
     func updateCell(message: Message) {
-        let imageRatio = ImageRatio(width: message.body?.thumb?.metaData?.width ?? 1,
-                                    height: message.body?.thumb?.metaData?.height ?? 1)
+        let imageRatio = ImageRatio(width: message.body?.file?.metaData?.width ?? 1,
+                                    height: message.body?.file?.metaData?.height ?? 1)
         
         let path = message.body?.thumb?.id?.fullFilePathFromId()
         print("jojx ", path)
@@ -51,7 +51,7 @@ extension ImageMessageTableViewCell {
         }.store(in: &subs)
     }
     
-    func setTempThumbnail(url: URL?) {
-        photoImageView.setImage(url: url, as: .square)
+    func setTempThumbnail(url: URL?, as imageRatio: ImageRatio) {
+        photoImageView.setImage(url: url, as: imageRatio)
     }
 }

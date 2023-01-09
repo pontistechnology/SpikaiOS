@@ -120,7 +120,7 @@ extension CurrentChatViewController {
                 self?.title = stringValue
             }.store(in: &self.subscriptions)
         
-        self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (uuid, percent, url) in
+        self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (uuid, percent, file) in
             guard let entity = self?.frc?.fetchedObjects?.first(where: { [weak self] messageEntity in
                 messageEntity.localId == uuid
             }),
@@ -132,8 +132,9 @@ extension CurrentChatViewController {
             if percent == 1.0 {
                 (cell as? BaseMessageTableViewCell)?.hideUploadProgress()
             }
-            guard let url = url else { return }
-            (cell as? ImageMessageTableViewCell)?.setTempThumbnail(url: url)
+            guard let file = file else { return }
+            (cell as? ImageMessageTableViewCell)?.setTempThumbnail(url: file.fileUrl, as: ImageRatio(width: file.metaData.width, height: file.metaData.height))
+            (cell as? VideoMessageTableViewCell)?.setTempThumbnail(duration: "\(file.metaData.duration) s", url: file.fileUrl)
         }.store(in: &subscriptions)
     }
     

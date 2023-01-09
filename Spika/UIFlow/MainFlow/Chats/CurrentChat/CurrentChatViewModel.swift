@@ -17,7 +17,7 @@ class CurrentChatViewModel: BaseViewModel {
     let friendUser: User?
     var room: Room?
     let roomPublisher = PassthroughSubject<Room, Error>()
-    let uploadProgressPublisher = PassthroughSubject<(localId: String, percentUploaded: CGFloat, thumbUrl: URL?), Never>()
+    let uploadProgressPublisher = PassthroughSubject<(localId: String, percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
@@ -250,9 +250,9 @@ extension CurrentChatViewModel {
         switch file.fileType {
         case .image, .video:
             guard let data = file.thumbnail?.jpegData(compressionQuality: 1) else { return }
-            uploadProgressPublisher.send((localId: localId, percentUploaded: 0.01, thumbUrl: file.fileUrl))
+            uploadProgressPublisher.send((localId: localId, percentUploaded: 0.01, selectedFile: file))
             repository
-                .uploadWholeFile(data: data, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
+                .uploadWholeFile(data: data, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: file.metaData.duration))
                 .sink { c in
                     
                 } receiveValue: { [weak self] filea, percent in
@@ -264,13 +264,13 @@ extension CurrentChatViewModel {
                             
                         } receiveValue: { [weak self] fileb, percent in
                             guard let self = self else { return }
-                            self.uploadProgressPublisher.send((localId: localId, percentUploaded: percent, thumbUrl: nil))
+                            self.uploadProgressPublisher.send((localId: localId, percentUploaded: percent, selectedFile: file))
                             guard let fileb = fileb else { return }
                             self.sendMessage(body: RequestMessageBody(text: nil, fileId: fileb.id, thumbId: filea.id), localId: localId, type: file.fileType, replyId: nil)
                         }.store(in: &self.subscriptions)
                 }.store(in: &subscriptions)            
         default:
-            uploadProgressPublisher.send((localId: localId, percentUploaded: 0.01, thumbUrl: nil))
+            uploadProgressPublisher.send((localId: localId, percentUploaded: 0.01, selectedFile: nil))
             repository
                 .uploadWholeFile(fromUrl: file.fileUrl,
                                  mimeType: file.mimeType,
@@ -278,7 +278,7 @@ extension CurrentChatViewModel {
                 .sink { c in
                     
                 } receiveValue: { [weak self] filea, percent in
-                    self?.uploadProgressPublisher.send((localId: localId, percentUploaded: percent, thumbUrl: nil))
+                    self?.uploadProgressPublisher.send((localId: localId, percentUploaded: percent, selectedFile: nil))
                     self?.sendMessage(body: RequestMessageBody(text: nil, fileId: filea?.id, thumbId: nil),
                                       localId: localId,
                                       type: file.fileType,
@@ -340,11 +340,12 @@ extension CurrentChatViewModel {
                           url.copyFileFromURL(to: targetURL) == true
                     else { return }
                     let thumb = url.videoThumbnail()
+                    let metaData = url.videoMetaData()
                     let file  = SelectedFile(fileType: .video,
                                              name: nil,
                                              fileUrl: targetURL,
                                              thumbnail: thumb,
-                                             metaData: MetaData(width: 1, height: 2, duration: 3), // TODO: metadata
+                                             metaData: metaData,
                                              mimeType: "video/mp4", // TODO: determine
                                              size: nil)
                     self?.sendFile(file: file)

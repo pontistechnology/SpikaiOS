@@ -38,10 +38,18 @@ extension URL {
         guard let cgImage = try? imgGenerator.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 1), actualTime: nil)
         else { return UIImage(systemName: "video")!}
         
-        print("Video pokojo: ", asset.duration)
-        
+        print("Video pokojo: ", asset.duration, cgImage.width, cgImage.height)
         
         return UIImage(cgImage: cgImage)
+    }
+    
+    func videoMetaData() -> MetaData {
+        let asset = AVURLAsset(url: self)
+        let imgGenerator = AVAssetImageGenerator(asset: asset) // TODO: will be deprecated ˇ
+        guard let cgImage = try? imgGenerator.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 1), actualTime: nil)
+        else { return MetaData(width: 1, height: 1, duration: 1)}
+        
+        return MetaData(width: Int64(cgImage.width), height: Int64(cgImage.height), duration: Int64(asset.duration.seconds))
     }
     
     func downsample(imageSource: CGImageSource,

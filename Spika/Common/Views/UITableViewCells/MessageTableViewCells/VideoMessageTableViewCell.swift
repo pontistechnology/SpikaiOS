@@ -41,4 +41,8 @@ extension VideoMessageTableViewCell {
             self?.tapPublisher.send(.playVideo)
         }.store(in: &subs)
     }
+    
+    func setTempThumbnail(duration: String, url: URL?) {
+        videoView.setup(duration: duration, thumbnailURL: url)
+    }
 }
