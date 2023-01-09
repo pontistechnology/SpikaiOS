@@ -14,7 +14,10 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     let descriptionLabel = CustomLabel(text: "", textSize: 14, textColor: .textTertiary)
     let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
     let timeLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary)
+    
+    let messagesStackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .fill, spacing: 8)
     let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .white, fontName: .MontserratSemiBold, alignment: .center)
+    let mutedIcon = UIImageView(image: UIImage(safeImage: .mutedIcon))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,7 +33,10 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         contentView.addSubview(nameLabel)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(timeLabel)
-        contentView.addSubview(messagesNumberLabel)
+        
+        contentView.addSubview(messagesStackView)
+        messagesStackView.addArrangedSubview(mutedIcon)
+        messagesStackView.addArrangedSubview(messagesNumberLabel)
     }
     
     func styleSubviews() {
@@ -44,6 +50,9 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.layer.cornerRadius = 10
         messagesNumberLabel.clipsToBounds = true
         messagesNumberLabel.isHidden = true
+        
+        mutedIcon.translatesAutoresizingMaskIntoConstraints = false
+        mutedIcon.contentMode = .center
     }
     
     func positionSubviews() {
@@ -55,10 +64,13 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         
         timeLabel.anchor(top: contentView.topAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 18, left: 0, bottom: 0, right: 20))
         
-        messagesNumberLabel.anchor(top: timeLabel.bottomAnchor, trailing: timeLabel.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
+        messagesStackView.anchor(top: timeLabel.bottomAnchor, trailing: timeLabel.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0))
+        messagesStackView.constrainHeight(20)
+        messagesNumberLabel.constrainWidth(20)
+//        mutedIcon.constrainWidth(20)
     }
     
-    func configureCell(avatarUrl: URL?, name: String, description: String, time: String, badgeNumber: Int) {
+    func configureCell(avatarUrl: URL?, name: String, description: String, time: String, badgeNumber: Int, muted: Bool) {
         leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(safeImage: .userImage))
 
         nameLabel.text = name
@@ -66,6 +78,8 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         timeLabel.text = time
         messagesNumberLabel.text = "\(badgeNumber)"
         messagesNumberLabel.isHidden = badgeNumber == 0
+        
+        mutedIcon.isHidden = !muted
     }
     
     override func prepareForReuse() {
