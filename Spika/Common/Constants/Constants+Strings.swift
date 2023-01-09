@@ -19,6 +19,7 @@ public extension Constants {
         case members = "Members"
         case details = "Details"
         case shared = "shared"
+        case delete = "Delete"
         
         //MARK: - CountryPickerViewController
         case search = "Search"
@@ -60,6 +61,11 @@ public extension Constants {
         case mute = "Mute"
         case block = "Block"
         case report = "Report"
+        case deleteTheRoom = "Delete the room?"
+        case somethingWentWrongDeletingTheRoom = "Something went wrong deleting the room"
+        case somethingWentWrongAddingUsers = "Something went wrong trying to add new users"
+        case somethingWentWrongMutingRoom = "Something went wrong muting the room"
+        case somethingWentWrongUnmutingRoom = "Something went wrong unmuting the room"
         
         //MARK: - ContactsViewController
         case searchForContactsMessages = "Search for contact,message, file..."

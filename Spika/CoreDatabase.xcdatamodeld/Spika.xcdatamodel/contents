@@ -69,6 +69,7 @@
         <attribute name="lastMessageTimestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="muted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="roomDeleted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="visitedRoom" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MessageEntity" inverseName="room" inverseEntity="MessageEntity"/>

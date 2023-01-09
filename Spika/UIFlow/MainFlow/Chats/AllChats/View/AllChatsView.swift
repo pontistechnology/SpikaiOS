@@ -10,7 +10,7 @@ import UIKit
 class AllChatsView: UIView, BaseView {
     
     let chatLabel = CustomLabel(text: .getStringFor(.chat), textSize: 28, textColor: .textPrimaryAndWhite)
-    let pencilImageView = UIImageView()
+    let pencilImageView = UIButton()
     let searchBar = SearchBar(placeholder: .getStringFor(.searchForContact), shouldShowCancel: false)
     let allChatsTableView = UITableView()
     
@@ -32,7 +32,7 @@ class AllChatsView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        pencilImageView.image = UIImage(safeImage: .pencil)
+        pencilImageView.setImage(UIImage(safeImage: .pencil), for: .normal)
         allChatsTableView.separatorStyle = .none
         allChatsTableView.rowHeight = 70
     }

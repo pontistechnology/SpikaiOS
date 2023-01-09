@@ -40,6 +40,7 @@ class CurrentChatViewController: BaseViewController {
         setupNavigationItems()
         setupBindings()
         checkRoom()
+        self.navigationItem.backButtonTitle = self.viewModel.room?.name
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -112,14 +113,7 @@ extension CurrentChatViewController {
                     break
                 }
             }.store(in: &subscriptions)
-        
-        self.viewModel.repository
-            .unreadRoomsPublisher
-            .sink { [weak self] value in
-                let stringValue = value > 0 ? String(value) : ""
-                self?.title = stringValue
-            }.store(in: &self.subscriptions)
-        
+            
         self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (uuid, percent, file) in
             guard let entity = self?.frc?.fetchedObjects?.first(where: { [weak self] messageEntity in
                 messageEntity.localId == uuid
@@ -435,7 +429,6 @@ extension CurrentChatViewController {
                                   lastSeen: .getStringFor(.today))
         }
         
-        self.navigationItem.titleView = UIView(frame: .zero)
         let vtest = UIBarButtonItem(customView: friendInfoView)
         friendInfoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onChatDetails)))
         navigationItem.leftBarButtonItem = vtest

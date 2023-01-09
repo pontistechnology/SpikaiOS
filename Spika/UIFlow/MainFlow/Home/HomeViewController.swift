@@ -55,7 +55,7 @@ class HomeViewController: UIPageViewController {
             .unreadRoomsPublisher
             .sink { [weak self] value in
                 let stringValue = value > 0 ? String(value) : ""
-                self?.title = stringValue
+                self?.navigationItem.backButtonTitle = stringValue
             }.store(in: &self.subscriptions)
         
         self.viewModel.repository.unreadRoomsPublisher

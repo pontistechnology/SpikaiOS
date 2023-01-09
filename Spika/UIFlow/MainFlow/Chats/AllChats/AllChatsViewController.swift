@@ -33,15 +33,19 @@ class AllChatsViewController: BaseViewController {
             self?.viewModel.presentSelectUserScreen()
         }.store(in: &subscriptions)
         
-        setRoomsFetch()
-        
-        self.viewModel.repository
-            .unreadRoomsPublisher
-            .sink { [weak self] string in
-                self?.navigationController?.navigationItem.backBarButtonItem =
-                UIBarButtonItem(title:.getStringFor(.title), style:.plain, target:nil, action:nil)
+        allChatsView.pencilImageView
+            .tap()
+            .sink { [weak self] _ in
+                self?.onCreateNewRoom()
             }.store(in: &self.subscriptions)
+        
+        setRoomsFetch()
     }
+    
+    func onCreateNewRoom() {
+        self.viewModel.getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
+    }
+    
 }
 
 // MARK: - NSFetchedResultsController
@@ -178,7 +182,7 @@ extension AllChatsViewController: SearchBarDelegate {
     }
     
     func changePredicate(to newString: String) {
-        let searchPredicate = newString.isEmpty ? self.viewModel.defaultChatsPredicate : NSPredicate(format: "name CONTAINS[c] '\(newString)'")
+        let searchPredicate = newString.isEmpty ? self.viewModel.defaultChatsPredicate : NSPredicate(format: "name CONTAINS[c] '\(newString)' and roomDeleted = false")
         self.frc?.fetchRequest.predicate = searchPredicate
         try? self.frc?.performFetch()
         self.allChatsView.allChatsTableView.reloadData()

@@ -118,6 +118,16 @@ public extension UIView {
         }
         centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: constant).isActive = true
     }
+    
+    func constraintToGuide(guide: UILayoutGuide, insets: UIEdgeInsets = UIEdgeInsets.zero) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: insets.left).isActive = true
+        self.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: insets.right).isActive = true
+        self.topAnchor.constraint(equalTo: guide.topAnchor, constant: insets.top).isActive = true
+        self.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: insets.bottom).isActive = true
+    }
+    
 }
 
 public extension UIView {

@@ -151,9 +151,16 @@ class AppCoordinator: Coordinator {
     }
     
     func presentNewGroupChatScreen(selectedMembers: [User]) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroupChatViewController.self, arguments: self, selectedMembers)!
-        let selectUserVC = navigationController.presentedViewController as? UINavigationController
-        selectUserVC?.pushViewController(viewController, animated: true)
+        let usersSelectedPublisher = PassthroughSubject<[User],Never>()
+        self.presentUserSelection(preselectedUsers: selectedMembers, usersSelectedPublisher: usersSelectedPublisher)
+        
+        usersSelectedPublisher
+            .sink { [weak self] users in
+                guard let self = self else { return }
+                let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroupChatViewController.self, arguments: self, users)!
+                let navC = UINavigationController(rootViewController: viewController)
+                self.navigationController.present(navC, animated: true, completion: nil)
+            }.store(in: &self.subs)
     }
     
     func presentMessageDetails(users: [User], records: [MessageRecord]) {
