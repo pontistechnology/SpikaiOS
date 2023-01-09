@@ -13,7 +13,7 @@ struct Room: Codable {
     let name: String?
     let avatarFileId: Int64?
     let createdAt: Int64
-    let muted: Bool
+    var muted: Bool
     let users: [RoomUser]
     let deleted: Bool
 }

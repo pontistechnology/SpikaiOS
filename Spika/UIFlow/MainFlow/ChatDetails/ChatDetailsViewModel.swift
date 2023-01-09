@@ -50,12 +50,13 @@ class ChatDetailsViewModel: BaseViewModel {
                 guard let self = self else { return }
                 switch completion {
                 case .finished:
+                    self.updateRoomIsMuted(room: self.room.value, isMuted: !self.room.value.muted)
                     break
                 case .failure(_):
                     let message: String = mute ? .getStringFor(.somethingWentWrongMutingRoom) : .getStringFor(.somethingWentWrongUnmutingRoom)
                     self.getAppCoordinator()?
                         .showError(message: message)
-                    //TODO: Reset Room muted state & observer
+                    self.room.send(self.room.value)
                 }
             } receiveValue: { _ in }
             .store(in: &self.subscriptions)
@@ -176,6 +177,12 @@ class ChatDetailsViewModel: BaseViewModel {
                 guard let roomData = response.data?.room else { return }
                 self.saveLocalRoom(room: roomData)
             }.store(in: &subscriptions)
+    }
+    
+    func updateRoomIsMuted(room: Room, isMuted:Bool) {
+        var mutableRoom = room
+        mutableRoom.muted = isMuted
+        self.saveLocalRoom(room: mutableRoom)
     }
     
     func saveLocalRoom(room: Room) {
