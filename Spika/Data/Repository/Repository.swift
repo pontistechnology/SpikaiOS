@@ -111,6 +111,7 @@ protocol Repository {
     func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<EmptyResponse,Error>
     func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
     func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
+    func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error>
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
 
     // MARK: - USERDEFAULTS: User

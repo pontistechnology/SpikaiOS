@@ -9,12 +9,8 @@ import UIKit
 
 class ChatContentView: UIView, BaseView {
     
-    let chatImage = UIImageView()
-    lazy var cameraIcon: ImageButton = {
-        let button = ImageButton(image: UIImage(safeImage: .camera), size: CGSize(width: 28, height: 28))
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    } ()
+    let chatImage = ImageViewWithIcon(image:  UIImage(safeImage: .userImage),size: CGSize(width: 120, height: 120))
+    
     let chatName = CustomLabel(text: .getStringFor(.group), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
     
     let sharedMediaOptionButton = NavView(text: .getStringFor(.sharedMediaLinksDocs))
@@ -73,7 +69,7 @@ class ChatContentView: UIView, BaseView {
     
     func addSubviews() {
         self.addSubview(chatImage)
-        self.addSubview(self.cameraIcon)
+//        self.addSubview(self.cameraIcon)
         self.addSubview(chatName)
         self.addSubview(mainStackView)
         
@@ -96,18 +92,20 @@ class ChatContentView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        chatImage.image = UIImage(safeImage: .testImage)
-        chatImage.layer.cornerRadius = 60
-        chatImage.contentMode = .scaleAspectFill
-        chatImage.clipsToBounds = true
+//        chatImage.image = UIImage(safeImage: .testImage)
+//        chatImage.layer.cornerRadius = 60
+//        chatImage.contentMode = .scaleAspectFill
+//        chatImage.clipsToBounds = true
     }
     
     func positionSubviews() {
         chatImage.anchor(top: self.topAnchor, padding: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0), size: CGSize(width: 120, height: 120))
         chatImage.centerXToSuperview()
         
-        cameraIcon.centerX(self.chatImage, constant: 40)
-        cameraIcon.centerY(self.chatImage, constant: 40)
+//        cameraIcon.centerX(self.chatImage, constant: 40)
+//        cameraIcon.centerY(self.chatImage, constant: 40)
+        chatImage.constrainWidth(120)
+        chatImage.constrainHeight(120)
         
         chatName.anchor(top: chatImage.bottomAnchor, padding: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0))
         chatName.centerXToSuperview()

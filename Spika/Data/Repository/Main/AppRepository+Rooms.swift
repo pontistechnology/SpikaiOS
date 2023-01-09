@@ -148,6 +148,21 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
+        let resources = Resources<CreateRoomResponseModel, EditRoomAvatarRequestModel>(
+            path: url,
+            requestType: .PUT,
+            bodyParameters: EditRoomAvatarRequestModel(avatarFileId: avatarId),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        return networkService.performRequest(resources: resources)
+    }
+    
     func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)

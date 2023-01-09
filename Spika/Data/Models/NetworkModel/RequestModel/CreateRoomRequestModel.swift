@@ -21,3 +21,7 @@ struct EditRoomUsersRequestModel: Codable {
 struct EditRoomAdminsRequestModel: Codable {
     var adminUserIds: [Int64]?
 }
+
+struct EditRoomAvatarRequestModel: Codable {
+    var avatarFileId: Int64?
+}

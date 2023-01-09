@@ -44,7 +44,7 @@ final class ChatDetailsViewController: BaseViewController {
                 return room.getAvatarUrl()
             }
             .sink { [weak self] url in
-                self?.chatDetailView.contentView.chatImage.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
+                self?.chatDetailView.contentView.chatImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
             }.store(in: &self.viewModel.subscriptions)
 
         self.viewModel.room
@@ -73,10 +73,18 @@ final class ChatDetailsViewController: BaseViewController {
         isAdmin
             .sink(receiveValue: { [weak self] isAdmin in
                 self?.chatDetailView.contentView.chatMembersView.addContactButton.isHidden = !isAdmin
-                self?.chatDetailView.contentView.cameraIcon.isHidden = !isAdmin
                 self?.chatDetailView.contentView.deleteButton.isHidden = !isAdmin
             })
             .store(in: &self.viewModel.subscriptions)
+        
+        self.viewModel
+            .uploadProgressPublisher
+            .sink { [weak self] completion in
+                self?.chatDetailView.contentView.chatImage.hideUploadProgress()
+            } receiveValue: { [weak self] progress in
+                guard let self = self else { return }
+                self.chatDetailView.contentView.chatImage.showUploadProgress(progress: progress)
+            }.store(in: &subscriptions)
         
         // UI Binding
         self.chatDetailView.contentView
@@ -109,9 +117,8 @@ final class ChatDetailsViewController: BaseViewController {
         self.chatDetailView.contentView
             .chatImage
             .tap()
-            .combineLatest(isAdmin)
-            .map { $0.1 }
-            .filter { $0 }
+            .withLatestFrom(isAdmin)
+            .filter { $0.1 }
             .sink { [weak self] _ in
                 self?.onChangeImage()
             }.store(in: &self.subscriptions)
@@ -143,6 +150,7 @@ final class ChatDetailsViewController: BaseViewController {
         }))
         actionSheet.addAction(UIAlertAction(title: .getStringFor(.removePhoto), style: .destructive, handler: { [weak self] _ in
             guard let self = self else { return }
+            
         }))
         actionSheet.addAction(UIAlertAction(title: .getStringFor(.cancel), style: .cancel, handler: nil))
     }
@@ -150,7 +158,6 @@ final class ChatDetailsViewController: BaseViewController {
 }
 
 extension ChatDetailsViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     func setupImagePicker() {
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -169,12 +176,11 @@ extension ChatDetailsViewController : UIImagePickerControllerDelegate, UINavigat
                 viewModel.showError(.getStringFor(.pleaseSelectASquare))
             } else {
                 guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
-//                enterUsernameView.profilePictureView.showImage(resizedImage)
-//                fileData = resizedImage.jpegData(compressionQuality: 1)
+                guard let data = resizedImage.jpegData(compressionQuality: 1) else { return }
+                self.viewModel.changeAvatar(image: data)
             }
-            dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true)
         }
-        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

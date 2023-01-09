@@ -77,6 +77,14 @@ class ImageViewWithIcon: UIView, BaseView {
         cameraIcon.isHidden = false
     }
     
+    func showImage(_ url: URL, placeholder: UIImage?) {
+        plainImageView.isHidden = true
+        
+        mainImageView.kf.setImage(with: url, placeholder: placeholder)
+        mainImageView.isHidden  = false
+        cameraIcon.isHidden = false
+    }
+    
     func showUploadProgress(progress: CGFloat) {
         if let _ = uploadProgressView.superview {
             

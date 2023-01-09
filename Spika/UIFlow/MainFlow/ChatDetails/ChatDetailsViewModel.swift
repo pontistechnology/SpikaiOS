@@ -13,6 +13,8 @@ class ChatDetailsViewModel: BaseViewModel {
     
     private let updateContacts = PassthroughSubject<[Int64],Never>()
     
+    let uploadProgressPublisher = PassthroughSubject<CGFloat, Error>()
+    
     init(repository: Repository, coordinator: Coordinator, room: CurrentValueSubject<Room,Never>) {
         self.room = room
         super.init(repository: repository, coordinator: coordinator)
@@ -140,6 +142,57 @@ class ChatDetailsViewModel: BaseViewModel {
                 self.deleteRoomComfirmed()
             }
         }).store(in: &self.subscriptions)
+    }
+    
+    func changeAvatar(image: Data) {
+        repository.uploadWholeFile(data: image)
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    break
+                case let .failure(error):
+                    self?.uploadProgressPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
+                    self?.showError("Error with file upload: \(error)")
+                }
+            } receiveValue: { [weak self] (file, percent) in
+                guard let self = self else { return }
+                self.uploadProgressPublisher.send(percent)
+                guard let id = file?.id else { return }
+                self.updateRoomWithAvatar(avatarId: id)
+            }.store(in: &subscriptions)
+    }
+    
+    func updateRoomWithAvatar(avatarId: Int64) {
+        repository.updateRoomAvatar(roomId: self.room.value.id, avatarId: avatarId)
+            .sink { [weak self] c in
+                switch c {
+                case .finished:
+                    break
+                case let .failure(error):
+                    self?.uploadProgressPublisher.send(completion: .failure(NetworkError.chunkUploadFail))
+                    self?.showError("Error with file upload: \(error)")
+                }
+            } receiveValue: { response in
+                guard let roomData = response.data?.room else { return }
+                self.saveLocalRoom(room: roomData)
+            }.store(in: &subscriptions)
+    }
+    
+    func saveLocalRoom(room: Room) {
+        repository.saveLocalRooms(rooms: [room])
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+            guard let _ = self else { return }
+            switch completion {
+            case .finished:
+                print("saved to local DB")
+            case .failure(_):
+                print("saving to local DB failed")
+            }
+        } receiveValue: { [weak self] rooms in
+            guard let room = rooms.first else { return }
+            self?.room.send(room)
+        }.store(in: &subscriptions)
     }
     
     deinit {
