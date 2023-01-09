@@ -252,7 +252,7 @@ extension CurrentChatViewModel {
             guard let data = file.thumbnail?.jpegData(compressionQuality: 1) else { return }
             uploadProgressPublisher.send((localId: localId, percentUploaded: 0.01, selectedFile: file))
             repository
-                .uploadWholeFile(data: data, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: file.metaData.duration))
+                .uploadWholeFile(data: data, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
                 .sink { c in
                     
                 } receiveValue: { [weak self] filea, percent in

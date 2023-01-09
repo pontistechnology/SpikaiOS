@@ -91,5 +91,17 @@ public class MessageEntity: NSManagedObject {
         if let thumbDuration = message.body?.thumb?.metaData?.duration {
             self.bodyThumbMetaDataDuration = thumbDuration
         }
+        
+        if let fileWidth = message.body?.file?.metaData?.width {
+            self.bodyFileMetaDataWidth = fileWidth
+        }
+        
+        if let fileHeight = message.body?.file?.metaData?.height {
+            self.bodyFileMetaDataHeight = fileHeight
+        }
+        
+        if let fileDuration = message.body?.file?.metaData?.duration {
+            self.bodyFileMetaDataDuration = fileDuration
+        }
     }
 }
