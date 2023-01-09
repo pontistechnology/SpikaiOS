@@ -47,7 +47,6 @@ class DetailsViewController: BaseViewController {
         
         detailsView.contentView.videoCallButton.tap().sink { [weak self] _ in
             guard let url = URL(string: "https://conference2.spika.chat/conference/spika3web") else { return }
-//            guard let url = URL(string: "https://webrtc.github.io/samples/src/content/getusermedia/gum/") else { return }
 
             if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized,
                AVCaptureDevice.authorizationStatus(for: .audio) == .authorized {
