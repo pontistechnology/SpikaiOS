@@ -168,7 +168,7 @@ extension BaseMessageTableViewCell {
         }
     }
     
-    func showReactions() {
+    func showReactions(emojis: [String]) {
         contentView.addSubview(reactionsView)
         containerBottomConstraint?.constant -= 15
         
@@ -184,7 +184,7 @@ extension BaseMessageTableViewCell {
         }
         reactionsView.backgroundColor = senderType.backgroundColor
         
-        reactionsView.show(emojis: ["😙","😅"])
+        reactionsView.show(emojis: emojis)
     }
     
     func showUploadProgress(at percent: CGFloat) {

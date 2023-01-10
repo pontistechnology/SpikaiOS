@@ -343,7 +343,9 @@ extension CurrentChatViewController: UITableViewDataSource {
                                indexPath: frc?.indexPath(forObject: repliedMessageEntity))
         }
         
-        cell.showReactions()
+        if let reactions = message.getMessageReactions() {
+            cell.showReactions(emojis: reactions)
+        }
         
         switch message.type {
         case .text:
