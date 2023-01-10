@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 
 class MessageReactionsView: UIView {
+    private var emojiLabel = CustomLabel(text: "😂😂😂", textSize: 12, textColor: .textPrimary, fontName: .MontserratMedium)
+    private var countLabel = CustomLabel(text: "4", textSize: 8, textColor: .textPrimary, fontName: .MontserratMedium)
+    
     init() {
         super.init(frame: .zero)
         setupView()
@@ -21,7 +24,8 @@ class MessageReactionsView: UIView {
 
 extension MessageReactionsView: BaseView {
     func addSubviews() {
-        
+        addSubview(emojiLabel)
+        addSubview(countLabel)
     }
     
     func styleSubviews() {
@@ -32,8 +36,8 @@ extension MessageReactionsView: BaseView {
     }
     
     func positionSubviews() {
-        
+        emojiLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 0))
+        countLabel.anchor(leading: emojiLabel.trailingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 6))
+        countLabel.centerYToSuperview()
     }
-    
-    
 }

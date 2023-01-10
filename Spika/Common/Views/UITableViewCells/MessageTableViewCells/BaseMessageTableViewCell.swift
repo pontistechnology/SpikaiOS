@@ -171,8 +171,6 @@ extension BaseMessageTableViewCell {
     func showReactions() {
         contentView.addSubview(reactionsView)
         containerBottomConstraint?.constant -= 15
-        reactionsView.constrainWidth(88)
-        reactionsView.constrainHeight(24)
         
         guard let reuseIdentifier = self.reuseIdentifier,
               let senderType = getMessageSenderType(reuseIdentifier: reuseIdentifier)
