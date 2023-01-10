@@ -18,7 +18,7 @@ class BaseMessageTableViewCell: UITableViewCell {
     let containerStackView = UIStackView()
     private var replyView: MessageReplyView?
     private let progressView = CircularProgressBar(spinnerWidth: 20)
-    private let reactionsView = UIView(backgroundColor: .appGreen)
+    private let reactionsView = MessageReactionsView()
     
     private var containerBottomConstraint: NSLayoutConstraint?
     
@@ -77,7 +77,7 @@ extension BaseMessageTableViewCell: BaseView {
     }
     
     func setupContainer(sender: MessageSender) {
-        containerStackView.backgroundColor = sender == .me ?  UIColor(hexString: "C8EBFE") : .chatBackground // TODO: ask nika for color
+        containerStackView.backgroundColor = sender.backgroundColor
         messageStateView.isHidden = sender != .me
         
         containerBottomConstraint = containerStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2)
@@ -121,6 +121,7 @@ extension BaseMessageTableViewCell {
         self.replyView = nil
         print("AA")
         progressView.removeFromSuperview()
+        containerBottomConstraint = nil
 //        senderPhotoImageview.isHidden = true
     }
     
@@ -183,6 +184,7 @@ extension BaseMessageTableViewCell {
         case .friend, .group:
             reactionsView.anchor(leading: containerStackView.leadingAnchor, bottom: containerStackView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 1, bottom: -15, right: 0))
         }
+        reactionsView.backgroundColor = senderType.backgroundColor
     }
     
     func showUploadProgress(at percent: CGFloat) {
