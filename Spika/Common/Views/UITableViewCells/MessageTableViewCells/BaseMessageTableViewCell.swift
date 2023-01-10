@@ -183,6 +183,8 @@ extension BaseMessageTableViewCell {
             reactionsView.anchor(leading: containerStackView.leadingAnchor, bottom: containerStackView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 1, bottom: -15, right: 0))
         }
         reactionsView.backgroundColor = senderType.backgroundColor
+        
+        reactionsView.show(emojis: ["😙","😅"])
     }
     
     func showUploadProgress(at percent: CGFloat) {
