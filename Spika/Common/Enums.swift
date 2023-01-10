@@ -91,6 +91,15 @@ enum MessageSender {
             return "Group"
         }
     }
+    
+    var backgroundColor: UIColor {
+        switch self {
+        case .me:
+            return UIColor(hexString: "C8EBFE")
+        case .friend, .group:
+            return .chatBackground
+        }
+    }
 }
 
 enum ScrollToBottomType {
