@@ -343,6 +343,8 @@ extension CurrentChatViewController: UITableViewDataSource {
                                indexPath: frc?.indexPath(forObject: repliedMessageEntity))
         }
         
+        cell.showReactions()
+        
         switch message.type {
         case .text:
             (cell as? TextMessageTableViewCell)?.updateCell(message: message)
