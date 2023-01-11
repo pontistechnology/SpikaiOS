@@ -21,7 +21,7 @@ final class ChatMembersView: UIView, BaseView {
     
     var tableViewHeightConstraint: NSLayoutConstraint!
     
-    let onRemoveUser = PassthroughSubject<User?,Never>()
+    let onRemoveUser = PassthroughSubject<IndexPath,Never>()
     
     var subscriptions = Set<AnyCancellable>()
     
@@ -173,8 +173,24 @@ extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier,
                                                  for: indexPath) as! ContactsTableViewCell
-        cell.configureCell(self.users[indexPath.row].user, isEditable: self.isAdmin.value)
-        cell.onRemoveUser
+        let model = self.users[indexPath.row]
+        //        cell.configureCell(self.users[indexPath.row].user, isEditable: self.isAdmin.value)
+//        if self.isAdmin.value {
+//            cell.configureCell(type: .remove(title: self.users[indexPath.row].user.getDisplayName(),
+//                                             subTitle: self.users[indexPath.row].user.telephoneNumber))
+//        } else {
+//            cell.configureCell(type: .normal(title: self.users[indexPath.row].user.getDisplayName(),
+//                                             subTitle: self.users[indexPath.row].user.telephoneNumber))
+//        }
+        cell.configureCell(title: model.user.getDisplayName(),
+                           description: model.user.telephoneNumber,
+                           leftImage: model.user.avatarFileId?.fullFilePathFromId(),
+                           type: self.isAdmin.value ? .remove : .normal)
+        
+        cell.onRightClickAction
+            .compactMap ({ [weak self] cell in
+                return self?.tableView.indexPath(for: cell)
+            })
             .subscribe(self.onRemoveUser)
             .store(in: &cell.subscriptions)
         return cell

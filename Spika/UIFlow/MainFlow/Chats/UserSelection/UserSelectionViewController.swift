@@ -122,7 +122,10 @@ extension UserSelectionViewController: UITableViewDataSource {
         // User was selected
         cell?.accessoryType = self.viewModel.userSelected(user: user) ? .checkmark : .none
         
-        cell?.configureCell(user)
+        cell?.configureCell(title: user.getDisplayName(),
+                            description: user.telephoneNumber,
+                            leftImage: user.avatarFileId?.fullFilePathFromId(),
+                            type: .normal)
         return cell ?? UITableViewCell()
     }
 }

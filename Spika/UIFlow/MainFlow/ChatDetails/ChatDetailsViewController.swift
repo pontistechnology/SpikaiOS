@@ -90,8 +90,8 @@ final class ChatDetailsViewController: BaseViewController {
         self.chatDetailView.contentView
             .chatMembersView
             .onRemoveUser
-            .sink { [weak self] user in
-                guard let user = user else { return }
+            .sink { [weak self] indexPath in
+                guard let user = self?.viewModel.room.value.users[indexPath.row].user else { return }
                 self?.viewModel.removeUser(user: user)
             }.store(in: &self.chatDetailView.contentView.chatMembersView.subscriptions)
         

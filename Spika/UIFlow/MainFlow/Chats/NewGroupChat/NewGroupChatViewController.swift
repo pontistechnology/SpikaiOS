@@ -39,8 +39,9 @@ class NewGroupChatViewController: BaseViewController {
         
         self.newGroupChatView.chatMembersView
             .onRemoveUser
-            .compactMap { $0 }
-            .sink { [weak self] user in
+//            .compactMap { $0 }
+            .sink { [weak self] indexPath in
+                guard let user = self?.viewModel.selectedUsers.value[indexPath.row] else { return }
                 self?.viewModel.removeUser(user: user)
             }.store(in: &self.viewModel.subscriptions)
         
