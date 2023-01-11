@@ -199,6 +199,21 @@ class AppCoordinator: Coordinator {
         return viewControllerToPresent.publisher
     }
     
+    func presentReactionsActionsSheet() {
+        let viewControllerToPresent = ReactionsViewController()
+        
+        if #available(iOS 15.0, *) {
+            if let sheet = viewControllerToPresent.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        navigationController.present(viewControllerToPresent, animated: true)
+    }
+    
     func presentAVVideoController(asset: AVAsset) {
         let avPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
         let avPlayerVC = AVPlayerViewController()

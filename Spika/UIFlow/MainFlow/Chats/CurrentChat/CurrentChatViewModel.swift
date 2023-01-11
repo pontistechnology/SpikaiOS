@@ -64,6 +64,10 @@ extension CurrentChatViewModel {
     func showImage(link: URL) {
         getAppCoordinator()?.presentImageViewer(link: link)
     }
+    
+    func showReactions() {
+        getAppCoordinator()?.presentReactionsActionsSheet()
+    }
 }
 
 extension CurrentChatViewModel {

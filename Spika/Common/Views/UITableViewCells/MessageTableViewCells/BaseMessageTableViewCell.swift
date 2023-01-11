@@ -121,6 +121,7 @@ extension BaseMessageTableViewCell {
         self.replyView = nil
         print("AA")
         progressView.removeFromSuperview()
+        reactionsView.removeFromSuperview()
         containerBottomConstraint = nil
 //        senderPhotoImageview.isHidden = true
     }
@@ -183,6 +184,10 @@ extension BaseMessageTableViewCell {
             reactionsView.anchor(leading: containerStackView.leadingAnchor, bottom: containerStackView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 1, bottom: -15, right: 0))
         }
         reactionsView.backgroundColor = senderType.backgroundColor
+        
+        reactionsView.tap().sink { [weak self] _ in
+            self?.tapPublisher.send(.showReactions)
+        }.store(in: &subs)
         
         reactionsView.show(emojis: emojis)
     }

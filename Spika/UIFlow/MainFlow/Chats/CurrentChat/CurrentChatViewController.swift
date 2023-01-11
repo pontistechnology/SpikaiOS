@@ -285,6 +285,8 @@ extension CurrentChatViewController {
             viewModel.showImage(link: url)
         case .scrollToReply(let indexPath):
             currentChatView.messagesTableView.blinkRow(at: indexPath)
+        case .showReactions:
+            viewModel.showReactions()
         }
     }
 }
