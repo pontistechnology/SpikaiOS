@@ -65,8 +65,12 @@ extension CurrentChatViewModel {
         getAppCoordinator()?.presentImageViewer(link: link)
     }
     
-    func showReactions() {
-        getAppCoordinator()?.presentReactionsActionsSheet()
+    func showReactions(records: [MessageRecord]) {
+        guard let roomUsers = room?.users else { return }
+        let users = roomUsers.compactMap { roomUser in
+            roomUser.user
+        }
+        getAppCoordinator()?.presentReactionsActionsSheet(users: users, records: records)
     }
 }
 

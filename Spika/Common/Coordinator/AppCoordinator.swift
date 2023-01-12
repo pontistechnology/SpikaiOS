@@ -199,8 +199,8 @@ class AppCoordinator: Coordinator {
         return viewControllerToPresent.publisher
     }
     
-    func presentReactionsActionsSheet() {
-        let viewControllerToPresent = ReactionsViewController()
+    func presentReactionsActionsSheet(users: [User], records: [MessageRecord]) {
+        let viewControllerToPresent = ReactionsViewController(users: users, records: records)
         
         if #available(iOS 15.0, *) {
             if let sheet = viewControllerToPresent.sheetPresentationController {

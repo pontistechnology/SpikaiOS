@@ -45,8 +45,13 @@ extension MessageReactionsView: BaseView {
 extension MessageReactionsView {
     func show(emojis: [String]) {
         let maxNumberOfEmojis = 3
+        guard let uniqueArray = Array(NSOrderedSet(array: emojis)) as? [String] else { return }
         emojiLabel.text = ""
-        _ = emojis.prefix(maxNumberOfEmojis).map { emojiLabel.text?.append($0)}
-        countLabel.text = emojis.count > maxNumberOfEmojis ? "\(emojis.count)" : ""
+        _ = uniqueArray.prefix(maxNumberOfEmojis).map { emojiLabel.text?.append($0)}
+        
+        if emojis.count > maxNumberOfEmojis
+            || (uniqueArray.count < emojis.count && emojis.count > 1) {
+            countLabel.text = "\(emojis.count)"
+        }
     }
 }

@@ -286,7 +286,7 @@ extension CurrentChatViewController {
         case .scrollToReply(let indexPath):
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .showReactions:
-            viewModel.showReactions()
+            viewModel.showReactions(records: message.getMessageReactionsRecords() ?? [])
         }
     }
 }
@@ -345,8 +345,8 @@ extension CurrentChatViewController: UITableViewDataSource {
                                indexPath: frc?.indexPath(forObject: repliedMessageEntity))
         }
         
-        if let reactions = message.getMessageReactions() {
-            cell.showReactions(emojis: reactions)
+        if let reactionsRecords = message.getMessageReactionsRecords() {
+            cell.showReactions(reactionRecords: reactionsRecords)
         }
         
         switch message.type {

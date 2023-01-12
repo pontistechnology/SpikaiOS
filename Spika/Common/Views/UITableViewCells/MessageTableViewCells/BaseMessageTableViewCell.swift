@@ -169,7 +169,7 @@ extension BaseMessageTableViewCell {
         }
     }
     
-    func showReactions(emojis: [String]) {
+    func showReactions(reactionRecords: [MessageRecord]) {
         contentView.addSubview(reactionsView)
         containerBottomConstraint?.constant -= 15
         
@@ -189,7 +189,7 @@ extension BaseMessageTableViewCell {
             self?.tapPublisher.send(.showReactions)
         }.store(in: &subs)
         
-        reactionsView.show(emojis: emojis)
+        reactionsView.show(emojis: reactionRecords.compactMap { $0.reaction })
     }
     
     func showUploadProgress(at percent: CGFloat) {

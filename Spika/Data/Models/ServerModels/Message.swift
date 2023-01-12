@@ -100,11 +100,11 @@ extension Message {
         return .waiting
     }
     
-    func getMessageReactions() -> [String]? {
-        guard let reactions = records?.filter({ $0.type == .reaction }).compactMap({ $0.reaction }),
+    func getMessageReactionsRecords() -> [MessageRecord]? {
+        guard let reactions = records?.filter({ $0.type == .reaction }),
               !reactions.isEmpty
         else { return nil}
-        return reactions
+        return reactions.sorted(by: { $0.createdAt > $1.createdAt })
     }
 }
 

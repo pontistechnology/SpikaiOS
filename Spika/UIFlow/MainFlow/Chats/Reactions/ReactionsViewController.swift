@@ -10,6 +10,18 @@ import UIKit
 
 class ReactionsViewController: BaseViewController {
     private let reactionsView = ReactionsView()
+    private let records: [MessageRecord]
+    private let users: [User]
+    
+    init(users: [User], records: [MessageRecord]) {
+        self.records = records
+        self.users = users
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
