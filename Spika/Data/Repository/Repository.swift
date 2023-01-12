@@ -75,6 +75,9 @@ protocol Repository {
     func syncMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error>
     func syncMessageRecords(timestamp: Int64) -> AnyPublisher<SyncMessageRecordsResponseModel, Error>
     func syncUsers(timestamp: Int64) -> AnyPublisher<SyncUsersResponseModel, Error>
+    func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
+    func unblockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
+    func getBlockedRooms() -> AnyPublisher<BlockedUsersResponseModel, Error>
     
     // MARK: NETWORKING: Device
     
