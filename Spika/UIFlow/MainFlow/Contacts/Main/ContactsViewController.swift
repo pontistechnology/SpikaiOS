@@ -74,7 +74,10 @@ extension ContactsViewController: UITableViewDataSource {
             return EmptyTableViewCell()
         }
         let user = User(entity: userEntity)
-        cell?.configureCell(user)
+        cell?.configureCell(title: user.getDisplayName(),
+                            description: user.telephoneNumber,
+                            leftImage: user.avatarFileId?.fullFilePathFromId(),
+                            type: .normal)
         return cell ?? EmptyTableViewCell()
     }
     

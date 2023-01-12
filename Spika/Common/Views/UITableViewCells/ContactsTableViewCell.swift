@@ -10,26 +10,38 @@ import UIKit
 import Kingfisher
 import Combine
 
+enum ContactsTableViewCellType {
+    case normal
+    case text(text: String?)
+    case remove
+    case emoji(emoji: String, size: CGFloat)
+}
+
 class ContactsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "ContactsTableViewCell"
-    var user: User?
-    let onRemoveUser = PassthroughSubject<User?,Never>()
+    
+    let onRightClickAction = PassthroughSubject<UITableViewCell,Never>()
     var subscriptions = Set<AnyCancellable>()
     
-    let nameLabel = CustomLabel(text: "*Contact Name*", textSize: 14, fontName: .MontserratMedium)
-    let descriptionLabel = CustomLabel(text: "CTO", textSize: 12, fontName: .MontserratRegular)
-    let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
-    lazy var removeButton: UIButton = {
+    private let horizontalStackView = CustomStackView(axis: .horizontal, spacing: 12)
+    private let leftImageView = RoundedImageView(image: UIImage(safeImage: .userImage))
+    private lazy var rightButton: UIButton = {
         let button = UIButton()
+        button.imageView?.contentMode = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(safeImage: .close), for: .normal)
         button.setContentHuggingPriority(.required, for: .horizontal)
+        button.setTitleColor(.black, for: .normal)
         button.publisher(for: .touchUpInside)
-            .map { [weak self] _ in self?.user }
-            .subscribe(self.onRemoveUser)
+            .map { [unowned self] _ in self }
+            .subscribe(self.onRightClickAction)
             .store(in: &subscriptions)
         return button
     } ()
+    
+    private let verticalStackView = CustomStackView(axis: .vertical, spacing: 12)
+    private let nameLabel = CustomLabel(text: "", textSize: 14, fontName: .MontserratMedium)
+    private let descriptionLabel = CustomLabel(text: "CTO", textSize: 12, fontName: .MontserratRegular)
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,46 +53,53 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     }
     
     func addSubviews() {
-        self.contentView.addSubview(leftImageView)
-        self.contentView.addSubview(nameLabel)
-        self.contentView.addSubview(descriptionLabel)
-        self.contentView.addSubview(removeButton)
+        self.contentView.addSubview(horizontalStackView)
+        self.horizontalStackView.addArrangedSubview(self.leftImageView)
+        self.horizontalStackView.addArrangedSubview(self.verticalStackView)
+        self.verticalStackView.addArrangedSubview(self.nameLabel)
+        self.verticalStackView.addArrangedSubview(self.descriptionLabel)
+        
+        self.horizontalStackView.addArrangedSubview(self.rightButton)
     }
     
     func styleSubviews() {
+        leftImageView.translatesAutoresizingMaskIntoConstraints = false
         leftImageView.clipsToBounds = true
-        leftImageView.layer.cornerRadius = 21
         leftImageView.contentMode = .scaleAspectFill
         nameLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 1
     }
     
     func positionSubviews() {
-        leftImageView.centerYToSuperview()
-        leftImageView.anchor(leading: self.contentView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0), size: CGSize(width: 42, height: 42))
-        
-        nameLabel.anchor(top: self.contentView.topAnchor, leading: leftImageView.trailingAnchor, trailing: self.removeButton.leadingAnchor, padding: UIEdgeInsets(top: 12, left: 16, bottom: 0, right: 20))
-        descriptionLabel.anchor(leading: leftImageView.trailingAnchor, bottom: self.contentView.bottomAnchor, trailing: self.removeButton.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 16, bottom: 13, right: 20))
-        
-        self.removeButton.centerYToSuperview()
-        self.removeButton.anchor(trailing: self.contentView.trailingAnchor, padding: UIEdgeInsets(top: 12, left: 16, bottom: 0, right: 14), size: CGSize(width: 50, height: 50))
+        self.horizontalStackView.constraint(with: UIEdgeInsets(top: 12, left: 20, bottom: -12, right: -20))
+        self.leftImageView.widthAnchor.constraint(equalTo: self.leftImageView.heightAnchor).isActive = true
     }
     
-    func configureCell(image: UIImage, name: String, desc: String) {
-        leftImageView.image = image
-        nameLabel.text = name
-        descriptionLabel.text = desc
-    }
-    
-    func configureCell(_ model: User, isEditable: Bool = false) {
-        self.nameLabel.text = model.getDisplayName()
-        self.descriptionLabel.text = model.telephoneNumber
-        self.user = model
+    func configureCell(title: String?,
+                       description: String?,
+                       leftImage: URL?,
+                       type: ContactsTableViewCellType) {
+        self.nameLabel.text = title
+        self.descriptionLabel.text = description
+        leftImageView.kf.setImage(with: leftImage, placeholder: UIImage(safeImage: .userImage))
         
-        let url = model.avatarFileId?.fullFilePathFromId()
-        leftImageView.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
-        
-        self.removeButton.isHidden = !isEditable
+        switch type {
+        case .normal:
+            self.rightButton.isHidden = true
+        case .text(let text):
+            self.rightButton.isHidden = false
+            self.rightButton.setImage(nil, for: .normal)
+            self.rightButton.setTitle(text, for: .normal)
+        case .remove:
+            self.rightButton.isHidden = false
+            self.rightButton.setImage(UIImage(safeImage: .close), for: .normal)
+            self.rightButton.setTitle(nil, for: .normal)
+        case .emoji(let emoji, let size):
+            self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)
+            self.rightButton.isHidden = false
+            self.rightButton.setImage(nil, for: .normal)
+            self.rightButton.setTitle(emoji, for: .normal)
+        }
     }
     
     override func prepareForReuse() {
