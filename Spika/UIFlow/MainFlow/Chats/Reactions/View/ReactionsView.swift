@@ -14,11 +14,11 @@ class ReactionsView: UIView {
     let tableView = UITableView()
     let stackView = UIStackView()
     
-    init() {
+    init(categories: [String]) {
         super.init(frame: .zero)
         setupView()
         tableView.register(ContactsTableViewCell.self, forCellReuseIdentifier: ContactsTableViewCell.reuseIdentifier)
-        setupStackView()
+        setupStackView(categories)
     }
     
     required init?(coder: NSCoder) {
@@ -37,7 +37,6 @@ extension ReactionsView: BaseView {
     func styleSubviews() {
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-//        stackView.backgroundColor = .logoBlue
     }
     
     func positionSubviews() {
@@ -53,13 +52,10 @@ extension ReactionsView: BaseView {
 }
 
 extension ReactionsView {
-    func setupStackView() {
-        let a = ["😂","😇","😍","😘","❤️"]
-        let aa = CustomLabel(text: "ALL", textSize: 16, alignment: .center)
-        stackView.addArrangedSubview(aa)
-        for i in 0...4 {
-            let a = CustomLabel(text: a[i], textSize: 16, alignment: .center)
-            stackView.addArrangedSubview(a)
+    func setupStackView(_ elements: [String]) {
+        elements.forEach {
+            let label = CustomLabel(text: $0, textSize: 16, alignment: .center)
+            stackView.addArrangedSubview(label)
         }
     }
 }
