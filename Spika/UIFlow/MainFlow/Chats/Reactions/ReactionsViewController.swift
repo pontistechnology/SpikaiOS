@@ -21,24 +21,20 @@ class ReactionsViewController: BaseViewController {
 extension ReactionsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        80
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let s = ["😂","😇","😍","😘","❤️"]
-        return s[section]
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        4
+        64
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        21
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
+        else { return EmptyTableViewCell()}
+        
+        cell.configureCell(title: "User name", description: "description", leftImage: nil, type: .emoji(emoji: "😂", size: 32))
+        
+        return cell
     }
     
     func setupBindings() {
