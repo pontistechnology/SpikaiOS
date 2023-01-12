@@ -67,6 +67,9 @@ public extension Constants {
         case somethingWentWrongMutingRoom = "Something went wrong muting the room"
         case somethingWentWrongUnmutingRoom = "Something went wrong unmuting the room"
         
+        case youBlockedTheContact = "You blocked the contact"
+        case unblock = "Unblock"
+        
         //MARK: - ContactsViewController
         case searchForContactsMessages = "Search for contact,message, file..."
         

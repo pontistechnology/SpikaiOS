@@ -209,7 +209,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func getBlockedRooms() -> AnyPublisher<BlockedUsersResponseModel, Error> {
+    func getBlockedUsers() -> AnyPublisher<BlockedUsersResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<BlockedUsersResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -229,7 +229,7 @@ extension AppRepository {
         self.databaseService.blockedUsersService.updateBlockedIds(blockedUsers: users)
     }
     
-    func localBlockedUserIds() -> CurrentValueSubject<[User]?,Never> {
+    func blockedUsersPublisher() -> CurrentValueSubject<[User]?,Never> {
         return self.databaseService.blockedUsersService.blockedUserIds
     }
     

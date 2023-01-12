@@ -119,7 +119,7 @@ private extension SSE {
 
 private extension SSE {
     func syncBlockedList() {
-        repository.getBlockedRooms()
+        repository.getBlockedUsers()
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:

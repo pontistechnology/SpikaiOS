@@ -76,15 +76,15 @@ extension TestRepository {
                 .eraseToAnyPublisher()
     }
     
-    func getBlockedRooms() -> AnyPublisher<BlockedUsersResponseModel, Error> {
+    func updateBlockedUserIds(users: [User]?) {}
+    
+    func getBlockedUsers() -> AnyPublisher<BlockedUsersResponseModel, Error> {
         return Fail<BlockedUsersResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
     }
-    
-    func updateBlockedUserIds(users: [User]?) {}
-    
-    func localBlockedUserIds() -> CurrentValueSubject<[User]?,Never> {
+        
+    func blockedUsersPublisher() -> CurrentValueSubject<[User]?,Never> {
         return CurrentValueSubject(nil)
     }
     

@@ -18,19 +18,68 @@ class CurrentChatViewModel: BaseViewModel {
     var room: Room?
     let roomPublisher = PassthroughSubject<Room, Error>()
     let uploadProgressPublisher = PassthroughSubject<(localId: String, percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
+    let isBlocked = CurrentValueSubject<Bool,Never>(false)
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
         super.init(repository: repository, coordinator: coordinator)
+        self.setupBinding()
     }
     
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
         
-        let roomUsers = room.users
         self.friendUser = room.getFriendUserInPrivateRoom(myUserId: repository.getMyUserId())
         super.init(repository: repository, coordinator: coordinator)
+        self.setupBinding()
     }
+    
+    func setupBinding() {
+        self.repository.blockedUsersPublisher()
+            .receive(on: DispatchQueue.main)
+            .map { [weak self] blockedUsers in
+                guard let blockedUsers = blockedUsers else { return false }
+                guard self?.room?.users.count == 2 else { return false }
+                
+                return blockedUsers.contains { user in
+                    user.id == self?.room?.users.first?.userId
+                }
+            }
+            .subscribe(self.isBlocked)
+            .store(in: &self.subscriptions)
+    }
+    
+    func unblockUser() {
+        let ownId = self.repository.getMyUserId()
+        guard let contact = self.room?.users.first(where: { roomUser in
+            roomUser.userId != ownId
+        }) else { return }
+        self.repository.unblockUser(userId: contact.userId)
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    self?.updateBlockedList()
+                case .failure(_):
+                    ()
+                }
+            } receiveValue: { _ in }
+            .store(in: &self.subscriptions)
+    }
+    
+    func updateBlockedList() {
+        repository.getBlockedUsers()
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    return
+                case .failure(let error):
+                    return
+                }
+            } receiveValue: { [weak self] response in
+                self?.repository.updateBlockedUserIds(users: response.data.blockedUsers)
+            }.store(in: &subscriptions)
+    }
+    
 }
 
 // MARK: - Navigation

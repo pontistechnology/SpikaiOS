@@ -77,10 +77,10 @@ protocol Repository {
     func syncUsers(timestamp: Int64) -> AnyPublisher<SyncUsersResponseModel, Error>
     func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
     func unblockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
-    func getBlockedRooms() -> AnyPublisher<BlockedUsersResponseModel, Error>
+    func getBlockedUsers() -> AnyPublisher<BlockedUsersResponseModel, Error>
     
     func updateBlockedUserIds(users: [User]?)
-    func localBlockedUserIds() -> CurrentValueSubject<[User]?,Never>
+    func blockedUsersPublisher() -> CurrentValueSubject<[User]?,Never>
     
     // MARK: NETWORKING: Device
     
