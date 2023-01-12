@@ -112,7 +112,8 @@ extension AllChatsViewController: UITableViewDataSource {
                                 name: friendUser.getDisplayName(),
                                 description: entity.lastMessageText(),
                                 time: entity.lastMessageTime(),
-                                badgeNumber: badgeNumber)
+                                badgeNumber: badgeNumber,
+                                muted: entity.muted)
             
         } else if room.type != .privateRoom {
             
@@ -120,7 +121,8 @@ extension AllChatsViewController: UITableViewDataSource {
                                 name: room.name ?? .getStringFor(.noName),
                                 description: entity.lastMessageText(),
                                 time: entity.lastMessageTime(),
-                                badgeNumber: badgeNumber)
+                                badgeNumber: badgeNumber,
+                                muted: entity.muted)
         }
         
         return cell ?? EmptyTableViewCell()
