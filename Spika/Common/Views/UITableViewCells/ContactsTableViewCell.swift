@@ -11,27 +11,26 @@ import Kingfisher
 import Combine
 
 enum ContactsTableViewCellType {
-    case normal//(title: String?, subTitle: String?, leftImage: URL?)
+    case normal
     case text(text: String?)
     case remove
-    case image(image: UIImage)
-    case imageUrl(imageUrl: URL)
+    case emoji(emoji: String, size: CGFloat)
 }
 
 class ContactsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "ContactsTableViewCell"
     
-    var user: User?
     let onRightClickAction = PassthroughSubject<UITableViewCell,Never>()
     var subscriptions = Set<AnyCancellable>()
     
-    let horizontalStackView = CustomStackView(axis: .horizontal, spacing: 12)
-    let leftImageView = RoundedImageView(image: UIImage(safeImage: .userImage))
-    lazy var rightButton: UIButton = {
+    private let horizontalStackView = CustomStackView(axis: .horizontal, spacing: 12)
+    private let leftImageView = RoundedImageView(image: UIImage(safeImage: .userImage))
+    private lazy var rightButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .center
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setContentHuggingPriority(.required, for: .horizontal)
+        button.setTitleColor(.black, for: .normal)
         button.publisher(for: .touchUpInside)
             .map { [unowned self] _ in self }
             .subscribe(self.onRightClickAction)
@@ -39,9 +38,9 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         return button
     } ()
     
-    let verticalStackView = CustomStackView(axis: .vertical, spacing: 12)
-    let nameLabel = CustomLabel(text: "", textSize: 14, fontName: .MontserratMedium)
-    let descriptionLabel = CustomLabel(text: "CTO", textSize: 12, fontName: .MontserratRegular)
+    private let verticalStackView = CustomStackView(axis: .vertical, spacing: 12)
+    private let nameLabel = CustomLabel(text: "", textSize: 14, fontName: .MontserratMedium)
+    private let descriptionLabel = CustomLabel(text: "CTO", textSize: 12, fontName: .MontserratRegular)
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -95,14 +94,11 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
             self.rightButton.isHidden = false
             self.rightButton.setImage(UIImage(safeImage: .close), for: .normal)
             self.rightButton.setTitle(nil, for: .normal)
-        case .image(let image):
+        case .emoji(let emoji, let size):
+            self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)
             self.rightButton.isHidden = false
-            self.rightButton.setImage(image, for: .normal)
-            self.rightButton.setTitle(nil, for: .normal)
-        case .imageUrl(let imageUrl):
-            self.rightButton.isHidden = false
-            self.rightButton.kf.setImage(with: imageUrl, for: .normal)
-            self.rightButton.setTitle(nil, for: .normal)
+            self.rightButton.setImage(nil, for: .normal)
+            self.rightButton.setTitle(emoji, for: .normal)
         }
     }
     
