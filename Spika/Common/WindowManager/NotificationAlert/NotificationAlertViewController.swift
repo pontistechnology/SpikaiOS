@@ -15,7 +15,7 @@ class NotificationAlertViewController: BaseViewController {
     init(info: MessageNotificationInfo, tapPublisher: PassthroughSubject<MessageNotificationInfo, Never>) {
         self.tapPublisher = tapPublisher
         notificationAlertView = NotificationAlertView(info: info)
-        super.init(nibName: nil, bundle: nil)
+        super.init()
         setupBindings(info: info)
     }
     

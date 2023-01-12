@@ -14,7 +14,7 @@ class VideoCallViewController: BaseViewController {
     
     init(url: URL) {
         videoCallView = VideoCallView(url: url)
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder: NSCoder) {

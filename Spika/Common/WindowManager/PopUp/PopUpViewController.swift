@@ -24,7 +24,7 @@ class PopUpViewController: BaseViewController {
         case .alertView(title: let title, message: let message, buttons: let buttons):
             popUpView = AlertView(title: title, message: message, buttons: buttons)
         }
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         view.addSubview(popUpView)
         popUpView.centerInSuperview()
