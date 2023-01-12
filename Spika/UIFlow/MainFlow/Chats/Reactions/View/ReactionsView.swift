@@ -7,12 +7,16 @@
 
 import Foundation
 import UIKit
+import Combine
 
 class ReactionsView: UIView {
-    private let label = CustomLabel(text: .getStringFor(.reactions), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
-    let closeImageView = UIImageView(image: UIImage(safeImage: .closeActionsSheet))
     let tableView = UITableView()
-    let stackView = UIStackView()
+    private let label = CustomLabel(text: .getStringFor(.reactions), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
+    private let closeImageView = UIImageView(image: UIImage(safeImage: .closeActionsSheet))
+    private let stackView = UIStackView()
+    
+    let stackviewTapPublisher = PassthroughSubject<String, Never>()
+    private var subs = Set<AnyCancellable>()
     
     init(categories: [String]) {
         super.init(frame: .zero)
@@ -55,6 +59,10 @@ extension ReactionsView {
     func setupStackView(_ elements: [String]) {
         elements.forEach {
             let label = CustomLabel(text: $0, textSize: 16, alignment: .center)
+            let fL = $0.firstLetter()
+            label.tap().sink { [weak self] _ in
+                self?.stackviewTapPublisher.send(fL)
+            }.store(in: &subs)
             stackView.addArrangedSubview(label)
         }
     }

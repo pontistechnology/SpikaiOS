@@ -12,6 +12,7 @@ class ReactionsViewController: BaseViewController {
     private let reactionsView: ReactionsView
     private let records: [MessageRecord]
     private let users: [User]
+    private var filter: String?
     
     
     init(users: [User], records: [MessageRecord]) {
@@ -46,22 +47,35 @@ extension ReactionsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        records.count
+        filteredRecords.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
         else { return EmptyTableViewCell()}
-        let user = users.first { $0.id == records[indexPath.row].userId }
+        let user = users.first { $0.id == filteredRecords[indexPath.row].userId }
         cell.configureCell(title: user?.getDisplayName() ?? "Missing User",
                            description: user?.telephoneNumber,
                            leftImage: user?.avatarFileId?.fullFilePathFromId(),
-                           type: .emoji(emoji: records[indexPath.row].reaction ?? "#", size: 32))
+                           type: .emoji(emoji: filteredRecords[indexPath.row].reaction ?? "#", size: 32))
         return cell
     }
     
     func setupBindings() {
         reactionsView.tableView.delegate = self
         reactionsView.tableView.dataSource = self
+        
+        reactionsView.stackviewTapPublisher.sink { [weak self] ss in
+            self?.filter = ss
+            self?.reactionsView.tableView.reloadData()
+        }.store(in: &subscriptions)
+    }
+    
+    var filteredRecords: [MessageRecord] {
+        if let filter = filter,
+           filter != "A" {
+            return records.filter { $0.reaction == filter }
+        }
+        return records
     }
 }
