@@ -199,7 +199,7 @@ class AppCoordinator: Coordinator {
         return viewControllerToPresent.publisher
     }
     
-    func presentReactionsActionsSheet(users: [User], records: [MessageRecord]) {
+    func presentReactionsSheet(users: [User], records: [MessageRecord]) {
         let viewControllerToPresent = ReactionsViewController(users: users, records: records)
         
         if #available(iOS 15.0, *) {

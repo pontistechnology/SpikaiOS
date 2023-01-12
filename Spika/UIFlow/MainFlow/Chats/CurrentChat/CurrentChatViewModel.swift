@@ -70,7 +70,7 @@ extension CurrentChatViewModel {
         let users = roomUsers.compactMap { roomUser in
             roomUser.user
         }
-        getAppCoordinator()?.presentReactionsActionsSheet(users: users, records: records)
+        getAppCoordinator()?.presentReactionsSheet(users: users, records: records)
     }
 }
 

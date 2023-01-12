@@ -37,14 +37,17 @@ extension ReactionsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        21
+        records.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
         else { return EmptyTableViewCell()}
-        
-        cell.configureCell(title: "User name", description: "description", leftImage: nil, type: .emoji(emoji: "😂", size: 32))
+        let user = users.first { $0.id == records[indexPath.row].userId }
+        cell.configureCell(title: user?.getDisplayName() ?? "Missing User",
+                           description: user?.telephoneNumber,
+                           leftImage: user?.avatarFileId?.fullFilePathFromId(),
+                           type: .emoji(emoji: records[indexPath.row].reaction ?? "🫥", size: 32))
         
         return cell
     }
