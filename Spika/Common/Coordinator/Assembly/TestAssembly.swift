@@ -24,6 +24,9 @@ class TestAssembly: Assembly {
         container.register(NetworkService.self) { r in
             return NetworkService()
         }.inObjectScope(.container)
+        container.register(UserDefaults.self) { r in
+            return UserDefaults(suiteName: Constants.Networking.appGroupName)!
+        }.inObjectScope(.container)
         
         container.register(DatabaseService.self) { r in
             let coreDataStack = CoreDataStack()
@@ -31,7 +34,7 @@ class TestAssembly: Assembly {
             let chatEntityService = ChatEntityService(coreDataStack: coreDataStack)
             let messageEntityService = MessageEntityService(coreDataStack: coreDataStack)
             let roomEntityService = RoomEntityService(coreDataStack: coreDataStack)
-            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, roomEntityService: roomEntityService, coreDataStack: coreDataStack)
+            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, roomEntityService: roomEntityService, coreDataStack: coreDataStack, userDefaults: r.resolve(UserDefaults.self)!)
         }.inObjectScope(.container)
 
         container.register(Repository.self, name: RepositoryType.test.name) { r in

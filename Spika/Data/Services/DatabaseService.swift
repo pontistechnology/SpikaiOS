@@ -9,7 +9,7 @@ import Combine
 
 enum DatabseError: Error {
     case requestFailed, noSuchRecord, unknown, moreThanOne, savingError
-
+    
     var description : String {
         switch self {
         case .requestFailed: return "Request Failed."
@@ -18,7 +18,7 @@ enum DatabseError: Error {
         case .moreThanOne: return "More than one record."
         case .savingError: return "Saving error."
         }
-  }
+    }
 }
 
 class DatabaseService {
@@ -27,12 +27,14 @@ class DatabaseService {
     let messageEntityService: MessageEntityService
     let roomEntityService: RoomEntityService
     let coreDataStack: CoreDataStack
+    let blockedUsersService:BlockedUsersService
     
-    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService, roomEntityService: RoomEntityService, coreDataStack: CoreDataStack) {
+    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService, roomEntityService: RoomEntityService, coreDataStack: CoreDataStack, userDefaults: UserDefaults) {
         self.userEntityService = userEntityService
         self.chatEntityService = chatEntityService
         self.messageEntityService = messageEntityService
         self.roomEntityService = roomEntityService
         self.coreDataStack = coreDataStack
+        self.blockedUsersService = BlockedUsersService(sharedPrefs: userDefaults)
     }
 }

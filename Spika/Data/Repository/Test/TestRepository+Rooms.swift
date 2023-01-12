@@ -82,6 +82,12 @@ extension TestRepository {
                 .eraseToAnyPublisher()
     }
     
+    func updateBlockedUserIds(users: [User]?) {}
+    
+    func localBlockedUserIds() -> CurrentValueSubject<[User]?,Never> {
+        return CurrentValueSubject(nil)
+    }
+    
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))

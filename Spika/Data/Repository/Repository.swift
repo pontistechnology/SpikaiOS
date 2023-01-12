@@ -79,6 +79,9 @@ protocol Repository {
     func unblockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
     func getBlockedRooms() -> AnyPublisher<BlockedUsersResponseModel, Error>
     
+    func updateBlockedUserIds(users: [User]?)
+    func localBlockedUserIds() -> CurrentValueSubject<[User]?,Never>
+    
     // MARK: NETWORKING: Device
     
     func updatePushToken() -> AnyPublisher<UpdatePushResponseModel, Error>

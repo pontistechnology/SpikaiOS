@@ -31,6 +31,7 @@ class SSE {
             setupSSE()
         }
         syncRooms()
+        syncBlockedList()
     }
     
     func stopSSE() {
@@ -117,6 +118,20 @@ private extension SSE {
 // MARK: - Sync api calls
 
 private extension SSE {
+    func syncBlockedList() {
+        repository.getBlockedRooms()
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    return
+                case .failure(let error):
+                    return
+                }
+            } receiveValue: { [weak self] response in
+                self?.repository.updateBlockedUserIds(users: response.data.blockedUsers)
+            }.store(in: &subs)
+    }
+    
     func syncRooms() {
         repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { [weak self] completion in
             self?.checkError(completion: completion)

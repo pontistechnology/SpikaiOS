@@ -225,6 +225,14 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func updateBlockedUserIds(users: [User]?) {
+        self.databaseService.blockedUsersService.updateBlockedIds(blockedUsers: users)
+    }
+    
+    func localBlockedUserIds() -> CurrentValueSubject<[User]?,Never> {
+        return self.databaseService.blockedUsersService.blockedUserIds
+    }
+    
     // MARK: Database
     
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>{

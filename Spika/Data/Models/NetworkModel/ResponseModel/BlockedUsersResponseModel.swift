@@ -8,7 +8,9 @@
 import Foundation
 
 struct BlockedUsersResponseModel: Decodable {
-    let blockedUsers: [Int64]?
+    let data: BlockedUsers
 }
 
-
+struct BlockedUsers : Decodable {
+    let blockedUsers: [User]
+}
