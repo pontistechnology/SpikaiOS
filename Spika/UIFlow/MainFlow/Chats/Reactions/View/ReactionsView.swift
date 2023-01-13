@@ -15,14 +15,14 @@ class ReactionsView: UIView {
     private let closeImageView = UIImageView(image: UIImage(safeImage: .closeActionsSheet))
     private let stackView = UIStackView()
     
-    let stackviewTapPublisher = PassthroughSubject<String, Never>()
+    let stackviewTapPublisher = CurrentValueSubject<Int, Never>(0)
     private var subs = Set<AnyCancellable>()
     
-    init(categories: [String]) {
+    init(emojisAndCounts: [String]) {
         super.init(frame: .zero)
         setupView()
         tableView.register(ContactsTableViewCell.self, forCellReuseIdentifier: ContactsTableViewCell.reuseIdentifier)
-        setupStackView(categories)
+        setupStackView(emojisAndCounts)
     }
     
     required init?(coder: NSCoder) {
@@ -55,15 +55,23 @@ extension ReactionsView: BaseView {
     }
 }
 
-extension ReactionsView {
+private extension ReactionsView {
     func setupStackView(_ elements: [String]) {
-        elements.forEach {
-            let label = CustomLabel(text: $0, textSize: 16, alignment: .center)
-            let fL = $0.firstLetter()
+        for (index, element) in elements.enumerated() {
+            let label = CustomLabel(text: element, textSize: 16, alignment: .center)
             label.tap().sink { [weak self] _ in
-                self?.stackviewTapPublisher.send(fL)
+                self?.deleteBackgroundOfAllStackSubviews()
+                label.backgroundColor = UIColor(hexString: "F2F2F2")
+                self?.stackviewTapPublisher.send(index)
             }.store(in: &subs)
+            if index == 0 {
+                label.backgroundColor = UIColor(hexString: "F2F2F2")
+            }
             stackView.addArrangedSubview(label)
         }
+    }
+    
+    func deleteBackgroundOfAllStackSubviews() {
+        stackView.arrangedSubviews.forEach { $0.backgroundColor = .clear }
     }
 }

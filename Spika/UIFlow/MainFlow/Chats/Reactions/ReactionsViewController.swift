@@ -12,20 +12,24 @@ class ReactionsViewController: BaseViewController {
     private let reactionsView: ReactionsView
     private let records: [MessageRecord]
     private let users: [User]
-    private var filter: String?
-    
+    private let allCategories: [String]
     
     init(users: [User], records: [MessageRecord]) {
         self.records = records
         self.users = users
         
-        var filter = ["ALL"]
+        var keysAndCounts = ["ALL"]
+        var keys = ["ALL"]
         let reactions = records.compactMap { $0.reaction }
-        let d = Dictionary(grouping: reactions) { $0 }
+        Dictionary(grouping: reactions) { $0 }
             .sorted { $0.value.count > $1.value.count }
-        d.forEach { filter.append($0.key + " \($0.value.count)") }
+            .forEach {
+            keysAndCounts.append($0.key + " \($0.value.count)")
+            keys.append($0.key)
+        }
+        self.allCategories = keys
         
-        reactionsView = ReactionsView(categories: filter)
+        reactionsView = ReactionsView(emojisAndCounts: keysAndCounts)
         super.init()
     }
     
@@ -65,17 +69,16 @@ extension ReactionsViewController: UITableViewDelegate, UITableViewDataSource {
         reactionsView.tableView.delegate = self
         reactionsView.tableView.dataSource = self
         
-        reactionsView.stackviewTapPublisher.sink { [weak self] ss in
-            self?.filter = ss
+        reactionsView.stackviewTapPublisher.sink { [weak self] _ in
             self?.reactionsView.tableView.reloadData()
         }.store(in: &subscriptions)
     }
     
     var filteredRecords: [MessageRecord] {
-        if let filter = filter,
-           filter != "A" {
-            return records.filter { $0.reaction == filter }
-        }
-        return records
+        let index = reactionsView.stackviewTapPublisher.value
+        guard index < allCategories.count,
+              index > 0
+        else { return records }
+        return records.filter { $0.reaction == allCategories[index] }
     }
 }
