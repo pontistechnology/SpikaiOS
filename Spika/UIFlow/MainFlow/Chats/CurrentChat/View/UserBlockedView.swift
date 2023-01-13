@@ -25,7 +25,7 @@ class UserBlockedView: UIView, BaseView {
     }
     
     func styleSubviews() {
-//        self.isHidden = true
+        self.isHidden = true
         self.backgroundColor = .lightGray
         self.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
