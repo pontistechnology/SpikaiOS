@@ -45,8 +45,6 @@ class CurrentChatViewController: BaseViewController {
         addSubviews()
         positionSubviews()
         self.navigationItem.backButtonTitle = self.viewModel.room?.name
-        
-        //TODO: Show Message offering to block chat if user never replied.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -205,6 +203,13 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         }
         
         viewModel.roomVisited(roomId: room.id)
+        
+        if let messages = self.frc?.sections?.first?.objects as? [MessageEntity] {
+            for entity in messages {
+                let message = Message(messageEntity: entity)
+                self.offerToBlockUser.isHidden = message.fromUserId == self.viewModel.repository.getMyUserId()
+            }
+        }
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
