@@ -40,10 +40,10 @@ class CurrentChatViewModel: BaseViewModel {
             .map { [weak self] blockedUsers in
                 guard let blockedUsers = blockedUsers else { return false }
                 guard self?.room?.users.count == 2 else { return false }
+                let blockedIds = blockedUsers.map { $0.id }
+                let roomUserIds = self?.room?.users.map { $0.userId } ?? []
                 
-                return blockedUsers.contains { user in
-                    user.id == self?.room?.users.first?.userId
-                }
+                return Set(blockedIds).intersection(Set(roomUserIds)).count > 0
             }
             .subscribe(self.isBlocked)
             .store(in: &self.subscriptions)

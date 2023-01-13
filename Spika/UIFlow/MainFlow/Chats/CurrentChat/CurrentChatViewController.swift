@@ -146,6 +146,7 @@ extension CurrentChatViewController {
         
         self.viewModel.isBlocked.subscribe(on: DispatchQueue.main)
             .sink { [weak self] isBlocked in
+                print("Is Blocked: \(isBlocked)")
                 self?.userBlockedView.isHidden = !isBlocked
             }.store(in: &subscriptions)
         
