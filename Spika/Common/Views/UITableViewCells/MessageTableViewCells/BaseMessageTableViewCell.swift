@@ -122,8 +122,8 @@ extension BaseMessageTableViewCell {
         print("AA")
         progressView.removeFromSuperview()
         reactionsView.removeFromSuperview()
-        containerBottomConstraint = nil
-//        senderPhotoImageview.isHidden = true
+        containerBottomConstraint?.constant = -2
+        //        senderPhotoImageview.isHidden = true
     }
     
     func updateCellState(to state: MessageState) {
@@ -171,7 +171,7 @@ extension BaseMessageTableViewCell {
     
     func showReactions(reactionRecords: [MessageRecord]) {
         contentView.addSubview(reactionsView)
-        containerBottomConstraint?.constant -= 15
+        containerBottomConstraint?.constant = -17
         
         guard let reuseIdentifier = self.reuseIdentifier,
               let senderType = getMessageSenderType(reuseIdentifier: reuseIdentifier)
