@@ -26,6 +26,7 @@ class CurrentChatViewController: BaseViewController {
     
     private let currentChatView = CurrentChatView()
     private let userBlockedView = UserBlockedView(frame: CGRectZero)
+    private let offerToBlockUser = OfferToBlockUserView(frame: CGRectZero)
     var viewModel: CurrentChatViewModel!
     private let friendInfoView = ChatNavigationBarView()
     private var frc: NSFetchedResultsController<MessageEntity>?
@@ -44,6 +45,8 @@ class CurrentChatViewController: BaseViewController {
         addSubviews()
         positionSubviews()
         self.navigationItem.backButtonTitle = self.viewModel.room?.name
+        
+        //TODO: Show Message offering to block chat if user never replied.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,12 +61,17 @@ class CurrentChatViewController: BaseViewController {
     
     func addSubviews() {
         self.view.addSubview(userBlockedView)
+        self.view.addSubview(offerToBlockUser)
     }
     
     func positionSubviews() {
         userBlockedView.constraintBottom()
         userBlockedView.constraintLeading()
         userBlockedView.constraintTrailing()
+        
+        offerToBlockUser.constraintBottom()
+        offerToBlockUser.constraintLeading()
+        offerToBlockUser.constraintTrailing()
     }
     
     deinit {
@@ -150,10 +158,23 @@ extension CurrentChatViewController {
                 self?.userBlockedView.isHidden = !isBlocked
             }.store(in: &subscriptions)
         
-        self.userBlockedView.unblockButton
+        self.userBlockedView.blockUnblockButton
             .publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.unblockUser()
+            }.store(in: &subscriptions)
+        
+        self.offerToBlockUser.blockUnblockButton
+            .publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.offerToBlockUser.isHidden = true
+                self?.viewModel.blockUser()
+            }.store(in: &subscriptions)
+        
+        self.offerToBlockUser.okButton
+            .publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.offerToBlockUser.isHidden = true
             }.store(in: &subscriptions)
     }
     

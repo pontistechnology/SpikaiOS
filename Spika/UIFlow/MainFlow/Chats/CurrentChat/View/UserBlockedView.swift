@@ -8,15 +8,15 @@
 import UIKit
 import Combine
 
-final class UserBlockedView: UIView, BaseView {
+class UserBlockedView: UIView, BaseView {
     
     let verticalStackView = CustomStackView()
-    let label = CustomLabel(text: .getStringFor(.youBlockedTheContact), textSize: 18, textColor: .white, alignment: .center)
-    let unblockButton = MainButton()
+    let label = CustomLabel(text: .getStringFor(.youBlockedTheContact), textSize: 16, textColor: .white, alignment: .center)
+    let horizontalStackView = CustomStackView(axis: .horizontal, distribution: .fillEqually, spacing: 18)
+    let blockUnblockButton = MainButton()
     
     override init(frame: CGRect) {
         super.init(frame: CGRectZero)
-        self.isHidden = true
         self.setupView()
     }
     
@@ -25,11 +25,13 @@ final class UserBlockedView: UIView, BaseView {
     }
     
     func styleSubviews() {
+//        self.isHidden = true
         self.backgroundColor = .lightGray
         self.translatesAutoresizingMaskIntoConstraints = false
-        unblockButton.backgroundColor = .white
-        unblockButton.setTitleColor(.black, for: .normal)
-        unblockButton.setTitle(.getStringFor(.unblock), for: .normal)
+        label.numberOfLines = 0
+        blockUnblockButton.backgroundColor = .white
+        blockUnblockButton.setTitleColor(.black, for: .normal)
+        blockUnblockButton.setTitle(.getStringFor(.unblock), for: .normal)
     }
     
     func positionSubviews() {
@@ -39,7 +41,8 @@ final class UserBlockedView: UIView, BaseView {
     func addSubviews() {
         self.addSubview(self.verticalStackView)
         self.verticalStackView.addArrangedSubview(self.label)
-        self.verticalStackView.addArrangedSubview(self.unblockButton)
+        self.verticalStackView.addArrangedSubview(self.horizontalStackView)
+        self.horizontalStackView.addArrangedSubview(self.blockUnblockButton)
     }
     
 }

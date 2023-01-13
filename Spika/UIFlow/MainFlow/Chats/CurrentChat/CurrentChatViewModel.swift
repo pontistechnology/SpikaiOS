@@ -66,6 +66,23 @@ class CurrentChatViewModel: BaseViewModel {
             .store(in: &self.subscriptions)
     }
     
+    func blockUser() {
+        let ownId = self.repository.getMyUserId()
+        guard let contact = self.room?.users.first(where: { roomUser in
+            roomUser.userId != ownId
+        }) else { return }
+        self.repository.blockUser(userId: contact.userId)
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    self?.updateBlockedList()
+                case .failure(_):
+                    ()
+                }
+            } receiveValue: { _ in }
+            .store(in: &self.subscriptions)
+    }
+    
     func updateBlockedList() {
         repository.getBlockedUsers()
             .sink { completion in
