@@ -15,6 +15,8 @@ class ChatDetailsViewModel: BaseViewModel {
     
     let uploadProgressPublisher = PassthroughSubject<CGFloat, Error>()
     
+    let isBlocked = CurrentValueSubject<Bool,Never>(false)
+    
     init(repository: Repository, coordinator: Coordinator, room: CurrentValueSubject<Room,Never>) {
         self.room = room
         super.init(repository: repository, coordinator: coordinator)
@@ -40,6 +42,19 @@ class ChatDetailsViewModel: BaseViewModel {
                 guard let room = responseModel.data?.room else { return }
                 self?.updateRoom(room: room)
             }.store(in: &self.subscriptions)
+        
+        self.repository.blockedUsersPublisher()
+            .receive(on: DispatchQueue.main)
+            .map { [weak self] blockedUsers in
+                guard let blockedUsers = blockedUsers else { return false }
+                guard self?.room.value.users.count == 2 else { return false }
+                let blockedIds = blockedUsers.map { $0.id }
+                let roomUserIds = self?.room.value.users.map { $0.userId } ?? []
+                
+                return Set(blockedIds).intersection(Set(roomUserIds)).count > 0
+            }
+            .subscribe(self.isBlocked)
+            .store(in: &self.subscriptions)
     }
     
     func muteUnmute(mute: Bool) {
@@ -60,6 +75,62 @@ class ChatDetailsViewModel: BaseViewModel {
                 }
             } receiveValue: { _ in }
             .store(in: &self.subscriptions)
+    }
+    
+    func blockOrUnblock() {
+        if self.isBlocked.value {
+            self.unblockUser()
+        } else {
+            self.blockUser()
+        }
+    }
+    
+    func blockUser() {
+        let ownId = self.repository.getMyUserId()
+        guard let contact = self.room.value.users.first(where: { roomUser in
+            roomUser.userId != ownId
+        }) else { return }
+        self.repository.blockUser(userId: contact.userId)
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    self?.updateBlockedList()
+                case .failure(_):
+                    ()
+                }
+            } receiveValue: { _ in }
+            .store(in: &self.subscriptions)
+    }
+    
+    func unblockUser() {
+        let ownId = self.repository.getMyUserId()
+        guard let contact = self.room.value.users.first(where: { roomUser in
+            roomUser.userId != ownId
+        }) else { return }
+        self.repository.unblockUser(userId: contact.userId)
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    self?.updateBlockedList()
+                case .failure(_):
+                    ()
+                }
+            } receiveValue: { _ in }
+            .store(in: &self.subscriptions)
+    }
+    
+    func updateBlockedList() {
+        repository.getBlockedUsers()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    return
+                case .failure(let error):
+                    return
+                }
+            } receiveValue: { [weak self] response in
+                self?.repository.updateBlockedUserIds(users: response.data.blockedUsers)
+            }.store(in: &subscriptions)
     }
     
     func onAddNewUser() {

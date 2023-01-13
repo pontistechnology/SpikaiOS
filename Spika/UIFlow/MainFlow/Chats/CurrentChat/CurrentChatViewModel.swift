@@ -68,7 +68,7 @@ class CurrentChatViewModel: BaseViewModel {
     
     func updateBlockedList() {
         repository.getBlockedUsers()
-            .sink { [weak self] completion in
+            .sink { completion in
                 switch completion {
                 case .finished:
                     return
