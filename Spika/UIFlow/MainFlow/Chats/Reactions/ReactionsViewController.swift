@@ -72,6 +72,10 @@ extension ReactionsViewController: UITableViewDelegate, UITableViewDataSource {
         reactionsView.stackviewTapPublisher.sink { [weak self] _ in
             self?.reactionsView.tableView.reloadData()
         }.store(in: &subscriptions)
+        
+        reactionsView.closeImageView.tap().sink { [weak self] _ in
+            self?.dismiss(animated: true)
+        }.store(in: &subscriptions)
     }
     
     var filteredRecords: [MessageRecord] {
