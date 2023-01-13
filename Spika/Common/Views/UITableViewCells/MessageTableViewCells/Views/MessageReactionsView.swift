@@ -12,9 +12,10 @@ class MessageReactionsView: UIView {
     private var emojiLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratMedium)
     private var countLabel = CustomLabel(text: "", textSize: 8, textColor: .textPrimary, fontName: .MontserratMedium)
     
-    init() {
+    init(emojis: [String]) {
         super.init(frame: .zero)
         setupView()
+        show(emojis: emojis)
     }
     
     required init?(coder: NSCoder) {

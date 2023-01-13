@@ -18,7 +18,7 @@ class BaseMessageTableViewCell: UITableViewCell {
     let containerStackView = UIStackView()
     private var replyView: MessageReplyView?
     private let progressView = CircularProgressBar(spinnerWidth: 20)
-    private let reactionsView = MessageReactionsView()
+    private var reactionsView: MessageReactionsView?
     
     private var containerBottomConstraint: NSLayoutConstraint?
     
@@ -118,10 +118,10 @@ extension BaseMessageTableViewCell {
         senderPhotoImageview.image = nil
         subs.removeAll()
         replyView?.removeFromSuperview()
-        self.replyView = nil
-        print("AA")
         progressView.removeFromSuperview()
-        reactionsView.removeFromSuperview()
+        reactionsView?.removeFromSuperview()
+        self.replyView = nil
+        self.reactionsView = nil
         containerBottomConstraint?.constant = -2
         //        senderPhotoImageview.isHidden = true
     }
@@ -170,26 +170,24 @@ extension BaseMessageTableViewCell {
     }
     
     func showReactions(reactionRecords: [MessageRecord]) {
-        contentView.addSubview(reactionsView)
-        containerBottomConstraint?.constant = -17
-        
         guard let reuseIdentifier = self.reuseIdentifier,
               let senderType = getMessageSenderType(reuseIdentifier: reuseIdentifier)
         else { return }
+        reactionsView = MessageReactionsView(emojis: reactionRecords.compactMap { $0.reaction })
+        contentView.addSubview(reactionsView!)
+        containerBottomConstraint?.constant = -17
         
         switch senderType {
         case .me:
-            reactionsView.anchor(bottom: containerStackView.bottomAnchor, trailing: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: -15, right: 1))
+            reactionsView?.anchor(bottom: containerStackView.bottomAnchor, trailing: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: -15, right: 1))
         case .friend, .group:
-            reactionsView.anchor(leading: containerStackView.leadingAnchor, bottom: containerStackView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 1, bottom: -15, right: 0))
+            reactionsView?.anchor(leading: containerStackView.leadingAnchor, bottom: containerStackView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 1, bottom: -15, right: 0))
         }
-        reactionsView.backgroundColor = senderType.backgroundColor
+        reactionsView?.backgroundColor = senderType.backgroundColor
         
-        reactionsView.tap().sink { [weak self] _ in
+        reactionsView?.tap().sink { [weak self] _ in
             self?.tapPublisher.send(.showReactions)
         }.store(in: &subs)
-        
-        reactionsView.show(emojis: reactionRecords.compactMap { $0.reaction })
     }
     
     func showUploadProgress(at percent: CGFloat) {
