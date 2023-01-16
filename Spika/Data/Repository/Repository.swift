@@ -79,8 +79,10 @@ protocol Repository {
     func unblockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
     func getBlockedUsers() -> AnyPublisher<BlockedUsersResponseModel, Error>
     
-    func updateBlockedUserIds(users: [User]?)
-    func blockedUsersPublisher() -> CurrentValueSubject<[User]?,Never>
+    func updateBlockedUsers(users: [User])
+    func updateConfirmedUsers(confirmedUsers: [User])
+    func confirmedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never>
+    func blockedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never>
     
     // MARK: NETWORKING: Device
     

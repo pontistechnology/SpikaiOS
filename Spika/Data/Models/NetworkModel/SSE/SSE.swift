@@ -120,15 +120,9 @@ private extension SSE {
 private extension SSE {
     func syncBlockedList() {
         repository.getBlockedUsers()
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    return
-                case .failure(let error):
-                    return
-                }
+            .sink { _ in
             } receiveValue: { [weak self] response in
-                self?.repository.updateBlockedUserIds(users: response.data.blockedUsers)
+                self?.repository.updateBlockedUsers(users: response.data.blockedUsers)
             }.store(in: &subs)
     }
     

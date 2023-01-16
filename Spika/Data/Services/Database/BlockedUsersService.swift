@@ -10,26 +10,34 @@ import Combine
 
 class BlockedUsersService {
     //MARK: Not thread safe, perhaps not necessary?
-    let blockedUserIds = CurrentValueSubject<[User]?,Never>(nil)
+    let blockedUserIds = CurrentValueSubject<Set<Int64>?,Never>(nil)
+    
+    let confirmedUserIds = CurrentValueSubject<Set<Int64>?,Never>(nil)
     
     let sharedPrefs: UserDefaults
     
     init(sharedPrefs: UserDefaults) {
         self.sharedPrefs = sharedPrefs
         
-        guard let data = sharedPrefs.value(forKey: "blocked_ids") as? Data  else { return }
-        let decoder = JSONDecoder()
-        let users = try? decoder.decode([User].self, from: data)
+        let blockedArray = sharedPrefs.value(forKey: "blocked_user_ids") as? [Int64]
+        self.blockedUserIds.send(Set(blockedArray ?? []))
         
-        self.blockedUserIds.send(users)
+        let confirmedArray = sharedPrefs.value(forKey: "confirmed_user_ids") as? [Int64]
+        self.confirmedUserIds.send(Set(confirmedArray ?? []))
     }
     
-    func updateBlockedIds(blockedUsers: [User]?) {
-        let encoder = JSONEncoder()
-        let data = try? encoder.encode(blockedUsers)
-        
-        sharedPrefs.setValue(data, forKey: "blocked_ids")
-        blockedUserIds.send(blockedUsers)
+    func updateBlockedUsers(blockedUsers: [User]) {
+        let ids = Set(blockedUsers.map { $0.id })
+        sharedPrefs.setValue(Array(ids), forKey: "blocked_user_ids")
+        blockedUserIds.send(ids)
+    }
+    
+    func updateConfirmedUsers(confirmedUsers: [User]) {
+        let currentIds = self.confirmedUserIds.value ?? Set()
+        let newIds = Set(confirmedUsers.map { $0.id })
+        let union = newIds .union(currentIds)
+        sharedPrefs.setValue(Array(union), forKey: "confirmed_user_ids")
+        confirmedUserIds.send(union)
     }
     
 }

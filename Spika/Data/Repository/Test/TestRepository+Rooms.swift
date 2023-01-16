@@ -76,7 +76,9 @@ extension TestRepository {
                 .eraseToAnyPublisher()
     }
     
-    func updateBlockedUserIds(users: [User]?) {}
+    func updateBlockedUsers(users: [User]) {}
+    
+    func updateConfirmedUsers(confirmedUsers: [User]) {}
     
     func getBlockedUsers() -> AnyPublisher<BlockedUsersResponseModel, Error> {
         return Fail<BlockedUsersResponseModel, Error>(error: NetworkError.noAccessToken)
@@ -84,7 +86,11 @@ extension TestRepository {
                 .eraseToAnyPublisher()
     }
         
-    func blockedUsersPublisher() -> CurrentValueSubject<[User]?,Never> {
+    func blockedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never> {
+        return CurrentValueSubject(nil)
+    }
+    
+    func confirmedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never> {
         return CurrentValueSubject(nil)
     }
     

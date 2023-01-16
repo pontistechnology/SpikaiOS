@@ -18,7 +18,11 @@ class CurrentChatViewModel: BaseViewModel {
     var room: Room?
     let roomPublisher = PassthroughSubject<Room, Error>()
     let uploadProgressPublisher = PassthroughSubject<(localId: String, percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
+    
     let isBlocked = CurrentValueSubject<Bool,Never>(false)
+    let userRepliedInChat = CurrentValueSubject<Bool,Never>(true)
+    let offerToBlock = CurrentValueSubject<Bool,Never>(false)
+   
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
@@ -40,12 +44,41 @@ class CurrentChatViewModel: BaseViewModel {
             .map { [weak self] blockedUsers in
                 guard let blockedUsers = blockedUsers else { return false }
                 guard self?.room?.users.count == 2 else { return false }
-                let blockedIds = blockedUsers.map { $0.id }
                 let roomUserIds = self?.room?.users.map { $0.userId } ?? []
-                
-                return Set(blockedIds).intersection(Set(roomUserIds)).count > 0
+                return Set(blockedUsers).intersection(Set(roomUserIds)).count > 0
             }
             .subscribe(self.isBlocked)
+            .store(in: &self.subscriptions)
+        
+        self.setupShouldOfferBlockBinding()
+    }
+    
+    func setupShouldOfferBlockBinding() {
+        guard self.room?.users.count == 2 else { return }
+        
+        let ownId = self.repository.getMyUserId()
+        guard let contact = self.room?.users.first(where: { roomUser in
+            roomUser.userId != ownId
+        }) else { return }
+        
+        let contactId = contact.userId
+        
+        // Check if Contact is already blocked = false
+        let contactBlocked = self.repository.blockedUsersPublisher()
+            .map { $0?.contains(contactId) ?? false }
+            .map { !$0 }
+        
+        // Check if Contact in Confirmed = false
+        let contactConfirmed = self.repository.confirmedUsersPublisher()
+            .map { $0?.contains(contactId) ?? false }
+            .map { !$0 }
+        
+        // Check if User replied at some point = false
+        let userRepliedInChat = self.userRepliedInChat.map { !$0 }
+        
+        contactBlocked.combineLatest(contactConfirmed, userRepliedInChat)
+            .map { $0 && $1 && $2 }
+            .subscribe(self.offerToBlock)
             .store(in: &self.subscriptions)
     }
     
@@ -83,17 +116,20 @@ class CurrentChatViewModel: BaseViewModel {
             .store(in: &self.subscriptions)
     }
     
+    func userConfirmed() {
+        let ownId = self.repository.getMyUserId()
+        guard let contact = self.room?.users.first(where: { roomUser in
+            roomUser.userId != ownId
+        }) else { return }
+        
+        self.repository.updateConfirmedUsers(confirmedUsers: [contact.user])
+    }
+    
     func updateBlockedList() {
         repository.getBlockedUsers()
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    return
-                case .failure(let error):
-                    return
-                }
+            .sink { _ in
             } receiveValue: { [weak self] response in
-                self?.repository.updateBlockedUserIds(users: response.data.blockedUsers)
+                self?.repository.updateBlockedUsers(users: response.data.blockedUsers)
             }.store(in: &subscriptions)
     }
     

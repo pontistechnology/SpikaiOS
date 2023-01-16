@@ -94,19 +94,7 @@ extension CurrentChatViewController {
         }.store(in: &subscriptions)
         
         viewModel.roomPublisher.receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                // TODO: pop vc?, presentAlert?
-                guard let self = self else { return }
-                switch completion {
-                    
-                case .finished:
-                    break
-                case let .failure(error):
-                    break
-                    //                PopUpManager.shared.presentAlert(with: (title: "Error", message: error.localizedDescription), orientation: .horizontal, closures: [("Ok", {
-                    //                    self.viewModel.getAppCoordinator()?.popTopViewController()
-                    //                })]) // TODO: - check
-                }
+            .sink { _ in
             } receiveValue: { [weak self] room in
                 guard let self = self else { return }
                 self.setFetch(room: room)
@@ -134,7 +122,7 @@ extension CurrentChatViewController {
             }.store(in: &subscriptions)
         
         self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (uuid, percent, file) in
-            guard let entity = self?.frc?.fetchedObjects?.first(where: { [weak self] messageEntity in
+            guard let entity = self?.frc?.fetchedObjects?.first(where: { messageEntity in
                 messageEntity.localId == uuid
             }),
                   let indexPath = self?.frc?.indexPath(forObject: entity),
@@ -156,6 +144,11 @@ extension CurrentChatViewController {
                 self?.userBlockedView.isHidden = !isBlocked
             }.store(in: &subscriptions)
         
+        self.viewModel.offerToBlock
+            .sink { offerToBlock in
+                self.offerToBlockUser.isHidden = !offerToBlock
+            }.store(in: &subscriptions)
+        
         self.userBlockedView.blockUnblockButton
             .publisher(for: .touchUpInside)
             .sink { [weak self] _ in
@@ -173,6 +166,7 @@ extension CurrentChatViewController {
             .publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.offerToBlockUser.isHidden = true
+                self?.viewModel.userConfirmed()
             }.store(in: &subscriptions)
     }
     
@@ -204,11 +198,13 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         
         viewModel.roomVisited(roomId: room.id)
         
-        if let messages = self.frc?.sections?.first?.objects as? [MessageEntity] {
-            for entity in messages {
-                let message = Message(messageEntity: entity)
-                self.offerToBlockUser.isHidden = message.fromUserId == self.viewModel.repository.getMyUserId()
-            }
+        let userId = self.viewModel.repository.getMyUserId()
+        guard let messages = self.frc?.sections?.first?.objects as? [MessageEntity],
+              let _ = messages.first(where: { message in
+                  message.fromUserId == userId
+              }) else {
+            self.viewModel.userRepliedInChat.send(false)
+            return
         }
     }
     

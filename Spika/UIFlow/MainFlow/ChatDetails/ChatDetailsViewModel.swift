@@ -48,10 +48,8 @@ class ChatDetailsViewModel: BaseViewModel {
             .map { [weak self] blockedUsers in
                 guard let blockedUsers = blockedUsers else { return false }
                 guard self?.room.value.users.count == 2 else { return false }
-                let blockedIds = blockedUsers.map { $0.id }
                 let roomUserIds = self?.room.value.users.map { $0.userId } ?? []
-                
-                return Set(blockedIds).intersection(Set(roomUserIds)).count > 0
+                return Set(blockedUsers).intersection(Set(roomUserIds)).count > 0
             }
             .subscribe(self.isBlocked)
             .store(in: &self.subscriptions)
@@ -129,7 +127,7 @@ class ChatDetailsViewModel: BaseViewModel {
                     return
                 }
             } receiveValue: { [weak self] response in
-                self?.repository.updateBlockedUserIds(users: response.data.blockedUsers)
+                self?.repository.updateBlockedUsers(users: response.data.blockedUsers)
             }.store(in: &subscriptions)
     }
     
