@@ -138,13 +138,15 @@ extension CurrentChatViewController {
             (cell as? VideoMessageTableViewCell)?.setTempThumbnail(duration: "\(file.metaData.duration) s", url: file.fileUrl)
         }.store(in: &subscriptions)
         
-        self.viewModel.isBlocked.subscribe(on: DispatchQueue.main)
+        self.viewModel.isBlocked
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] isBlocked in
                 print("Is Blocked: \(isBlocked)")
                 self?.userBlockedView.isHidden = !isBlocked
             }.store(in: &subscriptions)
         
         self.viewModel.offerToBlock
+            .receive(on: DispatchQueue.main)
             .sink { offerToBlock in
                 self.offerToBlockUser.isHidden = !offerToBlock
             }.store(in: &subscriptions)

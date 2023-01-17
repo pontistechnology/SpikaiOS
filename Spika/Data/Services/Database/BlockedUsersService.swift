@@ -9,7 +9,9 @@ import Foundation
 import Combine
 
 class BlockedUsersService {
-    //MARK: Not thread safe, perhaps not necessary?
+    
+    private let writeQueue = DispatchQueue(label: "com.spika.blockeduserservice", attributes: .concurrent)
+    
     let blockedUserIds = CurrentValueSubject<Set<Int64>?,Never>(nil)
     
     let confirmedUserIds = CurrentValueSubject<Set<Int64>?,Never>(nil)
@@ -27,17 +29,21 @@ class BlockedUsersService {
     }
     
     func updateBlockedUsers(blockedUsers: [User]) {
-        let ids = Set(blockedUsers.map { $0.id })
-        sharedPrefs.setValue(Array(ids), forKey: "blocked_user_ids")
-        blockedUserIds.send(ids)
+        writeQueue.async {
+            let ids = Set(blockedUsers.map { $0.id })
+            self.sharedPrefs.setValue(Array(ids), forKey: "blocked_user_ids")
+            self.blockedUserIds.send(ids)
+        }
     }
     
     func updateConfirmedUsers(confirmedUsers: [User]) {
-        let currentIds = self.confirmedUserIds.value ?? Set()
-        let newIds = Set(confirmedUsers.map { $0.id })
-        let union = newIds .union(currentIds)
-        sharedPrefs.setValue(Array(union), forKey: "confirmed_user_ids")
-        confirmedUserIds.send(union)
+        writeQueue.async {
+            let currentIds = self.confirmedUserIds.value ?? Set()
+            let newIds = Set(confirmedUsers.map { $0.id })
+            let union = newIds .union(currentIds)
+            self.sharedPrefs.setValue(Array(union), forKey: "confirmed_user_ids")
+            self.confirmedUserIds.send(union)
+        }
     }
     
 }
