@@ -25,6 +25,8 @@ struct SelectedFile {
 class CurrentChatViewController: BaseViewController {
     
     private let currentChatView = CurrentChatView()
+    private let userBlockedView = UserBlockedView(frame: .zero)
+    private let offerToBlockUser = OfferToBlockUserView(frame: .zero)
     var viewModel: CurrentChatViewModel!
     private let friendInfoView = ChatNavigationBarView()
     private var frc: NSFetchedResultsController<MessageEntity>?
@@ -40,6 +42,8 @@ class CurrentChatViewController: BaseViewController {
         setupNavigationItems()
         setupBindings()
         checkRoom()
+        addSubviews()
+        positionSubviews()
         self.navigationItem.backButtonTitle = self.viewModel.room?.name
     }
     
@@ -51,6 +55,21 @@ class CurrentChatViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         guard let room = viewModel.room else { return }
         viewModel.roomVisited(roomId: room.id)
+    }
+    
+    func addSubviews() {
+        self.view.addSubview(userBlockedView)
+        self.view.addSubview(offerToBlockUser)
+    }
+    
+    func positionSubviews() {
+        userBlockedView.constraintBottom()
+        userBlockedView.constraintLeading()
+        userBlockedView.constraintTrailing()
+        
+        offerToBlockUser.constraintBottom()
+        offerToBlockUser.constraintLeading()
+        offerToBlockUser.constraintTrailing()
     }
     
     deinit {
@@ -88,25 +107,13 @@ extension CurrentChatViewController {
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
         viewModel.roomPublisher.receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-            // TODO: pop vc?, presentAlert?
-            guard let self = self else { return }
-            switch completion {
-                
-            case .finished:
-                break
-            case let .failure(error):
-                break
-//                PopUpManager.shared.presentAlert(with: (title: "Error", message: error.localizedDescription), orientation: .horizontal, closures: [("Ok", {
-//                    self.viewModel.getAppCoordinator()?.popTopViewController()
-//                })]) // TODO: - check
-            }
-        } receiveValue: { [weak self] room in
-            guard let self = self else { return }
-            self.setFetch(room: room)
-            self.setupNavigationItems()
-            self.viewModel.sendSeenStatus()
-        }.store(in: &self.subscriptions)
+            .sink { _ in
+            } receiveValue: { [weak self] room in
+                guard let self = self else { return }
+                self.setFetch(room: room)
+                self.setupNavigationItems()
+                self.viewModel.sendSeenStatus()
+            }.store(in: &self.subscriptions)
         
         currentChatView.downArrowImageView.tap().sink { [weak self] _ in
             self?.currentChatView.messagesTableView.scrollToBottom(.force)
@@ -126,9 +133,9 @@ extension CurrentChatViewController {
                     break
                 }
             }.store(in: &subscriptions)
-            
+        
         self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (uuid, percent, file) in
-            guard let entity = self?.frc?.fetchedObjects?.first(where: { [weak self] messageEntity in
+            guard let entity = self?.frc?.fetchedObjects?.first(where: { messageEntity in
                 messageEntity.localId == uuid
             }),
                   let indexPath = self?.frc?.indexPath(forObject: entity),
@@ -143,6 +150,39 @@ extension CurrentChatViewController {
             (cell as? ImageMessageTableViewCell)?.setTempThumbnail(url: file.fileUrl, as: ImageRatio(width: file.metaData.width, height: file.metaData.height))
             (cell as? VideoMessageTableViewCell)?.setTempThumbnail(duration: "\(file.metaData.duration) s", url: file.fileUrl)
         }.store(in: &subscriptions)
+        
+        self.viewModel.isBlocked
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isBlocked in
+                print("Is Blocked: \(isBlocked)")
+                self?.userBlockedView.isHidden = !isBlocked
+            }.store(in: &subscriptions)
+        
+        self.viewModel.offerToBlock
+            .receive(on: DispatchQueue.main)
+            .sink { offerToBlock in
+                self.offerToBlockUser.isHidden = !offerToBlock
+            }.store(in: &subscriptions)
+        
+        self.userBlockedView.blockUnblockButton
+            .publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.unblockUser()
+            }.store(in: &subscriptions)
+        
+        self.offerToBlockUser.blockUnblockButton
+            .publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.offerToBlockUser.isHidden = true
+                self?.viewModel.blockUser()
+            }.store(in: &subscriptions)
+        
+        self.offerToBlockUser.okButton
+            .publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.offerToBlockUser.isHidden = true
+                self?.viewModel.userConfirmed()
+            }.store(in: &subscriptions)
     }
     
     func handleScroll(isMyMessage: Bool) {
@@ -172,6 +212,15 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         }
         
         viewModel.roomVisited(roomId: room.id)
+        
+        let userId = self.viewModel.repository.getMyUserId()
+        guard let messages = self.frc?.sections?.first?.objects as? [MessageEntity],
+              let _ = messages.first(where: { message in
+                  message.fromUserId == userId
+              }) else {
+            self.viewModel.userRepliedInChat.send(false)
+            return
+        }
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

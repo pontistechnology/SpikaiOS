@@ -30,6 +30,9 @@ final class AppAssembly: Assembly {
         container.register(NetworkService.self) { r in
             return NetworkService()
         }.inObjectScope(.container)
+        container.register(UserDefaults.self) { r in
+            return UserDefaults(suiteName: Constants.Networking.appGroupName)!
+        }.inObjectScope(.container)
         
         container.register(DatabaseService.self) { r in
             let coreDataStack = container.resolve(CoreDataStack.self)!
@@ -37,13 +40,13 @@ final class AppAssembly: Assembly {
             let chatEntityService = ChatEntityService(coreDataStack: coreDataStack)
             let messageEntityService = MessageEntityService(coreDataStack: coreDataStack)
             let roomEntityService = RoomEntityService(coreDataStack: coreDataStack)
-            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, roomEntityService: roomEntityService, coreDataStack: coreDataStack)
+            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, roomEntityService: roomEntityService, coreDataStack: coreDataStack, userDefaults: r.resolve(UserDefaults.self)!)
         }.inObjectScope(.container)
 
         container.register(Repository.self, name: RepositoryType.production.name) { r in
             let networkService = container.resolve(NetworkService.self)!
             let databaseService = container.resolve(DatabaseService.self)!
-            return AppRepository(networkService: networkService, databaseService: databaseService)
+            return AppRepository(networkService: networkService, databaseService: databaseService, userDefaults: r.resolve(UserDefaults.self)!)
         }.inObjectScope(.container)
     }
     

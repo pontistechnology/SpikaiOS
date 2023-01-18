@@ -30,5 +30,6 @@ public extension Constants {
         static let syncMessageRecords = "api/messenger/message-records/sync"
         static let syncUsers = "api/messenger/users/sync"
         static let messageRecords = "api/messenger/message-records"
+        static let blocks = "api/messenger/blocks"
     }
 }

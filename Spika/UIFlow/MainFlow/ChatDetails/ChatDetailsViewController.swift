@@ -38,6 +38,10 @@ final class ChatDetailsViewController: BaseViewController {
             return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
         }
         
+        if self.viewModel.room.value.type == .privateRoom {
+            self.chatDetailView.contentView.blockButton.isHidden = false
+        }
+        
         // View Model Binding
         self.viewModel.room
             .compactMap{ room in
@@ -86,6 +90,15 @@ final class ChatDetailsViewController: BaseViewController {
                 self.chatDetailView.contentView.chatImage.showUploadProgress(progress: progress)
             }.store(in: &subscriptions)
         
+        self.viewModel
+            .isBlocked
+            .map { isBlocked in
+                return isBlocked ? String.getStringFor(.unblock) : .getStringFor(.block)
+            }
+            .sink { [weak self] string in
+                self?.chatDetailView.contentView.blockButton.setTitle(string, for: .normal)
+            }.store(in: &subscriptions)
+        
         // UI Binding
         self.chatDetailView.contentView
             .chatMembersView
@@ -128,6 +141,13 @@ final class ChatDetailsViewController: BaseViewController {
             .tap()
             .sink { [weak self] _ in
                 self?.viewModel.deleteRoom()
+            }.store(in: &self.subscriptions)
+        
+        self.chatDetailView.contentView
+            .blockButton
+            .tap()
+            .sink { [weak self] _ in
+                self?.viewModel.blockOrUnblock()
             }.store(in: &self.subscriptions)
     }
     

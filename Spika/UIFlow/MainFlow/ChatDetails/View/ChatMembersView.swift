@@ -174,14 +174,7 @@ extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier,
                                                  for: indexPath) as! ContactsTableViewCell
         let model = self.users[indexPath.row]
-        //        cell.configureCell(self.users[indexPath.row].user, isEditable: self.isAdmin.value)
-//        if self.isAdmin.value {
-//            cell.configureCell(type: .remove(title: self.users[indexPath.row].user.getDisplayName(),
-//                                             subTitle: self.users[indexPath.row].user.telephoneNumber))
-//        } else {
-//            cell.configureCell(type: .normal(title: self.users[indexPath.row].user.getDisplayName(),
-//                                             subTitle: self.users[indexPath.row].user.telephoneNumber))
-//        }
+        
         cell.configureCell(title: model.user.getDisplayName(),
                            description: model.user.telephoneNumber,
                            leftImage: model.user.avatarFileId?.fullFilePathFromId(),

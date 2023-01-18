@@ -179,6 +179,52 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let resources = Resources<EmptyResponse, BlockModel>(
+            path: Constants.Endpoints.blocks,
+            requestType: .POST,
+            bodyParameters: BlockModel(blockedId: userId),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func unblockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let resources = Resources<EmptyResponse, BlockModel>(
+            path: Constants.Endpoints.blocks + "/userId/\(userId)",
+            requestType: .DELETE,
+            bodyParameters: BlockModel(blockedId: userId),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func getBlockedUsers() -> AnyPublisher<BlockedUsersResponseModel, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<BlockedUsersResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<BlockedUsersResponseModel, BlockModel>(
+            path: Constants.Endpoints.blocks,
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
     // MARK: Database
     
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>{

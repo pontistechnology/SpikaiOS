@@ -64,6 +64,18 @@ extension TestRepository {
             .eraseToAnyPublisher()
     }
     
+    func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error> {
+        return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+    }
+    
+    func unblockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error> {
+        return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+    }
+    
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))
