@@ -11,8 +11,12 @@ import UIKit
 class MessageActionsView: UIView {
     private let reactionsStackview = CustomStackView(axis: .horizontal, distribution: .fillEqually, alignment: .center)
     private let actionsStackview = CustomStackView(axis: .vertical, distribution: .fillEqually)
+    private let actions: [MessageAction]
+    private let reactionsEmojis: [String]
     
-    init() {
+    init(reactions: [String], actions: [MessageAction]) {
+        self.actions = actions
+        self.reactionsEmojis = reactions
         super.init(frame: .zero)
         setupView()
     }
@@ -27,12 +31,11 @@ extension MessageActionsView: BaseView {
         addSubview(reactionsStackview)
         addSubview(actionsStackview)
         
-        ["👍", "❤️", "😂", "😲", "😥", "🙏"].forEach { emoji in
+        reactionsEmojis.forEach { emoji in
             let emojiLabel = CustomLabel(text: emoji, textSize: 32, fontName: .MontserratSemiBold, alignment: .center)
             reactionsStackview.addArrangedSubview(emojiLabel)
         }
-        
-        let actions: [MessageAction] = [.reply, .forward, .copy, .details, .favorite, .delete]
+
         actions.forEach { action in
             let contextMenuAction = ContextMenuActionView(messageAction: action)
             actionsStackview.addArrangedSubview(contextMenuAction)

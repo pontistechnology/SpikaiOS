@@ -215,7 +215,7 @@ class AppCoordinator: Coordinator {
     }
     
     func presentMessageActionsSheet() -> PassthroughSubject<MessageAction, Never> {
-        let viewControllerToPresent = MessageActionsViewController()
+        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageActionsViewController.self, argument: self)!
         if #available(iOS 15.0, *) {
             if let sheet = viewControllerToPresent.sheetPresentationController {
                 sheet.detents = [.medium()]
