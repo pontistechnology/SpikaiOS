@@ -73,6 +73,14 @@ enum AssetName: String {
     case micIcon = "micIcon"
     case photoIcon = "photoIcon"
     case videoIcon = "videoIcon"
+    
+    // message actions icons
+    case replyMessage = "replyMessage"
+    case forwardMessage = "forwardMessage"
+    case deleteMessage = "deleteMessage"
+    case copyMessage = "copyMessage"
+    case favoriteMessage = "favoriteMessage"
+    case detailsMessage = "detailsMessage"
 }
 
 extension UIImage {
