@@ -25,7 +25,17 @@ class ChatContentView: UIView, BaseView {
     
     let chatMembersView = ChatMembersView(contactsEditable: true)
     
-    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: .appRed)
+    let blockButton: UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle(.getStringFor(.block), for: .normal)
+        btn.setTitleColor(.appRed, for: .normal)
+        btn.contentHorizontalAlignment = .left
+        btn.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: 14)
+        return btn
+    } ()
+    
+//    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: .appRed)
     let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .appRed)
     
     var deleteButton: UIButton = {
@@ -86,24 +96,19 @@ class ChatContentView: UIView, BaseView {
         mainStackView.addArrangedSubview(chatMembersView)
         
         mainStackView.addArrangedSubview(self.labelStackView)
-        labelStackView.addArrangedSubview(blockLabel)
+        labelStackView.addArrangedSubview(blockButton)
         labelStackView.addArrangedSubview(reportLabel)
         labelStackView.addArrangedSubview(deleteButton)
     }
     
     func styleSubviews() {
-//        chatImage.image = UIImage(safeImage: .testImage)
-//        chatImage.layer.cornerRadius = 60
-//        chatImage.contentMode = .scaleAspectFill
-//        chatImage.clipsToBounds = true
+        self.blockButton.isHidden = true
     }
     
     func positionSubviews() {
         chatImage.anchor(top: self.topAnchor, padding: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0), size: CGSize(width: 120, height: 120))
         chatImage.centerXToSuperview()
         
-//        cameraIcon.centerX(self.chatImage, constant: 40)
-//        cameraIcon.centerY(self.chatImage, constant: 40)
         chatImage.constrainWidth(120)
         chatImage.constrainHeight(120)
         
@@ -117,7 +122,9 @@ class ChatContentView: UIView, BaseView {
                              padding: UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0))
 
         
-        blockLabel.constrainHeight(80)
+        blockButton.constrainHeight(80)
+        deleteButton.constrainHeight(80)
+        reportLabel.constrainHeight(80)
     }
     
 }

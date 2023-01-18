@@ -20,6 +20,7 @@ public extension Constants {
         case details = "Details"
         case shared = "shared"
         case delete = "Delete"
+        case ok = "Ok"
         
         //MARK: - CountryPickerViewController
         case search = "Search"
@@ -66,6 +67,10 @@ public extension Constants {
         case somethingWentWrongAddingUsers = "Something went wrong trying to add new users"
         case somethingWentWrongMutingRoom = "Something went wrong muting the room"
         case somethingWentWrongUnmutingRoom = "Something went wrong unmuting the room"
+        
+        case youBlockedTheContact = "You blocked the contact"
+        case newContact = "New contact, do you wish to continue the conversation"
+        case unblock = "Unblock"
         
         //MARK: - ContactsViewController
         case searchForContactsMessages = "Search for contact,message, file..."

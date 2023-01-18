@@ -20,7 +20,9 @@ class NotificationService: UNNotificationServiceExtension {
                                          chatEntityService: ChatEntityService(coreDataStack: coreDataStack),
                                          messageEntityService: MessageEntityService(coreDataStack: coreDataStack),
                                          roomEntityService: RoomEntityService(coreDataStack: coreDataStack),
-                                         coreDataStack: coreDataStack))
+                                         coreDataStack: coreDataStack,
+                                         userDefaults: self.userDefaults),
+        userDefaults: self.userDefaults)
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
