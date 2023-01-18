@@ -42,8 +42,9 @@ class CurrentChatViewModel: BaseViewModel {
         self.repository.blockedUsersPublisher()
             .receive(on: DispatchQueue.main)
             .map { [weak self] blockedUsers in
-                guard let blockedUsers = blockedUsers else { return false }
-                guard self?.room?.users.count == 2 else { return false }
+                guard let blockedUsers = blockedUsers,
+                self?.room?.type == .privateRoom else { return false }
+                
                 let roomUserIds = self?.room?.users.map { $0.userId } ?? []
                 return Set(blockedUsers).intersection(Set(roomUserIds)).count > 0
             }
@@ -93,7 +94,7 @@ class CurrentChatViewModel: BaseViewModel {
                 case .finished:
                     self?.updateBlockedList()
                 case .failure(_):
-                    ()
+                    break
                 }
             } receiveValue: { _ in }
             .store(in: &self.subscriptions)

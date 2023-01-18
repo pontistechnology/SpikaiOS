@@ -38,7 +38,7 @@ final class ChatDetailsViewController: BaseViewController {
             return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
         }
         
-        if self.viewModel.room.value.users.count == 2 {
+        if self.viewModel.room.value.type == .privateRoom {
             self.chatDetailView.contentView.blockButton.isHidden = false
         }
         

@@ -25,8 +25,8 @@ struct SelectedFile {
 class CurrentChatViewController: BaseViewController {
     
     private let currentChatView = CurrentChatView()
-    private let userBlockedView = UserBlockedView(frame: CGRectZero)
-    private let offerToBlockUser = OfferToBlockUserView(frame: CGRectZero)
+    private let userBlockedView = UserBlockedView(frame: .zero)
+    private let offerToBlockUser = OfferToBlockUserView(frame: .zero)
     var viewModel: CurrentChatViewModel!
     private let friendInfoView = ChatNavigationBarView()
     private var frc: NSFetchedResultsController<MessageEntity>?

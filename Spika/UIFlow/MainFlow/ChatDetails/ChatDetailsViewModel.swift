@@ -46,8 +46,8 @@ class ChatDetailsViewModel: BaseViewModel {
         self.repository.blockedUsersPublisher()
             .receive(on: DispatchQueue.main)
             .map { [weak self] blockedUsers in
-                guard let blockedUsers = blockedUsers else { return false }
-                guard self?.room.value.users.count == 2 else { return false }
+                guard let blockedUsers = blockedUsers,
+                      self?.room.value.type == .privateRoom else { return false }
                 let roomUserIds = self?.room.value.users.map { $0.userId } ?? []
                 return Set(blockedUsers).intersection(Set(roomUserIds)).count > 0
             }
