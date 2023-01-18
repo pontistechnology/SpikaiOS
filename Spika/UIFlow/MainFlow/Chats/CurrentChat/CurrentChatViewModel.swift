@@ -77,7 +77,7 @@ extension CurrentChatViewModel {
         getAppCoordinator()?
             .presentMessageActionsSheet()
             .sink(receiveValue: { [weak self] action in
-            
+                print("action ", action)
             }).store(in: &subscriptions)
     }
 }

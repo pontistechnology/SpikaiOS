@@ -26,5 +26,22 @@ class MessageActionsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(mainView)
+        setupBindings()
+    }
+    
+    func setupBindings() {
+        mainView.reactionsStackview.arrangedSubviews.enumerated().forEach { (index, view) in
+            view.tap().sink { [weak self] _ in
+                guard let self = self else { return }
+                self.tapPublisher.send(.reaction(emoji: self.viewModel.reactions[index]))
+            }.store(in: &subscriptions)
+        }
+        
+        mainView.actionsStackview.arrangedSubviews.enumerated().forEach { (index, view) in
+            view.tap().sink { [weak self] _ in
+                guard let self = self else { return }
+                self.tapPublisher.send(self.viewModel.actions[index])
+            }.store(in: &subscriptions)
+        }
     }
 }

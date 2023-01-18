@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 class MessageActionsView: UIView {
-    private let reactionsStackview = CustomStackView(axis: .horizontal, distribution: .fillEqually, alignment: .center)
-    private let actionsStackview = CustomStackView(axis: .vertical, distribution: .fillEqually)
+    let reactionsStackview = CustomStackView(axis: .horizontal, distribution: .fillEqually, alignment: .center)
+    let actionsStackview = CustomStackView(axis: .vertical, distribution: .fillEqually)
     private let actions: [MessageAction]
     private let reactionsEmojis: [String]
     
