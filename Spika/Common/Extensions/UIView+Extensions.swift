@@ -216,4 +216,9 @@ extension UIView {
         return .init(view: self)
     }
     
+    func longTap() -> GesturePublisher {
+        isUserInteractionEnabled = true
+        return .init(view: self, isLong: true)
+    }
+    
 }
