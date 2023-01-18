@@ -99,6 +99,13 @@ extension Message {
         
         return .waiting
     }
+    
+    func getMessageReactionsRecords() -> [MessageRecord]? {
+        guard let reactions = records?.filter({ $0.type == .reaction }),
+              !reactions.isEmpty
+        else { return nil}
+        return reactions.sorted(by: { $0.createdAt > $1.createdAt })
+    }
 }
 
 struct MessageBody: Codable {

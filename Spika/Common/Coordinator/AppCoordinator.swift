@@ -199,6 +199,36 @@ class AppCoordinator: Coordinator {
         return viewControllerToPresent.publisher
     }
     
+    func presentReactionsSheet(users: [User], records: [MessageRecord]) {
+        let viewControllerToPresent = ReactionsViewController(users: users, records: records)
+        
+        if #available(iOS 15.0, *) {
+            if let sheet = viewControllerToPresent.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        navigationController.present(viewControllerToPresent, animated: true)
+    }
+    
+    func presentMessageActionsSheet() -> PassthroughSubject<MessageAction, Never> {
+        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageActionsViewController.self, argument: self)!
+        if #available(iOS 15.0, *) {
+            if let sheet = viewControllerToPresent.sheetPresentationController {
+                sheet.detents = [.medium()]
+                sheet.prefersGrabberVisible = false
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            }
+        } else {
+            // TODO: Fallback on earlier versions
+        }
+        navigationController.present(viewControllerToPresent, animated: true)
+        return viewControllerToPresent.tapPublisher
+    }
+    
     func presentAVVideoController(asset: AVAsset) {
         let avPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
         let avPlayerVC = AVPlayerViewController()

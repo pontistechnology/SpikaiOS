@@ -17,7 +17,7 @@ final class ChatDetailsViewController: BaseViewController {
     
     init(viewModel: ChatDetailsViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder: NSCoder) {

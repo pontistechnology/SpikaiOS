@@ -73,6 +73,25 @@ extension AppRepository {
         databaseService.messageEntityService.printAllMessages()
     }
     
+    func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error> {
+        guard let accessToken = getAccessToken()
+        else {
+            return Fail(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<SendReactionResponseModel, SendReactionRequestModel>(
+            path: Constants.Endpoints.messageRecords,
+            requestType: .POST,
+            bodyParameters: SendReactionRequestModel(messageId: messageId,
+                                                     type: .reaction,
+                                                     reaction: reaction),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
 //    func getMessageRecordsAfter(timestamp: Int) -> AnyPublisher<MessageRecordSyncResponseModel, Error> {
 //        guard let accessToken = getAccessToken()
 //        else {

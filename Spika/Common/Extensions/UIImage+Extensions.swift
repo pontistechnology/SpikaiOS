@@ -31,7 +31,7 @@ enum AssetName: String {
     case library = "library"
     case location = "location"
     case contact = "contact"
-    case closeMoreActions = "closeMoreActions"
+    case closeActionsSheet = "closeActionsSheet"
     case house = "house"
     case docs = "docs"
     case search = "search"
@@ -73,6 +73,14 @@ enum AssetName: String {
     case micIcon = "micIcon"
     case photoIcon = "photoIcon"
     case videoIcon = "videoIcon"
+    
+    // message actions icons
+    case replyMessage = "replyMessage"
+    case forwardMessage = "forwardMessage"
+    case deleteMessage = "deleteMessage"
+    case copyMessage = "copyMessage"
+    case favoriteMessage = "favoriteMessage"
+    case detailsMessage = "detailsMessage"
 }
 
 extension UIImage {

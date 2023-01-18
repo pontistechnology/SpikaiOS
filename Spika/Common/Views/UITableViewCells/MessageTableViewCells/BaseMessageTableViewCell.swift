@@ -15,10 +15,12 @@ class BaseMessageTableViewCell: UITableViewCell {
     private let senderPhotoImageview = UIImageView(image: UIImage(safeImage: .userImage))
     private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
     private let messageStateView = MessageStateView(state: .waiting)
-    private let senderNameBottomConstraint = NSLayoutConstraint()
     let containerStackView = UIStackView()
     private var replyView: MessageReplyView?
     private let progressView = CircularProgressBar(spinnerWidth: 20)
+    private var reactionsView: MessageReactionsView?
+    
+    private var containerBottomConstraint: NSLayoutConstraint?
     
     let tapPublisher = PassthroughSubject<MessageCellTaps, Never>()
     var subs = Set<AnyCancellable>()
@@ -75,18 +77,21 @@ extension BaseMessageTableViewCell: BaseView {
     }
     
     func setupContainer(sender: MessageSender) {
-        containerStackView.backgroundColor = sender == .me ?  UIColor(hexString: "C8EBFE") : .chatBackground // TODO: ask nika for color
+        containerStackView.backgroundColor = sender.backgroundColor
         messageStateView.isHidden = sender != .me
+        
+        containerBottomConstraint = containerStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2)
+        containerBottomConstraint?.isActive = true
         
         switch sender {
         case .me:
-            containerStackView.anchor(top: contentView.topAnchor, bottom: contentView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 20))
+            containerStackView.anchor(top: contentView.topAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 20))
             
             messageStateView.anchor(leading: containerStackView.trailingAnchor, bottom: containerStackView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 6))
 
             timeLabel.anchor(trailing: containerStackView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
         case .friend:
-            containerStackView.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: contentView.bottomAnchor, padding: UIEdgeInsets(top: 2, left: 20, bottom: 2, right: 0))
+            containerStackView.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 2, left: 20, bottom: 0, right: 0))
     
             timeLabel.anchor(leading: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
         case .group:
@@ -95,7 +100,7 @@ extension BaseMessageTableViewCell: BaseView {
             
             senderNameLabel.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: containerStackView.topAnchor, padding: UIEdgeInsets(top: 2, left: 68, bottom: 4, right: 0))
 
-            containerStackView.anchor(leading: contentView.leadingAnchor, bottom: contentView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 60, bottom: 2, right: 0))
+            containerStackView.anchor(leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 0))
     
             senderPhotoImageview.anchor(bottom: containerStackView.bottomAnchor, trailing: containerStackView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 14), size: CGSize(width: 20, height: 20))
             
@@ -113,10 +118,12 @@ extension BaseMessageTableViewCell {
         senderPhotoImageview.image = nil
         subs.removeAll()
         replyView?.removeFromSuperview()
-        self.replyView = nil
-        print("AA")
         progressView.removeFromSuperview()
-//        senderPhotoImageview.isHidden = true
+        reactionsView?.removeFromSuperview()
+        self.replyView = nil
+        self.reactionsView = nil
+        containerBottomConstraint?.constant = -2
+        //        senderPhotoImageview.isHidden = true
     }
     
     func updateCellState(to state: MessageState) {
@@ -162,6 +169,27 @@ extension BaseMessageTableViewCell {
         }
     }
     
+    func showReactions(reactionRecords: [MessageRecord]) {
+        guard let reuseIdentifier = self.reuseIdentifier,
+              let senderType = getMessageSenderType(reuseIdentifier: reuseIdentifier)
+        else { return }
+        reactionsView = MessageReactionsView(emojis: reactionRecords.compactMap { $0.reaction })
+        contentView.addSubview(reactionsView!)
+        containerBottomConstraint?.constant = -17
+        
+        switch senderType {
+        case .me:
+            reactionsView?.anchor(bottom: containerStackView.bottomAnchor, trailing: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: -15, right: 1))
+        case .friend, .group:
+            reactionsView?.anchor(leading: containerStackView.leadingAnchor, bottom: containerStackView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 1, bottom: -15, right: 0))
+        }
+        reactionsView?.backgroundColor = senderType.backgroundColor
+        
+        reactionsView?.tap().sink { [weak self] _ in
+            self?.tapPublisher.send(.showReactions)
+        }.store(in: &subs)
+    }
+    
     func showUploadProgress(at percent: CGFloat) {
         if progressView.superview == nil {
             containerStackView.addSubview(progressView)
@@ -171,7 +199,7 @@ extension BaseMessageTableViewCell {
         progressView.setProgress(to: percent)
     }
     
-    func hideUploadProgress() {
+    func hideUploadProgress() {
         progressView.removeFromSuperview()
     }
 }

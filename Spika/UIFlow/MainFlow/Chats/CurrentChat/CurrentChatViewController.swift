@@ -84,6 +84,16 @@ extension CurrentChatViewController {
         viewModel.checkLocalRoom()
     }
     
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        let tableView = currentChatView.messagesTableView
+        guard sender.state == .began,
+              let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
+              let entity = frc?.object(at: indexPath)
+        else { return }
+        let message = Message(messageEntity: entity)
+        viewModel.showMessageActions(message)
+    }
+    
     func setupBindings() {
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
@@ -92,6 +102,9 @@ extension CurrentChatViewController {
         currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
             self?.handleInput(state)
         }.store(in: &subscriptions)
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
         viewModel.roomPublisher.receive(on: DispatchQueue.main)
             .sink { _ in
@@ -334,6 +347,8 @@ extension CurrentChatViewController {
             viewModel.showImage(link: url)
         case .scrollToReply(let indexPath):
             currentChatView.messagesTableView.blinkRow(at: indexPath)
+        case .showReactions:
+            viewModel.showReactions(records: message.getMessageReactionsRecords() ?? [])
         }
     }
 }
@@ -390,6 +405,10 @@ extension CurrentChatViewController: UITableViewDataSource {
             cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: repliedMessage,
                                sender: cell.getMessageSenderType(reuseIdentifier: identifier),
                                indexPath: frc?.indexPath(forObject: repliedMessageEntity))
+        }
+        
+        if let reactionsRecords = message.getMessageReactionsRecords() {
+            cell.showReactions(reactionRecords: reactionsRecords)
         }
         
         switch message.type {

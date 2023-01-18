@@ -58,6 +58,11 @@
         <relationship name="message" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MessageEntity" inverseName="records" inverseEntity="MessageEntity"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
+                <constraint value="userId"/>
+                <constraint value="type"/>
+                <constraint value="messageId"/>
+            </uniquenessConstraint>
+            <uniquenessConstraint>
                 <constraint value="id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>

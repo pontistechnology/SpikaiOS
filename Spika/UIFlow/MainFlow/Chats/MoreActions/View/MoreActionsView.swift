@@ -24,7 +24,7 @@ class MoreActionsView: UIView {
     let libraryImageView = UIImageView(image: UIImage(safeImage: .library))
     let locationImageView = UIImageView(image: UIImage(safeImage: .location))
     let contactImageView = UIImageView(image: UIImage(safeImage: .contact))
-    let closeImageView = UIImageView(image: UIImage(safeImage: .closeMoreActions))
+    let closeImageView = UIImageView(image: UIImage(safeImage: .closeActionsSheet))
     
     init() {
         super.init(frame: .zero)

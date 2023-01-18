@@ -17,7 +17,7 @@ class UserSelectionViewController: BaseViewController {
     
     init(viewModel: UserSelectionViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -109,24 +109,24 @@ extension UserSelectionViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
-        guard let userEntity = self.viewModel.frc?.object(at: indexPath) else {
-            return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell,
+              let userEntity = self.viewModel.frc?.object(at: indexPath) else {
+            return EmptyTableViewCell()
         }
         let user = User(entity: userEntity)
         
-        cell?.selectionStyle = .none
+        cell.selectionStyle = .none
         // User Preselected - selection disabled
-        cell?.backgroundColor = self.viewModel.userSelectionDisabled(user: user) ? .lightGray : .white
-        cell?.isUserInteractionEnabled = !self.viewModel.userSelectionDisabled(user: user)
+        cell.backgroundColor = self.viewModel.userSelectionDisabled(user: user) ? .lightGray : .white
+        cell.isUserInteractionEnabled = !self.viewModel.userSelectionDisabled(user: user)
         // User was selected
-        cell?.accessoryType = self.viewModel.userSelected(user: user) ? .checkmark : .none
+        cell.accessoryType = self.viewModel.userSelected(user: user) ? .checkmark : .none
         
-        cell?.configureCell(title: user.getDisplayName(),
+        cell.configureCell(title: user.getDisplayName(),
                             description: user.telephoneNumber,
                             leftImage: user.avatarFileId?.fullFilePathFromId(),
                             type: .normal)
-        return cell ?? UITableViewCell()
+        return cell
     }
 }
 
