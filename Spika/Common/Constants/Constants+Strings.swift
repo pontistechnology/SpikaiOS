@@ -101,7 +101,6 @@ public extension Constants {
         case unknown = "Unknown"
         case today = "Today"
         case yesterday = "Yesterday"
-        case reply = "Reply"
         
         // MARK: - SelectUsersViewController
         case newChat = "New chat"
@@ -114,5 +113,11 @@ public extension Constants {
         
         // MARK: - Reactions
         case reactions = "Reactions"
+        
+        // MARK: - Message Actions
+        case reply = "Reply"
+        case forward = "Forward"
+        case copy = "Copy"
+        case favorite = "Favorite"
     }
 }
