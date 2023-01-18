@@ -34,6 +34,7 @@ class MessageActionsViewController: BaseViewController {
             view.tap().sink { [weak self] _ in
                 guard let self = self else { return }
                 self.tapPublisher.send(.reaction(emoji: self.viewModel.reactions[index]))
+                self.dismiss(animated: true)
             }.store(in: &subscriptions)
         }
         
@@ -41,6 +42,7 @@ class MessageActionsViewController: BaseViewController {
             view.tap().sink { [weak self] _ in
                 guard let self = self else { return }
                 self.tapPublisher.send(self.viewModel.actions[index])
+                self.dismiss(animated: true)
             }.store(in: &subscriptions)
         }
     }
