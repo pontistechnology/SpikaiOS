@@ -27,7 +27,6 @@ class DatabaseService {
     let messageEntityService: MessageEntityService
     let roomEntityService: RoomEntityService
     let coreDataStack: CoreDataStack
-    let blockedUsersService:BlockedUsersService
     
     init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService, roomEntityService: RoomEntityService, coreDataStack: CoreDataStack, userDefaults: UserDefaults) {
         self.userEntityService = userEntityService
@@ -35,6 +34,5 @@ class DatabaseService {
         self.messageEntityService = messageEntityService
         self.roomEntityService = roomEntityService
         self.coreDataStack = coreDataStack
-        self.blockedUsersService = BlockedUsersService(sharedPrefs: userDefaults)
     }
 }

@@ -76,24 +76,6 @@ extension TestRepository {
                 .eraseToAnyPublisher()
     }
     
-    func updateBlockedUsers(users: [User]) {}
-    
-    func updateConfirmedUsers(confirmedUsers: [User]) {}
-    
-    func getBlockedUsers() -> AnyPublisher<BlockedUsersResponseModel, Error> {
-        return Fail<BlockedUsersResponseModel, Error>(error: NetworkError.noAccessToken)
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
-    }
-        
-    func blockedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never> {
-        return CurrentValueSubject(nil)
-    }
-    
-    func confirmedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never> {
-        return CurrentValueSubject(nil)
-    }
-    
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error> {
         return Future { promise in
             promise(.failure(DatabseError.unknown))

@@ -225,22 +225,6 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func updateBlockedUsers(users: [User]) {
-        self.databaseService.blockedUsersService.updateBlockedUsers(blockedUsers: users)
-    }
-    
-    func updateConfirmedUsers(confirmedUsers: [User]) {
-        self.databaseService.blockedUsersService.updateConfirmedUsers(confirmedUsers: confirmedUsers)
-    }
-    
-    func blockedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never> {
-        return self.databaseService.blockedUsersService.blockedUserIds
-    }
-    
-    func confirmedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never> {
-        return self.databaseService.blockedUsersService.confirmedUserIds
-    }
-    
     // MARK: Database
     
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>{

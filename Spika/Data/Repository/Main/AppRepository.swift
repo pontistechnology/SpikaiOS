@@ -17,10 +17,17 @@ class AppRepository: Repository {
     
     let unreadRoomsPublisher = CurrentValueSubject<Int,Never>(0)
     
+    let writeQueue = DispatchQueue(label: "com.spika.blockeduserservice", attributes: .concurrent)
+    
+    let blockedUserIds = CurrentValueSubject<Set<Int64>?,Never>(nil)
+    
+    let confirmedUserIds = CurrentValueSubject<Set<Int64>?,Never>(nil)
+    
     init(networkService: NetworkService, databaseService: DatabaseService, userDefaults: UserDefaults) {
         self.networkService = networkService
         self.databaseService = databaseService
         self.userDefaults = userDefaults
+        self.loadStoredBlockedUserValues()
 //        print("repo init")
     }
     
