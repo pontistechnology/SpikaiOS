@@ -77,7 +77,13 @@ extension CurrentChatViewModel {
         getAppCoordinator()?
             .presentMessageActionsSheet()
             .sink(receiveValue: { [weak self] action in
-                print("action ", action)
+                switch action {
+                case .reaction(emoji: let emoji):
+                    guard let id = message.id else { return }
+                    self?.sendReaction(reaction: emoji, messageId: id)
+                default:
+                    break
+                }
             }).store(in: &subscriptions)
     }
 }
@@ -391,5 +397,18 @@ extension CurrentChatViewModel {
                                     size: Int64(size))
             sendFile(file: file)
         }
+    }
+}
+
+// MARK: - Reactions
+
+extension CurrentChatViewModel {
+    func sendReaction(reaction: String, messageId: Int64) {
+        repository.sendReaction(messageId: messageId, reaction: reaction)
+            .sink { c in
+            } receiveValue: { [weak self] response in
+                guard let records = response.data?.messageRecords else { return }
+                self?.repository.saveMessageRecords(records)
+            }.store(in: &subscriptions)
     }
 }

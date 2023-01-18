@@ -136,6 +136,10 @@
 		934F2EE128172EEA0086C343 /* UpdatePushRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */; };
 		934F2EE3281735590086C343 /* TestRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE2281735590086C343 /* TestRepository+Device.swift */; };
 		934FF16D2977774F002C76F7 /* ContextMenuActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF16C2977774F002C76F7 /* ContextMenuActionView.swift */; };
+		934FF16F29778A65002C76F7 /* SendReactionRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF16E29778A65002C76F7 /* SendReactionRequestModel.swift */; };
+		934FF17129778AF9002C76F7 /* SendReactionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF17029778AF9002C76F7 /* SendReactionResponseModel.swift */; };
+		934FF17229778E02002C76F7 /* SendReactionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF17029778AF9002C76F7 /* SendReactionResponseModel.swift */; };
+		934FF17329778E09002C76F7 /* SendReactionRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF16E29778A65002C76F7 /* SendReactionRequestModel.swift */; };
 		9352641927F88937001434A3 /* SSE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9352641827F88937001434A3 /* SSE.swift */; };
 		9352A5702977667900E0D90E /* MessageActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9352A56C2977667900E0D90E /* MessageActionsViewController.swift */; };
 		9352A5712977667900E0D90E /* MessageActionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9352A56D2977667900E0D90E /* MessageActionsViewModel.swift */; };
@@ -480,6 +484,8 @@
 		934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePushRequestModel.swift; sourceTree = "<group>"; };
 		934F2EE2281735590086C343 /* TestRepository+Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+Device.swift"; sourceTree = "<group>"; };
 		934FF16C2977774F002C76F7 /* ContextMenuActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuActionView.swift; sourceTree = "<group>"; };
+		934FF16E29778A65002C76F7 /* SendReactionRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReactionRequestModel.swift; sourceTree = "<group>"; };
+		934FF17029778AF9002C76F7 /* SendReactionResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReactionResponseModel.swift; sourceTree = "<group>"; };
 		9352641827F88937001434A3 /* SSE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSE.swift; sourceTree = "<group>"; };
 		9352A56C2977667900E0D90E /* MessageActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageActionsViewController.swift; sourceTree = "<group>"; };
 		9352A56D2977667900E0D90E /* MessageActionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageActionsViewModel.swift; sourceTree = "<group>"; };
@@ -1461,6 +1467,7 @@
 				934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */,
 				931B15142821291400A0CD35 /* DeliveredRequestModel.swift */,
 				6C9C7241291E743A0089AB4C /* SettingsModel.swift */,
+				934FF16E29778A65002C76F7 /* SendReactionRequestModel.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -1485,6 +1492,7 @@
 				939B30492850DE9200FFA537 /* SyncUsersResponseModel.swift */,
 				93AE06EE290892B90009A50C /* SeenResponseModel.swift */,
 				6CD30FF22922865D0017918B /* EmptyResponse.swift */,
+				934FF17029778AF9002C76F7 /* SendReactionResponseModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -2099,6 +2107,7 @@
 				931B14DD2821182D00A0CD35 /* DatabaseService.swift in Sources */,
 				931B14DC2821182800A0CD35 /* NetworkService.swift in Sources */,
 				931B14F728211AC100A0CD35 /* SendMessageRequest.swift in Sources */,
+				934FF17329778E09002C76F7 /* SendReactionRequestModel.swift in Sources */,
 				9324B254281BDFD700E7D76D /* MessageEntity+CoreDataClass.swift in Sources */,
 				939B304C2850E01800FFA537 /* SyncRoomsResponseModel.swift in Sources */,
 				931B14DF2821186000A0CD35 /* MessageEntityService.swift in Sources */,
@@ -2130,6 +2139,7 @@
 				931B14D7281FD91100A0CD35 /* AppRepository+Device.swift in Sources */,
 				93711DFC28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */,
+				934FF17229778E02002C76F7 /* SendReactionResponseModel.swift in Sources */,
 				6C153BF129486F2B00D400A7 /* Constants+Strings.swift in Sources */,
 				9347CCE4286457C900018AEB /* Date+Extensions.swift in Sources */,
 				931B150028211AC600A0CD35 /* SendMessageResponse.swift in Sources */,
@@ -2287,6 +2297,7 @@
 				AD8192632721D54A00D5BE48 /* AllChatsView.swift in Sources */,
 				938D053227D59DD3002E5CE5 /* NewGroupChatViewModel.swift in Sources */,
 				93CF473D2963240200213DBE /* AppRepository+File.swift in Sources */,
+				934FF16F29778A65002C76F7 /* SendReactionRequestModel.swift in Sources */,
 				937055DD2914B2290052EC77 /* OneSecPopUpView.swift in Sources */,
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
 				93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */,
@@ -2356,6 +2367,7 @@
 				933BE85D27B65BDF0099BA9E /* SharedViewController.swift in Sources */,
 				6C6AD21B291E3B8E0026CDAC /* ChatContentView.swift in Sources */,
 				93CF473F2963241200213DBE /* TestRepository+File.swift in Sources */,
+				934FF17129778AF9002C76F7 /* SendReactionResponseModel.swift in Sources */,
 				9396AB7127FED6F100696757 /* VerifyFileResponseModel.swift in Sources */,
 				AD819290272305D900D5BE48 /* TapUtils.swift in Sources */,
 				ADD5040127101B69009D50CB /* ContentView.swift in Sources */,

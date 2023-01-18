@@ -58,4 +58,10 @@ extension TestRepository {
             p(.failure(DatabseError.requestFailed))
         }
     }
+    
+    func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error> {
+        return Fail<SendReactionResponseModel, Error>(error: NetworkError.noAccessToken)
+                 .receive(on: DispatchQueue.main)
+                 .eraseToAnyPublisher()
+    }
 }
