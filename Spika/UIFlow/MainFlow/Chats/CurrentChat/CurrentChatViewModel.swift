@@ -72,6 +72,14 @@ extension CurrentChatViewModel {
         }
         getAppCoordinator()?.presentReactionsSheet(users: users, records: records)
     }
+    
+    func showMessageActions(_ message: Message) {
+        getAppCoordinator()?
+            .presentMessageActionsSheet()
+            .sink(receiveValue: { [weak self] action in
+            
+            }).store(in: &subscriptions)
+    }
 }
 
 extension CurrentChatViewModel {

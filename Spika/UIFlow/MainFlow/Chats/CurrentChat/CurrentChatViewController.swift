@@ -65,6 +65,16 @@ extension CurrentChatViewController {
         viewModel.checkLocalRoom()
     }
     
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        let tableView = currentChatView.messagesTableView
+        guard sender.state == .began,
+              let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
+              let entity = frc?.object(at: indexPath)
+        else { return }
+        let message = Message(messageEntity: entity)
+        viewModel.showMessageActions(message)
+    }
+    
     func setupBindings() {
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
@@ -73,6 +83,9 @@ extension CurrentChatViewController {
         currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
             self?.handleInput(state)
         }.store(in: &subscriptions)
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
         viewModel.roomPublisher.receive(on: DispatchQueue.main)
             .sink { [weak self] completion in

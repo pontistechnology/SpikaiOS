@@ -214,6 +214,21 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewControllerToPresent, animated: true)
     }
     
+    func presentMessageActionsSheet() -> PassthroughSubject<MessageAction, Never> {
+        let viewControllerToPresent = MessageActionsViewController()
+        if #available(iOS 15.0, *) {
+            if let sheet = viewControllerToPresent.sheetPresentationController {
+                sheet.detents = [.medium()]
+                sheet.prefersGrabberVisible = false
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            }
+        } else {
+            // TODO: Fallback on earlier versions
+        }
+        navigationController.present(viewControllerToPresent, animated: true)
+        return viewControllerToPresent.tapPublisher
+    }
+    
     func presentAVVideoController(asset: AVAsset) {
         let avPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
         let avPlayerVC = AVPlayerViewController()
