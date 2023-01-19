@@ -15,6 +15,7 @@ class SettingsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(settingsView)
+        settingsView.titleLabel.text = "Build number: " + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown")
     }
     
     override func viewWillAppear(_ animated: Bool) {
