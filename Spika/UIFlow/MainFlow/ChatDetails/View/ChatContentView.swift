@@ -35,7 +35,6 @@ class ChatContentView: UIView, BaseView {
         return btn
     } ()
     
-//    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: .appRed)
     let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .appRed)
     
     var deleteButton: UIButton = {
@@ -79,7 +78,6 @@ class ChatContentView: UIView, BaseView {
     
     func addSubviews() {
         self.addSubview(chatImage)
-//        self.addSubview(self.cameraIcon)
         self.addSubview(chatName)
         self.addSubview(mainStackView)
         

@@ -10,7 +10,7 @@ import Foundation
 public extension Constants {
     class Endpoints {
         static let getPosts = "posts"
-        static let getUserDetails = "/api/messenger/me"
+        static let getUserDetails = "api/messenger/me"
         static let authenticateUser = "api/messenger/auth"
         static let verifyCode = "api/messenger/auth/verify"
         static let uploadFiles = "api/upload/files"

@@ -9,7 +9,15 @@ import UIKit
 
 class SettingsView: UIView, BaseView {
     
-    let titleLabel = UILabel()
+//    let titleLabel = UILabel()
+    
+    lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    } ()
+    
+    let contentView = SettingsContentView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,15 +29,20 @@ class SettingsView: UIView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(titleLabel)
+        self.addSubview(self.scrollView)
+        self.scrollView.addSubview(self.contentView)
     }
     
-    func styleSubviews() {
-        titleLabel.text = .getStringFor(.settings)
-    }
+    func styleSubviews() {}
     
     func positionSubviews() {
-        titleLabel.centerInSuperview()
+        self.scrollView.fillSuperview()
+        
+        self.contentView.anchor(top: self.scrollView.contentLayoutGuide.topAnchor,
+                                leading: self.scrollView.contentLayoutGuide.leadingAnchor,
+                                bottom: self.scrollView.contentLayoutGuide.bottomAnchor,
+                                trailing: self.scrollView.contentLayoutGuide.trailingAnchor)
+        self.contentView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
     
 }
