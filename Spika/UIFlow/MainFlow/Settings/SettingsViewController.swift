@@ -20,21 +20,29 @@ class SettingsViewController: BaseViewController {
     }
     
     func setupBinding() {
-//        let userPublisher = self.viewModel.getAppCoordinator().fetchMyUserDetails()
         self.viewModel
             .user
             .compactMap { $0?.avatarFileId?.fullFilePathFromId() }
             .sink { c in
-                switch c {
-                case .finished:
-                    break
-                case .failure(let error):
-                    break
-                }
             } receiveValue: { [weak self] url in
                 self?.settingsView.contentView.userImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
             }.store(in: &self.subscriptions)
         
+        self.viewModel
+            .user
+            .compactMap { $0?.displayName }
+            .sink { c in
+            } receiveValue: { [weak self] text in
+                self?.settingsView.contentView.userName.setText(text: text)
+            }.store(in: &self.subscriptions)
+        
+        self.viewModel
+            .user
+            .compactMap { $0?.telephoneNumber }
+            .sink { c in
+            } receiveValue: { [weak self] text in
+                self?.settingsView.contentView.userPhoneNumber.setText(text: text)
+            }.store(in: &self.subscriptions)
     }
     
     override func viewWillAppear(_ animated: Bool) {
