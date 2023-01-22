@@ -36,3 +36,8 @@ enum SyncType {
     case messages
     case messageRecords
 }
+
+enum DeleteMessageTarget: String, Codable {
+    case all
+    case user
+}

@@ -182,9 +182,9 @@ extension CurrentChatViewModel {
             .presentMessageActionsSheet()
             .sink(receiveValue: { [weak self] action in
                 self?.getAppCoordinator()?.dismissViewController()
+                guard let id = message.id else { return }
                 switch action {
                 case .reaction(emoji: let emoji):
-                    guard let id = message.id else { return }
                     self?.sendReaction(reaction: emoji, messageId: id)
                 case .reply:
                     self?.selectedMessageToReplyPublisher.send(message)
@@ -193,10 +193,21 @@ extension CurrentChatViewModel {
                     self?.getAppCoordinator()?.showOneSecPopUp(.copy)
                 case .details:
                     self?.presentMessageDetails(records: message.records ?? [])
+                case .delete:
+                    self?.deleteMessage(id: id)
                 default:
                     break
                 }
             }).store(in: &subscriptions)
+    }
+    
+    func deleteMessage(id: Int64) {
+        repository.deleteMessage(messageId: id, target: .all).sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let message = response.data?.message else { return }
+            self?.saveMessage(message: message)
+        }.store(in: &subscriptions)
     }
 }
 
