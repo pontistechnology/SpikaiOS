@@ -81,6 +81,7 @@ enum AssetName: String {
     case copyMessage = "copyMessage"
     case favoriteMessage = "favoriteMessage"
     case detailsMessage = "detailsMessage"
+    case slideReply = "slideReply"
 }
 
 extension UIImage {

@@ -564,7 +564,7 @@ extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
-        let firstLeft = UIContextualAction(style: .normal, title: "r") { [weak self] (action, view, completionHandler) in
+        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { [weak self] (action, view, completionHandler) in
 
             guard let messageEntity = self?.frc?.object(at: indexPath) else { return }
             let message = Message(messageEntity: messageEntity)
@@ -575,6 +575,7 @@ extension CurrentChatViewController {
             completionHandler(true)
         }
         firstLeft.backgroundColor = .logoBlue
+        firstLeft.image = UIImage(safeImage: .slideReply)
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }
     
