@@ -154,7 +154,7 @@ extension BaseMessageTableViewCell {
     func showReplyView(senderName: String, message: Message, sender: MessageSender?, indexPath: IndexPath?) {
         if replyView == nil, let sender = sender {
             
-            let containerColor = sender == .me ? .chatBackground : UIColor(hexString: "C8EBFE")
+            let containerColor: UIColor = sender == .me ? .chatBackground : .myChatBackground
             
             self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: containerColor, indexPath: indexPath)
             

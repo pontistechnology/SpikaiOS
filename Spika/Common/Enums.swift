@@ -95,7 +95,7 @@ enum MessageSender {
     var backgroundColor: UIColor {
         switch self {
         case .me:
-            return UIColor(hexString: "C8EBFE")
+            return .myChatBackground
         case .friend, .group:
             return .chatBackground
         }
