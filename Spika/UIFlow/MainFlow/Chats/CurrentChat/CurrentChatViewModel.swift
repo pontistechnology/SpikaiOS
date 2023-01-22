@@ -22,6 +22,8 @@ class CurrentChatViewModel: BaseViewModel {
     let isBlocked = CurrentValueSubject<Bool,Never>(false)
     let userRepliedInChat = CurrentValueSubject<Bool,Never>(true)
     let offerToBlock = CurrentValueSubject<Bool,Never>(false)
+    
+    var selectedMessageToReply: Message? = nil
    
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
@@ -294,7 +296,7 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-    func trySendMessage(text: String, replyId: Int64?) {
+    func trySendMessage(text: String) {
         guard let room = self.room else { return }
         print("ROOM: ", room)
         let uuid = UUID().uuidString
@@ -303,7 +305,7 @@ extension CurrentChatViewModel {
                               roomId: room.id,
                               type: .text,
                               body: MessageBody(text: text, file: nil, thumb: nil),
-                              replyId: replyId,
+                              replyId: selectedMessageToReply?.id,
                               localId: uuid)
         
         repository.saveMessages([message]).sink { c in
@@ -312,6 +314,7 @@ extension CurrentChatViewModel {
             let body = RequestMessageBody(text: message.body?.text,
                                           fileId: nil,
                                           thumbId: nil)
+            self?.selectedMessageToReply = nil
             self?.sendMessage(body: body, localId: uuid, type: .text, replyId: message.replyId)
         }.store(in: &subscriptions)
     }

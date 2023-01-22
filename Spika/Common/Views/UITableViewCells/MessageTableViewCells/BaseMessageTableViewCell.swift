@@ -156,13 +156,13 @@ extension BaseMessageTableViewCell {
             
             let containerColor: UIColor = sender == .me ? .chatBackground : .myChatBackground
             
-            self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: containerColor, indexPath: indexPath)
+            self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: containerColor)
             
             containerStackView.insertArrangedSubview(replyView!, at: 0)
             
             replyView?.tap().sink(receiveValue: { [weak self] _ in
                 guard let self = self,
-                      let indexPath = self.replyView?.indexPath
+                      let indexPath = indexPath
                 else { return }
                 self.tapPublisher.send(.scrollToReply(indexPath))
             }).store(in: &subs)

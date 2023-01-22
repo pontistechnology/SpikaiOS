@@ -65,9 +65,8 @@ extension MessageInputView {
         hideReplyView()
         if replyView == nil {
             self.replyView = MessageReplyView(senderName: senderName, message: message,
-                                              backgroundColor: .chatBackground,
-                                              indexPath: indexPath, showCloseButton: true)
-            replyBindings()
+                                              backgroundColor: .chatBackground, showCloseButton: true)
+            replyBindings(indexPath: indexPath)
             guard let replyView = replyView else { return }
             insertArrangedSubview(replyView, at: 0)
         }
@@ -78,13 +77,13 @@ extension MessageInputView {
         replyView = nil
     }
     
-    func replyBindings() {
+    func replyBindings(indexPath: IndexPath?) {
         replyView?.closeButton.tap().sink(receiveValue: { [weak self] _ in
             self?.hideReplyView()
         }).store(in: &subscriptions)
         
         replyView?.containerView.tap().sink(receiveValue: { [weak self] _ in
-            guard let indexPath = self?.replyView?.indexPath else { return }
+            guard let indexPath = indexPath else { return }
             self?.inputViewTapPublisher.send(.scrollToReply(indexPath))
         }).store(in: &subscriptions)
     }

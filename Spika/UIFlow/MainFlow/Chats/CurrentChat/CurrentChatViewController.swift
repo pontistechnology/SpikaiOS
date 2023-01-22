@@ -317,8 +317,7 @@ extension CurrentChatViewController {
         case .plus:
             presentMoreActions()
         case .send(let inputText):
-            let replyId = currentChatView.messageInputView.replyView?.message.id
-            viewModel.trySendMessage(text: inputText, replyId: replyId)
+            viewModel.trySendMessage(text: inputText)
             currentChatView.messageInputView.clean()
         case .camera, .microphone:
             print(state, " in ccVC")
@@ -550,7 +549,7 @@ extension CurrentChatViewController {
             guard let messageEntity = self?.frc?.object(at: indexPath) else { return }
             let message = Message(messageEntity: messageEntity)
             let senderName = self?.viewModel.room?.getDisplayNameFor(userId: message.fromUserId)
-            
+            self?.viewModel.selectedMessageToReply = message
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message, indexPath: indexPath)
             
             completionHandler(true)
