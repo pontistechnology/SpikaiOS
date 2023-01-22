@@ -270,13 +270,19 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             frcIsChangingPublisher.send(.other)
         
         case .move:
-            print("DIDCHANGE: rows move")
+            // this is called instead of .update when there is only one object in section
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath
             else {
                 return
             }
-            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+            if indexPath == newIndexPath {
+                UIView.performWithoutAnimation {
+                    currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
+                }
+            } else {
+                currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+            }
             frcIsChangingPublisher.send(.other)
         
         case .update:
