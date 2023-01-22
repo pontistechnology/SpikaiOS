@@ -181,6 +181,7 @@ extension CurrentChatViewModel {
         getAppCoordinator()?
             .presentMessageActionsSheet()
             .sink(receiveValue: { [weak self] action in
+                self?.getAppCoordinator()?.dismissViewController()
                 switch action {
                 case .reaction(emoji: let emoji):
                     guard let id = message.id else { return }
@@ -190,6 +191,8 @@ extension CurrentChatViewModel {
                 case .copy:
                     UIPasteboard.general.string = message.body?.text
                     self?.getAppCoordinator()?.showOneSecPopUp(.copy)
+                case .details:
+                    self?.presentMessageDetails(records: message.records ?? [])
                 default:
                     break
                 }

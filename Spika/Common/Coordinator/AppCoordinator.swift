@@ -180,7 +180,7 @@ class AppCoordinator: Coordinator {
     }
     
     func dismissViewController() {
-        let currentVC = navigationController.presentedViewController as? UINavigationController
+        let currentVC = navigationController.presentedViewController
         currentVC?.dismiss(animated: true)
     }
     
