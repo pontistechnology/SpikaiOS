@@ -558,13 +558,14 @@ extension CurrentChatViewController {
                 completionHandler(true)
             }
         }
-        firstRight.backgroundColor = .systemBlue
+        firstRight.backgroundColor = .logoBlue
+        firstRight.image = UIImage(safeImage: .detailsMessage)
         return UISwipeActionsConfiguration(actions: [firstRight])
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
-        let firstLeft = UIContextualAction(style: .normal, title: "Reply") { [weak self] (action, view, completionHandler) in
+        let firstLeft = UIContextualAction(style: .normal, title: .getStringFor(.reply)) { [weak self] (action, view, completionHandler) in
 
             guard let messageEntity = self?.frc?.object(at: indexPath) else { return }
             let message = Message(messageEntity: messageEntity)
