@@ -15,8 +15,12 @@ enum OneSecPopUpType {
     
     var image: UIImage {
         switch self {
-        case .copy, .favorite, .forward:
-            return UIImage(safeImage: .error) // TODO: - add assets
+        case .copy:
+            return UIImage(safeImage: .sent)
+        case .forward:
+            return UIImage(safeImage: .forwardMessage)
+        case .favorite:
+            return UIImage(safeImage: .favoriteMessage)
         }
     }
     

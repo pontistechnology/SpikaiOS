@@ -245,6 +245,8 @@ class AppCoordinator: Coordinator {
     }
 }
 
+// MARK: - Window manager
+
 extension AppCoordinator {
     private func getWindowManager() -> WindowManager {
         Assembler.sharedAssembler.resolver.resolve(WindowManager.self, argument: windowScene)!
@@ -281,5 +283,9 @@ extension AppCoordinator {
                                                      message: message,
                                                      buttons: buttons))
         return getWindowManager().popUpPublisher
+    }
+    
+    func showOneSecPopUp(_ selection: OneSecPopUpType) {
+        getWindowManager().showPopUp(for: .oneSec(selection))
     }
 }

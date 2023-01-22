@@ -187,6 +187,9 @@ extension CurrentChatViewModel {
                     self?.sendReaction(reaction: emoji, messageId: id)
                 case .reply:
                     self?.selectedMessageToReplyPublisher.send(message)
+                case .copy:
+                    UIPasteboard.general.string = message.body?.text
+                    self?.getAppCoordinator()?.showOneSecPopUp(.copy)
                 default:
                     break
                 }
