@@ -23,8 +23,7 @@ class CurrentChatViewModel: BaseViewModel {
     let userRepliedInChat = CurrentValueSubject<Bool,Never>(true)
     let offerToBlock = CurrentValueSubject<Bool,Never>(false)
     
-    var selectedMessageToReply: Message? = nil
-   
+    let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
@@ -186,6 +185,8 @@ extension CurrentChatViewModel {
                 case .reaction(emoji: let emoji):
                     guard let id = message.id else { return }
                     self?.sendReaction(reaction: emoji, messageId: id)
+                case .reply:
+                    self?.selectedMessageToReplyPublisher.send(message)
                 default:
                     break
                 }
@@ -305,7 +306,7 @@ extension CurrentChatViewModel {
                               roomId: room.id,
                               type: .text,
                               body: MessageBody(text: text, file: nil, thumb: nil),
-                              replyId: selectedMessageToReply?.id,
+                              replyId: selectedMessageToReplyPublisher.value?.id,
                               localId: uuid)
         
         repository.saveMessages([message]).sink { c in
@@ -314,7 +315,7 @@ extension CurrentChatViewModel {
             let body = RequestMessageBody(text: message.body?.text,
                                           fileId: nil,
                                           thumbId: nil)
-            self?.selectedMessageToReply = nil
+            self?.selectedMessageToReplyPublisher.send(nil)
             self?.sendMessage(body: body, localId: uuid, type: .text, replyId: message.replyId)
         }.store(in: &subscriptions)
     }

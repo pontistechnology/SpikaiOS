@@ -103,6 +103,21 @@ extension CurrentChatViewController {
             self?.handleInput(state)
         }.store(in: &subscriptions)
         
+        viewModel.selectedMessageToReplyPublisher.sink { [weak self] selectedMessage in
+            guard let selectedMessage = selectedMessage,
+                  let id = selectedMessage.id
+            else {
+                self?.currentChatView.messageInputView.hideReplyView()
+                return
+            }
+            let senderName = self?.viewModel.room?.getDisplayNameFor(userId: selectedMessage.fromUserId)
+            self?.currentChatView
+                .messageInputView
+                .showReplyView(senderName: senderName ?? .getStringFor(.unknown),
+                               message: selectedMessage,
+                               indexPath: self?.getIndexPathFor(messageId: id))
+        }.store(in: &subscriptions)
+        
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
@@ -325,6 +340,8 @@ extension CurrentChatViewController {
             print("emoji in ccvc")
         case .scrollToReply(let indexPath):
             currentChatView.messagesTableView.blinkRow(at: indexPath)
+        case .hideReply:
+            viewModel.selectedMessageToReplyPublisher.send(nil)
         }
     }
 }
@@ -409,7 +426,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             
             cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: repliedMessage,
                                sender: cell.getMessageSenderType(reuseIdentifier: identifier),
-                               indexPath: frc?.indexPath(forObject: repliedMessageEntity))
+                               indexPath: getIndexPathFor(messageId: replyId))
         }
         
         if let reactionsRecords = message.getMessageReactionsRecords() {
@@ -549,7 +566,7 @@ extension CurrentChatViewController {
             guard let messageEntity = self?.frc?.object(at: indexPath) else { return }
             let message = Message(messageEntity: messageEntity)
             let senderName = self?.viewModel.room?.getDisplayNameFor(userId: message.fromUserId)
-            self?.viewModel.selectedMessageToReply = message
+            self?.viewModel.selectedMessageToReplyPublisher.send(message)
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message, indexPath: indexPath)
             
             completionHandler(true)
@@ -617,5 +634,13 @@ extension CurrentChatViewController: UIDocumentPickerDelegate {
     
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         controller.dismiss(animated: true)
+    }
+}
+
+extension CurrentChatViewController {
+    private func getIndexPathFor(messageId id: Int64) -> IndexPath? {
+        guard let entity = frc?.fetchedObjects?.first(where: { $0.id == "\(id)" })
+        else { return nil }
+        return frc?.indexPath(forObject: entity)
     }
 }

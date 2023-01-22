@@ -16,6 +16,7 @@ enum MessageInputViewState {
     case emoji
     case scrollToReply(IndexPath)
     case plus
+    case hideReply
 }
 
 class MessageInputView: UIStackView, BaseView {
@@ -79,7 +80,7 @@ extension MessageInputView {
     
     func replyBindings(indexPath: IndexPath?) {
         replyView?.closeButton.tap().sink(receiveValue: { [weak self] _ in
-            self?.hideReplyView()
+            self?.inputViewTapPublisher.send(.hideReply)
         }).store(in: &subscriptions)
         
         replyView?.containerView.tap().sink(receiveValue: { [weak self] _ in
