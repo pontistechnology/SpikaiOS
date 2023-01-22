@@ -104,8 +104,7 @@ extension CurrentChatViewController {
         }.store(in: &subscriptions)
         
         viewModel.selectedMessageToReplyPublisher.sink { [weak self] selectedMessage in
-            guard let selectedMessage = selectedMessage,
-                  let id = selectedMessage.id
+            guard let selectedMessage = selectedMessage
             else {
                 self?.currentChatView.messageInputView.hideReplyView()
                 return
@@ -114,8 +113,7 @@ extension CurrentChatViewController {
             self?.currentChatView
                 .messageInputView
                 .showReplyView(senderName: senderName ?? .getStringFor(.unknown),
-                               message: selectedMessage,
-                               indexPath: self?.getIndexPathFor(messageId: id))
+                               message: selectedMessage)
         }.store(in: &subscriptions)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
@@ -338,7 +336,10 @@ extension CurrentChatViewController {
             print(state, " in ccVC")
         case .emoji:
             print("emoji in ccvc")
-        case .scrollToReply(let indexPath):
+        case .scrollToReply:
+            guard let selectedMessageId = viewModel.selectedMessageToReplyPublisher.value?.id,
+                  let indexPath = getIndexPathFor(messageId: selectedMessageId)
+            else { return }
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .hideReply:
             viewModel.selectedMessageToReplyPublisher.send(nil)
@@ -367,7 +368,10 @@ extension CurrentChatViewController {
         case .openImage:
             guard let url = message.body?.file?.id?.fullFilePathFromId() else { return }
             viewModel.showImage(link: url)
-        case .scrollToReply(let indexPath):
+        case .scrollToReply:
+            guard let replyId = message.replyId,
+                  let indexPath = getIndexPathFor(messageId: replyId)
+            else { return }
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .showReactions:
             viewModel.showReactions(records: message.getMessageReactionsRecords() ?? [])
@@ -425,8 +429,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             let senderName = viewModel.room?.getDisplayNameFor(userId: repliedMessage.fromUserId)
             
             cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: repliedMessage,
-                               sender: cell.getMessageSenderType(reuseIdentifier: identifier),
-                               indexPath: getIndexPathFor(messageId: replyId))
+                               sender: cell.getMessageSenderType(reuseIdentifier: identifier))
         }
         
         if let reactionsRecords = message.getMessageReactionsRecords() {
@@ -567,7 +570,7 @@ extension CurrentChatViewController {
             let message = Message(messageEntity: messageEntity)
             let senderName = self?.viewModel.room?.getDisplayNameFor(userId: message.fromUserId)
             self?.viewModel.selectedMessageToReplyPublisher.send(message)
-            self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message, indexPath: indexPath)
+            self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
             
             completionHandler(true)
         }

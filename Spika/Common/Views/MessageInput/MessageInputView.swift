@@ -14,7 +14,7 @@ enum MessageInputViewState {
     case camera
     case microphone
     case emoji
-    case scrollToReply(IndexPath)
+    case scrollToReply
     case plus
     case hideReply
 }
@@ -62,12 +62,12 @@ extension MessageInputView {
 }
 
 extension MessageInputView {
-    func showReplyView(senderName: String, message: Message, indexPath: IndexPath?) {
+    func showReplyView(senderName: String, message: Message) {
         hideReplyView()
         if replyView == nil {
             self.replyView = MessageReplyView(senderName: senderName, message: message,
                                               backgroundColor: .chatBackground, showCloseButton: true)
-            replyBindings(indexPath: indexPath)
+            replyBindings()
             guard let replyView = replyView else { return }
             insertArrangedSubview(replyView, at: 0)
         }
@@ -78,14 +78,13 @@ extension MessageInputView {
         replyView = nil
     }
     
-    func replyBindings(indexPath: IndexPath?) {
+    func replyBindings() {
         replyView?.closeButton.tap().sink(receiveValue: { [weak self] _ in
             self?.inputViewTapPublisher.send(.hideReply)
         }).store(in: &subscriptions)
         
         replyView?.containerView.tap().sink(receiveValue: { [weak self] _ in
-            guard let indexPath = indexPath else { return }
-            self?.inputViewTapPublisher.send(.scrollToReply(indexPath))
+            self?.inputViewTapPublisher.send(.scrollToReply)
         }).store(in: &subscriptions)
     }
 }

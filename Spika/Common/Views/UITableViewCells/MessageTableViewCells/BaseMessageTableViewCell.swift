@@ -151,7 +151,7 @@ extension BaseMessageTableViewCell {
         timeLabel.isHidden = !value
     }
     
-    func showReplyView(senderName: String, message: Message, sender: MessageSender?, indexPath: IndexPath?) {
+    func showReplyView(senderName: String, message: Message, sender: MessageSender?) {
         if replyView == nil, let sender = sender {
             
             let containerColor: UIColor = sender == .me ? .chatBackground : .myChatBackground
@@ -161,10 +161,7 @@ extension BaseMessageTableViewCell {
             containerStackView.insertArrangedSubview(replyView!, at: 0)
             
             replyView?.tap().sink(receiveValue: { [weak self] _ in
-                guard let self = self,
-                      let indexPath = indexPath
-                else { return }
-                self.tapPublisher.send(.scrollToReply(indexPath))
+                self?.tapPublisher.send(.scrollToReply)
             }).store(in: &subs)
         }
     }

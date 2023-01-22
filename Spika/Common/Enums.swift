@@ -138,7 +138,7 @@ enum MessageCellTaps {
     case playVideo
     case playAudio(playedPercentPublisher: PassthroughSubject<Float, Never>)
     case openImage
-    case scrollToReply(IndexPath)
+    case scrollToReply
     case showReactions
 }
 
