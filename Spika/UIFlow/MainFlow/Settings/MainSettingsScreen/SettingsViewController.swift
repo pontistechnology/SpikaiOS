@@ -71,6 +71,13 @@ class SettingsViewController: BaseViewController {
             guard let self = self else { return }
             self.present(self.actionSheet, animated: true, completion: nil)
         }.store(in: &subscriptions)
+        
+        self.settingsView.contentView.privacyOptionButton
+            .tap()
+            .sink { [weak self] _ in
+//                self?.navigationItem.backButtonTitle = .getStringFor(.privacy)
+                self?.viewModel.getAppCoordinator()?.presentPrivacySettingsScreen()
+            }.store(in: &subscriptions)
     }
     
     func setupActionSheet() {

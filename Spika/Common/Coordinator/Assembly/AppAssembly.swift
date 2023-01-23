@@ -21,6 +21,8 @@ final class AppAssembly: Assembly {
         self.assembleAllChatsViewController(container)
         self.assembleChatDetailsViewController(container)
         self.assembleSettingsViewController(container)
+        self.assemblePrivacySettingsViewController(container)
+        self.assembleBlockedUsersSettingsViewController(container)
         self.assembleImageViewerViewController(container)
         self.assembleUserSelectionViewController(container)
         self.assembleMessageActionsViewController(container)
@@ -164,6 +166,32 @@ final class AppAssembly: Assembly {
         container.register(SettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
             let controller = SettingsViewController()
             controller.viewModel = container.resolve(SettingsViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assemblePrivacySettingsViewController(_ container: Container){
+        container.register(PrivacySettingsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return PrivacySettingsViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(PrivacySettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = PrivacySettingsViewController()
+            controller.viewModel = container.resolve(PrivacySettingsViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleBlockedUsersSettingsViewController(_ container: Container){
+        container.register(BlockedUsersViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return BlockedUsersViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(BlockedUsersViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = BlockedUsersViewController()
+            controller.viewModel = container.resolve(BlockedUsersViewModel.self, argument: coordinator)
             return controller
         }.inObjectScope(.transient)
     }

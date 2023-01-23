@@ -20,6 +20,14 @@
 		6C153BF129486F2B00D400A7 /* Constants+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEF2948696A00D400A7 /* Constants+Strings.swift */; };
 		6C153BF229486F2B00D400A7 /* Constants+Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BED2948693B00D400A7 /* Constants+Database.swift */; };
 		6C153BF329486F2B00D400A7 /* Constants+Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */; };
+		6C175EB5297EC44C00804275 /* BaseSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EB4297EC44C00804275 /* BaseSettingsView.swift */; };
+		6C175EB7297EC61C00804275 /* BaseSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EB6297EC61C00804275 /* BaseSettingsViewModel.swift */; };
+		6C175EBD297ECC5200804275 /* PrivacySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EBC297ECC5200804275 /* PrivacySettingsViewController.swift */; };
+		6C175EBF297ECCD600804275 /* PrivacySettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EBE297ECCD600804275 /* PrivacySettingsViewModel.swift */; };
+		6C175EC1297ECD0700804275 /* PrivacySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EC0297ECD0700804275 /* PrivacySettingsView.swift */; };
+		6C175EC7297ED93300804275 /* BlockedUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EC6297ED93300804275 /* BlockedUsersViewController.swift */; };
+		6C175EC9297ED93A00804275 /* BlockedUsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EC8297ED93A00804275 /* BlockedUsersViewModel.swift */; };
+		6C175ECC297ED94400804275 /* BlockedUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175ECB297ED94400804275 /* BlockedUsersView.swift */; };
 		6C2497DF2924FB3000594A55 /* UserSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497DE2924FB3000594A55 /* UserSelectionViewController.swift */; };
 		6C2497E12924FB3700594A55 /* UserSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497E02924FB3700594A55 /* UserSelectionViewModel.swift */; };
 		6C2497E42924FB4200594A55 /* UserSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497E32924FB4200594A55 /* UserSelectionView.swift */; };
@@ -426,6 +434,14 @@
 		6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Endpoints.swift"; sourceTree = "<group>"; };
 		6C153BED2948693B00D400A7 /* Constants+Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Database.swift"; sourceTree = "<group>"; };
 		6C153BEF2948696A00D400A7 /* Constants+Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Strings.swift"; sourceTree = "<group>"; };
+		6C175EB4297EC44C00804275 /* BaseSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsView.swift; sourceTree = "<group>"; };
+		6C175EB6297EC61C00804275 /* BaseSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewModel.swift; sourceTree = "<group>"; };
+		6C175EBC297ECC5200804275 /* PrivacySettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySettingsViewController.swift; sourceTree = "<group>"; };
+		6C175EBE297ECCD600804275 /* PrivacySettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySettingsViewModel.swift; sourceTree = "<group>"; };
+		6C175EC0297ECD0700804275 /* PrivacySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySettingsView.swift; sourceTree = "<group>"; };
+		6C175EC6297ED93300804275 /* BlockedUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersViewController.swift; sourceTree = "<group>"; };
+		6C175EC8297ED93A00804275 /* BlockedUsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersViewModel.swift; sourceTree = "<group>"; };
+		6C175ECB297ED94400804275 /* BlockedUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersView.swift; sourceTree = "<group>"; };
 		6C2497DE2924FB3000594A55 /* UserSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionViewController.swift; sourceTree = "<group>"; };
 		6C2497E02924FB3700594A55 /* UserSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionViewModel.swift; sourceTree = "<group>"; };
 		6C2497E32924FB4200594A55 /* UserSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionView.swift; sourceTree = "<group>"; };
@@ -760,6 +776,79 @@
 				6C153BEF2948696A00D400A7 /* Constants+Strings.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		6C175EB1297EC3E400804275 /* SettingsScreens */ = {
+			isa = PBXGroup;
+			children = (
+				6C175EBA297ECBFE00804275 /* BaseSettingsScreen */,
+				6C175EC2297ED87700804275 /* PrivacySettings */,
+				6C175EC5297ED91000804275 /* BlockedUsers */,
+			);
+			path = SettingsScreens;
+			sourceTree = "<group>";
+		};
+		6C175EBA297ECBFE00804275 /* BaseSettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				6C175EB6297EC61C00804275 /* BaseSettingsViewModel.swift */,
+				6C175EC3297ED88B00804275 /* View */,
+			);
+			path = BaseSettingsScreen;
+			sourceTree = "<group>";
+		};
+		6C175EBB297ECC2A00804275 /* MainSettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				AD81924B2721745700D5BE48 /* SettingsViewController.swift */,
+				AD81926A2721D5DE00D5BE48 /* SettingsViewModel.swift */,
+				AD81925F2721D50D00D5BE48 /* View */,
+			);
+			path = MainSettingsScreen;
+			sourceTree = "<group>";
+		};
+		6C175EC2297ED87700804275 /* PrivacySettings */ = {
+			isa = PBXGroup;
+			children = (
+				6C175EBC297ECC5200804275 /* PrivacySettingsViewController.swift */,
+				6C175EBE297ECCD600804275 /* PrivacySettingsViewModel.swift */,
+				6C175EC4297ED8AA00804275 /* View */,
+			);
+			path = PrivacySettings;
+			sourceTree = "<group>";
+		};
+		6C175EC3297ED88B00804275 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6C175EB4297EC44C00804275 /* BaseSettingsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6C175EC4297ED8AA00804275 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6C175EC0297ECD0700804275 /* PrivacySettingsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6C175EC5297ED91000804275 /* BlockedUsers */ = {
+			isa = PBXGroup;
+			children = (
+				6C175EC6297ED93300804275 /* BlockedUsersViewController.swift */,
+				6C175EC8297ED93A00804275 /* BlockedUsersViewModel.swift */,
+				6C175ECA297ED93E00804275 /* View */,
+			);
+			path = BlockedUsers;
+			sourceTree = "<group>";
+		};
+		6C175ECA297ED93E00804275 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6C175ECB297ED94400804275 /* BlockedUsersView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		6C2497DD2924FB1C00594A55 /* UserSelection */ = {
@@ -1260,9 +1349,8 @@
 		AD819244272173AB00D5BE48 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				AD81924B2721745700D5BE48 /* SettingsViewController.swift */,
-				AD81926A2721D5DE00D5BE48 /* SettingsViewModel.swift */,
-				AD81925F2721D50D00D5BE48 /* View */,
+				6C175EBB297ECC2A00804275 /* MainSettingsScreen */,
+				6C175EB1297EC3E400804275 /* SettingsScreens */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2215,6 +2303,7 @@
 				93D86DB827BAA15900F275B0 /* DocsTableView.swift in Sources */,
 				6C7423C3297192C30090C416 /* OfferToBlockUserView.swift in Sources */,
 				AD8192552721C00D00D5BE48 /* UIColor+Extensions.swift in Sources */,
+				6C175EC9297ED93A00804275 /* BlockedUsersViewModel.swift in Sources */,
 				93C07A89290127FD003DFD61 /* EmptyTableViewCell.swift in Sources */,
 				AD81926B2721D5DE00D5BE48 /* SettingsViewModel.swift in Sources */,
 				9352A5722977667900E0D90E /* MessageActionsView.swift in Sources */,
@@ -2227,6 +2316,7 @@
 				933BE86627B671270099BA9E /* ChatSearchView.swift in Sources */,
 				AD8192692721D5BD00D5BE48 /* AllChatsViewModel.swift in Sources */,
 				934F2EDF28172D150086C343 /* AppRepository+Device.swift in Sources */,
+				6C175ECC297ED94400804275 /* BlockedUsersView.swift in Sources */,
 				93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */,
 				933BE86227B65C9C0099BA9E /* SharedView.swift in Sources */,
 				9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */,
@@ -2314,11 +2404,13 @@
 				6C3F1544297ACDA900CE003A /* SettingsContentView.swift in Sources */,
 				6C056C7829700D6E00198EC1 /* BlockModel.swift in Sources */,
 				93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */,
+				6C175EBF297ECCD600804275 /* PrivacySettingsViewModel.swift in Sources */,
 				9367455E27C71D1300F43CCD /* OldAlertViewController.swift in Sources */,
 				AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */,
 				93F4A89E282DE9C400CEA637 /* MessageDetailsView.swift in Sources */,
 				6CF1C865297819CF00754A24 /* AppRepository+BlockedUsers.swift in Sources */,
 				93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */,
+				6C175EB7297EC61C00804275 /* BaseSettingsViewModel.swift in Sources */,
 				AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */,
 				938D053627D5BFF8002E5CE5 /* CreateRoomRequestModel.swift in Sources */,
 				933BE85F27B65C6F0099BA9E /* SharedViewModel.swift in Sources */,
@@ -2372,6 +2464,7 @@
 				AD9BFD222729950600736318 /* EnterNumberViewController.swift in Sources */,
 				930EE59D27A938B800143B48 /* UploadChunkResponseModel.swift in Sources */,
 				9361E5A82879B4760049F218 /* ImageMessageTableViewCell.swift in Sources */,
+				6C175EC7297ED93300804275 /* BlockedUsersViewController.swift in Sources */,
 				939B304A2850DE9200FFA537 /* SyncUsersResponseModel.swift in Sources */,
 				936A28F02926E96100E7333D /* ImageViewerViewController.swift in Sources */,
 				ADD503D5270DD5F4009D50CB /* AppAssembly.swift in Sources */,
@@ -2386,6 +2479,7 @@
 				933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */,
 				936A28F22926E98600E7333D /* ImageViewerViewModel.swift in Sources */,
 				93AE06EF290892B90009A50C /* SeenResponseModel.swift in Sources */,
+				6C175EB5297EC44C00804275 /* BaseSettingsView.swift in Sources */,
 				930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */,
 				93227E9627D6D99D002E3DED /* CheckRoomResponseModel.swift in Sources */,
 				9352A5712977667900E0D90E /* MessageActionsViewModel.swift in Sources */,
@@ -2393,6 +2487,7 @@
 				6C769036291D36B5007F13D2 /* ChatDetailsViewController.swift in Sources */,
 				939B30422850DC2D00FFA537 /* TestRepository+Sync.swift in Sources */,
 				AD8192712722D3E900D5BE48 /* MainButton.swift in Sources */,
+				6C175EC1297ECD0700804275 /* PrivacySettingsView.swift in Sources */,
 				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,
 				AD81926F2722D0A400D5BE48 /* SegmentedControl.swift in Sources */,
 				AD9BFD4E272B10AF00736318 /* EnterVerifyCodeView.swift in Sources */,
@@ -2432,6 +2527,7 @@
 				6C2638952907DB4400E7E79E /* CustomTableViewHeader.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
 				AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */,
+				6C175EBD297ECC5200804275 /* PrivacySettingsViewController.swift in Sources */,
 				6C75CE1E291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift in Sources */,
 				ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */,
 				EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */,

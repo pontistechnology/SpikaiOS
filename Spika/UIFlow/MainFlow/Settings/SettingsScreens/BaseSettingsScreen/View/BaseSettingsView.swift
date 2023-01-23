@@ -1,23 +1,23 @@
 //
-//  SettingsView.swift
+//  BaseSettingsView.swift
 //  Spika
 //
-//  Created by Marko on 21.10.2021..
+//  Created by Vedran Vugrin on 23.01.2023..
 //
 
 import UIKit
 
-class SettingsView: UIView, BaseView {
-    
-//    let titleLabel = UILabel()
-    
-    lazy var scrollView: UIScrollView = {
+class BaseSettingsView: UIView, BaseView {
+        
+    private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     } ()
     
-    let contentView = SettingsContentView(frame: .zero)
+    private let contentView = UIView()
+    
+    let mainStackView = CustomStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,6 +31,7 @@ class SettingsView: UIView, BaseView {
     func addSubviews() {
         self.addSubview(self.scrollView)
         self.scrollView.addSubview(self.contentView)
+        self.contentView.addSubview(self.mainStackView)
     }
     
     func styleSubviews() {}
@@ -43,6 +44,11 @@ class SettingsView: UIView, BaseView {
                                 bottom: self.scrollView.contentLayoutGuide.bottomAnchor,
                                 trailing: self.scrollView.contentLayoutGuide.trailingAnchor)
         self.contentView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        
+        self.mainStackView.constraintLeading()
+        self.mainStackView.constraintTrailing()
+        self.mainStackView.constraintTop(to: nil, constant: 24)
+        self.mainStackView.constraintBottom()
     }
     
 }

@@ -128,5 +128,6 @@ public extension Constants {
         
         // MARK: - Settings
         case privacy = "Privacy"
+        case blockedUsers = "Blocked users"
     }
 }
