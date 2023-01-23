@@ -17,6 +17,13 @@ final class TextMessageTableViewCell: BaseMessageTableViewCell {
         setupTextCell()
     }
     
+    init(text: String) {
+        super.init(style: .default, reuseIdentifier: nil)
+        setupContainer(sender: .friend)
+        setupTextCell()
+        plainTextView.setup(text: "This message is deleted.")
+    }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -33,7 +40,7 @@ final class TextMessageTableViewCell: BaseMessageTableViewCell {
 
 // MARK: Public Functions
 
-extension TextMessageTableViewCell {
+extension TextMessageTableViewCell: BaseMessageTableViewCellProtocol {
     
     override func prepareForReuse() {
         super.prepareForReuse()

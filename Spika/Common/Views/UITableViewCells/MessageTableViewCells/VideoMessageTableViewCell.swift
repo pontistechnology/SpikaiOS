@@ -25,7 +25,7 @@ final class VideoMessageTableViewCell: BaseMessageTableViewCell {
     }
 }
 
-extension VideoMessageTableViewCell {
+extension VideoMessageTableViewCell: BaseMessageTableViewCellProtocol {
     override func prepareForReuse() {
         super.prepareForReuse()
         videoView.reset()

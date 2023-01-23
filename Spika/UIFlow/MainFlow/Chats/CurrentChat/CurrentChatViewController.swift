@@ -226,7 +226,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         
         viewModel.roomVisited(roomId: room.id)
         
-        let userId = self.viewModel.repository.getMyUserId()
+        let userId = self.viewModel.getMyUserId()
         guard let messages = self.frc?.sections?.first?.objects as? [MessageEntity],
               let _ = messages.first(where: { message in
                   message.fromUserId == userId
@@ -414,49 +414,16 @@ extension CurrentChatViewController: UITableViewDataSource {
         guard let entity = frc?.object(at: indexPath),
               let roomType = viewModel.room?.type
         else { return EmptyTableViewCell()}
-        
+
         let message = Message(messageEntity: entity)
-        let myUserId = viewModel.repository.getMyUserId()
+        let myUserId = viewModel.getMyUserId()
+        
         guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
               let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
         else { return EmptyTableViewCell() }
         
-        if let replyId = message.replyId,
-           replyId >= 0,
-           let repliedMessageEntity = frc?.fetchedObjects?.first(where: { $0.id == "\(replyId)" })
-        {
-            let repliedMessage = Message(messageEntity: repliedMessageEntity)
-            let senderName = viewModel.room?.getDisplayNameFor(userId: repliedMessage.fromUserId)
-            
-            cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: repliedMessage,
-                               sender: cell.getMessageSenderType(reuseIdentifier: identifier))
-        }
+        let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
         
-        if let reactionsRecords = message.getMessageReactionsRecords() {
-            cell.showReactions(reactionRecords: reactionsRecords)
-        }
-        
-        switch message.type {
-        case .text:
-            (cell as? TextMessageTableViewCell)?.updateCell(message: message)
-        case .image:
-            (cell as? ImageMessageTableViewCell)?.updateCell(message: message)
-        case .file:
-            (cell as? FileMessageTableViewCell)?.updateCell(message: message)
-        case .audio:
-            (cell as? AudioMessageTableViewCell)?.updateCell(message: message)
-        case .video:
-            (cell as? VideoMessageTableViewCell)?.updateCell(message: message)
-        case .unknown:
-            break
-        }
-        
-        cell.tapPublisher.sink(receiveValue: { [weak self] state in
-            self?.handleCellTap(state, message: message)
-        }).store(in: &cell.subs)
-        
-        cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
-        cell.updateTime(to: message.createdAt)
         if let user = viewModel.getUser(for: message.fromUserId) {
             if !isPreviousCellMine(for: indexPath) {
                 cell.updateSender(name: user.getDisplayName())
@@ -465,6 +432,31 @@ extension CurrentChatViewController: UITableViewDataSource {
                 cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
             }
         }
+        
+        if let replyId = message.replyId, replyId >= 0,
+           let repliedMessageEntity = frc?.fetchedObjects?.first(where: { $0.id == "\(replyId)" })
+        {
+            let repliedMessage = Message(messageEntity: repliedMessageEntity)
+            let senderName = viewModel.room?.getDisplayNameFor(userId: repliedMessage.fromUserId)
+            
+            cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown),
+                               message: repliedMessage,
+                               sender: senderType)
+        }
+        
+        if let reactionsRecords = message.getMessageReactionsRecords() {
+            cell.showReactions(reactionRecords: reactionsRecords)
+        }
+        
+        (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
+        
+        cell.tapPublisher.sink(receiveValue: { [weak self] state in
+            self?.handleCellTap(state, message: message)
+        }).store(in: &cell.subs)
+        
+        cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        cell.updateTime(to: message.createdAt)
+        
         return cell
     }
     

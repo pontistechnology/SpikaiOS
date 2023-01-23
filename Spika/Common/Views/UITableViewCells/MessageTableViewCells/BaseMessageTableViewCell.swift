@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 import Combine
 
+protocol BaseMessageTableViewCellProtocol {
+    func updateCell(message: Message)
+}
+
 class BaseMessageTableViewCell: UITableViewCell {
     
     private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary, fontName: .MontserratRegular, alignment: .left)

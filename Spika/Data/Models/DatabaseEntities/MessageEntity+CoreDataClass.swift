@@ -44,6 +44,8 @@ public class MessageEntity: NSManagedObject {
             self.seenCount = seenCount
         }
         
+        isRemoved = message.deleted
+        
         roomId = message.roomId
 
         self.type = message.type.rawValue
