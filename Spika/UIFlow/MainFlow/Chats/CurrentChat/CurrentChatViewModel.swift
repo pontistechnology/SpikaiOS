@@ -194,11 +194,33 @@ extension CurrentChatViewModel {
                 case .details:
                     self?.presentMessageDetails(records: message.records ?? [])
                 case .delete:
-                    self?.deleteMessage(id: id)
+                    self?.showDeleteConfirmDialog(id: id, forAll: message.fromUserId == self?.getMyUserId())
                 default:
                     break
                 }
             }).store(in: &subscriptions)
+    }
+    
+    func showDeleteConfirmDialog(id: Int64, forAll: Bool = false) {
+        if forAll {
+            getAppCoordinator()?
+                .showAlertView(title: "asdf", message: "gfsad", buttons: [.regular(title: "Delete for me"),
+                                                                          .regular(title: "Delete for everyone"),
+                                                                          .destructive(title: "Cancel")])
+                .sink(receiveCompletion: { c in
+
+                }, receiveValue: { c in
+                    switch c {
+
+                    case .dismiss:
+                        break
+                    case .alertViewTap(let a):
+                        print("TAPTAP: ", a)
+                    }
+                })
+                .store(in: &subscriptions)
+        }
+//        self?.deleteMessage(id: id)
     }
     
     func deleteMessage(id: Int64) {
