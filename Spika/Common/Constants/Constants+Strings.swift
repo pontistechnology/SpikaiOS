@@ -125,5 +125,8 @@ public extension Constants {
         case forward = "Forward"
         case copy = "Copy"
         case favorite = "Favorite"
+        
+        // MARK: - Settings
+        case privacy = "Privacy"
     }
 }

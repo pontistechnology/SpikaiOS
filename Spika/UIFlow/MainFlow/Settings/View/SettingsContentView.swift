@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class SettingsContentView: UIView {
     
@@ -14,9 +15,14 @@ class SettingsContentView: UIView {
     
     let userImage = ImageViewWithIcon(image:  UIImage(safeImage: .userImage),size: CGSize(width: 120, height: 120))
     
-    let userName = CustomLabel(text: .getStringFor(.group), textSize: 20, textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
+    let userName = ActionButton()
+    let userNameTextField = TextField()
+    
     let userPhoneNumber = CustomLabel(text: .getStringFor(.group), textSize: 16, textColor: .textTertiary, fontName: .MontserratSemiBold)
     
+    let privacyOptionButton = NavView(text: .getStringFor(.privacy))
+    
+    let userNameChanged = PassthroughSubject<String,Never>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,7 +39,15 @@ class SettingsContentView: UIView {
 
 extension SettingsContentView: BaseView {
     
-    func styleSubviews() {}
+    func styleSubviews() {
+        userName.titleLabel?.font = .customFont(name: .MontserratSemiBold, size: 20)
+        userNameTextField.translatesAutoresizingMaskIntoConstraints = false
+        userNameTextField.autocorrectionType = .no
+        userNameTextField.autocapitalizationType = .none
+        userNameTextField.returnKeyType = .done
+        userNameTextField.delegate = self
+        userNameTextField.isHidden = true
+    }
     
     func addSubviews() {
         self.addSubview(mainStackView)
@@ -42,6 +56,10 @@ extension SettingsContentView: BaseView {
         userInfoStackView.addArrangedSubview(userImage)
         userInfoStackView.addArrangedSubview(userName)
         userInfoStackView.addArrangedSubview(userPhoneNumber)
+        
+        mainStackView.addArrangedSubview(privacyOptionButton)
+        
+        self.addSubview(self.userNameTextField)
     }
     
     func positionSubviews() {
@@ -49,6 +67,26 @@ extension SettingsContentView: BaseView {
         mainStackView.constraintTrailing()
         mainStackView.constraintTop(to: nil, constant: 24)
         mainStackView.constraintBottom()
+        
+        userNameTextField.centerYAnchor.constraint(equalTo: userName.centerYAnchor).isActive = true
+        userNameTextField.constraintLeading(to: self.mainStackView, constant: 22)
+        userNameTextField.constraintTrailing(to: self.mainStackView, constant: -22)
+        userNameTextField.constrainHeight(50)
+    }
+    
+}
+
+extension SettingsContentView: UITextFieldDelegate {
+ 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = textField.text,
+              !text.isEmpty else { return }
+        self.userNameChanged.send(text)
     }
     
 }
