@@ -419,10 +419,9 @@ extension CurrentChatViewController: UITableViewDataSource {
         let myUserId = viewModel.getMyUserId()
         
         guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
-              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
+              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell,
+              let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
         else { return EmptyTableViewCell() }
-        
-        let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
         
         if let user = viewModel.getUser(for: message.fromUserId) {
             if !isPreviousCellMine(for: indexPath) {
@@ -431,6 +430,12 @@ extension CurrentChatViewController: UITableViewDataSource {
             if !isNextCellMine(for: indexPath) {
                 cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
             }
+        }
+        
+        guard !message.deleted
+        else {
+            (cell as? DeletedMessageTableViewCell)?.updateCell(message: message)
+            return cell
         }
         
         if let replyId = message.replyId, replyId >= 0,

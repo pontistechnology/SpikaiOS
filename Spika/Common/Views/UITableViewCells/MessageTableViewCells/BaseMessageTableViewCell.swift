@@ -18,7 +18,7 @@ class BaseMessageTableViewCell: UITableViewCell {
     private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary, fontName: .MontserratRegular, alignment: .left)
     private let senderPhotoImageview = UIImageView(image: UIImage(safeImage: .userImage))
     private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
-    private let messageStateView = MessageStateView(state: .waiting)
+    private let messageStateView = MessageStateView()
     let containerStackView = UIStackView()
     private var replyView: MessageReplyView?
     private let progressView = CircularProgressBar(spinnerWidth: 20)

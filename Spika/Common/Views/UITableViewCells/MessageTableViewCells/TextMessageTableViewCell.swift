@@ -17,9 +17,9 @@ final class TextMessageTableViewCell: BaseMessageTableViewCell {
         setupTextCell()
     }
     
-    init(text: String) {
+    init(text: String, sender: MessageSender) {
         super.init(style: .default, reuseIdentifier: nil)
-        setupContainer(sender: .friend)
+        setupContainer(sender: sender)
         setupTextCell()
         plainTextView.setup(text: "This message is deleted.")
     }
