@@ -91,6 +91,7 @@ extension CurrentChatViewController {
               let entity = frc?.object(at: indexPath)
         else { return }
         let message = Message(messageEntity: entity)
+        guard !message.deleted else { return }
         viewModel.showMessageActions(message)
     }
     
@@ -548,12 +549,15 @@ extension CurrentChatViewController {
 extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let messageEntity = frc?.object(at: indexPath) else { return nil }
+        let message = Message(messageEntity: messageEntity)
+        guard !message.deleted,
+              let records = message.records
+        else { return nil}
+              
         let firstRight = UIContextualAction(style: .normal, title: .getStringFor(.details)) { [weak self] (action, view, completionHandler) in
-            if let messageEntity = self?.frc?.object(at: indexPath),
-               let records = Message(messageEntity: messageEntity).records {
-                self?.viewModel.presentMessageDetails(records: records)
-                completionHandler(true)
-            }
+            self?.viewModel.presentMessageDetails(records: records)
+            completionHandler(true)
         }
         firstRight.backgroundColor = .logoBlue
         firstRight.image = UIImage(safeImage: .detailsMessage)
@@ -561,15 +565,15 @@ extension CurrentChatViewController {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
+        guard let messageEntity = frc?.object(at: indexPath) else { return nil }
+        let message = Message(messageEntity: messageEntity)
+        guard !message.deleted else { return nil }
+        
         let firstLeft = UIContextualAction(style: .normal, title: .getStringFor(.reply)) { [weak self] (action, view, completionHandler) in
 
-            guard let messageEntity = self?.frc?.object(at: indexPath) else { return }
-            let message = Message(messageEntity: messageEntity)
             let senderName = self?.viewModel.room?.getDisplayNameFor(userId: message.fromUserId)
             self?.viewModel.selectedMessageToReplyPublisher.send(message)
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
-            
             completionHandler(true)
         }
         firstLeft.backgroundColor = .logoBlue
