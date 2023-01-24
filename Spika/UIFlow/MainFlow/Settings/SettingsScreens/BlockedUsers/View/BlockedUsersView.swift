@@ -9,13 +9,15 @@ import Foundation
 
 final class BlockedUsersView: BaseSettingsView {
     
+    let chatMembersView = ChatMembersView(contactsEditable: true)
+    
     override func styleSubviews() {
         super.styleSubviews()
-//        self.titleLabel.setText(text: .getStringFor(.blockedUsers))
     }
     
     override func addSubviews() {
         super.addSubviews()
+        self.mainStackView.addArrangedSubview(chatMembersView)
     }
     
 }

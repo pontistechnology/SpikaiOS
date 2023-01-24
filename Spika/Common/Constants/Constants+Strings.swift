@@ -129,5 +129,6 @@ public extension Constants {
         // MARK: - Settings
         case privacy = "Privacy"
         case blockedUsers = "Blocked users"
+        case somethingWentWrongFetchingBlockedUsers = "Something went wrong fetching blocked users"
     }
 }
