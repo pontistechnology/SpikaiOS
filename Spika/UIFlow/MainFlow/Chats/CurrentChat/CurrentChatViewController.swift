@@ -555,13 +555,19 @@ extension CurrentChatViewController {
               let records = message.records
         else { return nil}
               
-        let firstRight = UIContextualAction(style: .normal, title: .getStringFor(.details)) { [weak self] (action, view, completionHandler) in
+        let detailsAction = UIContextualAction(style: .normal, title: .getStringFor(.details)) { [weak self] (action, view, completionHandler) in
             self?.viewModel.presentMessageDetails(records: records)
             completionHandler(true)
         }
-        firstRight.backgroundColor = .logoBlue
-        firstRight.image = UIImage(safeImage: .detailsMessage)
-        return UISwipeActionsConfiguration(actions: [firstRight])
+        detailsAction.backgroundColor = .appBlueLight
+        detailsAction.image = UIImage(safeImage: .slideDetails)
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: .getStringFor(.delete)) { [weak self] (action, view, completionHandler) in
+            
+            completionHandler(true)
+        }
+        deleteAction.image = UIImage(safeImage: .slideDelete)
+        return UISwipeActionsConfiguration(actions: [deleteAction, detailsAction])
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -576,7 +582,7 @@ extension CurrentChatViewController {
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
             completionHandler(true)
         }
-        firstLeft.backgroundColor = .logoBlue
+        firstLeft.backgroundColor = .appBlueLight
         firstLeft.image = UIImage(safeImage: .slideReply)
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }
