@@ -35,8 +35,9 @@ extension MessageTextView: BaseView {
 }
 
 extension MessageTextView {
-    func setup(text: String?) {
+    func setup(text: String?, color: UIColor = .logoBlue) {
         textView.text = text
+        textView.textColor = color
     }
     
     func reset() {
