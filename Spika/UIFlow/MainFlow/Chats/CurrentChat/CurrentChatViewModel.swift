@@ -203,22 +203,14 @@ extension CurrentChatViewModel {
     
     func showDeleteConfirmDialog(id: Int64, forAll: Bool = false) {
         if forAll {
+            let actions = [AlertViewButton.regular(title: "Delete for everyone"),
+                           .regular(title: "Delete for me"),
+                           .regular(title: "Cancel")]
             getAppCoordinator()?
-                .showAlertView(title: "asdf", message: "gfsad", buttons: [.regular(title: "Delete for me"),
-                                                                          .regular(title: "Delete for everyone"),
-                                                                          .destructive(title: "Cancel")])
-                .sink(receiveCompletion: { c in
-
-                }, receiveValue: { c in
-                    switch c {
-
-                    case .dismiss:
-                        break
-                    case .alertViewTap(let a):
-                        print("TAPTAP: ", a)
-                    }
-                })
-                .store(in: &subscriptions)
+                .showActionSheet(actions: actions)
+                .sink(receiveValue: { indexcic in
+                    print("indexcic ", indexcic)
+                }).store(in: &subscriptions)
         }
 //        self?.deleteMessage(id: id)
     }

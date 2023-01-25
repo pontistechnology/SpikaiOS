@@ -552,22 +552,24 @@ extension CurrentChatViewController {
         guard let messageEntity = frc?.object(at: indexPath) else { return nil }
         let message = Message(messageEntity: messageEntity)
         guard !message.deleted,
-              let records = message.records
+              let records = message.records,
+              let id = message.id
         else { return nil}
               
-        let detailsAction = UIContextualAction(style: .normal, title: .getStringFor(.details)) { [weak self] (action, view, completionHandler) in
+        let detailsAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
             self?.viewModel.presentMessageDetails(records: records)
             completionHandler(true)
         }
-        detailsAction.backgroundColor = .appBlueLight
+        detailsAction.backgroundColor = .appWhite
         detailsAction.image = UIImage(safeImage: .slideDetails)
         
-        let deleteAction = UIContextualAction(style: .destructive, title: .getStringFor(.delete)) { [weak self] (action, view, completionHandler) in
-            
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
+            self?.viewModel.showDeleteConfirmDialog(id: id, forAll: true)
             completionHandler(true)
         }
+        deleteAction.backgroundColor = .appWhite
         deleteAction.image = UIImage(safeImage: .slideDelete)
-        return UISwipeActionsConfiguration(actions: [deleteAction, detailsAction])
+        return UISwipeActionsConfiguration(actions: [detailsAction, deleteAction])
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -582,7 +584,7 @@ extension CurrentChatViewController {
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
             completionHandler(true)
         }
-        firstLeft.backgroundColor = .appBlueLight
+        firstLeft.backgroundColor = .appWhite
         firstLeft.image = UIImage(safeImage: .slideReply)
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }

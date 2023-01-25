@@ -288,4 +288,24 @@ extension AppCoordinator {
     func showOneSecPopUp(_ selection: OneSecPopUpType) {
         getWindowManager().showPopUp(for: .oneSec(selection))
     }
+    
+    func showActionSheet(actions: [AlertViewButton], showCancel: Bool = true) -> Future<Int, Never> {
+        Future { [weak self] promise in
+            let actionSheet = UIAlertController(title: nil,
+                                                message: nil,
+                                                preferredStyle: .actionSheet)
+            actions.enumerated().forEach { (index, action) in
+                actionSheet.addAction(UIAlertAction(title:  action.title,
+                                                    style: .destructive, handler: { [weak self] _ in
+                    promise(.success(index))
+                }))
+            }
+            if showCancel {
+                actionSheet.addAction(UIAlertAction(title:  .getStringFor(.cancel),
+                                                    style: .cancel,
+                                                    handler: nil))                
+            }
+            self?.navigationController.present(actionSheet, animated: true)
+        }
+    }
 }
