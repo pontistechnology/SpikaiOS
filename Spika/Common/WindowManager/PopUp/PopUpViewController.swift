@@ -21,8 +21,6 @@ class PopUpViewController: BaseViewController {
         case .errorMessage(let message):
             popUpView = ErrorMessageView(message: message)
             publisher.send(.dismiss(after: 3))
-        case .alertView(title: let title, message: let message, buttons: let buttons):
-            popUpView = AlertView(title: title, message: message, buttons: buttons)
         }
         super.init()
 

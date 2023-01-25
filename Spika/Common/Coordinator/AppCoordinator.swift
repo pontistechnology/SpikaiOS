@@ -277,34 +277,31 @@ extension AppCoordinator {
     func showError(message: String) {
         getWindowManager().showPopUp(for: .errorMessage(message))
     }
-    
-    func showAlertView(title: String, message: String, buttons: [AlertViewButton]) -> PassthroughSubject<PopUpPublisherType, Never> {
-        getWindowManager().showPopUp(for: .alertView(title: title,
-                                                     message: message,
-                                                     buttons: buttons))
-        return getWindowManager().popUpPublisher
-    }
-    
+//        
     func showOneSecPopUp(_ selection: OneSecPopUpType) {
         getWindowManager().showPopUp(for: .oneSec(selection))
     }
     
-    func showActionSheet(title: String? = nil,
-                         message: String? = nil,
-                         actions: [AlertViewButton],
-                         showCancel: Bool = true) -> Future<Int, Never> {
+    func showAlert(title: String? = nil, message: String? = nil, style: UIAlertController.Style = .actionSheet,
+                   actions: [AlertViewButton], cancelText: String? = .getStringFor(.cancel)) -> Future<Int, Never> {
         Future { [weak self] promise in
-            let actionSheet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+            let actionSheet = UIAlertController(title: title, message: message, preferredStyle: style)
             
             actions.enumerated().forEach { (index, action) in
-                actionSheet.addAction(UIAlertAction(title:  action.title, style: action.style, handler: { [weak self] _ in
+                actionSheet.addAction(UIAlertAction(title:  action.title, style: action.style, handler: { _ in
                     promise(.success(index))
                 }))
             }
-            if showCancel {
-                actionSheet.addAction(UIAlertAction(title:  .getStringFor(.cancel), style: .cancel, handler: nil))
+            if let cancelText = cancelText {
+                actionSheet.addAction(UIAlertAction(title:  cancelText, style: .cancel, handler: nil))
             }
             self?.navigationController.present(actionSheet, animated: true)
+            
+            if actions.isEmpty {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                    actionSheet.dismiss(animated: true)
+                }
+            }
         }
     }
 }

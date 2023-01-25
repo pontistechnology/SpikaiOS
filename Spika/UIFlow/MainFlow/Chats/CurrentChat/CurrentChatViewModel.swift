@@ -206,9 +206,9 @@ extension CurrentChatViewModel {
         var actions: [AlertViewButton] = [.destructive(title: .getStringFor(.deleteForMe))]
         if message.fromUserId == getMyUserId() {
             actions.append(.destructive(title: .getStringFor(.deleteForEveryone)))
-        }
+        }        
         getAppCoordinator()?
-            .showActionSheet(actions: actions)
+            .showAlert(actions: actions)
             .sink(receiveValue: { [weak self] tappedIndex in
                 switch tappedIndex {
                 case 0:

@@ -38,12 +38,11 @@ enum OneSecPopUpType {
 
 enum PopUpType {
     case errorMessage(_ message: String)
-    case alertView(title: String, message: String, buttons: [AlertViewButton])
     case oneSec(OneSecPopUpType)
     
     var isBlockingUI: Bool {
         switch self {
-        case .oneSec, .alertView:
+        case .oneSec:
             return true
         case .errorMessage:
             return false

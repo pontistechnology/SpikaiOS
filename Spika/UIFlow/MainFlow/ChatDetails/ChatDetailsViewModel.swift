@@ -34,7 +34,7 @@ class ChatDetailsViewModel: BaseViewModel {
             .sink { [weak self] c in
                 switch c {
                 case .failure(_):
-                    self?.getAppCoordinator()?.showError(message: .getStringFor(.somethingWentWrongAddingUsers))
+                    self?.showError(.getStringFor(.somethingWentWrongAddingUsers))
                 case.finished:
                     return
                 }
@@ -67,8 +67,7 @@ class ChatDetailsViewModel: BaseViewModel {
                     break
                 case .failure(_):
                     let message: String = mute ? .getStringFor(.somethingWentWrongMutingRoom) : .getStringFor(.somethingWentWrongUnmutingRoom)
-                    self.getAppCoordinator()?
-                        .showError(message: message)
+                    self.showError(message)
                     self.room.send(self.room.value)
                 }
             } receiveValue: { _ in }
@@ -166,12 +165,12 @@ class ChatDetailsViewModel: BaseViewModel {
             }.store(in: &self.subscriptions)
     }
     
-    func deleteRoomComfirmed() {
+    func deleteRoomConfirmed() {
         self.repository.deleteOnlineRoom(forRoomId: self.room.value.id)
             .sink { [weak self] completion in
                 switch completion {
                 case .failure(_):
-                    self?.getAppCoordinator()?.showError(message: .getStringFor(.somethingWentWrongDeletingTheRoom))
+                    self?.showError(.getStringFor(.somethingWentWrongDeletingTheRoom))
                 case.finished:
                     guard let room = self?.room.value else { return }
                     self?.deleteLocalRoom(room: room)
@@ -188,7 +187,7 @@ class ChatDetailsViewModel: BaseViewModel {
             .sink { [weak self] c in
                 switch c {
                 case .failure(_):
-                    self?.getAppCoordinator()?.showError(message: .getStringFor(.somethingWentWrongDeletingTheRoom))
+                    self?.showError(.getStringFor(.somethingWentWrongDeletingTheRoom))
                 case.finished:
                     self?.getAppCoordinator()?.popTopViewController()
                     self?.getAppCoordinator()?.popTopViewController()
@@ -199,19 +198,15 @@ class ChatDetailsViewModel: BaseViewModel {
     }
     
     func deleteRoom() {
-        self.getAppCoordinator()?.showAlertView(title: .getStringFor(.deleteTheRoom),
-                                                message: .getStringFor(.deleteTheRoom),
-                                                buttons: [AlertViewButton.regular(title: .getStringFor(.cancel)),
-                                                          AlertViewButton.regular(title: .getStringFor(.delete))])
-        .sink(receiveValue: { type in
-            switch type {
-            case .dismiss:
-                ()
-            case .alertViewTap(let index):
-                guard index == 1 else { return }
-                self.deleteRoomComfirmed()
-            }
-        }).store(in: &self.subscriptions)
+        self.getAppCoordinator()?.showAlert(title: .getStringFor(.deleteTheRoom),
+                                            message: .getStringFor(.deleteTheRoom),
+                                            style: .alert,
+                                            actions: [AlertViewButton.regular(title: .getStringFor(.delete))])
+        .sink(receiveValue: { [weak self] tappedIndex in
+            guard tappedIndex == 0 else { return }
+            self?.deleteRoomConfirmed()
+        })
+        .store(in: &subscriptions)
     }
     
     func changeAvatar(image: Data) {
