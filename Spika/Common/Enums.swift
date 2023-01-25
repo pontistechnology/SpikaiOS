@@ -78,6 +78,15 @@ enum AlertViewButton {
             return title
         }
     }
+    
+    var style: UIAlertAction.Style {
+        switch self {
+        case .regular:
+            return .default
+        case .destructive:
+            return .destructive
+        }
+    }
 }
 
 enum MessageSender {

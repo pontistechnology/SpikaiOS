@@ -552,8 +552,7 @@ extension CurrentChatViewController {
         guard let messageEntity = frc?.object(at: indexPath) else { return nil }
         let message = Message(messageEntity: messageEntity)
         guard !message.deleted,
-              let records = message.records,
-              let id = message.id
+              let records = message.records
         else { return nil}
               
         let detailsAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
@@ -564,7 +563,7 @@ extension CurrentChatViewController {
         detailsAction.image = UIImage(safeImage: .slideDetails)
         
         let deleteAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
-            self?.viewModel.showDeleteConfirmDialog(id: id, forAll: true)
+            self?.viewModel.showDeleteConfirmDialog(message: message)
             completionHandler(true)
         }
         deleteAction.backgroundColor = .appWhite

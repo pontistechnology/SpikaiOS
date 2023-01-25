@@ -194,29 +194,35 @@ extension CurrentChatViewModel {
                 case .details:
                     self?.presentMessageDetails(records: message.records ?? [])
                 case .delete:
-                    self?.showDeleteConfirmDialog(id: id, forAll: message.fromUserId == self?.getMyUserId())
+                    self?.showDeleteConfirmDialog(message: message)
                 default:
                     break
                 }
             }).store(in: &subscriptions)
     }
     
-    func showDeleteConfirmDialog(id: Int64, forAll: Bool = false) {
-        if forAll {
-            let actions = [AlertViewButton.regular(title: "Delete for everyone"),
-                           .regular(title: "Delete for me"),
-                           .regular(title: "Cancel")]
-            getAppCoordinator()?
-                .showActionSheet(actions: actions)
-                .sink(receiveValue: { indexcic in
-                    print("indexcic ", indexcic)
-                }).store(in: &subscriptions)
+    func showDeleteConfirmDialog(message: Message) {
+        guard let id = message.id else { return }
+        var actions: [AlertViewButton] = [.destructive(title: .getStringFor(.deleteForMe))]
+        if message.fromUserId == getMyUserId() {
+            actions.append(.destructive(title: .getStringFor(.deleteForEveryone)))
         }
-//        self?.deleteMessage(id: id)
+        getAppCoordinator()?
+            .showActionSheet(actions: actions)
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.deleteMessage(id: id, target: .user)
+                case 1:
+                    self?.deleteMessage(id: id, target: .all)
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
     }
     
-    func deleteMessage(id: Int64) {
-        repository.deleteMessage(messageId: id, target: .all).sink { c in
+    func deleteMessage(id: Int64, target: DeleteMessageTarget) {
+        repository.deleteMessage(messageId: id, target: target).sink { c in
             
         } receiveValue: { [weak self] response in
             guard let message = response.data?.message else { return }
