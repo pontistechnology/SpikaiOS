@@ -34,7 +34,7 @@ class SettingsViewController: BaseViewController {
             .compactMap { $0?.avatarFileId?.fullFilePathFromId() }
             .sink { c in
             } receiveValue: { [weak self] url in
-                self?.settingsView.contentView.userImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
+                self?.settingsView.userImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
             }.store(in: &self.subscriptions)
         
         self.viewModel
@@ -42,8 +42,8 @@ class SettingsViewController: BaseViewController {
             .compactMap { $0?.displayName }
             .sink { c in
             } receiveValue: { [weak self] text in
-                self?.settingsView.contentView.userName.setTitle(text, for: .normal)
-                self?.settingsView.contentView.userNameTextField.text = text
+                self?.settingsView.userName.setTitle(text, for: .normal)
+                self?.settingsView.userNameTextField.text = text
             }.store(in: &self.subscriptions)
         
         self.viewModel
@@ -51,31 +51,30 @@ class SettingsViewController: BaseViewController {
             .compactMap { $0?.telephoneNumber }
             .sink { c in
             } receiveValue: { [weak self] text in
-                self?.settingsView.contentView.userPhoneNumber.setText(text: text)
+                self?.settingsView.userPhoneNumber.setText(text: text)
             }.store(in: &self.subscriptions)
         
         // View binding
-        self.settingsView.contentView.userName
+        self.settingsView.userName
             .tap()
             .sink { [weak self] _ in
                 self?.onChangeUserName()
             }.store(in: &self.subscriptions)
         
-        self.settingsView.contentView.userNameChanged
+        self.settingsView.userNameChanged
             .sink { [weak self] newName in
-                self?.settingsView.contentView.userNameTextField.isHidden = true
+                self?.settingsView.userNameTextField.isHidden = true
                 self?.viewModel.onChangeUserName(newName: newName)
             }.store(in: &self.subscriptions)
         
-        self.settingsView.contentView.userImage.tap().sink { [weak self] _ in
+        self.settingsView.userImage.tap().sink { [weak self] _ in
             guard let self = self else { return }
             self.present(self.actionSheet, animated: true, completion: nil)
         }.store(in: &subscriptions)
         
-        self.settingsView.contentView.privacyOptionButton
+        self.settingsView.privacyOptionButton
             .tap()
             .sink { [weak self] _ in
-//                self?.navigationItem.backButtonTitle = .getStringFor(.privacy)
                 self?.viewModel.getAppCoordinator()?.presentPrivacySettingsScreen()
             }.store(in: &subscriptions)
     }
@@ -96,14 +95,14 @@ class SettingsViewController: BaseViewController {
         actionSheet.addAction(UIAlertAction(title:  .getStringFor(.removePhoto), style: .destructive, handler: { [weak self] _ in
             guard let self = self else { return }
             self.fileData = nil
-            self.settingsView.contentView.userImage.deleteMainImage()
+            self.settingsView.userImage.deleteMainImage()
         }))
         actionSheet.addAction(UIAlertAction(title: .getStringFor(.cancel), style: .cancel, handler: nil))
     }
     
     func onChangeUserName() {
-        self.settingsView.contentView.userNameTextField.isHidden = false
-        self.settingsView.contentView.userNameTextField.becomeFirstResponder()
+        self.settingsView.userNameTextField.isHidden = false
+        self.settingsView.userNameTextField.becomeFirstResponder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -133,7 +132,7 @@ extension SettingsViewController : UIImagePickerControllerDelegate, UINavigation
                 viewModel.showError(.getStringFor(.pleaseSelectASquare))
             } else {
                 guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
-                self.settingsView.contentView.userImage.showImage(resizedImage)
+                self.settingsView.userImage.showImage(resizedImage)
                 guard let data = resizedImage.jpegData(compressionQuality: 1) else { return }
                 self.viewModel.onChangeUserAvatar(imageFileData: data)
             }

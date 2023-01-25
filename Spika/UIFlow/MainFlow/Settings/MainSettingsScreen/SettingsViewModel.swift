@@ -8,15 +8,7 @@
 import Foundation
 import Combine
 
-class SettingsViewModel: BaseViewModel {
-    
-    let user = CurrentValueSubject<User?,Error>(nil)
-    
-    
-    override init(repository: Repository, coordinator: Coordinator) {
-        super.init(repository: repository, coordinator: coordinator)
-        self.fetchUserDetails()
-    }
+class SettingsViewModel: BaseSettingsViewModel {
     
     func onChangeUserName(newName: String) {
         guard newName != self.user.value?.getDisplayName() else { return }
@@ -61,15 +53,6 @@ class SettingsViewModel: BaseViewModel {
             self.repository.saveUserInfo(user: user, device: nil)
             self.user.send(user)
         }.store(in: &subscriptions)
-    }
-    
-    func fetchUserDetails() {
-        self.repository.fetchMyUserDetails()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { c in
-            }, receiveValue: { [weak self] responseModel in
-                self?.user.send(responseModel.data?.user)
-            }).store(in: &self.subscriptions)
     }
     
 }

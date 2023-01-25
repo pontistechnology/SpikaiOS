@@ -15,7 +15,7 @@ class BaseSettingsView: UIView, BaseView {
         return view
     } ()
     
-    private let contentView = UIView()
+    let contentView = UIView()
     
     let mainStackView = CustomStackView()
     
