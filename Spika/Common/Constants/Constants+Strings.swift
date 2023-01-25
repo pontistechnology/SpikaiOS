@@ -130,5 +130,6 @@ public extension Constants {
         case privacy = "Privacy"
         case blockedUsers = "Blocked users"
         case somethingWentWrongFetchingBlockedUsers = "Something went wrong fetching blocked users"
+        case somethingWentWrongUnblockingUser = "Something went wrong unblocking the contact"
     }
 }

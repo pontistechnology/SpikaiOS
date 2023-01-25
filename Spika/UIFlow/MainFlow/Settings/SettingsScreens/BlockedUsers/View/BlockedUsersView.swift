@@ -13,6 +13,7 @@ final class BlockedUsersView: BaseSettingsView {
     
     override func styleSubviews() {
         super.styleSubviews()
+        chatMembersView.isAdmin.send(true)
     }
     
     override func addSubviews() {

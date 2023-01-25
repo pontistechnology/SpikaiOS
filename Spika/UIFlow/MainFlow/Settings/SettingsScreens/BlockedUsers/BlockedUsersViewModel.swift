@@ -19,6 +19,7 @@ class BlockedUsersViewModel: BaseSettingsViewModel {
  
     func fetchBlockedUsers() {
         repository.getBlockedUsers()
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {
                 case .finished:
@@ -30,6 +31,35 @@ class BlockedUsersViewModel: BaseSettingsViewModel {
                 }
             } receiveValue: { [weak self] response in
                 self?.blockedUsers.send(response.data.blockedUsers)
+            }.store(in: &subscriptions)
+    }
+    
+    func unblockUserAt(index: Int) {
+        guard let user = self.blockedUsers.value?[index] else { return }
+        self.repository.unblockUser(userId: user.id)
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    self?.updateBlockedList()
+                    self?.fetchBlockedUsers()
+                case .failure(_):
+                    self?.getAppCoordinator()?.showError(message: .getStringFor(.somethingWentWrongUnblockingUser))
+                }
+            } receiveValue: { _ in }
+            .store(in: &self.subscriptions)
+    }
+    
+    func updateBlockedList() {
+        repository.getBlockedUsers()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    return
+                case .failure(let error):
+                    return
+                }
+            } receiveValue: { [weak self] response in
+                self?.repository.updateBlockedUsers(users: response.data.blockedUsers)
             }.store(in: &subscriptions)
     }
     

@@ -29,6 +29,12 @@ class BlockedUsersViewController: BaseViewController {
                 self?.settingsView.chatMembersView.updateWithUsers(users: users)
             })
             .store(in: &self.subscriptions)
+        
+        self.settingsView.chatMembersView
+            .onRemoveUser
+            .sink { [weak self] indexPath in
+                self?.viewModel.unblockUserAt(index: indexPath.row)
+            }.store(in: &self.subscriptions)
     }
     
 }
