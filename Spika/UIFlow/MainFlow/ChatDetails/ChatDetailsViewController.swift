@@ -71,7 +71,7 @@ final class ChatDetailsViewController: BaseViewController {
             .store(in: &self.viewModel.subscriptions)
         
         isAdmin
-            .subscribe(self.chatDetailView.contentView.chatMembersView.isAdmin)
+            .subscribe(self.chatDetailView.contentView.chatMembersView.editable)
             .store(in: &self.viewModel.subscriptions)
         
         isAdmin

@@ -23,7 +23,7 @@ class ChatContentView: UIView, BaseView {
     let pinChatSwitchView = SwitchView(text: .getStringFor(.pinchat))
     let muteSwitchView = SwitchView(text: .getStringFor(.mute))
     
-    let chatMembersView = ChatMembersView(contactsEditable: true)
+    let chatMembersView = ChatMembersView(canAddNewMore: true)
     
     let blockButton: UIButton = {
         let btn = UIButton()

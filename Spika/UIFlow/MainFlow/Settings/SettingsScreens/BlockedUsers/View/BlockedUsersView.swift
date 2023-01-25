@@ -9,11 +9,11 @@ import Foundation
 
 final class BlockedUsersView: BaseSettingsView {
     
-    let chatMembersView = ChatMembersView(contactsEditable: true)
+    let chatMembersView = ChatMembersView(canAddNewMore: false)
     
     override func styleSubviews() {
         super.styleSubviews()
-        chatMembersView.isAdmin.send(true)
+        chatMembersView.editable.send(true)
     }
     
     override func addSubviews() {
