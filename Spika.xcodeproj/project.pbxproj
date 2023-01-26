@@ -47,10 +47,10 @@
 		6C9C5C7C29262610009D3E2B /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */; };
 		6C9C5C7E29262657009D3E2B /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7D29262657009D3E2B /* CustomStackView.swift */; };
 		6C9C7242291E743A0089AB4C /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C7241291E743A0089AB4C /* SettingsModel.swift */; };
+		6CBD43A52982801D00A1059E /* AppRepository+BlockedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */; };
+		6CBD43A9298282F100A1059E /* AppRepository+Blocked_Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */; };
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
-		6CF1C865297819CF00754A24 /* AppRepository+BlockedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */; };
-		6CF1C86629781A4D00754A24 /* AppRepository+BlockedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */; };
 		6CF1C86829781D0900754A24 /* TestRepository+BlockedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF1C86729781D0900754A24 /* TestRepository+BlockedUsers.swift */; };
 		6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6CFB46C22948C1D7000D26BB /* Localizable.strings */; };
 		6E1AA22EBF32F5F6B1E36042 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5B9AC9482808B0DB202E82 /* Pods_Spika.framework */; };
@@ -461,6 +461,7 @@
 		6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		6C9C5C7D29262657009D3E2B /* CustomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
 		6C9C7241291E743A0089AB4C /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Blocked_Notification.swift"; sourceTree = "<group>"; };
 		6CD30FF22922865D0017918B /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+BlockedUsers.swift"; sourceTree = "<group>"; };
 		6CF1C86729781D0900754A24 /* TestRepository+BlockedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+BlockedUsers.swift"; sourceTree = "<group>"; };
@@ -1456,6 +1457,7 @@
 				939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */,
 				93CF473C2963240200213DBE /* AppRepository+File.swift */,
 				6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */,
+				6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -2186,6 +2188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				931B150F28211ACB00A0CD35 /* RoomUserEntity+CoreDataClass.swift in Sources */,
+				6CBD43A9298282F100A1059E /* AppRepository+Blocked_Notification.swift in Sources */,
 				9319416B2819CB510067566C /* NotificationService.swift in Sources */,
 				931B151028211ACB00A0CD35 /* UserEntity+CoreDataClass.swift in Sources */,
 				931B14F928211AC100A0CD35 /* ContactsRequestModel.swift in Sources */,
@@ -2248,7 +2251,6 @@
 				931B150628211AC600A0CD35 /* CreateRoomResponseModel.swift in Sources */,
 				934F036E282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */,
-				6CF1C86629781A4D00754A24 /* AppRepository+BlockedUsers.swift in Sources */,
 				931B150E28211ACB00A0CD35 /* RoomEntity+CoreDataClass.swift in Sources */,
 				931B14D7281FD91100A0CD35 /* AppRepository+Device.swift in Sources */,
 				93711DFC28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -2308,6 +2310,7 @@
 				AD81926B2721D5DE00D5BE48 /* SettingsViewModel.swift in Sources */,
 				9352A5722977667900E0D90E /* MessageActionsView.swift in Sources */,
 				939AAE3C28F62F6600DD5142 /* Room.swift in Sources */,
+				6CBD43A52982801D00A1059E /* AppRepository+BlockedUsers.swift in Sources */,
 				6C2497DF2924FB3000594A55 /* UserSelectionViewController.swift in Sources */,
 				AD9A68182739084A00BDC439 /* ActionButton.swift in Sources */,
 				AD8192612721D52200D5BE48 /* CallHistoryView.swift in Sources */,
@@ -2408,7 +2411,6 @@
 				9367455E27C71D1300F43CCD /* OldAlertViewController.swift in Sources */,
 				AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */,
 				93F4A89E282DE9C400CEA637 /* MessageDetailsView.swift in Sources */,
-				6CF1C865297819CF00754A24 /* AppRepository+BlockedUsers.swift in Sources */,
 				93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */,
 				6C175EB7297EC61C00804275 /* BaseSettingsViewModel.swift in Sources */,
 				AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */,

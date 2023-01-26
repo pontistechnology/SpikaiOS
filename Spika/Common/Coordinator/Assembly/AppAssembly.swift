@@ -12,6 +12,7 @@ final class AppAssembly: Assembly {
     
     func assemble(container: Container) {
         self.assembleCoreDataStack(container)
+        self.assemblePublishers(container)
         self.assembleMainRepository(container)
         self.assembleSSE(container)
         self.assembleWindowManager(container)
@@ -32,6 +33,9 @@ final class AppAssembly: Assembly {
         container.register(NetworkService.self) { r in
             return NetworkService()
         }.inObjectScope(.container)
+        container.register(DispatchQueue.self) { r in
+            return DispatchQueue(label: "com.spika.blockeduserservice", attributes: .concurrent)
+        }.inObjectScope(.container)
         container.register(UserDefaults.self) { r in
             return UserDefaults(suiteName: Constants.Networking.appGroupName)!
         }.inObjectScope(.container)
@@ -49,6 +53,19 @@ final class AppAssembly: Assembly {
             let networkService = container.resolve(NetworkService.self)!
             let databaseService = container.resolve(DatabaseService.self)!
             return AppRepository(networkService: networkService, databaseService: databaseService, userDefaults: r.resolve(UserDefaults.self)!)
+        }.inObjectScope(.container)
+    }
+    
+    private func assemblePublishers(_ container: Container) {
+        container.register(CurrentValueSubject<Set<Int64>?,Never>.self) { resolver in
+            let userDefaults = resolver.resolve(UserDefaults.self)
+            let blockedArray = userDefaults?.value(forKey: "blocked_user_ids") as? [Int64]
+            return CurrentValueSubject<Set<Int64>?,Never>(Set(blockedArray ?? []))
+        }.inObjectScope(.container)
+        container.register(CurrentValueSubject<Set<Int64>,Never>.self) { resolver in
+            let userDefaults = resolver.resolve(UserDefaults.self)
+            let confirmedArray = userDefaults?.value(forKey: "confirmed_user_ids") as? [Int64]
+            return CurrentValueSubject<Set<Int64>,Never>(Set(confirmedArray ?? []))
         }.inObjectScope(.container)
     }
     
