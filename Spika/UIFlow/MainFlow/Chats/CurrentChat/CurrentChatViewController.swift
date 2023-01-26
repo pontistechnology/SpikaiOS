@@ -438,6 +438,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             (cell as? DeletedMessageTableViewCell)?.updateCell(message: message)
             return cell
         }
+        // Do not add anything before this, because message can be deleted
         
         if let replyId = message.replyId, replyId >= 0,
            let repliedMessageEntity = frc?.fetchedObjects?.first(where: { $0.id == "\(replyId)" })
