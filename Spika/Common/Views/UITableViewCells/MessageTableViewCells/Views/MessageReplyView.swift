@@ -13,13 +13,9 @@ class MessageReplyView: UIView {
     private let thumbnailImageView = UIImageView()
     let containerView = UIView()
     let closeButton = UIButton()
-    var indexPath: IndexPath?
     private var showCloseButton = false
-    let message: Message
     
-    init(senderName: String, message: Message, backgroundColor: UIColor, indexPath: IndexPath?, showCloseButton: Bool = false) {
-        self.message = message
-        self.indexPath = indexPath
+    init(senderName: String, message: Message, backgroundColor: UIColor, showCloseButton: Bool = false) {
         self.showCloseButton = showCloseButton
         containerView.backgroundColor = backgroundColor
         senderNameLabel = CustomLabel(text: senderName, textSize: 12, textColor: .textPrimary, fontName: .MontserratSemiBold)

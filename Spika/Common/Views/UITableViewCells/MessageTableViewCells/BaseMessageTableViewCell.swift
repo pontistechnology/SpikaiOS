@@ -9,12 +9,16 @@ import Foundation
 import UIKit
 import Combine
 
+protocol BaseMessageTableViewCellProtocol {
+    func updateCell(message: Message)
+}
+
 class BaseMessageTableViewCell: UITableViewCell {
     
     private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary, fontName: .MontserratRegular, alignment: .left)
     private let senderPhotoImageview = UIImageView(image: UIImage(safeImage: .userImage))
     private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
-    private let messageStateView = MessageStateView(state: .waiting)
+    private let messageStateView = MessageStateView()
     let containerStackView = UIStackView()
     private var replyView: MessageReplyView?
     private let progressView = CircularProgressBar(spinnerWidth: 20)
@@ -151,20 +155,17 @@ extension BaseMessageTableViewCell {
         timeLabel.isHidden = !value
     }
     
-    func showReplyView(senderName: String, message: Message, sender: MessageSender?, indexPath: IndexPath?) {
+    func showReplyView(senderName: String, message: Message, sender: MessageSender?) {
         if replyView == nil, let sender = sender {
             
-            let containerColor = sender == .me ? .chatBackground : UIColor(hexString: "C8EBFE")
+            let containerColor: UIColor = sender == .me ? .chatBackground : .myChatBackground
             
-            self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: containerColor, indexPath: indexPath)
+            self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: containerColor)
             
             containerStackView.insertArrangedSubview(replyView!, at: 0)
             
             replyView?.tap().sink(receiveValue: { [weak self] _ in
-                guard let self = self,
-                      let indexPath = self.replyView?.indexPath
-                else { return }
-                self.tapPublisher.send(.scrollToReply(indexPath))
+                self?.tapPublisher.send(.scrollToReply)
             }).store(in: &subs)
         }
     }

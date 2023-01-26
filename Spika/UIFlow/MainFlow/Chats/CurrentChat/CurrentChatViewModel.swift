@@ -22,7 +22,8 @@ class CurrentChatViewModel: BaseViewModel {
     let isBlocked = CurrentValueSubject<Bool,Never>(false)
     let userRepliedInChat = CurrentValueSubject<Bool,Never>(true)
     let offerToBlock = CurrentValueSubject<Bool,Never>(false)
-   
+    
+    let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
     
     init(repository: Repository, coordinator: Coordinator, friendUser: User) {
         self.friendUser = friendUser
@@ -180,14 +181,53 @@ extension CurrentChatViewModel {
         getAppCoordinator()?
             .presentMessageActionsSheet()
             .sink(receiveValue: { [weak self] action in
+                self?.getAppCoordinator()?.dismissViewController()
+                guard let id = message.id else { return }
                 switch action {
                 case .reaction(emoji: let emoji):
-                    guard let id = message.id else { return }
                     self?.sendReaction(reaction: emoji, messageId: id)
+                case .reply:
+                    self?.selectedMessageToReplyPublisher.send(message)
+                case .copy:
+                    UIPasteboard.general.string = message.body?.text
+                    self?.getAppCoordinator()?.showOneSecPopUp(.copy)
+                case .details:
+                    self?.presentMessageDetails(records: message.records ?? [])
+                case .delete:
+                    self?.showDeleteConfirmDialog(message: message)
                 default:
                     break
                 }
             }).store(in: &subscriptions)
+    }
+    
+    func showDeleteConfirmDialog(message: Message) {
+        guard let id = message.id else { return }
+        var actions: [AlertViewButton] = [.destructive(title: .getStringFor(.deleteForMe))]
+        if message.fromUserId == getMyUserId() {
+            actions.append(.destructive(title: .getStringFor(.deleteForEveryone)))
+        }        
+        getAppCoordinator()?
+            .showAlert(actions: actions)
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.deleteMessage(id: id, target: .user)
+                case 1:
+                    self?.deleteMessage(id: id, target: .all)
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
+    }
+    
+    func deleteMessage(id: Int64, target: DeleteMessageTarget) {
+        repository.deleteMessage(messageId: id, target: target).sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let message = response.data?.message else { return }
+            self?.saveMessage(message: message)
+        }.store(in: &subscriptions)
     }
 }
 
@@ -294,7 +334,7 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-    func trySendMessage(text: String, replyId: Int64?) {
+    func trySendMessage(text: String) {
         guard let room = self.room else { return }
         print("ROOM: ", room)
         let uuid = UUID().uuidString
@@ -303,7 +343,7 @@ extension CurrentChatViewModel {
                               roomId: room.id,
                               type: .text,
                               body: MessageBody(text: text, file: nil, thumb: nil),
-                              replyId: replyId,
+                              replyId: selectedMessageToReplyPublisher.value?.id,
                               localId: uuid)
         
         repository.saveMessages([message]).sink { c in
@@ -312,6 +352,7 @@ extension CurrentChatViewModel {
             let body = RequestMessageBody(text: message.body?.text,
                                           fileId: nil,
                                           thumbId: nil)
+            self?.selectedMessageToReplyPublisher.send(nil)
             self?.sendMessage(body: body, localId: uuid, type: .text, replyId: message.replyId)
         }.store(in: &subscriptions)
     }

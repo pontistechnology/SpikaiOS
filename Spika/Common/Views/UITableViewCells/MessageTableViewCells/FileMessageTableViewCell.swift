@@ -27,7 +27,7 @@ final class FileMessageTableViewCell: BaseMessageTableViewCell {
 
 // MARK: Public Functions
 
-extension FileMessageTableViewCell {
+extension FileMessageTableViewCell: BaseMessageTableViewCellProtocol {
     
     override func prepareForReuse() {
         super.prepareForReuse()

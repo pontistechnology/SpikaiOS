@@ -35,6 +35,23 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<SendMessageResponse, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<SendMessageResponse, EmptyRequestBody>(
+            path: Constants.Endpoints.sendMessage + "/\(messageId)",
+            requestType: .DELETE,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken],
+            queryParameters: ["target" : target.rawValue])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
     func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else { return Fail<DeliveredResponseModel, Error>(error: NetworkError.noAccessToken)

@@ -9,7 +9,8 @@ import Foundation
 import Combine
 import CoreData
 
-class TestRepository: Repository {
+// TODO: add repository protocol
+class TestRepository {
     
     let networkService: NetworkService
     let databaseService: DatabaseService

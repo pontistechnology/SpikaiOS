@@ -91,6 +91,7 @@ extension CurrentChatViewController {
               let entity = frc?.object(at: indexPath)
         else { return }
         let message = Message(messageEntity: entity)
+        guard !message.deleted else { return }
         viewModel.showMessageActions(message)
     }
     
@@ -101,6 +102,19 @@ extension CurrentChatViewController {
         
         currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
             self?.handleInput(state)
+        }.store(in: &subscriptions)
+        
+        viewModel.selectedMessageToReplyPublisher.sink { [weak self] selectedMessage in
+            guard let selectedMessage = selectedMessage
+            else {
+                self?.currentChatView.messageInputView.hideReplyView()
+                return
+            }
+            let senderName = self?.viewModel.room?.getDisplayNameFor(userId: selectedMessage.fromUserId)
+            self?.currentChatView
+                .messageInputView
+                .showReplyView(senderName: senderName ?? .getStringFor(.unknown),
+                               message: selectedMessage)
         }.store(in: &subscriptions)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
@@ -213,7 +227,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         
         viewModel.roomVisited(roomId: room.id)
         
-        let userId = self.viewModel.repository.getMyUserId()
+        let userId = self.viewModel.getMyUserId()
         guard let messages = self.frc?.sections?.first?.objects as? [MessageEntity],
               let _ = messages.first(where: { message in
                   message.fromUserId == userId
@@ -270,13 +284,19 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             frcIsChangingPublisher.send(.other)
         
         case .move:
-            print("DIDCHANGE: rows move")
+            // this is called instead of .update when there is only one object in section
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath
             else {
                 return
             }
-            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+            if indexPath == newIndexPath {
+                UIView.performWithoutAnimation {
+                    currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
+                }
+            } else {
+                currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+            }
             frcIsChangingPublisher.send(.other)
         
         case .update:
@@ -311,15 +331,19 @@ extension CurrentChatViewController {
         case .plus:
             presentMoreActions()
         case .send(let inputText):
-            let replyId = currentChatView.messageInputView.replyView?.message.id
-            viewModel.trySendMessage(text: inputText, replyId: replyId)
+            viewModel.trySendMessage(text: inputText)
             currentChatView.messageInputView.clean()
         case .camera, .microphone:
             print(state, " in ccVC")
         case .emoji:
             print("emoji in ccvc")
-        case .scrollToReply(let indexPath):
+        case .scrollToReply:
+            guard let selectedMessageId = viewModel.selectedMessageToReplyPublisher.value?.id,
+                  let indexPath = getIndexPathFor(messageId: selectedMessageId)
+            else { return }
             currentChatView.messagesTableView.blinkRow(at: indexPath)
+        case .hideReply:
+            viewModel.selectedMessageToReplyPublisher.send(nil)
         }
     }
 }
@@ -345,7 +369,10 @@ extension CurrentChatViewController {
         case .openImage:
             guard let url = message.body?.file?.id?.fullFilePathFromId() else { return }
             viewModel.showImage(link: url)
-        case .scrollToReply(let indexPath):
+        case .scrollToReply:
+            guard let replyId = message.replyId,
+                  let indexPath = getIndexPathFor(messageId: replyId)
+            else { return }
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .showReactions:
             viewModel.showReactions(records: message.getMessageReactionsRecords() ?? [])
@@ -388,50 +415,15 @@ extension CurrentChatViewController: UITableViewDataSource {
         guard let entity = frc?.object(at: indexPath),
               let roomType = viewModel.room?.type
         else { return EmptyTableViewCell()}
-        
+
         let message = Message(messageEntity: entity)
-        let myUserId = viewModel.repository.getMyUserId()
+        let myUserId = viewModel.getMyUserId()
+        
         guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
-              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
+              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell,
+              let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
         else { return EmptyTableViewCell() }
         
-        if let replyId = message.replyId,
-           replyId >= 0,
-           let repliedMessageEntity = frc?.fetchedObjects?.first(where: { $0.id == "\(replyId)" })
-        {
-            let repliedMessage = Message(messageEntity: repliedMessageEntity)
-            let senderName = viewModel.room?.getDisplayNameFor(userId: repliedMessage.fromUserId)
-            
-            cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: repliedMessage,
-                               sender: cell.getMessageSenderType(reuseIdentifier: identifier),
-                               indexPath: frc?.indexPath(forObject: repliedMessageEntity))
-        }
-        
-        if let reactionsRecords = message.getMessageReactionsRecords() {
-            cell.showReactions(reactionRecords: reactionsRecords)
-        }
-        
-        switch message.type {
-        case .text:
-            (cell as? TextMessageTableViewCell)?.updateCell(message: message)
-        case .image:
-            (cell as? ImageMessageTableViewCell)?.updateCell(message: message)
-        case .file:
-            (cell as? FileMessageTableViewCell)?.updateCell(message: message)
-        case .audio:
-            (cell as? AudioMessageTableViewCell)?.updateCell(message: message)
-        case .video:
-            (cell as? VideoMessageTableViewCell)?.updateCell(message: message)
-        case .unknown:
-            break
-        }
-        
-        cell.tapPublisher.sink(receiveValue: { [weak self] state in
-            self?.handleCellTap(state, message: message)
-        }).store(in: &cell.subs)
-        
-        cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
-        cell.updateTime(to: message.createdAt)
         if let user = viewModel.getUser(for: message.fromUserId) {
             if !isPreviousCellMine(for: indexPath) {
                 cell.updateSender(name: user.getDisplayName())
@@ -440,6 +432,37 @@ extension CurrentChatViewController: UITableViewDataSource {
                 cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
             }
         }
+        
+        guard !message.deleted
+        else {
+            (cell as? DeletedMessageTableViewCell)?.updateCell(message: message)
+            return cell
+        }
+        
+        if let replyId = message.replyId, replyId >= 0,
+           let repliedMessageEntity = frc?.fetchedObjects?.first(where: { $0.id == "\(replyId)" })
+        {
+            let repliedMessage = Message(messageEntity: repliedMessageEntity)
+            let senderName = viewModel.room?.getDisplayNameFor(userId: repliedMessage.fromUserId)
+            
+            cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown),
+                               message: repliedMessage,
+                               sender: senderType)
+        }
+        
+        if let reactionsRecords = message.getMessageReactionsRecords() {
+            cell.showReactions(reactionRecords: reactionsRecords)
+        }
+        
+        (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
+        
+        cell.tapPublisher.sink(receiveValue: { [weak self] state in
+            self?.handleCellTap(state, message: message)
+        }).store(in: &cell.subs)
+        
+        cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        cell.updateTime(to: message.createdAt)
+        
         return cell
     }
     
@@ -526,30 +549,42 @@ extension CurrentChatViewController {
 extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstRight = UIContextualAction(style: .normal, title: .getStringFor(.details)) { [weak self] (action, view, completionHandler) in
-            if let messageEntity = self?.frc?.object(at: indexPath),
-               let records = Message(messageEntity: messageEntity).records {
-                self?.viewModel.presentMessageDetails(records: records)
-                completionHandler(true)
-            }
+        guard let messageEntity = frc?.object(at: indexPath) else { return nil }
+        let message = Message(messageEntity: messageEntity)
+        guard !message.deleted,
+              let records = message.records
+        else { return nil}
+              
+        let detailsAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
+            self?.viewModel.presentMessageDetails(records: records)
+            completionHandler(true)
         }
-        firstRight.backgroundColor = .systemBlue
-        return UISwipeActionsConfiguration(actions: [firstRight])
+        detailsAction.backgroundColor = .appWhite
+        detailsAction.image = UIImage(safeImage: .slideDetails)
+        
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
+            self?.viewModel.showDeleteConfirmDialog(message: message)
+            completionHandler(true)
+        }
+        deleteAction.backgroundColor = .appWhite
+        deleteAction.image = UIImage(safeImage: .slideDelete)
+        return UISwipeActionsConfiguration(actions: [detailsAction, deleteAction])
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let messageEntity = frc?.object(at: indexPath) else { return nil }
+        let message = Message(messageEntity: messageEntity)
+        guard !message.deleted else { return nil }
+        
+        let firstLeft = UIContextualAction(style: .normal, title: .getStringFor(.reply)) { [weak self] (action, view, completionHandler) in
 
-        let firstLeft = UIContextualAction(style: .normal, title: "r") { [weak self] (action, view, completionHandler) in
-
-            guard let messageEntity = self?.frc?.object(at: indexPath) else { return }
-            let message = Message(messageEntity: messageEntity)
             let senderName = self?.viewModel.room?.getDisplayNameFor(userId: message.fromUserId)
-            
-            self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message, indexPath: indexPath)
-            
+            self?.viewModel.selectedMessageToReplyPublisher.send(message)
+            self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
             completionHandler(true)
         }
-        firstLeft.backgroundColor = .logoBlue
+        firstLeft.backgroundColor = .appWhite
+        firstLeft.image = UIImage(safeImage: .slideReply)
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }
     
@@ -612,5 +647,13 @@ extension CurrentChatViewController: UIDocumentPickerDelegate {
     
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         controller.dismiss(animated: true)
+    }
+}
+
+extension CurrentChatViewController {
+    private func getIndexPathFor(messageId id: Int64) -> IndexPath? {
+        guard let entity = frc?.fetchedObjects?.first(where: { $0.id == "\(id)" })
+        else { return nil }
+        return frc?.indexPath(forObject: entity)
     }
 }

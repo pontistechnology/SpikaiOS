@@ -28,7 +28,7 @@ final class AudioMessageTableViewCell: BaseMessageTableViewCell {
 }
 // MARK: Public Functions
 
-extension AudioMessageTableViewCell {
+extension AudioMessageTableViewCell: BaseMessageTableViewCellProtocol {
     
     override func prepareForReuse() {
         super.prepareForReuse()

@@ -31,7 +31,7 @@ final class ImageMessageTableViewCell: BaseMessageTableViewCell {
 }
 // MARK: Public Functions
 
-extension ImageMessageTableViewCell {
+extension ImageMessageTableViewCell: BaseMessageTableViewCellProtocol {
     
     override func prepareForReuse() {
         super.prepareForReuse()

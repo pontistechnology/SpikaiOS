@@ -37,11 +37,11 @@ class TestAssembly: Assembly {
             return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, roomEntityService: roomEntityService, coreDataStack: coreDataStack, userDefaults: r.resolve(UserDefaults.self)!)
         }.inObjectScope(.container)
 
-        container.register(Repository.self, name: RepositoryType.test.name) { r in
-            let networkService = container.resolve(NetworkService.self)!
-            let databaseService = container.resolve(DatabaseService.self)!
-            return TestRepository(networkService: networkService, databaseService: databaseService)
-        }.inObjectScope(.container)
+//        container.register(Repository.self, name: RepositoryType.test.name) { r in
+//            let networkService = container.resolve(NetworkService.self)!
+//            let databaseService = container.resolve(DatabaseService.self)!
+//            return TestRepository(networkService: networkService, databaseService: databaseService)
+//        }.inObjectScope(.container)
     }
     
     private func assembleHomeViewModel(_ container: Container) {

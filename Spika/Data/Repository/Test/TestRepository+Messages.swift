@@ -64,4 +64,10 @@ extension TestRepository {
                  .receive(on: DispatchQueue.main)
                  .eraseToAnyPublisher()
     }
+    
+    func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<SendMessageResponse, Error> {
+        return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
+                 .receive(on: DispatchQueue.main)
+                 .eraseToAnyPublisher()
+    }
 }

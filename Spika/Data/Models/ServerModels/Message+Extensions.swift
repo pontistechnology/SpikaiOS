@@ -18,7 +18,7 @@ extension Message {
         } else {
             identifier = MessageSender.group.reuseIdentifierPrefix
         }
-        
-        return identifier + type.rawValue.capitalized + "MessageTableViewCell"
+        let type = deleted ? "Deleted" : type.rawValue.capitalized
+        return identifier + type + "MessageTableViewCell"
     }
 }

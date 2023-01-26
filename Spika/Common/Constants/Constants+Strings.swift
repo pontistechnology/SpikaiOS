@@ -125,7 +125,9 @@ public extension Constants {
         case forward = "Forward"
         case copy = "Copy"
         case favorite = "Favorite"
-        
+        case deleteForMe = "Delete for me"
+        case deleteForEveryone = "Delete for everyone"
+
         // MARK: - Settings
         case privacy = "Privacy"
         case blockedUsers = "Blocked users"

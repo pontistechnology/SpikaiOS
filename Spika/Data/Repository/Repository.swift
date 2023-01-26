@@ -69,6 +69,7 @@ protocol Repository {
     func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error>
     func sendSeenStatus(roomId: Int64) -> AnyPublisher<SeenResponseModel, Error>
     func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error>
+    func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<SendMessageResponse, Error>
     
     // MARK: NETWORKING: Sync
     

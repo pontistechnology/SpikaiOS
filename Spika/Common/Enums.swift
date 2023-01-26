@@ -15,8 +15,12 @@ enum OneSecPopUpType {
     
     var image: UIImage {
         switch self {
-        case .copy, .favorite, .forward:
-            return UIImage(safeImage: .error) // TODO: - add assets
+        case .copy:
+            return UIImage(safeImage: .sent)
+        case .forward:
+            return UIImage(safeImage: .forwardMessage)
+        case .favorite:
+            return UIImage(safeImage: .favoriteMessage)
         }
     }
     
@@ -34,12 +38,11 @@ enum OneSecPopUpType {
 
 enum PopUpType {
     case errorMessage(_ message: String)
-    case alertView(title: String, message: String, buttons: [AlertViewButton])
     case oneSec(OneSecPopUpType)
     
     var isBlockingUI: Bool {
         switch self {
-        case .oneSec, .alertView:
+        case .oneSec:
             return true
         case .errorMessage:
             return false
@@ -74,6 +77,15 @@ enum AlertViewButton {
             return title
         }
     }
+    
+    var style: UIAlertAction.Style {
+        switch self {
+        case .regular:
+            return .default
+        case .destructive:
+            return .destructive
+        }
+    }
 }
 
 enum MessageSender {
@@ -95,7 +107,7 @@ enum MessageSender {
     var backgroundColor: UIColor {
         switch self {
         case .me:
-            return UIColor(hexString: "C8EBFE")
+            return .myChatBackground
         case .friend, .group:
             return .chatBackground
         }
@@ -138,7 +150,7 @@ enum MessageCellTaps {
     case playVideo
     case playAudio(playedPercentPublisher: PassthroughSubject<Float, Never>)
     case openImage
-    case scrollToReply(IndexPath)
+    case scrollToReply
     case showReactions
 }
 

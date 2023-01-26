@@ -17,6 +17,7 @@ struct Message: Codable {
     let deliveredCount: Int64?
     let seenCount: Int64?
     let replyId: Int64?
+    let deleted: Bool
     let type: MessageType
     let body: MessageBody?
     let records: [MessageRecord]?
@@ -34,6 +35,7 @@ extension Message {
         self.replyId = replyId
         self.roomId = roomId
         self.type = type
+        self.deleted = false
         self.createdAt = createdAt
         self.records = nil
     }
@@ -55,6 +57,7 @@ extension Message {
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
                   replyId: Int64(messageEntity.replyId ?? "-1"),
+                  deleted: messageEntity.isRemoved,
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
                                     file: FileData(id: messageEntity.bodyFileId, fileName: messageEntity.bodyFileName,
