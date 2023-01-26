@@ -287,10 +287,6 @@ extension AppCoordinator {
     func showError(message: String) {
         getWindowManager().showPopUp(for: .errorMessage(message))
     }
-//        
-    func showOneSecPopUp(_ selection: OneSecPopUpType) {
-        getWindowManager().showPopUp(for: .oneSec(selection))
-    }
     
     func showAlert(title: String? = nil, message: String? = nil, style: UIAlertController.Style = .actionSheet,
                    actions: [AlertViewButton], cancelText: String? = .getStringFor(.cancel)) -> Future<Int, Never> {

@@ -198,10 +198,10 @@ class ChatDetailsViewModel: BaseViewModel {
     }
     
     func deleteRoom() {
-        self.getAppCoordinator()?.showAlert(title: .getStringFor(.deleteTheRoom),
-                                            message: .getStringFor(.deleteTheRoom),
+        self.getAppCoordinator()?.showAlert(title: .getStringFor(.areYouSureYoutWantToDeleteGroup),
+                                            message: nil,
                                             style: .alert,
-                                            actions: [AlertViewButton.regular(title: .getStringFor(.delete))])
+                                            actions: [AlertViewButton.destructive(title: .getStringFor(.delete))])
         .sink(receiveValue: { [weak self] tappedIndex in
             guard tappedIndex == 0 else { return }
             self?.deleteRoomConfirmed()

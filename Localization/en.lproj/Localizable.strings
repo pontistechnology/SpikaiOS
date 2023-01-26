@@ -48,7 +48,7 @@
 "Mute" = "Mute";
 "Block" = "Block";
 "Report" = "Report";
-"Delete the room?" = "Delete the room?";
+"Are you sure you want to delete group?" = "Are you sure you want to delete group?";
 "Something went wrong deleting the room" = "Something went wrong deleting the room";
 "Something went wrong trying to add new users" = "Something went wrong trying to add new users";
 "Something went wrong muting the room" = "Something went wrong muting the room";
@@ -97,4 +97,4 @@
 "Delete" = "Delete";
 
 "Delete for me" = "Delete for me";
-"Deletet for everyone" = "Delete for everyone";
+"Delete for everyone" = "Delete for everyone";
