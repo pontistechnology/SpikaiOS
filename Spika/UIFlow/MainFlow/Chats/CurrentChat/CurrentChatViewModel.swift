@@ -190,7 +190,7 @@ extension CurrentChatViewModel {
                     self?.selectedMessageToReplyPublisher.send(message)
                 case .copy:
                     UIPasteboard.general.string = message.body?.text
-                    self?.getAppCoordinator()?.showOneSecPopUp(.copy)
+                    self?.showOneSecAlert(type: .copy)
                 case .details:
                     self?.presentMessageDetails(records: message.records ?? [])
                 case .delete:

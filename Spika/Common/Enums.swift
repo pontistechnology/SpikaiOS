@@ -13,18 +13,7 @@ enum OneSecPopUpType {
     case forward
     case favorite
     
-    var image: UIImage {
-        switch self {
-        case .copy:
-            return UIImage(safeImage: .sent)
-        case .forward:
-            return UIImage(safeImage: .forwardMessage)
-        case .favorite:
-            return UIImage(safeImage: .favoriteMessage)
-        }
-    }
-    
-    var description: String {
+    var title: String {
         switch self {
         case .copy:
             return "Copied"
@@ -38,12 +27,9 @@ enum OneSecPopUpType {
 
 enum PopUpType {
     case errorMessage(_ message: String)
-    case oneSec(OneSecPopUpType)
     
     var isBlockingUI: Bool {
         switch self {
-        case .oneSec:
-            return true
         case .errorMessage:
             return false
         }

@@ -79,12 +79,11 @@ extension WindowManager {
 
 enum PopUpPublisherType {
     case dismiss(after: Int)
-    case alertViewTap(Int)
 }
 
 extension WindowManager {
     func showPopUp(for type: PopUpType) {
-        // Check is error or popup presented
+        // TODO: Check is error or popup presented
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.popUpWindow = nil
@@ -113,8 +112,6 @@ private extension WindowManager {
                 switch type {
                 case .dismiss(after: let seconds):
                     self?.dismissPopUpWindowAfter(seconds: seconds)
-                case .alertViewTap(_):
-                    self?.dismissPopUpWindowAfter(seconds: 0)
                 }
             }.store(in: &subs)
     }

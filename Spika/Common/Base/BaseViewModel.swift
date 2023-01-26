@@ -31,4 +31,9 @@ class BaseViewModel: NSObject {
     func showError(_ message: String) {
         getAppCoordinator()?.showError(message: message)
     }
+    
+    func showOneSecAlert(type: OneSecPopUpType) {
+        _ = getAppCoordinator()?
+            .showAlert(title: type.title, message: nil, style: .alert, actions: [], cancelText: nil)
+    }
 }
