@@ -22,7 +22,7 @@ class SettingsViewController: BaseViewController {
         setupBinding()
         setupImagePicker()
         setupActionSheet()
-//        settingsView.titleLabel.text = "Build number: " + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown")
+        settingsView.appVersion.text = "Build number: " + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown")
     }
     
     func setupBinding() {

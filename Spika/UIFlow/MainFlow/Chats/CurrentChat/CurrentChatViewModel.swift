@@ -72,7 +72,7 @@ class CurrentChatViewModel: BaseViewModel {
         
         // Check if Contact in Confirmed = false
         let contactConfirmed = self.repository.confirmedUsersPublisher()
-            .map { $0?.contains(contactId) ?? false }
+            .map { $0.contains(contactId) }
             .map { !$0 }
         
         // Check if User replied at some point = false

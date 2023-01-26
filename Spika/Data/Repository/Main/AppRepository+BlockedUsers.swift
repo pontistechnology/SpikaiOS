@@ -7,41 +7,38 @@
 
 import Foundation
 import Combine
+import Swinject
 
 extension AppRepository {
     
-    func loadStoredBlockedUserValues() {
-        let blockedArray = self.userDefaults.value(forKey: "blocked_user_ids") as? [Int64]
-        self.blockedUserIds.send(Set(blockedArray ?? []))
-        
-        let confirmedArray = self.userDefaults.value(forKey: "confirmed_user_ids") as? [Int64]
-        self.confirmedUserIds.send(Set(confirmedArray ?? []))
+    func serialWriteQueue() -> DispatchQueue {
+        return Assembler.sharedAssembler.resolver.resolve(DispatchQueue.self)!
     }
     
     func updateBlockedUsers(users: [User]) {
-        self.writeQueue.async {
+        self.serialWriteQueue().async {
             let ids = Set(users.map { $0.id })
             self.userDefaults.setValue(Array(ids), forKey: "blocked_user_ids")
-            self.blockedUserIds.send(ids)
+            self.blockedUsersPublisher().send(ids)
         }
     }
     
     func updateConfirmedUsers(confirmedUsers: [User]) {
-        self.writeQueue.async {
-            let currentIds = self.confirmedUserIds.value ?? Set()
+        self.serialWriteQueue().async {
+            let currentIds = self.confirmedUsersPublisher().value
             let newIds = Set(confirmedUsers.map { $0.id })
             let union = newIds .union(currentIds)
             self.userDefaults.setValue(Array(union), forKey: "confirmed_user_ids")
-            self.confirmedUserIds.send(union)
+            self.confirmedUsersPublisher().send(union)
         }
     }
     
     func blockedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never> {
-        return self.blockedUserIds
+        return Assembler.sharedAssembler.resolver.resolve(CurrentValueSubject<Set<Int64>?,Never>.self)!
     }
     
-    func confirmedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never> {
-        return self.confirmedUserIds
+    func confirmedUsersPublisher() -> CurrentValueSubject<Set<Int64>,Never> {
+        return Assembler.sharedAssembler.resolver.resolve(CurrentValueSubject<Set<Int64>,Never>.self)!
     }
     
 }
