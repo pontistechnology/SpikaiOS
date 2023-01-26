@@ -243,6 +243,16 @@ class AppCoordinator: Coordinator {
             .resolve(ImageViewerViewController.self, arguments: self, link)!
         navigationController.pushViewController(imageViewerViewController, animated: true)
     }
+    
+    func presentPrivacySettingsScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(PrivacySettingsViewController.self, argument: self)!
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentBlockedUsersSettingsScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(BlockedUsersViewController.self, argument: self)!
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
 }
 
 extension AppCoordinator {

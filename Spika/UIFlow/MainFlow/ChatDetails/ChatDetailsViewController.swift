@@ -71,7 +71,7 @@ final class ChatDetailsViewController: BaseViewController {
             .store(in: &self.viewModel.subscriptions)
         
         isAdmin
-            .subscribe(self.chatDetailView.contentView.chatMembersView.isAdmin)
+            .subscribe(self.chatDetailView.contentView.chatMembersView.editable)
             .store(in: &self.viewModel.subscriptions)
         
         isAdmin
@@ -168,9 +168,7 @@ final class ChatDetailsViewController: BaseViewController {
             self.imagePicker.sourceType = .photoLibrary
             self.present(self.imagePicker, animated: true, completion: nil)
         }))
-        actionSheet.addAction(UIAlertAction(title: .getStringFor(.removePhoto), style: .destructive, handler: { [weak self] _ in
-            guard let self = self else { return }
-            
+        actionSheet.addAction(UIAlertAction(title: .getStringFor(.removePhoto), style: .destructive, handler: { _ in            
         }))
         actionSheet.addAction(UIAlertAction(title: .getStringFor(.cancel), style: .cancel, handler: nil))
     }

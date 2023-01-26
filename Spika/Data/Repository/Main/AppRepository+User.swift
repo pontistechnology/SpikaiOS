@@ -29,11 +29,16 @@ extension AppRepository {
     // MARK: Network
     
     func fetchMyUserDetails() -> AnyPublisher<AuthResponseModel, Error> {
-        let resources = Resources<AuthResponseModel, AuthRequestModel>(
+        guard let accessToken = getAccessToken()
+        else { return Fail<AuthResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let resources = Resources<AuthResponseModel, EmptyRequestBody>(
             path: Constants.Endpoints.getUserDetails,
             requestType: .GET,
             bodyParameters: nil,
-            httpHeaderFields: nil,
+            httpHeaderFields: ["accesstoken" : accessToken],
             queryParameters: nil
         )
         return networkService.performRequest(resources: resources)
