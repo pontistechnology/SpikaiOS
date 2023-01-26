@@ -11,7 +11,7 @@ import Combine
 final class ChatMembersView: UIView, BaseView {
     
     //MARK: - Variables
-    let contactsEditable: Bool
+    let canAddNewMore: Bool
     
     let cellHeight: CGFloat = 80
     
@@ -25,7 +25,7 @@ final class ChatMembersView: UIView, BaseView {
     
     var subscriptions = Set<AnyCancellable>()
     
-    let isAdmin = CurrentValueSubject<Bool,Never>(false)
+    let editable = CurrentValueSubject<Bool,Never>(false)
     
     //MARK: - UI
     lazy var mainStackView: UIStackView = {
@@ -75,8 +75,8 @@ final class ChatMembersView: UIView, BaseView {
     
     
     //MARK: - Methods
-    init(contactsEditable: Bool) {
-        self.contactsEditable = contactsEditable
+    init(canAddNewMore: Bool) {
+        self.canAddNewMore = canAddNewMore
         super.init(frame: CGRectZero)
         setupView()
         self.setupBinding()
@@ -88,7 +88,7 @@ final class ChatMembersView: UIView, BaseView {
     }
     
     func setupBinding() {
-        self.isAdmin
+        self.editable
             .sink { [weak self] isAdmin in
                 self?.addContactButton.isHidden = !isAdmin
             }.store(in: &self.subscriptions)
@@ -129,7 +129,7 @@ final class ChatMembersView: UIView, BaseView {
         self.mainStackView.addArrangedSubview(self.horizontalTitleStackView)
         self.horizontalTitleStackView.addArrangedSubview(self.titleLabel)
         
-        if self.contactsEditable {
+        if self.canAddNewMore {
             self.horizontalTitleStackView.addArrangedSubview(self.addContactButton)
         }
         
@@ -178,7 +178,7 @@ extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
         cell.configureCell(title: model.user.getDisplayName(),
                            description: model.user.telephoneNumber,
                            leftImage: model.user.avatarFileId?.fullFilePathFromId(),
-                           type: self.isAdmin.value ? .remove : .normal)
+                           type: self.editable.value ? .remove : .normal)
         
         cell.onRightClickAction
             .compactMap ({ [weak self] cell in

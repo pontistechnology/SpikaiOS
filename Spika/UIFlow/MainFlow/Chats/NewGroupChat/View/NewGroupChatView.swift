@@ -19,7 +19,7 @@ class NewGroupChatView: UIView, BaseView {
         return btn
     } ()
     let groupNameTextfield = TextField(textPlaceholder: .getStringFor(.groupName))
-    let chatMembersView = ChatMembersView(contactsEditable: false)
+    let chatMembersView = ChatMembersView(canAddNewMore: false)
     
     
     override init(frame: CGRect) {
@@ -39,7 +39,7 @@ class NewGroupChatView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        self.chatMembersView.isAdmin.send(true)
+        self.chatMembersView.editable.send(true)
     }
     
     func positionSubviews() {
