@@ -21,6 +21,8 @@ class SettingsView: BaseSettingsView {
     
     let privacyOptionButton = NavView(text: .getStringFor(.privacy))
     
+    let appVersion = CustomLabel(text: "", textSize: 16, textColor: .textTertiary, fontName: .MontserratLight, alignment: .center)
+    
     let userNameChanged = PassthroughSubject<String,Never>()
     
     override func styleSubviews() {
@@ -43,6 +45,8 @@ class SettingsView: BaseSettingsView {
         userInfoStackView.addArrangedSubview(userPhoneNumber)
         
         mainStackView.addArrangedSubview(privacyOptionButton)
+        
+        mainStackView.addArrangedSubview(appVersion)
         
         self.contentView.addSubview(self.userNameTextField)
     }
