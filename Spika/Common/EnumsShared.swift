@@ -41,3 +41,21 @@ enum DeleteMessageTarget: String, Codable {
     case all
     case user
 }
+
+enum ImagePickerError: Error {
+    case badQuality, wrongDimensions
+
+    var description : String {
+        switch self {
+        case .badQuality:
+            return "Please use better quality"
+        case .wrongDimensions:
+            return "Please select a square"
+        }
+  }
+}
+
+enum WarningOrResult<Success> {
+    case warning(String)
+    case result(Success)
+}

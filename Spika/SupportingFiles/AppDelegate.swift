@@ -19,8 +19,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         configureNotifications(app: application)
         customization()
+        test()
         return true
     }
+    
+    
+    func test() {
+            print("_____")
+            Constants.Strings.allCases.enumerated().forEach { index, element in
+                print("C ", index, String.getStringFor(element))
+                print(String.getStringFor(element) == element.rawValue)
+            }
+            print("_____")
+    }
+    
     
     func customization() {
         if let token = UserDefaults(suiteName: Constants.Networking.appGroupName)?.string(forKey: Constants.Database.accessToken) as? String {

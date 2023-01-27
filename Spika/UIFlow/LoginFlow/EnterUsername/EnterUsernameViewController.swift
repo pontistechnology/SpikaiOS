@@ -19,7 +19,7 @@ class EnterUsernameViewController: BaseViewController {
         super.viewDidLoad()
         setupView(enterUsernameView)
         setupBindings()
-        setupImagePicker()
+//        setupImagePicker()
         setupActionSheet()
     }
     
@@ -31,7 +31,7 @@ class EnterUsernameViewController: BaseViewController {
             self.imagePicker.cameraDevice = .front
             self.present(self.imagePicker, animated: true, completion: nil)
         }))
-        actionSheet.addAction(UIAlertAction(title:  .getStringFor(.chooseFromHallery), style: .default, handler: { [weak self] _ in
+        actionSheet.addAction(UIAlertAction(title:  .getStringFor(.chooseFromGallery), style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             self.imagePicker.sourceType = .photoLibrary
             self.present(self.imagePicker, animated: true, completion: nil)
@@ -77,34 +77,34 @@ class EnterUsernameViewController: BaseViewController {
     }
 }
 
-extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func setupImagePicker() {
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            
-            let widhtInPixels  = pickedImage.size.width * UIScreen.main.scale
-            let heightInPixels = pickedImage.size.height * UIScreen.main.scale
-            
-            
-            if widhtInPixels < 512 || heightInPixels < 512 {
-                viewModel.showError(.getStringFor(.pleaseUserBetterQuality))
-            } else if abs(widhtInPixels - heightInPixels) > 20 {
-                viewModel.showError(.getStringFor(.pleaseSelectASquare))
-            } else {
-                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
-                enterUsernameView.profilePictureView.showImage(resizedImage)
-                fileData = resizedImage.jpegData(compressionQuality: 1)
-            }
-            dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-}
+//extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//    
+//    func setupImagePicker() {
+//        imagePicker.delegate = self
+//        imagePicker.allowsEditing = true
+//    }
+//    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+//            
+//            let widhtInPixels  = pickedImage.size.width * UIScreen.main.scale
+//            let heightInPixels = pickedImage.size.height * UIScreen.main.scale
+//            
+//            
+//            if widhtInPixels < 512 || heightInPixels < 512 {
+//                viewModel.showError(.getStringFor(.pleaseUserBetterQuality))
+//            } else if abs(widhtInPixels - heightInPixels) > 20 {
+//                viewModel.showError(.getStringFor(.pleaseSelectASquare))
+//            } else {
+//                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
+//                enterUsernameView.profilePictureView.showImage(resizedImage)
+//                fileData = resizedImage.jpegData(compressionQuality: 1)
+//            }
+//            dismiss(animated: true, completion: nil)
+//        }
+//    }
+//    
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        dismiss(animated: true, completion: nil)
+//    }
+//}
