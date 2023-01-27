@@ -64,7 +64,7 @@ class SettingsViewController: BaseViewController {
             }.store(in: &self.subscriptions)
         
         self.settingsView.userImage.tap().sink { [weak self] _ in
-            self?.setupActionSheet()
+            self?.showChangeImageActionSheet()
         }.store(in: &subscriptions)
         
         self.settingsView.privacyOptionButton
@@ -88,7 +88,7 @@ class SettingsViewController: BaseViewController {
 
     }
     
-    func setupActionSheet() {
+    func showChangeImageActionSheet() {
         viewModel
             .getAppCoordinator()?
             .showAlert(actions: [.regular(title: .getStringFor(.takeAPhoto)),
