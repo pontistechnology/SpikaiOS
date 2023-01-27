@@ -146,15 +146,14 @@ final class ChatDetailsViewController: BaseViewController {
             }.store(in: &self.subscriptions)
         
         imagePickerPublisher.sink { [weak self] pickedImage in
-            let statusOfImage = pickedImage.statusOfPhoto(for: .avatar)
             let photoStatus = pickedImage.statusOfPhoto(for: .avatar)
             switch photoStatus {
             case .allOk:
-                break
-            default:
                 guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
                 guard let data = resizedImage.jpegData(compressionQuality: 1) else { return }
                 self?.viewModel.changeAvatar(image: data)
+            default:
+                self?.viewModel.showError(photoStatus.description)
             }
         }.store(in: &subscriptions)
     }

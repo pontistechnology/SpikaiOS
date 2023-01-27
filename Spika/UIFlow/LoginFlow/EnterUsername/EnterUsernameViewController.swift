@@ -53,11 +53,11 @@ class EnterUsernameViewController: BaseViewController {
             let photoStatus = pickedImage.statusOfPhoto(for: .avatar)
             switch photoStatus {
             case .allOk:
-                break
-            default:
                 guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
                 self?.enterUsernameView.profilePictureView.showImage(resizedImage)
                 self?.fileData = resizedImage.jpegData(compressionQuality: 1)
+            default:
+                self?.viewModel.showError(photoStatus.description)
             }
         }.store(in: &subscriptions)
     }
