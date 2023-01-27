@@ -169,15 +169,15 @@ enum StateOfImage {
     var description: String {
         switch self {
         case .badQuality:
-            return "Please select a square"
+            return .getStringFor(.pleaseSelectLargerImage)
         case .wrongDimensions:
-            return "Please select a larger image"
+            return .getStringFor(.pleaseSelectSquare)
         case .tooBig:
-            return "Selected image is too big"
+            return .getStringFor(.selectedImageIsTooBig)
         case .wrongFormat:
-            return "Unsupported format"
+            return .getStringFor(.unsupportedFormat)
         case .allOk:
-            return "All ok."
+            return .getStringFor(.allOk)
         }
     }
 }
