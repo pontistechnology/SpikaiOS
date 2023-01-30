@@ -100,4 +100,9 @@ class ImageViewWithIcon: UIView, BaseView {
         uploadProgressView.removeFromSuperview()
         isUserInteractionEnabled = true
     }
+    
+    func updateCameraIsHidden(isHidden: Bool) {
+        self.cameraIcon.isHidden = isHidden
+    }
+    
 }

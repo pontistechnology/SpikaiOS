@@ -29,7 +29,7 @@ final class ChatDetailsViewController: BaseViewController {
     
     private func setupBindings() {
         let isAdmin = self.viewModel.room.map { [weak self] room in
-            guard let self = self else { return false }
+            guard let self = self, room.type == .groupRoom else { return false }
             return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
         }
         
@@ -39,8 +39,16 @@ final class ChatDetailsViewController: BaseViewController {
         
         // View Model Binding
         self.viewModel.room
-            .compactMap{ room in
-                return room.avatarFileId?.fullFilePathFromId()
+            .compactMap{ [weak self] room in
+                if room.type == .groupRoom {
+                    return room.avatarFileId?.fullFilePathFromId()
+                } else {
+                    guard let ownId = self?.viewModel.repository.getMyUserId(),
+                          let contact = self?.viewModel.room.value.users.first(where: { roomUser in
+                        roomUser.userId != ownId
+                    }) else { return nil }
+                    return contact.user.avatarFileId?.fullFilePathFromId()
+                }
             }
             .sink { [weak self] url in
                 self?.chatDetailView.contentView.chatImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
@@ -73,6 +81,7 @@ final class ChatDetailsViewController: BaseViewController {
             .sink(receiveValue: { [weak self] isAdmin in
                 self?.chatDetailView.contentView.chatMembersView.addContactButton.isHidden = !isAdmin
                 self?.chatDetailView.contentView.deleteButton.isHidden = !isAdmin
+                self?.chatDetailView.contentView.chatImage.updateCameraIsHidden(isHidden: !isAdmin)
             })
             .store(in: &self.viewModel.subscriptions)
         
@@ -175,8 +184,7 @@ final class ChatDetailsViewController: BaseViewController {
                 case 1:
                     self?.showUIImagePicker(source: .photoLibrary)
                 case 2:
-                    // TODO: - delete avatar
-                    break
+                    self?.viewModel.changeAvatar(image: nil)
                 default:
                     break
                 }
