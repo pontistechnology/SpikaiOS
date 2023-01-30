@@ -11,7 +11,8 @@ import Combine
 class BaseViewController: UIViewController {
     
     var subscriptions = Set<AnyCancellable>()
-    let circularProgressBar = CircularProgressBar(spinnerWidth: 24)
+    private let circularProgressBar = CircularProgressBar(spinnerWidth: 24)
+    let imagePickerPublisher = PassthroughSubject<UIImage, Never>()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -94,3 +95,32 @@ extension BaseViewController {
         view.endEditing(true)
     }
 }
+
+// MARK: UIImagepicker
+
+extension BaseViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func showUIImagePicker(source: UIImagePickerController.SourceType, allowsEdit: Bool = true) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = source
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = allowsEdit
+        if case UIImagePickerController.SourceType.camera = source {
+            imagePicker.cameraCaptureMode = .photo
+            imagePicker.cameraDevice = .front
+        }
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // TODO: Check picker isEditing and set info for editedImage or originalImage
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            imagePickerPublisher.send(pickedImage)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+

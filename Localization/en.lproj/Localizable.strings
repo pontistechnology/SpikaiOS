@@ -98,3 +98,9 @@
 
 "Delete for me" = "Delete for me";
 "Delete for everyone" = "Delete for everyone";
+
+"Please select a square" = "Please select a square",
+"Please select a larger image" = "Please select a larger image",
+"Selected image is too big" = "Selected image is too big",
+"Unsupported format" = "Unsupported format",
+"All ok." = "All ok."

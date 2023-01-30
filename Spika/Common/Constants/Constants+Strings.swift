@@ -8,7 +8,7 @@
 import Foundation
 
 public extension Constants {
-    enum Strings : String {
+    enum Strings : String, CaseIterable {
         // MARK: - Common
         case appName = "Spika"
         case cancel = "Cancel"
@@ -37,10 +37,8 @@ public extension Constants {
         case username = "Username"
         case enterUsername = "Enter username"
         case takeAPhoto = "Take a photo"
-        case chooseFromHallery = "Choose from gallery"
+        case chooseFromGallery = "Choose from gallery"
         case removePhoto = "Remove photo"
-        case pleaseUserBetterQuality = "Please use better quality."
-        case pleaseSelectASquare = "Please select a square"
         
         // MARK: - EnterVerifyCodeView
         case weSentYou6DigitCode = "We sent you 6 digit verification code."
@@ -133,5 +131,13 @@ public extension Constants {
         case blockedUsers = "Blocked users"
         case somethingWentWrongFetchingBlockedUsers = "Something went wrong fetching blocked users"
         case somethingWentWrongUnblockingUser = "Something went wrong unblocking the contact"
+        
+        // MARK: - UIImage status
+        case pleaseSelectSquare = "Please select a square"
+        case pleaseSelectLargerImage = "Please select a larger image"
+        case selectedImageIsTooBig = "Selected image is too big"
+        case unsupportedFormat = "Unsupported format"
+        case allOk = "All ok."
+
     }
 }

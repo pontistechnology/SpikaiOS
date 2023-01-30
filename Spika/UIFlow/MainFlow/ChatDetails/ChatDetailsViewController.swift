@@ -12,9 +12,6 @@ final class ChatDetailsViewController: BaseViewController {
     private let viewModel: ChatDetailsViewModel
     private let chatDetailView = ChatDetailsView(frame: CGRectZero)
     
-    let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    private let imagePicker = UIImagePickerController()
-    
     init(viewModel: ChatDetailsViewModel) {
         self.viewModel = viewModel
         super.init()
@@ -28,8 +25,6 @@ final class ChatDetailsViewController: BaseViewController {
         super.viewDidLoad()
         setupView(chatDetailView)
         setupBindings()
-        setupActionSheet()
-        setupImagePicker()
     }
     
     private func setupBindings() {
@@ -149,59 +144,43 @@ final class ChatDetailsViewController: BaseViewController {
             .sink { [weak self] _ in
                 self?.viewModel.blockOrUnblock()
             }.store(in: &self.subscriptions)
+        
+        imagePickerPublisher.sink { [weak self] pickedImage in
+            let photoStatus = pickedImage.statusOfPhoto(for: .avatar)
+            switch photoStatus {
+            case .allOk:
+                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
+                guard let data = resizedImage.jpegData(compressionQuality: 1) else { return }
+                self?.viewModel.changeAvatar(image: data)
+            default:
+                self?.viewModel.showError(photoStatus.description)
+            }
+        }.store(in: &subscriptions)
     }
     
     func onChangeImage() {
-        self.present(self.actionSheet, animated: true, completion: nil)
+        showChangeImageActionSheet()
     }
     
-    func setupActionSheet() {
-        actionSheet.addAction(UIAlertAction(title: .getStringFor(.takeAPhoto), style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
-            self.imagePicker.sourceType = .camera
-            self.imagePicker.cameraCaptureMode = .photo
-            self.imagePicker.cameraDevice = .front
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-        actionSheet.addAction(UIAlertAction(title: .getStringFor(.chooseFromHallery), style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
-            self.imagePicker.sourceType = .photoLibrary
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-        actionSheet.addAction(UIAlertAction(title: .getStringFor(.removePhoto), style: .destructive, handler: { _ in            
-        }))
-        actionSheet.addAction(UIAlertAction(title: .getStringFor(.cancel), style: .cancel, handler: nil))
+    func showChangeImageActionSheet() {
+        viewModel
+            .getAppCoordinator()?
+            .showAlert(actions: [.regular(title: .getStringFor(.takeAPhoto)),
+                                 .regular(title: .getStringFor(.chooseFromGallery)),
+                                 .destructive(title: .getStringFor(.removePhoto))])
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.showUIImagePicker(source: .camera)
+                case 1:
+                    self?.showUIImagePicker(source: .photoLibrary)
+                case 2:
+                    // TODO: - delete avatar
+                    break
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
     }
     
-}
-
-extension ChatDetailsViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func setupImagePicker() {
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            
-            let widhtInPixels  = pickedImage.size.width * UIScreen.main.scale
-            let heightInPixels = pickedImage.size.height * UIScreen.main.scale
-            
-            
-            if widhtInPixels < 512 || heightInPixels < 512 {
-                viewModel.showError(.getStringFor(.pleaseUserBetterQuality))
-            } else if abs(widhtInPixels - heightInPixels) > 20 {
-                viewModel.showError(.getStringFor(.pleaseSelectASquare))
-            } else {
-                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
-                guard let data = resizedImage.jpegData(compressionQuality: 1) else { return }
-                self.viewModel.changeAvatar(image: data)
-            }
-            self.dismiss(animated: true)
-        }
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
 }

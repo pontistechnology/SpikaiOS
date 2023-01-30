@@ -19,16 +19,12 @@ class NewGroupChatViewController: BaseViewController {
     private let newGroupChatView = NewGroupChatView()
     
     var viewModel: NewGroupChatViewModel!
-    private let imagePicker = UIImagePickerController()
-    let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     var fileData: Data?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(newGroupChatView)
         setupBindings()
-        setupImagePicker()
-        setupActionSheet()
     }
     
     func setupBindings() {
@@ -56,26 +52,44 @@ class NewGroupChatViewController: BaseViewController {
         
         newGroupChatView.groupNameTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         newGroupChatView.groupNameTextfield.delegate = self
-    }
-    
-    func setupActionSheet() {
-        actionSheet.addAction(UIAlertAction(title: .getStringFor(.takeAPhoto), style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
-            self.imagePicker.sourceType = .camera
-            self.imagePicker.cameraCaptureMode = .photo
-            self.imagePicker.cameraDevice = .front
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-        actionSheet.addAction(UIAlertAction(title: .getStringFor(.chooseFromHallery), style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
-            self.imagePicker.sourceType = .photoLibrary
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-        actionSheet.addAction(UIAlertAction(title: .getStringFor(.cancel), style: .cancel, handler: nil))
+        
+        imagePickerPublisher.sink { pickedImage in
+            let photoStatus = pickedImage.statusOfPhoto(for: .avatar)
+            switch photoStatus {
+            case .allOk:
+                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
+                guard let data = resizedImage.jpegData(compressionQuality: 1) else { return }
+                self.newGroupChatView.avatarPictureView.setImage(resizedImage, for: .normal)
+                self.viewModel.fileData = data
+            default:
+                self.viewModel.showError(photoStatus.description)
+            }
+        }.store(in: &subscriptions)
     }
     
     func onChangeImage() {
-        self.present(self.actionSheet, animated: true, completion: nil)
+        showChangeImageActionSheet()
+    }
+    
+    func showChangeImageActionSheet() {
+        viewModel
+            .getAppCoordinator()?
+            .showAlert(actions: [.regular(title: .getStringFor(.takeAPhoto)),
+                                 .regular(title: .getStringFor(.chooseFromGallery)),
+                                 .destructive(title: .getStringFor(.removePhoto))])
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.showUIImagePicker(source: .camera)
+                case 1:
+                    self?.showUIImagePicker(source: .photoLibrary)
+                case 2:
+                    // TODO: - delete avatar
+                    break
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
     }
     
     override func setupView(_ view: UIView) {
@@ -107,37 +121,5 @@ extension NewGroupChatViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-}
-
-extension NewGroupChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func setupImagePicker() {
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            
-            let widhtInPixels  = pickedImage.size.width * UIScreen.main.scale
-            let heightInPixels = pickedImage.size.height * UIScreen.main.scale
-            
-            
-            if widhtInPixels < 512 || heightInPixels < 512 {
-                viewModel.showError(.getStringFor(.pleaseUserBetterQuality))
-            } else if abs(widhtInPixels - heightInPixels) > 20 {
-                viewModel.showError(.getStringFor(.pleaseSelectASquare))
-            } else {
-                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
-                self.newGroupChatView.avatarPictureView.setImage(resizedImage, for: .normal)
-                self.viewModel.fileData = resizedImage.jpegData(compressionQuality: 1)
-            }
-            dismiss(animated: true, completion: nil)
-        }
-        
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
     }
 }

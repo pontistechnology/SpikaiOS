@@ -11,45 +11,19 @@ class EnterUsernameViewController: BaseViewController {
     
     private let enterUsernameView = EnterUsernameView()
     var viewModel: EnterUsernameViewModel!
-    private let imagePicker = UIImagePickerController()
-    let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     var fileData: Data?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(enterUsernameView)
         setupBindings()
-        setupImagePicker()
-        setupActionSheet()
-    }
-    
-    func setupActionSheet() {
-        actionSheet.addAction(UIAlertAction(title:  .getStringFor(.takeAPhoto), style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
-            self.imagePicker.sourceType = .camera
-            self.imagePicker.cameraCaptureMode = .photo
-            self.imagePicker.cameraDevice = .front
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-        actionSheet.addAction(UIAlertAction(title:  .getStringFor(.chooseFromHallery), style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
-            self.imagePicker.sourceType = .photoLibrary
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-        actionSheet.addAction(UIAlertAction(title:  .getStringFor(.removePhoto), style: .destructive, handler: { [weak self] _ in
-            guard let self = self else { return }
-            self.fileData = nil
-            self.enterUsernameView.profilePictureView.deleteMainImage()
-        }))
-        actionSheet.addAction(UIAlertAction(title: .getStringFor(.cancel), style: .cancel, handler: nil))
     }
     
     func setupBindings() {
         sink(networkRequestState: viewModel.networkRequestState)
         
         enterUsernameView.profilePictureView.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            self.present(self.actionSheet, animated: true, completion: nil)
+            self?.showChangeImageActionSheet()
         }.store(in: &subscriptions)
         
         enterUsernameView.nextButton.tap().sink { [weak self] _ in
@@ -74,37 +48,38 @@ class EnterUsernameViewController: BaseViewController {
             guard let self = self else { return }
             self.enterUsernameView.profilePictureView.showUploadProgress(progress: progress)
         }.store(in: &subscriptions)
-    }
-}
-
-extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func setupImagePicker() {
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            
-            let widhtInPixels  = pickedImage.size.width * UIScreen.main.scale
-            let heightInPixels = pickedImage.size.height * UIScreen.main.scale
-            
-            
-            if widhtInPixels < 512 || heightInPixels < 512 {
-                viewModel.showError(.getStringFor(.pleaseUserBetterQuality))
-            } else if abs(widhtInPixels - heightInPixels) > 20 {
-                viewModel.showError(.getStringFor(.pleaseSelectASquare))
-            } else {
+        
+        imagePickerPublisher.sink { [weak self] pickedImage in
+            let photoStatus = pickedImage.statusOfPhoto(for: .avatar)
+            switch photoStatus {
+            case .allOk:
                 guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
-                enterUsernameView.profilePictureView.showImage(resizedImage)
-                fileData = resizedImage.jpegData(compressionQuality: 1)
+                self?.enterUsernameView.profilePictureView.showImage(resizedImage)
+                self?.fileData = resizedImage.jpegData(compressionQuality: 1)
+            default:
+                self?.viewModel.showError(photoStatus.description)
             }
-            dismiss(animated: true, completion: nil)
-        }
+        }.store(in: &subscriptions)
     }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+    func showChangeImageActionSheet() {
+        viewModel
+            .getAppCoordinator()?
+            .showAlert(actions: [.regular(title: .getStringFor(.takeAPhoto)),
+                                 .regular(title: .getStringFor(.chooseFromGallery)),
+                                 .destructive(title: .getStringFor(.removePhoto))])
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.showUIImagePicker(source: .camera)
+                case 1:
+                    self?.showUIImagePicker(source: .photoLibrary)
+                case 2:
+                    self?.fileData = nil
+                    self?.enterUsernameView.profilePictureView.deleteMainImage()
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
     }
 }

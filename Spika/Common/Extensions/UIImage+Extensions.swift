@@ -119,3 +119,65 @@ extension UIImage {
         }
     }
 }
+
+extension UIImage {
+    
+    var widthInPixels: Double {
+        return self.size.width * UIScreen.main.scale
+    }
+    
+    var heightInPixels: Double {
+        return self.size.height * UIScreen.main.scale
+    }
+    
+    var isSquare: Bool {
+        return abs(widthInPixels - heightInPixels) < 20
+    }
+    
+    func statusOfPhoto(for purpose: ImagePurpose) -> StateOfImage {
+        // TODO: check is format wrong
+        switch purpose {
+        case .avatar:
+            if !isSquare {
+                return .wrongDimensions
+            } else if widthInPixels < 512 || heightInPixels < 512 {
+                return .badQuality
+            }
+        case .thumbnail:
+            break
+        case .fullSize:
+            break
+        }
+        return .allOk
+    }
+}
+
+
+enum ImagePurpose {
+    case avatar
+    case thumbnail
+    case fullSize
+}
+
+enum StateOfImage {
+    case badQuality
+    case wrongDimensions
+    case tooBig
+    case wrongFormat
+    case allOk
+    
+    var description: String {
+        switch self {
+        case .badQuality:
+            return .getStringFor(.pleaseSelectLargerImage)
+        case .wrongDimensions:
+            return .getStringFor(.pleaseSelectSquare)
+        case .tooBig:
+            return .getStringFor(.selectedImageIsTooBig)
+        case .wrongFormat:
+            return .getStringFor(.unsupportedFormat)
+        case .allOk:
+            return .getStringFor(.allOk)
+        }
+    }
+}
