@@ -39,8 +39,16 @@ final class ChatDetailsViewController: BaseViewController {
         
         // View Model Binding
         self.viewModel.room
-            .compactMap{ room in
-                return room.avatarFileId?.fullFilePathFromId()
+            .compactMap{ [weak self] room in
+                if room.type == .groupRoom {
+                    return room.avatarFileId?.fullFilePathFromId()
+                } else {
+                    guard let ownId = self?.viewModel.repository.getMyUserId(),
+                          let contact = self?.viewModel.room.value.users.first(where: { roomUser in
+                        roomUser.userId != ownId
+                    }) else { return nil }
+                    return contact.user.avatarFileId?.fullFilePathFromId()
+                }
             }
             .sink { [weak self] url in
                 self?.chatDetailView.contentView.chatImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
