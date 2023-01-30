@@ -29,7 +29,7 @@ final class ChatDetailsViewController: BaseViewController {
     
     private func setupBindings() {
         let isAdmin = self.viewModel.room.map { [weak self] room in
-            guard let self = self else { return false }
+            guard let self = self, room.type == .groupRoom else { return false }
             return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
         }
         
