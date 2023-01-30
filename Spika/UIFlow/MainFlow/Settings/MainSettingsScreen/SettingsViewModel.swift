@@ -50,8 +50,7 @@ class SettingsViewModel: BaseSettingsViewModel {
         } receiveValue: { [weak self] response in
             guard let self = self,
                   let user = response.data?.user else { return }
-            self.repository.saveUserInfo(user: user, device: nil)
-            self.user.send(user)
+            self.saveUser(user: user)
         }.store(in: &subscriptions)
     }
     
