@@ -176,8 +176,7 @@ final class ChatDetailsViewController: BaseViewController {
                 case 1:
                     self?.showUIImagePicker(source: .photoLibrary)
                 case 2:
-                    // TODO: - delete avatar
-                    break
+                    self?.viewModel.changeAvatar(image: nil)
                 default:
                     break
                 }

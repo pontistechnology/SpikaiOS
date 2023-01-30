@@ -101,7 +101,7 @@ class SettingsViewController: BaseViewController {
                 case 1:
                     self?.showUIImagePicker(source: .photoLibrary)
                 case 2:
-                    self?.fileData = nil
+                    self?.viewModel.onChangeUserAvatar(imageFileData: nil)
                     self?.settingsView.userImage.deleteMainImage()
                 default:
                     break

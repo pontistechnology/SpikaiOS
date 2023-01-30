@@ -44,6 +44,7 @@ class BaseSettingsViewModel: BaseViewModel {
     func saveUser(user: User) {
         self.repository.saveUserInfo(user: user, device: nil)
         self.repository.saveUser(user)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let _ = self else { return }
                 switch completion {

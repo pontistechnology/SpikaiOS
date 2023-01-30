@@ -209,7 +209,11 @@ class ChatDetailsViewModel: BaseViewModel {
         .store(in: &subscriptions)
     }
     
-    func changeAvatar(image: Data) {
+    func changeAvatar(image: Data?) {
+        guard let image = image else {
+            self.updateRoomWithAvatar(avatarId: 0)
+            return
+        }
         repository.uploadWholeFile(data: image, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
             .sink { [weak self] completion in
                 switch completion {
