@@ -143,6 +143,10 @@ class ChatDetailsViewModel: BaseViewModel {
     }
     
     func removeUser(user: User) {
+        if let roomUser = self.room.value.users.first(where: { $0.userId == user.id }), roomUser.isAdmin ?? false {
+            return
+        }
+        
         var userIds = self.room.value.users.map { $0.userId }
         userIds.removeAll(where: { $0 == user.id })
         self.updateContacts.send(userIds)

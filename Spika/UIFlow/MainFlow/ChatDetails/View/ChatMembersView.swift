@@ -175,10 +175,19 @@ extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as! ContactsTableViewCell
         let model = self.users[indexPath.row]
         
+        var cellType: ContactsTableViewCellType = .normal
+        if self.editable.value {
+            if model.isAdmin ?? false {
+                cellType = .text(text: .getStringFor(.admin))
+            } else {
+                cellType = .remove
+            }
+        }
+        
         cell.configureCell(title: model.user.getDisplayName(),
                            description: model.user.telephoneNumber,
                            leftImage: model.user.avatarFileId?.fullFilePathFromId(),
-                           type: self.editable.value ? .remove : .normal)
+                           type: cellType)
         
         cell.onRightClickAction
             .compactMap ({ [weak self] cell in

@@ -60,6 +60,7 @@ public extension Constants {
         case mute = "Mute"
         case block = "Block"
         case report = "Report"
+        case admin = "Admin"
         case areYouSureYoutWantToDeleteGroup = "Are you sure you want to delete group?"
         case somethingWentWrongDeletingTheRoom = "Something went wrong deleting the room"
         case somethingWentWrongAddingUsers = "Something went wrong trying to add new users"
