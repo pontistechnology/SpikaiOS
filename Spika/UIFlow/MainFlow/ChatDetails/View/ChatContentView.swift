@@ -25,27 +25,9 @@ class ChatContentView: UIView, BaseView {
     
     let chatMembersView = ChatMembersView(canAddNewMore: true)
     
-    let blockButton: UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle(.getStringFor(.block), for: .normal)
-        btn.setTitleColor(.appRed, for: .normal)
-        btn.contentHorizontalAlignment = .left
-        btn.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: 14)
-        return btn
-    } ()
-    
-    let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .appRed)
-    
-    var deleteButton: UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle(.getStringFor(.delete), for: .normal)
-        btn.setTitleColor(.appRed, for: .normal)
-        btn.contentHorizontalAlignment = .left
-        btn.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: 14)
-        return btn
-    } ()
+    let blockButton = CustomButton(text: .getStringFor(.block), textSize: 14, textColor: .appRed, alignment: .left)
+    let deleteButton = CustomButton(text: .getStringFor(.delete), textSize: 14, textColor: .appRed, alignment: .left)
+    let leaveButton = CustomButton(text: .getStringFor(.exitGroup), textSize: 14, textColor: .appRed, alignment: .left)
     
     lazy var mainStackView: UIStackView = {
        let stackView = UIStackView()
@@ -95,8 +77,9 @@ class ChatContentView: UIView, BaseView {
         
         mainStackView.addArrangedSubview(self.labelStackView)
         labelStackView.addArrangedSubview(blockButton)
-        labelStackView.addArrangedSubview(reportLabel)
+//        labelStackView.addArrangedSubview(reportLabel)
         labelStackView.addArrangedSubview(deleteButton)
+        labelStackView.addArrangedSubview(leaveButton)
     }
     
     func styleSubviews() {
@@ -122,7 +105,7 @@ class ChatContentView: UIView, BaseView {
         
         blockButton.constrainHeight(58)
         deleteButton.constrainHeight(58)
-        reportLabel.constrainHeight(58)
+//        reportLabel.constrainHeight(58)
     }
     
 }

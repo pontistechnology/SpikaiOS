@@ -47,6 +47,7 @@
 		6C9C5C7C29262610009D3E2B /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */; };
 		6C9C5C7E29262657009D3E2B /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7D29262657009D3E2B /* CustomStackView.swift */; };
 		6C9C7242291E743A0089AB4C /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C7241291E743A0089AB4C /* SettingsModel.swift */; };
+		6CBBEC67298AB1F5004281D3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBBEC66298AB1F5004281D3 /* CustomButton.swift */; };
 		6CBD43A52982801D00A1059E /* AppRepository+BlockedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */; };
 		6CBD43A9298282F100A1059E /* AppRepository+Blocked_Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */; };
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
@@ -460,6 +461,7 @@
 		6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		6C9C5C7D29262657009D3E2B /* CustomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
 		6C9C7241291E743A0089AB4C /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		6CBBEC66298AB1F5004281D3 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Blocked_Notification.swift"; sourceTree = "<group>"; };
 		6CD30FF22922865D0017918B /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+BlockedUsers.swift"; sourceTree = "<group>"; };
@@ -1797,6 +1799,7 @@
 				AD9BFCF227296D5500736318 /* ErrorView.swift */,
 				AD9BFCF42729828100736318 /* LogoImageView.swift */,
 				AD9A68172739084A00BDC439 /* ActionButton.swift */,
+				6CBBEC66298AB1F5004281D3 /* CustomButton.swift */,
 				93708E1A279F95DB00F81095 /* CustomLabel.swift */,
 				931E23A827D2DCDA0065FFFC /* MessageStateView.swift */,
 				93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */,
@@ -2277,6 +2280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CBBEC67298AB1F5004281D3 /* CustomButton.swift in Sources */,
 				938D053427D5BF65002E5CE5 /* AppRepository+Rooms.swift in Sources */,
 				9371A1F129241D33005129CC /* VideoMessageTableViewCell.swift in Sources */,
 				9364873528B8E5D00069D538 /* FileMessageTableViewCell.swift in Sources */,

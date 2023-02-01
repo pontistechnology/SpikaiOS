@@ -112,6 +112,7 @@ public extension Constants {
         case newPrivateChat = "New private chat"
         
         // MARK: - DetailsViewController
+        case exitGroup = "Exit group"
         case nameAndSurname = "Name and Surname"
         case favoriteMessages = "Favorite messages"
         

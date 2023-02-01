@@ -35,6 +35,10 @@ final class ChatDetailsViewController: BaseViewController {
         
         if self.viewModel.room.value.type == .privateRoom {
             self.chatDetailView.contentView.blockButton.isHidden = false
+            self.chatDetailView.contentView.leaveButton.isHidden = true
+        } else {
+            self.chatDetailView.contentView.blockButton.isHidden = true
+            self.chatDetailView.contentView.leaveButton.isHidden = false
         }
         
         // View Model Binding
