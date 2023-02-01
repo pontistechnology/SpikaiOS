@@ -122,7 +122,7 @@ class ChatDetailsViewModel: BaseViewModel {
                 switch completion {
                 case .finished:
                     return
-                case .failure(let error):
+                case .failure(_):
                     return
                 }
             } receiveValue: { [weak self] response in

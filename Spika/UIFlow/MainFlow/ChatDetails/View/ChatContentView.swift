@@ -120,9 +120,9 @@ class ChatContentView: UIView, BaseView {
                              padding: UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0))
 
         
-        blockButton.constrainHeight(80)
-        deleteButton.constrainHeight(80)
-        reportLabel.constrainHeight(80)
+        blockButton.constrainHeight(58)
+        deleteButton.constrainHeight(58)
+        reportLabel.constrainHeight(58)
     }
     
 }
