@@ -55,7 +55,16 @@ final class ChatDetailsViewController: BaseViewController {
             }.store(in: &self.viewModel.subscriptions)
 
         self.viewModel.room
-            .map { $0.name }
+            .map{ [weak self] room in
+                if room.type == .privateRoom {
+                    guard let ownId = self?.viewModel.repository.getMyUserId(),
+                          let contact = self?.viewModel.room.value.users.first(where: { roomUser in
+                        roomUser.userId != ownId
+                    }) else { return nil }
+                    return contact.user.displayName
+                }
+                return room.name
+            }
             .sink { [weak self] chatName in
                 self?.chatDetailView.contentView.chatName.text = chatName
             }.store(in: &self.viewModel.subscriptions)
