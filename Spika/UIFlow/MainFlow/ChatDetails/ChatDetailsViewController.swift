@@ -181,6 +181,13 @@ final class ChatDetailsViewController: BaseViewController {
             }.store(in: &self.subscriptions)
         
         self.chatDetailView.contentView
+            .leaveButton
+            .tap()
+            .sink { [weak self] _ in
+                self?.viewModel.leaveRoom()
+            }.store(in: &self.subscriptions)
+        
+        self.chatDetailView.contentView
             .blockButton
             .tap()
             .sink { [weak self] _ in

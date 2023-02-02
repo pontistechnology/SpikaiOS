@@ -233,6 +233,22 @@ class ChatDetailsViewModel: BaseViewModel {
         .store(in: &subscriptions)
     }
     
+    func leaveRoom() {
+        repository.leaveOnlineRoom(forRoomId: self.room.value.id)
+            .sink { [weak self] c in
+                switch c {
+                case .finished:
+                    break
+                case .failure(_):
+                    self?.showError("Error leaving room")
+                }
+            } receiveValue: { response in
+                guard let roomData = response.data?.room else { return }
+                self.saveLocalRoom(room: roomData)
+            }
+            .store(in: &subscriptions)
+    }
+    
     func changeAvatar(image: Data?) {
         guard let image = image else {
             self.updateRoomWithAvatar(avatarId: 0)
