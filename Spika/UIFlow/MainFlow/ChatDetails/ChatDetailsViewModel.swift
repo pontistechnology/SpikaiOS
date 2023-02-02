@@ -55,6 +55,26 @@ class ChatDetailsViewModel: BaseViewModel {
             .store(in: &self.subscriptions)
     }
     
+    func onChangeChatName(newName: String) {
+        guard newName != self.room.value.name else { return }
+        networkRequestState.send(.started())
+        
+        self.repository.updateRoomName(roomId: self.room.value.id, newName: newName)
+            .sink { [weak self] c in
+                self?.networkRequestState.send(.finished)
+                switch c {
+                case .finished:
+                    let delegate = UIApplication.shared.delegate as! AppDelegate
+                    delegate.allroomsprinter()
+                case .failure(_):
+                    break
+                }
+            } receiveValue: { [weak self] room in
+                guard let newRoom = room.data?.room else { return }
+                self?.saveLocalRoom(room: newRoom)
+            }.store(in: &self.subscriptions)
+    }
+    
     func muteUnmute(mute: Bool) {
         self.repository
             .muteUnmuteRoom(roomId: self.room.value.id, mute: mute)
@@ -122,7 +142,7 @@ class ChatDetailsViewModel: BaseViewModel {
                 switch completion {
                 case .finished:
                     return
-                case .failure(let error):
+                case .failure(_):
                     return
                 }
             } receiveValue: { [weak self] response in
@@ -143,6 +163,10 @@ class ChatDetailsViewModel: BaseViewModel {
     }
     
     func removeUser(user: User) {
+        if let roomUser = self.room.value.users.first(where: { $0.userId == user.id }), roomUser.isAdmin ?? false {
+            return
+        }
+        
         var userIds = self.room.value.users.map { $0.userId }
         userIds.removeAll(where: { $0 == user.id })
         self.updateContacts.send(userIds)

@@ -174,8 +174,8 @@ extension CurrentChatViewController {
         
         self.viewModel.offerToBlock
             .receive(on: DispatchQueue.main)
-            .sink { offerToBlock in
-                self.offerToBlockUser.isHidden = !offerToBlock
+            .sink { [weak self] offerToBlock in
+                self?.offerToBlockUser.isHidden = !offerToBlock
             }.store(in: &subscriptions)
         
         self.userBlockedView.blockUnblockButton

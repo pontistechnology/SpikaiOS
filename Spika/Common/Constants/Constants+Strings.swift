@@ -21,6 +21,7 @@ public extension Constants {
         case shared = "shared"
         case delete = "Delete"
         case ok = "Ok"
+        case you = "You"
         
         // MARK: - CountryPickerViewController
         case search = "Search"
@@ -60,6 +61,7 @@ public extension Constants {
         case mute = "Mute"
         case block = "Block"
         case report = "Report"
+        case admin = "Admin"
         case areYouSureYoutWantToDeleteGroup = "Are you sure you want to delete group?"
         case somethingWentWrongDeletingTheRoom = "Something went wrong deleting the room"
         case somethingWentWrongAddingUsers = "Something went wrong trying to add new users"
@@ -112,6 +114,7 @@ public extension Constants {
         case newPrivateChat = "New private chat"
         
         // MARK: - DetailsViewController
+        case exitGroup = "Exit group"
         case nameAndSurname = "Name and Surname"
         case favoriteMessages = "Favorite messages"
         
