@@ -55,6 +55,26 @@ class ChatDetailsViewModel: BaseViewModel {
             .store(in: &self.subscriptions)
     }
     
+    func onChangeChatName(newName: String) {
+        guard newName != self.room.value.name else { return }
+        networkRequestState.send(.started())
+        
+        self.repository.updateRoomName(roomId: self.room.value.id, newName: newName)
+            .sink { [weak self] c in
+                self?.networkRequestState.send(.finished)
+                switch c {
+                case .finished:
+                    let delegate = UIApplication.shared.delegate as! AppDelegate
+                    delegate.allroomsprinter()
+                case .failure(_):
+                    break
+                }
+            } receiveValue: { [weak self] room in
+                guard let newRoom = room.data?.room else { return }
+                self?.saveLocalRoom(room: newRoom)
+            }.store(in: &self.subscriptions)
+    }
+    
     func muteUnmute(mute: Bool) {
         self.repository
             .muteUnmuteRoom(roomId: self.room.value.id, mute: mute)
