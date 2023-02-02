@@ -194,6 +194,22 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func leaveOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CreateRoomResponseModel, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<CreateRoomResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.checkRoomForRoomId + "/" + String(roomId) + "/leave",
+            requestType: .POST,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
     func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
