@@ -11,6 +11,8 @@ import Combine
 final class ChatMembersView: UIView, BaseView {
     
     //MARK: - Variables
+    var ownId: Int64?
+    
     let canAddNewMore: Bool
     
     let cellHeight: CGFloat = 80
@@ -184,7 +186,9 @@ extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        cell.configureCell(title: model.user.getDisplayName(),
+        let userName = self.ownId == model.userId ? .getStringFor(.you) : model.user.getDisplayName()
+        
+        cell.configureCell(title: userName,
                            description: model.user.telephoneNumber,
                            leftImage: model.user.avatarFileId?.fullFilePathFromId(),
                            type: cellType)

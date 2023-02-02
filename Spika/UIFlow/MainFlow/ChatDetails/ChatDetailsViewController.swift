@@ -28,6 +28,8 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     private func setupBindings() {
+        self.chatDetailView.contentView.chatMembersView.ownId = self.viewModel.getMyUserId()
+        
         let isAdmin = self.viewModel.room.map { [weak self] room in
             guard let self = self, room.type == .groupRoom else { return false }
             return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
