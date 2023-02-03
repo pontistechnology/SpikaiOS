@@ -27,6 +27,10 @@ class NewGroupChatViewController: BaseViewController {
         setupBindings()
     }
     
+    deinit {
+        print("new group deinit")
+    }
+    
     func setupBindings() {
         self.viewModel.selectedUsers
             .sink { [weak self] users in

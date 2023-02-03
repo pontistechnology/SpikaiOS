@@ -3,6 +3,16 @@
     {
       "filename" : "slideReply2.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Frame 25.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

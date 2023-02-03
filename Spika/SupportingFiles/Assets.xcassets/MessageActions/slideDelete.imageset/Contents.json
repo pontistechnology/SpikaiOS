@@ -3,6 +3,16 @@
     {
       "filename" : "slideDelete2.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Delete icon.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
