@@ -23,9 +23,9 @@ class TextField: UITextField {
     }
     
     private func setupButton() {
-        backgroundColor = .appWhite
+        backgroundColor = .inputFieldColor
         layer.borderWidth = 1
-        layer.borderColor = UIColor.textTertiary.cgColor
+        layer.borderColor = UIColor.borderColor.cgColor
         layer.cornerRadius = 10
         
         textColor = .textPrimary

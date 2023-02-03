@@ -313,7 +313,6 @@
 		AD8192832722D5AF00D5BE48 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192782722D57400D5BE48 /* Montserrat-Bold.ttf */; };
 		AD8192842722D5AF00D5BE48 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192752722D57300D5BE48 /* Montserrat-Light.ttf */; };
 		AD8192852722D5AF00D5BE48 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192772722D57400D5BE48 /* Montserrat-Medium.ttf */; };
-		AD8192872722D9BA00D5BE48 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */; };
 		AD8192892722F5CD00D5BE48 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192882722F5CD00D5BE48 /* ImageButton.swift */; };
 		AD819290272305D900D5BE48 /* TapUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81928F272305D900D5BE48 /* TapUtils.swift */; };
 		AD9A68162739024B00BDC439 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68152739024B00BDC439 /* String+Extension.swift */; };
@@ -343,8 +342,6 @@
 		AD9BFD49272B105800736318 /* EnterVerifyCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD48272B105800736318 /* EnterVerifyCodeViewController.swift */; };
 		AD9BFD4B272B107500736318 /* EnterVerifyCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4A272B107500736318 /* EnterVerifyCodeViewModel.swift */; };
 		AD9BFD4E272B10AF00736318 /* EnterVerifyCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD4D272B10AF00736318 /* EnterVerifyCodeView.swift */; };
-		AD9BFD51272B17B100736318 /* VerificationTextFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD50272B17B100736318 /* VerificationTextFieldItem.swift */; };
-		AD9BFD53272B184E00736318 /* VerificationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD52272B184E00736318 /* VerificationTextField.swift */; };
 		AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E38FC2725B2D900DC5D43 /* SearchBar.swift */; };
 		AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E38FE2726B2AA00DC5D43 /* TextField.swift */; };
 		AD9E39052726CD2000DC5D43 /* MessageTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E39042726CD2000DC5D43 /* MessageTextField.swift */; };
@@ -656,7 +653,6 @@
 		AD81927A2722D57400D5BE48 /* Montserrat-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraLight.ttf"; sourceTree = "<group>"; };
 		AD81927B2722D57400D5BE48 /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		AD81927C2722D57400D5BE48 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
-		AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		AD8192882722F5CD00D5BE48 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		AD81928F272305D900D5BE48 /* TapUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapUtils.swift; sourceTree = "<group>"; };
 		AD9A68152739024B00BDC439 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -687,9 +683,6 @@
 		AD9BFD48272B105800736318 /* EnterVerifyCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterVerifyCodeViewController.swift; sourceTree = "<group>"; };
 		AD9BFD4A272B107500736318 /* EnterVerifyCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterVerifyCodeViewModel.swift; sourceTree = "<group>"; };
 		AD9BFD4D272B10AF00736318 /* EnterVerifyCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterVerifyCodeView.swift; sourceTree = "<group>"; };
-		AD9BFD50272B17B100736318 /* VerificationTextFieldItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationTextFieldItem.swift; sourceTree = "<group>"; };
-		AD9BFD52272B184E00736318 /* VerificationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationTextField.swift; sourceTree = "<group>"; };
-		AD9BFD54272B1A0200736318 /* VerificationTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationTextFieldView.swift; sourceTree = "<group>"; };
 		AD9E38FC2725B2D900DC5D43 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		AD9E38FE2726B2AA00DC5D43 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		AD9E39042726CD2000DC5D43 /* MessageTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextField.swift; sourceTree = "<group>"; };
@@ -1626,9 +1619,6 @@
 		AD9BFD4F272B176800736318 /* VerificationTextFieldView */ = {
 			isa = PBXGroup;
 			children = (
-				AD9BFD50272B17B100736318 /* VerificationTextFieldItem.swift */,
-				AD9BFD52272B184E00736318 /* VerificationTextField.swift */,
-				AD9BFD54272B1A0200736318 /* VerificationTextFieldView.swift */,
 				6C326A6628FECAAE00E00A59 /* OTPCodeTextField.swift */,
 			);
 			path = VerificationTextFieldView;
@@ -1785,7 +1775,6 @@
 				AD9BFD4F272B176800736318 /* VerificationTextFieldView */,
 				AD81926E2722D0A400D5BE48 /* SegmentedControl.swift */,
 				AD8192702722D3E900D5BE48 /* MainButton.swift */,
-				AD8192862722D9BA00D5BE48 /* SecondaryButton.swift */,
 				AD8192882722F5CD00D5BE48 /* ImageButton.swift */,
 				93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */,
 				AD9E38FC2725B2D900DC5D43 /* SearchBar.swift */,
@@ -2327,7 +2316,6 @@
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
 				93BD5B3C27FB83A400240331 /* RoomEntityService.swift in Sources */,
 				93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */,
-				AD9BFD53272B184E00736318 /* VerificationTextField.swift in Sources */,
 				939B30402850DC1F00FFA537 /* AppRepository+Sync.swift in Sources */,
 				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
 				AD81924A2721743900D5BE48 /* AllChatsViewController.swift in Sources */,
@@ -2361,7 +2349,6 @@
 				AD9BFD1B2729899500736318 /* TestRepository+Messages.swift in Sources */,
 				AD8192572721C2CE00D5BE48 /* HomeTabBar.swift in Sources */,
 				939B30462850DDE700FFA537 /* SyncMessagesResponseModel.swift in Sources */,
-				AD8192872722D9BA00D5BE48 /* SecondaryButton.swift in Sources */,
 				AD9A68162739024B00BDC439 /* String+Extension.swift in Sources */,
 				93E4F6FC27C4687100432CFA /* CurrentChatViewController.swift in Sources */,
 				AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */,
@@ -2495,7 +2482,6 @@
 				ADD5040127101B69009D50CB /* ContentView.swift in Sources */,
 				AD9BFD302729ABDB00736318 /* Country.swift in Sources */,
 				9365A79127E184FA0038CA7F /* GetAllRoomsResponseModel.swift in Sources */,
-				AD9BFD51272B17B100736318 /* VerificationTextFieldItem.swift in Sources */,
 				9396AE1527CBBABE0041B4A6 /* UITextView+Extensions.swift in Sources */,
 				93CFFA4F293587EB001EBACF /* MessageReplyView.swift in Sources */,
 				93FFFE5F296DD50C0058DDB2 /* MessageReactionsView.swift in Sources */,
