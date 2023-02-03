@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CustomStackView: UIStackView {
+class CustomStackView: UIStackView {
     
     init(axis: NSLayoutConstraint.Axis = .vertical,
          distribution: UIStackView.Distribution = .fill,
