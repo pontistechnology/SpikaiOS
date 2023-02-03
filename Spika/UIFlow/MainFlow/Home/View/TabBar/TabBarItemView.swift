@@ -20,8 +20,8 @@ class TabBarItemView: UIView, BaseView {
     
     lazy var highlightsView: UIView = {
         let highlightsView = UIView()
-        highlightsView.layer.cornerRadius = 23
-        highlightsView.layer.masksToBounds = true
+//        highlightsView.layer.cornerRadius = 23
+//        highlightsView.layer.masksToBounds = true
         return highlightsView
     } ()
     
@@ -61,11 +61,10 @@ class TabBarItemView: UIView, BaseView {
                        usingSpringWithDamping: 1.0,
                        initialSpringVelocity: 0.5,
                        options: options,
-                       animations: {
-            let color = isSelected ? UIColor.appBlueLight : UIColor.clear
-            self.highlightsView.backgroundColor = color
-            self.button.setImage(isSelected ? self.tab.imageSelected : self.tab.imageNormal, for: .normal)
-            (self.superview as? UIStackView)?.layoutIfNeeded()
+                       animations: { [weak self] in
+            self?.highlightsView.backgroundColor = .clear
+            self?.button.setImage(isSelected ? self?.tab.imageSelected : self?.tab.imageNormal, for: .normal)
+            (self?.superview as? UIStackView)?.layoutIfNeeded()
         }, completion: nil)
     }
     

@@ -19,7 +19,7 @@ class EnterNumberTextField: UIView, BaseView {
     var textField = UITextField()
     let numberView = UIView()
     let countryNumberLabel = CustomLabel(text: "", textColor: .primaryColor, fontName: .MontserratMedium, alignment: .center)
-    let lineBreakView = UIView()
+    private let lineBreakView = UIView()
     
     private let placeholder: String
     private let title: String

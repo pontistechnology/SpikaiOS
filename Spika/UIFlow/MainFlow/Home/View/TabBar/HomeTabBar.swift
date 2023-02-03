@@ -70,7 +70,7 @@ class HomeTabBar: UIView, BaseView {
         tabStackView.alignment = .fill
         tabStackView.distribution = .fillEqually
         tabStackView.spacing = 0
-        topBorderView.backgroundColor = .lightGray.withAlphaComponent(0.5)
+        topBorderView.backgroundColor = .textTertiary
     }
     
     func positionSubviews() {
