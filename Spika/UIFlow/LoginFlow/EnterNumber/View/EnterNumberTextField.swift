@@ -59,14 +59,14 @@ class EnterNumberTextField: UIView, BaseView {
         
         textField.keyboardType = .phonePad
         textField.placeholder = placeholder
-        textField.textColor = .textPrimaryAndWhite
+        textField.textColor = .textPrimary
         textField.font = .customFont(name: .MontserratMedium)
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
         
-        numberView.backgroundColor = .whiteAndDarkBackground2
+        numberView.backgroundColor = .appWhite
         numberView.layer.borderWidth = 1
-        numberView.layer.borderColor = UIColor.textTertiaryAndDarkBackground2.cgColor
+        numberView.layer.borderColor = UIColor.textTertiary.cgColor
         numberView.layer.cornerRadius = 10
     }
     

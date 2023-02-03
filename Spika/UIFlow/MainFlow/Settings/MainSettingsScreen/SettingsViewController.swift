@@ -77,8 +77,9 @@ class SettingsViewController: BaseViewController {
             let statusOfPhoto = selectedImage.statusOfPhoto(for: .avatar)
             switch statusOfPhoto {
             case .allOk:
-                self?.settingsView.userImage.showImage(selectedImage)
-                guard let data = selectedImage.jpegData(compressionQuality: 1) else { return }
+                guard let resizedImage = self?.viewModel.resizeImage(selectedImage),
+                      let data = resizedImage.jpegData(compressionQuality: 1) else { return }
+                self?.settingsView.userImage.showImage(resizedImage)
                 self?.viewModel.onChangeUserAvatar(imageFileData: data)
             default:
                 self?.viewModel.showError(statusOfPhoto.description)

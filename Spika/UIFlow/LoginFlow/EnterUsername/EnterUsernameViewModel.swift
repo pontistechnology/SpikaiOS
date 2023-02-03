@@ -15,8 +15,9 @@ class EnterUsernameViewModel: BaseViewModel {
     let uploadProgressPublisher = PassthroughSubject<CGFloat, Error>()
     
     func updateUser(username: String, imageFileData: Data?) {
-        if let imageFileData = imageFileData {
-            let tuple = repository.uploadWholeFile(data: imageFileData, mimeType: "image/*", metaData: MetaData(width: 512, height: 512, duration: 0))
+        if let imageFileData = imageFileData,
+           let fileUrl = repository.saveDataToFile(imageFileData, name: "newAvatar") {
+            let tuple = repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 512, height: 512, duration: 0))
             tuple.sink { [weak self] completion in
                 guard let self = self else { return }
                 switch completion {

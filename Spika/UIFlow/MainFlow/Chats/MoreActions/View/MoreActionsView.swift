@@ -16,7 +16,7 @@ enum MoreActions { // TODO: move
 }
 
 class MoreActionsView: UIView {
-    private let containerView = UIView(backgroundColor: .white)
+    private let containerView = UIView(backgroundColor: .appWhite)
     
     private let moreActionsLabel = CustomLabel(text: "More actions", textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
     private let optionsStackView = CustomStackView(axis: .horizontal, distribution: .fillEqually, spacing: 12)

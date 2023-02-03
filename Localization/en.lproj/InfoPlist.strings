@@ -6,7 +6,7 @@
   
 */
 
-"NSCameraUsageDescription" = "Can we use your microphone?";
+"NSCameraUsageDescription" = "Can we use your camera?";
 "NSContactsUsageDescription" = "Can we use your contacts?";
 "NSMicrophoneUsageDescription" = "Can we use your microphone?";
 

@@ -86,17 +86,7 @@ enum AssetName: String {
     case slideDetails = "slideDetails"
 }
 
-extension UIImage {
-    func resizeImageToFitPixels(size: CGSize) -> UIImage? {
-        let pixelsSize = CGSize(width: size.width / UIScreen.main.scale,
-                                height: size.height / UIScreen.main.scale)
-        UIGraphicsBeginImageContextWithOptions(pixelsSize, false, 0.0)
-        self.draw(in: CGRect(origin: CGPoint.zero, size: pixelsSize))
-        guard let resizedImage = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
-        UIGraphicsEndImageContext()
-        return resizedImage
-    }
-    
+extension UIImage {    
     static var missingImage: UIImage {
         return UIImage(systemName: "externaldrive.badge.xmark")!
     }
@@ -122,16 +112,8 @@ extension UIImage {
 
 extension UIImage {
     
-    var widthInPixels: Double {
-        return self.size.width * UIScreen.main.scale
-    }
-    
-    var heightInPixels: Double {
-        return self.size.height * UIScreen.main.scale
-    }
-    
-    var isSquare: Bool {
-        return abs(widthInPixels - heightInPixels) < 20
+    private var isSquare: Bool {
+        return abs(self.size.width - self.size.height) < 20
     }
     
     func statusOfPhoto(for purpose: ImagePurpose) -> StateOfImage {
@@ -140,7 +122,7 @@ extension UIImage {
         case .avatar:
             if !isSquare {
                 return .wrongDimensions
-            } else if widthInPixels < 512 || heightInPixels < 512 {
+            } else if self.size.width < 512 || self.size.height < 512 {
                 return .badQuality
             }
         case .thumbnail:
@@ -151,7 +133,6 @@ extension UIImage {
         return .allOk
     }
 }
-
 
 enum ImagePurpose {
     case avatar

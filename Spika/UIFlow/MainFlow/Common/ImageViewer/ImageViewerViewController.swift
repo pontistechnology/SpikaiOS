@@ -15,6 +15,10 @@ class ImageViewerViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(imageViewerView)
-        imageViewerView.setImage(link: viewModel.link)
+        if let localURL = viewModel.getLocalURL() {
+            imageViewerView.setImage(path: localURL.path)
+        } else {
+            imageViewerView.setImage(link: viewModel.getOnlineURL())
+        }
     }
 }

@@ -54,12 +54,12 @@ class SearchBar: UIView, BaseView {
         deleteImage.isHidden = true
         
         searchTextField.autocorrectionType = .no
-        searchTextField.textColor = .textPrimaryAndWhite
+        searchTextField.textColor = .textPrimary
         searchTextField.font = .customFont(name: .MontserratMedium, size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
         
-        searchView.backgroundColor = .chatBackgroundAndDarkBackground2
+        searchView.backgroundColor = .chatBackground
         searchView.layer.cornerRadius = 10
         searchView.clipsToBounds = true
         

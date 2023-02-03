@@ -10,10 +10,10 @@ import UIKit
 
 class SelectUsersView: UIView, BaseView {
     
-    let numberSelectedUsersLabel = CustomLabel(text: "0/100 " + .getStringFor(.selected), textSize: 11, textColor: .textPrimaryAndWhite)
+    let numberSelectedUsersLabel = CustomLabel(text: "0/100 " + .getStringFor(.selected), textSize: 11, textColor: .textPrimary)
     let cancelLabel = CustomLabel(text: .getStringFor(.cancel), textSize: 14, textColor: .primaryColor, fontName: .MontserratBold)
     let nextLabel = CustomLabel(text: .getStringFor(.next), textSize: 14, textColor: .primaryColor, fontName: .MontserratSemiBold)
-    let chatLabel = CustomLabel(text: .getStringFor(.newChat), textSize: 28, textColor: .textPrimaryAndWhite)
+    let chatLabel = CustomLabel(text: .getStringFor(.newChat), textSize: 28, textColor: .textPrimary)
     let searchBar = SearchBar(placeholder: .getStringFor(.searchForContact), shouldShowCancel: false)
     let chatOptionLabel = CustomLabel(text: .getStringFor(.newGroupChat), textSize: 14, textColor: .primaryColor, fontName: .MontserratBold)
     let contactsTableView = ContactsTableView()

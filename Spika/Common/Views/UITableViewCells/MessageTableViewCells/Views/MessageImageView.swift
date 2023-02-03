@@ -47,8 +47,7 @@ extension MessageImageView: BaseView {
 }
 
 extension MessageImageView {
-    func setImage(url: URL?, as ratio: ImageRatio) {
-        
+    private func setRatio(to ratio: ImageRatio) {
         switch ratio {
         case .portrait:
             imageWidthConstraint?.constant = 140
@@ -60,7 +59,16 @@ extension MessageImageView {
             imageWidthConstraint?.constant = 246
             imageHeightConstraint?.constant = 246
         }
+    }
+    
+    func setImage(url: URL?, as ratio: ImageRatio) {
+        setRatio(to: ratio)
         imageView.kf.setImage(with: url, placeholder: UIImage(systemName: "arrow.counterclockwise")?.withTintColor(.gray, renderingMode: .alwaysOriginal)) // TODO: change image
+    }
+    
+    func setImage(path: String, as ratio: ImageRatio) {
+        setRatio(to: ratio)
+        imageView.image = UIImage(contentsOfFile: path)
     }
     
     func reset() {

@@ -11,7 +11,7 @@ class EnterUsernameViewController: BaseViewController {
     
     private let enterUsernameView = EnterUsernameView()
     var viewModel: EnterUsernameViewModel!
-    var fileData: Data?
+    var fileData: Data? // TODO: change to url, move to viewmodel, use phphotopicker
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +53,7 @@ class EnterUsernameViewController: BaseViewController {
             let photoStatus = pickedImage.statusOfPhoto(for: .avatar)
             switch photoStatus {
             case .allOk:
-                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
+                guard let resizedImage = self?.viewModel.resizeImage(pickedImage) else { return }
                 self?.enterUsernameView.profilePictureView.showImage(resizedImage)
                 self?.fileData = resizedImage.jpegData(compressionQuality: 1)
             default:

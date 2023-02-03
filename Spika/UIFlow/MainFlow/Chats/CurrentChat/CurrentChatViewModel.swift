@@ -17,7 +17,7 @@ class CurrentChatViewModel: BaseViewModel {
     let friendUser: User?
     var room: Room?
     let roomPublisher = PassthroughSubject<Room, Error>()
-    let uploadProgressPublisher = PassthroughSubject<(localId: String, percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
+    let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
     let isBlocked = CurrentValueSubject<Bool,Never>(false)
     let userRepliedInChat = CurrentValueSubject<Bool,Never>(true)
@@ -44,7 +44,7 @@ class CurrentChatViewModel: BaseViewModel {
             .receive(on: DispatchQueue.main)
             .map { [weak self] blockedUsers in
                 guard let blockedUsers = blockedUsers,
-                self?.room?.type == .privateRoom else { return false }
+                      self?.room?.type == .privateRoom else { return false }
                 
                 let roomUserIds = self?.room?.users.map { $0.userId } ?? []
                 return Set(blockedUsers).intersection(Set(roomUserIds)).count > 0
@@ -165,8 +165,8 @@ extension CurrentChatViewModel {
         getAppCoordinator()?.presentAVVideoController(asset: asset)
     }
     
-    func showImage(link: URL) {
-        getAppCoordinator()?.presentImageViewer(link: link)
+    func showImage(message: Message) {
+        getAppCoordinator()?.presentImageViewer(message: message)
     }
     
     func showReactions(records: [MessageRecord]) {
@@ -206,7 +206,7 @@ extension CurrentChatViewModel {
         var actions: [AlertViewButton] = [.destructive(title: .getStringFor(.deleteForMe))]
         if message.fromUserId == getMyUserId() {
             actions.append(.destructive(title: .getStringFor(.deleteForEveryone)))
-        }        
+        }
         getAppCoordinator()?
             .showAlert(actions: actions)
             .sink(receiveValue: { [weak self] tappedIndex in
@@ -319,9 +319,9 @@ extension CurrentChatViewModel {
             guard let self = self else { return }
             print("creating room response: ", response)
             if let errorMessage = response.message {
-//                PopUpManager.shared.presentAlert(with: (title: "Error", message: errorMessage), orientation: .horizontal, closures: [("Ok", {
-//                    self.getAppCoordinator()?.popTopViewController()
-//                })]) // TODO: - check
+                //                PopUpManager.shared.presentAlert(with: (title: "Error", message: errorMessage), orientation: .horizontal, closures: [("Ok", {
+                //                    self.getAppCoordinator()?.popTopViewController()
+                //                })]) // TODO: - check
             }
             guard let room = response.data?.room else { return }
             self.saveLocalRoom(room: room)
@@ -412,13 +412,15 @@ extension CurrentChatViewModel {
 
 extension CurrentChatViewModel {
     
-    func upload(file: SelectedFile, localId: String) {
+    func upload(file: SelectedFile) {
         switch file.fileType {
         case .image, .video:
-            guard let data = file.thumbnail?.jpegData(compressionQuality: 1) else { return }
-            uploadProgressPublisher.send((localId: localId, percentUploaded: 0.01, selectedFile: file))
+            guard let thumbURL = file.thumbUrl,
+                  let thumbMetadata = file.thumbMetadata
+            else { return }
+            uploadProgressPublisher.send((percentUploaded: 0.01, selectedFile: file))
             repository
-                .uploadWholeFile(data: data, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
+                .uploadWholeFile(fromUrl: thumbURL, mimeType: "image/*", metaData: thumbMetadata)
                 .sink { c in
                     
                 } receiveValue: { [weak self] filea, percent in
@@ -430,13 +432,13 @@ extension CurrentChatViewModel {
                             
                         } receiveValue: { [weak self] fileb, percent in
                             guard let self = self else { return }
-                            self.uploadProgressPublisher.send((localId: localId, percentUploaded: percent, selectedFile: file))
+                            self.uploadProgressPublisher.send((percentUploaded: percent, selectedFile: file))
                             guard let fileb = fileb else { return }
-                            self.sendMessage(body: RequestMessageBody(text: nil, fileId: fileb.id, thumbId: filea.id), localId: localId, type: file.fileType, replyId: nil)
+                            self.sendMessage(body: RequestMessageBody(text: nil, fileId: fileb.id, thumbId: filea.id), localId: file.localId, type: file.fileType, replyId: nil)
                         }.store(in: &self.subscriptions)
-                }.store(in: &subscriptions)            
+                }.store(in: &subscriptions)
         default:
-            uploadProgressPublisher.send((localId: localId, percentUploaded: 0.01, selectedFile: nil))
+            uploadProgressPublisher.send((percentUploaded: 0.01, selectedFile: nil))
             repository
                 .uploadWholeFile(fromUrl: file.fileUrl,
                                  mimeType: file.mimeType,
@@ -444,9 +446,9 @@ extension CurrentChatViewModel {
                 .sink { c in
                     
                 } receiveValue: { [weak self] filea, percent in
-                    self?.uploadProgressPublisher.send((localId: localId, percentUploaded: percent, selectedFile: nil))
+                    self?.uploadProgressPublisher.send((percentUploaded: percent, selectedFile: nil))
                     self?.sendMessage(body: RequestMessageBody(text: nil, fileId: filea?.id, thumbId: nil),
-                                      localId: localId,
+                                      localId: file.localId,
                                       type: file.fileType,
                                       replyId: nil)
                 }.store(in: &subscriptions)
@@ -456,7 +458,7 @@ extension CurrentChatViewModel {
     
     func sendFile(file: SelectedFile) {
         guard let room = room else { return }
-        let uuid = UUID().uuidString
+        let uuid = file.localId
         
         let message = Message(createdAt: Date().currentTimeMillis(),
                               fromUserId: getMyUserId(),
@@ -464,19 +466,36 @@ extension CurrentChatViewModel {
                               type: file.fileType,
                               body: MessageBody(text: nil,
                                                 file: FileData(id: nil,
-                                                                fileName: file.name,
-                                                                mimeType: file.mimeType,
-                                                                size: file.size,
+                                                               fileName: file.name,
+                                                               mimeType: file.mimeType,
+                                                               size: file.size,
                                                                metaData: file.metaData),
-                                               thumb: nil),
+                                                thumb: nil),
                               replyId: nil,
                               localId: uuid)
         
         repository.saveMessages([message]).sink { c in
             
         } receiveValue: { [weak self] messages in
-            self?.upload(file: file, localId: uuid)
+            self?.upload(file: file)
         }.store(in: &subscriptions)
+    }
+    
+    func sendResized(resizedImage: UIImage) {
+        let uuid = UUID().uuidString
+        guard let jpgData = resizedImage.jpegData(compressionQuality: 1),
+              let fileURL = repository.saveDataToFile(jpgData, name: uuid),
+              let thumbData = fileURL.downsample(isForThumbnail: true)?.jpegData(compressionQuality: 1),
+              let thumbURL = repository.saveDataToFile(thumbData, name: "\(uuid)thumb"),
+              let fileMetadata = fileURL.imageMetaData(),
+              let thumbMetadata = thumbURL.imageMetaData()
+        else { return }
+        
+        let file = SelectedFile(fileType: .image, name: uuid,
+                                fileUrl: fileURL, thumbUrl: thumbURL,
+                                thumbMetadata: thumbMetadata, metaData: fileMetadata,
+                                mimeType: "image/*", size: nil, localId: uuid)
+        sendFile(file: file)
     }
     
     func sendMultimedia(_ results: [PHPickerResult]) {
@@ -484,36 +503,32 @@ extension CurrentChatViewModel {
             
             if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
                 result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { [weak self] url, error in
-                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
                     guard let url = url,
-                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                          url.copyFileFromURL(to: targetURL) == true
+                          let downsampledImage = url.downsample()
                     else { return }
-                    let thumbnail = targetURL.imageThumbnail()
-                    let metaData = targetURL.imageMetaData()
-                    let file = SelectedFile(fileType: .image, name: nil,
-                                            fileUrl: targetURL, thumbnail: thumbnail, metaData: metaData,
-                                            mimeType: "image/*", size: nil)
-                    self?.sendFile(file: file)
+                    self?.sendResized(resizedImage: downsampledImage)
                 }
             }
             
             if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
                 result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
-                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+                    
+                    let uuid = UUID().uuidString
+                    let thumbImage = UIImage(safeImage: .playVideo)
                     guard let url = url,
-                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                          url.copyFileFromURL(to: targetURL) == true
+                          let fileUrl = self?.repository.copyFile(from: url, name: uuid),
+                          let videoMetadata = fileUrl.videoMetaData(),
+                          //                          let thumbImage = fileUrl.videoThumbnail(),
+                          let resizedData = self?.resizeImage(thumbImage)?.jpegData(compressionQuality: 1),
+                          let thumbUrl = self?.repository.saveDataToFile(resizedData, name: "\(uuid)thumb"),
+                          let thumbMetadata = thumbUrl.imageMetaData()
+                            
                     else { return }
-                    let thumb = url.videoThumbnail()
-                    let metaData = url.videoMetaData()
-                    let file  = SelectedFile(fileType: .video,
-                                             name: nil,
-                                             fileUrl: targetURL,
-                                             thumbnail: thumb,
-                                             metaData: metaData,
-                                             mimeType: "video/mp4", // TODO: determine
-                                             size: nil)
+                    
+                    let file = SelectedFile(fileType: .video,
+                                            name: uuid,
+                                            fileUrl: fileUrl,
+                                            thumbUrl: thumbUrl, thumbMetadata: thumbMetadata, metaData: videoMetadata, mimeType: "video/mp4", size: nil, localId: uuid)
                     self?.sendFile(file: file)
                 }
             }
@@ -521,27 +536,35 @@ extension CurrentChatViewModel {
     }
     
     func sendDocuments(urls: [URL]) {
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        for url in urls {
-            guard let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                  url.copyFileFromURL(to: targetURL) == true,
-                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey, .fileSizeKey]),
-                  let type = resourceValues.contentType,
-                  let size = resourceValues.fileSize
-            else { return }
-            let fileName = resourceValues.name ?? "unknownName"
-            
-            print("TYPEE: ", type)
-            let file = SelectedFile(fileType: .file,
-                                    name: fileName,
-                                    fileUrl: targetURL,
-                                    thumbnail: nil,
-                                    metaData: MetaData(width: 0, height: 0, duration: 0),
-                                    mimeType: "\(type)",
-                                    size: Int64(size))
-            sendFile(file: file)
-        }
+        //        for url in urls {
+        //            guard let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
+        //                  url.copyFileFromURL(to: targetURL) == true,
+        //                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey, .fileSizeKey]),
+        //                  let type = resourceValues.contentType,
+        //                  let size = resourceValues.fileSize
+        //            else { return }
+        //            let fileName = resourceValues.name ?? "unknownName"
+        //
+        //            print("TYPEE: ", type)
+        //            let file = SelectedFile(fileType: .file,
+        //                                    name: fileName,
+        //                                    fileUrl: targetURL,
+        //                                    thumbnail: nil,
+        //                                    metaData: MetaData(width: 0, height: 0, duration: 0),
+        //                                    mimeType: "\(type)",
+        //                                    size: Int64(size))
+        //            sendFile(file: file)
+        //        }
     }
+    
+    func sendCameraImage(_ image: UIImage) {
+        guard let data = image.jpegData(compressionQuality: 1),
+              let resizedImage = repository.saveDataToFile(data, name: "tempFile")?.downsample()
+        else { return }
+        sendResized(resizedImage: resizedImage)
+    }
+    
+    
 }
 
 // MARK: - Reactions

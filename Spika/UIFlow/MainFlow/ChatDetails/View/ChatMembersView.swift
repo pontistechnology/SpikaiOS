@@ -47,7 +47,7 @@ final class ChatMembersView: UIView, BaseView {
     } ()
     
     let titleLabel = CustomLabel(text: .getStringFor(.members), textSize: 22,
-                                 textColor: .textPrimaryAndWhite,
+                                 textColor: .textPrimary,
                                  fontName: .MontserratSemiBold)
     
     lazy var addContactButton: UIButton = {

@@ -238,9 +238,9 @@ class AppCoordinator: Coordinator {
         }
     }
     
-    func presentImageViewer(link: URL) {
+    func presentImageViewer(message: Message) {
         let imageViewerViewController = Assembler.sharedAssembler.resolver
-            .resolve(ImageViewerViewController.self, arguments: self, link)!
+            .resolve(ImageViewerViewController.self, arguments: self, message)!
         navigationController.pushViewController(imageViewerViewController, animated: true)
     }
     

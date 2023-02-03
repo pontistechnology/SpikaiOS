@@ -26,10 +26,10 @@ class VerificationTextFieldItem: UIView, BaseView {
     
     func styleSubviews() {
         textField.text = ""
-        textField.textColor = .textPrimaryAndWhite
+        textField.textColor = .textPrimary
         textField.keyboardType = .numberPad
-        backgroundColor = .whiteAndDarkBackground2
-        layer.borderColor = UIColor.textTertiaryAndDarkBackground2.cgColor
+        backgroundColor = .appWhite
+        layer.borderColor = UIColor.textTertiary.cgColor
         layer.borderWidth = 1
         layer.masksToBounds = false
         layer.cornerRadius = 10

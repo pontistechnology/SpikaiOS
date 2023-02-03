@@ -42,16 +42,17 @@ extension ImageMessageTableViewCell: BaseMessageTableViewCellProtocol {
         let imageRatio = ImageRatio(width: message.body?.file?.metaData?.width ?? 1,
                                     height: message.body?.file?.metaData?.height ?? 1)
         
-        let path = message.body?.thumb?.id?.fullFilePathFromId()
-        print("jojx ", path)
-        photoImageView.setImage(url: path, as: imageRatio)
+        // TODO: - use repository
+        if let localPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(message.localId ?? "").path,
+           FileManager.default.fileExists(atPath: localPath) {
+            photoImageView.setImage(path: localPath, as: imageRatio)
+        } else {
+            let path = message.body?.thumb?.id?.fullFilePathFromId()
+            photoImageView.setImage(url: path, as: imageRatio)            
+        }
         
         photoImageView.tap().sink { [weak self] _ in
             self?.tapPublisher.send(.openImage)
         }.store(in: &subs)
-    }
-    
-    func setTempThumbnail(url: URL?, as imageRatio: ImageRatio) {
-        photoImageView.setImage(url: url, as: imageRatio)
     }
 }

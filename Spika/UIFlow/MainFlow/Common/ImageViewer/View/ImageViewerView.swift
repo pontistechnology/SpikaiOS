@@ -78,7 +78,13 @@ extension ImageViewerView: BaseView {
         return zoomRect
     }
     
-    func setImage(link: URL) {
+    func setImage(link: URL?) {
+        imageView.kf.indicatorType = .activity
         imageView.kf.setImage(with: link, placeholder: UIImage(safeImage: .unknownFileThumbnail))
     }
+    
+    func setImage(path: String) {
+        imageView.image = UIImage(contentsOfFile: path)
+    }
+    
 }

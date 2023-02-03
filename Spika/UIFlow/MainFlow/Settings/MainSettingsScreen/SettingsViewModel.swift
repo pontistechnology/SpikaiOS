@@ -17,12 +17,14 @@ class SettingsViewModel: BaseSettingsViewModel {
     }
     
     func onChangeUserAvatar(imageFileData: Data?) {
-        guard let imageFileData = imageFileData else {
+        guard let imageFileData = imageFileData,
+              let fileUrl = repository.saveDataToFile(imageFileData, name: "newAvatar")
+        else {
             self.updateInfo(username: self.user.value?.getDisplayName() ?? "", avatarFileId: 0)
             return
         }
         
-        let tuple = repository.uploadWholeFile(data: imageFileData, mimeType: "image/*", metaData: MetaData(width: 512, height: 512, duration: 0))
+        let tuple = repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 512, height: 512, duration: 0))
         tuple.sink { [weak self] completion in
             guard let self = self else { return }
             switch completion {

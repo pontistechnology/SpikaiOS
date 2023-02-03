@@ -39,7 +39,7 @@ class BaseViewController: UIViewController {
     }
     
     func setupView(_ view: UIView) {
-        self.view.backgroundColor = .whiteAndDarkBackground
+        self.view.backgroundColor = .appWhite
         self.view.addSubview(view)
         view.fillSuperviewSafeAreaLayoutGuide()
         hideKeyboardWhenTappedAround()
@@ -112,9 +112,11 @@ extension BaseViewController: UIImagePickerControllerDelegate & UINavigationCont
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        // TODO: Check picker isEditing and set info for editedImage or originalImage
+        // TODO: send url
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             imagePickerPublisher.send(pickedImage)
+        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            imagePickerPublisher.send(originalImage)
         }
         dismiss(animated: true, completion: nil)
     }

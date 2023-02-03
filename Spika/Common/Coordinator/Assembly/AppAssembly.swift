@@ -214,16 +214,16 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleImageViewerViewController(_ container: Container) {
-        container.register(ImageViewerViewModel.self) { (resolver, coordinator: AppCoordinator, link: URL) in
+        container.register(ImageViewerViewModel.self) { (resolver, coordinator: AppCoordinator, message: Message) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             let viewModel = ImageViewerViewModel(repository: repository, coordinator: coordinator)
-            viewModel.link = link
+            viewModel.message = message
             return viewModel
         }.inObjectScope(.transient)
         
-        container.register(ImageViewerViewController.self) { (resolver, coordinator: AppCoordinator, link: URL) in
+        container.register(ImageViewerViewController.self) { (resolver, coordinator: AppCoordinator, message: Message) in
             let controller = ImageViewerViewController()
-            controller.viewModel = container.resolve(ImageViewerViewModel.self, arguments: coordinator, link)
+            controller.viewModel = container.resolve(ImageViewerViewModel.self, arguments: coordinator, message)
             return controller
         }.inObjectScope(.transient)
     }

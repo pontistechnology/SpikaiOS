@@ -61,11 +61,11 @@ private extension ReactionsView {
             let label = CustomLabel(text: element, textSize: 16, alignment: .center)
             label.tap().sink { [weak self] _ in
                 self?.deleteBackgroundOfAllStackSubviews()
-                label.backgroundColor = UIColor(hexString: "F2F2F2")
+                label.backgroundColor = .askNika
                 self?.stackviewTapPublisher.send(index)
             }.store(in: &subs)
             if index == 0 {
-                label.backgroundColor = UIColor(hexString: "F2F2F2")
+                label.backgroundColor = .askNika
             }
             stackView.addArrangedSubview(label)
         }
