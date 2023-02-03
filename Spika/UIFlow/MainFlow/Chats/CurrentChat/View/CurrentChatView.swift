@@ -40,7 +40,7 @@ class CurrentChatView: UIView, BaseView {
         
         downArrowImageView.isHidden = true
         
-        backgroundColor = .white
+        backgroundColor = .appWhite
     }
     
     func positionSubviews() {        

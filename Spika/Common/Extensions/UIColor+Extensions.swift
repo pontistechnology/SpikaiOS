@@ -27,6 +27,7 @@ extension UIColor {
     static let appWhite = safeColor(named: "appWhite")
     static let borderColor = safeColor(named: "borderColor")
     static let chatBackground = safeColor(named: "chatBackground")
+    static let inputFieldColor = safeColor(named: "inputFieldColor")
     static let myChatBackground = safeColor(named: "myChatBackground")
     static let primaryColor = safeColor(named: "primaryColor")
     static let textPrimary = safeColor(named: "textPrimary")

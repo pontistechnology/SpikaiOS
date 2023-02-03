@@ -46,7 +46,6 @@ extension InputTextAndControlsView: BaseView {
     }
     
     func styleSubviews() {
-//        backgroundColor = .orange
         closeButton.setImage(UIImage(safeImage: .close), for: .normal)
         plusButton.setImage(UIImage(safeImage: .plus), for: .normal)
         sendButton.setImage(UIImage(safeImage: .send), for: .normal)
