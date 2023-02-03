@@ -28,17 +28,10 @@ extension UIColor {
     static let borderColor = safeColor(named: "borderColor")
     static let chatBackground = safeColor(named: "chatBackground")
     static let myChatBackground = safeColor(named: "myChatBackground")
-    static let darkBackground = safeColor(named: "darkBackground")
-    static let darkBackground2 = safeColor(named: "darkBackground2")
-    static let logoBlue = safeColor(named: "logoBlue")
-    static let logoBlueLighter = safeColor(named: "logoBlueLighter")
-    static let navigation = safeColor(named: "navigation")
     static let primaryColor = safeColor(named: "primaryColor")
-    static let secondaryColor = safeColor(named: "secondaryColor")
     static let textPrimary = safeColor(named: "textPrimary")
     static let textSecondary = safeColor(named: "textSecondary")
     static let textTertiary = safeColor(named: "textTertiary")
-    static let askNika = safeColor(named: "askNika")
     
     /* Common Combinations of colors
         - These colors are combinations of individual colors
