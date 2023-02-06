@@ -109,6 +109,7 @@ public extension Constants {
         case unknown = "Unknown"
         case today = "Today"
         case yesterday = "Yesterday"
+        case youAreNoLongerMember = "You are no longer a member of this group"
         
         // MARK: - SelectUsersViewController
         case newChat = "New chat"
