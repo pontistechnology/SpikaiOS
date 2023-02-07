@@ -16,7 +16,7 @@ enum MoreActions { // TODO: move
 }
 
 class MoreActionsView: UIView {
-    private let containerView = UIView(backgroundColor: .appWhite)
+    private let containerView = UIView()
     
     private let moreActionsLabel = CustomLabel(text: "More actions", textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
     private let optionsStackView = CustomStackView(axis: .horizontal, distribution: .fillEqually, spacing: 12)
@@ -49,7 +49,7 @@ extension MoreActionsView: BaseView {
     }
     
     func styleSubviews() {
-        containerView.backgroundColor = .appWhite
+        containerView.backgroundColor = .inputFieldColor
         containerView.layer.cornerRadius = 10
         containerView.clipsToBounds = true
         filesImageView.contentMode = .scaleAspectFit
