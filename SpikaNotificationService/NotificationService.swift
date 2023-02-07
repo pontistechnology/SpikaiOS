@@ -54,9 +54,9 @@ extension NotificationService {
     func sendDeliveredStatus(messageIds: [Int64]) {
         repository.sendDeliveredStatus(messageIds: messageIds).sink { c in
             
-        } receiveValue: { response in
-            guard let bestAttemptContent = self.bestAttemptContent,
-                  let contentHandler = self.contentHandler
+        } receiveValue: { [weak self] response in
+            guard let bestAttemptContent = self?.bestAttemptContent,
+                  let contentHandler = self?.contentHandler
             else { return }
             contentHandler(bestAttemptContent)
         }.store(in: &subs)
