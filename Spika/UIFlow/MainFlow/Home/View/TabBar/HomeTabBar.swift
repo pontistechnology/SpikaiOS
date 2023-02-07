@@ -82,7 +82,7 @@ class HomeTabBar: UIView, BaseView {
         tabStackView.centerY(inView: tabContainer)
         
         topBorderView.anchor(leading: tabContainer.leadingAnchor, bottom: tabContainer.topAnchor, trailing: tabContainer.trailingAnchor)
-        topBorderView.constrainHeight(1)
+        topBorderView.constrainHeight(0.5)
     }
     
 }
