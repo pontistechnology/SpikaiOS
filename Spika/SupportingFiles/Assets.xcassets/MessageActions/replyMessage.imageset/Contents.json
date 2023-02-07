@@ -3,6 +3,16 @@
     {
       "filename" : "Reply.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Reply 1.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
