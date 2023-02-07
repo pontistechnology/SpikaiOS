@@ -61,4 +61,7 @@ class SettingsViewModel: BaseSettingsViewModel {
             }.store(in: &subscriptions)
     }
     
+    func presentAppereanceSettingsScreen() {
+        getAppCoordinator()?.presentAppereanceSettingsScreen()
+    }
 }

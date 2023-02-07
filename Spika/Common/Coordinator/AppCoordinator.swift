@@ -249,6 +249,11 @@ class AppCoordinator: Coordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func presentAppereanceSettingsScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(AppereanceSettingsViewController.self, argument: self)!
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
     func presentBlockedUsersSettingsScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(BlockedUsersViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)
@@ -309,5 +314,12 @@ extension AppCoordinator {
                 }
             }
         }
+    }
+}
+
+extension AppCoordinator {
+    func changeAppereance(to mode: UIUserInterfaceStyle) {
+        userDefaults.set(mode.rawValue, forKey: Constants.Database.selectedAppereanceMode)
+        getWindowManager().changeAppereance(to: mode)
     }
 }

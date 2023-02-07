@@ -19,7 +19,9 @@ class SettingsView: BaseSettingsView {
     
     let userPhoneNumber = CustomLabel(text: .getStringFor(.group), textSize: 16, textColor: .textTertiary, fontName: .MontserratSemiBold)
     
+    let appereanceOptionButton = NavView(text: .getStringFor(.appereance))
     let privacyOptionButton = NavView(text: .getStringFor(.privacy))
+    
     
     let appVersion = CustomLabel(text: "", textSize: 16, textColor: .textTertiary, fontName: .MontserratLight, alignment: .center)
     
@@ -44,6 +46,7 @@ class SettingsView: BaseSettingsView {
         userInfoStackView.addArrangedSubview(userName)
         userInfoStackView.addArrangedSubview(userPhoneNumber)
         
+        mainStackView.addArrangedSubview(appereanceOptionButton)
         mainStackView.addArrangedSubview(privacyOptionButton)
         
         mainStackView.addArrangedSubview(appVersion)

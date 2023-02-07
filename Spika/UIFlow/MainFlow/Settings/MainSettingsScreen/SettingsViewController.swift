@@ -73,6 +73,10 @@ class SettingsViewController: BaseViewController {
                 self?.viewModel.getAppCoordinator()?.presentPrivacySettingsScreen()
             }.store(in: &subscriptions)
         
+        self.settingsView.appereanceOptionButton.tap().sink { [weak self] _ in
+            self?.viewModel.presentAppereanceSettingsScreen()
+        }.store(in: &subscriptions)
+        
         self.imagePickerPublisher.sink { [weak self] selectedImage in
             let statusOfPhoto = selectedImage.statusOfPhoto(for: .avatar)
             switch statusOfPhoto {

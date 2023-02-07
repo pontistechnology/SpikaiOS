@@ -23,6 +23,7 @@ final class AppAssembly: Assembly {
         self.assembleChatDetailsViewController(container)
         self.assembleSettingsViewController(container)
         self.assemblePrivacySettingsViewController(container)
+        self.assembleAppereanceSettingsViewController(container)
         self.assembleBlockedUsersSettingsViewController(container)
         self.assembleImageViewerViewController(container)
         self.assembleUserSelectionViewController(container)
@@ -196,6 +197,19 @@ final class AppAssembly: Assembly {
         container.register(PrivacySettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
             let controller = PrivacySettingsViewController()
             controller.viewModel = container.resolve(PrivacySettingsViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleAppereanceSettingsViewController(_ container: Container){
+        container.register(AppereanceSettingsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return AppereanceSettingsViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(AppereanceSettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = AppereanceSettingsViewController()
+            controller.viewModel = container.resolve(AppereanceSettingsViewModel.self, argument: coordinator)
             return controller
         }.inObjectScope(.transient)
     }

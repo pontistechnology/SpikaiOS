@@ -265,6 +265,9 @@
 		93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DBF27BAB49D00F275B0 /* DocsTableViewCell.swift */; };
 		93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */; };
 		93D86DC427BAEEA000F275B0 /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DC327BAEEA000F275B0 /* MediaCollectionViewCell.swift */; };
+		93D993092992AB7F0038565F /* AppereanceSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D993052992AB7F0038565F /* AppereanceSettingsViewModel.swift */; };
+		93D9930A2992AB7F0038565F /* AppereanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D993072992AB7F0038565F /* AppereanceSettingsView.swift */; };
+		93D9930B2992AB7F0038565F /* AppereanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D993082992AB7F0038565F /* AppereanceSettingsViewController.swift */; };
 		93DE585827BC7B6600C45EB4 /* VideoCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */; };
 		93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */; };
 		93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */; };
@@ -606,6 +609,9 @@
 		93D86DBF27BAB49D00F275B0 /* DocsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocsTableViewCell.swift; sourceTree = "<group>"; };
 		93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksTableViewCell.swift; sourceTree = "<group>"; };
 		93D86DC327BAEEA000F275B0 /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
+		93D993052992AB7F0038565F /* AppereanceSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppereanceSettingsViewModel.swift; sourceTree = "<group>"; };
+		93D993072992AB7F0038565F /* AppereanceSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppereanceSettingsView.swift; sourceTree = "<group>"; };
+		93D993082992AB7F0038565F /* AppereanceSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppereanceSettingsViewController.swift; sourceTree = "<group>"; };
 		93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewController.swift; sourceTree = "<group>"; };
 		93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewModel.swift; sourceTree = "<group>"; };
 		93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallView.swift; sourceTree = "<group>"; };
@@ -1210,6 +1216,24 @@
 			path = UITableViewCells;
 			sourceTree = "<group>";
 		};
+		93D993042992AB7F0038565F /* AppereanceScreen */ = {
+			isa = PBXGroup;
+			children = (
+				93D993082992AB7F0038565F /* AppereanceSettingsViewController.swift */,
+				93D993052992AB7F0038565F /* AppereanceSettingsViewModel.swift */,
+				93D993062992AB7F0038565F /* View */,
+			);
+			path = AppereanceScreen;
+			sourceTree = "<group>";
+		};
+		93D993062992AB7F0038565F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				93D993072992AB7F0038565F /* AppereanceSettingsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		93DE585527BC7A9800C45EB4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -1338,6 +1362,7 @@
 		AD819244272173AB00D5BE48 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				93D993042992AB7F0038565F /* AppereanceScreen */,
 				6C175EBB297ECC2A00804275 /* MainSettingsScreen */,
 				6C175EB1297EC3E400804275 /* SettingsScreens */,
 			);
@@ -2335,6 +2360,7 @@
 				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
 				9325720A28B8F0140078D489 /* UTType+Extensions.swift in Sources */,
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
+				93D9930A2992AB7F0038565F /* AppereanceSettingsView.swift in Sources */,
 				934F2EDD28172BD10086C343 /* UpdatePushResponseModel.swift in Sources */,
 				6C9C5C7C29262610009D3E2B /* UIView+NSLayoutConstraint.swift in Sources */,
 				93E4F6EB27C2BB6D00432CFA /* SelectUsersViewController.swift in Sources */,
@@ -2377,6 +2403,7 @@
 				930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */,
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
 				93C77B6E2922F76100F676C5 /* ExpandableTextView.swift in Sources */,
+				93D993092992AB7F0038565F /* AppereanceSettingsViewModel.swift in Sources */,
 				6C2497E42924FB4200594A55 /* UserSelectionView.swift in Sources */,
 				6C65B550291B9B2B007C5B92 /* TabBarItem.swift in Sources */,
 				93E4F6F027C2BB9700432CFA /* SelectUsersView.swift in Sources */,
@@ -2423,6 +2450,7 @@
 				AD9BFD39272AB31300736318 /* CountryPickerViewModel.swift in Sources */,
 				ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */,
 				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
+				93D9930B2992AB7F0038565F /* AppereanceSettingsViewController.swift in Sources */,
 				93708E14279F871400F81095 /* EnterUsernameViewController.swift in Sources */,
 				93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */,
 				93C714A12815F888008BBA33 /* Int64+Extensions.swift in Sources */,

@@ -23,13 +23,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spika" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ViP-ZS-iUq">
-                                <rect key="frame" x="153" y="425" width="108" height="46.5"/>
+                                <rect key="frame" x="153" y="424.5" width="108" height="47"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat SemiBold" pointSize="38"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="bGh-ee-fnX">
-                                <rect key="frame" x="149" y="301" width="116" height="116"/>
+                                <rect key="frame" x="149" y="300.5" width="116" height="116"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="116" id="QWr-hl-dvf"/>
                                     <constraint firstAttribute="width" constant="116" id="smo-WF-Wyq"/>
@@ -37,7 +37,7 @@
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" name="appWhite"/>
+                        <color key="backgroundColor" name="primaryBackground"/>
                         <constraints>
                             <constraint firstItem="ViP-ZS-iUq" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="5V1-p4-0jZ"/>
                             <constraint firstItem="ViP-ZS-iUq" firstAttribute="top" secondItem="bGh-ee-fnX" secondAttribute="bottom" constant="8" id="AdC-jN-EK1"/>
@@ -53,7 +53,7 @@
     </scenes>
     <resources>
         <image name="logo" width="116" height="116"/>
-        <namedColor name="appWhite">
+        <namedColor name="primaryBackground">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
