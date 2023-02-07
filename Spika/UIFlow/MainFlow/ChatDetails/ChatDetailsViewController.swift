@@ -122,6 +122,16 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.chatDetailView.contentView.blockButton.setTitle(string, for: .normal)
             }.store(in: &subscriptions)
         
+        self.viewModel
+            .room
+            .map { $0.users.map{ $0.userId } }
+            .filter { [weak self] userIds in
+                guard let ownId = self?.viewModel.getMyUserId() else { return false }
+                return !userIds.contains(ownId)
+            }.sink { [weak self] string in
+                self?.viewModel.getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: nil))
+            }.store(in: &subscriptions)
+        
         // UI Binding
         self.chatDetailView.contentView.chatName
             .tap()
@@ -181,6 +191,13 @@ final class ChatDetailsViewController: BaseViewController {
             }.store(in: &self.subscriptions)
         
         self.chatDetailView.contentView
+            .leaveButton
+            .tap()
+            .sink { [weak self] _ in
+                self?.onLeaveRoom()
+            }.store(in: &self.subscriptions)
+        
+        self.chatDetailView.contentView
             .blockButton
             .tap()
             .sink { [weak self] _ in
@@ -202,6 +219,19 @@ final class ChatDetailsViewController: BaseViewController {
     
     func onChangeImage() {
         showChangeImageActionSheet()
+    }
+    
+    func onLeaveRoom() {
+        self.viewModel.getAppCoordinator()?.showAlert(title: .getStringFor(.areYouSureYoutWantToExitGroup),
+                                            message: nil,
+                                            style: .alert,
+                                            actions: [AlertViewButton.destructive(title: .getStringFor(.yes))])
+        .sink(receiveValue: { [weak self] tappedIndex in
+            guard tappedIndex == 0 else { return }
+            self?.viewModel.leaveRoomConfirmed()
+//            self?.viewModel.getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: nil))
+        })
+        .store(in: &subscriptions)
     }
     
     func showChangeImageActionSheet() {

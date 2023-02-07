@@ -233,6 +233,22 @@ class ChatDetailsViewModel: BaseViewModel {
         .store(in: &subscriptions)
     }
     
+    func leaveRoomConfirmed() {
+        repository.leaveOnlineRoom(forRoomId: self.room.value.id)
+            .sink { [weak self] c in
+                switch c {
+                case .finished:
+                    break
+                case .failure(_):
+                    self?.showError("Error leaving room")
+                }
+            } receiveValue: { response in
+                guard let roomData = response.data?.room else { return }
+                self.updateRoomUsers(room: roomData)
+            }
+            .store(in: &subscriptions)
+    }
+    
     func changeAvatar(image: Data?) {
         guard let image = image else {
             self.updateRoomWithAvatar(avatarId: 0)
@@ -275,6 +291,21 @@ class ChatDetailsViewModel: BaseViewModel {
         var mutableRoom = room
         mutableRoom.muted = isMuted
         self.saveLocalRoom(room: mutableRoom)
+    }
+    
+    func updateRoomUsers(room: Room) {
+        self.repository.updateRoomUsers(room: room)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("saved to local DB")
+                case .failure(_):
+                    print("saving to local DB failed")
+                }
+            } receiveValue: { [weak self] room in
+                self?.room.send(room)
+            }.store(in: &subscriptions)
     }
     
     func saveLocalRoom(room: Room) {

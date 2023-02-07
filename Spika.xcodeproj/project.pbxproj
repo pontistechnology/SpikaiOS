@@ -40,6 +40,7 @@
 		6C6AD21B291E3B8E0026CDAC /* ChatContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6AD21A291E3B8E0026CDAC /* ChatContentView.swift */; };
 		6C6AD21D291E41DD0026CDAC /* ChatMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */; };
 		6C7423C3297192C30090C416 /* OfferToBlockUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7423C2297192C30090C416 /* OfferToBlockUserView.swift */; };
+		6C74A6C12990F44000AB65B4 /* UserNotInChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C74A6C02990F44000AB65B4 /* UserNotInChatView.swift */; };
 		6C75CE1E291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C75CE1D291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift */; };
 		6C769036291D36B5007F13D2 /* ChatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */; };
 		6C769038291D36BF007F13D2 /* ChatDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */; };
@@ -455,6 +456,7 @@
 		6C6AD21A291E3B8E0026CDAC /* ChatContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentView.swift; sourceTree = "<group>"; };
 		6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMembersView.swift; sourceTree = "<group>"; };
 		6C7423C2297192C30090C416 /* OfferToBlockUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferToBlockUserView.swift; sourceTree = "<group>"; };
+		6C74A6C02990F44000AB65B4 /* UserNotInChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotInChatView.swift; sourceTree = "<group>"; };
 		6C75CE1D291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppCoordinator+PushNotifications.swift"; sourceTree = "<group>"; };
 		6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewController.swift; sourceTree = "<group>"; };
 		6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -1297,6 +1299,7 @@
 				93E4F70027C468BB00432CFA /* CurrentChatView.swift */,
 				6C056C7D2970478100198EC1 /* UserBlockedView.swift */,
 				6C7423C2297192C30090C416 /* OfferToBlockUserView.swift */,
+				6C74A6C02990F44000AB65B4 /* UserNotInChatView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2347,6 +2350,7 @@
 				93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */,
 				93BF627528EB9B7900B48BBF /* EnumsShared.swift in Sources */,
 				93E4F6F827C3A4B100432CFA /* AllChatsTableViewCell.swift in Sources */,
+				6C74A6C12990F44000AB65B4 /* UserNotInChatView.swift in Sources */,
 				933BE86E27B677BC0099BA9E /* FavoritesViewController.swift in Sources */,
 				AD9BFD272729955200736318 /* EnterNumberView.swift in Sources */,
 				934FF16D2977774F002C76F7 /* ContextMenuActionView.swift in Sources */,
