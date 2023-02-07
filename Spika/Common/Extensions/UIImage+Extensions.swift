@@ -42,6 +42,7 @@ enum AssetName: String {
     case waiting = "waiting"
     case cameraImage = "camera_image"
     case mutedIcon = "mutedIcon"
+    case pinnedChatIcon = "pinnedChatIcon"
     
     // File icons Ken
     case pdfThumbnail = "pdfThumbnail"
