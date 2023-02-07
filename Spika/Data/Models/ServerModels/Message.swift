@@ -145,6 +145,23 @@ enum MessageType: String, Codable {
     public init(from decoder: Decoder) throws {
         self = try MessageType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
     }
+    
+    var pushNotificationText: String {
+        switch self {
+        case .text:
+            return "[Text message]"
+        case .image:
+            return "[Photo message]"
+        case .video:
+            return "[Video message]"
+        case .file:
+            return "[File message]"
+        case .audio:
+            return "[Audio message]"
+        case .unknown:
+            return "[Unknown message]"
+        }
+    }
 }
 
 enum MessageState {
