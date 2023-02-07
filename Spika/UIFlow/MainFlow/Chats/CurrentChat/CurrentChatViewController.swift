@@ -29,6 +29,7 @@ class CurrentChatViewController: BaseViewController {
     private let currentChatView = CurrentChatView()
     private let userBlockedView = UserBlockedView(frame: .zero)
     private let offerToBlockUser = OfferToBlockUserView(frame: .zero)
+    private let userNotInChatView = UserNotInChatView(frame: .zero)
     var viewModel: CurrentChatViewModel!
     private let friendInfoView = ChatNavigationBarView()
     private var frc: NSFetchedResultsController<MessageEntity>?
@@ -62,6 +63,7 @@ class CurrentChatViewController: BaseViewController {
     func addSubviews() {
         self.view.addSubview(userBlockedView)
         self.view.addSubview(offerToBlockUser)
+        self.view.addSubview(userNotInChatView)
     }
     
     func positionSubviews() {
@@ -72,6 +74,10 @@ class CurrentChatViewController: BaseViewController {
         offerToBlockUser.constraintBottom()
         offerToBlockUser.constraintLeading()
         offerToBlockUser.constraintTrailing()
+        
+        userNotInChatView.constraintBottom()
+        userNotInChatView.constraintLeading()
+        userNotInChatView.constraintTrailing()
     }
     
     deinit {
@@ -101,6 +107,7 @@ extension CurrentChatViewController {
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
+        self.userNotInChatView.isHidden = self.viewModel.userIsMember
         
         currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
             self?.handleInput(state)

@@ -11,6 +11,8 @@ import Combine
 final class ChatMembersView: UIView, BaseView {
     
     //MARK: - Variables
+    var ownId: Int64?
+    
     let canAddNewMore: Bool
     
     let cellHeight: CGFloat = 80
@@ -175,10 +177,21 @@ extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as! ContactsTableViewCell
         let model = self.users[indexPath.row]
         
-        cell.configureCell(title: model.user.getDisplayName(),
+        var cellType: ContactsTableViewCellType = .normal
+        if self.editable.value {
+            if model.isAdmin ?? false {
+                cellType = .text(text: .getStringFor(.admin))
+            } else {
+                cellType = .remove
+            }
+        }
+        
+        let userName = self.ownId == model.userId ? .getStringFor(.you) : model.user.getDisplayName()
+        
+        cell.configureCell(title: userName,
                            description: model.user.telephoneNumber,
                            leftImage: model.user.avatarFileId?.fullFilePathFromId(),
-                           type: self.editable.value ? .remove : .normal)
+                           type: cellType)
         
         cell.onRightClickAction
             .compactMap ({ [weak self] cell in

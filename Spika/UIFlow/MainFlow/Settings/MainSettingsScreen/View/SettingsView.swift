@@ -14,7 +14,7 @@ class SettingsView: BaseSettingsView {
     
     let userImage = ImageViewWithIcon(image:  UIImage(safeImage: .userImage),size: CGSize(width: 120, height: 120))
     
-    let userName = ActionButton()
+    let userName = CustomButton(text: "", textSize: 18, textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
     let userNameTextField = TextField()
     
     let userPhoneNumber = CustomLabel(text: .getStringFor(.group), textSize: 16, textColor: .textTertiary, fontName: .MontserratSemiBold)
@@ -29,7 +29,6 @@ class SettingsView: BaseSettingsView {
     
     override func styleSubviews() {
         super.styleSubviews()
-        userName.titleLabel?.font = .customFont(name: .MontserratSemiBold, size: 20)
         userNameTextField.translatesAutoresizingMaskIntoConstraints = false
         userNameTextField.autocorrectionType = .no
         userNameTextField.autocapitalizationType = .none

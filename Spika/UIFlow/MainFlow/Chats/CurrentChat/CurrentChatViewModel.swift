@@ -135,6 +135,12 @@ class CurrentChatViewModel: BaseViewModel {
             }.store(in: &subscriptions)
     }
     
+    var userIsMember: Bool {
+        let ids = self.room?.users.map { $0.userId } ?? []
+        let ownId = self.getMyUserId()
+        return ids.contains(ownId)
+    }
+    
 }
 
 // MARK: - Navigation

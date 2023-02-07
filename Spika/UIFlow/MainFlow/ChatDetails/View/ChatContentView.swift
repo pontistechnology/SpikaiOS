@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 class ChatContentView: UIView, BaseView {
     
     let chatImage = ImageViewWithIcon(image:  UIImage(safeImage: .userImage),size: CGSize(width: 120, height: 120))
     
     let chatName = CustomLabel(text: .getStringFor(.group), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
+    let chatNameTextField = TextField()
     
     let sharedMediaOptionButton = NavView(text: .getStringFor(.sharedMediaLinksDocs))
     let chatSearchOptionButton = NavView(text: .getStringFor(.chatSearch))
@@ -25,27 +27,11 @@ class ChatContentView: UIView, BaseView {
     
     let chatMembersView = ChatMembersView(canAddNewMore: true)
     
-    let blockButton: UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle(.getStringFor(.block), for: .normal)
-        btn.setTitleColor(.appRed, for: .normal)
-        btn.contentHorizontalAlignment = .left
-        btn.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: 14)
-        return btn
-    } ()
+    let blockButton = CustomButton(text: .getStringFor(.block), textSize: 14, textColor: .appRed, alignment: .left)
+    let deleteButton = CustomButton(text: .getStringFor(.delete), textSize: 14, textColor: .appRed, alignment: .left)
+    let leaveButton = CustomButton(text: .getStringFor(.exitGroup), textSize: 14, textColor: .appRed, alignment: .left)
     
-    let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .appRed)
-    
-    var deleteButton: UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle(.getStringFor(.delete), for: .normal)
-        btn.setTitleColor(.appRed, for: .normal)
-        btn.contentHorizontalAlignment = .left
-        btn.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: 14)
-        return btn
-    } ()
+    let chatNameChanged = PassthroughSubject<String,Never>()
     
     lazy var mainStackView: UIStackView = {
        let stackView = UIStackView()
@@ -80,6 +66,7 @@ class ChatContentView: UIView, BaseView {
         self.addSubview(chatImage)
         self.addSubview(chatName)
         self.addSubview(mainStackView)
+        self.addSubview(chatNameTextField)
         
         mainStackView.addArrangedSubview(sharedMediaOptionButton)
         mainStackView.addArrangedSubview(chatSearchOptionButton)
@@ -95,12 +82,19 @@ class ChatContentView: UIView, BaseView {
         
         mainStackView.addArrangedSubview(self.labelStackView)
         labelStackView.addArrangedSubview(blockButton)
-        labelStackView.addArrangedSubview(reportLabel)
         labelStackView.addArrangedSubview(deleteButton)
+        labelStackView.addArrangedSubview(leaveButton)
     }
     
     func styleSubviews() {
         self.blockButton.isHidden = true
+        
+        chatNameTextField.translatesAutoresizingMaskIntoConstraints = false
+        chatNameTextField.autocorrectionType = .no
+        chatNameTextField.autocapitalizationType = .none
+        chatNameTextField.returnKeyType = .done
+        chatNameTextField.delegate = self
+        chatNameTextField.isHidden = true
     }
     
     func positionSubviews() {
@@ -120,9 +114,28 @@ class ChatContentView: UIView, BaseView {
                              padding: UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0))
 
         
-        blockButton.constrainHeight(80)
-        deleteButton.constrainHeight(80)
-        reportLabel.constrainHeight(80)
+        blockButton.constrainHeight(58)
+        deleteButton.constrainHeight(58)
+        
+        chatNameTextField.centerYAnchor.constraint(equalTo: chatName.centerYAnchor).isActive = true
+        chatNameTextField.constraintLeading(to: self.mainStackView, constant: 22)
+        chatNameTextField.constraintTrailing(to: self.mainStackView, constant: -22)
+        chatNameTextField.constrainHeight(50)
+    }
+    
+}
+
+extension ChatContentView: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = textField.text,
+              !text.isEmpty else { return }
+        self.chatNameChanged.send(text)
     }
     
 }

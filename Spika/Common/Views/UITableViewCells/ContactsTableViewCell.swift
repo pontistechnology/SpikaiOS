@@ -15,6 +15,7 @@ enum ContactsTableViewCellType {
     case text(text: String?)
     case remove
     case emoji(emoji: String, size: CGFloat)
+    case doubleEntry(firstText: String?, firstImage: AssetName?, secondText: String?, secondImage: AssetName?)
 }
 
 class ContactsTableViewCell: UITableViewCell, BaseView {
@@ -38,6 +39,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         return button
     } ()
     
+    private let rightView = ContactsCellRightView()
     private let verticalStackView = CustomStackView(axis: .vertical, spacing: 12)
     private let nameLabel = CustomLabel(text: "", textSize: 14, fontName: .MontserratMedium)
     private let descriptionLabel = CustomLabel(text: "CTO", textSize: 12, fontName: .MontserratRegular)
@@ -61,6 +63,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         self.verticalStackView.addArrangedSubview(self.descriptionLabel)
         
         self.horizontalStackView.addArrangedSubview(self.rightButton)
+        self.horizontalStackView.addArrangedSubview(self.rightView)
     }
     
     func styleSubviews() {
@@ -70,6 +73,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         nameLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 1
         backgroundColor = .primaryBackground
+        rightView.isHidden = true
     }
     
     func positionSubviews() {
@@ -85,22 +89,36 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         self.descriptionLabel.text = description
         leftImageView.kf.setImage(with: leftImage, placeholder: UIImage(safeImage: .userImage))
         
+        self.rightButton.isHidden = true
+        self.rightButton.setImage(nil, for: .normal)
+        self.rightButton.setTitle(nil, for: .normal)
+        self.rightView.isHidden = true
+        
         switch type {
         case .normal:
-            self.rightButton.isHidden = true
+            break
         case .text(let text):
             self.rightButton.isHidden = false
-            self.rightButton.setImage(nil, for: .normal)
             self.rightButton.setTitle(text, for: .normal)
         case .remove:
             self.rightButton.isHidden = false
             self.rightButton.setImage(UIImage(safeImage: .close), for: .normal)
-            self.rightButton.setTitle(nil, for: .normal)
         case .emoji(let emoji, let size):
-            self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)
             self.rightButton.isHidden = false
-            self.rightButton.setImage(nil, for: .normal)
+            self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)
             self.rightButton.setTitle(emoji, for: .normal)
+        case .doubleEntry(let firstText,let firstImage,let secondText,let secondImage):
+            self.rightView.isHidden = false
+            
+            self.rightView.firstRow.label.text = firstText
+            if let image = firstImage {
+                self.rightView.firstRow.imageView.image = UIImage(safeImage: image)
+            }
+            
+            self.rightView.secondRow.label.text = secondText
+            if let image = secondImage {
+                self.rightView.secondRow.imageView.image = UIImage(safeImage: image)
+            }
         }
     }
     

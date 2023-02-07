@@ -28,6 +28,8 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     private func setupBindings() {
+        self.chatDetailView.contentView.chatMembersView.ownId = self.viewModel.getMyUserId()
+        
         let isAdmin = self.viewModel.room.map { [weak self] room in
             guard let self = self, room.type == .groupRoom else { return false }
             return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
@@ -35,6 +37,10 @@ final class ChatDetailsViewController: BaseViewController {
         
         if self.viewModel.room.value.type == .privateRoom {
             self.chatDetailView.contentView.blockButton.isHidden = false
+            self.chatDetailView.contentView.leaveButton.isHidden = true
+        } else {
+            self.chatDetailView.contentView.blockButton.isHidden = true
+            self.chatDetailView.contentView.leaveButton.isHidden = false
         }
         
         // View Model Binding
@@ -55,16 +61,28 @@ final class ChatDetailsViewController: BaseViewController {
             }.store(in: &self.viewModel.subscriptions)
 
         self.viewModel.room
-            .map { $0.name }
+            .map { [weak self] room in
+                if room.type == .privateRoom {
+                    guard let ownId = self?.viewModel.repository.getMyUserId(),
+                          let contact = self?.viewModel.room.value.users.first(where: { roomUser in
+                        roomUser.userId != ownId
+                          }) else { return nil as String? }
+                    return contact.user.displayName
+                }
+                return room.name
+            }
             .sink { [weak self] chatName in
                 self?.chatDetailView.contentView.chatName.text = chatName
-            }.store(in: &self.viewModel.subscriptions)
+                self?.chatDetailView.contentView.chatNameTextField.text = chatName
+            }
+            .store(in: &self.viewModel.subscriptions)
 
         self.viewModel.room
             .map { $0.users }
             .sink { [weak self] users in
                 self?.chatDetailView.contentView.chatMembersView.updateWithUsers(users: users)
-            }.store(in: &self.viewModel.subscriptions)
+            }
+            .store(in: &self.viewModel.subscriptions)
         
         self.viewModel.room
             .map { $0.muted }
@@ -82,6 +100,7 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.chatDetailView.contentView.chatMembersView.addContactButton.isHidden = !isAdmin
                 self?.chatDetailView.contentView.deleteButton.isHidden = !isAdmin
                 self?.chatDetailView.contentView.chatImage.updateCameraIsHidden(isHidden: !isAdmin)
+                self?.chatDetailView.contentView.chatName.isUserInteractionEnabled = isAdmin
             })
             .store(in: &self.viewModel.subscriptions)
         
@@ -103,7 +122,31 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.chatDetailView.contentView.blockButton.setTitle(string, for: .normal)
             }.store(in: &subscriptions)
         
+        self.viewModel
+            .room
+            .map { $0.users.map{ $0.userId } }
+            .filter { [weak self] userIds in
+                guard let ownId = self?.viewModel.getMyUserId() else { return false }
+                return !userIds.contains(ownId)
+            }.sink { [weak self] string in
+                self?.viewModel.getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: nil))
+            }.store(in: &subscriptions)
+        
         // UI Binding
+        self.chatDetailView.contentView.chatName
+            .tap()
+            .withLatestFrom(isAdmin)
+            .filter { $0.1 }
+            .sink { [weak self] _ in
+                self?.onChangeChatName()
+            }.store(in: &self.subscriptions)
+        
+        self.chatDetailView.contentView.chatNameChanged
+            .sink { [weak self] newName in
+                self?.chatDetailView.contentView.chatNameTextField.isHidden = true
+                self?.viewModel.onChangeChatName(newName: newName)
+            }.store(in: &self.subscriptions)
+        
         self.chatDetailView.contentView
             .chatMembersView
             .onRemoveUser
@@ -148,6 +191,13 @@ final class ChatDetailsViewController: BaseViewController {
             }.store(in: &self.subscriptions)
         
         self.chatDetailView.contentView
+            .leaveButton
+            .tap()
+            .sink { [weak self] _ in
+                self?.onLeaveRoom()
+            }.store(in: &self.subscriptions)
+        
+        self.chatDetailView.contentView
             .blockButton
             .tap()
             .sink { [weak self] _ in
@@ -171,6 +221,19 @@ final class ChatDetailsViewController: BaseViewController {
         showChangeImageActionSheet()
     }
     
+    func onLeaveRoom() {
+        self.viewModel.getAppCoordinator()?.showAlert(title: .getStringFor(.areYouSureYoutWantToExitGroup),
+                                            message: nil,
+                                            style: .alert,
+                                            actions: [AlertViewButton.destructive(title: .getStringFor(.yes))])
+        .sink(receiveValue: { [weak self] tappedIndex in
+            guard tappedIndex == 0 else { return }
+            self?.viewModel.leaveRoomConfirmed()
+//            self?.viewModel.getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: nil))
+        })
+        .store(in: &subscriptions)
+    }
+    
     func showChangeImageActionSheet() {
         viewModel
             .getAppCoordinator()?
@@ -189,6 +252,11 @@ final class ChatDetailsViewController: BaseViewController {
                     break
                 }
             }).store(in: &subscriptions)
+    }
+    
+    func onChangeChatName() {
+        self.chatDetailView.contentView.chatNameTextField.isHidden = false
+        self.chatDetailView.contentView.chatNameTextField.becomeFirstResponder()
     }
     
 }

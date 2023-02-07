@@ -163,6 +163,21 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
+        let resources = Resources<CreateRoomResponseModel, EditRoomNameRequestModel>(
+            path: url,
+            requestType: .PUT,
+            bodyParameters: EditRoomNameRequestModel(name: newName),
+            httpHeaderFields: ["accesstoken" : accessToken])
+        return networkService.performRequest(resources: resources)
+    }
+    
     func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
@@ -173,6 +188,22 @@ extension AppRepository {
         let resources = Resources<EmptyResponse, EmptyRequestBody>(
             path: Constants.Endpoints.checkRoomForRoomId + "/" + String(roomId),
             requestType: .DELETE,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func leaveOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CreateRoomResponseModel, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<CreateRoomResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.checkRoomForRoomId + "/" + String(roomId) + "/leave",
+            requestType: .POST,
             bodyParameters: nil,
             httpHeaderFields: ["accesstoken" : accessToken])
         

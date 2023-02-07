@@ -60,6 +60,7 @@ protocol Repository {
     func checkOnlineRoom(forUserId userId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func checkOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error>
+    func leaveOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CreateRoomResponseModel, Error>
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
     
     // MARK: NETWORKING: Message
@@ -122,6 +123,7 @@ protocol Repository {
     func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
     func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
     func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error>
+    func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error>
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
 
     // MARK: - USERDEFAULTS: User
