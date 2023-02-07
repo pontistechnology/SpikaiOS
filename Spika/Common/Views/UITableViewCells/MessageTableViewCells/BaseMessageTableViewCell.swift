@@ -41,6 +41,10 @@ class BaseMessageTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        print("BASE MESSAGE TABLEVIEW CELL DEINIT")
+    }
 }
 
 extension BaseMessageTableViewCell {
@@ -73,6 +77,7 @@ extension BaseMessageTableViewCell: BaseView {
         senderPhotoImageview.clipsToBounds = true
         senderPhotoImageview.isHidden = true
         timeLabel.isHidden = true
+        backgroundColor = .primaryBackground
     }
     
     func positionSubviews() {

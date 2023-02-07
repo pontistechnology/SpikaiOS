@@ -40,7 +40,6 @@ protocol Repository {
     // MARK: NETWORKING: File upload
     
     @available(iOSApplicationExtension 13.4, *) func uploadWholeFile(fromUrl url: URL, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>)
-    func uploadWholeFile(data: Data, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>)
     func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error>
     func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int, metaData: MetaData) -> AnyPublisher<VerifyFileResponseModel, Error>
     
@@ -135,9 +134,15 @@ protocol Repository {
     func getMyDeviceId() -> Int64
     func getSyncTimestamp(for type: SyncType) -> Int64
     func setSyncTimestamp(for type: SyncType, timestamp: Int64)
+    func getCurrentAppereance() -> Int
     
     // MARK: COREDATA: Contacts
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error>
     func getContact(phoneNumber: String) -> Future<FetchedContact, Error>
     @discardableResult func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error>
+    
+    // MARK: - FILES
+    func saveDataToFile(_ data: Data, name: String) -> URL?
+    func copyFile(from fromURL: URL, name: String) -> URL?
+    func getFile(name: String) -> URL?
 }

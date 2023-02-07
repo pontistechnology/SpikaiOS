@@ -51,7 +51,7 @@ extension Message {
         self.init(createdAt: messageEntity.createdAt,
                   fromUserId: messageEntity.fromUserId,
                   roomId: messageEntity.roomId,
-                  id: Int64(messageEntity.id ?? "-2"), // TODO: - check
+                  id: Int64(messageEntity.id ?? "nil"), // TODO: - check
                   localId: messageEntity.localId,
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
@@ -99,7 +99,9 @@ extension Message {
         if deliveredCount > 0 {
             return .sent
         }
-        
+        if id != nil {
+            return .sent
+        }
         return .waiting
     }
     
@@ -142,6 +144,23 @@ enum MessageType: String, Codable {
     
     public init(from decoder: Decoder) throws {
         self = try MessageType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
+    }
+    
+    var pushNotificationText: String {
+        switch self {
+        case .text:
+            return "[Text message]"
+        case .image:
+            return "[Photo message]"
+        case .video:
+            return "[Video message]"
+        case .file:
+            return "[File message]"
+        case .audio:
+            return "[Audio message]"
+        case .unknown:
+            return "[Unknown message]"
+        }
     }
 }
 

@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ic_clear_24px.svg",
+      "filename" : "clear_24px.svg",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Frame 2.svg",
       "idiom" : "universal"
     }
   ],

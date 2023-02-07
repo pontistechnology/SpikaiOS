@@ -16,10 +16,12 @@ struct SelectedFile {
     let fileType: MessageType
     let name: String?
     let fileUrl: URL
-    let thumbnail: UIImage?
+    let thumbUrl: URL?
+    let thumbMetadata: MetaData?
     let metaData: MetaData
     let mimeType: String
     let size: Int64?
+    let localId: String
 }
 
 class CurrentChatViewController: BaseViewController {
@@ -79,7 +81,7 @@ class CurrentChatViewController: BaseViewController {
     }
     
     deinit {
-//        print("currentChatVC deinit")
+        print("currentChatVC deinit")
     }
 }
 
@@ -155,21 +157,23 @@ extension CurrentChatViewController {
                 }
             }.store(in: &subscriptions)
         
-        self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (uuid, percent, file) in
+        self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (percent, file) in
             guard let entity = self?.frc?.fetchedObjects?.first(where: { messageEntity in
-                messageEntity.localId == uuid
+                messageEntity.localId == file?.localId
             }),
                   let indexPath = self?.frc?.indexPath(forObject: entity),
                   let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
             else { return }
             (cell as? BaseMessageTableViewCell)?.showUploadProgress(at: percent)
-            
+
             if percent == 1.0 {
                 (cell as? BaseMessageTableViewCell)?.hideUploadProgress()
             }
-            guard let file = file else { return }
-            (cell as? ImageMessageTableViewCell)?.setTempThumbnail(url: file.fileUrl, as: ImageRatio(width: file.metaData.width, height: file.metaData.height))
-            (cell as? VideoMessageTableViewCell)?.setTempThumbnail(duration: "\(file.metaData.duration) s", url: file.fileUrl)
+        }.store(in: &subscriptions)
+        
+        self.imagePickerPublisher.sink { [weak self] pickedImage in
+
+            self?.viewModel.sendCameraImage(pickedImage)
         }.store(in: &subscriptions)
         
         self.viewModel.isBlocked
@@ -342,6 +346,7 @@ extension CurrentChatViewController {
             currentChatView.messageInputView.clean()
         case .camera, .microphone:
             print(state, " in ccVC")
+            showUIImagePicker(source: .camera, allowsEdit: false)
         case .emoji:
             print("emoji in ccvc")
         case .scrollToReply:
@@ -375,7 +380,7 @@ extension CurrentChatViewController {
             audioSubscribe?.store(in: &subscriptions)
         case .openImage:
             guard let url = message.body?.file?.id?.fullFilePathFromId() else { return }
-            viewModel.showImage(link: url)
+            viewModel.showImage(message: message)
         case .scrollToReply:
             guard let replyId = message.replyId,
                   let indexPath = getIndexPathFor(messageId: replyId)
@@ -567,14 +572,14 @@ extension CurrentChatViewController {
             self?.viewModel.presentMessageDetails(records: records)
             completionHandler(true)
         }
-        detailsAction.backgroundColor = .appWhite
+        detailsAction.backgroundColor = .primaryBackground
         detailsAction.image = UIImage(safeImage: .slideDetails)
         
         let deleteAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
             self?.viewModel.showDeleteConfirmDialog(message: message)
             completionHandler(true)
         }
-        deleteAction.backgroundColor = .appWhite
+        deleteAction.backgroundColor = .primaryBackground
         deleteAction.image = UIImage(safeImage: .slideDelete)
         return UISwipeActionsConfiguration(actions: [detailsAction, deleteAction])
     }
@@ -591,7 +596,7 @@ extension CurrentChatViewController {
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
             completionHandler(true)
         }
-        firstLeft.backgroundColor = .appWhite
+        firstLeft.backgroundColor = .primaryBackground
         firstLeft.image = UIImage(safeImage: .slideReply)
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }

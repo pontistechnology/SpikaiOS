@@ -65,12 +65,12 @@ class HomeTabBar: UIView, BaseView {
     }
     
     func styleSubviews() {
-        tabContainer.backgroundColor = .whiteAndDarkBackground
+        tabContainer.backgroundColor = .primaryBackground
         tabStackView.axis = .horizontal
         tabStackView.alignment = .fill
         tabStackView.distribution = .fillEqually
         tabStackView.spacing = 0
-        topBorderView.backgroundColor = .lightGray.withAlphaComponent(0.5)
+        topBorderView.backgroundColor = .textTertiary
     }
     
     func positionSubviews() {
@@ -82,7 +82,7 @@ class HomeTabBar: UIView, BaseView {
         tabStackView.centerY(inView: tabContainer)
         
         topBorderView.anchor(leading: tabContainer.leadingAnchor, bottom: tabContainer.topAnchor, trailing: tabContainer.trailingAnchor)
-        topBorderView.constrainHeight(1)
+        topBorderView.constrainHeight(0.5)
     }
     
 }

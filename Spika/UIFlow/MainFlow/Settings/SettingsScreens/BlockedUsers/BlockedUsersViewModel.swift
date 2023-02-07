@@ -20,12 +20,12 @@ class BlockedUsersViewModel: BaseSettingsViewModel {
     func fetchBlockedUsers() {
         repository.getBlockedUsers()
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
                     return
                 case .failure(_):
-                    self.getAppCoordinator()?
+                    self?.getAppCoordinator()?
                         .showError(message: .getStringFor(.somethingWentWrongFetchingBlockedUsers))
                     return
                 }

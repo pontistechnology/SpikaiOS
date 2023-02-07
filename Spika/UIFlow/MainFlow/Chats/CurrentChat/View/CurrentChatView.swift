@@ -37,10 +37,11 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.rowHeight = UITableView.automaticDimension
         messagesTableView.estimatedRowHeight = 5
         messagesTableView.backgroundColor = .clear
+        messagesTableView.showsHorizontalScrollIndicator = false
         
         downArrowImageView.isHidden = true
         
-        backgroundColor = .white
+        backgroundColor = .primaryBackground
     }
     
     func positionSubviews() {        

@@ -3,6 +3,16 @@
     {
       "filename" : "favorite_border_24px.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "favorite_border_24px 1.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

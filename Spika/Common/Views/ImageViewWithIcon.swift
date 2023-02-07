@@ -12,7 +12,7 @@ class ImageViewWithIcon: UIView, BaseView {
     private let backgroundView = UIView()
     private let mainImageView = UIImageView()
     private let plainImageView = UIImageView()
-    private let cameraIcon = ImageButton(image: UIImage(safeImage: .camera), size: CGSize(width: 28, height: 28))
+    private let cameraIcon = ImageButton(image: UIImage(safeImage: .camera), size: CGSize(width: 28, height: 28)) // TODO: camera background
     private let uploadProgressView = CircularProgressBar(spinnerWidth: 24)
     
     private let image: UIImage

@@ -47,9 +47,9 @@ extension RoomEntity {
             return "No messages"
         }
         if type == RoomType.privateRoom.rawValue {
-            return lastMessage.bodyText ?? ""
+            return lastMessage.bodyText ?? MessageType(rawValue: lastMessage.type ?? "")?.pushNotificationText ?? ""
         } else {
-            return ((users?.allObjects as? [RoomUserEntity])?.first(where: {$0.userId == lastMessage.fromUserId})?.user?.contactsName ?? "no name") + ": " + (lastMessage.bodyText ?? "")
+            return ((users?.allObjects as? [RoomUserEntity])?.first(where: {$0.userId == lastMessage.fromUserId})?.user?.contactsName ?? "no name") + ": " + (lastMessage.bodyText ?? MessageType(rawValue: lastMessage.type ?? "")?.pushNotificationText ?? "")
         }
     }
     

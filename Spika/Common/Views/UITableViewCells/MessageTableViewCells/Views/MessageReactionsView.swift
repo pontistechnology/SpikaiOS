@@ -33,7 +33,7 @@ extension MessageReactionsView: BaseView {
         backgroundColor = .blue
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = UIColor.white.cgColor
+        layer.borderColor = UIColor.primaryBackground.cgColor
     }
     
     func positionSubviews() {

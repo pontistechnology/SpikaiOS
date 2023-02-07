@@ -10,7 +10,7 @@ import UIKit
 class MessageVideoView: UIView {
     let thumbnailImageView = UIImageView()
     private let playVideoIconImageView = UIImageView(image: UIImage(safeImage: .playVideo))
-    private let durationLabel = CustomLabel(text: "", textColor: .white)
+    private let durationLabel = CustomLabel(text: "", textColor: .primaryBackground)
     
     init() {
         super.init(frame: .zero)

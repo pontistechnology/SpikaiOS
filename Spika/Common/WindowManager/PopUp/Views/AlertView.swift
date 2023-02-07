@@ -39,7 +39,7 @@ class AlertView: UIView {
             button.setTitle(item.title, for: .normal)
             button.setTitleColor(item.color, for: .normal)
             button.titleLabel?.font = .customFont(name: .MontserratSemiBold)
-            button.backgroundColor = .white
+            button.backgroundColor = .primaryBackground
             button.tap().sink { [weak self] _ in
                 self?.tapPublisher.send(index)
             }.store(in: &subs)
@@ -57,7 +57,7 @@ extension AlertView: BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .appWhite
+        backgroundColor = .primaryBackground
         layer.cornerRadius = 10
         layer.masksToBounds = true
     }

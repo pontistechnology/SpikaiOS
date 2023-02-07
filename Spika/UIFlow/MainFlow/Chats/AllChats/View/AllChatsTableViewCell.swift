@@ -16,7 +16,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     let timeLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary)
     
     let messagesStackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .fill, spacing: 8)
-    let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .white, fontName: .MontserratSemiBold, alignment: .center)
+    let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .primaryBackground, fontName: .MontserratSemiBold, alignment: .center)
     let mutedIcon = UIImageView(image: UIImage(safeImage: .mutedIcon))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

@@ -10,7 +10,7 @@ import UIKit
 
 class NewGroupChatView: UIView, BaseView {
     
-    let newGroupLabel = CustomLabel(text: .getStringFor(.newGroup), textSize: 28, textColor: .textPrimaryAndWhite, fontName: .MontserratSemiBold)
+    let newGroupLabel = CustomLabel(text: .getStringFor(.newGroup), textSize: 28, textColor: .textPrimary, fontName: .MontserratSemiBold)
     var avatarPictureView: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(safeImage: .cameraImage), for: .normal)

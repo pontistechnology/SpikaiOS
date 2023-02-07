@@ -16,7 +16,7 @@ final class OfferToBlockUserView: UserBlockedView {
         blockUnblockButton.setTitle(.getStringFor(.block), for: .normal)
         label.text = .getStringFor(.newContact)
         
-        okButton.backgroundColor = .white
+        okButton.backgroundColor = .primaryBackground
         okButton.setTitleColor(.black, for: .normal)
         okButton.setTitle(.getStringFor(.ok), for: .normal)
     }

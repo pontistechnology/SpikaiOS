@@ -23,6 +23,7 @@ final class AppAssembly: Assembly {
         self.assembleChatDetailsViewController(container)
         self.assembleSettingsViewController(container)
         self.assemblePrivacySettingsViewController(container)
+        self.assembleAppereanceSettingsViewController(container)
         self.assembleBlockedUsersSettingsViewController(container)
         self.assembleImageViewerViewController(container)
         self.assembleUserSelectionViewController(container)
@@ -200,6 +201,19 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.transient)
     }
     
+    private func assembleAppereanceSettingsViewController(_ container: Container){
+        container.register(AppereanceSettingsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return AppereanceSettingsViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(AppereanceSettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = AppereanceSettingsViewController()
+            controller.viewModel = container.resolve(AppereanceSettingsViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
     private func assembleBlockedUsersSettingsViewController(_ container: Container){
         container.register(BlockedUsersViewModel.self) { (resolver, coordinator: AppCoordinator) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
@@ -214,16 +228,16 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleImageViewerViewController(_ container: Container) {
-        container.register(ImageViewerViewModel.self) { (resolver, coordinator: AppCoordinator, link: URL) in
+        container.register(ImageViewerViewModel.self) { (resolver, coordinator: AppCoordinator, message: Message) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             let viewModel = ImageViewerViewModel(repository: repository, coordinator: coordinator)
-            viewModel.link = link
+            viewModel.message = message
             return viewModel
         }.inObjectScope(.transient)
         
-        container.register(ImageViewerViewController.self) { (resolver, coordinator: AppCoordinator, link: URL) in
+        container.register(ImageViewerViewController.self) { (resolver, coordinator: AppCoordinator, message: Message) in
             let controller = ImageViewerViewController()
-            controller.viewModel = container.resolve(ImageViewerViewModel.self, arguments: coordinator, link)
+            controller.viewModel = container.resolve(ImageViewerViewModel.self, arguments: coordinator, message)
             return controller
         }.inObjectScope(.transient)
     }

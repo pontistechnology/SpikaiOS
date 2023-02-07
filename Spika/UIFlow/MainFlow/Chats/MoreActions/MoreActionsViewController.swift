@@ -43,5 +43,9 @@ private extension MoreActionsViewController {
         moreActionsView.locationImageView.tap().sink { [weak self] _ in
             self?.publisher.send(.location)
         }.store(in: &subscriptions)
+        
+        moreActionsView.transparentView.tap().sink { [weak self] _ in
+            self?.publisher.send(.close)
+        }.store(in: &subscriptions)
     }
 }

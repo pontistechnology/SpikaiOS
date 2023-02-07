@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         configureNotifications(app: application)
         customization()
-        test()
+//        test()
         return true
     }
     

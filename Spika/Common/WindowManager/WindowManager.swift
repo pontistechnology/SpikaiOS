@@ -130,3 +130,11 @@ private extension WindowManager {
         }
     }
 }
+
+// Light / Dark mode
+
+extension WindowManager {
+    func changeAppereance(to mode: UIUserInterfaceStyle) {
+        scene.keyWindow?.overrideUserInterfaceStyle = mode
+    }
+}

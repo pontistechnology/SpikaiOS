@@ -8,5 +8,19 @@
 import Foundation
 
 class ImageViewerViewModel: BaseViewModel {
-    var link: URL!
+    var message: Message!
+    
+    func getLocalURL() -> URL? {
+        guard message.fromUserId == getMyUserId(),
+              let localId = message.localId,
+              let url = repository.getFile(name: localId)
+        else { return nil }
+        return url
+    }
+    
+    func getOnlineURL() -> URL? {
+        guard let url = message.body?.file?.id?.fullFilePathFromId()
+        else { return nil }
+        return url        
+    }
 }

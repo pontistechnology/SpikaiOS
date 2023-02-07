@@ -41,6 +41,8 @@ extension ReactionsView: BaseView {
     func styleSubviews() {
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
+        backgroundColor = .secondaryBackground
+        tableView.backgroundColor = .secondaryBackground
     }
     
     func positionSubviews() {
@@ -61,11 +63,11 @@ private extension ReactionsView {
             let label = CustomLabel(text: element, textSize: 16, alignment: .center)
             label.tap().sink { [weak self] _ in
                 self?.deleteBackgroundOfAllStackSubviews()
-                label.backgroundColor = UIColor(hexString: "F2F2F2")
+                label.backgroundColor = .chatBackground
                 self?.stackviewTapPublisher.send(index)
             }.store(in: &subs)
             if index == 0 {
-                label.backgroundColor = UIColor(hexString: "F2F2F2")
+                label.backgroundColor = .chatBackground
             }
             stackView.addArrangedSubview(label)
         }

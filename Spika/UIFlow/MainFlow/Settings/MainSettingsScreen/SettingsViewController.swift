@@ -73,12 +73,17 @@ class SettingsViewController: BaseViewController {
                 self?.viewModel.getAppCoordinator()?.presentPrivacySettingsScreen()
             }.store(in: &subscriptions)
         
+        self.settingsView.appereanceOptionButton.tap().sink { [weak self] _ in
+            self?.viewModel.presentAppereanceSettingsScreen()
+        }.store(in: &subscriptions)
+        
         self.imagePickerPublisher.sink { [weak self] selectedImage in
             let statusOfPhoto = selectedImage.statusOfPhoto(for: .avatar)
             switch statusOfPhoto {
             case .allOk:
-                self?.settingsView.userImage.showImage(selectedImage)
-                guard let data = selectedImage.jpegData(compressionQuality: 1) else { return }
+                guard let resizedImage = self?.viewModel.resizeImage(selectedImage),
+                      let data = resizedImage.jpegData(compressionQuality: 1) else { return }
+                self?.settingsView.userImage.showImage(resizedImage)
                 self?.viewModel.onChangeUserAvatar(imageFileData: data)
             default:
                 self?.viewModel.showError(statusOfPhoto.description)

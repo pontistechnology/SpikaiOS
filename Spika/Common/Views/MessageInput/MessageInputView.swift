@@ -44,7 +44,7 @@ class MessageInputView: UIStackView, BaseView {
     
     func styleSubviews() {
         axis = .vertical
-        dividerLine.backgroundColor = .navigation
+        dividerLine.backgroundColor = .textTertiary
     }
     
     func positionSubviews() {

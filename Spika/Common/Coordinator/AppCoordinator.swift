@@ -218,7 +218,7 @@ class AppCoordinator: Coordinator {
         let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageActionsViewController.self, argument: self)!
         if #available(iOS 15.0, *) {
             if let sheet = viewControllerToPresent.sheetPresentationController {
-                sheet.detents = [.medium()]
+                sheet.detents = [.medium()] // can be changed to custom height when iOS 16
                 sheet.prefersGrabberVisible = false
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             }
@@ -238,14 +238,19 @@ class AppCoordinator: Coordinator {
         }
     }
     
-    func presentImageViewer(link: URL) {
+    func presentImageViewer(message: Message) {
         let imageViewerViewController = Assembler.sharedAssembler.resolver
-            .resolve(ImageViewerViewController.self, arguments: self, link)!
+            .resolve(ImageViewerViewController.self, arguments: self, message)!
         navigationController.pushViewController(imageViewerViewController, animated: true)
     }
     
     func presentPrivacySettingsScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(PrivacySettingsViewController.self, argument: self)!
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentAppereanceSettingsScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(AppereanceSettingsViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -309,5 +314,12 @@ extension AppCoordinator {
                 }
             }
         }
+    }
+}
+
+extension AppCoordinator {
+    func changeAppereance(to mode: UIUserInterfaceStyle) {
+        userDefaults.set(mode.rawValue, forKey: Constants.Database.selectedAppereanceMode)
+        getWindowManager().changeAppereance(to: mode)
     }
 }

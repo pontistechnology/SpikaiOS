@@ -27,8 +27,8 @@ class BaseSettingsViewModel: BaseViewModel {
                     break
                 default: break
                 }
-            } receiveValue: { user in
-                self.user.send(user)
+            } receiveValue: { [weak self] user in
+                self?.user.send(user)
             }.store(in: &self.subscriptions)
     }
     

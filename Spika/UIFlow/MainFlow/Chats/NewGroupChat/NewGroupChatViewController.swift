@@ -27,6 +27,10 @@ class NewGroupChatViewController: BaseViewController {
         setupBindings()
     }
     
+    deinit {
+        print("new group deinit")
+    }
+    
     func setupBindings() {
         self.viewModel.selectedUsers
             .sink { [weak self] users in
@@ -53,16 +57,16 @@ class NewGroupChatViewController: BaseViewController {
         newGroupChatView.groupNameTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         newGroupChatView.groupNameTextfield.delegate = self
         
-        imagePickerPublisher.sink { pickedImage in
+        imagePickerPublisher.sink { [weak self] pickedImage in
             let photoStatus = pickedImage.statusOfPhoto(for: .avatar)
             switch photoStatus {
             case .allOk:
-                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
+                guard let resizedImage = self?.viewModel.resizeImage(pickedImage) else { return }
                 guard let data = resizedImage.jpegData(compressionQuality: 1) else { return }
-                self.newGroupChatView.avatarPictureView.setImage(resizedImage, for: .normal)
-                self.viewModel.fileData = data
+                self?.newGroupChatView.avatarPictureView.setImage(resizedImage, for: .normal)
+                self?.viewModel.fileData = data
             default:
-                self.viewModel.showError(photoStatus.description)
+                self?.viewModel.showError(photoStatus.description)
             }
         }.store(in: &subscriptions)
     }
@@ -93,7 +97,7 @@ class NewGroupChatViewController: BaseViewController {
     }
     
     override func setupView(_ view: UIView) {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .primaryBackground
         self.view.addSubview(self.scrollView)
         self.scrollView.constraint()
         

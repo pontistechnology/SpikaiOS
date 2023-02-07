@@ -208,7 +208,7 @@ final class ChatDetailsViewController: BaseViewController {
             let photoStatus = pickedImage.statusOfPhoto(for: .avatar)
             switch photoStatus {
             case .allOk:
-                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
+                guard let resizedImage = self?.viewModel.resizeImage(pickedImage) else { return }
                 guard let data = resizedImage.jpegData(compressionQuality: 1) else { return }
                 self?.viewModel.changeAvatar(image: data)
             default:

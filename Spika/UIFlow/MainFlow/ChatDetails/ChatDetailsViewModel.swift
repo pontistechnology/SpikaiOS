@@ -242,19 +242,21 @@ class ChatDetailsViewModel: BaseViewModel {
                 case .failure(_):
                     self?.showError("Error leaving room")
                 }
-            } receiveValue: { response in
+            } receiveValue: { [weak self] response in
                 guard let roomData = response.data?.room else { return }
-                self.updateRoomUsers(room: roomData)
+                self?.updateRoomUsers(room: roomData)
             }
             .store(in: &subscriptions)
     }
     
     func changeAvatar(image: Data?) {
-        guard let image = image else {
+        guard let image = image,
+              let fileUrl = repository.saveDataToFile(image, name: "newAvatar")
+        else {
             self.updateRoomWithAvatar(avatarId: 0)
             return
         }
-        repository.uploadWholeFile(data: image, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
+        repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:

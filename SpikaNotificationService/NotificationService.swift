@@ -54,24 +54,51 @@ extension NotificationService {
     func sendDeliveredStatus(messageIds: [Int64]) {
         repository.sendDeliveredStatus(messageIds: messageIds).sink { c in
             
-        } receiveValue: { response in
-            guard let bestAttemptContent = self.bestAttemptContent,
-                  let contentHandler = self.contentHandler
+        } receiveValue: { [weak self] response in
+            guard let bestAttemptContent = self?.bestAttemptContent,
+                  let contentHandler = self?.contentHandler
             else { return }
             contentHandler(bestAttemptContent)
         }.store(in: &subs)
     }
     
-    func saveMessage(message: Message) {
+    func saveMessage(message: Message, firstTry: Bool = true) {
         repository.saveMessages([message]).sink { [weak self] c in
             switch c {
             case .finished:
                 break
             case let .failure(error):
-                self?.show(title: "saving error", text: error.localizedDescription)
+                if firstTry {
+                    self?.getOnlineRoom(message: message)
+                } else {
+                    self?.show(title: "Can't save message. - REPORT", text: error.localizedDescription)
+                }
             }
         } receiveValue: { [weak self] messages in
             self?.getMessageNotificationInfo(message: messages.first!)
+        }.store(in: &subs)
+    }
+    
+    func getOnlineRoom(message: Message) {
+        repository.checkOnlineRoom(forRoomId: message.roomId).sink { [weak self] c in
+            switch c {
+            case .finished:
+                break
+            case .failure(let error):
+                self?.show(title: "Can't get online room. - REPORT", text: error.localizedDescription)
+            }
+        } receiveValue: { [weak self] response in
+            guard let room = response.data?.room,
+                  let self = self
+            else {
+                self?.show(title: "Can't parse online room - REPORT", text: "Please report.")
+                return
+            }
+            self.repository.saveLocalRooms(rooms: [room]).sink(receiveCompletion: { c in
+                
+            }, receiveValue: { [weak self] _ in
+                self?.saveMessage(message: message, firstTry: false)
+            }).store(in: &self.subs)
         }.store(in: &subs)
     }
     

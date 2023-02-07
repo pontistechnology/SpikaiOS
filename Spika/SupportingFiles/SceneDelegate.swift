@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: scene)
         window?.rootViewController = navController
+        setDefaultAppereance()
         window?.makeKeyAndVisible()
 
         appCoordinator = AppCoordinator(navigationController: navController, windowScene: scene)
@@ -56,7 +57,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Save changes in the application's managed object context when the application transitions to the background.
     }
-
-
+    
+    func setDefaultAppereance() {
+        let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)
+        let rawValue = userDefaults?.integer(forKey: Constants.Database.selectedAppereanceMode) ?? 0
+        let mode = UIUserInterfaceStyle(rawValue: rawValue) ?? .unspecified
+        window?.overrideUserInterfaceStyle = mode
+    }
 }
 

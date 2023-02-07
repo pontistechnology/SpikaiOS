@@ -4,7 +4,7 @@
 
   Created by Vedran Vugrin on 13.12.2022..
 */
-  
+
 "Spika" = "Spika";
 "Cancel" = "Cancel";
 "Done" = "Done";
@@ -38,6 +38,10 @@
 "Call History" = "Call History";
 "Contacts" = "Contacts";
 "Settings" = "Settings";
+"Appereance" = "Appereance";
+"Dark mode" = "Dark mode";
+"Light mode" = "Light mode";
+"System mode" = "System mode";
 
 "Group" = "Group";
 "Shared Media, Links and Docs" = "Shared Media, Links and Docs";
@@ -104,3 +108,5 @@
 "Selected image is too big" = "Selected image is too big";
 "Unsupported format" = "Unsupported format";
 "All ok." = "All ok.";
+
+
