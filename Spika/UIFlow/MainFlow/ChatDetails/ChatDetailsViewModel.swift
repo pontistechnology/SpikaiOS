@@ -242,9 +242,9 @@ class ChatDetailsViewModel: BaseViewModel {
                 case .failure(_):
                     self?.showError("Error leaving room")
                 }
-            } receiveValue: { response in
+            } receiveValue: { [weak self] response in
                 guard let roomData = response.data?.room else { return }
-                self.updateRoomUsers(room: roomData)
+                self?.updateRoomUsers(room: roomData)
             }
             .store(in: &subscriptions)
     }
