@@ -39,7 +39,7 @@ class MessageDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(messageDetailsView)
-        view.backgroundColor = .appWhite
+        view.backgroundColor = .inputFieldColor
         setupBindings()
     }
 }
@@ -54,7 +54,7 @@ extension MessageDetailsViewController {
 extension MessageDetailsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerView = view as? UITableViewHeaderFooterView {
-            headerView.contentView.backgroundColor = .appWhite
+            headerView.contentView.backgroundColor = .inputFieldColor
             headerView.textLabel?.textColor = .textPrimary
             headerView.textLabel?.font = .customFont(name: .MontserratRegular, size: 12)
         }

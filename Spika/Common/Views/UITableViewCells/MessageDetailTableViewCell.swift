@@ -31,7 +31,7 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .appWhite // TODO: change
+        backgroundColor = .inputFieldColor
         leftImageView.clipsToBounds = true
         leftImageView.layer.cornerRadius = 35/2
         userNameLabel.numberOfLines = 1
