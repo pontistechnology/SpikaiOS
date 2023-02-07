@@ -29,11 +29,11 @@ class AllChatsViewController: BaseViewController {
         allChatsView.allChatsTableView.dataSource = self
         allChatsView.searchBar.delegate = self
         
-        allChatsView.pencilImageView.tap().sink { [weak self] _ in
+        allChatsView.newChatButton.tap().sink { [weak self] _ in
             self?.viewModel.presentSelectUserScreen()
         }.store(in: &subscriptions)
         
-        allChatsView.pencilImageView
+        allChatsView.newChatButton
             .tap()
             .sink { [weak self] _ in
                 self?.onCreateNewRoom()

@@ -10,7 +10,6 @@ import UIKit
 
 enum AssetName: String {
     case videoCall = "videoCall"
-    case pencil = "pencil"
     case logo = "logo"
     case userImage = "user_image"
     case chatBubble = "chatBubble"
