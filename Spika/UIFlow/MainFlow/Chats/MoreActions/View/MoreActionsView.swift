@@ -18,6 +18,8 @@ enum MoreActions { // TODO: move
 class MoreActionsView: UIView {
     private let containerView = UIView()
     
+    let transparentView = UIView()
+    
     private let moreActionsLabel = CustomLabel(text: "More actions", textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
     private let optionsStackView = CustomStackView(axis: .horizontal, distribution: .fillEqually, spacing: 12)
     let filesImageView = UIImageView(image: UIImage(safeImage: .files))
@@ -38,6 +40,7 @@ class MoreActionsView: UIView {
 
 extension MoreActionsView: BaseView {
     func addSubviews() {
+        addSubview(transparentView)
         addSubview(containerView)
         containerView.addSubview(moreActionsLabel)
         containerView.addSubview(optionsStackView)
@@ -49,6 +52,7 @@ extension MoreActionsView: BaseView {
     }
     
     func styleSubviews() {
+        transparentView.backgroundColor = .clear
         containerView.backgroundColor = .secondaryBackground
         containerView.layer.cornerRadius = 10
         containerView.clipsToBounds = true
@@ -61,6 +65,8 @@ extension MoreActionsView: BaseView {
     
     func positionSubviews() {
         containerView.anchor(leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        
+        transparentView.anchor(top: topAnchor, leading: leadingAnchor, bottom: containerView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         
         closeImageView.anchor(top: containerView.topAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 25))
         
