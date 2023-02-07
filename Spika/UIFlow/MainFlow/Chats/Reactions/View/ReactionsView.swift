@@ -41,6 +41,8 @@ extension ReactionsView: BaseView {
     func styleSubviews() {
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
+        backgroundColor = .secondaryBackground
+        tableView.backgroundColor = .secondaryBackground
     }
     
     func positionSubviews() {

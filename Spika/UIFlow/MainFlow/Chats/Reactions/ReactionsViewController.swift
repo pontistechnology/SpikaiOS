@@ -40,6 +40,7 @@ class ReactionsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(reactionsView)
+        view.backgroundColor = .secondaryBackground
         setupBindings()
     }
 }
@@ -62,6 +63,7 @@ extension ReactionsViewController: UITableViewDelegate, UITableViewDataSource {
                            description: user?.telephoneNumber,
                            leftImage: user?.avatarFileId?.fullFilePathFromId(),
                            type: .emoji(emoji: filteredRecords[indexPath.row].reaction ?? "#", size: 32))
+        cell.backgroundColor = .secondaryBackground
         return cell
     }
     
