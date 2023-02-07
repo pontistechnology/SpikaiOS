@@ -16,21 +16,25 @@ class AppereanceSettingsViewController: BaseViewController {
         super.viewDidLoad()
         setupView(mainView)
         setupBindings()
+        mainView.changeCurrentLabel(to: viewModel.repository.getCurrentAppereance())
     }
 }
 
 private extension AppereanceSettingsViewController {
     func setupBindings() {
-        mainView.darkModeLabel.tap().sink { [weak self] _ in
-            self?.viewModel.changeAppereanceMode(to: .dark)
+        mainView.systemModeLabel.tap().sink { [weak self] _ in
+            self?.viewModel.changeAppereanceMode(to: .unspecified)
+            self?.mainView.changeCurrentLabel(to: 0)
         }.store(in: &subscriptions)
         
         mainView.lightModeLabel.tap().sink { [weak self] _ in
             self?.viewModel.changeAppereanceMode(to: .light)
+            self?.mainView.changeCurrentLabel(to: 1)
         }.store(in: &subscriptions)
-        
-        mainView.systemModeLabel.tap().sink { [weak self] _ in
-            self?.viewModel.changeAppereanceMode(to: .unspecified)
+
+        mainView.darkModeLabel.tap().sink { [weak self] _ in
+            self?.viewModel.changeAppereanceMode(to: .dark)
+            self?.mainView.changeCurrentLabel(to: 2)
         }.store(in: &subscriptions)
     }
 }

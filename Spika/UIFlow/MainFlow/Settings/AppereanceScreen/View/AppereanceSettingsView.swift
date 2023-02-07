@@ -10,6 +10,7 @@ import UIKit
 
 class AppereanceSettingsView: UIView {
     
+    let currentLabel = CustomLabel(text: "")
     let darkModeLabel = CustomLabel(text: .getStringFor(.darkMode))
     let lightModeLabel = CustomLabel(text: .getStringFor(.lightMode))
     let systemModeLabel = CustomLabel(text: .getStringFor(.systemMode))
@@ -32,6 +33,7 @@ extension AppereanceSettingsView: BaseView {
         stackView.addArrangedSubview(darkModeLabel)
         stackView.addArrangedSubview(lightModeLabel)
         stackView.addArrangedSubview(systemModeLabel)
+        stackView.addArrangedSubview(currentLabel)
     }
     
     func styleSubviews() {
@@ -44,5 +46,14 @@ extension AppereanceSettingsView: BaseView {
 }
 
 extension AppereanceSettingsView {
-    
+    func changeCurrentLabel(to value: Int) {
+        currentLabel.text = ""
+        if value == 0 {
+            currentLabel.text = "Currently we are using system mode."
+        } else if value == 1 {
+            currentLabel.text = "Currently we are forcing light mode"
+        } else if value == 2 {
+            currentLabel.text = "Currently we are forcing dark mode"
+        }
+    }
 }

@@ -132,6 +132,7 @@ protocol Repository {
     func getMyDeviceId() -> Int64
     func getSyncTimestamp(for type: SyncType) -> Int64
     func setSyncTimestamp(for type: SyncType, timestamp: Int64)
+    func getCurrentAppereance() -> Int
     
     // MARK: COREDATA: Contacts
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error>

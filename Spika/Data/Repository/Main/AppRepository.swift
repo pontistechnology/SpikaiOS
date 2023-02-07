@@ -40,4 +40,8 @@ class AppRepository: Repository {
         return databaseService.coreDataStack.mainMOC
     }
     
+    func getCurrentAppereance() -> Int {
+        return userDefaults.integer(forKey: Constants.Database.selectedAppereanceMode)
+    }
+    
 }
