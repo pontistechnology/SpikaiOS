@@ -510,28 +510,28 @@ extension CurrentChatViewModel {
                 }
             }
             
-            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
-                    
-                    let uuid = UUID().uuidString
-                    let thumbImage = UIImage(safeImage: .playVideo)
-                    guard let url = url,
-                          let fileUrl = self?.repository.copyFile(from: url, name: uuid),
-                          let videoMetadata = fileUrl.videoMetaData(),
-                          //                          let thumbImage = fileUrl.videoThumbnail(),
-                          let resizedData = self?.resizeImage(thumbImage)?.jpegData(compressionQuality: 1),
-                          let thumbUrl = self?.repository.saveDataToFile(resizedData, name: "\(uuid)thumb"),
-                          let thumbMetadata = thumbUrl.imageMetaData()
-                            
-                    else { return }
-                    
-                    let file = SelectedFile(fileType: .video,
-                                            name: uuid,
-                                            fileUrl: fileUrl,
-                                            thumbUrl: thumbUrl, thumbMetadata: thumbMetadata, metaData: videoMetadata, mimeType: "video/mp4", size: nil, localId: uuid)
-                    self?.sendFile(file: file)
-                }
-            }
+//            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+//                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
+//                    
+//                    let uuid = UUID().uuidString
+//                    let thumbImage = UIImage(safeImage: .playVideo)
+//                    guard let url = url,
+//                          let fileUrl = self?.repository.copyFile(from: url, name: uuid),
+//                          let videoMetadata = fileUrl.videoMetaData(),
+//                          //                          let thumbImage = fileUrl.videoThumbnail(),
+//                          let resizedData = self?.resizeImage(thumbImage)?.jpegData(compressionQuality: 1),
+//                          let thumbUrl = self?.repository.saveDataToFile(resizedData, name: "\(uuid)thumb"),
+//                          let thumbMetadata = thumbUrl.imageMetaData()
+//                            
+//                    else { return }
+//                    
+//                    let file = SelectedFile(fileType: .video,
+//                                            name: uuid,
+//                                            fileUrl: fileUrl,
+//                                            thumbUrl: thumbUrl, thumbMetadata: thumbMetadata, metaData: videoMetadata, mimeType: "video/mp4", size: nil, localId: uuid)
+//                    self?.sendFile(file: file)
+//                }
+//            }
         }
     }
     
