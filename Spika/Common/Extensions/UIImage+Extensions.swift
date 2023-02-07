@@ -11,7 +11,7 @@ import UIKit
 enum AssetName: String {
     case videoCall = "videoCall"
     case logo = "logo"
-    case userImage = "user_image"
+    case userImage = "userImage"
     case chatBubble = "chatBubble"
     case phoneCall = "phoneCall"
     case testImage = "matejVida"
@@ -41,7 +41,7 @@ enum AssetName: String {
     case fail = "fail"
     case waiting = "waiting"
     case cameraImage = "camera_image"
-    case mutedIcon = "muted_icon"
+    case mutedIcon = "mutedIcon"
     
     // File icons Ken
     case pdfThumbnail = "pdfThumbnail"
