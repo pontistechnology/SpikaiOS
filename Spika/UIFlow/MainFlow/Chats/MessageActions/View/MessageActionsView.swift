@@ -43,7 +43,7 @@ extension MessageActionsView: BaseView {
     }
     
     func styleSubviews() {
-        
+        backgroundColor = .inputFieldColor
     }
     
     func positionSubviews() {
