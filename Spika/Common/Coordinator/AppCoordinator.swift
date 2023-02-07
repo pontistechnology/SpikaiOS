@@ -218,7 +218,7 @@ class AppCoordinator: Coordinator {
         let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageActionsViewController.self, argument: self)!
         if #available(iOS 15.0, *) {
             if let sheet = viewControllerToPresent.sheetPresentationController {
-                sheet.detents = [.medium()]
+                sheet.detents = [.medium()] // can be changed to custom height when iOS 16
                 sheet.prefersGrabberVisible = false
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             }
