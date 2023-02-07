@@ -565,14 +565,14 @@ extension CurrentChatViewController {
             self?.viewModel.presentMessageDetails(records: records)
             completionHandler(true)
         }
-        detailsAction.backgroundColor = .appWhite
+        detailsAction.backgroundColor = .primaryBackground
         detailsAction.image = UIImage(safeImage: .slideDetails)
         
         let deleteAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
             self?.viewModel.showDeleteConfirmDialog(message: message)
             completionHandler(true)
         }
-        deleteAction.backgroundColor = .appWhite
+        deleteAction.backgroundColor = .primaryBackground
         deleteAction.image = UIImage(safeImage: .slideDelete)
         return UISwipeActionsConfiguration(actions: [detailsAction, deleteAction])
     }
@@ -589,7 +589,7 @@ extension CurrentChatViewController {
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
             completionHandler(true)
         }
-        firstLeft.backgroundColor = .appWhite
+        firstLeft.backgroundColor = .primaryBackground
         firstLeft.image = UIImage(safeImage: .slideReply)
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }

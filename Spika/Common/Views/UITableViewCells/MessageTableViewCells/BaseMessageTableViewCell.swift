@@ -77,7 +77,7 @@ extension BaseMessageTableViewCell: BaseView {
         senderPhotoImageview.clipsToBounds = true
         senderPhotoImageview.isHidden = true
         timeLabel.isHidden = true
-        backgroundColor = .appWhite
+        backgroundColor = .primaryBackground
     }
     
     func positionSubviews() {

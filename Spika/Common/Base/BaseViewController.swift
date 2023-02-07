@@ -39,7 +39,7 @@ class BaseViewController: UIViewController {
     }
     
     func setupView(_ view: UIView) {
-        self.view.backgroundColor = .appWhite
+        self.view.backgroundColor = .primaryBackground
         self.view.addSubview(view)
         view.fillSuperviewSafeAreaLayoutGuide()
         hideKeyboardWhenTappedAround()

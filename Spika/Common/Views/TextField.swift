@@ -23,7 +23,7 @@ class TextField: UITextField {
     }
     
     private func setupButton() {
-        backgroundColor = .inputFieldColor
+        backgroundColor = .secondaryBackground
         layer.borderWidth = 1
         layer.borderColor = UIColor.borderColor.cgColor
         layer.cornerRadius = 10

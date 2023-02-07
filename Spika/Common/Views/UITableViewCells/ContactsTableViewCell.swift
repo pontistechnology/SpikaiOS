@@ -69,7 +69,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         leftImageView.contentMode = .scaleAspectFill
         nameLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 1
-        backgroundColor = .appWhite
+        backgroundColor = .primaryBackground
     }
     
     func positionSubviews() {

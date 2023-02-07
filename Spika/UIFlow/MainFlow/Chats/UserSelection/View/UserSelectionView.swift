@@ -30,7 +30,7 @@ class UserSelectionView: UIView, BaseView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .appWhite
+        self.backgroundColor = .primaryBackground
         setupView()
     }
     

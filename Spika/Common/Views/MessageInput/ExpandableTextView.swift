@@ -41,7 +41,7 @@ extension ExpandableTextView {
         layer.borderColor = UIColor.borderColor.cgColor
         layer.borderWidth = 1
         customFont(name: .MontserratMedium)
-        backgroundColor = .inputFieldColor
+        backgroundColor = .secondaryBackground
     }
     
     func positionSubviews() {

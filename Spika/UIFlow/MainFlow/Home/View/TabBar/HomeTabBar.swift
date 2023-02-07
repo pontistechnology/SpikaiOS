@@ -65,7 +65,7 @@ class HomeTabBar: UIView, BaseView {
     }
     
     func styleSubviews() {
-        tabContainer.backgroundColor = .appWhite
+        tabContainer.backgroundColor = .primaryBackground
         tabStackView.axis = .horizontal
         tabStackView.alignment = .fill
         tabStackView.distribution = .fillEqually
