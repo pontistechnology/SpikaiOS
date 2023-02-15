@@ -38,7 +38,9 @@ extension CustomTextView {
         backgroundColor = .clear
         font = .customFont(name: fontName, size: titleSize)
         textColor = titleColor
-        linkTextAttributes = [.foregroundColor: UIColor.link, .underlineColor: UIColor.link]
+        linkTextAttributes = [.foregroundColor : UIColor.textPrimary,
+                              .underlineStyle  : NSUnderlineStyle.single.rawValue,
+                              .underlineColor : UIColor.textPrimary]
         isEditable = false
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0

@@ -11,7 +11,7 @@ import Combine
 class UserBlockedView: UIView, BaseView {
     
     let verticalStackView = CustomStackView()
-    let label = CustomLabel(text: .getStringFor(.youBlockedTheContact), textSize: 16, textColor: .primaryBackground, alignment: .center)
+    let label = CustomLabel(text: .getStringFor(.youBlockedTheContact), textSize: 16, textColor: .textPrimary, alignment: .center)
     let horizontalStackView = CustomStackView(axis: .horizontal, distribution: .fillEqually, spacing: 18)
     let blockUnblockButton = MainButton()
     
@@ -26,11 +26,11 @@ class UserBlockedView: UIView, BaseView {
     
     func styleSubviews() {
         self.isHidden = true
-        self.backgroundColor = .lightGray
+        self.backgroundColor = .textTertiary
         self.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         blockUnblockButton.backgroundColor = .primaryBackground
-        blockUnblockButton.setTitleColor(.black, for: .normal)
+        blockUnblockButton.setTitleColor(.textPrimary, for: .normal)
         blockUnblockButton.setTitle(.getStringFor(.unblock), for: .normal)
     }
     
