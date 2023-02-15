@@ -16,6 +16,7 @@ struct Room: Codable {
     var muted: Bool
     let users: [RoomUser]
     let deleted: Bool
+    var pinned: Bool
 }
 
 extension Room {
@@ -30,7 +31,8 @@ extension Room {
                   createdAt: roomEntity.createdAt,
                   muted: roomEntity.muted,
                   users: roomUsers,
-                  deleted: roomEntity.roomDeleted
+                  deleted: roomEntity.roomDeleted,
+                  pinned: roomEntity.pinned
                   )
     }
 }

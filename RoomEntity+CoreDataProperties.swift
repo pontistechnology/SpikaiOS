@@ -27,6 +27,7 @@ extension RoomEntity {
     @NSManaged public var roomDeleted: Bool
     @NSManaged public var messages: NSOrderedSet?
     @NSManaged public var users: NSSet?
+    @NSManaged public var pinned: Bool
 
 }
 

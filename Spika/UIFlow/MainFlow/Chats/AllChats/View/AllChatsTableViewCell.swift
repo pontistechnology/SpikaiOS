@@ -17,6 +17,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     
     let messagesStackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .fill, spacing: 8)
     let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .primaryBackground, fontName: .MontserratSemiBold, alignment: .center)
+    let pinnedIcon = UIImageView(image: UIImage(safeImage: .pinnedChatIcon))
     let mutedIcon = UIImageView(image: UIImage(safeImage: .mutedIcon))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -35,6 +36,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         contentView.addSubview(timeLabel)
         
         contentView.addSubview(messagesStackView)
+        messagesStackView.addArrangedSubview(pinnedIcon)
         messagesStackView.addArrangedSubview(mutedIcon)
         messagesStackView.addArrangedSubview(messagesNumberLabel)
     }
@@ -50,6 +52,9 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.layer.cornerRadius = 10
         messagesNumberLabel.clipsToBounds = true
         messagesNumberLabel.isHidden = true
+        
+        pinnedIcon.translatesAutoresizingMaskIntoConstraints = false
+        pinnedIcon.contentMode = .center
         
         mutedIcon.translatesAutoresizingMaskIntoConstraints = false
         mutedIcon.contentMode = .center
@@ -70,7 +75,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
 //        mutedIcon.constrainWidth(20)
     }
     
-    func configureCell(avatarUrl: URL?, name: String, description: String, time: String, badgeNumber: Int, muted: Bool) {
+    func configureCell(avatarUrl: URL?, name: String, description: String, time: String, badgeNumber: Int, muted: Bool, pinned: Bool) {
         leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(safeImage: .userImage))
 
         nameLabel.text = name
@@ -80,6 +85,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.isHidden = badgeNumber == 0
         
         mutedIcon.isHidden = !muted
+        pinnedIcon.isHidden = !pinned
     }
     
     override func prepareForReuse() {

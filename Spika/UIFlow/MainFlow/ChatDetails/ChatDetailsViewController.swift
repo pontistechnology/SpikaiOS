@@ -91,6 +91,13 @@ final class ChatDetailsViewController: BaseViewController {
             }
             .store(in: &self.viewModel.subscriptions)
         
+        self.viewModel.room
+            .map { $0.pinned }
+            .sink { [weak self] isMuted in
+                self?.chatDetailView.contentView.pinChatSwitchView.stateSwitch.isOn = isMuted
+            }
+            .store(in: &self.viewModel.subscriptions)
+        
         isAdmin
             .subscribe(self.chatDetailView.contentView.chatMembersView.editable)
             .store(in: &self.viewModel.subscriptions)
@@ -164,6 +171,17 @@ final class ChatDetailsViewController: BaseViewController {
             }
             .sink { [weak self] value in
                 self?.viewModel.muteUnmute(mute: value)
+            }.store(in: &self.subscriptions)
+        
+        self.chatDetailView.contentView
+            .pinChatSwitchView
+            .stateSwitch
+            .publisher(for: .touchUpInside)
+            .compactMap { [weak self] _ in
+                self?.chatDetailView.contentView.pinChatSwitchView.stateSwitch.isOn
+            }
+            .sink { [weak self] value in
+                self?.viewModel.pinUnpin(pin: value)
             }.store(in: &self.subscriptions)
         
         self.chatDetailView.contentView

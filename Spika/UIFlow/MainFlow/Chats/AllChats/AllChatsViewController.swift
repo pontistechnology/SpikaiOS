@@ -57,8 +57,8 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
             guard let self = self else { return }
             let fetchRequest = RoomEntity.fetchRequest()
             fetchRequest.predicate = self.viewModel.defaultChatsPredicate
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp),
-                                                             ascending: false),
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
+                                            NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
                                             NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
             self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                   managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
@@ -113,7 +113,8 @@ extension AllChatsViewController: UITableViewDataSource {
                                 description: entity.lastMessageText(),
                                 time: entity.lastMessageTime(),
                                 badgeNumber: badgeNumber,
-                                muted: entity.muted)
+                                muted: entity.muted,
+                                pinned: entity.pinned)
             
         } else if room.type != .privateRoom {
             
@@ -122,7 +123,8 @@ extension AllChatsViewController: UITableViewDataSource {
                                 description: entity.lastMessageText(),
                                 time: entity.lastMessageTime(),
                                 badgeNumber: badgeNumber,
-                                muted: entity.muted)
+                                muted: entity.muted,
+                                pinned: entity.pinned)
         }
         
         return cell ?? EmptyTableViewCell()
@@ -186,6 +188,9 @@ extension AllChatsViewController: SearchBarDelegate {
     func changePredicate(to newString: String) {
         let searchPredicate = newString.isEmpty ? self.viewModel.defaultChatsPredicate : NSPredicate(format: "name CONTAINS[c] '\(newString)' and roomDeleted = false")
         self.frc?.fetchRequest.predicate = searchPredicate
+        self.frc?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
+                                                  NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
+                                                  NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
         try? self.frc?.performFetch()
         self.allChatsView.allChatsTableView.reloadData()
     }

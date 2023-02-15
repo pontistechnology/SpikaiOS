@@ -94,6 +94,25 @@ class ChatDetailsViewModel: BaseViewModel {
             .store(in: &self.subscriptions)
     }
     
+    func pinUnpin(pin: Bool) {
+        self.repository
+            .pinUnpinRoom(roomId: self.room.value.id, pin: pin)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                guard let self = self else { return }
+                switch completion {
+                case .finished:
+                    self.updateRoomIsPinned(room: self.room.value, isPinned: !self.room.value.pinned)
+                    break
+                case .failure(_):
+                    let message: String = pin ? .getStringFor(.somethingWentWrongMutingRoom) : .getStringFor(.somethingWentWrongUnmutingRoom)
+                    self.showError(message)
+                    self.room.send(self.room.value)
+                }
+            } receiveValue: { _ in }
+            .store(in: &self.subscriptions)
+    }
+    
     func blockOrUnblock() {
         if self.isBlocked.value {
             self.unblockUser()
@@ -292,6 +311,12 @@ class ChatDetailsViewModel: BaseViewModel {
     func updateRoomIsMuted(room: Room, isMuted:Bool) {
         var mutableRoom = room
         mutableRoom.muted = isMuted
+        self.saveLocalRoom(room: mutableRoom)
+    }
+    
+    func updateRoomIsPinned(room: Room, isPinned:Bool) {
+        var mutableRoom = room
+        mutableRoom.pinned = isPinned
         self.saveLocalRoom(room: mutableRoom)
     }
     

@@ -24,6 +24,7 @@ public class RoomEntity: NSManagedObject {
         self.type = room.type.rawValue
         self.muted = room.muted
         self.roomDeleted = room.deleted
+        self.pinned = room.pinned
         
         for roomUser in room.users {
             let r = RoomUserEntity(roomUser: roomUser, roomId: room.id, insertInto: context)
