@@ -79,14 +79,15 @@ class NetworkService {
         
         return URLSession.shared.dataTaskPublisher(for: request)
             .map({ [weak self] (data, response) in
-//                DebugUtils.printRequestAndResponse(request: request, data: data)
+                DebugUtils.printRequestAndResponse(request: request, data: data)
                 let statusCode = (response as? HTTPURLResponse)?.statusCode
                 switch statusCode {
                 case 200:
                     break
 //                    print("STATUS CODE 200")
-                case 401:
-                    break // TODO: - sign out
+                case 401, 403:
+                    let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)!
+                    userDefaults.removeObject(forKey: Constants.Database.accessToken)
                 case 404:
                     break
 //                    print("STATUS CODE 404: ", response.url)
