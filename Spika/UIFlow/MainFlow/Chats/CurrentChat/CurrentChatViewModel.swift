@@ -15,10 +15,15 @@ import PhotosUI
 class CurrentChatViewModel: BaseViewModel {
     
     let friendUser: User?
-    var room: Room?
+    var room: Room? {
+        didSet {
+            self.updateIsMember()
+        }
+    }
     let roomPublisher = PassthroughSubject<Room, Error>()
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
+    let isMember = CurrentValueSubject<Bool,Never>(true)
     let isBlocked = CurrentValueSubject<Bool,Never>(false)
     let userRepliedInChat = CurrentValueSubject<Bool,Never>(true)
     let offerToBlock = CurrentValueSubject<Bool,Never>(false)
@@ -135,10 +140,10 @@ class CurrentChatViewModel: BaseViewModel {
             }.store(in: &subscriptions)
     }
     
-    var userIsMember: Bool {
+    func updateIsMember() {
         let ids = self.room?.users.map { $0.userId } ?? []
         let ownId = self.getMyUserId()
-        return ids.contains(ownId)
+        self.isMember.send(ids.contains(ownId))
     }
     
 }

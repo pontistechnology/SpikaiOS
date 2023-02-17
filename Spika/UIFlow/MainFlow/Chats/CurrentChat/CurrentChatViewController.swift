@@ -107,7 +107,6 @@ extension CurrentChatViewController {
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
         sink(networkRequestState: viewModel.networkRequestState)
-        self.userNotInChatView.isHidden = self.viewModel.userIsMember
         
         currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
             self?.handleInput(state)
@@ -187,6 +186,12 @@ extension CurrentChatViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] offerToBlock in
                 self?.offerToBlockUser.isHidden = !offerToBlock
+            }.store(in: &subscriptions)
+        
+        self.viewModel.isMember
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isMember in
+                self?.userNotInChatView.isHidden = isMember
             }.store(in: &subscriptions)
         
         self.userBlockedView.blockUnblockButton
