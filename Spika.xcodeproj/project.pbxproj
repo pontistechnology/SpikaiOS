@@ -11,7 +11,6 @@
 		6C056C76297009D600198EC1 /* BlockedUsersResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C74297008AC00198EC1 /* BlockedUsersResponseModel.swift */; };
 		6C056C7829700D6E00198EC1 /* BlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C7729700D6E00198EC1 /* BlockModel.swift */; };
 		6C056C7929700D9E00198EC1 /* BlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C7729700D6E00198EC1 /* BlockModel.swift */; };
-		6C056C7E2970478100198EC1 /* UserBlockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C7D2970478100198EC1 /* UserBlockedView.swift */; };
 		6C0AA21E2966D55D00E87304 /* Publisher+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0AA21D2966D55D00E87304 /* Publisher+Extensions.swift */; };
 		6C14B43E296EE67F00F30F63 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C14B43D296EE67F00F30F63 /* RoundedImageView.swift */; };
 		6C153BEC2948693200D400A7 /* Constants+Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */; };
@@ -39,8 +38,6 @@
 		6C65B552291BD1B8007C5B92 /* TabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65B551291BD1B8007C5B92 /* TabBarItemView.swift */; };
 		6C6AD21B291E3B8E0026CDAC /* ChatContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6AD21A291E3B8E0026CDAC /* ChatContentView.swift */; };
 		6C6AD21D291E41DD0026CDAC /* ChatMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */; };
-		6C7423C3297192C30090C416 /* OfferToBlockUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7423C2297192C30090C416 /* OfferToBlockUserView.swift */; };
-		6C74A6C12990F44000AB65B4 /* UserNotInChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C74A6C02990F44000AB65B4 /* UserNotInChatView.swift */; };
 		6C75CE1E291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C75CE1D291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift */; };
 		6C769036291D36B5007F13D2 /* ChatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */; };
 		6C769038291D36BF007F13D2 /* ChatDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */; };
@@ -52,6 +49,7 @@
 		6CBBEC67298AB1F5004281D3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBBEC66298AB1F5004281D3 /* CustomButton.swift */; };
 		6CBD43A52982801D00A1059E /* AppRepository+BlockedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */; };
 		6CBD43A9298282F100A1059E /* AppRepository+Blocked_Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */; };
+		6CD1915A29A35E2300A8041A /* ChatBlockingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1915929A35E2300A8041A /* ChatBlockingView.swift */; };
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CF1C86829781D0900754A24 /* TestRepository+BlockedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF1C86729781D0900754A24 /* TestRepository+BlockedUsers.swift */; };
@@ -429,7 +427,6 @@
 		583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C056C74297008AC00198EC1 /* BlockedUsersResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersResponseModel.swift; sourceTree = "<group>"; };
 		6C056C7729700D6E00198EC1 /* BlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockModel.swift; sourceTree = "<group>"; };
-		6C056C7D2970478100198EC1 /* UserBlockedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBlockedView.swift; sourceTree = "<group>"; };
 		6C0AA21D2966D55D00E87304 /* Publisher+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extensions.swift"; sourceTree = "<group>"; };
 		6C14B43D296EE67F00F30F63 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Endpoints.swift"; sourceTree = "<group>"; };
@@ -454,8 +451,6 @@
 		6C65B551291BD1B8007C5B92 /* TabBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemView.swift; sourceTree = "<group>"; };
 		6C6AD21A291E3B8E0026CDAC /* ChatContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentView.swift; sourceTree = "<group>"; };
 		6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMembersView.swift; sourceTree = "<group>"; };
-		6C7423C2297192C30090C416 /* OfferToBlockUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferToBlockUserView.swift; sourceTree = "<group>"; };
-		6C74A6C02990F44000AB65B4 /* UserNotInChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotInChatView.swift; sourceTree = "<group>"; };
 		6C75CE1D291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppCoordinator+PushNotifications.swift"; sourceTree = "<group>"; };
 		6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewController.swift; sourceTree = "<group>"; };
 		6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -466,6 +461,7 @@
 		6C9C7241291E743A0089AB4C /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		6CBBEC66298AB1F5004281D3 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Blocked_Notification.swift"; sourceTree = "<group>"; };
+		6CD1915929A35E2300A8041A /* ChatBlockingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBlockingView.swift; sourceTree = "<group>"; };
 		6CD30FF22922865D0017918B /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+BlockedUsers.swift"; sourceTree = "<group>"; };
 		6CF1C86729781D0900754A24 /* TestRepository+BlockedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+BlockedUsers.swift"; sourceTree = "<group>"; };
@@ -1310,10 +1306,8 @@
 		93E4F6FF27C468AB00432CFA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6CD1915929A35E2300A8041A /* ChatBlockingView.swift */,
 				93E4F70027C468BB00432CFA /* CurrentChatView.swift */,
-				6C056C7D2970478100198EC1 /* UserBlockedView.swift */,
-				6C7423C2297192C30090C416 /* OfferToBlockUserView.swift */,
-				6C74A6C02990F44000AB65B4 /* UserNotInChatView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2321,7 +2315,6 @@
 				AD9BFD342729AE8300736318 /* CountryTableViewCell.swift in Sources */,
 				6C769038291D36BF007F13D2 /* ChatDetailsViewModel.swift in Sources */,
 				93D86DB827BAA15900F275B0 /* DocsTableView.swift in Sources */,
-				6C7423C3297192C30090C416 /* OfferToBlockUserView.swift in Sources */,
 				AD8192552721C00D00D5BE48 /* UIColor+Extensions.swift in Sources */,
 				6C175EC9297ED93A00804275 /* BlockedUsersViewModel.swift in Sources */,
 				93C07A89290127FD003DFD61 /* EmptyTableViewCell.swift in Sources */,
@@ -2360,7 +2353,6 @@
 				93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */,
 				93BF627528EB9B7900B48BBF /* EnumsShared.swift in Sources */,
 				93E4F6F827C3A4B100432CFA /* AllChatsTableViewCell.swift in Sources */,
-				6C74A6C12990F44000AB65B4 /* UserNotInChatView.swift in Sources */,
 				933BE86E27B677BC0099BA9E /* FavoritesViewController.swift in Sources */,
 				AD9BFD272729955200736318 /* EnterNumberView.swift in Sources */,
 				934FF16D2977774F002C76F7 /* ContextMenuActionView.swift in Sources */,
@@ -2561,10 +2553,10 @@
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,
 				EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */,
 				6C6AD21D291E41DD0026CDAC /* ChatMembersView.swift in Sources */,
-				6C056C7E2970478100198EC1 /* UserBlockedView.swift in Sources */,
 				9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */,
 				EAC81D782810422F0004D835 /* FetchedContact.swift in Sources */,
 				AD81925C2721D45100D5BE48 /* ContactsView.swift in Sources */,
+				6CD1915A29A35E2300A8041A /* ChatBlockingView.swift in Sources */,
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
 				ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */,
 				9355BEDA28056D1A00B9EC85 /* CoreDataStack.swift in Sources */,

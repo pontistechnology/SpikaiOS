@@ -27,9 +27,7 @@ struct SelectedFile {
 class CurrentChatViewController: BaseViewController {
     
     private let currentChatView = CurrentChatView()
-    private let userBlockedView = UserBlockedView(frame: .zero)
-    private let offerToBlockUser = OfferToBlockUserView(frame: .zero)
-    private let userNotInChatView = UserNotInChatView(frame: .zero)
+    let chatBlockingView = ChatBlockingView()
     var viewModel: CurrentChatViewModel!
     private let friendInfoView = ChatNavigationBarView()
     private var frc: NSFetchedResultsController<MessageEntity>?
@@ -61,23 +59,13 @@ class CurrentChatViewController: BaseViewController {
     }
     
     func addSubviews() {
-        self.view.addSubview(userBlockedView)
-        self.view.addSubview(offerToBlockUser)
-        self.view.addSubview(userNotInChatView)
+        view.addSubview(chatBlockingView)
     }
     
     func positionSubviews() {
-        userBlockedView.constraintBottom()
-        userBlockedView.constraintLeading()
-        userBlockedView.constraintTrailing()
-        
-        offerToBlockUser.constraintBottom()
-        offerToBlockUser.constraintLeading()
-        offerToBlockUser.constraintTrailing()
-        
-        userNotInChatView.constraintBottom()
-        userNotInChatView.constraintLeading()
-        userNotInChatView.constraintTrailing()
+        chatBlockingView.constraintBottom()
+        chatBlockingView.constraintLeading()
+        chatBlockingView.constraintTrailing()
     }
     
     deinit {
@@ -175,43 +163,47 @@ extension CurrentChatViewController {
             self?.viewModel.sendCameraImage(pickedImage)
         }.store(in: &subscriptions)
         
-        self.viewModel.isBlocked
+        let isBlocked = self.viewModel.isBlocked
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] isBlocked in
-                print("Is Blocked: \(isBlocked)")
-                self?.userBlockedView.isHidden = !isBlocked
-            }.store(in: &subscriptions)
+            .map { isBlocked -> ChatBlockingViewState in
+                return isBlocked ? .userBlocked : .notUsed
+            }
         
-        self.viewModel.offerToBlock
+        let offerBlock = self.viewModel.offerToBlock
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] offerToBlock in
-                self?.offerToBlockUser.isHidden = !offerToBlock
-            }.store(in: &subscriptions)
+            .map { offerBlock -> ChatBlockingViewState in
+                return offerBlock ? .newChat : .notUsed
+            }
         
-        self.viewModel.isMember
+        let isMember = self.viewModel.isMember
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] isMember in
-                self?.userNotInChatView.isHidden = isMember
+            .map { isMember -> ChatBlockingViewState in
+                return !isMember ? .notInChat : .notUsed
+            }
+        
+        Publishers.CombineLatest3(isBlocked, offerBlock, isMember)
+            .map { blockingState in
+                return [blockingState.0, blockingState.1, blockingState.2].reduce(into: ChatBlockingViewState.notUsed) { partialResult, new in
+                    if new != .notUsed {
+                        partialResult = new
+                    }
+                }
+            }
+            .sink { [weak self] viewState in
+                self?.chatBlockingView.updateState(state: viewState)
             }.store(in: &subscriptions)
         
-        self.userBlockedView.blockUnblockButton
-            .publisher(for: .touchUpInside)
-            .sink { [weak self] _ in
-                self?.viewModel.unblockUser()
-            }.store(in: &subscriptions)
-        
-        self.offerToBlockUser.blockUnblockButton
-            .publisher(for: .touchUpInside)
-            .sink { [weak self] _ in
-                self?.offerToBlockUser.isHidden = true
-                self?.viewModel.blockUser()
-            }.store(in: &subscriptions)
-        
-        self.offerToBlockUser.okButton
-            .publisher(for: .touchUpInside)
-            .sink { [weak self] _ in
-                self?.offerToBlockUser.isHidden = true
-                self?.viewModel.userConfirmed()
+        self.chatBlockingView.chatBlockingUserAction
+            .sink { [weak self] action in
+                switch action {
+                case.unblockUser:
+                    self?.viewModel.unblockUser()
+                case .blockUser:
+                    self?.viewModel.blockUser()
+                case .ok:
+                    self?.chatBlockingView.updateState(state: .notUsed)
+                    self?.viewModel.userConfirmed()
+                }
             }.store(in: &subscriptions)
     }
     
