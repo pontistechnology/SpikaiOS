@@ -1,11 +1,10 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
-target 'Spika' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+use_frameworks!
 
-  # Pods for Spika
+# Pods for Spika
+def shared_pods
   pod 'Swinject'
   source 'https://github.com/CocoaPods/Specs.git'
   pod 'PhoneNumberKit', :git => 'https://github.com/marmelroy/PhoneNumberKit'
@@ -14,8 +13,12 @@ target 'Spika' do
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Messaging'
   pod 'IKEventSource'
+end
 
-  target 'AppTests' do
-      pod 'Swinject'
-  end
+target 'Spika' do
+  shared_pods
+end
+
+target 'Spika Dev' do
+  shared_pods
 end

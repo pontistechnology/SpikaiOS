@@ -16,13 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        FirebaseApp.configure()
+        configureFirebase()
         configureNotifications(app: application)
         customization()
 //        test()
         return true
     }
     
+    func configureFirebase() {
+        FirebaseApp.configure()
+        
+    }
     
     func test() {
             print("_____")
