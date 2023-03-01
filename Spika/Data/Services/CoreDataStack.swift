@@ -32,7 +32,8 @@ class CoreDataStack: NSObject {
     
     lazy var persistantContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: self.moduleName)
-        let directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.studio.clover.Spika.groupSpika")!
+        
+        let directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.Networking.appGroupName)!
         let storeName = "\(self.moduleName).sqlite"
         let storeUrl =  directory.appendingPathComponent(storeName)
         
