@@ -42,6 +42,7 @@
 		6C6AD21B291E3B8E0026CDAC /* ChatContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6AD21A291E3B8E0026CDAC /* ChatContentView.swift */; };
 		6C6AD21D291E41DD0026CDAC /* ChatMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */; };
 		6C758CB829AF8A3F00895C9A /* InfoDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C758CB729AF8A3F00895C9A /* InfoDev.plist */; };
+		6C758CB929AF8C9800895C9A /* InfoDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C758CB729AF8A3F00895C9A /* InfoDev.plist */; };
 		6C75CE1E291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C75CE1D291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift */; };
 		6C769036291D36B5007F13D2 /* ChatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */; };
 		6C769038291D36BF007F13D2 /* ChatDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */; };
@@ -2490,6 +2491,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C758CB929AF8C9800895C9A /* InfoDev.plist in Resources */,
 				6C78B8B129AF5ADB004BF881 /* Montserrat-Light.ttf in Resources */,
 				6C78B8B229AF5ADB004BF881 /* Montserrat-Regular.ttf in Resources */,
 				6C78B8B329AF5ADB004BF881 /* Localizable.strings in Resources */,
@@ -3475,7 +3477,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = InfoDev.plist;
+				INFOPLIST_FILE = Spika/InfoDev.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
@@ -3513,7 +3515,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = InfoDev.plist;
+				INFOPLIST_FILE = Spika/InfoDev.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
