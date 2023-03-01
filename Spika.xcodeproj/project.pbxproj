@@ -41,6 +41,7 @@
 		6C65B552291BD1B8007C5B92 /* TabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65B551291BD1B8007C5B92 /* TabBarItemView.swift */; };
 		6C6AD21B291E3B8E0026CDAC /* ChatContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6AD21A291E3B8E0026CDAC /* ChatContentView.swift */; };
 		6C6AD21D291E41DD0026CDAC /* ChatMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */; };
+		6C758CB829AF8A3F00895C9A /* InfoDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C758CB729AF8A3F00895C9A /* InfoDev.plist */; };
 		6C75CE1E291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C75CE1D291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift */; };
 		6C769036291D36B5007F13D2 /* ChatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */; };
 		6C769038291D36BF007F13D2 /* ChatDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */; };
@@ -431,7 +432,7 @@
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CF1C86829781D0900754A24 /* TestRepository+BlockedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF1C86729781D0900754A24 /* TestRepository+BlockedUsers.swift */; };
 		6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6CFB46C22948C1D7000D26BB /* Localizable.strings */; };
-		6E1AA22EBF32F5F6B1E36042 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		6E1AA22EBF32F5F6B1E36042 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		7E72A0473D6052432982C00A /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2511C3428ADAAF827BEC0E72 /* Pods_Spika.framework */; };
 		89ECD2F713F7863059BAC021 /* Pods_Spika_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414A4A1E472811F66834C409 /* Pods_Spika_Dev.framework */; };
 		93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
@@ -843,12 +844,12 @@
 		6C65B551291BD1B8007C5B92 /* TabBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemView.swift; sourceTree = "<group>"; };
 		6C6AD21A291E3B8E0026CDAC /* ChatContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentView.swift; sourceTree = "<group>"; };
 		6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMembersView.swift; sourceTree = "<group>"; };
+		6C758CB729AF8A3F00895C9A /* InfoDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InfoDev.plist; sourceTree = "<group>"; };
 		6C75CE1D291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppCoordinator+PushNotifications.swift"; sourceTree = "<group>"; };
 		6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewController.swift; sourceTree = "<group>"; };
 		6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewModel.swift; sourceTree = "<group>"; };
 		6C76903A291D451A007F13D2 /* ChatDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsView.swift; sourceTree = "<group>"; };
 		6C78B8C629AF5ADB004BF881 /* Spika Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spika Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C78B8C729AF5ADB004BF881 /* InfoDev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = InfoDev.plist; path = /Users/vedranvugrin/Desktop/SpikaiOS/InfoDev.plist; sourceTree = "<absolute>"; };
 		6C78B91D29AF5D89004BF881 /* SpikaNotificationServiceDev.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpikaNotificationServiceDev.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C78B91F29AF6467004BF881 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6C78B92129AF65F1004BF881 /* NotificationInfoDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NotificationInfoDev.plist; sourceTree = "<group>"; };
@@ -1162,7 +1163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E1AA22EBF32F5F6B1E36042 /* BuildFile in Frameworks */,
+				6E1AA22EBF32F5F6B1E36042 /* (null) in Frameworks */,
 				7E72A0473D6052432982C00A /* Pods_Spika.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2094,7 +2095,7 @@
 				ADD503C8270DC42E009D50CB /* SupportingFiles */,
 				ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */,
 				ADD503C2270DC3CA009D50CB /* Info.plist */,
-				6C78B8C729AF5ADB004BF881 /* InfoDev.plist */,
+				6C758CB729AF8A3F00895C9A /* InfoDev.plist */,
 			);
 			path = Spika;
 			sourceTree = "<group>";
@@ -2527,6 +2528,7 @@
 			files = (
 				EAA6A39F27CCF30C00B7E01F /* GoogleService-Info.plist in Resources */,
 				AD8192842722D5AF00D5BE48 /* Montserrat-Light.ttf in Resources */,
+				6C758CB829AF8A3F00895C9A /* InfoDev.plist in Resources */,
 				AD81927E2722D5AF00D5BE48 /* Montserrat-Regular.ttf in Resources */,
 				6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */,
 				6C8FF1C32949D27000955592 /* InfoPlist.strings in Resources */,
