@@ -23,7 +23,8 @@ class RoomEntityService {
 extension RoomEntityService {
     
     func getRoom(forUserId id: Int64) -> Future<Room, Error> {
-        Future { promise in
+        Future { [weak self] promise in
+            guard let self = self else { return }
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = RoomEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "type == 'private' AND ANY users.userId == %@", "\(id)")
@@ -45,7 +46,8 @@ extension RoomEntityService {
     }
     
     func getRoom(forRoomId id: Int64) -> Future<Room, Error> {
-        Future { promise in
+        Future { [weak self] promise in
+            guard let self = self else { return }
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = RoomEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "id == %d", id)
@@ -67,7 +69,8 @@ extension RoomEntityService {
     }
     // TODO: - is this same function as above one?
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error> {
-        Future { promise in
+        Future { [weak self] promise in
+            guard let self = self else { return }
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 let fetchRequest = RoomEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "id == %d", roomId)

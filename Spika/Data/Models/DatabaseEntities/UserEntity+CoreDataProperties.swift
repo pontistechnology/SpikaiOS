@@ -23,7 +23,6 @@ extension UserEntity {
     @NSManaged public var contactsName: String?
     @NSManaged public var id: Int64
     @NSManaged public var telephoneNumber: String?
-    @NSManaged public var roomUsers: RoomUserEntity?
 
 }
 

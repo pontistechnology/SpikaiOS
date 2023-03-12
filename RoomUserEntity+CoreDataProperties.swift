@@ -19,8 +19,6 @@ extension RoomUserEntity {
     @NSManaged public var isAdmin: Bool
     @NSManaged public var userId: Int64
     @NSManaged public var roomId: Int64
-    @NSManaged public var inRooms: RoomEntity?
-    @NSManaged public var user: UserEntity?
 
 }
 

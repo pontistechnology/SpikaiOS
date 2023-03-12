@@ -26,35 +26,40 @@ public class RoomEntity: NSManagedObject {
         self.roomDeleted = room.deleted
         self.pinned = room.pinned
         
-        for roomUser in room.users {
-            let r = RoomUserEntity(roomUser: roomUser, roomId: room.id, insertInto: context)
-            self.addToUsers(r)
-        }
+//        for roomUser in room.users {
+//            let r = RoomUserEntity(roomUser: roomUser, roomId: room.id, insertInto: context)
+//            self.addToUsers(r)
+//        }
     }
 }
 
 extension RoomEntity {
     func numberOfUnreadMessages(myUserId: Int64) -> Int{
-        return (messages?.array as? [MessageEntity])?
-            .filter { messageEntity in
-                messageEntity.createdAt > visitedRoom }
-            .filter { newMessages in
-                newMessages.fromUserId != myUserId
-            }.count ?? 0
+        return 2 // TODO: - dbr check
+//        (messages?.array as? [MessageEntity])?
+//            .filter { messageEntity in
+//                messageEntity.createdAt > visitedRoom }
+//            .filter { newMessages in
+//                newMessages.fromUserId != myUserId
+//            }.count ?? 0
     }
     
     func lastMessageText() -> String {
-        guard let lastMessage = messages?.lastObject as? MessageEntity else {
-            return "No messages"
-        }
-        if type == RoomType.privateRoom.rawValue {
-            return lastMessage.bodyText ?? MessageType(rawValue: lastMessage.type ?? "")?.pushNotificationText ?? ""
-        } else {
-            return ((users?.allObjects as? [RoomUserEntity])?.first(where: {$0.userId == lastMessage.fromUserId})?.user?.contactsName ?? "no name") + ": " + (lastMessage.bodyText ?? MessageType(rawValue: lastMessage.type ?? "")?.pushNotificationText ?? "")
-        }
+        // TODO: - dbr move somewhere else
+        return "to doo"
+//        guard let lastMessage = messages?.lastObject as? MessageEntity else {
+//            return "No messages"
+//        }
+//        if type == RoomType.privateRoom.rawValue {
+//            return lastMessage.bodyText ?? MessageType(rawValue: lastMessage.type ?? "")?.pushNotificationText ?? ""
+//        } else {
+//            return ((users?.allObjects as? [RoomUserEntity])?.first(where: {$0.userId == lastMessage.fromUserId})?.user?.contactsName ?? "no name") + ": " + (lastMessage.bodyText ?? MessageType(rawValue: lastMessage.type ?? "")?.pushNotificationText ?? "")
+//        }
     }
     
     func lastMessageTime() -> String {
-        return (messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? ""
+        // TODO: - dbr move somewhere
+        return "to do"
+//        return (messages?.lastObject as? MessageEntity)?.createdAt.convert(to: .allChatsTimeFormat) ?? ""
     }
 }
