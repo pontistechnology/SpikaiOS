@@ -19,17 +19,6 @@ struct User: Codable {
     
     var contactsName: String?
         
-    init(entity: UserEntity) {
-        self.id = entity.id
-        self.displayName = entity.displayName
-        self.avatarFileId = entity.avatarFileId
-        self.telephoneNumber = entity.telephoneNumber
-        self.emailAddress = entity.emailAddress
-        self.createdAt = entity.createdAt
-        
-        self.contactsName = entity.contactsName
-    }
-    
     func getDisplayName() -> String {
         var displayNameResult: String
         
@@ -40,5 +29,18 @@ struct User: Codable {
         }
         
         return displayNameResult
+    }
+}
+
+extension User {
+    init(entity: UserEntity) {
+        self.id = entity.id
+        self.displayName = entity.displayName
+        self.avatarFileId = entity.avatarFileId
+        self.telephoneNumber = entity.telephoneNumber
+        self.emailAddress = entity.emailAddress
+        self.createdAt = entity.createdAt
+        
+        self.contactsName = entity.contactsName
     }
 }

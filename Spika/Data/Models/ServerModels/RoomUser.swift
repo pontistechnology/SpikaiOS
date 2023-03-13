@@ -9,29 +9,17 @@ import Foundation
 
 struct RoomUser: Codable {
     
-    static var room: CodingUserInfoKey {
-            return CodingUserInfoKey(rawValue: "room")!
-    }
-    
-    
     let userId: Int64
     let isAdmin: Bool?
     let user: User
 
-    // is not in api
-    var roomId: Int64 = -1
-}
-
-extension RoomUser {
+    // TODO: - dbr is not in api, ask stjepan
+    let roomId: Int64
     
-    
-//    init(roomUserEntity: RoomUserEntity) {
-//        self.init(userId: roomUserEntity.userId,
-//                  isAdmin: roomUserEntity.isAdmin,
-//                  user: User(entity: roomUserEntity.user!)) // TODO: check !
-//    }
-    
-//    init(user:User) {
-//        self.init(userId: 0, isAdmin: false, user: user)
-//    }
+    init(roomUserEntity: RoomUserEntity, user: User, roomId: Int64) {
+        self.init(userId: roomUserEntity.userId,
+                  isAdmin: roomUserEntity.isAdmin,
+                  user: user,
+                  roomId: roomId)
+    }
 }

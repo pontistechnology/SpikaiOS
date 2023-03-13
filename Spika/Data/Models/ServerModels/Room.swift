@@ -17,20 +17,22 @@ struct Room: Codable {
     let users: [RoomUser]
     let deleted: Bool
     var pinned: Bool
+    
+    init(roomEntity: RoomEntity, users: [RoomUser]) {
+        self.id = roomEntity.id
+        self.type = RoomType(rawValue: roomEntity.type ?? "private") ?? .privateRoom
+        self.name = roomEntity.name
+        self.avatarFileId = roomEntity.avatarFileId
+        self.createdAt = roomEntity.createdAt
+        self.muted = roomEntity.muted
+        self.users = users
+        self.deleted = roomEntity.roomDeleted
+        self.pinned = roomEntity.pinned
+    }
 }
 
 extension Room {
-    init(roomEntity: RoomEntity, users: [RoomUser]) {
-        self.init(id: roomEntity.id,
-                  type: RoomType(rawValue: roomEntity.type ?? "private") ?? .privateRoom,
-                  name: roomEntity.name,
-                  avatarFileId: roomEntity.avatarFileId,
-                  createdAt: roomEntity.createdAt,
-                  muted: roomEntity.muted,
-                  users: users,
-                  deleted: roomEntity.roomDeleted,
-                  pinned: roomEntity.pinned)
-    }
+    
 //    init(roomEntity: RoomEntity) {
 ////        print("INIT ROOM ENTITY: ", roomEntity.id, roomEntity.users?.count)
 //        let roomUsers = roomEntity.users?.allObjects.compactMap{ RoomUser(roomUserEntity: $0 as! RoomUserEntity)} ?? []
