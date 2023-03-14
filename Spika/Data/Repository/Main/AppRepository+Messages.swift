@@ -132,9 +132,9 @@ extension AppRepository {
         return databaseService.messageEntityService.saveMessages(messages)
     }
     
-    func getMessages(forRoomId roomId: Int64) -> Future<[Message], Error> {
-        self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
-    }
+//    func getMessages(forRoomId roomId: Int64) -> Future<[Message], Error> {
+//        self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
+//    }
 
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
         self.databaseService.messageEntityService.saveMessageRecords(messageRecords)

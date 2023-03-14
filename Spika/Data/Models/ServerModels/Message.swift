@@ -40,14 +40,7 @@ extension Message {
         self.records = nil
     }
     
-    init(messageEntity: MessageEntity) {
-        var messageRecords: [MessageRecord] = []
-        
-        if let records = messageEntity.records?.allObjects as? [MessageRecordEntity] {
-            messageRecords = records.map({ entity in
-                MessageRecord(messageRecordEntity: entity)
-            })
-        }
+    init(messageEntity: MessageEntity, records: [MessageRecord]) {
         self.init(createdAt: messageEntity.createdAt,
                   fromUserId: messageEntity.fromUserId,
                   roomId: messageEntity.roomId,
@@ -72,7 +65,7 @@ extension Message {
                                                     metaData: MetaData(width: messageEntity.bodyThumbMetaDataWidth,
                                                                        height: messageEntity.bodyThumbMetaDataHeight,
                                                                        duration: messageEntity.bodyThumbMetaDataDuration))),
-                  records: messageRecords)
+                  records: records)
     }
     
     func getMessageState(myUserId: Int64) -> MessageState {

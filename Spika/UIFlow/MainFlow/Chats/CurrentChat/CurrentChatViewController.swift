@@ -86,7 +86,7 @@ extension CurrentChatViewController {
               let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
               let entity = frc?.object(at: indexPath)
         else { return }
-        let message = Message(messageEntity: entity)
+        let message = Message(messageEntity: entity, records: []) // TODO: - dbr add records
         guard !message.deleted else { return }
         viewModel.showMessageActions(message)
     }
@@ -425,7 +425,7 @@ extension CurrentChatViewController: UITableViewDataSource {
               let roomType = viewModel.room?.type
         else { return EmptyTableViewCell()}
 
-        let message = Message(messageEntity: entity)
+        let message = Message(messageEntity: entity, records: []) // TODO: - dbr add records
         let myUserId = viewModel.getMyUserId()
         
         guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
@@ -452,7 +452,7 @@ extension CurrentChatViewController: UITableViewDataSource {
         if let replyId = message.replyId, replyId >= 0,
            let repliedMessageEntity = frc?.fetchedObjects?.first(where: { $0.id == "\(replyId)" })
         {
-            let repliedMessage = Message(messageEntity: repliedMessageEntity)
+            let repliedMessage = Message(messageEntity: repliedMessageEntity, records: []) // TODO: - dbr add records
             let senderName = viewModel.room?.getDisplayNameFor(userId: repliedMessage.fromUserId)
             
             cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown),
@@ -560,7 +560,7 @@ extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let messageEntity = frc?.object(at: indexPath) else { return nil }
-        let message = Message(messageEntity: messageEntity)
+        let message = Message(messageEntity: messageEntity, records: []) // TODO: - dbr add records
         guard !message.deleted,
               let records = message.records
         else { return nil}
@@ -583,7 +583,7 @@ extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let messageEntity = frc?.object(at: indexPath) else { return nil }
-        let message = Message(messageEntity: messageEntity)
+        let message = Message(messageEntity: messageEntity, records: []) // TODO: - dbr add records
         guard !message.deleted else { return nil }
         
         let firstLeft = UIContextualAction(style: .normal, title: .getStringFor(.reply)) { [weak self] (action, view, completionHandler) in

@@ -105,7 +105,7 @@ extension RoomEntityService {
             else {
                 return
             }
-            let roomUser = RoomUser(roomUserEntity: roomUserEntity, user: user, roomId: roomId)
+            let roomUser = RoomUser(roomUserEntity: roomUserEntity, user: user)
         }
     }
     
