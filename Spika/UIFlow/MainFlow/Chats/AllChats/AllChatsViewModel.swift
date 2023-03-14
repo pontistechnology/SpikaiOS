@@ -11,7 +11,7 @@ import Combine
 class AllChatsViewModel: BaseViewModel {
     
     var defaultChatsPredicate: NSPredicate = {
-        let predicate1 =  NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
+        let predicate1 =  NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)'") // TODO: - add message count greater than 0
         let predicate2 = NSPredicate(format: "roomDeleted = false")
         return NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
     } ()

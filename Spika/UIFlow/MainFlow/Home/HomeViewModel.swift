@@ -14,13 +14,13 @@ class HomeViewModel: BaseViewModel {
     
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
-        self.setupUnreadMessagesFrc()
+//        self.setupUnreadMessagesFrc()
         self.updateUnreadMessages() // Frc can have results even without fetch being called!
     }
     
     func setupUnreadMessagesFrc() {
         let fetchRequest = RoomEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "messages.@count > 0")
+        fetchRequest.predicate = NSPredicate(format: "messages.@count > 0") // TODO: - dbr
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp),
                                                          ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]

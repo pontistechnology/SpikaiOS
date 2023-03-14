@@ -12,7 +12,7 @@ class AllChatsViewController: BaseViewController {
     
     private let allChatsView = AllChatsView()
     var viewModel: AllChatsViewModel!
-    var frc: NSFetchedResultsController<RoomEntity>?
+    var frc: NSFetchedResultsController<RoomEntity>? // TODO: - move to viewmodel
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: animated)
