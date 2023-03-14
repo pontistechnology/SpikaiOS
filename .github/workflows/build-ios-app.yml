@@ -1,0 +1,10 @@
+name: firebase_dev
+on: push
+jobs:
+  build_firebase_dev:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - run: fastlane Spika
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
