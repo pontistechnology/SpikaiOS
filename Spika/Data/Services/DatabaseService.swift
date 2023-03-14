@@ -23,14 +23,12 @@ enum DatabseError: Error {
 
 class DatabaseService {
     let userEntityService: UserEntityService
-    let chatEntityService: ChatEntityService
     let messageEntityService: MessageEntityService
     let roomEntityService: RoomEntityService
     let coreDataStack: CoreDataStack
     
-    init(userEntityService: UserEntityService, chatEntityService: ChatEntityService, messageEntityService: MessageEntityService, roomEntityService: RoomEntityService, coreDataStack: CoreDataStack, userDefaults: UserDefaults) {
+    init(userEntityService: UserEntityService, messageEntityService: MessageEntityService, roomEntityService: RoomEntityService, coreDataStack: CoreDataStack, userDefaults: UserDefaults) {
         self.userEntityService = userEntityService
-        self.chatEntityService = chatEntityService
         self.messageEntityService = messageEntityService
         self.roomEntityService = roomEntityService
         self.coreDataStack = coreDataStack

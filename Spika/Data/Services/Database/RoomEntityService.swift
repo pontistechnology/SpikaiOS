@@ -24,8 +24,8 @@ extension RoomEntityService {
     
     func getRoom(forUserId id: Int64) -> Future<Room, Error> {
         Future { [weak self] promise in
-            guard let self = self else { return }
-            self.coreDataStack.persistantContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistantContainer.performBackgroundTask { [weak self] context in
+                guard let self = self else { return }
                 // TODO: - dbr
                 // find all roomUsers
                 let roomUsersFR = RoomUserEntity.fetchRequest()
@@ -49,22 +49,16 @@ extension RoomEntityService {
                 }
                 
                 // fetch user with user id
-                
-                let userFR = UserEntity.fetchRequest()
-                userFR.predicate = NSPredicate(format: "id == %d", roomUserEntity.userId) // check
-                
-                guard let users = try? context.fetch(userFR),
+                guard let users = self.getUsers(id: [roomUserEntity.userId], context: context),
                       users.count == 1,
-                      let userEntity = users.first
+                      let user = users.first
                 else {
                     promise(.failure(DatabseError.moreThanOne)) // check user
                 }
                 
                 // convert from coredata entites to structs and return
-                let user = User(entity: userEntity)
                 let roomUser = RoomUser(roomUserEntity: roomUserEntity,
-                                        user: user,
-                                        roomId: roomEntity.id)
+                                        user: user)
                 
                 let room = Room(roomEntity: roomEntity, users: [roomUser]) // add me to list
                 
@@ -91,26 +85,6 @@ extension RoomEntityService {
             }
         }
     }
-//    // TODO: - is this same function as above one?
-//    func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error> {
-//        Future { [weak self] promise in
-//            guard let self = self else { return }
-//            self.coreDataStack.persistantContainer.performBackgroundTask { context in
-//                let fetchRequest = RoomEntity.fetchRequest()
-//                fetchRequest.predicate = NSPredicate(format: "id == %d", roomId)
-//                do {
-//                    let rooms = try context.fetch(fetchRequest)
-//                    if rooms.count == 1 {
-//                        promise(.success(Room(roomEntity: rooms.first!)))
-//                    } else {
-//                        promise(.failure(DatabseError.moreThanOne))
-//                    }
-//                } catch {
-//                    promise(.failure(DatabseError.requestFailed))
-//                }
-//            }
-//        }
-//    }
     
     private func getRoomUsers(roomId: Int64, context: NSManagedObjectContext) -> [RoomUser]? {
         // fetch all [RoomUserEntity] from database
@@ -135,6 +109,7 @@ extension RoomEntityService {
         }
     }
     
+    // copy exist
     private func getUsers(id: [Int64], context: NSManagedObjectContext) -> [User]? {
         let usersFR = UserEntity.fetchRequest()
         usersFR.predicate = NSPredicate(format: "id IN %@", id) // check
@@ -166,32 +141,30 @@ extension RoomEntityService {
     }
     
     func updateRoomUsers(_ room: Room) -> Future<Room, Error> {
+        // TODO: - dbr
+        // maybe delete all roomUsers with that room id, then save new ones
         Future { [weak self] promise in
             guard let self = self else { return }
             self.coreDataStack.persistantContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
-                let fr = RoomEntity.fetchRequest()
-                fr.predicate = NSPredicate(format: "id == %d", room.id)
-                guard let roomEntity = try? context.fetch(fr).first else { return }
-                
-                let users = roomEntity.users?.allObjects as! [RoomUserEntity]
-                
-                for usr in users {
-                    roomEntity.removeFromUsers(usr)
-                }
-                
-                try? context.save()
-                
-                for usr in room.users {
-                    let r = RoomUserEntity(roomUser: usr, roomId: room.id, insertInto: context)
-                    roomEntity.addToUsers(r)
-                }
-                
+                let roomUserFR = RoomUserEntity.fetchRequest()
+                roomUserFR.predicate = NSPredicate(format: "roomId == %d", room.id)
+
                 do {
+                    let roomUsers = try context.fetch(roomUserFR)
+                    for roomUser in roomUsers {
+                        context.delete(roomUser)
+                    }
                     try context.save()
-                    promise(.success(Room(roomEntity: roomEntity)))
+                    
+                    room.users.forEach { rU in
+                        _ = RoomUserEntity(roomUser: rU, insertInto: context)
+                    }
+                    try context.save()
+                    promise(.success(room))
                 } catch {
+                    print("Error deleting RoomUsers: \(error)")
                     promise(.failure(DatabseError.savingError))
                 }
             }

@@ -17,7 +17,6 @@ class NotificationService: UNNotificationServiceExtension {
     lazy var repository = AppRepository(
         networkService: NetworkService(),
         databaseService: DatabaseService(userEntityService: UserEntityService(coreDataStack: coreDataStack),
-                                         chatEntityService: ChatEntityService(coreDataStack: coreDataStack),
                                          messageEntityService: MessageEntityService(coreDataStack: coreDataStack),
                                          roomEntityService: RoomEntityService(coreDataStack: coreDataStack),
                                          coreDataStack: coreDataStack,

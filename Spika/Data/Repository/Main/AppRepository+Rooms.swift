@@ -292,7 +292,7 @@ extension AppRepository {
     }
     
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error> {
-        databaseService.roomEntityService.checkLocalRoom(withId: roomId)
+        databaseService.roomEntityService.getRoom(forRoomId: roomId)
     }
     
     func roomVisited(roomId: Int64) {

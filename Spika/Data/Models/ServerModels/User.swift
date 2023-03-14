@@ -34,13 +34,12 @@ struct User: Codable {
 
 extension User {
     init(entity: UserEntity) {
-        self.id = entity.id
-        self.displayName = entity.displayName
-        self.avatarFileId = entity.avatarFileId
-        self.telephoneNumber = entity.telephoneNumber
-        self.emailAddress = entity.emailAddress
-        self.createdAt = entity.createdAt
-        
-        self.contactsName = entity.contactsName
+        self.init(id: entity.id,
+                  displayName: entity.displayName,
+                  avatarFileId: entity.avatarFileId,
+                  telephoneNumber: entity.telephoneNumber,
+                  emailAddress: entity.emailAddress,
+                  createdAt: entity.createdAt,
+                  contactsName: entity.contactsName)
     }
 }

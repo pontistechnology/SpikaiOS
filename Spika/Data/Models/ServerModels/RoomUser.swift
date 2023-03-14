@@ -12,14 +12,14 @@ struct RoomUser: Codable {
     let userId: Int64
     let isAdmin: Bool?
     let user: User
-
-    // TODO: - dbr is not in api, ask stjepan
     let roomId: Int64
-    
-    init(roomUserEntity: RoomUserEntity, user: User, roomId: Int64) {
+}
+
+extension RoomUser {
+    init(roomUserEntity: RoomUserEntity, user: User) {
         self.init(userId: roomUserEntity.userId,
                   isAdmin: roomUserEntity.isAdmin,
                   user: user,
-                  roomId: roomId)
+                  roomId: roomUserEntity.roomId)
     }
 }

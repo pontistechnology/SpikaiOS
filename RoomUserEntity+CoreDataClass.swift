@@ -12,13 +12,13 @@ import CoreData
 @objc(RoomUserEntity)
 public class RoomUserEntity: NSManagedObject {
     
-    convenience init(roomUser: RoomUser, roomId: Int64, insertInto context: NSManagedObjectContext) {
+    convenience init(roomUser: RoomUser, insertInto context: NSManagedObjectContext) {
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.Database.roomUserEntity, in: context) else {
             fatalError("error, MessageRecordEntity")
         }
         self.init(entity: entity, insertInto: context)
         self.userId = roomUser.userId
-        self.isAdmin = roomUser.isAdmin ?? false // TODO: check always?
-        self.roomId = roomId
+        self.isAdmin = roomUser.isAdmin ?? false // TODO: - dbr check always?
+        self.roomId = roomUser.roomId
     }
 }

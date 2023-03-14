@@ -87,7 +87,7 @@ extension AppRepository {
     }
     
     func printAllMessages() {
-        databaseService.messageEntityService.printAllMessages()
+//        databaseService.messageEntityService.printAllMessages()
     }
     
     func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error> {
