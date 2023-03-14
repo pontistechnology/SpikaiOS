@@ -221,7 +221,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: "createdDate", ascending: true),
             NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
-        fetchRequest.predicate = NSPredicate(format: "room.id == %d", room.id)
+        fetchRequest.predicate = NSPredicate(format: "room.id == %d", room.id) // TODO: - dbr change
         self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: "sectionName", cacheName: nil)
         self.frc?.delegate = self
         do {

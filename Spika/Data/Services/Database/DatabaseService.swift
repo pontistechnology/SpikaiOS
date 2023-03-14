@@ -201,6 +201,7 @@ extension DatabaseService {
                 guard let roomUsers = try? context.fetch(roomUsersFR)
                 else {
                     promise(.failure(DatabaseError.noSuchRecord)) // check
+                    return
                 }
                 
                 // find all private rooms with this users, should always be only one
@@ -214,6 +215,7 @@ extension DatabaseService {
                       let roomUserEntity = roomUsers.first(where: { $0.roomId == roomEntity.id })
                 else {
                     promise(.failure(DatabaseError.moreThanOne)) // check zero
+                    return
                 }
                 
                 // fetch user with user id
@@ -222,6 +224,7 @@ extension DatabaseService {
                       let user = users.first
                 else {
                     promise(.failure(DatabaseError.moreThanOne)) // check user
+                    return
                 }
                 
                 // convert from coredata entites to structs and return
@@ -247,6 +250,7 @@ extension DatabaseService {
                       let roomUsers = self.getRoomUsers(roomId: roomEntity.id, context: context)
                 else {
                     promise(.failure(DatabaseError.moreThanOne)) // check zero
+                    return
                 }
                 let room = Room(roomEntity: roomEntity, users: roomUsers)
                 promise(.success(room))
@@ -268,12 +272,13 @@ extension DatabaseService {
         let users = getUsers(id: roomUserEntities.map({ $0.userId}), context: context)
         
         // return [RoomUser], should be same count as [RoomUserEntity]
-        return roomUserEntities.map { roomUserEntity in
-            guard let user = users?.first(where: { $0.id == roomUserEntity.userId })
+        
+        return roomUserEntities.compactMap { roomUserEntity in
+            guard let user = users?.first(where: { $0.id == roomUserEntity.userId})
             else {
-                return
+                return nil
             }
-            let roomUser = RoomUser(roomUserEntity: roomUserEntity, user: user)
+            return RoomUser(roomUserEntity: roomUserEntity, user: user)
         }
     }
     
@@ -390,7 +395,7 @@ extension DatabaseService {
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
                 for message in messages {
-                    let messageEntity = MessageEntity(message: message, context: context)
+                    _ = MessageEntity(message: message, context: context)
                 }
                 // TODO: - dbr add last timestamp
                 
