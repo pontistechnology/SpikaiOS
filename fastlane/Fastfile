@@ -26,7 +26,7 @@ platform :ios do
 	scheme: "Spika", 
 	include_bitcode:false,
         export_options:{ 
-            manageAppVersionAndBuildNumber: false 
+            manageAppVersionAndBuildNumber: false
         })
     pilot( api_key_path: "fastlane/Q4Y97SL8HA.json" )
   end
