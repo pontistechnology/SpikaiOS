@@ -272,7 +272,8 @@ extension AppCoordinator {
             .notificationTapPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] info in
-                self?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: info.room.id))
+//                self?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: info.room.id))
+                // TODO: - dbr add room to info
             }.store(in: &subs)
     }
     

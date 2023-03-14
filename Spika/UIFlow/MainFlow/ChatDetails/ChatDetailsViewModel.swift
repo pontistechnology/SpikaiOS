@@ -64,8 +64,7 @@ class ChatDetailsViewModel: BaseViewModel {
                 self?.networkRequestState.send(.finished)
                 switch c {
                 case .finished:
-                    let delegate = UIApplication.shared.delegate as! AppDelegate
-                    delegate.allroomsprinter()
+                    break
                 case .failure(_):
                     break
                 }
@@ -198,8 +197,7 @@ class ChatDetailsViewModel: BaseViewModel {
             .sink { c in
                 switch c {
                 case .finished:
-                    let delegate = UIApplication.shared.delegate as! AppDelegate
-                    delegate.allroomsprinter()
+                    break
                 case .failure(_):
                     break
                 }

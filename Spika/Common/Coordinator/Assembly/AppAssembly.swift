@@ -43,11 +43,7 @@ final class AppAssembly: Assembly {
         
         container.register(DatabaseService.self) { r in
             let coreDataStack = container.resolve(CoreDataStack.self)!
-            let userEntityService = UserEntityService(coreDataStack: coreDataStack)
-            let chatEntityService = ChatEntityService(coreDataStack: coreDataStack)
-            let messageEntityService = MessageEntityService(coreDataStack: coreDataStack)
-            let roomEntityService = RoomEntityService(coreDataStack: coreDataStack)
-            return DatabaseService(userEntityService: userEntityService, chatEntityService: chatEntityService, messageEntityService: messageEntityService, roomEntityService: roomEntityService, coreDataStack: coreDataStack, userDefaults: r.resolve(UserDefaults.self)!)
+            return DatabaseService(coreDataStack: coreDataStack)
         }.inObjectScope(.container)
 
         container.register(Repository.self, name: RepositoryType.production.name) { r in
