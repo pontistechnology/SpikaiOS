@@ -22,16 +22,17 @@ platform :ios do
     #increment_build_number(xcodeproj: "Spika.xcodeproj")
  
     enable_automatic_code_signing
-    pilot( api_key_path: "fastlane/Q4Y97SL8HA.json" )
 
     build_app(workspace: "Spika.xcworkspace", 
 	scheme: "Spika", 
 	include_bitcode:false)
-	upload_to_testflight
+    pilot( api_key_path: "fastlane/Q4Y97SL8HA.json" )
+    upload_to_testflight
 
     build_app(workspace: "Spika.xcworkspace", 
        scheme: "Spika Dev", 
        include_bitcode:false)
-       upload_to_testflight
+    pilot( api_key_path: "fastlane/Q4Y97SL8HA.json" )
+    upload_to_testflight
   end
 end
