@@ -1,7 +1,7 @@
 name: build-ios-app
 on: push
 jobs:
-  build_firebase_dev:
+  build_spika:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
