@@ -54,56 +54,9 @@ public class MessageEntity: NSManagedObject {
             self.bodyText = bodyText
         }
         
-        if let fileId = message.body?.file?.id {
-            self.bodyFileId = fileId
-        }
-        
-        if let fileMimeType = message.body?.file?.mimeType {
-            self.bodyFileMimeType = fileMimeType
-        }
-        
-        if let fileSize = message.body?.file?.size {
-            self.bodyFileSize = fileSize
-        }
-        
-        if let fileName = message.body?.file?.fileName {
-            self.bodyFileName = fileName
-        }
-        
-        
+        // TODO: - dbr add fileId and thumbId
+
         self.replyId = "\(message.replyId ?? -1)"
         
-        
-        if let thumbId = message.body?.thumb?.id {
-            self.bodyThumbId = thumbId
-        }
-        
-        if let thumbMimeType = message.body?.thumb?.mimeType {
-            self.bodyThumbMimeType = thumbMimeType
-        }
-        
-        if let thumbWidth = message.body?.thumb?.metaData?.width {
-            self.bodyThumbMetaDataWidth = thumbWidth
-        }
-        
-        if let thumbHeight = message.body?.thumb?.metaData?.height {
-            self.bodyThumbMetaDataHeight = thumbHeight
-        }
-        
-        if let thumbDuration = message.body?.thumb?.metaData?.duration {
-            self.bodyThumbMetaDataDuration = thumbDuration
-        }
-        
-        if let fileWidth = message.body?.file?.metaData?.width {
-            self.bodyFileMetaDataWidth = fileWidth
-        }
-        
-        if let fileHeight = message.body?.file?.metaData?.height {
-            self.bodyFileMetaDataHeight = fileHeight
-        }
-        
-        if let fileDuration = message.body?.file?.metaData?.duration {
-            self.bodyFileMetaDataDuration = fileDuration
-        }
     }
 }

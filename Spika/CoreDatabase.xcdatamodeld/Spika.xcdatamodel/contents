@@ -10,20 +10,17 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="FileEntity" representedClassName="FileEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="fileName" optional="YES" attributeType="String"/>
+        <attribute name="fileSize" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="metaDataDuration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="metaDataHeight" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="metaDataWidth" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mimeType" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="MessageEntity" representedClassName="MessageEntity" syncable="YES">
-        <attribute name="bodyFileId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="bodyFileMetaDataDuration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="bodyFileMetaDataHeight" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="bodyFileMetaDataWidth" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="bodyFileMimeType" optional="YES" attributeType="String"/>
-        <attribute name="bodyFileName" optional="YES" attributeType="String"/>
-        <attribute name="bodyFileSize" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="bodyText" optional="YES" attributeType="String"/>
-        <attribute name="bodyThumbId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="bodyThumbMetaDataDuration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="bodyThumbMetaDataHeight" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="bodyThumbMetaDataWidth" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="bodyThumbMimeType" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="deliveredCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -31,7 +28,6 @@
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="isRemoved" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="localId" optional="YES" attributeType="String"/>
-        <attribute name="percentUploaded" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="replyId" optional="YES" attributeType="String"/>
         <attribute name="roomId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="seenCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
