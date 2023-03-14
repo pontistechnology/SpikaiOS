@@ -21,6 +21,8 @@ struct Room: Codable {
 
 extension Room {
     
+    
+    
     init(roomEntity: RoomEntity, users: [RoomUser]) {
         self.init(id: roomEntity.id,
                   type: RoomType(rawValue: roomEntity.type ?? "private") ?? .privateRoom,

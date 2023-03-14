@@ -129,19 +129,19 @@ extension AppRepository {
     // MARK: Database
     
     func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
-        return databaseService.messageEntityService.saveMessages(messages)
+        return databaseService.saveMessages(messages)
     }
     
 //    func getMessages(forRoomId roomId: Int64) -> Future<[Message], Error> {
-//        self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
+//        self.databaseService.getMessages(forRoomId: roomId)
 //    }
 
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
-        self.databaseService.messageEntityService.saveMessageRecords(messageRecords)
+        self.databaseService.saveMessageRecords(messageRecords)
     }
     
     func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error> {
-        self.databaseService.messageEntityService.getNotificationInfoForMessage(message: message)
+        self.databaseService.getNotificationInfoForMessage(message: message)
     }
 
 }

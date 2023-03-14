@@ -276,30 +276,30 @@ extension AppRepository {
     // MARK: Database
     
     func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>{
-        return databaseService.roomEntityService.getRoom(forUserId: id)
+        return databaseService.getRoom(forUserId: id)
     }
     
     func getRoomWithId(forRoomId id: Int64) -> Future<Room, Error>{
-        return databaseService.roomEntityService.getRoom(forRoomId: id)
+        return databaseService.getRoom(forRoomId: id)
     }
     
     func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error> {
-        databaseService.roomEntityService.saveRooms(rooms)
+        databaseService.saveRooms(rooms)
     }
     
     func updateRoomUsers(room: Room) -> Future<Room, Error> {
-        databaseService.roomEntityService.updateRoomUsers(room)
+        databaseService.updateRoomUsers(room)
     }
     
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error> {
-        databaseService.roomEntityService.getRoom(forRoomId: roomId)
+        databaseService.getRoom(forRoomId: roomId)
     }
     
     func roomVisited(roomId: Int64) {
-        databaseService.roomEntityService.roomVisited(roomId: roomId)
+        databaseService.roomVisited(roomId: roomId)
     }
     
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error> {
-        return databaseService.roomEntityService.deleteRoom(roomId: roomId)
+        return databaseService.deleteRoom(roomId: roomId)
     }
 }

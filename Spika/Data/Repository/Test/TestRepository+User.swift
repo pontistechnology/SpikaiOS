@@ -46,19 +46,19 @@
 //    }
 //    
 //    func getLocalUser(withId id: Int64) -> Future<User, Error> {
-//        return Future { promise in promise(.failure(DatabseError.unknown))}
+//        return Future { promise in promise(.failure(DatabaseError.unknown))}
 //    }
 //    
 //    func getLocalUsers() -> Future<[User], Error> {
-//        return Future { promise in promise(.failure(DatabseError.unknown))}
+//        return Future { promise in promise(.failure(DatabaseError.unknown))}
 //    }
 //    
 //    func saveUser(_ user: User) -> Future<User, Error> {
-//        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+//        Future { promise in promise(.failure(DatabaseError.noSuchRecord))}
 //    }
 //    
 //    func saveUsers(_ user: [User]) -> Future<[User], Error> {
-//        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+//        Future { promise in promise(.failure(DatabaseError.noSuchRecord))}
 //    }
 //        
 //    func updateUser(username: String?, avatarFileId: Int64?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error> {
@@ -81,14 +81,14 @@
 //    }
 //    
 //    func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
-//        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+//        Future { promise in promise(.failure(DatabaseError.noSuchRecord))}
 //    }
 //    
 //    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
-//        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+//        Future { promise in promise(.failure(DatabaseError.noSuchRecord))}
 //    }
 //    
 //    func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
-//        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+//        Future { promise in promise(.failure(DatabaseError.noSuchRecord))}
 //    }
 //}

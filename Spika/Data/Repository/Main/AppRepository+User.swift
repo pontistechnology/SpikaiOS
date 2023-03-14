@@ -120,30 +120,30 @@ extension AppRepository {
     // MARK: Database
     
     func getLocalUsers() -> Future<[User], Error> {
-        return databaseService.userEntityService.getLocalUsers()
+        return databaseService.getLocalUsers()
     }
     
     func getLocalUser(withId id: Int64) -> Future<User, Error> {
-        return databaseService.userEntityService.getLocalUser(withId: id)
+        return databaseService.getLocalUser(withId: id)
     }
     
     func saveUser(_ user: User) -> Future<User, Error> {
-        return databaseService.userEntityService.saveUser(user)
+        return databaseService.saveUser(user)
     }
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
-        return databaseService.userEntityService.saveUsers(users)
+        return databaseService.saveUsers(users)
     }
     
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
-        return databaseService.userEntityService.saveContacts(contacts)
+        return databaseService.saveContacts(contacts)
     }
     
 //    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
-//        return databaseService.userEntityService.getContact(phoneNumber: phoneNumber)
+//        return databaseService.getContact(phoneNumber: phoneNumber)
 //    }
     
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
-        return databaseService.userEntityService.updateUsersWithContactData(users)
+        return databaseService.updateUsersWithContactData(users)
     }
 }

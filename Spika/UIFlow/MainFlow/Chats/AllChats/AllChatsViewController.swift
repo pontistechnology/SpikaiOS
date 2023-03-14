@@ -83,7 +83,7 @@ extension AllChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let roomEntity = frc?.object(at: indexPath) else { return }
-        let room = Room(roomEntity: roomEntity)
+        let room = Room(roomEntity: roomEntity, users: []) // TODO: - dbr fetch users
         print("ROOM selected: ", room)
         viewModel.presentCurrentChatScreen(room: room)
     }
@@ -103,7 +103,7 @@ extension AllChatsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
         guard let entity = frc?.object(at: indexPath) else { return EmptyTableViewCell()}
     
-        let room = Room(roomEntity: entity)
+        let room = Room(roomEntity: entity, users: []) // TODO: - dbr fetch users
         
         let badgeNumber = entity.numberOfUnreadMessages(myUserId: viewModel.getMyUserId())
         if room.type == .privateRoom,

@@ -98,7 +98,6 @@
 		6C78B7C229AF5ADB004BF881 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86B27B677920099BA9E /* FavoritesView.swift */; };
 		6C78B7C329AF5ADB004BF881 /* ChatsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6F127C2C1E500432CFA /* ChatsAssembly.swift */; };
 		6C78B7C429AF5ADB004BF881 /* CountryPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD36272AB2F000736318 /* CountryPickerViewController.swift */; };
-		6C78B7C529AF5ADB004BF881 /* RoomEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BD5B3B27FB83A400240331 /* RoomEntityService.swift */; };
 		6C78B7C629AF5ADB004BF881 /* DocsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DBF27BAB49D00F275B0 /* DocsTableViewCell.swift */; };
 		6C78B7C729AF5ADB004BF881 /* AppRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */; };
 		6C78B7C829AF5ADB004BF881 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503EC270DE2B9009D50CB /* HomeViewModel.swift */; };
@@ -205,7 +204,6 @@
 		6C78B82E29AF5ADB004BF881 /* CurrentChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FD27C4688C00432CFA /* CurrentChatViewModel.swift */; };
 		6C78B82F29AF5ADB004BF881 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
 		6C78B83029AF5ADB004BF881 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* NotesViewController.swift */; };
-		6C78B83129AF5ADB004BF881 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		6C78B83229AF5ADB004BF881 /* CountryPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD38272AB31300736318 /* CountryPickerViewModel.swift */; };
 		6C78B83329AF5ADB004BF881 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
 		6C78B83429AF5ADB004BF881 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D0270DD57D009D50CB /* Coordinator.swift */; };
@@ -281,7 +279,6 @@
 		6C78B87B29AF5ADB004BF881 /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87227B677F10099BA9E /* NotesViewModel.swift */; };
 		6C78B87C29AF5ADB004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93711DFA28E475A30074A50B /* MessageEntity+CoreDataProperties.swift */; };
 		6C78B87D29AF5ADB004BF881 /* IconAndLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */; };
-		6C78B87E29AF5ADB004BF881 /* RoomUserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */; };
 		6C78B87F29AF5ADB004BF881 /* DeliveredRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15142821291400A0CD35 /* DeliveredRequestModel.swift */; };
 		6C78B88029AF5ADB004BF881 /* SyncRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B30432850DD2200FFA537 /* SyncRoomsResponseModel.swift */; };
 		6C78B88129AF5ADB004BF881 /* VerifyFileRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AB7227FED6FF00696757 /* VerifyFileRequestModel.swift */; };
@@ -312,7 +309,6 @@
 		6C78B89A29AF5ADB004BF881 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81925B2721D45100D5BE48 /* ContactsView.swift */; };
 		6C78B89B29AF5ADB004BF881 /* ChatBlockingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1915929A35E2300A8041A /* ChatBlockingView.swift */; };
 		6C78B89C29AF5ADB004BF881 /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
-		6C78B89D29AF5ADB004BF881 /* UserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040A2716EB4B009D50CB /* UserEntityService.swift */; };
 		6C78B89E29AF5ADB004BF881 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9355BED928056D1A00B9EC85 /* CoreDataStack.swift */; };
 		6C78B89F29AF5ADB004BF881 /* DeliveredResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15172821295600A0CD35 /* DeliveredResponseModel.swift */; };
 		6C78B8A029AF5ADB004BF881 /* TabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65B551291BD1B8007C5B92 /* TabBarItemView.swift */; };
@@ -380,7 +376,6 @@
 		6C78B8ED29AF5D89004BF881 /* SendReactionRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF16E29778A65002C76F7 /* SendReactionRequestModel.swift */; };
 		6C78B8EE29AF5D89004BF881 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */; };
 		6C78B8EF29AF5D89004BF881 /* SyncRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B30432850DD2200FFA537 /* SyncRoomsResponseModel.swift */; };
-		6C78B8F029AF5D89004BF881 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		6C78B8F129AF5D89004BF881 /* DebugUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EB2926C4C900E7333D /* DebugUtils.swift */; };
 		6C78B8F229AF5D89004BF881 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
 		6C78B8F329AF5D89004BF881 /* Constants+Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BED2948693B00D400A7 /* Constants+Database.swift */; };
@@ -398,7 +393,6 @@
 		6C78B8FF29AF5D89004BF881 /* SyncUsersResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B30492850DE9200FFA537 /* SyncUsersResponseModel.swift */; };
 		6C78B90229AF5D89004BF881 /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */; };
 		6C78B90329AF5D89004BF881 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
-		6C78B90429AF5D89004BF881 /* RoomEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BD5B3B27FB83A400240331 /* RoomEntityService.swift */; };
 		6C78B90529AF5D89004BF881 /* SeenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AE06EE290892B90009A50C /* SeenResponseModel.swift */; };
 		6C78B90629AF5D89004BF881 /* CreateRoomRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */; };
 		6C78B90729AF5D89004BF881 /* CreateRoomResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053727D5C05F002E5CE5 /* CreateRoomResponseModel.swift */; };
@@ -413,8 +407,6 @@
 		6C78B91029AF5D89004BF881 /* Constants+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEF2948696A00D400A7 /* Constants+Strings.swift */; };
 		6C78B91129AF5D89004BF881 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9347CCE228644E1300018AEB /* Date+Extensions.swift */; };
 		6C78B91229AF5D89004BF881 /* SendMessageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9927D6EE47002E3DED /* SendMessageResponse.swift */; };
-		6C78B91329AF5D89004BF881 /* UserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040A2716EB4B009D50CB /* UserEntityService.swift */; };
-		6C78B91429AF5D89004BF881 /* RoomUserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */; };
 		6C78B91529AF5D89004BF881 /* VerifyFileResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AB7027FED6F000696757 /* VerifyFileResponseModel.swift */; };
 		6C78B91629AF5D89004BF881 /* VerifyCodeRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD45272AECFA00736318 /* VerifyCodeRequestModel.swift */; };
 		6C78B91729AF5D89004BF881 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B93280EFFD200F9B321 /* User.swift */; };
@@ -450,10 +442,6 @@
 		931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
 		931B14DC2821182800A0CD35 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F2270DE39A009D50CB /* NetworkService.swift */; };
 		931B14DD2821182D00A0CD35 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040F27173FD9009D50CB /* DatabaseService.swift */; };
-		931B14DE2821185300A0CD35 /* UserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040A2716EB4B009D50CB /* UserEntityService.swift */; };
-		931B14DF2821186000A0CD35 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
-		931B14E02821186300A0CD35 /* RoomEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BD5B3B27FB83A400240331 /* RoomEntityService.swift */; };
-		931B14E12821186600A0CD35 /* RoomUserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */; };
 		931B14E528211A5100A0CD35 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B93280EFFD200F9B321 /* User.swift */; };
 		931B14F128211AC100A0CD35 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
 		931B14F228211AC100A0CD35 /* VerifyCodeRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD45272AECFA00736318 /* VerifyCodeRequestModel.swift */; };
@@ -616,7 +604,6 @@
 		93B4A9EE27DB3AB000DC52F6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */; };
 		93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916E27CD578F000F94B0 /* Data+Extension.swift */; };
 		93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */; };
-		93BD5B3C27FB83A400240331 /* RoomEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BD5B3B27FB83A400240331 /* RoomEntityService.swift */; };
 		93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3CF290C519900DEE9D1 /* WindowManager.swift */; };
 		93BED3D8290C746000DEE9D1 /* NotificationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */; };
 		93BF627528EB9B7900B48BBF /* EnumsShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* EnumsShared.swift */; };
@@ -630,7 +617,6 @@
 		93C77B6E2922F76100F676C5 /* ExpandableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C77B6D2922F76100F676C5 /* ExpandableTextView.swift */; };
 		93C77B702923396200F676C5 /* AudioMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C77B6F2923396200F676C5 /* AudioMessageTableViewCell.swift */; };
 		93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
-		93CEF90227FD856A0038B7A9 /* RoomUserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */; };
 		93CF473D2963240200213DBE /* AppRepository+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF473C2963240200213DBE /* AppRepository+File.swift */; };
 		93CF473F2963241200213DBE /* TestRepository+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF473E2963241200213DBE /* TestRepository+File.swift */; };
 		93CF47402963286B00213DBE /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DB270DD6DC009D50CB /* AppRepository.swift */; };
@@ -666,7 +652,6 @@
 		93F4A8A0282DF1B500CEA637 /* MessageDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */; };
 		93FC0DA427FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */; };
 		93FFFE5F296DD50C0058DDB2 /* MessageReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFFE5E296DD50C0058DDB2 /* MessageReactionsView.swift */; };
-		AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819237271E866100D5BE48 /* MessageEntityService.swift */; };
 		AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */; };
 		AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
 		AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819245272173F500D5BE48 /* ContactsViewController.swift */; };
@@ -750,7 +735,6 @@
 		ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FB27101B20009D50CB /* DetailsViewController.swift */; };
 		ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
 		ADD5040127101B69009D50CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040027101B69009D50CB /* ContentView.swift */; };
-		ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040A2716EB4B009D50CB /* UserEntityService.swift */; };
 		ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040F27173FD9009D50CB /* DatabaseService.swift */; };
 		ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
 		EA9B662228227CB70009228C /* FetchedContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC81D772810422F0004D835 /* FetchedContact.swift */; };
@@ -986,7 +970,6 @@
 		93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		93B8916E27CD578F000F94B0 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
-		93BD5B3B27FB83A400240331 /* RoomEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomEntityService.swift; sourceTree = "<group>"; };
 		93BED3CF290C519900DEE9D1 /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertViewController.swift; sourceTree = "<group>"; };
 		93BF627428EB9B7900B48BBF /* EnumsShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumsShared.swift; sourceTree = "<group>"; };
@@ -998,7 +981,6 @@
 		93C77B6D2922F76100F676C5 /* ExpandableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTextView.swift; sourceTree = "<group>"; };
 		93C77B6F2923396200F676C5 /* AudioMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageTableViewCell.swift; sourceTree = "<group>"; };
 		93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomUserEntityService.swift; sourceTree = "<group>"; };
 		93CF473C2963240200213DBE /* AppRepository+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+File.swift"; sourceTree = "<group>"; };
 		93CF473E2963241200213DBE /* TestRepository+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestRepository+File.swift"; sourceTree = "<group>"; };
 		93CFFA4E293587EB001EBACF /* MessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyView.swift; sourceTree = "<group>"; };
@@ -1031,7 +1013,6 @@
 		93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailTableViewCell.swift; sourceTree = "<group>"; };
 		93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		93FFFE5E296DD50C0058DDB2 /* MessageReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReactionsView.swift; sourceTree = "<group>"; };
-		AD819237271E866100D5BE48 /* MessageEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntityService.swift; sourceTree = "<group>"; };
 		AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Messages.swift"; sourceTree = "<group>"; };
 		AD819245272173F500D5BE48 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		AD8192472721741600D5BE48 /* CallHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryViewController.swift; sourceTree = "<group>"; };
@@ -1117,7 +1098,6 @@
 		ADD503FB27101B20009D50CB /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		ADD503FD27101B44009D50CB /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		ADD5040027101B69009D50CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		ADD5040A2716EB4B009D50CB /* UserEntityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntityService.swift; sourceTree = "<group>"; };
 		ADD5040F27173FD9009D50CB /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		ADD5041927174B82009D50CB /* AppRepository+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+User.swift"; sourceTree = "<group>"; };
 		B8CA5DFA6002C6B3AF963036 /* Pods-Spika-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.release.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -2255,8 +2235,6 @@
 			children = (
 				ADD5040E27173FC2009D50CB /* Database */,
 				ADD503F2270DE39A009D50CB /* NetworkService.swift */,
-				ADD5040F27173FD9009D50CB /* DatabaseService.swift */,
-				9355BED928056D1A00B9EC85 /* CoreDataStack.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2314,10 +2292,8 @@
 		ADD5040E27173FC2009D50CB /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				ADD5040A2716EB4B009D50CB /* UserEntityService.swift */,
-				AD819237271E866100D5BE48 /* MessageEntityService.swift */,
-				93BD5B3B27FB83A400240331 /* RoomEntityService.swift */,
-				93CEF90127FD856A0038B7A9 /* RoomUserEntityService.swift */,
+				ADD5040F27173FD9009D50CB /* DatabaseService.swift */,
+				9355BED928056D1A00B9EC85 /* CoreDataStack.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -2718,7 +2694,6 @@
 				6C78B7C229AF5ADB004BF881 /* FavoritesView.swift in Sources */,
 				6C78B7C329AF5ADB004BF881 /* ChatsAssembly.swift in Sources */,
 				6C78B7C429AF5ADB004BF881 /* CountryPickerViewController.swift in Sources */,
-				6C78B7C529AF5ADB004BF881 /* RoomEntityService.swift in Sources */,
 				6C78B7C629AF5ADB004BF881 /* DocsTableViewCell.swift in Sources */,
 				6C78B7C729AF5ADB004BF881 /* AppRepository+Sync.swift in Sources */,
 				6C78B7C829AF5ADB004BF881 /* HomeViewModel.swift in Sources */,
@@ -2825,7 +2800,6 @@
 				6C78B82E29AF5ADB004BF881 /* CurrentChatViewModel.swift in Sources */,
 				6C78B82F29AF5ADB004BF881 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				6C78B83029AF5ADB004BF881 /* NotesViewController.swift in Sources */,
-				6C78B83129AF5ADB004BF881 /* MessageEntityService.swift in Sources */,
 				6C78B83229AF5ADB004BF881 /* CountryPickerViewModel.swift in Sources */,
 				6C78B83329AF5ADB004BF881 /* DetailsViewModel.swift in Sources */,
 				6C78B83429AF5ADB004BF881 /* Coordinator.swift in Sources */,
@@ -2902,7 +2876,6 @@
 				6C78B87B29AF5ADB004BF881 /* NotesViewModel.swift in Sources */,
 				6C78B87C29AF5ADB004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6C78B87D29AF5ADB004BF881 /* IconAndLabelView.swift in Sources */,
-				6C78B87E29AF5ADB004BF881 /* RoomUserEntityService.swift in Sources */,
 				6C78B87F29AF5ADB004BF881 /* DeliveredRequestModel.swift in Sources */,
 				6C78B88029AF5ADB004BF881 /* SyncRoomsResponseModel.swift in Sources */,
 				6C78B88129AF5ADB004BF881 /* VerifyFileRequestModel.swift in Sources */,
@@ -2933,7 +2906,6 @@
 				6C78B89A29AF5ADB004BF881 /* ContactsView.swift in Sources */,
 				6C78B89B29AF5ADB004BF881 /* ChatBlockingView.swift in Sources */,
 				6C78B89C29AF5ADB004BF881 /* AppRepository+User.swift in Sources */,
-				6C78B89D29AF5ADB004BF881 /* UserEntityService.swift in Sources */,
 				6C78B89E29AF5ADB004BF881 /* CoreDataStack.swift in Sources */,
 				6C78B89F29AF5ADB004BF881 /* DeliveredResponseModel.swift in Sources */,
 				6C78B8A029AF5ADB004BF881 /* TabBarItemView.swift in Sources */,
@@ -2995,7 +2967,6 @@
 				6C78B8ED29AF5D89004BF881 /* SendReactionRequestModel.swift in Sources */,
 				6C78B8EE29AF5D89004BF881 /* MessageEntity+CoreDataClass.swift in Sources */,
 				6C78B8EF29AF5D89004BF881 /* SyncRoomsResponseModel.swift in Sources */,
-				6C78B8F029AF5D89004BF881 /* MessageEntityService.swift in Sources */,
 				6C78B8F129AF5D89004BF881 /* DebugUtils.swift in Sources */,
 				6C78B8F229AF5D89004BF881 /* AppRepository+Tests.swift in Sources */,
 				6C78B8F329AF5D89004BF881 /* Constants+Database.swift in Sources */,
@@ -3013,7 +2984,6 @@
 				6C78B8FF29AF5D89004BF881 /* SyncUsersResponseModel.swift in Sources */,
 				6C78B90229AF5D89004BF881 /* RoomUserEntity+CoreDataProperties.swift in Sources */,
 				6C78B90329AF5D89004BF881 /* UploadChunkRequestModel.swift in Sources */,
-				6C78B90429AF5D89004BF881 /* RoomEntityService.swift in Sources */,
 				6C78B90529AF5D89004BF881 /* SeenResponseModel.swift in Sources */,
 				6C78B90629AF5D89004BF881 /* CreateRoomRequestModel.swift in Sources */,
 				6C78B90729AF5D89004BF881 /* CreateRoomResponseModel.swift in Sources */,
@@ -3028,8 +2998,6 @@
 				6C78B91029AF5D89004BF881 /* Constants+Strings.swift in Sources */,
 				6C78B91129AF5D89004BF881 /* Date+Extensions.swift in Sources */,
 				6C78B91229AF5D89004BF881 /* SendMessageResponse.swift in Sources */,
-				6C78B91329AF5D89004BF881 /* UserEntityService.swift in Sources */,
-				6C78B91429AF5D89004BF881 /* RoomUserEntityService.swift in Sources */,
 				6C78B91529AF5D89004BF881 /* VerifyFileResponseModel.swift in Sources */,
 				6C78B91629AF5D89004BF881 /* VerifyCodeRequestModel.swift in Sources */,
 				6C78B91729AF5D89004BF881 /* User.swift in Sources */,
@@ -3078,7 +3046,6 @@
 				934FF17329778E09002C76F7 /* SendReactionRequestModel.swift in Sources */,
 				9324B254281BDFD700E7D76D /* MessageEntity+CoreDataClass.swift in Sources */,
 				939B304C2850E01800FFA537 /* SyncRoomsResponseModel.swift in Sources */,
-				931B14DF2821186000A0CD35 /* MessageEntityService.swift in Sources */,
 				936A28ED2926C8C100E7333D /* DebugUtils.swift in Sources */,
 				931B14D6281FD91100A0CD35 /* AppRepository+Tests.swift in Sources */,
 				6C153BF229486F2B00D400A7 /* Constants+Database.swift in Sources */,
@@ -3097,7 +3064,6 @@
 				9324B257281BE0D900E7D76D /* Constants.swift in Sources */,
 				93BFA3732857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */,
 				931B14F128211AC100A0CD35 /* UploadChunkRequestModel.swift in Sources */,
-				931B14E02821186300A0CD35 /* RoomEntityService.swift in Sources */,
 				933FD55A2908A05100C4A235 /* SeenResponseModel.swift in Sources */,
 				931B14F528211AC100A0CD35 /* CreateRoomRequestModel.swift in Sources */,
 				931B150628211AC600A0CD35 /* CreateRoomResponseModel.swift in Sources */,
@@ -3112,8 +3078,6 @@
 				6C153BF129486F2B00D400A7 /* Constants+Strings.swift in Sources */,
 				9347CCE4286457C900018AEB /* Date+Extensions.swift in Sources */,
 				931B150028211AC600A0CD35 /* SendMessageResponse.swift in Sources */,
-				931B14DE2821185300A0CD35 /* UserEntityService.swift in Sources */,
-				931B14E12821186600A0CD35 /* RoomUserEntityService.swift in Sources */,
 				931B150928211AC600A0CD35 /* VerifyFileResponseModel.swift in Sources */,
 				931B14F228211AC100A0CD35 /* VerifyCodeRequestModel.swift in Sources */,
 				931B14E528211A5100A0CD35 /* User.swift in Sources */,
@@ -3175,7 +3139,6 @@
 				933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */,
 				93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
-				93BD5B3C27FB83A400240331 /* RoomEntityService.swift in Sources */,
 				93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */,
 				939B30402850DC1F00FFA537 /* AppRepository+Sync.swift in Sources */,
 				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
@@ -3283,7 +3246,6 @@
 				93E4F6FE27C4688C00432CFA /* CurrentChatViewModel.swift in Sources */,
 				93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				933BE87727B6796B0099BA9E /* NotesViewController.swift in Sources */,
-				AD819238271E866100D5BE48 /* MessageEntityService.swift in Sources */,
 				AD9BFD39272AB31300736318 /* CountryPickerViewModel.swift in Sources */,
 				ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */,
 				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
@@ -3359,7 +3321,6 @@
 				933BE87327B677F10099BA9E /* NotesViewModel.swift in Sources */,
 				93711DFB28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
 				93CFFA5129358CCB001EBACF /* IconAndLabelView.swift in Sources */,
-				93CEF90227FD856A0038B7A9 /* RoomUserEntityService.swift in Sources */,
 				931B15152821291400A0CD35 /* DeliveredRequestModel.swift in Sources */,
 				939B30442850DD2200FFA537 /* SyncRoomsResponseModel.swift in Sources */,
 				9396AB7327FED6FF00696757 /* VerifyFileRequestModel.swift in Sources */,
@@ -3390,7 +3351,6 @@
 				AD81925C2721D45100D5BE48 /* ContactsView.swift in Sources */,
 				6CD1915A29A35E2300A8041A /* ChatBlockingView.swift in Sources */,
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
-				ADD5040B2716EB4B009D50CB /* UserEntityService.swift in Sources */,
 				9355BEDA28056D1A00B9EC85 /* CoreDataStack.swift in Sources */,
 				931B15182821295600A0CD35 /* DeliveredResponseModel.swift in Sources */,
 				6C65B552291BD1B8007C5B92 /* TabBarItemView.swift in Sources */,

@@ -11,7 +11,7 @@
 //extension TestRepository {
 //    func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
 //        Future { promise in
-//            promise(.failure(DatabseError.savingError))
+//            promise(.failure(DatabaseError.savingError))
 //        }
 //    }
 //    
@@ -34,18 +34,18 @@
 //    }
 //    
 //    func getMessages(forRoomId: Int64) -> Future<[Message], Error> {
-//        Future { promise in promise(.failure(DatabseError.noSuchRecord))}
+//        Future { promise in promise(.failure(DatabaseError.noSuchRecord))}
 //    }
 //    
 //    func updateLocalMessage(message: Message, localId: String) -> Future<Message, Error> {
 //        Future { p in
-//            p(.failure(DatabseError.requestFailed))
+//            p(.failure(DatabaseError.requestFailed))
 //        }
 //    }
 //    
 //    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
 //        Future { p in
-//            p(.failure(DatabseError.unknown))
+//            p(.failure(DatabaseError.unknown))
 //        }
 //    }
 //    
@@ -55,7 +55,7 @@
 //    
 //    func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error> {
 //        Future { p in
-//            p(.failure(DatabseError.requestFailed))
+//            p(.failure(DatabaseError.requestFailed))
 //        }
 //    }
 //    

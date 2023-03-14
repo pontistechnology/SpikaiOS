@@ -16,12 +16,8 @@ class NotificationService: UNNotificationServiceExtension {
     let coreDataStack = CoreDataStack()
     lazy var repository = AppRepository(
         networkService: NetworkService(),
-        databaseService: DatabaseService(userEntityService: UserEntityService(coreDataStack: coreDataStack),
-                                         messageEntityService: MessageEntityService(coreDataStack: coreDataStack),
-                                         roomEntityService: RoomEntityService(coreDataStack: coreDataStack),
-                                         coreDataStack: coreDataStack,
-                                         userDefaults: self.userDefaults),
-        userDefaults: self.userDefaults)
+        databaseService: DatabaseService(coreDataStack: coreDataStack),
+        userDefaults: userDefaults)
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?

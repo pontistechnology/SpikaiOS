@@ -36,19 +36,19 @@
 //    
 //    func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error> {
 //        return Future { promise in
-//            promise(.failure(DatabseError.unknown))
+//            promise(.failure(DatabaseError.unknown))
 //        }
 //    }
 //    
 //    func getRoomWithId(forRoomId id: Int64) -> Future<Room, Error> {
 //        return Future { promise in
-//            promise(.failure(DatabseError.unknown))
+//            promise(.failure(DatabaseError.unknown))
 //        }
 //    }
 //    
 //    func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error> {
 //        return Future { promise in
-//            promise(.failure(DatabseError.unknown))
+//            promise(.failure(DatabaseError.unknown))
 //        }
 //    }
 //    
@@ -78,13 +78,13 @@
 //    
 //    func saveLocalRooms(rooms: [Room]) -> Future<[Room], Error> {
 //        return Future { promise in
-//            promise(.failure(DatabseError.unknown))
+//            promise(.failure(DatabaseError.unknown))
 //        }
 //    }
 //    
 //    func updateRoomUsers(room: Room) -> Future<Room, Error> {
 //        return Future { promise in
-//            promise(.failure(DatabseError.unknown))
+//            promise(.failure(DatabaseError.unknown))
 //        }
 //    }
 //    
@@ -118,7 +118,7 @@
 //    
 //    func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error> {
 //        return Future { promise in
-//            promise(.failure(DatabseError.unknown))
+//            promise(.failure(DatabaseError.unknown))
 //        }
 //    }
 //    
