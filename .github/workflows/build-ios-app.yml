@@ -1,4 +1,4 @@
-name: firebase_dev
+name: build-ios-app
 on: push
 jobs:
   build_firebase_dev:
