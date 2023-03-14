@@ -84,7 +84,7 @@ extension NotificationService {
             }
         } receiveValue: { [weak self] response in
             guard let room = response.data?.room,
-                  let self = self
+                  let self
             else {
                 self?.show(title: "Can't parse online room - REPORT", text: "Please report.")
                 return

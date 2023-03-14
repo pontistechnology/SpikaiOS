@@ -249,7 +249,7 @@ extension CurrentChatViewModel {
             roomPublisher.send(room)
         } else if let friendUser = friendUser {
             repository.checkLocalRoom(forUserId: friendUser.id).sink { [weak self] completion in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch completion {
                 case .finished:
                     break
@@ -258,7 +258,7 @@ extension CurrentChatViewModel {
                     self.checkOnlineRoom()
                 }
             } receiveValue: { [weak self] room in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.room = room
                 self.roomPublisher.send(room)
             }.store(in: &subscriptions)
@@ -270,7 +270,7 @@ extension CurrentChatViewModel {
         networkRequestState.send(.started())
         
         repository.checkOnlineRoom(forUserId: friendUser.id).sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let self else { return }
             switch completion {
             case .finished:
                 print("online check finished")
@@ -281,7 +281,7 @@ extension CurrentChatViewModel {
             }
         } receiveValue: { [weak self] response in
             
-            guard let self = self else { return }
+            guard let self else { return }
             
             if let room = response.data?.room {
                 print("There is online room.")
@@ -305,7 +305,7 @@ extension CurrentChatViewModel {
                 print("saving to local DB failed")
             }
         } receiveValue: { [weak self] rooms in
-            guard let self = self,
+            guard let self,
                   let room = rooms.first
             else { return }
             self.room = room
@@ -316,7 +316,7 @@ extension CurrentChatViewModel {
     func createRoom(userId: Int64) {
         networkRequestState.send(.started())
         repository.createOnlineRoom(userId: userId).sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let self else { return }
             self.networkRequestState.send(.finished)
             
             switch completion {
@@ -327,7 +327,7 @@ extension CurrentChatViewModel {
                 // TODO: present dialog and return? publish error
             }
         } receiveValue: { [weak self] response in
-            guard let self = self else { return }
+            guard let self else { return }
             print("creating room response: ", response)
             if let errorMessage = response.message {
                 //                PopUpManager.shared.presentAlert(with: (title: "Error", message: errorMessage), orientation: .horizontal, closures: [("Ok", {
@@ -383,7 +383,7 @@ extension CurrentChatViewModel {
             }
         } receiveValue: { [weak self] response in
             print("SendMessage response: ", response)
-            guard let self = self,
+            guard let self,
                   let message = response.data?.message
             else { return }
             self.saveMessage(message: message)
@@ -436,13 +436,13 @@ extension CurrentChatViewModel {
                     
                 } receiveValue: { [weak self] filea, percent in
                     guard let filea = filea else { return }
-                    guard let self = self else { return }
+                    guard let self else { return }
                     self.repository
                         .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData)
                         .sink { c in
                             
                         } receiveValue: { [weak self] fileb, percent in
-                            guard let self = self else { return }
+                            guard let self else { return }
                             self.uploadProgressPublisher.send((percentUploaded: percent, selectedFile: file))
                             guard let fileb = fileb else { return }
                             self.sendMessage(body: RequestMessageBody(text: nil, fileId: fileb.id, thumbId: filea.id), localId: file.localId, type: file.fileType, replyId: nil)

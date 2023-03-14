@@ -48,7 +48,7 @@ class BaseViewController: UIViewController {
     // TODO: - move
     private func showLoading(progress: CGFloat?) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             if let _ = self.circularProgressBar.superview {
                 print("jes")
             } else {
@@ -66,14 +66,14 @@ class BaseViewController: UIViewController {
     
     private func hideLoading() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.circularProgressBar.removeFromSuperview()
         }
     }
     
     func sink(networkRequestState publisher: CurrentValueSubject<RequestState, Never>) {
         publisher.sink { [weak self] state in
-            guard let self = self else { return }
+            guard let self else { return }
             switch state {
             case .finished:
                 self.hideLoading()

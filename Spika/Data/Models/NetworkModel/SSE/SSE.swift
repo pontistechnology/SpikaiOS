@@ -43,7 +43,7 @@ private extension SSE {
     
     func setupBindings() {
         finishedSyncPublisher.sink { [weak self] finished in
-            guard let self = self else { return }
+            guard let self else { return }
             switch finished {
             case .users:
                 self.syncMessages()
@@ -91,7 +91,7 @@ private extension SSE {
         }
         
         eventSource?.onMessage { [weak self] id, event, data in
-            guard let self = self,
+            guard let self,
                   let jsonData = data?.data(using: .utf8),
                   let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData),
                   let type = sseNewMessage.type
@@ -140,7 +140,7 @@ private extension SSE {
         repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { [weak self] completion in
             self?.checkError(completion: completion)
         } receiveValue: { [weak self] response in
-            guard let self = self,
+            guard let self,
                   let messages = response.data?.messages
             else { return }
             self.saveMessages(messages, isSync: true)
@@ -160,7 +160,7 @@ private extension SSE {
         repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { [weak self] completion in
             self?.checkError(completion: completion)
         } receiveValue: { [weak self] response in
-            guard let self = self,
+            guard let self,
                   let records = response.data?.messageRecords
             else { return }
             self.saveMessageRecords(records, isSync: true)

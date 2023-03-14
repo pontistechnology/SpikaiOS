@@ -31,7 +31,7 @@ final class ChatDetailsViewController: BaseViewController {
         self.chatDetailView.contentView.chatMembersView.ownId = self.viewModel.getMyUserId()
         
         let isAdmin = self.viewModel.room.map { [weak self] room in
-            guard let self = self, room.type == .groupRoom else { return false }
+            guard let self, room.type == .groupRoom else { return false }
             return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
         }
         
@@ -116,7 +116,7 @@ final class ChatDetailsViewController: BaseViewController {
             .sink { [weak self] completion in
                 self?.chatDetailView.contentView.chatImage.hideUploadProgress()
             } receiveValue: { [weak self] progress in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.chatDetailView.contentView.chatImage.showUploadProgress(progress: progress)
             }.store(in: &subscriptions)
         

@@ -26,7 +26,7 @@ class ChatDetailsViewModel: BaseViewModel {
     func setupBindings() {
         self.updateContacts
             .flatMap { [weak self] userIds in
-                guard let self = self else {
+                guard let self else {
                     return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken).eraseToAnyPublisher()
                 }
                 return self.repository.updateRoomUsers(roomId: self.room.value.id, userIds: userIds)
@@ -79,7 +79,7 @@ class ChatDetailsViewModel: BaseViewModel {
             .muteUnmuteRoom(roomId: self.room.value.id, mute: mute)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch completion {
                 case .finished:
                     self.updateRoomIsMuted(room: self.room.value, isMuted: !self.room.value.muted)
@@ -98,7 +98,7 @@ class ChatDetailsViewModel: BaseViewModel {
             .pinUnpinRoom(roomId: self.room.value.id, pin: pin)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch completion {
                 case .finished:
                     self.updateRoomIsPinned(room: self.room.value, isPinned: !self.room.value.pinned)
@@ -283,7 +283,7 @@ class ChatDetailsViewModel: BaseViewModel {
                     self?.showError("Error with file upload: \(error)")
                 }
             } receiveValue: { [weak self] (file, percent) in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.uploadProgressPublisher.send(percent)
                 guard let id = file?.id else { return }
                 self.updateRoomWithAvatar(avatarId: id)

@@ -80,7 +80,7 @@ extension AppRepository {
                     break
                 }
             } receiveValue: { [weak self] uploadChunkResponseModel in
-                guard let self = self,
+                guard let self,
                       let uploadedCount = uploadChunkResponseModel.data?.uploadedChunks?.count else { return }
                 let percent = CGFloat(uploadedCount) / CGFloat(totalChunks)
                 somePublisher.send((nil, percent))

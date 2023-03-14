@@ -24,7 +24,7 @@ class EnterVerifyCodeViewModel: BaseViewModel {
     func verifyCode(code: String) {
         networkRequestState.send(.started())
         repository.verifyCode(code: code, deviceId: deviceId).sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let self else { return }
             self.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):

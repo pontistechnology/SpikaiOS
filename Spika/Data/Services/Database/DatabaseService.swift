@@ -34,7 +34,7 @@ class DatabaseService {
 extension DatabaseService {
     func getLocalUsers() -> Future<[User], Error> {
         return Future { [weak self] promise in
-            guard let self = self else { return }
+            guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { context in
                 let fetchRequest = UserEntity.fetchRequest()
                 do {
@@ -193,7 +193,7 @@ extension DatabaseService {
     func getRoom(forUserId id: Int64) -> Future<Room, Error> {
         Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                guard let self = self else { return }
+                guard let self else { return }
                 // TODO: - dbr
                 // find all roomUsers
                 let roomUsersFR = RoomUserEntity.fetchRequest()
@@ -241,7 +241,7 @@ extension DatabaseService {
     func getRoom(forRoomId id: Int64) -> Future<Room, Error> {
         Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                guard let self = self else { return }
+                guard let self else { return }
                 let roomsFR = RoomEntity.fetchRequest()
                 roomsFR.predicate = NSPredicate(format: "id == %d", id)
                 guard let roomEntities = try? context.fetch(roomsFR),
@@ -297,7 +297,7 @@ extension DatabaseService {
         
     func saveRooms(_ rooms: [Room]) -> Future<[Room], Error> {
         Future { [weak self] promise in
-            guard let self = self else { return }
+            guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for room in rooms {
@@ -317,7 +317,7 @@ extension DatabaseService {
         // TODO: - dbr
         // maybe delete all roomUsers with that room id, then save new ones
         Future { [weak self] promise in
-            guard let self = self else { return }
+            guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
@@ -364,7 +364,7 @@ extension DatabaseService {
     
     func deleteRoom(roomId: Int64) -> Future<Bool, Error> {
         Future { [weak self] promise in
-            guard let self = self else { return }
+            guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
@@ -389,7 +389,7 @@ extension DatabaseService {
 extension DatabaseService {
     func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
         return Future { [weak self] promise in
-            guard let self = self else { return }
+            guard let self else { return }
             
             self.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -411,7 +411,7 @@ extension DatabaseService {
     
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
         return Future { [weak self] promise in
-            guard let self = self else { return }
+            guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
@@ -432,7 +432,7 @@ extension DatabaseService {
     func getNotificationInfoForMessage(message: Message) -> Future<MessageNotificationInfo, Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                guard let self = self else { return }
+                guard let self else { return }
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
                 // fetch room from database

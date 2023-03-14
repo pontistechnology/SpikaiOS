@@ -30,12 +30,12 @@ class EnterVerifyCodeViewController: BaseViewController {
     
     func setupBindings() {
         enterVerifyCodeView.nextButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.viewModel.verifyCode(code: self.enterVerifyCodeView.otpTextField.text!)
         }.store(in: &subscriptions)
         
         enterVerifyCodeView.resendCodeButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.viewModel.resendCode()
         }.store(in: &subscriptions)
         
@@ -46,7 +46,7 @@ class EnterVerifyCodeViewController: BaseViewController {
             }).store(in: &subscriptions)
         
         viewModel.resendSubject.sink { [weak self] resended in
-            guard let self = self else { return }
+            guard let self else { return }
             if resended {
                 self.enterVerifyCodeView.setupTimer()
             }

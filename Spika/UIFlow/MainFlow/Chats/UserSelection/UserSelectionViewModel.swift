@@ -42,7 +42,7 @@ class UserSelectionViewModel: BaseViewModel {
     
     func setFetch(withSearch search: String?) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             let fetchRequest = UserEntity.fetchRequest()
             fetchRequest.sortDescriptors = [
                 NSSortDescriptor(key: "contactsName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:))),

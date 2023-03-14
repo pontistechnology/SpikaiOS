@@ -119,7 +119,7 @@ extension CurrentChatViewController {
         viewModel.roomPublisher.receive(on: DispatchQueue.main)
             .sink { _ in
             } receiveValue: { [weak self] room in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.setFetch(room: room)
                 self.setupNavigationItems()
                 self.viewModel.sendSeenStatus()
@@ -133,7 +133,7 @@ extension CurrentChatViewController {
             .Zip(frcIsChangingPublisher, frcDidChangePublisher)
             .filter{$1}
             .sink { [weak self] (frcChange, frcDidChange) in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 switch frcChange {
                 case .insert(indexPath: let indexPath):

@@ -156,7 +156,7 @@ class AppCoordinator: Coordinator {
         
         usersSelectedPublisher
             .sink { [weak self] users in
-                guard let self = self else { return }
+                guard let self else { return }
                 let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroupChatViewController.self, arguments: self, users)!
                 let navC = UINavigationController(rootViewController: viewController)
                 self.navigationController.present(navC, animated: true, completion: nil)

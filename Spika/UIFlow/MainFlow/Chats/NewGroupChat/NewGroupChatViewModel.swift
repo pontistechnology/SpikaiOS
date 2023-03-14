@@ -31,7 +31,7 @@ class NewGroupChatViewModel: BaseViewModel {
            let fileUrl = repository.saveDataToFile(fileData, name: "newAvatar"){
             repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
                 .sink { [weak self] completion in
-                    guard let self = self else { return }
+                    guard let self else { return }
                     switch completion {
                     case .finished:
                         break
@@ -40,7 +40,7 @@ class NewGroupChatViewModel: BaseViewModel {
                         self.showError("Error with file upload: \(error)")
                     }
                 } receiveValue: { [weak self] (file, percent) in
-                    guard let self = self else { return }
+                    guard let self else { return }
                     self.uploadProgressPublisher.send(percent)
                     guard let id = file?.id else { return }
                     self.finalizeRoomCreation(name: name, avatarId: id)
