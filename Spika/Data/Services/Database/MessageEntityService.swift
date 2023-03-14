@@ -16,36 +16,7 @@ class MessageEntityService {
     init(coreDataStack: CoreDataStack) {
         self.coreDataStack = coreDataStack
     }
-    
-//    func getMessages(forRoomId id: Int64) -> Future<[Message], Error>{
-//        Future { [weak self] promise in
-//            // TODO: - dbr
-//            // fetch all messages, check string id,
-//            // fetch message records
-//            // maybe message records shouldnt be in message model
-//            self?.coreDataStack.persistantContainer.performBackgroundTask { [weak self] context in
-//                guard let self = self else { return }
-//                let fetchRequest = MessageEntity.fetchRequest()
-//                fetchRequest.predicate = NSPredicate(format: "roomId == %@", "\(id)")
-//
-//                do {
-//                    let messagesEntities = try context.fetch(fetchRequest)
-//                    let messages = messagesEntities.map{ Message(messageEntity: $0)}
-//                    promise(.success(messages.compactMap{$0}))
-//                } catch {
-//                    promise(.failure(DatabseError.requestFailed))
-//                }
-//            }
-//        }
-//    }
-    
-//    private func getMessageRecords(ids: [Int64], context: NSManagedObjectContext) -> MessageRecord {
-//        let messageRecordsFR = MessageRecordEntity.fetchRequest()
-//        messageRecordsFR.predicate = NSPredicate(format: "messageId IN %@", ids)
-//        
-//        
-//    }
-
+        
     func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
@@ -56,7 +27,7 @@ class MessageEntityService {
                 for message in messages {
                     let messageEntity = MessageEntity(message: message, context: context)
                 }
-                // todo add last timestamp
+                // TODO: - dbr add last timestamp
                 
                 do {
                     try context.save()
@@ -110,9 +81,8 @@ extension MessageEntityService {
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
                 // fetch room from database
-                let roomId = message.roomId
                 let roomEntiryFR = RoomEntity.fetchRequest()
-                roomEntiryFR.predicate = NSPredicate(format: "id == %d", roomId)
+                roomEntiryFR.predicate = NSPredicate(format: "id == %d", message.roomId)
                 
                 guard let rooms = try? context.fetch(roomEntiryFR),
                       rooms.count == 1,

@@ -32,22 +32,6 @@ extension Room {
                   deleted: roomEntity.roomDeleted,
                   pinned: roomEntity.pinned)
     }
-    
-//    init(roomEntity: RoomEntity) {
-////        print("INIT ROOM ENTITY: ", roomEntity.id, roomEntity.users?.count)
-//        let roomUsers = roomEntity.users?.allObjects.compactMap{ RoomUser(roomUserEntity: $0 as! RoomUserEntity)} ?? []
-//        
-//        self.init(id: roomEntity.id,
-//                  type: RoomType(rawValue: roomEntity.type ?? "private") ?? .privateRoom,
-//                  name: roomEntity.name,
-//                  avatarFileId: roomEntity.avatarFileId,
-//                  createdAt: roomEntity.createdAt,
-//                  muted: roomEntity.muted,
-//                  users: roomUsers,
-//                  deleted: roomEntity.roomDeleted,
-//                  pinned: roomEntity.pinned
-//                  )
-//    }
 }
 
 extension Room {

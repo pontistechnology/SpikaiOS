@@ -139,7 +139,7 @@ protocol Repository {
     
     // MARK: COREDATA: Contacts
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error>
-    func getContact(phoneNumber: String) -> Future<FetchedContact, Error>
+//    func getContact(phoneNumber: String) -> Future<FetchedContact, Error>
     @discardableResult func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error>
     
     // MARK: - FILES

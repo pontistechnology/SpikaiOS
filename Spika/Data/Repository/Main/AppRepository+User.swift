@@ -139,9 +139,9 @@ extension AppRepository {
         return databaseService.userEntityService.saveContacts(contacts)
     }
     
-    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
-        return databaseService.userEntityService.getContact(phoneNumber: phoneNumber)
-    }
+//    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
+//        return databaseService.userEntityService.getContact(phoneNumber: phoneNumber)
+//    }
     
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         return databaseService.userEntityService.updateUsersWithContactData(users)

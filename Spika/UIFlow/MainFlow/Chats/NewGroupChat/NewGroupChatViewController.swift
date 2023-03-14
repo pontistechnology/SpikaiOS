@@ -32,10 +32,11 @@ class NewGroupChatViewController: BaseViewController {
     }
     
     func setupBindings() {
-        self.viewModel.selectedUsers
-            .sink { [weak self] users in
-                self?.newGroupChatView.chatMembersView.updateWithUsers(users: users.map { RoomUser(user: $0) })
-            }.store(in: &self.viewModel.subscriptions)
+        // TODO: - dbr check with Vedran
+//        self.viewModel.selectedUsers
+//            .sink { [weak self] users in
+//                self?.newGroupChatView.chatMembersView.updateWithUsers(users: users.map { RoomUser(user: $0) })
+//            }.store(in: &self.viewModel.subscriptions)
         
         self.newGroupChatView.chatMembersView
             .onRemoveUser

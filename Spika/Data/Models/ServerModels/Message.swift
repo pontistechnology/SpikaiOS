@@ -53,19 +53,21 @@ extension Message {
                   deleted: messageEntity.isRemoved,
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
-                                    file: FileData(id: messageEntity.bodyFileId, fileName: messageEntity.bodyFileName,
-                                                   mimeType: messageEntity.bodyFileMimeType,
-                                                   size: messageEntity.bodyFileSize,
-                                                   metaData: MetaData(width: messageEntity.bodyFileMetaDataWidth,
-                                                                      height: messageEntity.bodyFileMetaDataHeight,
-                                                                      duration: messageEntity.bodyFileMetaDataDuration)),
-                                    thumb: FileData(id: messageEntity.bodyThumbId, fileName: "thumb name",
-                                                    mimeType: messageEntity.bodyThumbMimeType,
-                                                    size: 0,
-                                                    metaData: MetaData(width: messageEntity.bodyThumbMetaDataWidth,
-                                                                       height: messageEntity.bodyThumbMetaDataHeight,
-                                                                       duration: messageEntity.bodyThumbMetaDataDuration))),
-                  records: records)
+                                    file: nil,
+//                                        FileData(id: messageEntity.bodyFileId, fileName: messageEntity.bodyFileName,
+//                                                   mimeType: messageEntity.bodyFileMimeType,
+//                                                   size: messageEntity.bodyFileSize,
+//                                                   metaData: MetaData(width: messageEntity.bodyFileMetaDataWidth,
+//                                                                      height: messageEntity.bodyFileMetaDataHeight,
+//                                                                      duration: messageEntity.bodyFileMetaDataDuration)),
+                                    thumb: nil
+//                                        FileData(id: messageEntity.bodyThumbId, fileName: "thumb name",
+//                                                    mimeType: messageEntity.bodyThumbMimeType,
+//                                                    size: 0,
+//                                                    metaData: MetaData(width: messageEntity.bodyThumbMetaDataWidth,
+//                                                                       height: messageEntity.bodyThumbMetaDataHeight,
+//                                                                       duration: messageEntity.bodyThumbMetaDataDuration))
+                                   ),records: records)
     }
     
     func getMessageState(myUserId: Int64) -> MessageState {
@@ -110,6 +112,7 @@ struct MessageBody: Codable {
     let text: String?
     let file: FileData?
     let thumb: FileData?
+    // TODO: - dbr add fileid and thumbid
 }
 
 struct FileData: Codable {

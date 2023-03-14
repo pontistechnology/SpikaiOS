@@ -60,7 +60,7 @@ extension RoomEntityService {
                 let roomUser = RoomUser(roomUserEntity: roomUserEntity,
                                         user: user)
                 
-                let room = Room(roomEntity: roomEntity, users: [roomUser]) // add me to list
+                let room = Room(roomEntity: roomEntity, users: [roomUser]) // TODO: - dbr add me to list
                 
                 promise(.success(room))
             }

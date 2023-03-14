@@ -57,7 +57,7 @@ class UserEntityService {
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for user in users {
                     if user.displayName == nil {
-                        continue
+                        continue // TODO: check
                     }
                     let _ = UserEntity(user: user, context: context)
                 }
@@ -93,26 +93,26 @@ class UserEntityService {
         }
     }
     
-    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
-        return Future { [weak self] promise in
-            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
-                let fetchRequest = ContactEntity.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "phoneNumber = %@", phoneNumber)
-                do {
-                    let fetchResult = try context.fetch(fetchRequest)
-                    if let contactEntity = fetchResult.first {
-                        let contact = FetchedContact(firstName: contactEntity.givenName,
-                                                     lastName: contactEntity.familyName,
-                                                     telephone: contactEntity.phoneNumber)
-                        promise(.success(contact))
-                    }
-                } catch {
-                    print("Error loading: ", error)
-                    promise(.failure(DatabseError.requestFailed))
-                }
-            }
-        }
-    }
+//    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
+//        return Future { [weak self] promise in
+//            self?.coreDataStack.persistantContainer.performBackgroundTask { context in
+//                let fetchRequest = ContactEntity.fetchRequest()
+//                fetchRequest.predicate = NSPredicate(format: "phoneNumber = %@", phoneNumber)
+//                do {
+//                    let fetchResult = try context.fetch(fetchRequest)
+//                    if let contactEntity = fetchResult.first {
+//                        let contact = FetchedContact(firstName: contactEntity.givenName,
+//                                                     lastName: contactEntity.familyName,
+//                                                     telephone: contactEntity.phoneNumber)
+//                        promise(.success(contact))
+//                    }
+//                } catch {
+//                    print("Error loading: ", error)
+//                    promise(.failure(DatabseError.requestFailed))
+//                }
+//            }
+//        }
+//    }
     
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
