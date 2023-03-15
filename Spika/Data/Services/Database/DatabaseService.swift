@@ -108,27 +108,6 @@ extension DatabaseService {
         }
     }
     
-//    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
-//        return Future { [weak self] promise in
-//            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
-//                let fetchRequest = ContactEntity.fetchRequest()
-//                fetchRequest.predicate = NSPredicate(format: "phoneNumber = %@", phoneNumber)
-//                do {
-//                    let fetchResult = try context.fetch(fetchRequest)
-//                    if let contactEntity = fetchResult.first {
-//                        let contact = FetchedContact(firstName: contactEntity.givenName,
-//                                                     lastName: contactEntity.familyName,
-//                                                     telephone: contactEntity.phoneNumber)
-//                        promise(.success(contact))
-//                    }
-//                } catch {
-//                    print("Error loading: ", error)
-//                    promise(.failure(DatabaseError.requestFailed))
-//                }
-//            }
-//        }
-//    }
-    
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { context in
