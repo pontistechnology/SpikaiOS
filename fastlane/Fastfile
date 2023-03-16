@@ -28,7 +28,8 @@ platform :ios do
         export_options:{ 
             manageAppVersionAndBuildNumber: false
         })
-    pilot( api_key_path: "fastlane/Q4Y97SL8HA.json" )
+    pilot( api_key_path: "fastlane/Q4Y97SL8HA.json",
+        skip_waiting_for_build_processing: true)
   end
 
 end
