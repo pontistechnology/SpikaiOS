@@ -3485,7 +3485,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/SpikaDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3502,7 +3502,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3523,7 +3523,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/SpikaDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3540,7 +3540,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3557,7 +3557,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationServiceDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfoDev.plist;
@@ -3569,7 +3569,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "-DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3586,7 +3586,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationServiceDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfoDev.plist;
@@ -3598,7 +3598,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "-DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3615,7 +3615,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationService.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
@@ -3627,7 +3627,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = $APP_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika.Spika3NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3643,7 +3643,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationService.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
@@ -3655,7 +3655,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = $APP_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika.Spika3NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3669,6 +3669,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_BUILD_VERSION = 29;
+				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -3731,6 +3733,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_BUILD_VERSION = 29;
+				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -3793,7 +3797,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3810,7 +3814,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = $APP_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3830,7 +3834,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3847,7 +3851,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = $APP_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
