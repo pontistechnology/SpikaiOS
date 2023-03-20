@@ -1,5 +1,5 @@
 app_identifier("studio.clover.Spika") # The bundle identifier of your app
-apple_id("vedran.vugrin@clover.studio") # Your Apple Developer Portal username
+apple_id("ivo.peric@clover.studio") # Your Apple Developer Portal username
 
 itc_team_id("834733") # App Store Connect Team ID
 team_id("YU755VYJCP") # Developer Portal Team ID
