@@ -108,7 +108,7 @@ protocol Repository {
     func saveMessages(_ messages: [Message]) -> Future<[Message], Error>
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error>
 //    func getMessages(forRoomId: Int64) -> Future<[Message], Error>
-    func printAllMessages()
+    func getLastMessage(roomId: Int64) -> Message?
     func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error>
     
     // MARK: COREDATA: Room

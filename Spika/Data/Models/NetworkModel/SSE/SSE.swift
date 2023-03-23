@@ -16,45 +16,30 @@ class SSE {
     private let coordinator: Coordinator
     private var subs = Set<AnyCancellable>()
     
-    private let finishedSyncPublisher = PassthroughSubject<SyncType, Never>()
-    
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
         self.coordinator = coordinator
-        setupBindings()
         setupSSE()
     }
     
-    func syncAndStartSSE() {
+    func startSSEAndSync() {
         changeIndicatorColor(to: .appOrange)
         if eventSource == nil {
             setupSSE()
         }
-        syncRooms()
-        syncBlockedList()
+        startSSEConnection()
     }
     
     func stopSSE() {
         eventSource?.disconnect()
     }
-}
-
-private extension SSE {
     
-    func setupBindings() {
-        finishedSyncPublisher.sink { [weak self] finished in
-            guard let self else { return }
-            switch finished {
-            case .users:
-                self.syncMessages()
-            case .rooms:
-                self.syncUsers()
-            case .messages:
-                self.syncMessageRecords()
-            case .messageRecords:
-                self.startSSEConnection()
-            }
-        }.store(in: &subs)
+    private func startSyncs() {
+        syncRooms()
+        syncUsers()
+        syncMessages()
+        syncBlockedList()
+        syncMessageRecords()
     }
 }
 
@@ -79,12 +64,12 @@ private extension SSE {
         
         eventSource?.onOpen { [weak self] in
             self?.changeIndicatorColor(to: .appGreen)
+            self?.startSyncs()
         }
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
             self?.changeIndicatorColor(to: .appRed)
-            self?.syncAndStartSSE()
-
+            self?.startSSEAndSync()
 //            guard reconnect ?? false else { return }
 //            if server wants to control reconnecting
 //            let retryTime = self?.eventSource?.retryTime ?? 1500
@@ -104,7 +89,7 @@ private extension SSE {
                 self.saveMessages([message])
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
-                self.saveMessageRecords([record]) // TODO: - delay or something
+                self.saveMessageRecords([record])
             case .newRoom, .updateRoom:
                 guard let room = sseNewMessage.room else { return }
                 self.saveLocalRooms([room])
@@ -135,7 +120,7 @@ private extension SSE {
         }.store(in: &subs)
     }
     
-    // TODO: - check local DB for all roomIds, and fetch the missing ones
+    // TODO: - dbr check local DB for all roomIds, and fetch the missing ones
     func syncMessages() {
         repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { [weak self] completion in
             self?.checkError(completion: completion)
@@ -182,7 +167,6 @@ private extension SSE {
                     let timestamp = users.max{ $0.createdAt < $1.createdAt }?.createdAt ?? 0
                     self?.repository.setSyncTimestamp(for: .users, timestamp: timestamp)
                 }
-                self?.finishedSyncPublisher.send(.users)
             }
         }.store(in: &subs)
     }
@@ -190,15 +174,12 @@ private extension SSE {
     func saveLocalRooms(_ rooms: [Room], isSync: Bool = false) {
         repository.saveLocalRooms(rooms: rooms).sink { [weak self] completion in
             self?.checkError(completion: completion)
-//            print("SSE: save rooms c: ", c)
         } receiveValue: { [weak self] rooms in
-//            print("SSE: save rooms success")
             if isSync {
                 if !rooms.isEmpty {
                     let timestamp = rooms.max{ ($0.createdAt) < ($1.createdAt) }?.createdAt ?? 0
                     self?.repository.setSyncTimestamp(for: .rooms, timestamp: timestamp)
                 }
-                self?.finishedSyncPublisher.send(.rooms)
             }
         }.store(in: &subs)
     }
@@ -216,7 +197,6 @@ private extension SSE {
                 
                 self?.repository.setSyncTimestamp(for: .messages, timestamp: maxTimestamp)
                 self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: minTimestamp)
-                self?.finishedSyncPublisher.send(.messages)
             } else if let lastMessage = messages.last {
                 self?.getMessageNotificationInfo(message: lastMessage)
             }
@@ -228,12 +208,7 @@ private extension SSE {
         print("SSE: message records recieved: ", records.count)
         repository.saveMessageRecords(records).sink { [weak self] completion in
             self?.checkError(completion: completion)
-//            print("SSE: save message records c: ", c)
         } receiveValue: { [weak self] records in
-//            print("SSE: saved records: ", records.count)
-            if isSync {
-                self?.finishedSyncPublisher.send(.messageRecords)
-            }
         }.store(in: &subs)
     }
 }
@@ -242,8 +217,8 @@ private extension SSE {
 private extension SSE {
     
     func sendDeliveredStatus(messages: [Message]) {
-//        print("message id in sse: ", messages)
-        repository.sendDeliveredStatus(messageIds: messages.compactMap{$0.id}).sink { c in
+        repository.sendDeliveredStatus(messageIds: messages.compactMap{$0.id})
+            .sink { c in
             
         } receiveValue: { response in
 //            print("SSE: send delivered status sse response: ", response)

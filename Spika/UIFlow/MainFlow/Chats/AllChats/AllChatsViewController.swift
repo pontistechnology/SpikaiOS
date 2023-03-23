@@ -14,6 +14,8 @@ class AllChatsViewController: BaseViewController {
     var viewModel: AllChatsViewModel!
     var frc: NSFetchedResultsController<RoomEntity>? // TODO: - move to viewmodel
     
+    var frc2: NSFetchedResultsController<MessageEntity>?
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
@@ -104,14 +106,14 @@ extension AllChatsViewController: UITableViewDataSource {
         guard let entity = frc?.object(at: indexPath) else { return EmptyTableViewCell()}
     
         let room = Room(roomEntity: entity, users: []) // TODO: - dbr fetch users
-        
+        let lastMessage = viewModel.repository.getLastMessage(roomId: room.id)
         let badgeNumber = entity.numberOfUnreadMessages(myUserId: viewModel.getMyUserId())
         if room.type == .privateRoom,
            let friendUser = room.getFriendUserInPrivateRoom(myUserId: viewModel.getMyUserId()) {
             cell?.configureCell(avatarUrl: friendUser.avatarFileId?.fullFilePathFromId(),
                                 name: friendUser.getDisplayName(),
-                                description: entity.lastMessageText(),
-                                time: entity.lastMessageTime(),
+                                description: lastMessage?.body?.text ?? ".",
+                                time: lastMessage?.createdAt.convert(to: .allChatsTimeFormat) ?? ".",
                                 badgeNumber: badgeNumber,
                                 muted: entity.muted,
                                 pinned: entity.pinned)
@@ -120,8 +122,8 @@ extension AllChatsViewController: UITableViewDataSource {
             
             cell?.configureCell(avatarUrl: room.avatarFileId?.fullFilePathFromId(),
                                 name: room.name ?? .getStringFor(.noName),
-                                description: entity.lastMessageText(),
-                                time: entity.lastMessageTime(),
+                                description: lastMessage?.body?.text ?? ".",
+                                time: lastMessage?.createdAt.convert(to: .allChatsTimeFormat) ?? "-",
                                 badgeNumber: badgeNumber,
                                 muted: entity.muted,
                                 pinned: entity.pinned)

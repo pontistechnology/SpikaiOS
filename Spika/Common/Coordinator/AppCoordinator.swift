@@ -29,7 +29,7 @@ class AppCoordinator: Coordinator {
     func syncAndStartSSE() {
         guard let _ = userDefaults.string(forKey: Constants.Database.accessToken) else { return }
         let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
-        sse?.syncAndStartSSE()
+        sse?.startSSEAndSync()
     }
     
     //  This can be in scene delegate?

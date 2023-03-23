@@ -26,6 +26,15 @@ public class RoomEntity: NSManagedObject {
         self.roomDeleted = room.deleted
         self.pinned = room.pinned
     }
+    
+    @objc var lastMessageT: Int64 {
+        let fr = MessageEntity.fetchRequest()
+        fr.predicate = NSPredicate(format: "roomId == %d", id)
+        fr.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        fr.fetchLimit = 1
+        guard let ee = try? managedObjectContext?.fetch(fr).first else { return 0}
+        return Message(messageEntity: ee, records: []).createdAt
+    }
 }
 
 extension RoomEntity {
@@ -39,9 +48,16 @@ extension RoomEntity {
 //            }.count ?? 0
     }
     
-    func lastMessageText() -> String {
+    
+    
+    func lastMessage(context: NSManagedObjectContext) -> Message? {
         // TODO: - dbr move somewhere else
-        return "to doo"
+        let fr = MessageEntity.fetchRequest()
+        fr.predicate = NSPredicate(format: "roomId == %d", id)
+        fr.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        fr.fetchLimit = 1
+        guard let entity = try? context.fetch(fr).first else { return nil}
+        return Message(messageEntity: entity, records: []) // TODO: - dbr add recordss
 //        guard let lastMessage = messages?.lastObject as? MessageEntity else {
 //            return "No messages"
 //        }

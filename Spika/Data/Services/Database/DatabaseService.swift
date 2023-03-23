@@ -368,15 +368,16 @@ extension DatabaseService {
 extension DatabaseService {
     func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
         return Future { [weak self] promise in
-            guard let self else { return }
-            
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
                 for message in messages {
                     _ = MessageEntity(message: message, context: context)
                 }
                 // TODO: - dbr add last timestamp
+                if let lastMessage = messages.max(by: { $0.createdAt < $1.createdAt }) {
+                    self?.updateRoomLastMessageTimestamp(context: context, roomId: lastMessage.roomId, timestamp: lastMessage.createdAt)
+                }
                 
                 do {
                     try context.save()
@@ -386,6 +387,19 @@ extension DatabaseService {
                 }
             }
         }
+    }
+    
+    func updateRoomLastMessageTimestamp(context: NSManagedObjectContext, roomId: Int64, timestamp: Int64) {
+        let roomsFR = RoomEntity.fetchRequest()
+        roomsFR.predicate = NSPredicate(format: "id == %d", roomId)
+        guard let roomEntities = try? context.fetch(roomsFR),
+              roomEntities.count == 1
+        else {
+            return
+        }
+        // TODO: - dbr check if timestamp is greater than lastMessageTimestamp
+        roomEntities.first?.lastMessageTimestamp = timestamp
+        try? context.save()
     }
     
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
@@ -406,6 +420,15 @@ extension DatabaseService {
                 }
             }
         }
+    }
+    
+    func getLastMessage(roomId: Int64) -> Message? {
+        let fr = MessageEntity.fetchRequest()
+        fr.predicate = NSPredicate(format: "roomId == %d", roomId)
+        fr.fetchLimit = 1
+        fr.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        guard let entity = try? coreDataStack.mainMOC.fetch(fr).first else { return nil}
+        return Message(messageEntity: entity, records: [])
     }
     
     func getNotificationInfoForMessage(message: Message) -> Future<MessageNotificationInfo, Error> {
