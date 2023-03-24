@@ -223,7 +223,7 @@ extension DatabaseService {
         }
     }
     
-    private func getRoomUsers(roomId: Int64, context: NSManagedObjectContext) -> [RoomUser]? {
+    func getRoomUsers(roomId: Int64, context: NSManagedObjectContext) -> [RoomUser]? {
         // fetch all [RoomUserEntity] from database
         let roomUsersFR = RoomUserEntity.fetchRequest()
         roomUsersFR.predicate = NSPredicate(format: "roomId == %d", roomId)

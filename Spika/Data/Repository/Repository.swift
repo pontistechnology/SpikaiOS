@@ -103,11 +103,13 @@ protocol Repository {
     func saveUser(_ user: User) -> Future<User, Error>
     func saveUsers(_ users: [User]) -> Future<[User], Error>
     
+    // MARK: COREDATA: RoomUser
+    func getRoomUsers(roomId: Int64) -> [RoomUser]?
+    
     // MARK: COREDATA: Messages
     
     func saveMessages(_ messages: [Message]) -> Future<[Message], Error>
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error>
-//    func getMessages(forRoomId: Int64) -> Future<[Message], Error>
     func getLastMessage(roomId: Int64) -> Message?
     func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error>
     // TODO: move
@@ -128,6 +130,7 @@ protocol Repository {
     func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error>
     func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error>
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
+    
 
     // MARK: - USERDEFAULTS: User
     

@@ -49,7 +49,7 @@ final class ChatDetailsViewController: BaseViewController {
                 if room.type == .groupRoom {
                     return room.avatarFileId?.fullFilePathFromId()
                 } else {
-                    guard let ownId = self?.viewModel.repository.getMyUserId(),
+                    guard let ownId = self?.viewModel.getMyUserId(),
                           let contact = self?.viewModel.room.value.users.first(where: { roomUser in
                         roomUser.userId != ownId
                     }) else { return nil }
@@ -63,7 +63,7 @@ final class ChatDetailsViewController: BaseViewController {
         self.viewModel.room
             .map { [weak self] room in
                 if room.type == .privateRoom {
-                    guard let ownId = self?.viewModel.repository.getMyUserId(),
+                    guard let ownId = self?.viewModel.getMyUserId(),
                           let contact = self?.viewModel.room.value.users.first(where: { roomUser in
                         roomUser.userId != ownId
                           }) else { return nil as String? }

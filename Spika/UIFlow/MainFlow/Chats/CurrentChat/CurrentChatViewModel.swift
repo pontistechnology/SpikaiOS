@@ -24,10 +24,7 @@ class CurrentChatViewModel: BaseViewModel {
 //    }
     
     var friendUser: User? {
-        if room.type == .privateRoom {
-            return room.users.first { $0.userId != repository.getMyUserId() }?.user
-        }
-        return nil
+        room.getFriendUserInPrivateRoom(myUserId: getMyUserId())
     }
     
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
@@ -64,7 +61,7 @@ class CurrentChatViewModel: BaseViewModel {
     func setupShouldOfferBlockBinding() {
         guard self.room.users.count == 2 else { return }
         
-        let ownId = self.repository.getMyUserId()
+        let ownId = getMyUserId()
         guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
@@ -91,7 +88,7 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func unblockUser() {
-        let ownId = self.repository.getMyUserId()
+        let ownId = getMyUserId()
         guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
@@ -108,7 +105,7 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func blockUser() {
-        let ownId = self.repository.getMyUserId()
+        let ownId = getMyUserId()
         guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
@@ -125,7 +122,7 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func userConfirmed() {
-        let ownId = self.repository.getMyUserId()
+        let ownId = getMyUserId()
         guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }

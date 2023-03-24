@@ -300,6 +300,11 @@ extension AppRepository {
     }
     
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error> {
-        return databaseService.deleteRoom(roomId: roomId)
+        databaseService.deleteRoom(roomId: roomId)
+    }
+    
+    func getRoomUsers(roomId: Int64) -> [RoomUser]? {
+        databaseService.getRoomUsers(roomId: roomId,
+                                     context: databaseService.coreDataStack.mainMOC)
     }
 }
