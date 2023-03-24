@@ -12,6 +12,7 @@ public extension Constants {
         static let databaseName = "CoreDatabase"
         static let userEntity = "UserEntity"
         static let messageEntity = "MessageEntity"
+        static let fileEntity = "FileEntity"
         static let messageRecordEntity = "MessageRecordEntity"
         static let roomEntity = "RoomEntity"
         static let roomUserEntity = "RoomUserEntity"

@@ -482,6 +482,14 @@
 		9324B256281BE03800E7D76D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E48EAF27CEA6C3003B4188 /* Message.swift */; };
 		9324B257281BE0D900E7D76D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E7270DD87A009D50CB /* Constants.swift */; };
 		9325720A28B8F0140078D489 /* UTType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325720928B8F0140078D489 /* UTType+Extensions.swift */; };
+		932BADD729CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */; };
+		932BADD829CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */; };
+		932BADD929CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */; };
+		932BADDA29CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */; };
+		932BADDB29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD629CD2250003BA70E /* FileEntity+CoreDataProperties.swift */; };
+		932BADDC29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD629CD2250003BA70E /* FileEntity+CoreDataProperties.swift */; };
+		932BADDD29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD629CD2250003BA70E /* FileEntity+CoreDataProperties.swift */; };
+		932BADDE29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD629CD2250003BA70E /* FileEntity+CoreDataProperties.swift */; };
 		9335E3F5297F4CD0005CDBA0 /* DeletedMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9335E3F4297F4CD0005CDBA0 /* DeletedMessageTableViewCell.swift */; };
 		933BE85D27B65BDF0099BA9E /* SharedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE85C27B65BDF0099BA9E /* SharedViewController.swift */; };
 		933BE85F27B65C6F0099BA9E /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE85E27B65C6F0099BA9E /* SharedViewModel.swift */; };
@@ -855,6 +863,8 @@
 		932462D928FCBF0400E8C1B9 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		9324B251281BD6C200E7D76D /* SpikaNotificationService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpikaNotificationService.entitlements; sourceTree = "<group>"; };
 		9325720928B8F0140078D489 /* UTType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UTType+Extensions.swift"; sourceTree = "<group>"; };
+		932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		932BADD629CD2250003BA70E /* FileEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9335E3F4297F4CD0005CDBA0 /* DeletedMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedMessageTableViewCell.swift; sourceTree = "<group>"; };
 		933BE85C27B65BDF0099BA9E /* SharedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViewController.swift; sourceTree = "<group>"; };
 		933BE85E27B65C6F0099BA9E /* SharedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViewModel.swift; sourceTree = "<group>"; };
@@ -2225,6 +2235,8 @@
 		ADD504072716E9C7009D50CB /* DatabaseEntities */ = {
 			isa = PBXGroup;
 			children = (
+				932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */,
+				932BADD629CD2250003BA70E /* FileEntity+CoreDataProperties.swift */,
 				EAFA8B95280F05B000F9B321 /* ContactEntity+CoreDataClass.swift */,
 				EAFA8B97280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift */,
 				ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */,
@@ -2601,6 +2613,7 @@
 				6C78B79529AF5ADB004BF881 /* FileMessageTableViewCell.swift in Sources */,
 				6C78B79629AF5ADB004BF881 /* DetailsView.swift in Sources */,
 				6C78B79729AF5ADB004BF881 /* Publisher+Extensions.swift in Sources */,
+				932BADDD29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
 				6C78B79829AF5ADB004BF881 /* CustomLabel.swift in Sources */,
 				6C78B79929AF5ADB004BF881 /* SendMessageRequest.swift in Sources */,
 				6C78B79A29AF5ADB004BF881 /* MessageRecord.swift in Sources */,
@@ -2691,6 +2704,7 @@
 				6C78B7F429AF5ADB004BF881 /* AppDelegate.swift in Sources */,
 				6C78B7F529AF5ADB004BF881 /* DeletedMessageTableViewCell.swift in Sources */,
 				6C78B7F629AF5ADB004BF881 /* User.swift in Sources */,
+				932BADD929CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */,
 				6C78B7F729AF5ADB004BF881 /* MessageTextField.swift in Sources */,
 				6C78B7F829AF5ADB004BF881 /* TextAndImageView.swift in Sources */,
 				6C78B7F929AF5ADB004BF881 /* RoomEntity+CoreDataProperties.swift in Sources */,
@@ -2882,6 +2896,7 @@
 				6C78B8D329AF5D89004BF881 /* CoreDataStack.swift in Sources */,
 				6C78B8D429AF5D89004BF881 /* String+Extension.swift in Sources */,
 				6C78B8D529AF5D89004BF881 /* AppRepository+Messages.swift in Sources */,
+				932BADDA29CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */,
 				6C78B8D629AF5D89004BF881 /* MessageRecordEntity+CoreDataClass.swift in Sources */,
 				6C78B8D729AF5D89004BF881 /* Int64+Extensions.swift in Sources */,
 				6C78B8D829AF5D89004BF881 /* AuthRequestModel.swift in Sources */,
@@ -2890,6 +2905,7 @@
 				6C78B8DB29AF5D89004BF881 /* EnumsShared.swift in Sources */,
 				6C78B8DC29AF5D89004BF881 /* DeliveredRequestModel.swift in Sources */,
 				6C78B8DD29AF5D89004BF881 /* AppRepository+File.swift in Sources */,
+				932BADDE29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
 				6C78B8DE29AF5D89004BF881 /* SyncMessagesResponseModel.swift in Sources */,
 				6C78B8DF29AF5D89004BF881 /* AppRepository+Sync.swift in Sources */,
 				6C78B8E029AF5D89004BF881 /* UserEntity+CoreDataProperties.swift in Sources */,
@@ -2962,6 +2978,7 @@
 				9324B252281BDEFD00E7D76D /* CoreDataStack.swift in Sources */,
 				931B151328211B3F00A0CD35 /* String+Extension.swift in Sources */,
 				931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */,
+				932BADD829CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */,
 				934F036C282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift in Sources */,
 				939AAE4428F6613D00DD5142 /* Int64+Extensions.swift in Sources */,
 				931B14F428211AC100A0CD35 /* AuthRequestModel.swift in Sources */,
@@ -2970,6 +2987,7 @@
 				93BF627628EB9B7900B48BBF /* EnumsShared.swift in Sources */,
 				931B15162821291400A0CD35 /* DeliveredRequestModel.swift in Sources */,
 				93CF47412963287A00213DBE /* AppRepository+File.swift in Sources */,
+				932BADDC29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
 				939B304B2850E01800FFA537 /* SyncMessagesResponseModel.swift in Sources */,
 				93D4034D29245B5400DC77D3 /* AppRepository+Sync.swift in Sources */,
 				931B151128211ACB00A0CD35 /* UserEntity+CoreDataProperties.swift in Sources */,
@@ -3036,6 +3054,7 @@
 				9364873528B8E5D00069D538 /* FileMessageTableViewCell.swift in Sources */,
 				9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */,
 				6C0AA21E2966D55D00E87304 /* Publisher+Extensions.swift in Sources */,
+				932BADDB29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
 				93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */,
 				93227E9827D6ED70002E3DED /* SendMessageRequest.swift in Sources */,
 				939AAE4228F6308100DD5142 /* MessageRecord.swift in Sources */,
@@ -3126,6 +3145,7 @@
 				ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */,
 				9335E3F5297F4CD0005CDBA0 /* DeletedMessageTableViewCell.swift in Sources */,
 				EAFA8B94280EFFD200F9B321 /* User.swift in Sources */,
+				932BADD729CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */,
 				AD9E39052726CD2000DC5D43 /* MessageTextField.swift in Sources */,
 				6C5A01C6298C096900BF4A01 /* TextAndImageView.swift in Sources */,
 				9362B48E28623A44009F617D /* RoomEntity+CoreDataProperties.swift in Sources */,

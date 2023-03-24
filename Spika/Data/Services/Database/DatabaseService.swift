@@ -373,8 +373,12 @@ extension DatabaseService {
                 
                 for message in messages {
                     _ = MessageEntity(message: message, context: context)
+                    
+                    if message.type != .text {
+                        
+                    }
                 }
-                // TODO: - dbr add last timestamp
+                // TODO: - dbr add last timestamp, group
                 if let lastMessage = messages.max(by: { $0.createdAt < $1.createdAt }) {
                     self?.updateRoomLastMessageTimestamp(context: context, roomId: lastMessage.roomId, timestamp: lastMessage.createdAt)
                 }

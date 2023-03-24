@@ -23,7 +23,6 @@ class SSE {
     }
     
     func startSSEAndSync() {
-        changeIndicatorColor(to: .appOrange)
         if eventSource == nil {
             setupSSE()
         }
@@ -42,7 +41,7 @@ class SSE {
         syncMessageRecords()
     }
 }
-
+// TIMESTAMPS ARE WRONG HANDLED
 private extension SSE {
     
     func startSSEConnection(){
