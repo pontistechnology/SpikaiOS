@@ -40,7 +40,6 @@ extension DatabaseService {
                 do {
                     let userEntities = try context.fetch(fetchRequest)
                     let users = userEntities.map{ User(entity: $0) }
-//                    print("userentities count: ", userEntities.count, "users", users)
                     promise(.success(users.compactMap{ $0 }))
                 } catch {
                     print("Error loading: ", error)
@@ -49,7 +48,7 @@ extension DatabaseService {
             }
         }
     }
-    
+     // meaningless
     func saveUser(_ user: User) -> Future<User, Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { context in
@@ -108,6 +107,7 @@ extension DatabaseService {
         }
     }
     
+    // TODO: - check
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { context in
@@ -151,7 +151,7 @@ extension DatabaseService {
                         promise(.failure(DatabaseError.moreThanOne))
                     } else {
                         guard let userEntity = dbUsers.first else {
-                            print("GUARD getUser(UserEntityService) error: ")
+                            print("GUARD getLocalUser(withId id: Int64) error: ")
                             promise(.failure(DatabaseError.unknown))
                             return
                         }
@@ -254,8 +254,8 @@ extension DatabaseService {
         else {
             return nil
         }
-        return userEntities.map { userEntity in
-            User(entity: userEntity)
+        return userEntities.map {
+            User(entity: $0)
         }
     }
         
@@ -369,6 +369,12 @@ extension DatabaseService {
                     
                     if let thumb = message.body?.thumb {
                         _ = FileEntity(file: thumb, context: context)
+                    }
+                    
+                    if let records = message.records {
+                        records.forEach { record in
+                            _ = MessageRecordEntity(record: record, context: context)
+                        }
                     }
                 }
                 // TODO: - dbr add last timestamp, group
