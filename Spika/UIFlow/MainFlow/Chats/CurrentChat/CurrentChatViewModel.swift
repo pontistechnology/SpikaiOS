@@ -590,3 +590,15 @@ extension CurrentChatViewModel {
             }.store(in: &subscriptions)
     }
 }
+
+extension CurrentChatViewModel {
+    func getMessage(entity: MessageEntity) -> Message {
+        let fileData = repository.getFileData(id: entity.bodyFileId)
+        let thumbData = repository.getFileData(id: entity.bodyThumbId)
+        
+        return Message(messageEntity: entity,
+                       fileData: fileData,
+                       thumbData: thumbData,
+                       records: []) // TODO: - add records
+    }
+}

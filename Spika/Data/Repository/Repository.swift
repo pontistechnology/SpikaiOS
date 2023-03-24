@@ -110,6 +110,8 @@ protocol Repository {
 //    func getMessages(forRoomId: Int64) -> Future<[Message], Error>
     func getLastMessage(roomId: Int64) -> Message?
     func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error>
+    // TODO: move
+    func getFileData(id: Int64) -> FileData?
     
     // MARK: COREDATA: Room
     

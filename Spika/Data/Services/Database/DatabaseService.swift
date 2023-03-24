@@ -374,8 +374,12 @@ extension DatabaseService {
                 for message in messages {
                     _ = MessageEntity(message: message, context: context)
                     
-                    if message.type != .text {
-                        
+                    if let file = message.body?.file {
+                        _ = FileEntity(file: file, context: context)
+                    }
+                    
+                    if let thumb = message.body?.thumb {
+                        _ = FileEntity(file: thumb, context: context)
                     }
                 }
                 // TODO: - dbr add last timestamp, group
@@ -432,7 +436,20 @@ extension DatabaseService {
         fr.fetchLimit = 1
         fr.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         guard let entity = try? coreDataStack.mainMOC.fetch(fr).first else { return nil}
-        return Message(messageEntity: entity, records: [])
+        
+        return Message(messageEntity: entity,
+                       fileData: getFileData(id: entity.bodyFileId),
+                       thumbData: getFileData(id: entity.bodyThumbId),
+                       records: [])
+    }
+    
+    func getFileData(id: Int64) -> FileData? {
+        let fr = FileEntity.fetchRequest()
+        fr.predicate = NSPredicate(format: "id == %d", id)
+        guard let entity = try? coreDataStack.mainMOC.fetch(fr).first else {
+            return nil
+        }
+        return FileData(entity: entity)
     }
     
     func getNotificationInfoForMessage(message: Message) -> Future<MessageNotificationInfo, Error> {
