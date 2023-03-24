@@ -154,7 +154,7 @@ extension AppRepository {
         return targetURL
     }
     
-    func getFileData(id: Int64) -> FileData? {
+    func getFileData(id: String?) -> FileData? {
         databaseService.getFileData(id: id)
     }
 }

@@ -443,9 +443,10 @@ extension DatabaseService {
                        records: [])
     }
     
-    func getFileData(id: Int64) -> FileData? {
+    func getFileData(id: String?) -> FileData? {
+        guard let id = id else { return nil }
         let fr = FileEntity.fetchRequest()
-        fr.predicate = NSPredicate(format: "id == %d", id)
+        fr.predicate = NSPredicate(format: "id == %@", id)
         guard let entity = try? coreDataStack.mainMOC.fetch(fr).first else {
             return nil
         }

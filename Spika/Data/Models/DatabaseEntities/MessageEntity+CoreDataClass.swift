@@ -55,11 +55,11 @@ public class MessageEntity: NSManagedObject {
         }
         
         if let fileId = message.body?.file?.id {
-            self.bodyFileId = fileId
+            self.bodyFileId = "\(fileId)"
         }
         
         if let thumbId = message.body?.thumb?.id {
-            self.bodyThumbId = thumbId
+            self.bodyThumbId = "\(thumbId)"
         }
 
         self.replyId = "\(message.replyId ?? -1)"

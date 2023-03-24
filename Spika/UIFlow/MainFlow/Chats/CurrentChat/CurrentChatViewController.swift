@@ -86,10 +86,7 @@ extension CurrentChatViewController {
               let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
               let entity = frc?.object(at: indexPath)
         else { return }
-        let message = Message(messageEntity: entity,
-                              fileData: viewModel.repository.getFileData(id: entity.bodyFileId),
-                              thumbData: viewModel.repository.getFileData(id: entity.bodyThumbId),
-                              records: []) // TODO: - dbr add records
+        let message = viewModel.getMessage(entity: entity)
         guard !message.deleted else { return }
         viewModel.showMessageActions(message)
     }

@@ -111,7 +111,7 @@ protocol Repository {
     func getLastMessage(roomId: Int64) -> Message?
     func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error>
     // TODO: move
-    func getFileData(id: Int64) -> FileData?
+    func getFileData(id: String?) -> FileData?
     
     // MARK: COREDATA: Room
     
