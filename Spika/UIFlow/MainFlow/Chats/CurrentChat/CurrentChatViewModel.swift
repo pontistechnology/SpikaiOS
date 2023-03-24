@@ -16,11 +16,13 @@ class CurrentChatViewModel: BaseViewModel {
     
     var frc: NSFetchedResultsController<MessageEntity>?
     let friendUser: User?
-    var room: Room? {
-        didSet {
-            self.updateIsMember()
-        }
-    }
+    var room: Room
+//    {
+        // MOVE
+//        didSet {
+//            self.updateIsMember()
+//        }
+//    }
     let roomPublisher = PassthroughSubject<Room, Error>()
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
@@ -31,11 +33,11 @@ class CurrentChatViewModel: BaseViewModel {
     
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
     
-    init(repository: Repository, coordinator: Coordinator, friendUser: User) {
-        self.friendUser = friendUser
-        super.init(repository: repository, coordinator: coordinator)
-        self.setupBinding()
-    }
+//    init(repository: Repository, coordinator: Coordinator, friendUser: User) {
+//        self.friendUser = friendUser
+//        super.init(repository: repository, coordinator: coordinator)
+//        self.setupBinding()
+//    }
     
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
@@ -50,9 +52,9 @@ class CurrentChatViewModel: BaseViewModel {
             .receive(on: DispatchQueue.main)
             .map { [weak self] blockedUsers in
                 guard let blockedUsers = blockedUsers,
-                      self?.room?.type == .privateRoom else { return false }
+                      self?.room.type == .privateRoom else { return false }
                 
-                let roomUserIds = self?.room?.users.map { $0.userId } ?? []
+                let roomUserIds = self?.room.users.map { $0.userId } ?? []
                 return Set(blockedUsers).intersection(Set(roomUserIds)).count > 0
             }
             .subscribe(self.isBlocked)
@@ -62,10 +64,10 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func setupShouldOfferBlockBinding() {
-        guard self.room?.users.count == 2 else { return }
+        guard self.room.users.count == 2 else { return }
         
         let ownId = self.repository.getMyUserId()
-        guard let contact = self.room?.users.first(where: { roomUser in
+        guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
         
@@ -92,7 +94,7 @@ class CurrentChatViewModel: BaseViewModel {
     
     func unblockUser() {
         let ownId = self.repository.getMyUserId()
-        guard let contact = self.room?.users.first(where: { roomUser in
+        guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
         self.repository.unblockUser(userId: contact.userId)
@@ -109,7 +111,7 @@ class CurrentChatViewModel: BaseViewModel {
     
     func blockUser() {
         let ownId = self.repository.getMyUserId()
-        guard let contact = self.room?.users.first(where: { roomUser in
+        guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
         self.repository.blockUser(userId: contact.userId)
@@ -126,7 +128,7 @@ class CurrentChatViewModel: BaseViewModel {
     
     func userConfirmed() {
         let ownId = self.repository.getMyUserId()
-        guard let contact = self.room?.users.first(where: { roomUser in
+        guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
         
@@ -142,7 +144,7 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func updateIsMember() {
-        let ids = self.room?.users.map { $0.userId } ?? []
+        let ids = self.room.users.map { $0.userId } ?? []
         let ownId = self.getMyUserId()
         self.isMember.send(ids.contains(ownId))
     }
@@ -156,12 +158,7 @@ extension CurrentChatViewModel {
     }
     
     func presentMessageDetails(records: [MessageRecord]) {
-        guard let roomUsers = room?.users else {
-            return
-        }
-        let users = roomUsers.compactMap { roomUser in
-            roomUser.user
-        }
+        let users = room.users.compactMap { $0.user }
         getAppCoordinator()?.presentMessageDetails(users: users, records: records)
     }
     
@@ -182,8 +179,7 @@ extension CurrentChatViewModel {
     }
     
     func showReactions(records: [MessageRecord]) {
-        guard let roomUsers = room?.users else { return }
-        let users = roomUsers.compactMap { roomUser in
+        let users = room.users.compactMap { roomUser in
             roomUser.user
         }
         getAppCoordinator()?.presentReactionsSheet(users: users, records: records)
@@ -245,111 +241,13 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-    
-    func checkLocalRoom() {
-        if let room = room {
-            roomPublisher.send(room)
-        } else if let friendUser = friendUser {
-            repository.checkLocalRoom(forUserId: friendUser.id).sink { [weak self] completion in
-                guard let self else { return }
-                switch completion {
-                case .finished:
-                    break
-                case .failure(_):
-                    print("no local room")
-                    self.checkOnlineRoom()
-                }
-            } receiveValue: { [weak self] room in
-                guard let self else { return }
-                self.room = room
-                self.roomPublisher.send(room)
-            }.store(in: &subscriptions)
-        }
-    }
-    
-    func checkOnlineRoom()  {
-        guard let friendUser = friendUser else { return }
-        networkRequestState.send(.started())
-        
-        repository.checkOnlineRoom(forUserId: friendUser.id).sink { [weak self] completion in
-            guard let self else { return }
-            switch completion {
-            case .finished:
-                print("online check finished")
-            case .failure(let error):
-                self.showError(error.localizedDescription)
-                self.networkRequestState.send(.finished)
-                // TODO: publish error
-            }
-        } receiveValue: { [weak self] response in
-            
-            guard let self else { return }
-            
-            if let room = response.data?.room {
-                print("There is online room.")
-                self.saveLocalRoom(room: room)
-                self.networkRequestState.send(.finished)
-            } else {
-                print("There is no online room, creating started...")
-                self.createRoom(userId: friendUser.id)
-            }
-        }.store(in: &subscriptions)
-    }
-    
-    func saveLocalRoom(room: Room) {
-        repository.saveLocalRooms(rooms: [room]).sink { [weak self] completion in
-            guard let _ = self else { return }
-            switch completion {
-                
-            case .finished:
-                print("saved to local DB")
-            case .failure(_):
-                print("saving to local DB failed")
-            }
-        } receiveValue: { [weak self] rooms in
-            guard let self,
-                  let room = rooms.first
-            else { return }
-            self.room = room
-            self.roomPublisher.send(room)
-        }.store(in: &subscriptions)
-    }
-    
-    func createRoom(userId: Int64) {
-        networkRequestState.send(.started())
-        repository.createOnlineRoom(userId: userId).sink { [weak self] completion in
-            guard let self else { return }
-            self.networkRequestState.send(.finished)
-            
-            switch completion {
-            case .finished:
-                print("private room created")
-            case .failure(let error):
-                self.showError(error.localizedDescription)
-                // TODO: present dialog and return? publish error
-            }
-        } receiveValue: { [weak self] response in
-            guard let self else { return }
-            print("creating room response: ", response)
-            if let errorMessage = response.message {
-                //                PopUpManager.shared.presentAlert(with: (title: "Error", message: errorMessage), orientation: .horizontal, closures: [("Ok", {
-                //                    self.getAppCoordinator()?.popTopViewController()
-                //                })]) // TODO: - check
-            }
-            guard let room = response.data?.room else { return }
-            self.saveLocalRoom(room: room)
-        }.store(in: &subscriptions)
-    }
-    
-    func roomVisited(roomId: Int64) {
-        repository.roomVisited(roomId: roomId)
+    func roomVisited() {
+        repository.roomVisited(roomId: room.id)
     }
 }
 
 extension CurrentChatViewModel {
     func trySendMessage(text: String) {
-        guard let room = self.room else { return }
-        print("ROOM: ", room)
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
                               fromUserId: getMyUserId(),
@@ -372,8 +270,6 @@ extension CurrentChatViewModel {
     
     
     func sendMessage(body: RequestMessageBody, localId: String, type: MessageType, replyId: Int64?) {
-        guard let room = self.room else { return }
-        
         self.repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, replyId: replyId).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
@@ -403,7 +299,7 @@ extension CurrentChatViewModel {
 
 extension CurrentChatViewModel {
     func getUser(for id: Int64) -> User? {
-        return room?.users.first(where: { roomUser in
+        return room.users.first(where: { roomUser in
             roomUser.userId == id
         })?.user
     }
@@ -411,8 +307,7 @@ extension CurrentChatViewModel {
 
 extension CurrentChatViewModel {
     func sendSeenStatus() {
-        guard let roomId = room?.id else { return }
-        repository.sendSeenStatus(roomId: roomId).sink { c in
+        repository.sendSeenStatus(roomId: room.id).sink { c in
             
         } receiveValue: { [weak self] response in
             guard let messageRecords = response.data?.messageRecords else { return }
@@ -470,7 +365,6 @@ extension CurrentChatViewModel {
     }
     
     func sendFile(file: SelectedFile) {
-        guard let room = room else { return }
         let uuid = file.localId
         
         let message = Message(createdAt: Date().currentTimeMillis(),
@@ -632,7 +526,6 @@ extension CurrentChatViewModel {
 
 extension CurrentChatViewModel {
     func setFetch() {
-        guard let room = room else { return }
         let fetchRequest = MessageEntity.fetchRequest()
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: "createdDate", ascending: true),
@@ -652,7 +545,7 @@ extension CurrentChatViewModel {
             fatalError("Failed to fetch entities: \(error)") // TODO: handle error
         }
         
-        roomVisited(roomId: room.id)
+        roomVisited()
         
         // TODO: - refactor, move
         let userId = getMyUserId()

@@ -187,7 +187,7 @@ extension DatabaseService {
                 let possibleRoomsIds = roomUsers.map { $0.roomId }
                 let roomFR = RoomEntity.fetchRequest()
                 roomFR.predicate = NSPredicate(format: "type == 'private' AND roomId IN %@",
-                                               "\(possibleRoomsIds)") // check string id int
+                                               possibleRoomsIds) // check string id int
                 guard let rooms = try? context.fetch(roomFR),
                       rooms.count == 1,
                       let roomEntity = rooms.first,

@@ -42,10 +42,9 @@ class CurrentChatViewController: BaseViewController {
         setupView(currentChatView)
         setupNavigationItems()
         setupBindings()
-        checkRoom()
         addSubviews()
         positionSubviews()
-        self.navigationItem.backButtonTitle = self.viewModel.room?.name
+        self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,8 +53,7 @@ class CurrentChatViewController: BaseViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        guard let room = viewModel.room else { return }
-        viewModel.roomVisited(roomId: room.id)
+        viewModel.roomVisited()
     }
     
     func addSubviews() {
@@ -76,10 +74,6 @@ class CurrentChatViewController: BaseViewController {
 // MARK: Functions
 
 extension CurrentChatViewController {
-    func checkRoom() {
-        viewModel.checkLocalRoom()
-    }
-    
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         let tableView = currentChatView.messagesTableView
         guard sender.state == .began,
@@ -93,7 +87,6 @@ extension CurrentChatViewController {
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
         
-        viewModel.frc?.delegate = self
         sink(networkRequestState: viewModel.networkRequestState)
         
         currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
@@ -106,7 +99,7 @@ extension CurrentChatViewController {
                 self?.currentChatView.messageInputView.hideReplyView()
                 return
             }
-            let senderName = self?.viewModel.room?.getDisplayNameFor(userId: selectedMessage.fromUserId)
+            let senderName = self?.viewModel.room.getDisplayNameFor(userId: selectedMessage.fromUserId) // todo function
             self?.currentChatView
                 .messageInputView
                 .showReplyView(senderName: senderName ?? .getStringFor(.unknown),
@@ -121,6 +114,7 @@ extension CurrentChatViewController {
             } receiveValue: { [weak self] room in
                 guard let self else { return }
                 self.viewModel.setFetch()
+                self.viewModel.frc?.delegate = self
                 self.currentChatView.messagesTableView.reloadData()
                 self.currentChatView.messagesTableView.layoutIfNeeded()
                 self.currentChatView.messagesTableView.scrollToBottom(.force)
@@ -393,9 +387,9 @@ extension CurrentChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let message = viewModel.getMessage(for: indexPath),
-              let roomType = viewModel.room?.type
+        guard let message = viewModel.getMessage(for: indexPath)
         else { return EmptyTableViewCell()}
+        let roomType = viewModel.room.type
 
         let myUserId = viewModel.getMyUserId()
         
@@ -424,7 +418,7 @@ extension CurrentChatViewController: UITableViewDataSource {
            let repliedMessageIndexPath = viewModel.getIndexPathFor(messageId: replyId),
            let repliedMessage = viewModel.getMessage(for: repliedMessageIndexPath)
         {
-            let senderName = viewModel.room?.getDisplayNameFor(userId: repliedMessage.fromUserId)
+            let senderName = viewModel.room.getDisplayNameFor(userId: repliedMessage.fromUserId)
             cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown),
                                message: repliedMessage,
                                sender: senderType)
@@ -465,11 +459,11 @@ extension CurrentChatViewController {
         navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
         
-        if viewModel.room?.type == .privateRoom {
+        if viewModel.room.type == .privateRoom {
             friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarFileId?.fullFilePathFromId(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
         } else {
-            friendInfoView.change(avatarUrl: viewModel.room?.avatarFileId?.fullFilePathFromId(),
-                                  name: viewModel.room?.name,
+            friendInfoView.change(avatarUrl: viewModel.room.avatarFileId?.fullFilePathFromId(),
+                                  name: viewModel.room.name,
                                   lastSeen: .getStringFor(.today))
         }
         
@@ -479,9 +473,7 @@ extension CurrentChatViewController {
     }
     
     @objc func onChatDetails() {
-        guard let room = self.viewModel.room else { return }
-        let publisher = CurrentValueSubject<Room,Never>(room)
-        
+        let publisher = CurrentValueSubject<Room,Never>(viewModel.room)
         publisher.sink { [weak self] newRoom in
             self?.viewModel.room = newRoom
         }.store(in: &self.subscriptions)
@@ -526,10 +518,10 @@ extension CurrentChatViewController {
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let message = viewModel.getMessage(for: indexPath) else { return nil }
         guard !message.deleted else { return nil }
-        
+        //  TODO: refacotr
         let firstLeft = UIContextualAction(style: .normal, title: .getStringFor(.reply)) { [weak self] (action, view, completionHandler) in
 
-            let senderName = self?.viewModel.room?.getDisplayNameFor(userId: message.fromUserId)
+            let senderName = self?.viewModel.room.getDisplayNameFor(userId: message.fromUserId)
             self?.viewModel.selectedMessageToReplyPublisher.send(message)
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
             completionHandler(true)

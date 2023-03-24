@@ -60,7 +60,7 @@ class DetailsViewController: BaseViewController {
         
         detailsView.contentView.messageButton.tap().sink { [weak self] _ in
             guard let self else { return }
-            self.viewModel.presentCurrentChatScreen(user: self.viewModel.user)
+            self.viewModel.presentCurrentChatScreen()
         }.store(in: &subscriptions)
         
         viewModel.userSubject.receive(on: DispatchQueue.main).sink { [weak self] user in
