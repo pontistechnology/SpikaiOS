@@ -18,13 +18,13 @@ class DetailsViewModel: BaseViewModel {
         self.user = user
         self.userSubject = CurrentValueSubject<User, Never>(user)
         super.init(repository: repository, coordinator: coordinator)
-        checkLocalRoom()
+        checkLocalPrivateRoom()
     }
 }
 
 private extension DetailsViewModel {
-    func checkLocalRoom() {
-        repository.checkLocalRoom(forUserId: user.id).sink { [weak self] completion in
+    func checkLocalPrivateRoom() {
+        repository.checkLocalPrivateRoom(forUserId: user.id).sink { [weak self] completion in
             guard let self else { return }
             switch completion {
             case .finished:

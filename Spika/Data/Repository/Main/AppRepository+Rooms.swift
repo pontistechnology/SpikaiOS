@@ -275,8 +275,8 @@ extension AppRepository {
     
     // MARK: Database
     
-    func checkLocalRoom(forUserId id: Int64) -> Future<Room, Error>{
-        return databaseService.getRoom(forUserId: id)
+    func checkLocalPrivateRoom(forUserId id: Int64) -> Future<Room, Error>{
+        return databaseService.getPrivateRoom(forUserId: id)
     }
     
     func getRoomWithId(forRoomId id: Int64) -> Future<Room, Error>{

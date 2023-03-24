@@ -169,7 +169,7 @@ extension DatabaseService {
 // MARK: - Room
 
 extension DatabaseService {
-    func getRoom(forUserId id: Int64) -> Future<Room, Error> {
+    func getPrivateRoom(forUserId id: Int64) -> Future<Room, Error> {
         Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 guard let self else { return }
