@@ -173,10 +173,10 @@ extension DatabaseService {
         Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 guard let self else { return }
-                // TODO: - dbr
+
                 // find all roomUsers
                 let roomUsersFR = RoomUserEntity.fetchRequest()
-                roomUsersFR.predicate = NSPredicate(format: "userId == %d", id) // check
+                roomUsersFR.predicate = NSPredicate(format: "userId == %d", id)
                 guard let roomUsers = try? context.fetch(roomUsersFR)
                 else {
                     promise(.failure(DatabaseError.noSuchRecord)) // check
@@ -186,32 +186,18 @@ extension DatabaseService {
                 // find all private rooms with this users, should always be only one
                 let possibleRoomsIds = roomUsers.map { $0.roomId }
                 let roomFR = RoomEntity.fetchRequest()
-                roomFR.predicate = NSPredicate(format: "type == 'private' AND roomId IN %@",
-                                               possibleRoomsIds) // check string id int
+                roomFR.predicate = NSPredicate(format: "type == 'private' AND id IN %@",
+                                               possibleRoomsIds)
                 guard let rooms = try? context.fetch(roomFR),
                       rooms.count == 1,
                       let roomEntity = rooms.first,
-                      let roomUserEntity = roomUsers.first(where: { $0.roomId == roomEntity.id })
+                      let roomUsers = self.getRoomUsers(roomId: roomEntity.id, context: context) // get all RoomUsers for room, should be always be 2, roomUserEntity and my user
                 else {
                     promise(.failure(DatabaseError.moreThanOne)) // check zero
                     return
                 }
                 
-                // fetch user with user id
-                guard let users = self.getUsers(id: [roomUserEntity.userId], context: context),
-                      users.count == 1,
-                      let user = users.first
-                else {
-                    promise(.failure(DatabaseError.moreThanOne)) // check user
-                    return
-                }
-                
-                // convert from coredata entites to structs and return
-                let roomUser = RoomUser(roomUserEntity: roomUserEntity,
-                                        user: user)
-                
-                let room = Room(roomEntity: roomEntity, users: [roomUser]) // TODO: - dbr add me to list
-                
+                let room = Room(roomEntity: roomEntity, users: roomUsers)
                 promise(.success(room))
             }
         }
@@ -248,7 +234,7 @@ extension DatabaseService {
         }
         
         // fetch all [User] from database
-        let users = getUsers(id: roomUserEntities.map({ $0.userId}), context: context)
+        let users = getUsers(id: roomUserEntities.map({ $0.userId }), context: context)
         
         // return [RoomUser], should be same count as [RoomUserEntity]
         
@@ -261,7 +247,6 @@ extension DatabaseService {
         }
     }
     
-    // copy exist
     private func getUsers(id: [Int64], context: NSManagedObjectContext) -> [User]? {
         let usersFR = UserEntity.fetchRequest()
         usersFR.predicate = NSPredicate(format: "id IN %@", id) // check
@@ -281,6 +266,10 @@ extension DatabaseService {
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for room in rooms {
                     let _ = RoomEntity(room: room, context: context)
+                    for roomUser in room.users {
+                        _ = RoomUserEntity(roomUser: roomUser, insertInto: context)
+                        _ = UserEntity(user: roomUser.user, context: context)
+                    }
                 }
                 do {
                     try context.save()
