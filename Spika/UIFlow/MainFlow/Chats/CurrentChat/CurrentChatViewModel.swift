@@ -14,6 +14,7 @@ import PhotosUI
 
 class CurrentChatViewModel: BaseViewModel {
     
+    var frc: NSFetchedResultsController<MessageEntity>?
     let friendUser: User?
     var room: Room? {
         didSet {
@@ -189,6 +190,7 @@ extension CurrentChatViewModel {
     }
     
     func showMessageActions(_ message: Message) {
+        guard !message.deleted else { return }
         getAppCoordinator()?
             .presentMessageActionsSheet()
             .sink(receiveValue: { [weak self] action in
@@ -592,7 +594,18 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-    func getMessage(entity: MessageEntity) -> Message {
+//    func getMessage(entity: MessageEntity) -> Message {
+//        let fileData = repository.getFileData(id: entity.bodyFileId)
+//        let thumbData = repository.getFileData(id: entity.bodyThumbId)
+//        
+//        return Message(messageEntity: entity,
+//                       fileData: fileData,
+//                       thumbData: thumbData,
+//                       records: [])
+//    }
+    
+    func getMessage(for indexPath: IndexPath) -> Message? {
+        guard let entity = frc?.object(at: indexPath) else { return nil }
         let fileData = repository.getFileData(id: entity.bodyFileId)
         let thumbData = repository.getFileData(id: entity.bodyThumbId)
         
@@ -600,5 +613,89 @@ extension CurrentChatViewModel {
                        fileData: fileData,
                        thumbData: thumbData,
                        records: []) // TODO: - add records
+    }
+    
+    func getIndexPathFor(localId: String) -> IndexPath? {
+        guard let entity = frc?.fetchedObjects?.first(where: { $0.localId == localId })
+        else { return nil }
+        return frc?.indexPath(forObject: entity)
+    }
+    
+    func getIndexPathFor(messageId id: Int64) -> IndexPath? {
+        guard let entity = frc?.fetchedObjects?.first(where: { $0.id == "\(id)" })
+        else { return nil }
+        return frc?.indexPath(forObject: entity)
+    }
+}
+
+// FRC stuff
+
+extension CurrentChatViewModel {
+    func setFetch() {
+        guard let room = room else { return }
+        let fetchRequest = MessageEntity.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "createdDate", ascending: true),
+            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "roomId == %d", room.id)
+        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                              managedObjectContext: repository.getMainContext(),
+                                              sectionNameKeyPath: "sectionName",
+                                              cacheName: nil)
+        do {
+            try self.frc?.performFetch()
+//            move
+//            self.currentChatView.messagesTableView.reloadData()
+//            self.currentChatView.messagesTableView.layoutIfNeeded()
+//            self.currentChatView.messagesTableView.scrollToBottom(.force)
+        } catch {
+            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
+        }
+        
+        roomVisited(roomId: room.id)
+        
+        // TODO: - refactor, move
+        let userId = getMyUserId()
+        guard let messages = self.frc?.sections?.first?.objects as? [MessageEntity],
+              let _ = messages.first(where: { message in
+                  message.fromUserId == userId
+              }) else {
+            userRepliedInChat.send(false)
+            return
+        }
+    }
+    
+    func getNameForSection(section: Int) -> String? {
+        guard let sections = frc?.sections else { return nil }
+        var name = sections[section].name
+        if let time = (sections[section].objects?.first as? MessageEntity)?.createdAt {
+            name.append(", ")
+            name.append(time.convert(to: .HHmm))
+        }
+        return name
+    }
+    
+    func isPreviousCellMine(for indexPath: IndexPath) -> Bool {
+        let previousRow = indexPath.row - 1
+        if previousRow >= 0 {
+            let currentMessageEntity  = frc?.object(at: indexPath)
+            let previousMessageEntity = frc?.object(at: IndexPath(row: previousRow,
+                                                                  section: indexPath.section))
+            return currentMessageEntity?.fromUserId == previousMessageEntity?.fromUserId
+        }
+        return false
+    }
+    
+    func isNextCellMine(for indexPath: IndexPath) -> Bool {
+        guard let sections = frc?.sections else { return true }
+        let maxRowsIndex = sections[indexPath.section].numberOfObjects - 1
+        let nextRow = indexPath.row + 1
+        if nextRow <= maxRowsIndex {
+            let currentMessageEntity  = frc?.object(at: indexPath)
+            let nextMessageEntity = frc?.object(at: IndexPath(row: nextRow,
+                                                              section: indexPath.section))
+            return currentMessageEntity?.fromUserId == nextMessageEntity?.fromUserId
+        }
+        return false
     }
 }

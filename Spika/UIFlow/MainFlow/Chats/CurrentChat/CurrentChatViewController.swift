@@ -30,7 +30,7 @@ class CurrentChatViewController: BaseViewController {
     let chatBlockingView = ChatBlockingView()
     var viewModel: CurrentChatViewModel!
     private let friendInfoView = ChatNavigationBarView()
-    private var frc: NSFetchedResultsController<MessageEntity>?
+    
     private let audioPlayer = AudioPlayer()
     private var audioSubscribe: AnyCancellable?
     
@@ -84,16 +84,16 @@ extension CurrentChatViewController {
         let tableView = currentChatView.messagesTableView
         guard sender.state == .began,
               let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
-              let entity = frc?.object(at: indexPath)
+              let message = viewModel.getMessage(for: indexPath)
         else { return }
-        let message = viewModel.getMessage(entity: entity)
-        guard !message.deleted else { return }
         viewModel.showMessageActions(message)
     }
     
     func setupBindings() {
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
+        
+        viewModel.frc?.delegate = self
         sink(networkRequestState: viewModel.networkRequestState)
         
         currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
@@ -120,7 +120,10 @@ extension CurrentChatViewController {
             .sink { _ in
             } receiveValue: { [weak self] room in
                 guard let self else { return }
-                self.setFetch(room: room)
+                self.viewModel.setFetch()
+                self.currentChatView.messagesTableView.reloadData()
+                self.currentChatView.messagesTableView.layoutIfNeeded()
+                self.currentChatView.messagesTableView.scrollToBottom(.force)
                 self.setupNavigationItems()
                 self.viewModel.sendSeenStatus()
             }.store(in: &self.subscriptions)
@@ -137,18 +140,16 @@ extension CurrentChatViewController {
                 
                 switch frcChange {
                 case .insert(indexPath: let indexPath):
-                    guard let messageEntity = self.frc?.object(at: indexPath) else { return }
-                    self.handleScroll(isMyMessage: messageEntity.fromUserId == self.viewModel.getMyUserId())
+                    guard let message = self.viewModel.getMessage(for: indexPath) else { return }
+                    self.handleScroll(isMyMessage: message.fromUserId == self.viewModel.getMyUserId())
                 case .other:
                     break
                 }
             }.store(in: &subscriptions)
         
         self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (percent, file) in
-            guard let entity = self?.frc?.fetchedObjects?.first(where: { messageEntity in
-                messageEntity.localId == file?.localId
-            }),
-                  let indexPath = self?.frc?.indexPath(forObject: entity),
+            guard let localId = file?.localId,
+                  let indexPath = self?.viewModel.getIndexPathFor(localId: localId),
                   let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
             else { return }
             (cell as? BaseMessageTableViewCell)?.showUploadProgress(at: percent)
@@ -215,35 +216,6 @@ extension CurrentChatViewController {
 // MARK: - NSFetchedResultsController
 
 extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
-    
-    func setFetch(room: Room) {
-        let fetchRequest = MessageEntity.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "createdDate", ascending: true),
-            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
-        fetchRequest.predicate = NSPredicate(format: "roomId == %d", room.id)
-        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: "sectionName", cacheName: nil)
-        self.frc?.delegate = self
-        do {
-            try self.frc?.performFetch()
-            self.currentChatView.messagesTableView.reloadData()
-            self.currentChatView.messagesTableView.layoutIfNeeded()
-            self.currentChatView.messagesTableView.scrollToBottom(.force)
-        } catch {
-            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
-        }
-        
-        viewModel.roomVisited(roomId: room.id)
-        
-        let userId = self.viewModel.getMyUserId()
-        guard let messages = self.frc?.sections?.first?.objects as? [MessageEntity],
-              let _ = messages.first(where: { message in
-                  message.fromUserId == userId
-              }) else {
-            self.viewModel.userRepliedInChat.send(false)
-            return
-        }
-    }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         currentChatView.messagesTableView.beginUpdates()
@@ -348,7 +320,7 @@ extension CurrentChatViewController {
             print("emoji in ccvc")
         case .scrollToReply:
             guard let selectedMessageId = viewModel.selectedMessageToReplyPublisher.value?.id,
-                  let indexPath = getIndexPathFor(messageId: selectedMessageId)
+                  let indexPath = viewModel.getIndexPathFor(messageId: selectedMessageId)
             else { return }
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .hideReply:
@@ -380,7 +352,7 @@ extension CurrentChatViewController {
             viewModel.showImage(message: message)
         case .scrollToReply:
             guard let replyId = message.replyId,
-                  let indexPath = getIndexPathFor(messageId: replyId)
+                  let indexPath = viewModel.getIndexPathFor(messageId: replyId)
             else { return }
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .showReactions:
@@ -412,20 +384,19 @@ extension CurrentChatViewController: UITableViewDelegate {
 extension CurrentChatViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.frc?.sections?.count ?? 0
+        return viewModel.frc?.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = self.frc?.sections else { return 0 }
+        guard let sections = viewModel.frc?.sections else { return 0 }
         return sections[section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let entity = frc?.object(at: indexPath),
+        guard let message = viewModel.getMessage(for: indexPath),
               let roomType = viewModel.room?.type
         else { return EmptyTableViewCell()}
 
-        let message = viewModel.getMessage(entity: entity)
         let myUserId = viewModel.getMyUserId()
         
         guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
@@ -434,10 +405,10 @@ extension CurrentChatViewController: UITableViewDataSource {
         else { return EmptyTableViewCell() }
         
         if let user = viewModel.getUser(for: message.fromUserId) {
-            if !isPreviousCellMine(for: indexPath) {
+            if !viewModel.isPreviousCellMine(for: indexPath) {
                 cell.updateSender(name: user.getDisplayName())
             }
-            if !isNextCellMine(for: indexPath) {
+            if !viewModel.isNextCellMine(for: indexPath) {
                 cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
             }
         }
@@ -450,17 +421,17 @@ extension CurrentChatViewController: UITableViewDataSource {
         // Do not add anything before this, because message can be deleted
         
         if let replyId = message.replyId, replyId >= 0,
-           let repliedMessageEntity = frc?.fetchedObjects?.first(where: { $0.id == "\(replyId)" })
+           let repliedMessageIndexPath = viewModel.getIndexPathFor(messageId: replyId),
+           let repliedMessage = viewModel.getMessage(for: repliedMessageIndexPath)
         {
-            let repliedMessage = viewModel.getMessage(entity: repliedMessageEntity)
             let senderName = viewModel.room?.getDisplayNameFor(userId: repliedMessage.fromUserId)
-            
             cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown),
                                message: repliedMessage,
                                sender: senderType)
         }
         
         if let reactionsRecords = message.getMessageReactionsRecords() {
+            // TODO: - dbr fetch only reactions
             cell.showReactions(reactionRecords: reactionsRecords)
         }
         
@@ -477,38 +448,10 @@ extension CurrentChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sections = self.frc?.sections else { return nil }
-        var name = sections[section].name
-        if let time = (sections[section].objects?.first as? MessageEntity)?.createdAt {
-            name.append(", ")
-            name.append(time.convert(to: .HHmm))
+        guard let nameOfSection = viewModel.getNameForSection(section: section) else {
+            return nil
         }
-        let dateLabel = CustomLabel(text: name, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
-        return dateLabel
-    }
-    
-    func isPreviousCellMine(for indexPath: IndexPath) -> Bool {
-        let previousRow = indexPath.row - 1
-        if previousRow >= 0 {
-            let currentMessageEntity  = frc?.object(at: indexPath)
-            let previousMessageEntity = frc?.object(at: IndexPath(row: previousRow,
-                                                                  section: indexPath.section))
-            return currentMessageEntity?.fromUserId == previousMessageEntity?.fromUserId
-        }
-        return false
-    }
-    
-    func isNextCellMine(for indexPath: IndexPath) -> Bool {
-        guard let sections = frc?.sections else { return true }
-        let maxRowsIndex = sections[indexPath.section].numberOfObjects - 1
-        let nextRow = indexPath.row + 1
-        if nextRow <= maxRowsIndex {
-            let currentMessageEntity  = frc?.object(at: indexPath)
-            let nextMessageEntity = frc?.object(at: IndexPath(row: nextRow,
-                                                              section: indexPath.section))
-            return currentMessageEntity?.fromUserId == nextMessageEntity?.fromUserId
-        }
-        return false
+        return CustomLabel(text: nameOfSection, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
     }
 }
 
@@ -559,12 +502,11 @@ extension CurrentChatViewController {
 extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let messageEntity = frc?.object(at: indexPath) else { return nil }
-        let message = viewModel.getMessage(entity: messageEntity)
+        guard let message = viewModel.getMessage(for: indexPath) else { return nil }
         guard !message.deleted,
               let records = message.records
         else { return nil}
-              
+        // TODO: - refactor this to seperate view
         let detailsAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
             self?.viewModel.presentMessageDetails(records: records)
             completionHandler(true)
@@ -582,8 +524,7 @@ extension CurrentChatViewController {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let messageEntity = frc?.object(at: indexPath) else { return nil }
-        let message = viewModel.getMessage(entity: messageEntity)
+        guard let message = viewModel.getMessage(for: indexPath) else { return nil }
         guard !message.deleted else { return nil }
         
         let firstLeft = UIContextualAction(style: .normal, title: .getStringFor(.reply)) { [weak self] (action, view, completionHandler) in
@@ -657,13 +598,5 @@ extension CurrentChatViewController: UIDocumentPickerDelegate {
     
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         controller.dismiss(animated: true)
-    }
-}
-
-extension CurrentChatViewController {
-    private func getIndexPathFor(messageId id: Int64) -> IndexPath? {
-        guard let entity = frc?.fetchedObjects?.first(where: { $0.id == "\(id)" })
-        else { return nil }
-        return frc?.indexPath(forObject: entity)
     }
 }
