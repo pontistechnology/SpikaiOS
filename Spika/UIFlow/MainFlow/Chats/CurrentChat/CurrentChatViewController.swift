@@ -86,6 +86,11 @@ extension CurrentChatViewController {
     func setupBindings() {
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
+        viewModel.setFetch()
+        viewModel.frc?.delegate = self
+        self.currentChatView.messagesTableView.reloadData()
+        self.currentChatView.messagesTableView.layoutIfNeeded()
+        self.currentChatView.messagesTableView.scrollToBottom(.force)
         
         sink(networkRequestState: viewModel.networkRequestState)
         
@@ -109,18 +114,17 @@ extension CurrentChatViewController {
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
-        viewModel.roomPublisher.receive(on: DispatchQueue.main)
-            .sink { _ in
-            } receiveValue: { [weak self] room in
-                guard let self else { return }
-                self.viewModel.setFetch()
-                self.viewModel.frc?.delegate = self
-                self.currentChatView.messagesTableView.reloadData()
-                self.currentChatView.messagesTableView.layoutIfNeeded()
-                self.currentChatView.messagesTableView.scrollToBottom(.force)
-                self.setupNavigationItems()
-                self.viewModel.sendSeenStatus()
-            }.store(in: &self.subscriptions)
+//        viewModel.roomPublisher.receive(on: DispatchQueue.main)
+//            .sink { _ in
+//            } receiveValue: { [weak self] room in
+//                guard let self else { return }
+//                self.viewModel.setFetch()
+//                self.viewModel.frc?.delegate = self
+//                self.currentChatView.messagesTableView.reloadData()
+//                self.currentChatView.messagesTableView.layoutIfNeeded()
+//                self.currentChatView.messagesTableView.scrollToBottom(.force)
+//                self.viewModel.sendSeenStatus()
+//            }.store(in: &self.subscriptions)
         
         currentChatView.downArrowImageView.tap().sink { [weak self] _ in
             self?.currentChatView.messagesTableView.scrollToBottom(.force)
@@ -473,7 +477,7 @@ extension CurrentChatViewController {
     }
     
     @objc func onChatDetails() {
-        let publisher = CurrentValueSubject<Room,Never>(viewModel.room)
+        let publisher = CurrentValueSubject<Room, Never>(viewModel.room)
         publisher.sink { [weak self] newRoom in
             self?.viewModel.room = newRoom
         }.store(in: &self.subscriptions)

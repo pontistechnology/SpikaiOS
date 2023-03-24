@@ -15,7 +15,6 @@ import PhotosUI
 class CurrentChatViewModel: BaseViewModel {
     
     var frc: NSFetchedResultsController<MessageEntity>?
-    let friendUser: User?
     var room: Room
 //    {
         // MOVE
@@ -23,7 +22,14 @@ class CurrentChatViewModel: BaseViewModel {
 //            self.updateIsMember()
 //        }
 //    }
-    let roomPublisher = PassthroughSubject<Room, Error>()
+    
+    var friendUser: User? {
+        if room.type == .privateRoom {
+            return room.users.first { $0.userId != repository.getMyUserId() }?.user
+        }
+        return nil
+    }
+    
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
     let isMember = CurrentValueSubject<Bool,Never>(true)
@@ -33,16 +39,8 @@ class CurrentChatViewModel: BaseViewModel {
     
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
     
-//    init(repository: Repository, coordinator: Coordinator, friendUser: User) {
-//        self.friendUser = friendUser
-//        super.init(repository: repository, coordinator: coordinator)
-//        self.setupBinding()
-//    }
-    
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
-        
-        self.friendUser = room.getFriendUserInPrivateRoom(myUserId: repository.getMyUserId())
         super.init(repository: repository, coordinator: coordinator)
         self.setupBinding()
     }
@@ -144,7 +142,7 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func updateIsMember() {
-        let ids = self.room.users.map { $0.userId } ?? []
+        let ids = self.room.users.map { $0.userId }
         let ownId = self.getMyUserId()
         self.isMember.send(ids.contains(ownId))
     }
@@ -488,15 +486,6 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-//    func getMessage(entity: MessageEntity) -> Message {
-//        let fileData = repository.getFileData(id: entity.bodyFileId)
-//        let thumbData = repository.getFileData(id: entity.bodyThumbId)
-//        
-//        return Message(messageEntity: entity,
-//                       fileData: fileData,
-//                       thumbData: thumbData,
-//                       records: [])
-//    }
     
     func getMessage(for indexPath: IndexPath) -> Message? {
         guard let entity = frc?.object(at: indexPath) else { return nil }
