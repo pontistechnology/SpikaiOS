@@ -20,6 +20,7 @@ extension MessageEntity {
     @NSManaged public var bodyFileId: String?
     @NSManaged public var bodyThumbId: String?
     @NSManaged public var createdAt: Int64
+    @NSManaged public var modifiedAt: Int64
     @NSManaged public var isRemoved: Bool
     @NSManaged public var deliveredCount: Int64
     @NSManaged public var fromUserId: Int64

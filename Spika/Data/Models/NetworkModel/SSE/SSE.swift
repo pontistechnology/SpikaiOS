@@ -36,7 +36,8 @@ class SSE {
     private func startSyncs() {
         syncRooms()
         syncUsers()
-        syncMessages()
+        syncModifiedMessages()
+        syncUndeliveredMessages()
         syncBlockedList()
         syncMessageRecords()
     }
@@ -86,13 +87,13 @@ private extension SSE {
             switch type {
             case .newMessage:
                 guard let message = sseNewMessage.message else { return }
-                self.saveMessages([message])
+                self.saveMessages([message], syncTimestamp: nil)
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
-                self.saveMessageRecords([record])
+                self.saveMessageRecords([record], syncTimestamp: nil)
             case .newRoom, .updateRoom:
                 guard let room = sseNewMessage.room else { return }
-                self.saveLocalRooms([room])
+                self.saveLocalRooms([room], syncTimestamp: nil)
             default:
                 break
             }
@@ -112,43 +113,58 @@ private extension SSE {
     }
     
     func syncRooms() {
+        let timestampNow = Date().currentTimeMillis()
         repository.syncRooms(timestamp: repository.getSyncTimestamp(for: .rooms)).sink { [weak self] completion in
             self?.checkError(completion: completion)
         } receiveValue: { [weak self] response in
             guard let rooms = response.data?.rooms else { return }
-            self?.saveLocalRooms(rooms, isSync: true)
+            self?.saveLocalRooms(rooms, syncTimestamp: timestampNow)
         }.store(in: &subs)
     }
     
     // TODO: - dbr check local DB for all roomIds, and fetch the missing ones
-    func syncMessages() {
-        repository.syncMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { [weak self] completion in
+    func syncModifiedMessages() {
+        let timestampNow = Date().currentTimeMillis()
+        repository.syncModifiedMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { [weak self] completion in
             self?.checkError(completion: completion)
         } receiveValue: { [weak self] response in
             guard let self,
                   let messages = response.data?.messages
             else { return }
-            self.saveMessages(messages, isSync: true)
+            self.saveMessages(messages, syncTimestamp: timestampNow)
+        }.store(in: &subs)
+    }
+    
+    func syncUndeliveredMessages() {
+        repository.syncUndeliveredMessages().sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let self,
+                  let messages = response.data?.messages
+            else { return }
+            self.saveMessages(messages, syncTimestamp: nil)
         }.store(in: &subs)
     }
     
     func syncUsers() {
+        let timestampNow = Date().currentTimeMillis()
         repository.syncUsers(timestamp: repository.getSyncTimestamp(for: .users)).sink { [weak self] completion in
             self?.checkError(completion: completion)
         } receiveValue: { [weak self] response in
             guard let users = response.data?.users else { return }
-            self?.saveUsers(users, isSync: true)
+            self?.saveUsers(users, syncTimestamp: timestampNow)
         }.store(in: &subs)
     }
     
     func syncMessageRecords() {
+        let timestampNow = Date().currentTimeMillis()
         repository.syncMessageRecords(timestamp: repository.getSyncTimestamp(for: .messageRecords)).sink { [weak self] completion in
             self?.checkError(completion: completion)
         } receiveValue: { [weak self] response in
             guard let self,
                   let records = response.data?.messageRecords
             else { return }
-            self.saveMessageRecords(records, isSync: true)
+            self.saveMessageRecords(records, syncTimestamp: timestampNow)
         }.store(in: &subs)
     }
 }
@@ -156,59 +172,50 @@ private extension SSE {
 // MARK: - Saving to local database
 
 private extension SSE {
-    func saveUsers(_ users: [User], isSync: Bool = false) {
+    func saveUsers(_ users: [User], syncTimestamp: Int64?) {
         repository.saveUsers(users).sink { [weak self] completion in
             self?.checkError(completion: completion)
 //            print("SSE: save _ c: ", c)
         } receiveValue: { [weak self] users in
 //            print("SSE: save users success")
-            if isSync {
-                if !users.isEmpty {
-                    let timestamp = users.max{ $0.createdAt < $1.createdAt }?.createdAt ?? 0
-                    self?.repository.setSyncTimestamp(for: .users, timestamp: timestamp)
-                }
-            }
+            guard let syncTimestamp else { return }
+            self?.repository.setSyncTimestamp(for: .users, timestamp: syncTimestamp)
         }.store(in: &subs)
     }
     
-    func saveLocalRooms(_ rooms: [Room], isSync: Bool = false) {
+    func saveLocalRooms(_ rooms: [Room], syncTimestamp: Int64?) {
         repository.saveLocalRooms(rooms: rooms).sink { [weak self] completion in
             self?.checkError(completion: completion)
         } receiveValue: { [weak self] rooms in
-            if isSync {
-                if !rooms.isEmpty {
-                    let timestamp = rooms.max{ ($0.createdAt) < ($1.createdAt) }?.createdAt ?? 0
-                    self?.repository.setSyncTimestamp(for: .rooms, timestamp: timestamp)
-                }
-            }
+            guard let syncTimestamp else { return }
+            self?.repository.setSyncTimestamp(for: .rooms, timestamp: syncTimestamp)
         }.store(in: &subs)
     }
     
-    func saveMessages(_ messages: [Message], isSync: Bool = false) {
+    func saveMessages(_ messages: [Message], syncTimestamp: Int64?) {
         repository.saveMessages(messages).sink { [weak self] completion in
             self?.checkError(completion: completion)
 //            print("SSE: save message c: ", c)
         } receiveValue: { [weak self] messages in
 //            print("SSE: SAVED MESSAGES: ", messages.count)
-            if isSync {
-                let currentTimestamp = Date().currentTimeMillis()
-                let maxTimestamp = messages.max(by: {$0.createdAt < $1.createdAt})?.createdAt ?? currentTimestamp
-                let minTimestamp = messages.min(by: {$0.createdAt < $1.createdAt})?.createdAt ?? currentTimestamp
-                
-                self?.repository.setSyncTimestamp(for: .messages, timestamp: maxTimestamp)
-                self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: minTimestamp)
-            } else if let lastMessage = messages.last {
-                self?.getMessageNotificationInfo(message: lastMessage)
+            if let syncTimestamp {
+                self?.repository.setSyncTimestamp(for: .messages, timestamp: syncTimestamp)
+            } else {
+                if let lastMessage = messages.last {
+                    self?.getMessageNotificationInfo(message: lastMessage)
+                }
             }
             self?.sendDeliveredStatus(messages: messages)
         }.store(in: &subs)
     }
     
-    func saveMessageRecords(_ records: [MessageRecord], isSync: Bool = false) {
+    func saveMessageRecords(_ records: [MessageRecord], syncTimestamp: Int64?) {
         print("SSE: message records recieved: ", records.count)
         repository.saveMessageRecords(records).sink { [weak self] completion in
             self?.checkError(completion: completion)
         } receiveValue: { [weak self] records in
+            guard let syncTimestamp else { return }
+            self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: syncTimestamp)
         }.store(in: &subs)
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 
 struct Message: Codable {
     let createdAt: Int64
+    let modifiedAt: Int64
     let fromUserId: Int64
     let roomId: Int64
     let id: Int64?
@@ -37,11 +38,13 @@ extension Message {
         self.type = type
         self.deleted = false
         self.createdAt = createdAt
+        self.modifiedAt = createdAt
         self.records = nil
     }
     
     init(messageEntity: MessageEntity, fileData: FileData?, thumbData: FileData?, records: [MessageRecord]) {
         self.init(createdAt: messageEntity.createdAt,
+                  modifiedAt: messageEntity.modifiedAt,
                   fromUserId: messageEntity.fromUserId,
                   roomId: messageEntity.roomId,
                   id: Int64(messageEntity.id ?? "nil"), // TODO: - check

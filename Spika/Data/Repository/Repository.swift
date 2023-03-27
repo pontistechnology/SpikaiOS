@@ -74,7 +74,8 @@ protocol Repository {
     // MARK: NETWORKING: Sync
     
     func syncRooms(timestamp: Int64) -> AnyPublisher<SyncRoomsResponseModel, Error>
-    func syncMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error>
+    func syncModifiedMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error>
+    func syncUndeliveredMessages() -> AnyPublisher<SyncMessagesResponseModel, Error>
     func syncMessageRecords(timestamp: Int64) -> AnyPublisher<SyncMessageRecordsResponseModel, Error>
     func syncUsers(timestamp: Int64) -> AnyPublisher<SyncUsersResponseModel, Error>
     func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
