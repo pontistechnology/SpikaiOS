@@ -68,6 +68,7 @@ private extension SSE {
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
             self?.changeIndicatorColor(to: .appRed)
+            guard UIApplication.shared.applicationState == .active else { return }
             self?.startSSEAndSync()
 //            guard reconnect ?? false else { return }
 //            if server wants to control reconnecting
