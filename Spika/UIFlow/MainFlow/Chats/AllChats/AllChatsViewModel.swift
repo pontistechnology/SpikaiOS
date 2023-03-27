@@ -62,6 +62,7 @@ extension AllChatsViewModel {
     }
     
     func description(message: Message?, room: Room) -> String {
+        // TODO: - add strings to loc. strings?
         guard let message = message else { return "(No messages)"}
         let desc: String
         if room.type == .privateRoom {
