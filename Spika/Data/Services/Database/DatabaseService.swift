@@ -359,7 +359,7 @@ extension DatabaseService {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                
+                var uniqueRoomIds = Set<Int64>()
                 for message in messages {
                     _ = MessageEntity(message: message, context: context)
                     
@@ -376,10 +376,14 @@ extension DatabaseService {
                             _ = MessageRecordEntity(record: record, context: context)
                         }
                     }
+                    uniqueRoomIds.insert(message.roomId)
                 }
-                // TODO: - dbr add last timestamp, group
-                if let lastMessage = messages.max(by: { $0.createdAt < $1.createdAt }) {
-                    self?.updateRoomLastMessageTimestamp(context: context, roomId: lastMessage.roomId, timestamp: lastMessage.createdAt)
+                
+                // if save is from sync, refresh every room lastMessageTimestamp
+                for roomId in uniqueRoomIds {
+                    if let lastMessage = messages.filter({ $0.roomId == roomId }).max(by: {$0.createdAt < $1.createdAt}) {
+                        self?.updateRoomLastMessageTimestamp(context: context, roomId: lastMessage.roomId, timestamp: lastMessage.createdAt)
+                    }
                 }
                 
                 do {
@@ -392,16 +396,19 @@ extension DatabaseService {
         }
     }
     
-    func updateRoomLastMessageTimestamp(context: NSManagedObjectContext, roomId: Int64, timestamp: Int64) {
+    private func updateRoomLastMessageTimestamp(context: NSManagedObjectContext, roomId: Int64, timestamp: Int64) {
         let roomsFR = RoomEntity.fetchRequest()
         roomsFR.predicate = NSPredicate(format: "id == %d", roomId)
         guard let roomEntities = try? context.fetch(roomsFR),
-              roomEntities.count == 1
+              roomEntities.count == 1,
+              let entity = roomEntities.first
         else {
+            // TODO: - add warning
             return
         }
-        // TODO: - dbr check if timestamp is greater than lastMessageTimestamp
-        roomEntities.first?.lastMessageTimestamp = timestamp
+        if entity.lastMessageTimestamp < timestamp {
+            entity.lastMessageTimestamp = timestamp
+        }
         try? context.save()
     }
     

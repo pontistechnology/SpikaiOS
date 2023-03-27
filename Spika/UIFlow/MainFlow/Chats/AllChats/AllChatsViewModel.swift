@@ -14,8 +14,8 @@ class AllChatsViewModel: BaseViewModel {
     var frc: NSFetchedResultsController<RoomEntity>?
     
     var defaultChatsPredicate: NSPredicate = {
-        let predicate1 =  NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)'") // TODO: - add message count greater than 0
-        let predicate2 = NSPredicate(format: "roomDeleted = false")
+        let predicate1 =  NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR lastMessageTimestamp > 0")
+        let predicate2 = NSPredicate(format: "roomDeleted == false")
         return NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
     } ()
     
