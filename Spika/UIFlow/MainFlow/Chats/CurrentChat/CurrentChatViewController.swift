@@ -12,6 +12,7 @@ import PhotosUI
 import Combine
 import UniformTypeIdentifiers
 
+// TODO: - move
 struct SelectedFile {
     let fileType: MessageType
     let name: String?

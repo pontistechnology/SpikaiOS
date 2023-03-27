@@ -65,9 +65,11 @@ extension AllChatsViewModel {
         guard let message = message else { return "(No messages)"}
         let desc: String
         if room.type == .privateRoom {
-            desc = message.fromUserId == getMyUserId() ? "Me: " : "" + (message.body?.text ?? message.type.pushNotificationText)
+            desc = (message.fromUserId == getMyUserId() ? "Me: " : "")
+            + (message.body?.text ?? message.type.pushNotificationText)
         } else {
-            desc = message.fromUserId == getMyUserId() ? "Me: " : ((room.users.first(where: { $0.userId == message.fromUserId })?.user.getDisplayName() ?? "_") + ": ") + (message.body?.text ?? message.type.pushNotificationText) // TODO: check push text
+            desc = (message.fromUserId == getMyUserId() ? "Me: " : ((room.users.first(where: { $0.userId == message.fromUserId })?.user.getDisplayName() ?? "_")))
+                    + ": " + (message.body?.text ?? message.type.pushNotificationText)
         }
         return desc
     }
