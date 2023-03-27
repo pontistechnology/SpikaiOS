@@ -51,6 +51,7 @@ class CurrentChatViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+        viewModel.sendSeenStatus()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

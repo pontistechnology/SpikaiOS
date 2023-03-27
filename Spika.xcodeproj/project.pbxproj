@@ -463,6 +463,10 @@
 		931B15162821291400A0CD35 /* DeliveredRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15142821291400A0CD35 /* DeliveredRequestModel.swift */; };
 		931B15182821295600A0CD35 /* DeliveredResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15172821295600A0CD35 /* DeliveredResponseModel.swift */; };
 		931B15192821295600A0CD35 /* DeliveredResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15172821295600A0CD35 /* DeliveredResponseModel.swift */; };
+		931BDB9F29D255D80047C145 /* UnreadCountResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931BDB9E29D255D80047C145 /* UnreadCountResponseModel.swift */; };
+		931BDBA029D255D80047C145 /* UnreadCountResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931BDB9E29D255D80047C145 /* UnreadCountResponseModel.swift */; };
+		931BDBA129D255D80047C145 /* UnreadCountResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931BDB9E29D255D80047C145 /* UnreadCountResponseModel.swift */; };
+		931BDBA229D255D80047C145 /* UnreadCountResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931BDB9E29D255D80047C145 /* UnreadCountResponseModel.swift */; };
 		931CC37F2925DBAA003CB356 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931CC37E2925DBAA003CB356 /* AudioPlayer.swift */; };
 		931E23A927D2DCDA0065FFFC /* MessageStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E23A827D2DCDA0065FFFC /* MessageStateView.swift */; };
 		931F8AC0295493B100856C09 /* MoreActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931F8ABF295493B100856C09 /* MoreActionsViewController.swift */; };
@@ -848,6 +852,7 @@
 		9319416C2819CB510067566C /* NotificationInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = NotificationInfo.plist; sourceTree = "<group>"; };
 		931B15142821291400A0CD35 /* DeliveredRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveredRequestModel.swift; sourceTree = "<group>"; };
 		931B15172821295600A0CD35 /* DeliveredResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveredResponseModel.swift; sourceTree = "<group>"; };
+		931BDB9E29D255D80047C145 /* UnreadCountResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadCountResponseModel.swift; sourceTree = "<group>"; };
 		931CC37E2925DBAA003CB356 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		931E23A827D2DCDA0065FFFC /* MessageStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStateView.swift; sourceTree = "<group>"; };
 		931F8ABF295493B100856C09 /* MoreActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreActionsViewController.swift; sourceTree = "<group>"; };
@@ -1968,6 +1973,7 @@
 				6CD30FF22922865D0017918B /* EmptyResponse.swift */,
 				934FF17029778AF9002C76F7 /* SendReactionResponseModel.swift */,
 				6C056C74297008AC00198EC1 /* BlockedUsersResponseModel.swift */,
+				931BDB9E29D255D80047C145 /* UnreadCountResponseModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -2845,6 +2851,7 @@
 				6C78B88829AF5ADB004BF881 /* Repository.swift in Sources */,
 				6C78B88929AF5ADB004BF881 /* CountryPickerView.swift in Sources */,
 				6C78B88A29AF5ADB004BF881 /* PrivacySettingsViewController.swift in Sources */,
+				931BDBA129D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C78B88B29AF5ADB004BF881 /* AppCoordinator+PushNotifications.swift in Sources */,
 				6C78B88C29AF5ADB004BF881 /* UserEntity+CoreDataClass.swift in Sources */,
 				6C78B88D29AF5ADB004BF881 /* ContactsResponseModel.swift in Sources */,
@@ -2941,6 +2948,7 @@
 				6C78B8FE29AF5D89004BF881 /* Constants+Endpoints.swift in Sources */,
 				6C78B8FF29AF5D89004BF881 /* SyncUsersResponseModel.swift in Sources */,
 				6C78B90229AF5D89004BF881 /* RoomUserEntity+CoreDataProperties.swift in Sources */,
+				931BDBA229D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C78B90329AF5D89004BF881 /* UploadChunkRequestModel.swift in Sources */,
 				6C78B90529AF5D89004BF881 /* SeenResponseModel.swift in Sources */,
 				6C78B90629AF5D89004BF881 /* CreateRoomRequestModel.swift in Sources */,
@@ -3023,6 +3031,7 @@
 				939B304D2850E01800FFA537 /* SyncUsersResponseModel.swift in Sources */,
 				9324B257281BE0D900E7D76D /* Constants.swift in Sources */,
 				93BFA3732857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */,
+				931BDBA029D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				931B14F128211AC100A0CD35 /* UploadChunkRequestModel.swift in Sources */,
 				933FD55A2908A05100C4A235 /* SeenResponseModel.swift in Sources */,
 				931B14F528211AC100A0CD35 /* CreateRoomRequestModel.swift in Sources */,
@@ -3286,6 +3295,7 @@
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
 				AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */,
 				6C175EBD297ECC5200804275 /* PrivacySettingsViewController.swift in Sources */,
+				931BDB9F29D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C75CE1E291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift in Sources */,
 				ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */,
 				EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */,

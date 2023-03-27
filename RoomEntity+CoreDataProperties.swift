@@ -26,7 +26,7 @@ extension RoomEntity {
     @NSManaged public var muted: Bool
     @NSManaged public var roomDeleted: Bool
     @NSManaged public var pinned: Bool
-
+    @NSManaged public var unreadCount: Int64
 }
 
 extension RoomEntity : Identifiable {

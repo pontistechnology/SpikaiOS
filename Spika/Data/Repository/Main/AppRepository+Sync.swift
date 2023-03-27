@@ -85,6 +85,26 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func getUnreadCounts() -> AnyPublisher<UnreadCountResponseModel, Error> {
+        guard let accessToken = getAccessToken() else { return
+            Fail<UnreadCountResponseModel, Error>(error: NetworkError.noAccessToken)
+                    .receive(on: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<UnreadCountResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.getUnreadCount,
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func updateUnreadCounts(unreadCounts: [UnreadCount]) {
+        databaseService.updateUnreadCounts(unreadCounts)
+    }
+    
     func getSyncTimestamp(for type: SyncType) -> Int64 {
         switch type {
             

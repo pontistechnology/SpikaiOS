@@ -305,8 +305,9 @@ extension CurrentChatViewModel {
         repository.sendSeenStatus(roomId: room.id).sink { c in
             
         } receiveValue: { [weak self] response in
-            guard let messageRecords = response.data?.messageRecords else { return }
-            self?.repository.saveMessageRecords(messageRecords)
+            guard let self = self,
+                  let messageRecords = response.data?.messageRecords else { return }
+            self.repository.updateUnreadCounts(unreadCounts: [UnreadCount(roomId: self.room.id, unreadCount: 0)])
         }.store(in: &subscriptions)
     }
 }

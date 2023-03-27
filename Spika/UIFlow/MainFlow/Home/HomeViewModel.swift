@@ -68,7 +68,7 @@ extension HomeViewModel: NSFetchedResultsControllerDelegate {
     
     func updateUnreadMessages() {
         let allObjects = self.frc?.sections?.first?.objects as? [RoomEntity]
-        let count = allObjects?.filter { $0.numberOfUnreadMessages(myUserId: self.getMyUserId()) != 0 }.count ?? 0
-        self.repository.unreadRoomsPublisher.send(count)
+//        let count = allObjects?.filter { $0.numberOfUnreadMessages(myUserId: self.getMyUserId()) != 0 }.count ?? 0
+        self.repository.unreadRoomsPublisher.send(2) // TODO: - dbr
     }
 }

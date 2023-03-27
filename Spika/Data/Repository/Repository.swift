@@ -81,7 +81,9 @@ protocol Repository {
     func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
     func unblockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
     func getBlockedUsers() -> AnyPublisher<BlockedUsersResponseModel, Error>
+    func getUnreadCounts() -> AnyPublisher<UnreadCountResponseModel, Error>
     
+    // TODO: - move
     func serialWriteQueue() -> DispatchQueue
     func updateBlockedUsers(users: [User])
     func updateConfirmedUsers(confirmedUsers: [User])
@@ -131,6 +133,7 @@ protocol Repository {
     func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error>
     func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error>
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
+    func updateUnreadCounts(unreadCounts: [UnreadCount])
     
 
     // MARK: - USERDEFAULTS: User

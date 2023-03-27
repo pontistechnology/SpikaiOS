@@ -16,13 +16,11 @@ struct Room: Codable {
     var muted: Bool
     let users: [RoomUser]
     let deleted: Bool
+    let unreadCount: Int64
     var pinned: Bool
 }
 
 extension Room {
-    
-    
-    
     init(roomEntity: RoomEntity, users: [RoomUser]) {
         self.init(id: roomEntity.id,
                   type: RoomType(rawValue: roomEntity.type ?? "private") ?? .privateRoom,
@@ -32,6 +30,7 @@ extension Room {
                   muted: roomEntity.muted,
                   users: users,
                   deleted: roomEntity.roomDeleted,
+                  unreadCount: roomEntity.unreadCount,
                   pinned: roomEntity.pinned)
     }
 }

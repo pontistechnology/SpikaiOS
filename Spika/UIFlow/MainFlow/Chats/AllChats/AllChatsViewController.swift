@@ -15,6 +15,7 @@ class AllChatsViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        viewModel.refreshUnreadCounts()
     }
     
     override func viewDidLoad() {
@@ -82,7 +83,7 @@ extension AllChatsViewController: UITableViewDataSource {
         guard let room = viewModel.getRoom(for: indexPath) else { return EmptyTableViewCell()}
     
         let lastMessage = viewModel.repository.getLastMessage(roomId: room.id)
-        let badgeNumber = 2 // TODO: - unread count
+        let badgeNumber = room.unreadCount
         if room.type == .privateRoom,
            let friendUser = room.getFriendUserInPrivateRoom(myUserId: viewModel.getMyUserId()) {
             cell?.configureCell(avatarUrl: friendUser.avatarFileId?.fullFilePathFromId(),

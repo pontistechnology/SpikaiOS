@@ -88,12 +88,16 @@ private extension SSE {
             case .newMessage:
                 guard let message = sseNewMessage.message else { return }
                 self.saveMessages([message], syncTimestamp: nil)
+                self.getUnreadCounts()
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
                 self.saveMessageRecords([record], syncTimestamp: nil)
             case .newRoom, .updateRoom:
                 guard let room = sseNewMessage.room else { return }
                 self.saveLocalRooms([room], syncTimestamp: nil)
+            case .seenRoom:
+                guard let roomId = sseNewMessage.roomId else { return }
+                self.repository.updateUnreadCounts(unreadCounts: [UnreadCount(roomId: roomId, unreadCount: 0)])
             default:
                 break
             }
@@ -229,6 +233,15 @@ private extension SSE {
             
         } receiveValue: { response in
 //            print("SSE: send delivered status sse response: ", response)
+        }.store(in: &subs)
+    }
+    
+    func getUnreadCounts() {
+        repository.getUnreadCounts().sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let counts = response.data?.unreadCounts else { return }
+            self?.repository.updateUnreadCounts(unreadCounts: counts)
         }.store(in: &subs)
     }
 }

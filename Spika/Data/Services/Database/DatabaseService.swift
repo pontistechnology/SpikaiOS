@@ -412,6 +412,17 @@ extension DatabaseService {
         try? context.save()
     }
     
+    func updateUnreadCounts(_ counts: [UnreadCount]) {
+        let roomsFR = RoomEntity.fetchRequest()
+        roomsFR.predicate = NSPredicate(format: "id IN %@", counts.map({ $0.roomId }))
+        
+        guard let entities = try? coreDataStack.mainMOC.fetch(roomsFR) else { return }
+        for count in counts {
+            entities.first { $0.id == count.roomId }?.unreadCount = count.unreadCount
+        }
+        try? coreDataStack.mainMOC.save()
+    }
+    
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
         return Future { [weak self] promise in
             guard let self else { return }
