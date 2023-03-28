@@ -282,8 +282,6 @@ extension DatabaseService {
     }
     
     func updateRoomUsers(_ room: Room) -> Future<Room, Error> {
-        // TODO: - dbr
-        // maybe delete all roomUsers with that room id, then save new ones
         Future { [weak self] promise in
             guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { context in
