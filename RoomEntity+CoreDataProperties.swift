@@ -22,7 +22,6 @@ extension RoomEntity {
     @NSManaged public var lastMessageTimestamp: Int64
     @NSManaged public var name: String?
     @NSManaged public var type: String?
-    @NSManaged public var visitedRoom: Int64
     @NSManaged public var muted: Bool
     @NSManaged public var roomDeleted: Bool
     @NSManaged public var pinned: Bool

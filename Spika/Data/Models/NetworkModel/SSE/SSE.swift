@@ -26,6 +26,7 @@ class SSE {
         if eventSource == nil {
             setupSSE()
         }
+        getUnreadCounts()
         startSSEConnection()
     }
     

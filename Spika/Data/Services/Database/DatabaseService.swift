@@ -310,24 +310,6 @@ extension DatabaseService {
         }
     }
     
-    func roomVisited(roomId: Int64) {
-        coreDataStack.persistentContainer.performBackgroundTask { context in
-            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-            
-            let fr = RoomEntity.fetchRequest()
-            fr.predicate = NSPredicate(format: "id == %d", roomId)
-            guard let rooms = try? context.fetch(fr) else { return }
-            
-            if rooms.count == 1 {
-                rooms.first!.visitedRoom = Date().currentTimeMillis()
-            } else {
-                print("MORE THAN ONE ROOM.")
-            }
-            
-            try? context.save()
-        }
-    }
-    
     func deleteRoom(roomId: Int64) -> Future<Bool, Error> {
         Future { [weak self] promise in
             guard let self else { return }
@@ -424,7 +406,7 @@ extension DatabaseService {
         let roomsFR = RoomEntity.fetchRequest()
         roomsFR.predicate = NSPredicate(format: "id IN %@", counts.map({ $0.roomId }))
         
-        guard let entities = try? coreDataStack.mainMOC.fetch(roomsFR) else { return }
+        guard let entities = try? coreDataStack.mainMOC.fetch(roomsFR) else { return } // TODO: - think about backgroundMOC
         for count in counts {
             entities.first { $0.id == count.roomId }?.unreadCount = count.unreadCount
         }

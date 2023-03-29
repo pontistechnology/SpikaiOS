@@ -236,12 +236,6 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-    func roomVisited() {
-        repository.roomVisited(roomId: room.id)
-    }
-}
-
-extension CurrentChatViewModel {
     func trySendMessage(text: String) {
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
@@ -525,15 +519,9 @@ extension CurrentChatViewModel {
                                               cacheName: nil)
         do {
             try self.frc?.performFetch()
-//            move
-//            self.currentChatView.messagesTableView.reloadData()
-//            self.currentChatView.messagesTableView.layoutIfNeeded()
-//            self.currentChatView.messagesTableView.scrollToBottom(.force)
         } catch {
             fatalError("Failed to fetch entities: \(error)") // TODO: handle error
         }
-        
-        roomVisited()
         
         // TODO: - refactor, move
         let userId = getMyUserId()

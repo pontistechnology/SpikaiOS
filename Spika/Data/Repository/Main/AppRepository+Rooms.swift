@@ -295,10 +295,6 @@ extension AppRepository {
         databaseService.getRoom(forRoomId: roomId)
     }
     
-    func roomVisited(roomId: Int64) {
-        databaseService.roomVisited(roomId: roomId)
-    }
-    
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error> {
         databaseService.deleteRoom(roomId: roomId)
     }

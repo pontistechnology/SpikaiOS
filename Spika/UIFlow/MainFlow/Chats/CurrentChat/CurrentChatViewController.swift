@@ -54,10 +54,6 @@ class CurrentChatViewController: BaseViewController {
         viewModel.sendSeenStatus()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        viewModel.roomVisited()
-    }
-    
     func addSubviews() {
         view.addSubview(chatBlockingView)
     }
