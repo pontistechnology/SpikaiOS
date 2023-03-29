@@ -109,6 +109,10 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func getReactionRecords(messageId: String?) -> [MessageRecord]? {
+        databaseService.getReactionRecords(messageId: messageId)
+    }
+    
 //    func getMessageRecordsAfter(timestamp: Int) -> AnyPublisher<MessageRecordSyncResponseModel, Error> {
 //        guard let accessToken = getAccessToken()
 //        else {

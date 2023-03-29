@@ -410,6 +410,16 @@ extension DatabaseService {
         try? context.save()
     }
     
+    func getReactionRecords(messageId: String?) -> [MessageRecord]? {
+        guard let id = Int64(messageId ?? "failIsOk") else { return nil }
+        let recordsFR = MessageRecordEntity.fetchRequest()
+        recordsFR.predicate = NSPredicate(format: "messageId == %d AND type == %@", id, MessageRecordType.reaction.rawValue)
+        guard let entities = try? coreDataStack.mainMOC.fetch(recordsFR),
+              !entities.isEmpty
+        else { return nil }
+        return entities.map { MessageRecord(messageRecordEntity: $0) }
+    }
+    
     func updateUnreadCounts(_ counts: [UnreadCount]) {
         let roomsFR = RoomEntity.fetchRequest()
         roomsFR.predicate = NSPredicate(format: "id IN %@", counts.map({ $0.roomId }))

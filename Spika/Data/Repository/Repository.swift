@@ -117,6 +117,7 @@ protocol Repository {
     func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error>
     // TODO: move
     func getFileData(id: String?) -> FileData?
+    func getReactionRecords(messageId: String?) -> [MessageRecord]?
     
     // MARK: COREDATA: Room
     

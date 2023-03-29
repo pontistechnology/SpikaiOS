@@ -356,7 +356,7 @@ extension CurrentChatViewController {
             else { return }
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .showReactions:
-            viewModel.showReactions(records: message.getMessageReactionsRecords() ?? [])
+            viewModel.showReactions(records: message.records ?? []) // TODO: change maybe to vm
         }
     }
 }
@@ -430,8 +430,7 @@ extension CurrentChatViewController: UITableViewDataSource {
                                sender: senderType)
         }
         
-        if let reactionsRecords = message.getMessageReactionsRecords() {
-            // TODO: - dbr fetch only reactions
+        if let reactionsRecords = message.records {
             cell.showReactions(reactionRecords: reactionsRecords)
         }
         

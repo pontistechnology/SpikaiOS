@@ -489,11 +489,12 @@ extension CurrentChatViewModel {
         guard let entity = frc?.object(at: indexPath) else { return nil }
         let fileData = repository.getFileData(id: entity.bodyFileId)
         let thumbData = repository.getFileData(id: entity.bodyThumbId)
-        
+        let reactionRecords = repository.getReactionRecords(messageId: entity.id)
+
         return Message(messageEntity: entity,
                        fileData: fileData,
                        thumbData: thumbData,
-                       records: []) // TODO: - add records
+                       records: reactionRecords)
     }
     
     func getIndexPathFor(localId: String) -> IndexPath? {

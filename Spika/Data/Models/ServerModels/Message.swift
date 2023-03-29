@@ -42,7 +42,7 @@ extension Message {
         self.records = nil
     }
     
-    init(messageEntity: MessageEntity, fileData: FileData?, thumbData: FileData?, records: [MessageRecord]) {
+    init(messageEntity: MessageEntity, fileData: FileData?, thumbData: FileData?, records: [MessageRecord]?) {
         self.init(createdAt: messageEntity.createdAt,
                   modifiedAt: messageEntity.modifiedAt,
                   fromUserId: messageEntity.fromUserId,
@@ -88,13 +88,6 @@ extension Message {
             return .sent
         }
         return .waiting
-    }
-    
-    func getMessageReactionsRecords() -> [MessageRecord]? {
-        guard let reactions = records?.filter({ $0.type == .reaction }),
-              !reactions.isEmpty
-        else { return nil}
-        return reactions.sorted(by: { $0.createdAt > $1.createdAt })
     }
 }
 
