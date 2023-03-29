@@ -62,28 +62,15 @@ extension Message {
     
     func getMessageState(myUserId: Int64) -> MessageState {
         // TODO: check first seen, then delivered, then sent, waiting, error, (check fail)
-        guard let records = records,
-              let totalUserCount = totalUserCount
-        else {
-            print("there is no records")
-            return .fail
-        }
         
-        print("RECORDS: ", records)
-        
-        if records.filter({ $0.type == .seen}).count == totalUserCount {
+        if seenCount == totalUserCount {
             return .seen
         }
-        
-        let deliveredCount = records.filter({ $0.type == .delivered}).count
         
         if deliveredCount == totalUserCount {
             return .delivered
         }
         
-        if deliveredCount > 0 {
-            return .sent
-        }
         if id != nil {
             return .sent
         }

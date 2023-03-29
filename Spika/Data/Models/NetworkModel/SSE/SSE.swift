@@ -78,6 +78,7 @@ private extension SSE {
         }
         
         eventSource?.onMessage { [weak self] id, event, data in
+//            print("SSE DATA: ", data) // this is for see actual data
             guard let self,
                   let jsonData = data?.data(using: .utf8),
                   let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData),
@@ -93,6 +94,8 @@ private extension SSE {
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
                 self.saveMessageRecords([record], syncTimestamp: nil)
+                guard let newDetails = sseNewMessage.messageRecord?.message else { return }
+                self.updateMessage(messageCounts: newDetails)
             case .newRoom, .updateRoom:
                 guard let room = sseNewMessage.room else { return }
                 self.saveLocalRooms([room], syncTimestamp: nil)
@@ -222,6 +225,10 @@ private extension SSE {
             guard let syncTimestamp else { return }
             self?.repository.setSyncTimestamp(for: .messageRecords, timestamp: syncTimestamp)
         }.store(in: &subs)
+    }
+    
+    func updateMessage(messageCounts: SomeMessageDetails) {
+        repository.updateMessageSeenDeliveredCount(messageId: messageCounts.id, seenCount: messageCounts.seenCount, deliveredCount: messageCounts.deliveredCount)
     }
 }
 

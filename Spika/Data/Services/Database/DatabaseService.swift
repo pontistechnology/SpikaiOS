@@ -376,6 +376,28 @@ extension DatabaseService {
         }
     }
     
+    func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
+        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            let messageFR = MessageEntity.fetchRequest()
+            messageFR.predicate = NSPredicate(format: "id == %d", messageId)
+            guard let entity = try? context.fetch(messageFR).first else { return }
+            
+            if seenCount > entity.seenCount {
+                entity.seenCount = seenCount
+            }
+            
+            if deliveredCount > entity.deliveredCount {
+                entity.deliveredCount = deliveredCount
+            }
+            do {
+                try context.save()
+            } catch {
+                
+            }
+        }
+    }
+    
     private func updateRoomLastMessageTimestamp(context: NSManagedObjectContext, roomId: Int64, timestamp: Int64) {
         let roomsFR = RoomEntity.fetchRequest()
         roomsFR.predicate = NSPredicate(format: "id == %d", roomId)

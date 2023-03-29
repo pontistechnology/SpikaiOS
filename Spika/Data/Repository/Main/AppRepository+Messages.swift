@@ -113,6 +113,10 @@ extension AppRepository {
         databaseService.getReactionRecords(messageId: messageId)
     }
     
+    func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
+        databaseService.updateMessageSeenDeliveredCount(messageId: messageId, seenCount: seenCount, deliveredCount: deliveredCount)
+    }
+    
 //    func getMessageRecordsAfter(timestamp: Int) -> AnyPublisher<MessageRecordSyncResponseModel, Error> {
 //        guard let accessToken = getAccessToken()
 //        else {

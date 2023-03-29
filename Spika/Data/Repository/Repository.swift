@@ -118,6 +118,7 @@ protocol Repository {
     // TODO: move
     func getFileData(id: String?) -> FileData?
     func getReactionRecords(messageId: String?) -> [MessageRecord]?
+    func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64)
     
     // MARK: COREDATA: Room
     
