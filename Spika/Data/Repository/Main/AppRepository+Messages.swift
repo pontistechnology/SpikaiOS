@@ -109,8 +109,8 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func getReactionRecords(messageId: String?) -> [MessageRecord]? {
-        databaseService.getReactionRecords(messageId: messageId)
+    func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]? {
+        databaseService.getReactionRecords(messageId: messageId, context: context)
     }
     
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
@@ -140,8 +140,8 @@ extension AppRepository {
         return databaseService.saveMessages(messages)
     }
     
-    func getLastMessage(roomId: Int64) -> Message? {
-        return databaseService.getLastMessage(roomId: roomId)
+    func getLastMessage(roomId: Int64, context: NSManagedObjectContext) -> Message? {
+        return databaseService.getLastMessage(roomId: roomId, context: context)
     }
 
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {

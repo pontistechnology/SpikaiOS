@@ -61,4 +61,11 @@ class CoreDataStack: NSObject {
         moc.automaticallyMergesChangesFromParent = true
         return moc
     }()
+    
+//    lazy var backgroundMOC: NSManagedObjectContext = {
+//        let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+//        moc.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+//        moc.automaticallyMergesChangesFromParent = true
+//        return moc
+//    }()
 }

@@ -223,42 +223,6 @@ extension DatabaseService {
         }
     }
     
-    func getRoomUsers(roomId: Int64, context: NSManagedObjectContext) -> [RoomUser]? {
-        // fetch all [RoomUserEntity] from database
-        let roomUsersFR = RoomUserEntity.fetchRequest()
-        roomUsersFR.predicate = NSPredicate(format: "roomId == %d", roomId)
-        
-        guard let roomUserEntities = try? context.fetch(roomUsersFR)
-        else {
-            return nil
-        }
-        
-        // fetch all [User] from database
-        let users = getUsers(id: roomUserEntities.map({ $0.userId }), context: context)
-        
-        // return [RoomUser], should be same count as [RoomUserEntity]
-        
-        return roomUserEntities.compactMap { roomUserEntity in
-            guard let user = users?.first(where: { $0.id == roomUserEntity.userId})
-            else {
-                return nil
-            }
-            return RoomUser(roomUserEntity: roomUserEntity, user: user)
-        }
-    }
-    
-    private func getUsers(id: [Int64], context: NSManagedObjectContext) -> [User]? {
-        let usersFR = UserEntity.fetchRequest()
-        usersFR.predicate = NSPredicate(format: "id IN %@", id) // check
-        guard let userEntities = try? context.fetch(usersFR)
-        else {
-            return nil
-        }
-        return userEntities.map {
-            User(entity: $0)
-        }
-    }
-        
     func saveRooms(_ rooms: [Room]) -> Future<[Room], Error> {
         Future { [weak self] promise in
             guard let self else { return }
@@ -362,7 +326,7 @@ extension DatabaseService {
                 // if save is from sync, refresh every room lastMessageTimestamp
                 for roomId in uniqueRoomIds {
                     if let lastMessage = messages.filter({ $0.roomId == roomId }).max(by: {$0.createdAt < $1.createdAt}) {
-                        self?.updateRoomLastMessageTimestamp(context: context, roomId: lastMessage.roomId, timestamp: lastMessage.createdAt)
+                        self?.updateRoomLastMessageTimestamp(roomId: lastMessage.roomId, timestamp: lastMessage.createdAt)
                     }
                 }
                 
@@ -374,65 +338,6 @@ extension DatabaseService {
                 }
             }
         }
-    }
-    
-    func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
-        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-            let messageFR = MessageEntity.fetchRequest()
-            messageFR.predicate = NSPredicate(format: "id == %d", messageId)
-            guard let entity = try? context.fetch(messageFR).first else { return }
-            
-            if seenCount > entity.seenCount {
-                entity.seenCount = seenCount
-            }
-            
-            if deliveredCount > entity.deliveredCount {
-                entity.deliveredCount = deliveredCount
-            }
-            do {
-                try context.save()
-            } catch {
-                
-            }
-        }
-    }
-    
-    private func updateRoomLastMessageTimestamp(context: NSManagedObjectContext, roomId: Int64, timestamp: Int64) {
-        let roomsFR = RoomEntity.fetchRequest()
-        roomsFR.predicate = NSPredicate(format: "id == %d", roomId)
-        guard let roomEntities = try? context.fetch(roomsFR),
-              roomEntities.count == 1,
-              let entity = roomEntities.first
-        else {
-            // TODO: - add warning
-            return
-        }
-        if entity.lastMessageTimestamp < timestamp {
-            entity.lastMessageTimestamp = timestamp
-        }
-        try? context.save()
-    }
-    
-    func getReactionRecords(messageId: String?) -> [MessageRecord]? {
-        guard let id = Int64(messageId ?? "failIsOk") else { return nil }
-        let recordsFR = MessageRecordEntity.fetchRequest()
-        recordsFR.predicate = NSPredicate(format: "messageId == %d AND type == %@", id, MessageRecordType.reaction.rawValue)
-        guard let entities = try? coreDataStack.mainMOC.fetch(recordsFR),
-              !entities.isEmpty
-        else { return nil }
-        return entities.map { MessageRecord(messageRecordEntity: $0) }
-    }
-    
-    func updateUnreadCounts(_ counts: [UnreadCount]) {
-        let roomsFR = RoomEntity.fetchRequest()
-        roomsFR.predicate = NSPredicate(format: "id IN %@", counts.map({ $0.roomId }))
-        
-        guard let entities = try? coreDataStack.mainMOC.fetch(roomsFR) else { return } // TODO: - think about backgroundMOC
-        for count in counts {
-            entities.first { $0.id == count.roomId }?.unreadCount = count.unreadCount
-        }
-        try? coreDataStack.mainMOC.save()
     }
     
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
@@ -453,29 +358,6 @@ extension DatabaseService {
                 }
             }
         }
-    }
-    
-    func getLastMessage(roomId: Int64) -> Message? {
-        let fr = MessageEntity.fetchRequest()
-        fr.predicate = NSPredicate(format: "roomId == %d", roomId)
-        fr.fetchLimit = 1
-        fr.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
-        guard let entity = try? coreDataStack.mainMOC.fetch(fr).first else { return nil}
-        
-        return Message(messageEntity: entity,
-                       fileData: getFileData(id: entity.bodyFileId),
-                       thumbData: getFileData(id: entity.bodyThumbId),
-                       records: [])
-    }
-    
-    func getFileData(id: String?) -> FileData? {
-        guard let id = id else { return nil }
-        let fr = FileEntity.fetchRequest()
-        fr.predicate = NSPredicate(format: "id == %@", id)
-        guard let entity = try? coreDataStack.mainMOC.fetch(fr).first else {
-            return nil
-        }
-        return FileData(entity: entity)
     }
     
     func getNotificationInfoForMessage(message: Message) -> Future<MessageNotificationInfo, Error> {
@@ -514,5 +396,142 @@ extension DatabaseService {
             }
         }
 
+    }
+}
+
+// MARK: - helper functions, be carefull with threads
+
+extension DatabaseService {
+    func getRoomUsers(roomId: Int64, context: NSManagedObjectContext) -> [RoomUser]? {
+        var roomUsers: [RoomUser]?
+        context.performAndWait {
+            // fetch all [RoomUserEntity] from database
+            let roomUsersFR = RoomUserEntity.fetchRequest()
+            roomUsersFR.predicate = NSPredicate(format: "roomId == %d", roomId)
+            
+            guard let roomUserEntities = try? context.fetch(roomUsersFR) else { return }
+            
+            // fetch all [User] from database
+            let users = getUsers(id: roomUserEntities.map({ $0.userId }), context: context)
+            
+            // return [RoomUser], should be same count as [RoomUserEntity]
+            
+            roomUsers = roomUserEntities.compactMap { roomUserEntity in
+                guard let user = users?.first(where: { $0.id == roomUserEntity.userId})
+                else {
+                    return nil
+                }
+                return RoomUser(roomUserEntity: roomUserEntity, user: user)
+            }
+        }
+        return roomUsers
+    }
+    
+    private func getUsers(id: [Int64], context: NSManagedObjectContext) -> [User]? {
+        let usersFR = UserEntity.fetchRequest()
+        usersFR.predicate = NSPredicate(format: "id IN %@", id) // check
+        guard let userEntities = try? context.fetch(usersFR)
+        else {
+            return nil
+        }
+        return userEntities.map {
+            User(entity: $0)
+        }
+    }
+    
+    func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
+        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            let messageFR = MessageEntity.fetchRequest()
+            messageFR.predicate = NSPredicate(format: "id == %d", messageId)
+            guard let entity = try? context.fetch(messageFR).first else { return }
+            
+            if seenCount > entity.seenCount {
+                entity.seenCount = seenCount
+            }
+            
+            if deliveredCount > entity.deliveredCount {
+                entity.deliveredCount = deliveredCount
+            }
+            do {
+                try context.save()
+            } catch {
+                
+            }
+        }
+    }
+    
+    private func updateRoomLastMessageTimestamp(roomId: Int64, timestamp: Int64) {
+        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+            let roomsFR = RoomEntity.fetchRequest()
+            roomsFR.predicate = NSPredicate(format: "id == %d", roomId)
+            guard let roomEntities = try? context.fetch(roomsFR),
+                  roomEntities.count == 1,
+                  let entity = roomEntities.first
+            else {
+                // TODO: - add warning
+                return
+            }
+            if entity.lastMessageTimestamp < timestamp {
+                entity.lastMessageTimestamp = timestamp
+            }
+            try? context.save()
+        }
+    }
+    
+    func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]? {
+        var records: [MessageRecord]?
+        context.performAndWait {
+            guard let id = Int64(messageId ?? "failIsOk") else { return }
+            let recordsFR = MessageRecordEntity.fetchRequest()
+            recordsFR.predicate = NSPredicate(format: "messageId == %d AND type == %@", id, MessageRecordType.reaction.rawValue)
+            guard let entities = try? context.fetch(recordsFR),
+                  !entities.isEmpty
+            else { return }
+            records = entities.map { MessageRecord(messageRecordEntity: $0) }
+        }
+        return records
+    }
+    
+    func updateUnreadCounts(_ counts: [UnreadCount]) {
+        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+            let roomsFR = RoomEntity.fetchRequest()
+            roomsFR.predicate = NSPredicate(format: "id IN %@", counts.map({ $0.roomId }))
+            
+            guard let entities = try? context.fetch(roomsFR) else { return } // TODO: - think about backgroundMOC
+            for count in counts {
+                entities.first { $0.id == count.roomId }?.unreadCount = count.unreadCount
+            }
+            try? context.save()
+        }
+    }
+    
+    func getLastMessage(roomId: Int64, context: NSManagedObjectContext) -> Message? {
+        var message: Message?
+        context.performAndWait {
+            let fr = MessageEntity.fetchRequest()
+            fr.predicate = NSPredicate(format: "roomId == %d", roomId)
+            fr.fetchLimit = 1
+            fr.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+            guard let entity = try? context.fetch(fr).first else { return }
+            
+            message = Message(messageEntity: entity,
+                              fileData: getFileData(id: entity.bodyFileId, context: context),
+                              thumbData: getFileData(id: entity.bodyThumbId, context: context),
+                           records: [])
+        }
+        return message
+    }
+    
+    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
+        var fileData: FileData?
+        context.performAndWait {
+            guard let id = id else { return }
+            let fr = FileEntity.fetchRequest()
+            fr.predicate = NSPredicate(format: "id == %@", id)
+            guard let entity = try? context.fetch(fr).first else { return }
+            fileData = FileData(entity: entity)
+        }
+        return fileData
     }
 }

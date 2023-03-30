@@ -56,9 +56,17 @@ extension AllChatsViewModel {
     
     func getRoom(for indexPath: IndexPath) -> Room? {
         guard let entity = frc?.object(at: indexPath),
-              let roomUsers = repository.getRoomUsers(roomId: entity.id)
+              let context = entity.managedObjectContext,
+              let roomUsers = repository.getRoomUsers(roomId: entity.id, context: context)
         else { return nil }
         return Room(roomEntity: entity, users: roomUsers)
+    }
+    
+    func getLastMessage(for indexPath: IndexPath) -> Message? {
+        guard let entity = frc?.object(at: indexPath),
+              let context = entity.managedObjectContext
+        else { return nil }
+        return repository.getLastMessage(roomId: entity.id, context: context)
     }
     
     func description(message: Message?, room: Room) -> String {
@@ -69,10 +77,40 @@ extension AllChatsViewModel {
             desc = (message.fromUserId == getMyUserId() ? "Me: " : "")
             + (message.body?.text ?? message.type.pushNotificationText)
         } else {
-            desc = (message.fromUserId == getMyUserId() ? "Me: " : ((room.users.first(where: { $0.userId == message.fromUserId })?.user.getDisplayName() ?? "_")))
+            desc = (message.fromUserId == getMyUserId() ? "Me" : ((room.users.first(where: { $0.userId == message.fromUserId })?.user.getDisplayName() ?? "_")))
                     + ": " + (message.body?.text ?? message.type.pushNotificationText)
         }
         return desc
+    }
+    
+    func getDataForCell(at indexPath: IndexPath) -> (avatarUrl: URL?, name: String,
+                                                     description: String, time: String,
+                                                     badgeNumber: Int64, muted: Bool, pinned: Bool)?
+    {
+        guard let room = getRoom(for: indexPath) else { return nil }
+        let lastMessage = getLastMessage(for: indexPath)
+        
+        if room.type == .privateRoom,
+           let friendUser = room.getFriendUserInPrivateRoom(myUserId: getMyUserId()) {
+            
+            return (avatarUrl: friendUser.avatarFileId?.fullFilePathFromId(),
+                                name: friendUser.getDisplayName(),
+                                description: description(message: lastMessage, room: room),
+                                time: lastMessage?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
+                                badgeNumber: room.unreadCount,
+                                muted: room.muted,
+                                pinned: room.pinned)
+            
+        } else {
+            
+            return (avatarUrl: room.avatarFileId?.fullFilePathFromId(),
+                                name: room.name ?? .getStringFor(.noName),
+                                description: description(message: lastMessage, room: room),
+                                time: lastMessage?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
+                                badgeNumber: room.unreadCount,
+                                muted: room.muted,
+                                pinned: room.pinned)
+        }
     }
 }
 

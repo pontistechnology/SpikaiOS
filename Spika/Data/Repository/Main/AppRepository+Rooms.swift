@@ -299,8 +299,7 @@ extension AppRepository {
         databaseService.deleteRoom(roomId: roomId)
     }
     
-    func getRoomUsers(roomId: Int64) -> [RoomUser]? {
-        databaseService.getRoomUsers(roomId: roomId,
-                                     context: databaseService.coreDataStack.mainMOC)
+    func getRoomUsers(roomId: Int64, context: NSManagedObjectContext) -> [RoomUser]? {
+        databaseService.getRoomUsers(roomId: roomId, context: context)
     }
 }

@@ -107,18 +107,18 @@ protocol Repository {
     func saveUsers(_ users: [User]) -> Future<[User], Error>
     
     // MARK: COREDATA: RoomUser
-    func getRoomUsers(roomId: Int64) -> [RoomUser]?
+    func getRoomUsers(roomId: Int64, context: NSManagedObjectContext) -> [RoomUser]?
     
     // MARK: COREDATA: Messages
     
     func saveMessages(_ messages: [Message]) -> Future<[Message], Error>
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error>
-    func getLastMessage(roomId: Int64) -> Message?
+    func getLastMessage(roomId: Int64, context: NSManagedObjectContext) -> Message?
     func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error>
-    // TODO: move
-    func getFileData(id: String?) -> FileData?
-    func getReactionRecords(messageId: String?) -> [MessageRecord]?
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64)
+    // TODO: move
+    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData?
+    func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]?
     
     // MARK: COREDATA: Room
     

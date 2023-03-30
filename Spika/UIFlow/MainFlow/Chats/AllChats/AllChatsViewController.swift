@@ -80,31 +80,10 @@ extension AllChatsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
-        guard let room = viewModel.getRoom(for: indexPath) else { return EmptyTableViewCell()}
-    
-        let lastMessage = viewModel.repository.getLastMessage(roomId: room.id)
-        let badgeNumber = room.unreadCount
-        if room.type == .privateRoom,
-           let friendUser = room.getFriendUserInPrivateRoom(myUserId: viewModel.getMyUserId()) {
-            cell?.configureCell(avatarUrl: friendUser.avatarFileId?.fullFilePathFromId(),
-                                name: friendUser.getDisplayName(),
-                                description: viewModel.description(message: lastMessage, room: room),
-                                time: lastMessage?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
-                                badgeNumber: badgeNumber,
-                                muted: room.muted,
-                                pinned: room.pinned)
-            
-        } else if room.type != .privateRoom {
-            
-            cell?.configureCell(avatarUrl: room.avatarFileId?.fullFilePathFromId(),
-                                name: room.name ?? .getStringFor(.noName),
-                                description: viewModel.description(message: lastMessage, room: room),
-                                time: lastMessage?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
-                                badgeNumber: badgeNumber,
-                                muted: room.muted,
-                                pinned: room.pinned)
-        }
-        
+        guard let data = viewModel.getDataForCell(at: indexPath) else { return EmptyTableViewCell() }
+        cell?.configureCell(avatarUrl: data.avatarUrl, name: data.name,
+                            description: data.description, time: data.time,
+                            badgeNumber: data.badgeNumber, muted: data.muted, pinned: data.pinned)
         return cell ?? EmptyTableViewCell()
     }
 }

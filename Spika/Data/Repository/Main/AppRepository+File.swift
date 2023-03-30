@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import CryptoKit
+import CoreData
 
 extension AppRepository {
     
@@ -154,7 +155,7 @@ extension AppRepository {
         return targetURL
     }
     
-    func getFileData(id: String?) -> FileData? {
-        databaseService.getFileData(id: id)
+    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
+        databaseService.getFileData(id: id, context: context)
     }
 }

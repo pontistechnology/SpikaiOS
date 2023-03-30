@@ -480,10 +480,12 @@ extension CurrentChatViewModel {
 extension CurrentChatViewModel {
     
     func getMessage(for indexPath: IndexPath) -> Message? {
-        guard let entity = frc?.object(at: indexPath) else { return nil }
-        let fileData = repository.getFileData(id: entity.bodyFileId)
-        let thumbData = repository.getFileData(id: entity.bodyThumbId)
-        let reactionRecords = repository.getReactionRecords(messageId: entity.id)
+        guard let entity = frc?.object(at: indexPath),
+              let context = entity.managedObjectContext
+        else { return nil }
+        let fileData = repository.getFileData(id: entity.bodyFileId, context: context)
+        let thumbData = repository.getFileData(id: entity.bodyThumbId, context: context)
+        let reactionRecords = repository.getReactionRecords(messageId: entity.id, context: context)
 
         return Message(messageEntity: entity,
                        fileData: fileData,
