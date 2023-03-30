@@ -47,12 +47,12 @@ extension Message {
                   modifiedAt: messageEntity.modifiedAt,
                   fromUserId: messageEntity.fromUserId,
                   roomId: messageEntity.roomId,
-                  id: Int64(messageEntity.id ?? "nil"), // TODO: - check
+                  id: Int64(messageEntity.id ?? "nil"),
                   localId: messageEntity.localId,
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
-                  replyId: Int64(messageEntity.replyId ?? "-1"),
+                  replyId: Int64(messageEntity.replyId ?? "nil"),
                   deleted: messageEntity.isRemoved,
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
@@ -76,38 +76,29 @@ extension Message {
         }
         return .waiting
     }
+    
+    var pushNotificationText: String {
+        switch type {
+        case .text:
+            return body?.text ?? " "
+        case .image:
+            return "[Photo message]"
+        case .video:
+            return "[Video message]"
+        case .file:
+            return "[File message]"
+        case .audio:
+            return "[Audio message]"
+        case .unknown:
+            return "[Unknown message]"
+        }
+    }
 }
 
 struct MessageBody: Codable {
     let text: String?
     let file: FileData?
     let thumb: FileData?
-}
-
-struct FileData: Codable {
-    let id: Int64?
-    let fileName: String?
-    let mimeType: String?
-    let size: Int64?
-    let metaData: MetaData?
-}
-
-extension FileData {
-    init(entity: FileEntity) {
-        self.init(id: entity.id,
-                  fileName: entity.fileName,
-                  mimeType: entity.mimeType,
-                  size: entity.fileSize,
-                  metaData: MetaData(width: entity.metaDataWidth,
-                                     height: entity.metaDataHeight,
-                                     duration: entity.metaDataDuration))
-    }
-}
-
-struct MetaData: Codable {
-    let width: Int64
-    let height: Int64
-    let duration: Int64
 }
 
 enum MessageType: String, Codable {
@@ -121,23 +112,6 @@ enum MessageType: String, Codable {
     
     public init(from decoder: Decoder) throws {
         self = try MessageType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
-    }
-    
-    var pushNotificationText: String {
-        switch self {
-        case .text:
-            return "[Text message]"
-        case .image:
-            return "[Photo message]"
-        case .video:
-            return "[Video message]"
-        case .file:
-            return "[File message]"
-        case .audio:
-            return "[Audio message]"
-        case .unknown:
-            return "[Unknown message]"
-        }
     }
 }
 

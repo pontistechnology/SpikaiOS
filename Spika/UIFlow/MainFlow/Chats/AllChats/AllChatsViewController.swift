@@ -62,20 +62,17 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
 extension AllChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let room = viewModel.getRoom(for: indexPath) else { return }
-        print("ROOM selected: ", room)
-        viewModel.presentCurrentChatScreen(room: room)
+        viewModel.presentCurrentChatScreen(for: indexPath)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.view.endEditing(true)
+        self.view.endEditing(true) // TODO: - check, maybe use tableview keyboard handling method
     }
 }
 
 extension AllChatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = viewModel.frc?.sections else { return 0 }
-        return sections[section].numberOfObjects
+        viewModel.numberOfRows(in: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

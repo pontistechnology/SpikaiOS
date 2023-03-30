@@ -384,11 +384,11 @@ extension DatabaseService {
                 if room.type == RoomType.privateRoom.rawValue {
                     info = MessageNotificationInfo(title: user.getDisplayName(),
                                                    photoUrl: user.avatarFileId?.fullFilePathFromId(),
-                                                   messageText: message.body?.text ?? message.type.pushNotificationText)
+                                                   messageText: message.pushNotificationText)
                 } else {
                     info = MessageNotificationInfo(title: room.name ?? "no name",
                                                    photoUrl: room.avatarFileId.fullFilePathFromId(),
-                                                   messageText: "\(user.getDisplayName()): " + (message.body?.text ?? message.type.pushNotificationText))
+                                                   messageText: "\(user.getDisplayName()): " +  message.pushNotificationText)
                 }
                 promise(.success(info))
                 

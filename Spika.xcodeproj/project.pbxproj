@@ -560,6 +560,10 @@
 		937F48E827D3D66A005E19FB /* TextMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937F48E727D3D66A005E19FB /* TextMessageTableViewCell.swift */; };
 		937FBE6728B52D8D00C3A888 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FBE6628B52D8D00C3A888 /* URL+Extensions.swift */; };
 		937FBE6928B5309E00C3A888 /* AVURLAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FBE6828B5309E00C3A888 /* AVURLAsset+Extensions.swift */; };
+		9383879029D5253D0057714A /* FileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383878F29D5253D0057714A /* FileData.swift */; };
+		9383879129D5253D0057714A /* FileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383878F29D5253D0057714A /* FileData.swift */; };
+		9383879229D5253D0057714A /* FileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383878F29D5253D0057714A /* FileData.swift */; };
+		9383879329D5253D0057714A /* FileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383878F29D5253D0057714A /* FileData.swift */; };
 		938B477D27E29C9F004B36FD /* ChatNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */; };
 		938CC7C9293BB9F600606DA8 /* InputTextAndControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CC7C8293BB9F600606DA8 /* InputTextAndControlsView.swift */; };
 		938D052E27D59D83002E5CE5 /* NewGroupChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D052D27D59D83002E5CE5 /* NewGroupChatView.swift */; };
@@ -927,6 +931,7 @@
 		937F48E727D3D66A005E19FB /* TextMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageTableViewCell.swift; sourceTree = "<group>"; };
 		937FBE6628B52D8D00C3A888 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		937FBE6828B5309E00C3A888 /* AVURLAsset+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVURLAsset+Extensions.swift"; sourceTree = "<group>"; };
+		9383878F29D5253D0057714A /* FileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileData.swift; sourceTree = "<group>"; };
 		938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNavigationBarView.swift; sourceTree = "<group>"; };
 		938CC7C8293BB9F600606DA8 /* InputTextAndControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextAndControlsView.swift; sourceTree = "<group>"; };
 		938D052D27D59D83002E5CE5 /* NewGroupChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupChatView.swift; sourceTree = "<group>"; };
@@ -2301,6 +2306,7 @@
 				939AAE3E28F62FFF00DD5142 /* RoomUser.swift */,
 				939AAE4128F6308100DD5142 /* MessageRecord.swift */,
 				93C07A9B290139B5003DFD61 /* Message+Extensions.swift */,
+				9383878F29D5253D0057714A /* FileData.swift */,
 			);
 			path = ServerModels;
 			sourceTree = "<group>";
@@ -2760,6 +2766,7 @@
 				6C78B82629AF5ADB004BF881 /* OTPCodeTextField.swift in Sources */,
 				6C78B82729AF5ADB004BF881 /* WindowManager.swift in Sources */,
 				6C78B82829AF5ADB004BF881 /* AuthRequestModel.swift in Sources */,
+				9383879229D5253D0057714A /* FileData.swift in Sources */,
 				6C78B82929AF5ADB004BF881 /* UserRequestModel.swift in Sources */,
 				6C78B82A29AF5ADB004BF881 /* MessageFileView.swift in Sources */,
 				6C78B82B29AF5ADB004BF881 /* DatabaseService.swift in Sources */,
@@ -2912,6 +2919,7 @@
 				6C78B8DB29AF5D89004BF881 /* EnumsShared.swift in Sources */,
 				6C78B8DC29AF5D89004BF881 /* DeliveredRequestModel.swift in Sources */,
 				6C78B8DD29AF5D89004BF881 /* AppRepository+File.swift in Sources */,
+				9383879329D5253D0057714A /* FileData.swift in Sources */,
 				932BADDE29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
 				6C78B8DE29AF5D89004BF881 /* SyncMessagesResponseModel.swift in Sources */,
 				6C78B8DF29AF5D89004BF881 /* AppRepository+Sync.swift in Sources */,
@@ -2995,6 +3003,7 @@
 				93BF627628EB9B7900B48BBF /* EnumsShared.swift in Sources */,
 				931B15162821291400A0CD35 /* DeliveredRequestModel.swift in Sources */,
 				93CF47412963287A00213DBE /* AppRepository+File.swift in Sources */,
+				9383879129D5253D0057714A /* FileData.swift in Sources */,
 				932BADDC29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
 				939B304B2850E01800FFA537 /* SyncMessagesResponseModel.swift in Sources */,
 				93D4034D29245B5400DC77D3 /* AppRepository+Sync.swift in Sources */,
@@ -3204,6 +3213,7 @@
 				6C153BF02948696A00D400A7 /* Constants+Strings.swift in Sources */,
 				6C326A6728FECAAE00E00A59 /* OTPCodeTextField.swift in Sources */,
 				93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */,
+				9383879029D5253D0057714A /* FileData.swift in Sources */,
 				AD9BFD44272ADBE700736318 /* AuthRequestModel.swift in Sources */,
 				930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */,
 				939128EF2935780200A79FBA /* MessageFileView.swift in Sources */,
