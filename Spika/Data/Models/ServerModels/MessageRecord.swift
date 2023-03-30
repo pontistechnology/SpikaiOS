@@ -25,7 +25,6 @@ struct SomeMessageDetails: Codable {
     let deliveredCount: Int64
     let seenCount: Int64
     let roomId: Int64
-    let modifiedAt: Int64
 }
 
 extension MessageRecord {

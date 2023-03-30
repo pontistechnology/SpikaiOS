@@ -157,18 +157,12 @@ class AppCoordinator: Coordinator {
             }.store(in: &self.subs)
     }
     
-    func presentMessageDetails(users: [User], records: [MessageRecord]) {
-        // TODO: assemble this vc
-        let viewControllerToPresent = MessageDetailsViewController(users: users, records: records)
-        if #available(iOS 15.0, *) {
-            if let sheet = viewControllerToPresent.sheetPresentationController {
-                sheet.detents = [.medium(), .large()]
-                sheet.prefersGrabberVisible = true
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            }
-        } else {
-            // Fallback on earlier versions
-            // TODO: fix for ios 14
+    func presentMessageDetails(users: [User], messageId: Int64) {
+        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageDetailsViewController.self, arguments: self, users, messageId)!
+        if let sheet = viewControllerToPresent.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
         }
         navigationController.present(viewControllerToPresent, animated: true)
     }

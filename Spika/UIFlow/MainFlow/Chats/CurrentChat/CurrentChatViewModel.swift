@@ -152,9 +152,10 @@ extension CurrentChatViewModel {
         getAppCoordinator()?.popTopViewController()
     }
     
-    func presentMessageDetails(records: [MessageRecord]) {
+    func presentMessageDetails(for indexPath: IndexPath) {
+        guard let messageId = getMessage(for: indexPath)?.id else { return }
         let users = room.users.compactMap { $0.user }
-        getAppCoordinator()?.presentMessageDetails(users: users, records: records)
+        getAppCoordinator()?.presentMessageDetails(users: users, messageId: messageId)
     }
     
     func presentMoreActions() -> PassthroughSubject<MoreActions, Never>? {
@@ -180,6 +181,7 @@ extension CurrentChatViewModel {
         getAppCoordinator()?.presentReactionsSheet(users: users, records: records)
     }
     
+    // TODO: add indexpath
     func showMessageActions(_ message: Message) {
         guard !message.deleted else { return }
         getAppCoordinator()?
@@ -196,7 +198,8 @@ extension CurrentChatViewModel {
                     UIPasteboard.general.string = message.body?.text
                     self?.showOneSecAlert(type: .copy)
                 case .details:
-                    self?.presentMessageDetails(records: message.records ?? [])
+                    break
+//                    self?.presentMessageDetails(for: <#T##IndexPath#>)
                 case .delete:
                     self?.showDeleteConfirmDialog(message: message)
                 default:

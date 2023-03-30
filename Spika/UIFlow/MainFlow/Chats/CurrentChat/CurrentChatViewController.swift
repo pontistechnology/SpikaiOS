@@ -416,12 +416,12 @@ extension CurrentChatViewController: UITableViewDataSource {
         }
         // Do not add anything before this, because message can be deleted
         
-        if let replyId = message.replyId, replyId >= 0,
+        if let replyId = message.replyId,
            let repliedMessageIndexPath = viewModel.getIndexPathFor(messageId: replyId),
            let repliedMessage = viewModel.getMessage(for: repliedMessageIndexPath)
         {
             let senderName = viewModel.room.getDisplayNameFor(userId: repliedMessage.fromUserId)
-            cell.showReplyView(senderName: senderName ?? .getStringFor(.unknown),
+            cell.showReplyView(senderName: senderName,
                                message: repliedMessage,
                                sender: senderType)
         }
@@ -496,12 +496,10 @@ extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let message = viewModel.getMessage(for: indexPath) else { return nil }
-        guard !message.deleted,
-              let records = message.records
-        else { return nil}
+        guard !message.deleted else { return nil}
         // TODO: - refactor this to seperate view
         let detailsAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
-            self?.viewModel.presentMessageDetails(records: records)
+            self?.viewModel.presentMessageDetails(for: indexPath)
             completionHandler(true)
         }
         detailsAction.backgroundColor = .primaryBackground

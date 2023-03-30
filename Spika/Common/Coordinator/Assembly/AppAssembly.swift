@@ -28,6 +28,7 @@ final class AppAssembly: Assembly {
         self.assembleImageViewerViewController(container)
         self.assembleUserSelectionViewController(container)
         self.assembleMessageActionsViewController(container)
+        self.assembleMessageDetailsViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
@@ -248,6 +249,21 @@ final class AppAssembly: Assembly {
         container.register(MessageActionsViewController.self) { (resolver, coordinator: AppCoordinator) in
             let viewModel = container.resolve(MessageActionsViewModel.self, argument: coordinator)!
             let controller = MessageActionsViewController(viewModel: viewModel)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleMessageDetailsViewController(_ container: Container) {
+        container.register(MessageDetailsViewModel.self) { (resolver, coordinator: AppCoordinator, users: [User], messageId: Int64) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            let viewModel = MessageDetailsViewModel(repository: repository, coordinator: coordinator, users: users, messageId: messageId)
+            return viewModel
+        }.inObjectScope(.transient)
+        
+        container.register(MessageDetailsViewController.self) { (resolver, coordinator: AppCoordinator, users: [User], messageId: Int64) in
+            let viewModel = container.resolve(MessageDetailsViewModel.self, arguments: coordinator, users, messageId)!
+            let controller = MessageDetailsViewController()
+            controller.viewModel = viewModel
             return controller
         }.inObjectScope(.transient)
     }

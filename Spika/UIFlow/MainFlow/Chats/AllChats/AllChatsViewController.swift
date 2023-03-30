@@ -44,6 +44,7 @@ class AllChatsViewController: BaseViewController {
         allChatsView.allChatsTableView.reloadData()
     }
     
+    // TODO: - move to viewmodel under navigation
     func onCreateNewRoom() {
         self.viewModel.getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
     }
@@ -58,6 +59,8 @@ extension AllChatsViewController: NSFetchedResultsControllerDelegate {
         allChatsView.allChatsTableView.reloadData()
     }
 }
+
+// MARK: - UITableview
 
 extension AllChatsViewController: UITableViewDelegate {
     
@@ -85,7 +88,8 @@ extension AllChatsViewController: UITableViewDataSource {
     }
 }
 
-// MARK: UITableview swipe animations, ignore for now
+// MARK: - UITableview swipe animations, ignore for now
+
 extension AllChatsViewController {
     
     private func printSwipe() {
@@ -127,6 +131,8 @@ extension AllChatsViewController {
         return UISwipeActionsConfiguration(actions: [secondRightAction, firstRightAction])
     }
 }
+
+// MARK: - SearchBarDelegate
 
 extension AllChatsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
