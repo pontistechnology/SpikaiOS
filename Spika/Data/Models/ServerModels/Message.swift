@@ -31,8 +31,8 @@ extension Message {
         self.localId = localId
         self.fromUserId = fromUserId
         self.totalUserCount = -1
-        self.deliveredCount = -1
-        self.seenCount = -1
+        self.deliveredCount = -2 // needs to be different all 3 values, because state is calculated from this
+        self.seenCount = -3
         self.replyId = replyId
         self.roomId = roomId
         self.type = type
