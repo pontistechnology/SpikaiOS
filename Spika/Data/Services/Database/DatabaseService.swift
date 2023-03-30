@@ -35,7 +35,7 @@ extension DatabaseService {
     func getLocalUsers() -> Future<[User], Error> {
         return Future { [weak self] promise in
             guard let self else { return }
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 let fetchRequest = UserEntity.fetchRequest()
                 do {
                     let userEntities = try context.fetch(fetchRequest)
@@ -51,7 +51,7 @@ extension DatabaseService {
      // meaningless
     func saveUser(_ user: User) -> Future<User, Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let _ = UserEntity(user: user, context: context)
                 do {
@@ -67,7 +67,7 @@ extension DatabaseService {
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for user in users {
                     if user.displayName == nil {
@@ -88,7 +88,7 @@ extension DatabaseService {
     
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for contact in contacts {
                     let _ = ContactEntity(phoneNumber: contact.telephone,
@@ -110,7 +110,7 @@ extension DatabaseService {
     // TODO: - check
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 for var user in users {
 //                    saveUsers(users)
                     let fetchRequest = ContactEntity.fetchRequest()
@@ -139,7 +139,7 @@ extension DatabaseService {
     
     func getLocalUser(withId id: Int64) -> Future<User, Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let fetchRequest = UserEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
@@ -226,7 +226,7 @@ extension DatabaseService {
     func saveRooms(_ rooms: [Room]) -> Future<[Room], Error> {
         Future { [weak self] promise in
             guard let self else { return }
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for room in rooms {
                     let _ = RoomEntity(room: room, context: context)
@@ -248,7 +248,7 @@ extension DatabaseService {
     func updateRoomUsers(_ room: Room) -> Future<Room, Error> {
         Future { [weak self] promise in
             guard let self else { return }
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
                 let roomUserFR = RoomUserEntity.fetchRequest()
@@ -277,7 +277,7 @@ extension DatabaseService {
     func deleteRoom(roomId: Int64) -> Future<Bool, Error> {
         Future { [weak self] promise in
             guard let self else { return }
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
                 let fr = RoomEntity.fetchRequest()
@@ -343,7 +343,7 @@ extension DatabaseService {
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
         return Future { [weak self] promise in
             guard let self else { return }
-            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
                 for messageRecord in messageRecords {

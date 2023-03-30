@@ -45,7 +45,7 @@ class EnterUsernameViewModel: BaseViewModel {
             self.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
-                print("ERROR: ", error)
+//                print("ERROR: ", error)
                 self.showError("Username error: \(error)")
             case .finished:
                 self.presentHomeScreen()

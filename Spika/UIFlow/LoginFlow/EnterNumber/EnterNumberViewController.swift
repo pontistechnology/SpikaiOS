@@ -29,7 +29,6 @@ class EnterNumberViewController: BaseViewController {
                   let fullNumber = self.enterNumberView.getFullNumber(),
                   let uuid = UIDevice.current.identifierForVendor?.uuidString
             else { return }
-            print("UUID: ", uuid)
             
             self.viewModel.authenticateWithNumber(
                 number: fullNumber,

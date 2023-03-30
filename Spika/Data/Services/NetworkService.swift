@@ -79,7 +79,7 @@ class NetworkService {
         
         return URLSession.shared.dataTaskPublisher(for: request)
             .map({ [weak self] (data, response) in
-                DebugUtils.printRequestAndResponse(request: request, data: data)
+//                DebugUtils.printRequestAndResponse(request: request, data: data)
                 let statusCode = (response as? HTTPURLResponse)?.statusCode
                 switch statusCode {
                 case 200:

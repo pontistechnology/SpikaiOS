@@ -45,7 +45,7 @@ extension AppRepository {
     }
     
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
-        print("Phone number SHA256: ", telephoneNumber.getSHA256())
+//        print("Phone number SHA256: ", telephoneNumber.getSHA256())
         let resources = Resources<AuthResponseModel, AuthRequestModel>(
             path: Constants.Endpoints.authenticateUser,
             requestType: .POST,
