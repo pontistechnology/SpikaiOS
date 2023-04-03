@@ -96,7 +96,7 @@ class SearchBar: UIView, BaseView {
         }.store(in: &subscriptions)
         
         cancelButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.delegate?.searchBar(self, didPressCancel: true)
         }.store(in: &subscriptions)
         

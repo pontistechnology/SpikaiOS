@@ -30,7 +30,7 @@ class CoreDataStack: NSObject {
 //        return container
 //    }()
     
-    lazy var persistantContainer: NSPersistentContainer = {
+    lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: self.moduleName)
         
         let directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.Networking.appGroupName)!
@@ -57,8 +57,15 @@ class CoreDataStack: NSObject {
     
     lazy var mainMOC: NSManagedObjectContext = {
         let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        moc.persistentStoreCoordinator = persistantContainer.persistentStoreCoordinator
+        moc.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
         moc.automaticallyMergesChangesFromParent = true
         return moc
     }()
+    
+//    lazy var backgroundMOC: NSManagedObjectContext = {
+//        let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+//        moc.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+//        moc.automaticallyMergesChangesFromParent = true
+//        return moc
+//    }()
 }

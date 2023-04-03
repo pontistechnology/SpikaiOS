@@ -52,7 +52,7 @@ class ContactsViewModel: BaseViewModel {
             default: break
             }
         } receiveValue: { [weak self] contacts in
-            guard let self = self else { return }
+            guard let self else { return }
             self.repository.saveContacts(contacts).sink { completion in
                 
             } receiveValue: { contactss in
@@ -91,7 +91,7 @@ class ContactsViewModel: BaseViewModel {
                 break
             }
         } receiveValue: { [weak self] response in
-            guard let self = self else { return }
+            guard let self else { return }
 //            print("Success: ", response)
             if let list = response.data?.list {
                 self.repository.updateUsersWithContactData(list)

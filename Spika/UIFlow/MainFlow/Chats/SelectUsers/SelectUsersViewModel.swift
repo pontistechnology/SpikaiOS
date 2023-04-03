@@ -20,7 +20,7 @@ class SelectUsersViewModel: BaseViewModel {
                 break
             }
         } receiveValue: { [weak self] response in
-            guard let self = self else { return }
+            guard let self else { return }
             print("Success: ", response)
             if let list = response.data?.list {
 //                self.updateContactsUI(list: list)

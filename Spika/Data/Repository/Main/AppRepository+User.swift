@@ -13,17 +13,30 @@ extension AppRepository {
     
     // MARK: UserDefaults
     
-    func saveUserInfo(user: User, device: Device? = nil) {
+    func saveUserInfo(user: User, device: Device? = nil, telephoneNumber: TelephoneNumber?) {
         userDefaults.set(user.id, forKey: Constants.Database.userId)
-        userDefaults.set(user.telephoneNumber, forKey: Constants.Database.userPhoneNumber)
         userDefaults.set(user.displayName, forKey: Constants.Database.displayName)
-        guard let device = device else { return }
-        userDefaults.set(device.id, forKey: Constants.Database.deviceId)
-        userDefaults.set(device.token, forKey: Constants.Database.accessToken)
+        if let device {
+            userDefaults.set(device.id, forKey: Constants.Database.deviceId)
+            userDefaults.set(device.token, forKey: Constants.Database.accessToken)
+        }
+        if let telephoneNumber {
+            userDefaults.set(telephoneNumber.countryCode, forKey: Constants.Database.userPhoneNumberCountryCode)
+            userDefaults.set(telephoneNumber.restOfNumber, forKey: Constants.Database.userPhoneNumberRest)
+        }
     }
     
     func getMyUserId() -> Int64 {
         return Int64(userDefaults.integer(forKey: Constants.Database.userId))
+    }
+    
+    func getMyTelephoneNumber() -> TelephoneNumber? {
+        guard let phoneCode = userDefaults.string(forKey: Constants.Database.userPhoneNumberCountryCode),
+              let restOfNumber = userDefaults.string(forKey: Constants.Database.userPhoneNumberRest)
+        else {
+            return nil
+        }
+        return TelephoneNumber(countryCode: phoneCode, restOfNumber: restOfNumber)
     }
     
     // MARK: Network
@@ -45,7 +58,7 @@ extension AppRepository {
     }
     
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
-        print("Phone number SHA256: ", telephoneNumber.getSHA256())
+//        print("Phone number SHA256: ", telephoneNumber.getSHA256())
         let resources = Resources<AuthResponseModel, AuthRequestModel>(
             path: Constants.Endpoints.authenticateUser,
             requestType: .POST,
@@ -120,30 +133,30 @@ extension AppRepository {
     // MARK: Database
     
     func getLocalUsers() -> Future<[User], Error> {
-        return databaseService.userEntityService.getLocalUsers()
+        return databaseService.getLocalUsers()
     }
     
     func getLocalUser(withId id: Int64) -> Future<User, Error> {
-        return databaseService.userEntityService.getLocalUser(withId: id)
+        return databaseService.getLocalUser(withId: id)
     }
     
-    func saveUser(_ user: User) -> Future<User, Error> {
-        return databaseService.userEntityService.saveUser(user)
-    }
+//    func saveUser(_ user: User) -> Future<User, Error> {
+//        return databaseService.saveUser(user)
+//    }
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
-        return databaseService.userEntityService.saveUsers(users)
+        return databaseService.saveUsers(users)
     }
     
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
-        return databaseService.userEntityService.saveContacts(contacts)
+        return databaseService.saveContacts(contacts)
     }
     
-    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
-        return databaseService.userEntityService.getContact(phoneNumber: phoneNumber)
-    }
+//    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
+//        return databaseService.getContact(phoneNumber: phoneNumber)
+//    }
     
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
-        return databaseService.userEntityService.updateUsersWithContactData(users)
+        return databaseService.updateUsersWithContactData(users)
     }
 }

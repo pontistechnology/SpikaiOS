@@ -29,7 +29,7 @@ class AppCoordinator: Coordinator {
     func syncAndStartSSE() {
         guard let _ = userDefaults.string(forKey: Constants.Database.accessToken) else { return }
         let sse = Assembler.sharedAssembler.resolver.resolve(SSE.self, argument: self)
-        sse?.syncAndStartSSE()
+        sse?.startSSEAndSync()
     }
     
     //  This can be in scene delegate?
@@ -56,7 +56,7 @@ class AppCoordinator: Coordinator {
         self.navigationController.setViewControllers([viewController], animated: true)
     }
     
-    func presentEnterVerifyCodeScreen(number: String, deviceId: String) {
+    func presentEnterVerifyCodeScreen(number: TelephoneNumber, deviceId: String) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(EnterVerifyCodeViewController.self, arguments: self, number, deviceId)!
         self.navigationController.pushViewController(viewController, animated: true)
     }
@@ -132,12 +132,6 @@ class AppCoordinator: Coordinator {
         navigationController.present(navC, animated: true, completion: nil)
     }
     
-    func presentCurrentChatScreen(user: User) {
-        let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, user)!
-        
-        navigationController.pushViewController(currentChatViewController, animated: true)
-    }
-    
     func presentChatDetailsScreen(room: CurrentValueSubject<Room,Never>) {
         let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetailsViewController.self, arguments: self, room)!
         
@@ -156,25 +150,19 @@ class AppCoordinator: Coordinator {
         
         usersSelectedPublisher
             .sink { [weak self] users in
-                guard let self = self else { return }
+                guard let self else { return }
                 let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroupChatViewController.self, arguments: self, users)!
                 let navC = UINavigationController(rootViewController: viewController)
                 self.navigationController.present(navC, animated: true, completion: nil)
             }.store(in: &self.subs)
     }
     
-    func presentMessageDetails(users: [User], records: [MessageRecord]) {
-        // TODO: assemble this vc
-        let viewControllerToPresent = MessageDetailsViewController(users: users, records: records)
-        if #available(iOS 15.0, *) {
-            if let sheet = viewControllerToPresent.sheetPresentationController {
-                sheet.detents = [.medium(), .large()]
-                sheet.prefersGrabberVisible = true
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            }
-        } else {
-            // Fallback on earlier versions
-            // TODO: fix for ios 14
+    func presentMessageDetails(users: [User], messageId: Int64) {
+        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageDetailsViewController.self, arguments: self, users, messageId)!
+        if let sheet = viewControllerToPresent.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
         }
         navigationController.present(viewControllerToPresent, animated: true)
     }
@@ -272,7 +260,8 @@ extension AppCoordinator {
             .notificationTapPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] info in
-                self?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: info.room.id))
+//                self?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: info.room.id))
+                // TODO: - dbr add room to info
             }.store(in: &subs)
     }
     

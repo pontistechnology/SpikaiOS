@@ -29,18 +29,7 @@ class ChatsAssembly: Assembly {
 //        }.inObjectScope(.transient)
     }
     
-    private func assembleCurrentChatViewController(_ container: Container) {
-        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, user: User) in
-            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return CurrentChatViewModel(repository: repository, coordinator: coordinator, friendUser: user)
-        }.inObjectScope(.transient)
-
-        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, user: User) in
-            let controller = CurrentChatViewController()
-            controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, user)
-            return controller
-        }.inObjectScope(.transient)
-        
+    private func assembleCurrentChatViewController(_ container: Container) {        
         container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, room: Room) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return CurrentChatViewModel(repository: repository, coordinator: coordinator, room: room)

@@ -9,33 +9,19 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class MessageDetailsViewController: BaseViewController {
     
+    var viewModel: MessageDetailsViewModel!
     let sectionTitles:[String] = [.getStringFor(.readBy), .getStringFor(.deliveredTo), .getStringFor(.sentTo)]
-    let seenRecords: [MessageRecord]
-    let deliveredRecords: [MessageRecord]
-    var remainingUsers: [User]
-    let users: [User]
+//    let seenRecords: [MessageRecord]
+//    let deliveredRecords: [MessageRecord]
+//    var remainingUsers: [User]
+//    let users: [User]
     
     let messageDetailsView = MessageDetailsView()
-    
-    init(users: [User], records: [MessageRecord]) {
-        self.users = users
-        self.seenRecords = records.filter{$0.type == .seen}
-        self.deliveredRecords = records.filter{$0.type == .delivered}
-        self.remainingUsers = users.filter({ user in
-            !records.contains { record in
-                record.userId == user.id
-            }
-        })
-        super.init()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(messageDetailsView)
@@ -48,6 +34,8 @@ extension MessageDetailsViewController {
     func setupBindings() {
         messageDetailsView.recordsTableView.delegate = self
         messageDetailsView.recordsTableView.dataSource = self
+        viewModel.frc?.delegate = self
+        viewModel.setFetch()
     }
 }
 
@@ -63,53 +51,30 @@ extension MessageDetailsViewController: UITableViewDelegate {
 
 extension MessageDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return seenRecords.count
-        case 1:
-            return deliveredRecords.count
-        case 2:
-            return remainingUsers.count
-        default:
-            return 0
-        }
+        viewModel.numberOfRows(in: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MessageDetailTableViewCell.reuseIdentifier, for: indexPath) as? MessageDetailTableViewCell
-        switch indexPath.section {
-        case 0:
-            guard let user = users.first(where: { user in
-                seenRecords[indexPath.row].userId == user.id
-            }) else { break }
-            
-            cell?.configureCell(avatarUrl: user.avatarFileId?.fullFilePathFromId(),
-                                name: user.getDisplayName(),
-                                time: seenRecords[indexPath.row].createdAt.convert(to: .allChatsTimeFormat))
-        case 1:
-            guard let user = users.first(where: { user in
-                deliveredRecords[indexPath.row].userId == user.id
-            }) else { break }
-            
-            cell?.configureCell(avatarUrl: user.avatarFileId?.fullFilePathFromId(),
-                                name: user.getDisplayName(),
-                                time: deliveredRecords[indexPath.row].createdAt.convert(to: .allChatsTimeFormat))
-        case 2:
-            cell?.configureCell(avatarUrl: remainingUsers[indexPath.row].avatarFileId?.fullFilePathFromId(),
-                                name: remainingUsers[indexPath.row].getDisplayName(),
-                                time: .getStringFor(.waiting))
-        default:
-            break
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageDetailTableViewCell.reuseIdentifier, for: indexPath) as? MessageDetailTableViewCell,
+              let data = viewModel.getDataForCell(at: indexPath)
+        else {
+            return EmptyTableViewCell()
         }
-        
-        return cell ?? EmptyTableViewCell()
+        cell.configureCell(avatarUrl: data.avatarUrl, name: data.name, time: data.time)
+        return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        sectionTitles.count
+        viewModel.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         sectionTitles[section]
+    }
+}
+
+extension MessageDetailsViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        messageDetailsView.recordsTableView.reloadData()
     }
 }

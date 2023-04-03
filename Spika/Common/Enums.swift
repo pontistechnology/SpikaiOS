@@ -118,6 +118,7 @@ enum SSEEventType: String, Codable {
     case updateRoom = "UPDATE_ROOM"
     case deleteRoom = "DELETE_ROOM"
     case userUpdate = "USER_UPDATE"
+    case seenRoom = "SEEN_ROOM"
 }
 
 enum CustomFontName: String {

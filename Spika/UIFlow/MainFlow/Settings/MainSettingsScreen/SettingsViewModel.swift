@@ -26,7 +26,7 @@ class SettingsViewModel: BaseSettingsViewModel {
         
         let tuple = repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 512, height: 512, duration: 0))
         tuple.sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let self else { return }
             switch completion {
             case .finished:
                 break
@@ -34,7 +34,7 @@ class SettingsViewModel: BaseSettingsViewModel {
                 self.showError("Error with file upload: \(error)")
             }
         } receiveValue: { [weak self] (file, percent) in
-            guard let self = self else { return }
+            guard let self else { return }
             guard let file = file else { return }
             self.updateInfo(username: self.user.value?.getDisplayName() ?? "", avatarFileId: file.id ?? 0)
         }.store(in: &subscriptions)
@@ -45,7 +45,7 @@ class SettingsViewModel: BaseSettingsViewModel {
         repository.updateUser(username: username, avatarFileId: avatarFileId, telephoneNumber: nil, email: nil)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.networkRequestState.send(.finished)
                 switch completion {
                 case let .failure(error):
@@ -55,7 +55,7 @@ class SettingsViewModel: BaseSettingsViewModel {
                     return
                 }
             } receiveValue: { [weak self] response in
-                guard let self = self,
+                guard let self,
                       let user = response.data?.user else { return }
                 self.saveUser(user: user)
             }.store(in: &subscriptions)

@@ -33,7 +33,7 @@ final class WindowManager {
 extension WindowManager {
     private func setupIndicatorWindow() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.indicatorWindow = UIWindow(windowScene: self.scene)
             let width = 8.0
             self.indicatorWindow?.frame = CGRect(x: self.scene.screen.bounds.width - width - 10,
@@ -60,7 +60,7 @@ extension WindowManager {
 extension WindowManager {
     func showNotificationWindow(info: MessageNotificationInfo) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.notificationWindow = nil
             self.notificationWindow = UIWindow(windowScene: self.scene)
             self.notificationWindow?.frame = CGRect(x: 0, y: 60,
@@ -85,7 +85,7 @@ extension WindowManager {
     func showPopUp(for type: PopUpType) {
         // TODO: Check is error or popup presented
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.popUpWindow = nil
             self.popUpWindow = UIWindow(windowScene: self.scene)
             self.popUpWindow?.frame = type.frame(for: self.scene)

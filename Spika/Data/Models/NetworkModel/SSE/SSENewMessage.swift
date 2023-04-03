@@ -12,4 +12,5 @@ struct SSENewMessage: Codable {
     let message: Message?
     let messageRecord: MessageRecord?
     let room: Room?
+    let roomId: Int64?
 }

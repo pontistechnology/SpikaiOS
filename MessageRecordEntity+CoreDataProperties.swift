@@ -23,7 +23,6 @@ extension MessageRecordEntity {
     @NSManaged public var createdAt: Int64
     @NSManaged public var modifiedAt: Int64
     @NSManaged public var reaction: String?
-    @NSManaged public var message: MessageEntity?
 
 }
 

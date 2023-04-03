@@ -14,13 +14,19 @@ import PhotosUI
 
 class CurrentChatViewModel: BaseViewModel {
     
-    let friendUser: User?
-    var room: Room? {
-        didSet {
-            self.updateIsMember()
-        }
+    var frc: NSFetchedResultsController<MessageEntity>?
+    var room: Room
+//    {
+        // MOVE
+//        didSet {
+//            self.updateIsMember()
+//        }
+//    }
+    
+    var friendUser: User? {
+        room.getFriendUserInPrivateRoom(myUserId: getMyUserId())
     }
-    let roomPublisher = PassthroughSubject<Room, Error>()
+    
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
     let isMember = CurrentValueSubject<Bool,Never>(true)
@@ -30,16 +36,8 @@ class CurrentChatViewModel: BaseViewModel {
     
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
     
-    init(repository: Repository, coordinator: Coordinator, friendUser: User) {
-        self.friendUser = friendUser
-        super.init(repository: repository, coordinator: coordinator)
-        self.setupBinding()
-    }
-    
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
-        
-        self.friendUser = room.getFriendUserInPrivateRoom(myUserId: repository.getMyUserId())
         super.init(repository: repository, coordinator: coordinator)
         self.setupBinding()
     }
@@ -49,9 +47,9 @@ class CurrentChatViewModel: BaseViewModel {
             .receive(on: DispatchQueue.main)
             .map { [weak self] blockedUsers in
                 guard let blockedUsers = blockedUsers,
-                      self?.room?.type == .privateRoom else { return false }
+                      self?.room.type == .privateRoom else { return false }
                 
-                let roomUserIds = self?.room?.users.map { $0.userId } ?? []
+                let roomUserIds = self?.room.users.map { $0.userId } ?? []
                 return Set(blockedUsers).intersection(Set(roomUserIds)).count > 0
             }
             .subscribe(self.isBlocked)
@@ -61,10 +59,10 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func setupShouldOfferBlockBinding() {
-        guard self.room?.users.count == 2 else { return }
+        guard self.room.users.count == 2 else { return }
         
-        let ownId = self.repository.getMyUserId()
-        guard let contact = self.room?.users.first(where: { roomUser in
+        let ownId = getMyUserId()
+        guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
         
@@ -90,8 +88,8 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func unblockUser() {
-        let ownId = self.repository.getMyUserId()
-        guard let contact = self.room?.users.first(where: { roomUser in
+        let ownId = getMyUserId()
+        guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
         self.repository.unblockUser(userId: contact.userId)
@@ -107,8 +105,8 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func blockUser() {
-        let ownId = self.repository.getMyUserId()
-        guard let contact = self.room?.users.first(where: { roomUser in
+        let ownId = getMyUserId()
+        guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
         self.repository.blockUser(userId: contact.userId)
@@ -124,8 +122,8 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func userConfirmed() {
-        let ownId = self.repository.getMyUserId()
-        guard let contact = self.room?.users.first(where: { roomUser in
+        let ownId = getMyUserId()
+        guard let contact = self.room.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
         
@@ -141,7 +139,7 @@ class CurrentChatViewModel: BaseViewModel {
     }
     
     func updateIsMember() {
-        let ids = self.room?.users.map { $0.userId } ?? []
+        let ids = self.room.users.map { $0.userId }
         let ownId = self.getMyUserId()
         self.isMember.send(ids.contains(ownId))
     }
@@ -154,14 +152,10 @@ extension CurrentChatViewModel {
         getAppCoordinator()?.popTopViewController()
     }
     
-    func presentMessageDetails(records: [MessageRecord]) {
-        guard let roomUsers = room?.users else {
-            return
-        }
-        let users = roomUsers.compactMap { roomUser in
-            roomUser.user
-        }
-        getAppCoordinator()?.presentMessageDetails(users: users, records: records)
+    func presentMessageDetails(for indexPath: IndexPath) {
+        guard let messageId = getMessage(for: indexPath)?.id else { return }
+        let users = room.users.compactMap { $0.user }
+        getAppCoordinator()?.presentMessageDetails(users: users, messageId: messageId)
     }
     
     func presentMoreActions() -> PassthroughSubject<MoreActions, Never>? {
@@ -181,14 +175,15 @@ extension CurrentChatViewModel {
     }
     
     func showReactions(records: [MessageRecord]) {
-        guard let roomUsers = room?.users else { return }
-        let users = roomUsers.compactMap { roomUser in
+        let users = room.users.compactMap { roomUser in
             roomUser.user
         }
         getAppCoordinator()?.presentReactionsSheet(users: users, records: records)
     }
     
+    // TODO: add indexpath
     func showMessageActions(_ message: Message) {
+        guard !message.deleted else { return }
         getAppCoordinator()?
             .presentMessageActionsSheet()
             .sink(receiveValue: { [weak self] action in
@@ -203,7 +198,8 @@ extension CurrentChatViewModel {
                     UIPasteboard.general.string = message.body?.text
                     self?.showOneSecAlert(type: .copy)
                 case .details:
-                    self?.presentMessageDetails(records: message.records ?? [])
+                    break
+//                    self?.presentMessageDetails(for: <#T##IndexPath#>)
                 case .delete:
                     self?.showDeleteConfirmDialog(message: message)
                 default:
@@ -243,111 +239,7 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-    
-    func checkLocalRoom() {
-        if let room = room {
-            roomPublisher.send(room)
-        } else if let friendUser = friendUser {
-            repository.checkLocalRoom(forUserId: friendUser.id).sink { [weak self] completion in
-                guard let self = self else { return }
-                switch completion {
-                case .finished:
-                    break
-                case .failure(_):
-                    print("no local room")
-                    self.checkOnlineRoom()
-                }
-            } receiveValue: { [weak self] room in
-                guard let self = self else { return }
-                self.room = room
-                self.roomPublisher.send(room)
-            }.store(in: &subscriptions)
-        }
-    }
-    
-    func checkOnlineRoom()  {
-        guard let friendUser = friendUser else { return }
-        networkRequestState.send(.started())
-        
-        repository.checkOnlineRoom(forUserId: friendUser.id).sink { [weak self] completion in
-            guard let self = self else { return }
-            switch completion {
-            case .finished:
-                print("online check finished")
-            case .failure(let error):
-                self.showError(error.localizedDescription)
-                self.networkRequestState.send(.finished)
-                // TODO: publish error
-            }
-        } receiveValue: { [weak self] response in
-            
-            guard let self = self else { return }
-            
-            if let room = response.data?.room {
-                print("There is online room.")
-                self.saveLocalRoom(room: room)
-                self.networkRequestState.send(.finished)
-            } else {
-                print("There is no online room, creating started...")
-                self.createRoom(userId: friendUser.id)
-            }
-        }.store(in: &subscriptions)
-    }
-    
-    func saveLocalRoom(room: Room) {
-        repository.saveLocalRooms(rooms: [room]).sink { [weak self] completion in
-            guard let _ = self else { return }
-            switch completion {
-                
-            case .finished:
-                print("saved to local DB")
-            case .failure(_):
-                print("saving to local DB failed")
-            }
-        } receiveValue: { [weak self] rooms in
-            guard let self = self,
-                  let room = rooms.first
-            else { return }
-            self.room = room
-            self.roomPublisher.send(room)
-        }.store(in: &subscriptions)
-    }
-    
-    func createRoom(userId: Int64) {
-        networkRequestState.send(.started())
-        repository.createOnlineRoom(userId: userId).sink { [weak self] completion in
-            guard let self = self else { return }
-            self.networkRequestState.send(.finished)
-            
-            switch completion {
-            case .finished:
-                print("private room created")
-            case .failure(let error):
-                self.showError(error.localizedDescription)
-                // TODO: present dialog and return? publish error
-            }
-        } receiveValue: { [weak self] response in
-            guard let self = self else { return }
-            print("creating room response: ", response)
-            if let errorMessage = response.message {
-                //                PopUpManager.shared.presentAlert(with: (title: "Error", message: errorMessage), orientation: .horizontal, closures: [("Ok", {
-                //                    self.getAppCoordinator()?.popTopViewController()
-                //                })]) // TODO: - check
-            }
-            guard let room = response.data?.room else { return }
-            self.saveLocalRoom(room: room)
-        }.store(in: &subscriptions)
-    }
-    
-    func roomVisited(roomId: Int64) {
-        repository.roomVisited(roomId: roomId)
-    }
-}
-
-extension CurrentChatViewModel {
     func trySendMessage(text: String) {
-        guard let room = self.room else { return }
-        print("ROOM: ", room)
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
                               fromUserId: getMyUserId(),
@@ -370,8 +262,6 @@ extension CurrentChatViewModel {
     
     
     func sendMessage(body: RequestMessageBody, localId: String, type: MessageType, replyId: Int64?) {
-        guard let room = self.room else { return }
-        
         self.repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, replyId: replyId).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
@@ -383,7 +273,7 @@ extension CurrentChatViewModel {
             }
         } receiveValue: { [weak self] response in
             print("SendMessage response: ", response)
-            guard let self = self,
+            guard let self,
                   let message = response.data?.message
             else { return }
             self.saveMessage(message: message)
@@ -401,7 +291,7 @@ extension CurrentChatViewModel {
 
 extension CurrentChatViewModel {
     func getUser(for id: Int64) -> User? {
-        return room?.users.first(where: { roomUser in
+        return room.users.first(where: { roomUser in
             roomUser.userId == id
         })?.user
     }
@@ -409,12 +299,12 @@ extension CurrentChatViewModel {
 
 extension CurrentChatViewModel {
     func sendSeenStatus() {
-        guard let roomId = room?.id else { return }
-        repository.sendSeenStatus(roomId: roomId).sink { c in
+        repository.sendSeenStatus(roomId: room.id).sink { c in
             
         } receiveValue: { [weak self] response in
-            guard let messageRecords = response.data?.messageRecords else { return }
-            self?.repository.saveMessageRecords(messageRecords)
+            guard let self = self,
+                  let messageRecords = response.data?.messageRecords else { return }
+            self.repository.updateUnreadCounts(unreadCounts: [UnreadCount(roomId: self.room.id, unreadCount: 0)])
         }.store(in: &subscriptions)
     }
 }
@@ -436,13 +326,13 @@ extension CurrentChatViewModel {
                     
                 } receiveValue: { [weak self] filea, percent in
                     guard let filea = filea else { return }
-                    guard let self = self else { return }
+                    guard let self else { return }
                     self.repository
                         .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData)
                         .sink { c in
                             
                         } receiveValue: { [weak self] fileb, percent in
-                            guard let self = self else { return }
+                            guard let self else { return }
                             self.uploadProgressPublisher.send((percentUploaded: percent, selectedFile: file))
                             guard let fileb = fileb else { return }
                             self.sendMessage(body: RequestMessageBody(text: nil, fileId: fileb.id, thumbId: filea.id), localId: file.localId, type: file.fileType, replyId: nil)
@@ -468,7 +358,6 @@ extension CurrentChatViewModel {
     }
     
     func sendFile(file: SelectedFile) {
-        guard let room = room else { return }
         let uuid = file.localId
         
         let message = Message(createdAt: Date().currentTimeMillis(),
@@ -588,5 +477,99 @@ extension CurrentChatViewModel {
                 guard let records = response.data?.messageRecords else { return }
                 self?.repository.saveMessageRecords(records)
             }.store(in: &subscriptions)
+    }
+}
+
+extension CurrentChatViewModel {
+    
+    func getMessage(for indexPath: IndexPath) -> Message? {
+        guard let entity = frc?.object(at: indexPath),
+              let context = entity.managedObjectContext
+        else { return nil }
+        let fileData = repository.getFileData(id: entity.bodyFileId, context: context)
+        let thumbData = repository.getFileData(id: entity.bodyThumbId, context: context)
+        let reactionRecords = repository.getReactionRecords(messageId: entity.id, context: context)
+
+        return Message(messageEntity: entity,
+                       fileData: fileData,
+                       thumbData: thumbData,
+                       records: reactionRecords)
+    }
+    
+    func getIndexPathFor(localId: String) -> IndexPath? {
+        guard let entity = frc?.fetchedObjects?.first(where: { $0.localId == localId })
+        else { return nil }
+        return frc?.indexPath(forObject: entity)
+    }
+    
+    func getIndexPathFor(messageId id: Int64) -> IndexPath? {
+        guard let entity = frc?.fetchedObjects?.first(where: { $0.id == "\(id)" })
+        else { return nil }
+        return frc?.indexPath(forObject: entity)
+    }
+}
+
+// FRC stuff
+
+extension CurrentChatViewModel {
+    func setFetch() {
+        let fetchRequest = MessageEntity.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "createdDate", ascending: true),
+            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "roomId == %d", room.id)
+        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                              managedObjectContext: repository.getMainContext(),
+                                              sectionNameKeyPath: "sectionName",
+                                              cacheName: nil)
+        do {
+            try self.frc?.performFetch()
+        } catch {
+            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
+        }
+        
+        // TODO: - refactor, move
+        let userId = getMyUserId()
+        guard let messages = self.frc?.sections?.first?.objects as? [MessageEntity],
+              let _ = messages.first(where: { message in
+                  message.fromUserId == userId
+              }) else {
+            userRepliedInChat.send(false)
+            return
+        }
+    }
+    
+    func getNameForSection(section: Int) -> String? {
+        guard let sections = frc?.sections else { return nil }
+        var name = sections[section].name
+        if let time = (sections[section].objects?.first as? MessageEntity)?.createdAt {
+            name.append(", ")
+            name.append(time.convert(to: .HHmm))
+        }
+        return name
+    }
+    
+    func isPreviousCellMine(for indexPath: IndexPath) -> Bool {
+        let previousRow = indexPath.row - 1
+        if previousRow >= 0 {
+            let currentMessageEntity  = frc?.object(at: indexPath)
+            let previousMessageEntity = frc?.object(at: IndexPath(row: previousRow,
+                                                                  section: indexPath.section))
+            return currentMessageEntity?.fromUserId == previousMessageEntity?.fromUserId
+        }
+        return false
+    }
+    
+    func isNextCellMine(for indexPath: IndexPath) -> Bool {
+        guard let sections = frc?.sections else { return true }
+        let maxRowsIndex = sections[indexPath.section].numberOfObjects - 1
+        let nextRow = indexPath.row + 1
+        if nextRow <= maxRowsIndex {
+            let currentMessageEntity  = frc?.object(at: indexPath)
+            let nextMessageEntity = frc?.object(at: IndexPath(row: nextRow,
+                                                              section: indexPath.section))
+            return currentMessageEntity?.fromUserId == nextMessageEntity?.fromUserId
+        }
+        return false
     }
 }

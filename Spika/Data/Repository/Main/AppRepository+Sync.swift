@@ -37,7 +37,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func syncMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error> {
+    func syncModifiedMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error> {
         guard let accessToken = getAccessToken() else { return
             Fail<SyncMessagesResponseModel, Error>(error: NetworkError.noAccessToken)
                     .receive(on: DispatchQueue.main)
@@ -45,7 +45,38 @@ extension AppRepository {
         }
         
         let resources = Resources<SyncMessagesResponseModel, EmptyRequestBody>(
-            path: Constants.Endpoints.syncMessages + "/\(timestamp)",
+            path: Constants.Endpoints.syncModifiedMessages + "/\(timestamp)",
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func syncAllMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error> {
+        guard let accessToken = getAccessToken() else {
+            return Fail<SyncMessagesResponseModel, Error>(error: NetworkError.noAccessToken)
+                    .receive(on: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<SyncMessagesResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.syncAllMessages + "/\(timestamp)",
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func syncUndeliveredMessages() -> AnyPublisher<SyncMessagesResponseModel, Error> {
+        guard let accessToken = getAccessToken() else { return
+            Fail<SyncMessagesResponseModel, Error>(error: NetworkError.noAccessToken)
+                    .receive(on: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+        }
+        let resources = Resources<SyncMessagesResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.syncUndeliveredMessages,
             requestType: .GET,
             bodyParameters: nil,
             httpHeaderFields: ["accesstoken" : accessToken])
@@ -70,6 +101,26 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func getUnreadCounts() -> AnyPublisher<UnreadCountResponseModel, Error> {
+        guard let accessToken = getAccessToken() else { return
+            Fail<UnreadCountResponseModel, Error>(error: NetworkError.noAccessToken)
+                    .receive(on: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<UnreadCountResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.getUnreadCount,
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func updateUnreadCounts(unreadCounts: [UnreadCount]) {
+        databaseService.updateUnreadCounts(unreadCounts)
+    }
+    
     func getSyncTimestamp(for type: SyncType) -> Int64 {
         switch type {
             
@@ -78,25 +129,22 @@ extension AppRepository {
         case .users:
             return Int64(userDefaults.integer(forKey: Constants.Database.usersSyncTimestamp))
         case .messages:
-            let timestamp = Int64(userDefaults.integer(forKey: Constants.Database.messagesSyncTimestamp))
-            return timestamp == 0 ? Date().currentTimeMillis() : timestamp
+            return Int64(userDefaults.integer(forKey: Constants.Database.messagesSyncTimestamp))
         case .messageRecords:
-            let timestamp = Int64(userDefaults.integer(forKey: Constants.Database.messageRecordsSyncTimestamp))
-            return timestamp == 0 ? Date().currentTimeMillis() : timestamp
+            return Int64(userDefaults.integer(forKey: Constants.Database.messageRecordsSyncTimestamp))
         }
     }
     
     func setSyncTimestamp(for type: SyncType, timestamp: Int64) {
         switch type {
-            
         case .users:
             userDefaults.set(timestamp, forKey: Constants.Database.usersSyncTimestamp)
         case .rooms:
             userDefaults.set(timestamp, forKey: Constants.Database.roomsSyncTimestamp)
-        case .messageRecords:
-            userDefaults.set(timestamp, forKey: Constants.Database.messageRecordsSyncTimestamp)
         case .messages:
             userDefaults.set(timestamp, forKey: Constants.Database.messagesSyncTimestamp)
+        case .messageRecords:
+            userDefaults.set(timestamp, forKey: Constants.Database.messageRecordsSyncTimestamp)
         }
     }
 }
