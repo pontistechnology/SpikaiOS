@@ -37,8 +37,9 @@ class SSE {
     private func startSyncs() {
         syncRooms()
         syncUsers()
-        syncModifiedMessages()
-        syncUndeliveredMessages()
+//        syncModifiedMessages()
+//        syncUndeliveredMessages()
+        syncAllMessages()
         syncBlockedList()
         syncMessageRecords()
     }
@@ -151,6 +152,16 @@ private extension SSE {
                   let messages = response.data?.messages
             else { return }
             self.saveMessages(messages, syncTimestamp: nil)
+        }.store(in: &subs)
+    }
+    
+    func syncAllMessages() {
+        let timeStampNow = Date().currentTimeMillis()
+        repository.syncAllMessages(timestamp: repository.getSyncTimestamp(for: .messages)).sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let messages = response.data?.messages else { return }
+            self?.saveMessages(messages, syncTimestamp: timeStampNow)
         }.store(in: &subs)
     }
     

@@ -11,11 +11,11 @@ import Combine
 class EnterVerifyCodeViewModel: BaseViewModel {
     
     let deviceId: String
-    let phoneNumber: String
+    let phoneNumber: TelephoneNumber
     
     let resendSubject = CurrentValueSubject<Bool, Never>(false)
     
-    init(repository: Repository, coordinator: Coordinator, deviceId: String, phoneNumber: String) {
+    init(repository: Repository, coordinator: Coordinator, deviceId: String, phoneNumber: TelephoneNumber) {
         self.deviceId = deviceId
         self.phoneNumber = phoneNumber
         super.init(repository: repository, coordinator: coordinator)
@@ -34,16 +34,17 @@ class EnterVerifyCodeViewModel: BaseViewModel {
         } receiveValue: { [weak self] authModel in
 //            print(authModel)
             guard let user = authModel.data?.user,
-                  let device = authModel.data?.device
+                  let device = authModel.data?.device,
+                  let self
             else {
                 self?.showError("No user or device response.")
                 return
             }
-            self?.repository.saveUserInfo(user: user, device: device)
+            self.repository.saveUserInfo(user: user, device: device, telephoneNumber: self.phoneNumber)
             if user.displayName != "" {
-                self?.presentHomeScreen()
+                self.presentHomeScreen()
             } else {
-                self?.presentEnterUsernameScreen()
+                self.presentEnterUsernameScreen()
             }
         }.store(in: &subscriptions)
 
@@ -51,7 +52,7 @@ class EnterVerifyCodeViewModel: BaseViewModel {
     
     func resendCode() {
         networkRequestState.send(.started())
-        repository.authenticateUser(telephoneNumber: phoneNumber, deviceId: deviceId).sink { [weak self] completion in
+        repository.authenticateUser(telephoneNumber: phoneNumber.getFullNumber(), deviceId: deviceId).sink { [weak self] completion in
             self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):

@@ -19,20 +19,24 @@ class EnterNumberViewController: BaseViewController {
     }
     
     func setupBindings() {
-        enterNumberView.enterNumberTextField.countryNumberLabel.tap().sink { [weak self] _ in
-            guard let self else { return }
-            self.viewModel.presentCountryPicker(delegate: self)
-        }.store(in: &subscriptions)
+        let deviceId: String
+        if let oldData = viewModel.checkIfUserWasLogged() {
+            deviceId = oldData.deviceId
+            enterNumberView.setCountryCode(code: oldData.phoneNumber.countryCode)
+            enterNumberView.setRestOfNumber(oldData.phoneNumber.restOfNumber)
+            enterNumberView.enterNumberTextField.isUserInteractionEnabled = false
+            enterNumberView.changeTitle() // TODO: - text check
+        } else {
+            deviceId = UUID().uuidString
+            enterNumberView.enterNumberTextField.countryNumberLabel.tap().sink { [weak self] _ in
+                guard let self else { return }
+                self.viewModel.presentCountryPicker(delegate: self)
+            }.store(in: &subscriptions)
+        }
         
         enterNumberView.nextButton.tap().sink { [weak self] _ in
-            guard let self,
-                  let fullNumber = self.enterNumberView.getFullNumber(),
-                  let uuid = UIDevice.current.identifierForVendor?.uuidString
-            else { return }
-            
-            self.viewModel.authenticateWithNumber(
-                number: fullNumber,
-                deviceId: uuid)
+            guard let phoneNumber = self?.enterNumberView.getTelephoneNumber() else { return }
+            self?.viewModel.authenticateWithNumber(telephoneNumber: phoneNumber, deviceId: deviceId)
         }.store(in: &subscriptions)
         
         sink(networkRequestState: viewModel.networkRequestState)

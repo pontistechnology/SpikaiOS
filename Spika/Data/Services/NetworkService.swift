@@ -67,19 +67,12 @@ class NetworkService {
         request.addValue("ios", forHTTPHeaderField: "os-name")
         request.addValue(UIDevice.current.systemVersion, forHTTPHeaderField: "os-version")
         request.addValue(UIDevice.current.model, forHTTPHeaderField: "device-name")
-        request.addValue(UIDevice.current.identifierForVendor?.uuidString ?? "unknown", forHTTPHeaderField: "device-id")
         request.addValue((Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown", forHTTPHeaderField: "app-version")
         request.addValue(Locale.current.languageCode ?? "unknown", forHTTPHeaderField: "language")
-        
-//        return URLSession.shared.dataTaskPublisher(for: request)
-//                    .map(\.data)
-//                    .decode(type: T.self, decoder: JSONDecoder())
-//                    .receive(on: DispatchQueue.main)
-//                    .eraseToAnyPublisher()
-        
+                
         return URLSession.shared.dataTaskPublisher(for: request)
             .map({ [weak self] (data, response) in
-//                DebugUtils.printRequestAndResponse(request: request, data: data)
+                DebugUtils.printRequestAndResponse(request: request, data: data)
                 let statusCode = (response as? HTTPURLResponse)?.statusCode
                 switch statusCode {
                 case 200:

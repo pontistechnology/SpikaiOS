@@ -20,7 +20,7 @@ class HomeViewModel: BaseViewModel {
     
     func setupUnreadMessagesFrc() {
         let fetchRequest = RoomEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "unreadCount > 0")
+        fetchRequest.predicate = NSPredicate(format: "unreadCount > 0 AND roomDeleted == false")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp),
                                                          ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]

@@ -56,7 +56,7 @@ class AppCoordinator: Coordinator {
         self.navigationController.setViewControllers([viewController], animated: true)
     }
     
-    func presentEnterVerifyCodeScreen(number: String, deviceId: String) {
+    func presentEnterVerifyCodeScreen(number: TelephoneNumber, deviceId: String) {
         let viewController = Assembler.sharedAssembler.resolver.resolve(EnterVerifyCodeViewController.self, arguments: self, number, deviceId)!
         self.navigationController.pushViewController(viewController, animated: true)
     }

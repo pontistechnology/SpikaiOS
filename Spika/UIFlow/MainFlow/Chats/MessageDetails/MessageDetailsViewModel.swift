@@ -23,7 +23,8 @@ class MessageDetailsViewModel: BaseViewModel {
 extension MessageDetailsViewModel {
     func setFetch() {
         let fetchRequest = MessageRecordEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "messageId == %d AND type != 'reaction'", messageId)
+        fetchRequest.predicate = NSPredicate(format: "(type != 'reaction' AND messageId == %d)", messageId)
+
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: "type", ascending: true),
             NSSortDescriptor(key: #keyPath(MessageRecordEntity.createdAt), ascending: true)]

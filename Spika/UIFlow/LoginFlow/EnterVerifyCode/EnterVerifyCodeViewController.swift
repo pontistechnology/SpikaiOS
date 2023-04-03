@@ -20,18 +20,21 @@ class EnterVerifyCodeViewController: BaseViewController {
     }
     
     func setupUI() {
-        enterVerifyCodeView.titleLabel.text = .getStringFor(.weSentYou6DigitOn) + " \(viewModel.phoneNumber)."
+        enterVerifyCodeView.titleLabel.text = .getStringFor(.weSentYou6DigitOn) + " \(viewModel.phoneNumber.getFullNumber())."
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        // TODO: - move timer from view
         enterVerifyCodeView.timer?.invalidate()
         enterVerifyCodeView.timer = nil
     }
     
     func setupBindings() {
         enterVerifyCodeView.nextButton.tap().sink { [weak self] _ in
-            guard let self else { return }
-            self.viewModel.verifyCode(code: self.enterVerifyCodeView.otpTextField.text!)
+            guard let self,
+                  let verifyCode = self.enterVerifyCodeView.otpTextField.text
+            else { return }
+            self.viewModel.verifyCode(code: verifyCode)
         }.store(in: &subscriptions)
         
         enterVerifyCodeView.resendCodeButton.tap().sink { [weak self] _ in

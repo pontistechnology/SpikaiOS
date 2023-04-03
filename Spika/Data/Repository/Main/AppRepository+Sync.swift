@@ -53,6 +53,22 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func syncAllMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error> {
+        guard let accessToken = getAccessToken() else {
+            return Fail<SyncMessagesResponseModel, Error>(error: NetworkError.noAccessToken)
+                    .receive(on: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<SyncMessagesResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.syncAllMessages + "/\(timestamp)",
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
     func syncUndeliveredMessages() -> AnyPublisher<SyncMessagesResponseModel, Error> {
         guard let accessToken = getAccessToken() else { return
             Fail<SyncMessagesResponseModel, Error>(error: NetworkError.noAccessToken)
@@ -125,10 +141,10 @@ extension AppRepository {
             userDefaults.set(timestamp, forKey: Constants.Database.usersSyncTimestamp)
         case .rooms:
             userDefaults.set(timestamp, forKey: Constants.Database.roomsSyncTimestamp)
-        case .messageRecords:
-            userDefaults.set(timestamp, forKey: Constants.Database.messageRecordsSyncTimestamp)
         case .messages:
             userDefaults.set(timestamp, forKey: Constants.Database.messagesSyncTimestamp)
+        case .messageRecords:
+            userDefaults.set(timestamp, forKey: Constants.Database.messageRecordsSyncTimestamp)
         }
     }
 }

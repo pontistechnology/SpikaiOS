@@ -13,17 +13,30 @@ extension AppRepository {
     
     // MARK: UserDefaults
     
-    func saveUserInfo(user: User, device: Device? = nil) {
+    func saveUserInfo(user: User, device: Device? = nil, telephoneNumber: TelephoneNumber?) {
         userDefaults.set(user.id, forKey: Constants.Database.userId)
-        userDefaults.set(user.telephoneNumber, forKey: Constants.Database.userPhoneNumber)
         userDefaults.set(user.displayName, forKey: Constants.Database.displayName)
-        guard let device = device else { return }
-        userDefaults.set(device.id, forKey: Constants.Database.deviceId)
-        userDefaults.set(device.token, forKey: Constants.Database.accessToken)
+        if let device {
+            userDefaults.set(device.id, forKey: Constants.Database.deviceId)
+            userDefaults.set(device.token, forKey: Constants.Database.accessToken)
+        }
+        if let telephoneNumber {
+            userDefaults.set(telephoneNumber.countryCode, forKey: Constants.Database.userPhoneNumberCountryCode)
+            userDefaults.set(telephoneNumber.restOfNumber, forKey: Constants.Database.userPhoneNumberRest)
+        }
     }
     
     func getMyUserId() -> Int64 {
         return Int64(userDefaults.integer(forKey: Constants.Database.userId))
+    }
+    
+    func getMyTelephoneNumber() -> TelephoneNumber? {
+        guard let phoneCode = userDefaults.string(forKey: Constants.Database.userPhoneNumberCountryCode),
+              let restOfNumber = userDefaults.string(forKey: Constants.Database.userPhoneNumberRest)
+        else {
+            return nil
+        }
+        return TelephoneNumber(countryCode: phoneCode, restOfNumber: restOfNumber)
     }
     
     // MARK: Network
@@ -127,9 +140,9 @@ extension AppRepository {
         return databaseService.getLocalUser(withId: id)
     }
     
-    func saveUser(_ user: User) -> Future<User, Error> {
-        return databaseService.saveUser(user)
-    }
+//    func saveUser(_ user: User) -> Future<User, Error> {
+//        return databaseService.saveUser(user)
+//    }
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return databaseService.saveUsers(users)

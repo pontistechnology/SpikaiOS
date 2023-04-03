@@ -508,6 +508,10 @@
 		933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */; };
 		933BE87727B6796B0099BA9E /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* NotesViewController.swift */; };
 		933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87827B67A280099BA9E /* ChatSearchViewController.swift */; };
+		933E209F29D8AB030013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
+		933E20A129D8AB030013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
+		933E20A329D8B0BE0013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
+		933E20A429D8B0BF0013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
 		933FD55A2908A05100C4A235 /* SeenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AE06EE290892B90009A50C /* SeenResponseModel.swift */; };
 		934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
 		9347CCE328644E1300018AEB /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9347CCE228644E1300018AEB /* Date+Extensions.swift */; };
@@ -890,6 +894,7 @@
 		933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewModel.swift; sourceTree = "<group>"; };
 		933BE87627B6796A0099BA9E /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		933BE87827B67A280099BA9E /* ChatSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewController.swift; sourceTree = "<group>"; };
+		933E209E29D8AB030013E798 /* TelephoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneNumber.swift; sourceTree = "<group>"; };
 		934087B727EBAD7100209571 /* AppRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Tests.swift"; sourceTree = "<group>"; };
 		9347CCE228644E1300018AEB /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		934F0369282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageRecordEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -1418,6 +1423,14 @@
 				933BE86B27B677920099BA9E /* FavoritesView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		933E209D29D8AAE80013E798 /* OnlyForAppModels */ = {
+			isa = PBXGroup;
+			children = (
+				933E209E29D8AB030013E798 /* TelephoneNumber.swift */,
+			);
+			path = OnlyForAppModels;
 			sourceTree = "<group>";
 		};
 		9352A56B2977667900E0D90E /* MessageActions */ = {
@@ -2219,6 +2232,7 @@
 		ADD503F4270DF958009D50CB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				933E209D29D8AAE80013E798 /* OnlyForAppModels */,
 				EA29CE3A27E0B42A00B392E6 /* ServerModels */,
 				AD9BFD3D272ADA9000736318 /* NetworkModel */,
 				ADD504072716E9C7009D50CB /* DatabaseEntities */,
@@ -2650,6 +2664,7 @@
 				6C78B7AA29AF5ADB004BF881 /* UIColor+Extensions.swift in Sources */,
 				6C78B7AB29AF5ADB004BF881 /* BlockedUsersViewModel.swift in Sources */,
 				6C78B7AC29AF5ADB004BF881 /* EmptyTableViewCell.swift in Sources */,
+				933E20A129D8AB030013E798 /* TelephoneNumber.swift in Sources */,
 				6C78B7AD29AF5ADB004BF881 /* SettingsViewModel.swift in Sources */,
 				6C78B7AE29AF5ADB004BF881 /* MessageActionsView.swift in Sources */,
 				6C78B7AF29AF5ADB004BF881 /* Room.swift in Sources */,
@@ -2964,6 +2979,7 @@
 				931BDBA229D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C78B90329AF5D89004BF881 /* UploadChunkRequestModel.swift in Sources */,
 				6C78B90529AF5D89004BF881 /* SeenResponseModel.swift in Sources */,
+				933E20A329D8B0BE0013E798 /* TelephoneNumber.swift in Sources */,
 				6C78B90629AF5D89004BF881 /* CreateRoomRequestModel.swift in Sources */,
 				6C78B90729AF5D89004BF881 /* CreateRoomResponseModel.swift in Sources */,
 				6C78B90829AF5D89004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
@@ -3048,6 +3064,7 @@
 				931BDBA029D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				931B14F128211AC100A0CD35 /* UploadChunkRequestModel.swift in Sources */,
 				933FD55A2908A05100C4A235 /* SeenResponseModel.swift in Sources */,
+				933E20A429D8B0BF0013E798 /* TelephoneNumber.swift in Sources */,
 				931B14F528211AC100A0CD35 /* CreateRoomRequestModel.swift in Sources */,
 				931B150628211AC600A0CD35 /* CreateRoomResponseModel.swift in Sources */,
 				934F036E282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
@@ -3098,6 +3115,7 @@
 				AD8192552721C00D00D5BE48 /* UIColor+Extensions.swift in Sources */,
 				6C175EC9297ED93A00804275 /* BlockedUsersViewModel.swift in Sources */,
 				93C07A89290127FD003DFD61 /* EmptyTableViewCell.swift in Sources */,
+				933E209F29D8AB030013E798 /* TelephoneNumber.swift in Sources */,
 				AD81926B2721D5DE00D5BE48 /* SettingsViewModel.swift in Sources */,
 				9352A5722977667900E0D90E /* MessageActionsView.swift in Sources */,
 				939AAE3C28F62F6600DD5142 /* Room.swift in Sources */,

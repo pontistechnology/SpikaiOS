@@ -53,7 +53,7 @@ class EnterUsernameViewModel: BaseViewModel {
         } receiveValue: { [weak self] response in
             guard let self,
                   let user = response.data?.user else { return }
-            self.repository.saveUserInfo(user: user, device: nil)
+            self.repository.saveUserInfo(user: user, device: nil, telephoneNumber: nil)
             print(response)
         }.store(in: &subscriptions)
     }

@@ -48,22 +48,22 @@ extension DatabaseService {
             }
         }
     }
-     // meaningless
-    func saveUser(_ user: User) -> Future<User, Error> {
-        return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                let _ = UserEntity(user: user, context: context)
-                do {
-                    try context.save()
-                    promise(.success(user))
-                } catch {
-                    print("Error saving: ", error)
-                    promise(.failure(DatabaseError.savingError))
-                }
-            }
-        }
-    }
+//     // meaningless
+//    func saveUser(_ user: User) -> Future<User, Error> {
+//        return Future { [weak self] promise in
+//            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+//                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+//                let _ = UserEntity(user: user, context: context)
+//                do {
+//                    try context.save()
+//                    promise(.success(user))
+//                } catch {
+//                    print("Error saving: ", error)
+//                    promise(.failure(DatabaseError.savingError))
+//                }
+//            }
+//        }
+//    }
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
@@ -125,7 +125,7 @@ extension DatabaseService {
                             + " "
                             + (contact.lastName ?? "")
                         }
-                        _ = self?.saveUser(user)
+                        _ = self?.saveUsers([user])
                     } catch {
                         print("Error loading: ", error)
                         promise(.failure(DatabaseError.requestFailed))
@@ -359,7 +359,7 @@ extension DatabaseService {
             }
         }
     }
-    
+     // TODO: - refactorIt
     func getNotificationInfoForMessage(message: Message) -> Future<MessageNotificationInfo, Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
