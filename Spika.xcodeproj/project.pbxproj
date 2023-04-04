@@ -412,7 +412,7 @@
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6CFB46C22948C1D7000D26BB /* Localizable.strings */; };
-		6E1AA22EBF32F5F6B1E36042 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		6E1AA22EBF32F5F6B1E36042 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		7E72A0473D6052432982C00A /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2511C3428ADAAF827BEC0E72 /* Pods_Spika.framework */; };
 		89ECD2F713F7863059BAC021 /* Pods_Spika_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414A4A1E472811F66834C409 /* Pods_Spika_Dev.framework */; };
 		93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
@@ -1137,7 +1137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E1AA22EBF32F5F6B1E36042 /* (null) in Frameworks */,
+				6E1AA22EBF32F5F6B1E36042 /* BuildFile in Frameworks */,
 				7E72A0473D6052432982C00A /* Pods_Spika.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2341,8 +2341,8 @@
 				6C78B8AD29AF5ADB004BF881 /* Frameworks */,
 				6C78B8AF29AF5ADB004BF881 /* Resources */,
 				6C78B8BF29AF5ADB004BF881 /* ShellScript */,
-				6C78B8C029AF5ADB004BF881 /* [CP] Embed Pods Frameworks */,
 				6C10E97429AF71AC0070D617 /* Embed App Extensions */,
+				1516D16CA2F86F5672D363C3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2397,8 +2397,8 @@
 				ADD503AB270DC3C7009D50CB /* Frameworks */,
 				ADD503AC270DC3C7009D50CB /* Resources */,
 				EAA6A3A127CCF88C00B7E01F /* ShellScript */,
-				31BA492FD2CFFE591818CB3B /* [CP] Embed Pods Frameworks */,
 				931941702819CB510067566C /* Embed App Extensions */,
+				4F9474C9C525305A5BA710A9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2514,7 +2514,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		31BA492FD2CFFE591818CB3B /* [CP] Embed Pods Frameworks */ = {
+		1516D16CA2F86F5672D363C3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4F9474C9C525305A5BA710A9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2571,23 +2588,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		6C78B8C029AF5ADB004BF881 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		85136E67FAFA6A131C920030 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3419,7 +3419,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/SpikaDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3436,7 +3436,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = $APP_VERSION;
+				MARKETING_VERSION = "$APP_VERSION";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3457,7 +3457,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/SpikaDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3474,7 +3474,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = $APP_VERSION;
+				MARKETING_VERSION = "$APP_VERSION";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3491,7 +3491,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationServiceDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfoDev.plist;
@@ -3503,7 +3503,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = $APP_VERSION;
+				MARKETING_VERSION = "$APP_VERSION";
 				OTHER_SWIFT_FLAGS = "-DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3520,7 +3520,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationServiceDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfoDev.plist;
@@ -3532,7 +3532,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = $APP_VERSION;
+				MARKETING_VERSION = "$APP_VERSION";
 				OTHER_SWIFT_FLAGS = "-DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3549,7 +3549,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationService.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
@@ -3561,7 +3561,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = $APP_VERSION;
+				MARKETING_VERSION = "$APP_VERSION";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika.Spika3NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3577,7 +3577,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationService.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
@@ -3589,7 +3589,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = $APP_VERSION;
+				MARKETING_VERSION = "$APP_VERSION";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika.Spika3NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3731,7 +3731,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3748,7 +3748,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = $APP_VERSION;
+				MARKETING_VERSION = "$APP_VERSION";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3768,7 +3768,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3785,7 +3785,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = $APP_VERSION;
+				MARKETING_VERSION = "$APP_VERSION";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
