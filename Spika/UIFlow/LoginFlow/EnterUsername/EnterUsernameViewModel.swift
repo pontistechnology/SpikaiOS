@@ -45,7 +45,6 @@ class EnterUsernameViewModel: BaseViewModel {
             self.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
-//                print("ERROR: ", error)
                 self.showError("Username error: \(error)")
             case .finished:
                 self.presentHomeScreen()
@@ -54,7 +53,6 @@ class EnterUsernameViewModel: BaseViewModel {
             guard let self,
                   let user = response.data?.user else { return }
             self.repository.saveUserInfo(user: user, device: nil, telephoneNumber: nil)
-            print(response)
         }.store(in: &subscriptions)
     }
     

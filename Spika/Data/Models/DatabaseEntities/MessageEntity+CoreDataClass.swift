@@ -24,6 +24,7 @@ public class MessageEntity: NSManagedObject {
         
         modifiedAt = message.modifiedAt
         fromUserId = message.fromUserId
+        dummyValue = 1 // change this when frc needs to see changes
         
         if let id = message.id {
             self.id = "\(id)"

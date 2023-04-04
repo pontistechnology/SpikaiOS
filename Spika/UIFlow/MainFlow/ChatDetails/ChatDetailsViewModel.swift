@@ -324,9 +324,9 @@ class ChatDetailsViewModel: BaseViewModel {
             .sink { completion in
                 switch completion {
                 case .finished:
-                    print("saved to local DB")
+                    break
                 case .failure(_):
-                    print("saving to local DB failed")
+                    break
                 }
             } receiveValue: { [weak self] room in
                 self?.room.send(room)
@@ -340,9 +340,11 @@ class ChatDetailsViewModel: BaseViewModel {
             guard let _ = self else { return }
             switch completion {
             case .finished:
-                print("saved to local DB")
+                break
+//                print("saved to local DB")
             case .failure(_):
-                print("saving to local DB failed")
+                break
+//                print("saving to local DB failed")
             }
         } receiveValue: { [weak self] rooms in
             guard let room = rooms.first else { return }

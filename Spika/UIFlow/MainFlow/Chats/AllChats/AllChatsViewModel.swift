@@ -14,7 +14,7 @@ class AllChatsViewModel: BaseViewModel {
     var frc: NSFetchedResultsController<RoomEntity>?
     
     private var defaultChatsPredicate: NSPredicate = {
-        let predicate1 =  NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR lastMessageTimestamp > 0")
+        let predicate1 =  NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR lastMessageTimestamp > 0 OR unreadCount > 0")
         let predicate2 = NSPredicate(format: "roomDeleted == false")
         return NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
     } ()

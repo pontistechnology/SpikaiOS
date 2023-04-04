@@ -16,12 +16,6 @@ class CurrentChatViewModel: BaseViewModel {
     
     var frc: NSFetchedResultsController<MessageEntity>?
     var room: Room
-//    {
-        // MOVE
-//        didSet {
-//            self.updateIsMember()
-//        }
-//    }
     
     var friendUser: User? {
         room.getFriendUserInPrivateRoom(myUserId: getMyUserId())
