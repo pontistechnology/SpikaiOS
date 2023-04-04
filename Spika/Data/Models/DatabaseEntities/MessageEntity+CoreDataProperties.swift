@@ -32,6 +32,8 @@ extension MessageEntity {
     @NSManaged public var totalUserCount: Int64
     @NSManaged public var type: String?
     @NSManaged public var createdDate: Date?
+    @NSManaged public var dummyValue: Int64
+
     
     @objc public var sectionName: String {
         guard let createdDate = createdDate else {

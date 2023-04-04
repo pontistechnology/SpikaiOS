@@ -54,7 +54,7 @@ extension AudioMessageTableViewCell: BaseMessageTableViewCellProtocol {
         }.store(in: &subs)
         
         audioView.slider.publisher(for: .valueChanged).sink { [weak self] valuee in
-            print("Value audio player: ", valuee)
+//            print("Value audio player: ", valuee)
         }.store(in: &subs)
     }
 }

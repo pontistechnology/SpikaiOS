@@ -43,7 +43,7 @@ class BaseMessageTableViewCell: UITableViewCell {
     }
     
     deinit {
-        print("BASE MESSAGE TABLEVIEW CELL DEINIT")
+//        print("BASE MESSAGE TABLEVIEW CELL DEINIT")
     }
 }
 

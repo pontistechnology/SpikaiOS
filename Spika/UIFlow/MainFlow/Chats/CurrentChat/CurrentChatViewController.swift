@@ -42,9 +42,9 @@ class CurrentChatViewController: BaseViewController {
         super.viewDidLoad()
         setupView(currentChatView)
         setupNavigationItems()
-        setupBindings()
         addSubviews()
         positionSubviews()
+        setupBindings()
         self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
     
@@ -84,11 +84,6 @@ extension CurrentChatViewController {
     func setupBindings() {
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
-        viewModel.setFetch()
-        viewModel.frc?.delegate = self
-        self.currentChatView.messagesTableView.reloadData()
-        self.currentChatView.messagesTableView.layoutIfNeeded()
-        self.currentChatView.messagesTableView.scrollToBottom(.force)
         
         sink(networkRequestState: viewModel.networkRequestState)
         
@@ -112,20 +107,9 @@ extension CurrentChatViewController {
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
-//        viewModel.roomPublisher.receive(on: DispatchQueue.main)
-//            .sink { _ in
-//            } receiveValue: { [weak self] room in
-//                guard let self else { return }
-//                self.viewModel.setFetch()
-//                self.viewModel.frc?.delegate = self
-//                self.currentChatView.messagesTableView.reloadData()
-//                self.currentChatView.messagesTableView.layoutIfNeeded()
-//                self.currentChatView.messagesTableView.scrollToBottom(.force)
-//                self.viewModel.sendSeenStatus()
-//            }.store(in: &self.subscriptions)
-        
         currentChatView.downArrowImageView.tap().sink { [weak self] _ in
             self?.currentChatView.messagesTableView.scrollToBottom(.force)
+            self?.currentChatView.hideScrollToBottomButton(should: true)
         }.store(in: &self.subscriptions)
         
         Publishers
@@ -202,10 +186,25 @@ extension CurrentChatViewController {
                     self?.viewModel.userConfirmed()
                 }
             }.store(in: &subscriptions)
+        
+        viewModel.setFetch()
+        viewModel.frc?.delegate = self
+        self.currentChatView.messagesTableView.reloadData()
+        self.currentChatView.messagesTableView.scrollToBottom(.force)
     }
     
     func handleScroll(isMyMessage: Bool) {
         currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force : .ifLastCellVisible)
+    }
+}
+
+extension CurrentChatViewController {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffset = scrollView.contentOffset
+        let contentHeight = scrollView.contentSize.height
+        let frameHeight = scrollView.frame.height
+        let distanceFromBottom = contentHeight - contentOffset.y - frameHeight
+        currentChatView.hideScrollToBottomButton(should: distanceFromBottom <= 50.0)
     }
 }
 
@@ -221,16 +220,16 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
         case .insert:
-            print("DIDCHANGE: sections insert")
+//            print("DIDCHANGE: sections insert")
             currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
         case .delete:
-            print("DIDCHANGE: sections delete")
+//            print("DIDCHANGE: sections delete")
             currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
         case .move:
-            print("DIDCHANGE: sections move")
+//            print("DIDCHANGE: sections move")
             break
         case .update:
-            print("DIDCHANGE: sections update")
+//            print("DIDCHANGE: sections update")
             break
         @unknown default:
             break
@@ -242,7 +241,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         print("TYPE: ", type.rawValue)
         switch type {
         case .insert:
-            print("DIDCHANGE: rows insert")
+//            print("DIDCHANGE: rows insert")
             guard let newIndexPath = newIndexPath else {
                 return
             }
@@ -252,7 +251,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             
         case .delete:
-            print("DIDCHANGE: rows delete")
+//            print("DIDCHANGE: rows delete")
             guard let indexPath = indexPath else {
                 return
             }
@@ -267,7 +266,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
                 return
             }
             if indexPath == newIndexPath {
-                UIView.performWithoutAnimation {
+                UIView.performWithoutAnimation { [weak self] in
                     currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
                 }
             } else {
@@ -276,11 +275,11 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             frcIsChangingPublisher.send(.other)
         
         case .update:
-            print("DIDCHANGE: rows update")
+//            print("DIDCHANGE: rows update")
             guard let indexPath = indexPath else {
                 return
             }
-            UIView.performWithoutAnimation {
+            UIView.performWithoutAnimation { [weak self] in
                 currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
             }
             frcIsChangingPublisher.send(.other)
@@ -366,14 +365,6 @@ extension CurrentChatViewController: UITableViewDelegate {
         (tableView.visibleCells as? [BaseMessageTableViewCell])?.forEach{ $0.setTimeLabelVisible(false)}
         cell.tapHandler()
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        guard let lastIndexPath = tableView.lastCellIndexPath,
-              let shouldHide = tableView.indexPathsForVisibleRows?.contains(lastIndexPath)
-        else { return }
-        currentChatView.hideScrollToBottomButton(should: shouldHide)
     }
 }
 

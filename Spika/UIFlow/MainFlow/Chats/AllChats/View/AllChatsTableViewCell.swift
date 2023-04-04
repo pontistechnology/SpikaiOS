@@ -44,6 +44,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     func styleSubviews() {
         leftImageView.clipsToBounds = true
         leftImageView.layer.cornerRadius = 27
+        leftImageView.contentMode = .scaleAspectFill
         nameLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 1
         timeLabel.numberOfLines = 1

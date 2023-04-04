@@ -339,7 +339,7 @@ extension DatabaseService {
             }
         }
     }
-    
+        
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
         return Future { [weak self] promise in
             guard let self else { return }
@@ -349,6 +349,8 @@ extension DatabaseService {
                 for messageRecord in messageRecords {
                     _ = MessageRecordEntity(record: messageRecord, context: context)
                 }
+                
+                self?.updateMessagesDummyValue(ids: messageRecords.map({ $0.messageId }))
               
                 do {
                     try context.save()
@@ -458,6 +460,18 @@ extension DatabaseService {
             } catch {
                 
             }
+        }
+    }
+    
+    private func updateMessagesDummyValue(ids: [Int64]) {
+        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+            let messagesFR = MessageEntity.fetchRequest()
+            messagesFR.predicate = NSPredicate(format: "id IN %@", ids)
+            
+            guard let messageEntities = try? context.fetch(messagesFR) else { return }
+            
+            messageEntities.forEach { $0.dummyValue = $0.dummyValue + 1 }
+            try? context.save()
         }
     }
     
