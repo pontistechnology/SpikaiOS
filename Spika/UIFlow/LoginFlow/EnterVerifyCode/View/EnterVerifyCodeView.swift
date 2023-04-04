@@ -34,7 +34,6 @@ class EnterVerifyCodeView: UIView, BaseView {
     deinit {
         timer?.invalidate()
         timer = nil
-        print("timer invalidation")
     }
     
     required init?(coder: NSCoder) {

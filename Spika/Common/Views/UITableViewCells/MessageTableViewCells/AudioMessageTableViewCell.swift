@@ -45,7 +45,7 @@ extension AudioMessageTableViewCell: BaseMessageTableViewCellProtocol {
     
     func setupBindings() {
         audioView.playButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.tapPublisher.send(.playAudio(playedPercentPublisher: self.timePublisher))
         }.store(in: &subs)
         
@@ -54,7 +54,7 @@ extension AudioMessageTableViewCell: BaseMessageTableViewCellProtocol {
         }.store(in: &subs)
         
         audioView.slider.publisher(for: .valueChanged).sink { [weak self] valuee in
-            print("Value audio player: ", valuee)
+//            print("Value audio player: ", valuee)
         }.store(in: &subs)
     }
 }

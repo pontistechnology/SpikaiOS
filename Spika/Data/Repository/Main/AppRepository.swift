@@ -32,8 +32,8 @@ class AppRepository: Repository {
         return userDefaults.string(forKey: Constants.Database.accessToken)
     }
     
-    func getMyDeviceId() -> Int64 {
-        return Int64(userDefaults.integer(forKey: Constants.Database.deviceId))
+    func getMyDeviceId() -> String? {
+        return userDefaults.string(forKey: Constants.Database.deviceId)
     }
     
     func getMainContext() -> NSManagedObjectContext {

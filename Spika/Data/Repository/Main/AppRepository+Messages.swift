@@ -87,7 +87,7 @@ extension AppRepository {
     }
     
     func printAllMessages() {
-        databaseService.messageEntityService.printAllMessages()
+//        databaseService.messageEntityService.printAllMessages()
     }
     
     func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error> {
@@ -107,6 +107,14 @@ extension AppRepository {
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
+    }
+    
+    func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]? {
+        databaseService.getReactionRecords(messageId: messageId, context: context)
+    }
+    
+    func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
+        databaseService.updateMessageSeenDeliveredCount(messageId: messageId, seenCount: seenCount, deliveredCount: deliveredCount)
     }
     
 //    func getMessageRecordsAfter(timestamp: Int) -> AnyPublisher<MessageRecordSyncResponseModel, Error> {
@@ -129,19 +137,19 @@ extension AppRepository {
     // MARK: Database
     
     func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
-        return databaseService.messageEntityService.saveMessages(messages)
+        return databaseService.saveMessages(messages)
     }
     
-    func getMessages(forRoomId roomId: Int64) -> Future<[Message], Error> {
-        self.databaseService.messageEntityService.getMessages(forRoomId: roomId)
+    func getLastMessage(roomId: Int64, context: NSManagedObjectContext) -> Message? {
+        return databaseService.getLastMessage(roomId: roomId, context: context)
     }
 
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
-        self.databaseService.messageEntityService.saveMessageRecords(messageRecords)
+        self.databaseService.saveMessageRecords(messageRecords)
     }
     
     func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error> {
-        self.databaseService.messageEntityService.getNotificationInfoForMessage(message: message)
+        self.databaseService.getNotificationInfoForMessage(message: message)
     }
 
 }

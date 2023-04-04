@@ -20,15 +20,16 @@ class BlockedUsersViewController: BaseViewController {
     }
     
     func setupBinding() {
-        self.viewModel.blockedUsers
-            .compactMap { users in
-                return users?.map { RoomUser(user: $0) }
-            }
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] users in
-                self?.settingsView.chatMembersView.updateWithUsers(users: users)
-            })
-            .store(in: &self.subscriptions)
+        // TODO: - check with Vedran
+//        self.viewModel.blockedUsers
+//            .compactMap { users in
+//                return users?.map { RoomUser(user: $0) }
+//            }
+//            .receive(on: DispatchQueue.main)
+//            .sink(receiveValue: { [weak self] users in
+//                self?.settingsView.chatMembersView.updateWithUsers(users: users)
+//            })
+//            .store(in: &self.subscriptions)
         
         self.settingsView.chatMembersView
             .onRemoveUser

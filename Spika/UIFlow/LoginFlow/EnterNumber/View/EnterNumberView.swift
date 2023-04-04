@@ -32,7 +32,8 @@ class EnterNumberView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        titleLabel.numberOfLines = 2
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .justified
         
         nextButton.setTitle(.getStringFor(.next), for: .normal)
         nextButton.setEnabled(false)
@@ -56,6 +57,15 @@ class EnterNumberView: UIView, BaseView {
         enterNumberTextField.countryNumberLabel.text = code
     }
     
+    func setRestOfNumber(_ text: String) {
+        enterNumberTextField.setRestOfNumber(text)
+        nextButton.setEnabled(!text.isEmpty)
+    }
+    
+    func changeTitle() {
+        titleLabel.text = "Please confirm this phone number for re-login or reinstall the app to use a different phone number." // TODO: - check text for this
+    }
+    
     func getCountryCode(removePlus: Bool = false) -> String? {
         guard let code = enterNumberTextField.countryNumberLabel.text else { return nil }
         if removePlus {
@@ -64,11 +74,13 @@ class EnterNumberView: UIView, BaseView {
         return code
     }
     
-    func getFullNumber() -> String? {
-        if let countryCode = getCountryCode(), let number = enterNumberTextField.getNumber() {
-            return "\(countryCode)\(number)"
+    func getTelephoneNumber() -> TelephoneNumber? {
+        guard let countryCode = getCountryCode(),
+              let number = enterNumberTextField.getNumber()
+        else {
+            return nil
         }
-        return nil
+        return TelephoneNumber(countryCode: countryCode, restOfNumber: number)
     }
     
 }

@@ -16,13 +16,8 @@ class NotificationService: UNNotificationServiceExtension {
     let coreDataStack = CoreDataStack()
     lazy var repository = AppRepository(
         networkService: NetworkService(),
-        databaseService: DatabaseService(userEntityService: UserEntityService(coreDataStack: coreDataStack),
-                                         chatEntityService: ChatEntityService(coreDataStack: coreDataStack),
-                                         messageEntityService: MessageEntityService(coreDataStack: coreDataStack),
-                                         roomEntityService: RoomEntityService(coreDataStack: coreDataStack),
-                                         coreDataStack: coreDataStack,
-                                         userDefaults: self.userDefaults),
-        userDefaults: self.userDefaults)
+        databaseService: DatabaseService(coreDataStack: coreDataStack),
+        userDefaults: userDefaults)
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
@@ -89,7 +84,7 @@ extension NotificationService {
             }
         } receiveValue: { [weak self] response in
             guard let room = response.data?.room,
-                  let self = self
+                  let self
             else {
                 self?.show(title: "Can't parse online room - REPORT", text: "Please report.")
                 return

@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import CryptoKit
+import CoreData
 
 extension AppRepository {
     
@@ -80,7 +81,7 @@ extension AppRepository {
                     break
                 }
             } receiveValue: { [weak self] uploadChunkResponseModel in
-                guard let self = self,
+                guard let self,
                       let uploadedCount = uploadChunkResponseModel.data?.uploadedChunks?.count else { return }
                 let percent = CGFloat(uploadedCount) / CGFloat(totalChunks)
                 somePublisher.send((nil, percent))
@@ -152,5 +153,9 @@ extension AppRepository {
               FileManager.default.fileExists(atPath: targetURL.path)
         else { return nil }
         return targetURL
+    }
+    
+    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
+        databaseService.getFileData(id: id, context: context)
     }
 }

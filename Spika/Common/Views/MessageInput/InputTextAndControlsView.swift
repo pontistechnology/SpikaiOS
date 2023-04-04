@@ -112,7 +112,7 @@ private extension InputTextAndControlsView {
         }.store(in: &subscriptions)
 
         sendButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             let text = self.messageTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty else { return }
             self.publisher.send(.send(message: text))
@@ -120,12 +120,12 @@ private extension InputTextAndControlsView {
         }.store(in: &subscriptions)
 
         microphoneButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.publisher.send(.microphone)
         }.store(in: &subscriptions)
 
         cameraButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.publisher.send(.camera)
         }.store(in: &subscriptions)
     }

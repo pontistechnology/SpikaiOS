@@ -9,6 +9,7 @@ import Foundation
 
 struct Message: Codable {
     let createdAt: Int64
+    let modifiedAt: Int64
     let fromUserId: Int64
     let roomId: Int64
     let id: Int64?
@@ -30,86 +31,67 @@ extension Message {
         self.localId = localId
         self.fromUserId = fromUserId
         self.totalUserCount = -1
-        self.deliveredCount = -1
-        self.seenCount = -1
+        self.deliveredCount = -2 // needs to be different all 3 values, because state is calculated from this
+        self.seenCount = -3
         self.replyId = replyId
         self.roomId = roomId
         self.type = type
         self.deleted = false
         self.createdAt = createdAt
+        self.modifiedAt = createdAt
         self.records = nil
     }
     
-    init(messageEntity: MessageEntity) {
-        var messageRecords: [MessageRecord] = []
-        
-        if let records = messageEntity.records?.allObjects as? [MessageRecordEntity] {
-            messageRecords = records.map({ entity in
-                MessageRecord(messageRecordEntity: entity)
-            })
-        }
+    init(messageEntity: MessageEntity, fileData: FileData?, thumbData: FileData?, records: [MessageRecord]?) {
         self.init(createdAt: messageEntity.createdAt,
+                  modifiedAt: messageEntity.modifiedAt,
                   fromUserId: messageEntity.fromUserId,
                   roomId: messageEntity.roomId,
-                  id: Int64(messageEntity.id ?? "nil"), // TODO: - check
+                  id: Int64(messageEntity.id ?? "nil"),
                   localId: messageEntity.localId,
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
-                  replyId: Int64(messageEntity.replyId ?? "-1"),
+                  replyId: Int64(messageEntity.replyId ?? "nil"),
                   deleted: messageEntity.isRemoved,
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
-                                    file: FileData(id: messageEntity.bodyFileId, fileName: messageEntity.bodyFileName,
-                                                   mimeType: messageEntity.bodyFileMimeType,
-                                                   size: messageEntity.bodyFileSize,
-                                                   metaData: MetaData(width: messageEntity.bodyFileMetaDataWidth,
-                                                                      height: messageEntity.bodyFileMetaDataHeight,
-                                                                      duration: messageEntity.bodyFileMetaDataDuration)),
-                                    thumb: FileData(id: messageEntity.bodyThumbId, fileName: "thumb name",
-                                                    mimeType: messageEntity.bodyThumbMimeType,
-                                                    size: 0,
-                                                    metaData: MetaData(width: messageEntity.bodyThumbMetaDataWidth,
-                                                                       height: messageEntity.bodyThumbMetaDataHeight,
-                                                                       duration: messageEntity.bodyThumbMetaDataDuration))),
-                  records: messageRecords)
+                                    file: fileData, thumb: thumbData),
+                  records: records)
     }
     
     func getMessageState(myUserId: Int64) -> MessageState {
         // TODO: check first seen, then delivered, then sent, waiting, error, (check fail)
-        guard let records = records,
-              let totalUserCount = totalUserCount
-        else {
-            print("there is no records")
-            return .fail
-        }
         
-        print("RECORDS: ", records)
-        
-        if records.filter({ $0.type == .seen}).count == totalUserCount {
+        if seenCount == totalUserCount {
             return .seen
         }
-        
-        let deliveredCount = records.filter({ $0.type == .delivered}).count
         
         if deliveredCount == totalUserCount {
             return .delivered
         }
         
-        if deliveredCount > 0 {
-            return .sent
-        }
         if id != nil {
             return .sent
         }
         return .waiting
     }
     
-    func getMessageReactionsRecords() -> [MessageRecord]? {
-        guard let reactions = records?.filter({ $0.type == .reaction }),
-              !reactions.isEmpty
-        else { return nil}
-        return reactions.sorted(by: { $0.createdAt > $1.createdAt })
+    var pushNotificationText: String {
+        switch type {
+        case .text:
+            return body?.text ?? " "
+        case .image:
+            return "[Photo message]"
+        case .video:
+            return "[Video message]"
+        case .file:
+            return "[File message]"
+        case .audio:
+            return "[Audio message]"
+        case .unknown:
+            return "[Unknown message]"
+        }
     }
 }
 
@@ -117,20 +99,6 @@ struct MessageBody: Codable {
     let text: String?
     let file: FileData?
     let thumb: FileData?
-}
-
-struct FileData: Codable {
-    let id: Int64?
-    let fileName: String?
-    let mimeType: String?
-    let size: Int64?
-    let metaData: MetaData?
-}
-
-struct MetaData: Codable {
-    let width: Int64
-    let height: Int64
-    let duration: Int64
 }
 
 enum MessageType: String, Codable {
@@ -144,23 +112,6 @@ enum MessageType: String, Codable {
     
     public init(from decoder: Decoder) throws {
         self = try MessageType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
-    }
-    
-    var pushNotificationText: String {
-        switch self {
-        case .text:
-            return "[Text message]"
-        case .image:
-            return "[Photo message]"
-        case .video:
-            return "[Video message]"
-        case .file:
-            return "[File message]"
-        case .audio:
-            return "[Audio message]"
-        case .unknown:
-            return "[Unknown message]"
-        }
     }
 }
 

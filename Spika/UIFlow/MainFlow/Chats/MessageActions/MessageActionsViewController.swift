@@ -33,7 +33,7 @@ class MessageActionsViewController: BaseViewController {
     func setupBindings() {
         mainView.reactionsStackview.arrangedSubviews.enumerated().forEach { (index, view) in
             view.tap().sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.tapPublisher.send(.reaction(emoji: self.viewModel.reactions[index]))
                 self.dismiss(animated: true)
             }.store(in: &subscriptions)
@@ -41,7 +41,7 @@ class MessageActionsViewController: BaseViewController {
         
         mainView.actionsStackview.arrangedSubviews.enumerated().forEach { (index, view) in
             view.tap().sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.tapPublisher.send(self.viewModel.actions[index])
             }.store(in: &subscriptions)
         }

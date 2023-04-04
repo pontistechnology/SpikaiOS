@@ -41,9 +41,10 @@ class BaseSettingsViewModel: BaseViewModel {
             }).store(in: &self.subscriptions)
     }
     
+    // TODO: - check with Vedran
     func saveUser(user: User) {
-        self.repository.saveUserInfo(user: user, device: nil)
-        self.repository.saveUser(user)
+//        self.repository.saveUserInfo(user: user, device: nil)
+        self.repository.saveUsers([user])
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 guard let _ = self else { return }
@@ -52,7 +53,8 @@ class BaseSettingsViewModel: BaseViewModel {
                     print("Could not save user: \(error)")
                 default: break
                 }
-            } receiveValue: { [weak self] user in
+            } receiveValue: { [weak self] users in
+                guard users.count == 1, let user = users.first else { return }
                 self?.user.send(user)
             }.store(in: &subscriptions)
 

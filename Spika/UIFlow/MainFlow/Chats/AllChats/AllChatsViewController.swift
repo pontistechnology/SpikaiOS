@@ -12,10 +12,10 @@ class AllChatsViewController: BaseViewController {
     
     private let allChatsView = AllChatsView()
     var viewModel: AllChatsViewModel!
-    var frc: NSFetchedResultsController<RoomEntity>?
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        viewModel.refreshUnreadCounts()
     }
     
     override func viewDidLoad() {
@@ -39,9 +39,12 @@ class AllChatsViewController: BaseViewController {
                 self?.onCreateNewRoom()
             }.store(in: &self.subscriptions)
         
-        setRoomsFetch()
+        viewModel.setRoomsFetch()
+        viewModel.frc?.delegate = self
+        allChatsView.allChatsTableView.reloadData()
     }
     
+    // TODO: - move to viewmodel under navigation
     func onCreateNewRoom() {
         self.viewModel.getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
     }
@@ -52,86 +55,41 @@ class AllChatsViewController: BaseViewController {
 
 extension AllChatsViewController: NSFetchedResultsControllerDelegate {
     
-    func setRoomsFetch() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            let fetchRequest = RoomEntity.fetchRequest()
-            fetchRequest.predicate = self.viewModel.defaultChatsPredicate
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
-                                            NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
-                                            NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
-            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                  managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
-            self.frc?.delegate = self
-            do {
-                try self.frc?.performFetch()
-                self.allChatsView.allChatsTableView.reloadData()
-            } catch {
-                fatalError("Failed to fetch entities: \(error)")
-                // TODO: handle error and change main context to func
-            }
- 
-        }
-    }
-    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         allChatsView.allChatsTableView.reloadData()
     }
 }
 
+// MARK: - UITableview
+
 extension AllChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let roomEntity = frc?.object(at: indexPath) else { return }
-        let room = Room(roomEntity: roomEntity)
-        print("ROOM selected: ", room)
-        viewModel.presentCurrentChatScreen(room: room)
+        viewModel.presentCurrentChatScreen(for: indexPath)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.view.endEditing(true)
+        self.view.endEditing(true) // TODO: - check, maybe use tableview keyboard handling method
     }
 }
 
 extension AllChatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = self.frc?.sections else { return 0 }
-        return sections[section].numberOfObjects
+        viewModel.numberOfRows(in: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
-        guard let entity = frc?.object(at: indexPath) else { return EmptyTableViewCell()}
-    
-        let room = Room(roomEntity: entity)
-        
-        let badgeNumber = entity.numberOfUnreadMessages(myUserId: viewModel.getMyUserId())
-        if room.type == .privateRoom,
-           let friendUser = room.getFriendUserInPrivateRoom(myUserId: viewModel.getMyUserId()) {
-            cell?.configureCell(avatarUrl: friendUser.avatarFileId?.fullFilePathFromId(),
-                                name: friendUser.getDisplayName(),
-                                description: entity.lastMessageText(),
-                                time: entity.lastMessageTime(),
-                                badgeNumber: badgeNumber,
-                                muted: entity.muted,
-                                pinned: entity.pinned)
-            
-        } else if room.type != .privateRoom {
-            
-            cell?.configureCell(avatarUrl: room.avatarFileId?.fullFilePathFromId(),
-                                name: room.name ?? .getStringFor(.noName),
-                                description: entity.lastMessageText(),
-                                time: entity.lastMessageTime(),
-                                badgeNumber: badgeNumber,
-                                muted: entity.muted,
-                                pinned: entity.pinned)
-        }
-        
+        guard let data = viewModel.getDataForCell(at: indexPath) else { return EmptyTableViewCell() }
+        cell?.configureCell(avatarUrl: data.avatarUrl, name: data.name,
+                            description: data.description, time: data.time,
+                            badgeNumber: data.badgeNumber, muted: data.muted, pinned: data.pinned)
         return cell ?? EmptyTableViewCell()
     }
 }
 
-// MARK: UITableview swipe animations, ignore for now
+// MARK: - UITableview swipe animations, ignore for now
+
 extension AllChatsViewController {
     
     private func printSwipe() {
@@ -174,24 +132,17 @@ extension AllChatsViewController {
     }
 }
 
+// MARK: - SearchBarDelegate
+
 extension AllChatsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
         if let value = value {
-            self.changePredicate(to: value)
+            self.viewModel.changePredicate(to: value)
         }
     }
     
     func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
-        self.changePredicate(to: "")
-    }
-    
-    func changePredicate(to newString: String) {
-        let searchPredicate = newString.isEmpty ? self.viewModel.defaultChatsPredicate : NSPredicate(format: "name CONTAINS[c] '\(newString)' and roomDeleted = false")
-        self.frc?.fetchRequest.predicate = searchPredicate
-        self.frc?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
-                                                  NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
-                                                  NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
-        try? self.frc?.performFetch()
-        self.allChatsView.allChatsTableView.reloadData()
+        viewModel.changePredicate(to: "")
+        allChatsView.allChatsTableView.reloadData()
     }
 }

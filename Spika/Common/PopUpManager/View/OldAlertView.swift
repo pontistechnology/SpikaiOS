@@ -212,7 +212,7 @@
 //            self.containerView.transform = CGAffineTransform(translationX: 0, y: -200)
 //            self.containerView.alpha = 0
 //        } completion: { [weak self] status in
-//            guard let self = self else { return }
+//            guard let self else { return }
 //            self.delegate?.alertView(self, needDismiss: true)
 //        }
 //    }

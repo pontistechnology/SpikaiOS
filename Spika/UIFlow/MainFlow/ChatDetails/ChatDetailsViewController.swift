@@ -31,7 +31,7 @@ final class ChatDetailsViewController: BaseViewController {
         self.chatDetailView.contentView.chatMembersView.ownId = self.viewModel.getMyUserId()
         
         let isAdmin = self.viewModel.room.map { [weak self] room in
-            guard let self = self, room.type == .groupRoom else { return false }
+            guard let self, room.type == .groupRoom else { return false }
             return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
         }
         
@@ -49,7 +49,7 @@ final class ChatDetailsViewController: BaseViewController {
                 if room.type == .groupRoom {
                     return room.avatarFileId?.fullFilePathFromId()
                 } else {
-                    guard let ownId = self?.viewModel.repository.getMyUserId(),
+                    guard let ownId = self?.viewModel.getMyUserId(),
                           let contact = self?.viewModel.room.value.users.first(where: { roomUser in
                         roomUser.userId != ownId
                     }) else { return nil }
@@ -63,7 +63,7 @@ final class ChatDetailsViewController: BaseViewController {
         self.viewModel.room
             .map { [weak self] room in
                 if room.type == .privateRoom {
-                    guard let ownId = self?.viewModel.repository.getMyUserId(),
+                    guard let ownId = self?.viewModel.getMyUserId(),
                           let contact = self?.viewModel.room.value.users.first(where: { roomUser in
                         roomUser.userId != ownId
                           }) else { return nil as String? }
@@ -116,7 +116,7 @@ final class ChatDetailsViewController: BaseViewController {
             .sink { [weak self] completion in
                 self?.chatDetailView.contentView.chatImage.hideUploadProgress()
             } receiveValue: { [weak self] progress in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.chatDetailView.contentView.chatImage.showUploadProgress(progress: progress)
             }.store(in: &subscriptions)
         

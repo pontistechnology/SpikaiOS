@@ -11,7 +11,7 @@ import AVFoundation
 import Firebase
 import FirebaseMessaging
 
- @main
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
         
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -101,25 +101,6 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
             print("APNs registred.")
         }
         app.registerForRemoteNotifications()
-    }
-}
-
-// MARK: CoreData, testing, TODO: delete later
-
-extension AppDelegate {
-    func allroomsprinter() {
-        let coreDataStack = CoreDataStack()
-
-        let fr = RoomEntity.fetchRequest()
-        fr.predicate = NSPredicate(format: "type == 'private' AND ANY users.userId == 12")
-        let aa = try! coreDataStack.mainMOC.fetch(fr)
-        print(aa.count)
-        for a in aa {
-            print("Count of users: ", a.users!.count)
-            for user in a.users! {
-                print("Begi user: ", (user as! RoomUserEntity).user!.displayName!)
-            }
-        }
     }
 }
 

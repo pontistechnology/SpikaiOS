@@ -44,6 +44,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     func styleSubviews() {
         leftImageView.clipsToBounds = true
         leftImageView.layer.cornerRadius = 27
+        leftImageView.contentMode = .scaleAspectFill
         nameLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 1
         timeLabel.numberOfLines = 1
@@ -75,7 +76,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
 //        mutedIcon.constrainWidth(20)
     }
     
-    func configureCell(avatarUrl: URL?, name: String, description: String, time: String, badgeNumber: Int, muted: Bool, pinned: Bool) {
+    func configureCell(avatarUrl: URL?, name: String, description: String, time: String, badgeNumber: Int64, muted: Bool, pinned: Bool) {
         leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(safeImage: .userImage))
 
         nameLabel.text = name

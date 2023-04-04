@@ -52,7 +52,7 @@ extension OTPCodeTextField {
         self.publisher(for: .editingChanged)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-            guard let self = self, var inputText = self.text,
+            guard let self, var inputText = self.text,
                   inputText.isNumber
             else {
                 self?.text = ""

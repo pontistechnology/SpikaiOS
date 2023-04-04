@@ -16,7 +16,7 @@ class EnterNumberTextField: UIView, BaseView {
     
     let titleLabel = CustomLabel(text: "", textColor: .textTertiary,
                                  fontName: .MontserratMedium)
-    var textField = UITextField()
+    private var textField = UITextField()
     let numberView = UIView()
     let countryNumberLabel = CustomLabel(text: "", textColor: .primaryColor, fontName: .MontserratMedium, alignment: .center)
     private let lineBreakView = UIView()
@@ -102,6 +102,10 @@ class EnterNumberTextField: UIView, BaseView {
     
     func getNumber() -> String? {
         return textField.text
+    }
+    
+    func setRestOfNumber(_ string: String) {
+        textField.text = string
     }
     
 }

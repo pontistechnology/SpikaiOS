@@ -59,12 +59,12 @@ class DetailsViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         detailsView.contentView.messageButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            self.viewModel.presentCurrentChatScreen(user: self.viewModel.user)
+            guard let self else { return }
+            self.viewModel.presentCurrentChatScreen()
         }.store(in: &subscriptions)
         
         viewModel.userSubject.receive(on: DispatchQueue.main).sink { [weak self] user in
-            guard let self = self else { return }
+            guard let self else { return }
             self.detailsView.contentView.nameLabel.text = user.getDisplayName()
             let url = user.avatarFileId?.fullFilePathFromId()
             self.detailsView.contentView.profilePhoto.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))

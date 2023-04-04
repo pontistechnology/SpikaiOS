@@ -32,7 +32,7 @@ class AudioPlayer {
         timeObserverToken = audioPlayer?
             .addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 4),
                                      queue: nil, using: { [weak self] time in
-                guard let self = self,
+                guard let self,
                       let duration = self.audioPlayer?.currentItem?.duration.seconds,
                       duration > 0
                 else { return }
