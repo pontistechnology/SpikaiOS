@@ -23,121 +23,12 @@ class CurrentChatViewModel: BaseViewModel {
     
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
-    let isMember = CurrentValueSubject<Bool,Never>(true)
-    let isBlocked = CurrentValueSubject<Bool,Never>(false)
-    let userRepliedInChat = CurrentValueSubject<Bool,Never>(true)
-    let offerToBlock = CurrentValueSubject<Bool,Never>(false)
-    
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
     
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
         super.init(repository: repository, coordinator: coordinator)
-        self.setupBinding()
     }
-    
-    func setupBinding() {
-        self.repository.blockedUsersPublisher()
-            .receive(on: DispatchQueue.main)
-            .map { [weak self] blockedUsers in
-                guard let blockedUsers = blockedUsers,
-                      self?.room.type == .privateRoom else { return false }
-                
-                let roomUserIds = self?.room.users.map { $0.userId } ?? []
-                return Set(blockedUsers).intersection(Set(roomUserIds)).count > 0
-            }
-            .subscribe(self.isBlocked)
-            .store(in: &self.subscriptions)
-        
-        self.setupShouldOfferBlockBinding()
-    }
-    
-    func setupShouldOfferBlockBinding() {
-        guard self.room.users.count == 2 else { return }
-        
-        let ownId = getMyUserId()
-        guard let contact = self.room.users.first(where: { roomUser in
-            roomUser.userId != ownId
-        }) else { return }
-        
-        let contactId = contact.userId
-        
-        // Check if Contact is already blocked = false
-        let contactBlocked = self.repository.blockedUsersPublisher()
-            .map { $0?.contains(contactId) ?? false }
-            .map { !$0 }
-        
-        // Check if Contact in Confirmed = false
-        let contactConfirmed = self.repository.confirmedUsersPublisher()
-            .map { $0.contains(contactId) }
-            .map { !$0 }
-        
-        // Check if User replied at some point = false
-        let userRepliedInChat = self.userRepliedInChat.map { !$0 }
-        
-        contactBlocked.combineLatest(contactConfirmed, userRepliedInChat)
-            .map { $0 && $1 && $2 }
-            .subscribe(self.offerToBlock)
-            .store(in: &self.subscriptions)
-    }
-    
-    func unblockUser() {
-        let ownId = getMyUserId()
-        guard let contact = self.room.users.first(where: { roomUser in
-            roomUser.userId != ownId
-        }) else { return }
-        self.repository.unblockUser(userId: contact.userId)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.updateBlockedList()
-                case .failure(_):
-                    break
-                }
-            } receiveValue: { _ in }
-            .store(in: &self.subscriptions)
-    }
-    
-    func blockUser() {
-        let ownId = getMyUserId()
-        guard let contact = self.room.users.first(where: { roomUser in
-            roomUser.userId != ownId
-        }) else { return }
-        self.repository.blockUser(userId: contact.userId)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.updateBlockedList()
-                case .failure(_):
-                    ()
-                }
-            } receiveValue: { _ in }
-            .store(in: &self.subscriptions)
-    }
-    
-    func userConfirmed() {
-        let ownId = getMyUserId()
-        guard let contact = self.room.users.first(where: { roomUser in
-            roomUser.userId != ownId
-        }) else { return }
-        
-        self.repository.updateConfirmedUsers(confirmedUsers: [contact.user])
-    }
-    
-    func updateBlockedList() {
-        repository.getBlockedUsers()
-            .sink { _ in
-            } receiveValue: { [weak self] response in
-                self?.repository.updateBlockedUsers(users: response.data.blockedUsers)
-            }.store(in: &subscriptions)
-    }
-    
-    func updateIsMember() {
-        let ids = self.room.users.map { $0.userId }
-        let ownId = self.getMyUserId()
-        self.isMember.send(ids.contains(ownId))
-    }
-    
 }
 
 // MARK: - Navigation
@@ -147,9 +38,9 @@ extension CurrentChatViewModel {
     }
     
     func presentMessageDetails(for indexPath: IndexPath) {
-        guard let messageId = getMessage(for: indexPath)?.id else { return }
+        guard let message = getMessage(for: indexPath) else { return }
         let users = room.users.compactMap { $0.user }
-        getAppCoordinator()?.presentMessageDetails(users: users, messageId: messageId)
+        getAppCoordinator()?.presentMessageDetails(users: users, message: message)
     }
     
     func presentMoreActions() -> PassthroughSubject<MoreActions, Never>? {
@@ -520,16 +411,6 @@ extension CurrentChatViewModel {
             try self.frc?.performFetch()
         } catch {
             fatalError("Failed to fetch entities: \(error)") // TODO: handle error
-        }
-        
-        // TODO: - refactor, move
-        let userId = getMyUserId()
-        guard let messages = self.frc?.sections?.first?.objects as? [MessageEntity],
-              let _ = messages.first(where: { message in
-                  message.fromUserId == userId
-              }) else {
-            userRepliedInChat.send(false)
-            return
         }
     }
     

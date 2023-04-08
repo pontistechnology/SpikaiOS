@@ -52,16 +52,16 @@ extension MessageReplyView: BaseView {
     
     func positionSubviews() {
         
-        let heightConstraint = containerView.heightAnchor.constraint(equalToConstant: 54)
-        heightConstraint.priority = .defaultLow // This is needed because reply will be reused in cells
-        heightConstraint.isActive = true
-        
         containerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 140).isActive = true
-        containerView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 8, left: 10, bottom: 0, right: 0))
+        containerView.anchor(top: topAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 8, left: 10, bottom: 0, right: 0))
+        
+        let aaa = containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        aaa.priority = .defaultLow // This is needed because reply will be reused in cells
+        aaa.isActive = true
         
         senderNameLabel.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, trailing: thumbnailImageView.leadingAnchor, padding: UIEdgeInsets(top: 10, left: 12, bottom: 0, right: 10))
         
-        iconAndTextView.anchor(leading: senderNameLabel.leadingAnchor, bottom: containerView.bottomAnchor, trailing: thumbnailImageView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 4))
+        iconAndTextView.anchor(top: senderNameLabel.bottomAnchor, leading: senderNameLabel.leadingAnchor, bottom: containerView.bottomAnchor, trailing: thumbnailImageView.leadingAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 12, right: 4))
         
         thumbnailImageView.anchor(trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         thumbnailImageView.constrainWidth(44)

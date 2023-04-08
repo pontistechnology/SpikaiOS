@@ -254,14 +254,14 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleMessageDetailsViewController(_ container: Container) {
-        container.register(MessageDetailsViewModel.self) { (resolver, coordinator: AppCoordinator, users: [User], messageId: Int64) in
+        container.register(MessageDetailsViewModel.self) { (resolver, coordinator: AppCoordinator, users: [User], message: Message) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            let viewModel = MessageDetailsViewModel(repository: repository, coordinator: coordinator, users: users, messageId: messageId)
+            let viewModel = MessageDetailsViewModel(repository: repository, coordinator: coordinator, users: users, message: message)
             return viewModel
         }.inObjectScope(.transient)
         
-        container.register(MessageDetailsViewController.self) { (resolver, coordinator: AppCoordinator, users: [User], messageId: Int64) in
-            let viewModel = container.resolve(MessageDetailsViewModel.self, arguments: coordinator, users, messageId)!
+        container.register(MessageDetailsViewController.self) { (resolver, coordinator: AppCoordinator, users: [User], message: Message) in
+            let viewModel = container.resolve(MessageDetailsViewModel.self, arguments: coordinator, users, message)!
             let controller = MessageDetailsViewController()
             controller.viewModel = viewModel
             return controller

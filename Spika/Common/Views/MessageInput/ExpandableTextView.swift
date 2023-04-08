@@ -36,6 +36,7 @@ extension ExpandableTextView {
     func styleSubviews() {
         textContainerInset.left = 10
         textContainerInset.right = 36
+        autocorrectionType = .no
         layer.cornerRadius = 10
         clipsToBounds = true
         layer.borderColor = UIColor.borderColor.cgColor

@@ -157,8 +157,8 @@ class AppCoordinator: Coordinator {
             }.store(in: &self.subs)
     }
     
-    func presentMessageDetails(users: [User], messageId: Int64) {
-        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageDetailsViewController.self, arguments: self, users, messageId)!
+    func presentMessageDetails(users: [User], message: Message) {
+        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageDetailsViewController.self, arguments: self, users, message)!
         if let sheet = viewControllerToPresent.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true

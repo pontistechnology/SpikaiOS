@@ -14,13 +14,7 @@ import CoreData
 class MessageDetailsViewController: BaseViewController {
     
     var viewModel: MessageDetailsViewModel!
-    let sectionTitles:[String] = [.getStringFor(.readBy), .getStringFor(.deliveredTo), .getStringFor(.sentTo)]
-//    let seenRecords: [MessageRecord]
-//    let deliveredRecords: [MessageRecord]
-//    var remainingUsers: [User]
-//    let users: [User]
-    
-    let messageDetailsView = MessageDetailsView()
+    private let messageDetailsView = MessageDetailsView()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +28,8 @@ extension MessageDetailsViewController {
     func setupBindings() {
         messageDetailsView.recordsTableView.delegate = self
         messageDetailsView.recordsTableView.dataSource = self
-        viewModel.frc?.delegate = self
         viewModel.setFetch()
+        viewModel.frc?.delegate = self
     }
 }
 
@@ -54,13 +48,22 @@ extension MessageDetailsViewController: UITableViewDataSource {
         viewModel.numberOfRows(in: section)
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        64
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageDetailTableViewCell.reuseIdentifier, for: indexPath) as? MessageDetailTableViewCell,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell,
               let data = viewModel.getDataForCell(at: indexPath)
         else {
             return EmptyTableViewCell()
         }
-        cell.configureCell(avatarUrl: data.avatarUrl, name: data.name, time: data.time)
+//        cell.configureCell(avatarUrl: data.avatarUrl, name: data.name, time: data.time)
+        if indexPath.section == 0 {
+            cell.configureCell(title: data.name, description: data.time, leftImage: data.avatarUrl, type: .doubleEntry(firstText: data.time, firstImage: .sent, secondText: data.time, secondImage: .mutedIcon))
+        } else {
+            cell.configureCell(title: data.name, description: data.time, leftImage: data.avatarUrl, type: .normal)
+        }
         return cell
     }
     
@@ -69,12 +72,13 @@ extension MessageDetailsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sectionTitles[section]
+        viewModel.sectionTitles[section]
     }
 }
 
 extension MessageDetailsViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        viewModel.refreshData()
         messageDetailsView.recordsTableView.reloadData()
     }
 }
