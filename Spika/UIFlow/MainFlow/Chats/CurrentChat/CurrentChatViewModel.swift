@@ -114,7 +114,7 @@ extension CurrentChatViewModel {
     }
     
     func deleteMessage(id: Int64, target: DeleteMessageTarget) {
-        repository.deleteMessage(messageId: id, target: target).sink { c in
+        repository.deleteMessage(messageId: id, target: target).sink { _ in
             
         } receiveValue: { [weak self] response in
             guard let message = response.data?.message else { return }
@@ -134,7 +134,7 @@ extension CurrentChatViewModel {
                               replyId: selectedMessageToReplyPublisher.value?.id,
                               localId: uuid)
         
-        repository.saveMessages([message]).sink { c in
+        repository.saveMessages([message]).sink { _ in
             
         } receiveValue: { [weak self] messages in
             let body = RequestMessageBody(text: message.body?.text,
@@ -166,8 +166,8 @@ extension CurrentChatViewModel {
     }
     
     func saveMessage(message: Message) {
-        repository.saveMessages([message]).sink { c in
-            print(c)
+        repository.saveMessages([message]).sink { _ in
+            
         } receiveValue: { _ in
             
         }.store(in: &subscriptions)
@@ -184,13 +184,8 @@ extension CurrentChatViewModel {
 
 extension CurrentChatViewModel {
     func sendSeenStatus() {
-        repository.sendSeenStatus(roomId: room.id).sink { c in
-            
-        } receiveValue: { [weak self] response in
-            guard let self = self,
-                  let messageRecords = response.data?.messageRecords else { return }
-            self.repository.updateUnreadCounts(unreadCounts: [UnreadCount(roomId: self.room.id, unreadCount: 0)])
-        }.store(in: &subscriptions)
+        repository.sendSeenStatus(roomId: room.id)
+        
     }
 }
 
@@ -207,14 +202,14 @@ extension CurrentChatViewModel {
             uploadProgressPublisher.send((percentUploaded: 0.01, selectedFile: file))
             repository
                 .uploadWholeFile(fromUrl: thumbURL, mimeType: "image/*", metaData: thumbMetadata)
-                .sink { c in
+                .sink { _ in
                     
                 } receiveValue: { [weak self] filea, percent in
                     guard let filea = filea else { return }
                     guard let self else { return }
                     self.repository
                         .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData)
-                        .sink { c in
+                        .sink { _ in
                             
                         } receiveValue: { [weak self] fileb, percent in
                             guard let self else { return }
@@ -229,7 +224,7 @@ extension CurrentChatViewModel {
                 .uploadWholeFile(fromUrl: file.fileUrl,
                                  mimeType: file.mimeType,
                                  metaData: file.metaData)
-                .sink { c in
+                .sink { _ in
                     
                 } receiveValue: { [weak self] filea, percent in
                     self?.uploadProgressPublisher.send((percentUploaded: percent, selectedFile: nil))
@@ -259,7 +254,7 @@ extension CurrentChatViewModel {
                               replyId: nil,
                               localId: uuid)
         
-        repository.saveMessages([message]).sink { c in
+        repository.saveMessages([message]).sink { _ in
             
         } receiveValue: { [weak self] messages in
             self?.upload(file: file)
@@ -357,7 +352,7 @@ extension CurrentChatViewModel {
 extension CurrentChatViewModel {
     func sendReaction(reaction: String, messageId: Int64) {
         repository.sendReaction(messageId: messageId, reaction: reaction)
-            .sink { c in
+            .sink { _ in
             } receiveValue: { [weak self] response in
                 guard let records = response.data?.messageRecords else { return }
                 self?.repository.saveMessageRecords(records)

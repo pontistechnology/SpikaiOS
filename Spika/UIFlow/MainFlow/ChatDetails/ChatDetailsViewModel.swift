@@ -156,13 +156,7 @@ class ChatDetailsViewModel: BaseViewModel {
     
     func updateBlockedList() {
         repository.getBlockedUsers()
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    return
-                case .failure(_):
-                    return
-                }
+            .sink { _ in
             } receiveValue: { [weak self] response in
                 self?.repository.updateBlockedUsers(users: response.data.blockedUsers)
             }.store(in: &subscriptions)
@@ -194,13 +188,7 @@ class ChatDetailsViewModel: BaseViewModel {
         self.repository
             .updateRoomUsers(room: room )
             .receive(on: DispatchQueue.main)
-            .sink { c in
-                switch c {
-                case .finished:
-                    break
-                case .failure(_):
-                    break
-                }
+            .sink { _ in
             } receiveValue: { [weak self] room in
                 self?.room.send(room)
             }.store(in: &self.subscriptions)
@@ -320,14 +308,8 @@ class ChatDetailsViewModel: BaseViewModel {
     
     func updateRoomUsers(room: Room) {
         self.repository.updateRoomUsers(room: room)
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(_):
-                    break
-                }
+            .receive(on: DispatchQueue.main) // why on main
+            .sink { _ in
             } receiveValue: { [weak self] room in
                 self?.room.send(room)
             }.store(in: &subscriptions)

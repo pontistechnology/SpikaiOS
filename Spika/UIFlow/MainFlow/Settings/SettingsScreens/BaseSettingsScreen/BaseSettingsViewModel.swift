@@ -21,12 +21,7 @@ class BaseSettingsViewModel: BaseViewModel {
     private func loadLocalUser() {
         let ownId = self.repository.getMyUserId()
         self.repository.getLocalUser(withId: ownId)
-            .sink { completion in
-                switch completion {
-                case .failure(_):
-                    break
-                default: break
-                }
+            .sink { _ in
             } receiveValue: { [weak self] user in
                 self?.user.send(user)
             }.store(in: &self.subscriptions)

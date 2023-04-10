@@ -33,7 +33,6 @@ class HomeViewController: UIPageViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barStyle = .default
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        
         viewModel.updatePush()
     }
     

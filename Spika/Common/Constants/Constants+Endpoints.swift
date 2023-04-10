@@ -27,8 +27,6 @@ public extension Constants {
         static let seenStatus = "api/messenger/messages/roomId/seen" // TODO: check roomId
         static let syncRooms = "api/messenger/rooms/sync"
         static let syncAllMessages = "api/messenger/messages/sync"
-        static let syncModifiedMessages = "api/messenger/messages/sync/modified"
-        static let syncUndeliveredMessages = "api/messenger/messages/undelivered"
         static let syncMessageRecords = "api/messenger/message-records/sync"
         static let syncUsers = "api/messenger/users/sync"
         static let messageRecords = "api/messenger/message-records"
