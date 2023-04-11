@@ -59,14 +59,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: Push notifications
 
 extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
+    func decodeMessageFrom(userInfo: [AnyHashable : Any]) -> Message? {
+        guard let messageData = userInfo["message"] as? String,
+              let jsonData = messageData.data(using: .utf8),
+              let message = try? JSONDecoder().decode(Message.self, from: jsonData)
+        else {
+            return nil
+        }
+        return message
+    }
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        
-        guard let messageData = userInfo["message"] as? String,
-              let jsonData = messageData.data(using: .utf8),
-              let message = try? JSONDecoder().decode(Message.self, from: jsonData) else {
+       
+        guard let message = decodeMessageFrom(userInfo: userInfo) else {
             completionHandler()
             return
         }
@@ -76,9 +84,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
             completionHandler()
             return
         }
-        
+        removeNotifications(withRoomId: message.roomId)
         DispatchQueue.main.async {
-//            let config = HomeViewController.HomeViewControllerStartConfig(startingTab: 0, startWithMessage: message)
             sd.appCoordinator?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: message.roomId))
             completionHandler()
         }
@@ -101,6 +108,16 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
             print("APNs registred.")
         }
         app.registerForRemoteNotifications()
+    }
+    
+    func removeNotifications(withRoomId roomId: Int64) {
+        UNUserNotificationCenter.current().getDeliveredNotifications { [weak self] notifications in
+            let identifiers = notifications.filter { notification in
+                guard let message = self?.decodeMessageFrom(userInfo: notification.request.content.userInfo) else { return false }
+                return message.roomId == roomId
+            }.map { $0.request.identifier }
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: identifiers)
+        }
     }
 }
 
