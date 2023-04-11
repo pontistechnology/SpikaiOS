@@ -22,6 +22,7 @@ class AllChatsViewController: BaseViewController {
         super.viewDidLoad()
         setupView(allChatsView)
         setupBindings()
+        viewModel.refreshUnreadCounts()
     }
     
     func setupBindings() {

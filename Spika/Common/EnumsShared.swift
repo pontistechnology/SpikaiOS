@@ -27,7 +27,7 @@ struct MessageNotificationInfo {
     let title: String
     let photoUrl: URL?
     let messageText: String
-    var room: Room?
+    let roomId: Int64
 }
 
 enum SyncType {

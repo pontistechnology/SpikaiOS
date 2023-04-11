@@ -18,6 +18,7 @@ class AppCoordinator: Coordinator {
     let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)!
     let windowScene: UIWindowScene
     var subs = Set<AnyCancellable>()
+    var inAppNotificationCancellable: AnyCancellable?
 
     init(navigationController: UINavigationController, windowScene: UIWindowScene) {
         self.windowScene = windowScene
@@ -78,7 +79,7 @@ class AppCoordinator: Coordinator {
         if startSyncAndSSE {
             syncAndStartSSE()            
         }
-        self.navigationController.setViewControllers([viewController], animated: true)
+        self.navigationController.setViewControllers([viewController], animated: false)
     }
     
     func presentDetailsScreen(user: User) {
@@ -157,8 +158,8 @@ class AppCoordinator: Coordinator {
             }.store(in: &self.subs)
     }
     
-    func presentMessageDetails(users: [User], messageId: Int64) {
-        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageDetailsViewController.self, arguments: self, users, messageId)!
+    func presentMessageDetails(users: [User], message: Message) {
+        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageDetailsViewController.self, arguments: self, users, message)!
         if let sheet = viewControllerToPresent.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
@@ -267,9 +268,12 @@ extension AppCoordinator {
     
     func showNotification(info: MessageNotificationInfo) {
         DispatchQueue.main.async { [weak self] in
-            if let lastVC = self?.navigationController.viewControllers.last,
+            guard let self else { return }
+            if let lastVC = self.navigationController.viewControllers.last,
                !lastVC.isKind(of: CurrentChatViewController.self) {
-                self?.getWindowManager().showNotificationWindow(info: info)
+                self.inAppNotificationCancellable = self.getWindowManager().showNotificationWindow(info: info).sink(receiveValue: { [weak self] roomId in
+                    self?.presentHomeScreen(startSyncAndSSE: false, startTab: .chat(withChatId: roomId))
+                })
             }
         }
     }

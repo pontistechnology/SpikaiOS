@@ -53,7 +53,8 @@ public class MessageEntity: NSManagedObject {
         self.type = message.type.rawValue
         
         if let bodyText = message.body?.text {
-            self.bodyText = bodyText
+            self.bodyText = bodyText.replacingOccurrences(of: "\0", with: "")
+            // current bug, when text is copied from bad pdf, null character can be included in string, and label will be truncated
         }
         
         if let fileId = message.body?.file?.id {

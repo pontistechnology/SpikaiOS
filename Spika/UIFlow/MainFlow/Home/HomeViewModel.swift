@@ -37,7 +37,7 @@ class HomeViewModel: BaseViewModel {
     func presentChat(roomId: Int64) {
         self.repository.getRoomWithId(forRoomId: roomId)
             .receive(on: DispatchQueue.main)
-            .sink { c in
+            .sink { _ in
             } receiveValue: { [weak self] room in
                 self?.getAppCoordinator()?.presentCurrentChatScreen(room: room)
             }.store(in: &self.subscriptions)

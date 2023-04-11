@@ -35,6 +35,7 @@ extension IconAndLabelView: BaseView {
         switch messageType {
         case .text:
             textLabel.text = text
+            textLabel.numberOfLines = 3
             iconImageView.image = nil
         case .image:
             textLabel.text = "Photo message"
@@ -60,10 +61,12 @@ extension IconAndLabelView: BaseView {
             textLeftPadding = 16
         }
         iconImageView.constrainWidth(12)
-        iconImageView.constrainHeight(12)
+//        iconImageView.constrainHeight(12)
         iconImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         
-        textLabel.centerYToSuperview()
-        textLabel.anchor(leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: textLeftPadding, bottom: 0, right: 2))
+//        textLabel.centerYToSuperview()
+//        textLabel.anchor(leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: textLeftPadding, bottom: 0, right: 2))
+        
+        textLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: textLeftPadding, bottom: 0, right: 0))
     }
 }
