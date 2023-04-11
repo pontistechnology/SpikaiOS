@@ -58,9 +58,10 @@ extension MessageDetailsViewController: UITableViewDataSource {
         else {
             return EmptyTableViewCell()
         }
-//        cell.configureCell(avatarUrl: data.avatarUrl, name: data.name, time: data.time)
         if indexPath.section == 0 {
-            cell.configureCell(title: data.name, description: data.time, leftImage: data.avatarUrl, type: .doubleEntry(firstText: data.time, firstImage: .sent, secondText: data.time, secondImage: .mutedIcon))
+            cell.configureCell(title: data.name, description: data.time, leftImage: data.avatarUrl,
+                               type: .doubleEntry(firstText: data.time, firstImage: .sent,
+                                                  secondText: data.time, secondImage: .mutedIcon))
         } else {
             cell.configureCell(title: data.name, description: data.time, leftImage: data.avatarUrl, type: .normal)
         }
