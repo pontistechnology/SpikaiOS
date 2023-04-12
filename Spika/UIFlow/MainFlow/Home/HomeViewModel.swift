@@ -40,7 +40,7 @@ class HomeViewModel: BaseViewModel {
             } receiveValue: { [weak self] room in
                 self?.getAppCoordinator()?.presentCurrentChatScreen(room: room)
             }.store(in: &self.subscriptions)
-    }
+    } 
     
     func updatePush() {
         repository.updatePushToken().sink { completion in
