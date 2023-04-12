@@ -17,8 +17,6 @@ class HomeTabBar: UIView, BaseView {
     let tabBarItems: [TabBarItem]
     let tabs: [TabBarItemView]
     
-    let unreadRoomsPublisher = PassthroughSubject<Int,Never>()
-    
     let tabSelectedPublisher = PassthroughSubject<TabBarItem,Never>()
     
     var subscriptions = Set<AnyCancellable>()
@@ -38,14 +36,13 @@ class HomeTabBar: UIView, BaseView {
                 .subscribe(self.tabSelectedPublisher)
                 .store(in: &self.subscriptions)
         }
-        
-        self.unreadRoomsPublisher
-            .sink { [weak self] unreadRooms in
-                let message = unreadRooms > 0 ? String(unreadRooms) : nil
-                self?.tabs.first { tab in
-                    tab.tab == .chat(withChatId: nil)
-                }?.updateMessage(message: message)
-            }.store(in: &self.subscriptions)
+    }
+    
+    func updateUnreadChatsCount(_ count: Int) {
+        let text = count > 0 ? String(count) : nil
+        tabs.first { tab in
+            tab.tab == .chat(withChatId: nil)
+        }?.updateCountLabel(text)
     }
     
     func updateSelectedTab(selectedTab: TabBarItem) {

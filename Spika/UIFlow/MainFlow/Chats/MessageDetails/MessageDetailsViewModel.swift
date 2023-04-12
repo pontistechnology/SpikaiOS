@@ -68,13 +68,15 @@ extension MessageDetailsViewModel {
         return sectionTitles.count
     }
     
-    func getDataForCell(at indexPath: IndexPath) -> (avatarUrl: URL?, name: String, time: String)? {
+    func getDataForCell(at indexPath: IndexPath) -> (avatarUrl: URL?, name: String, time: String, editedTime: String?, telephoneNumber: String?)? {
         let user: User?
         let time: String
+        var editedTime: String?
         switch indexPath.section {
         case 0:
             user = allUsers.first(where: { $0.id == message.fromUserId })
             time = message.createdAt.convert(to: .allChatsTimeFormat)
+            editedTime = message.modifiedAt.convert(to: .allChatsTimeFormat)
         case 1:
             user = allUsers.first(where: { $0.id == seenRecords[indexPath.row].userId })
             time = seenRecords[indexPath.row].createdAt.convert(to: .allChatsTimeFormat)
@@ -89,7 +91,7 @@ extension MessageDetailsViewModel {
         }
         return (user?.avatarFileId?.fullFilePathFromId() ?? nil,
                 user?.getDisplayName() ?? "unknown",
-                time)
+                time, editedTime, user?.telephoneNumber)
     }
     
     func refreshData() {

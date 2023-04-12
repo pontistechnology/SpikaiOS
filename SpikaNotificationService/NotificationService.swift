@@ -33,6 +33,10 @@ class NotificationService: UNNotificationServiceExtension {
                 show(title: "Error", text: "Decoding error")
                 return
             }
+            // this contains number of unread messages in that room only
+//            if let unreadCount = message.unreadCount {
+//                bestAttemptContent.badge = NSNumber(value: unreadCount)
+//            }
             saveMessage(message: message)
         }
     }

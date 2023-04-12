@@ -496,12 +496,22 @@ extension DatabaseService {
     func updateUnreadCounts(_ counts: [UnreadCount]) {
         coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
             let roomsFR = RoomEntity.fetchRequest()
-//            roomsFR.predicate = NSPredicate(format: "id IN %@", counts.map({ $0.roomId }))
+
             guard let entities = try? context.fetch(roomsFR) else { return }
             entities.forEach { $0.unreadCount = 0 }
             for count in counts {
                 entities.first { $0.id == count.roomId }?.unreadCount = count.unreadCount
             }
+            try? context.save()
+        }
+    }
+    
+    func resetUnreadCount(_ roomId: Int64) {
+        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+            let roomsFR = RoomEntity.fetchRequest()
+            roomsFR.predicate = NSPredicate(format: "id = %d", roomId)
+            guard let entities = try? context.fetch(roomsFR) else { return }
+            entities.forEach { $0.unreadCount = 0 }
             try? context.save()
         }
     }

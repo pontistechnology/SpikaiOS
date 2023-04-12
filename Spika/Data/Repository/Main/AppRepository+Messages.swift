@@ -180,7 +180,8 @@ extension AppRepository {
         } receiveValue: { [weak self] response in
             guard let records = response.data?.messageRecords else { return }
             _ = self?.saveMessageRecords(records)
-            self?.updateUnreadCounts(unreadCounts: [UnreadCount(roomId: roomId, unreadCount: 0)])
+            self?.updateUnreadCountToZeroFor(roomId: roomId)
+            self?.removeNotificationsWith(roomId: roomId)
         }.store(in: &subs)
     }
 }

@@ -100,7 +100,7 @@ private extension SSE {
                 _ = self.repository.saveLocalRooms(rooms: [room])
             case .seenRoom:
                 guard let roomId = sseNewMessage.roomId else { return }
-                self.repository.updateUnreadCounts(unreadCounts: [UnreadCount(roomId: roomId, unreadCount: 0)])
+                self.repository.updateUnreadCountToZeroFor(roomId: roomId)
             default:
                 break
             }

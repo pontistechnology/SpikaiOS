@@ -103,6 +103,10 @@ extension AppRepository {
         databaseService.updateUnreadCounts(unreadCounts)
     }
     
+    func updateUnreadCountToZeroFor(roomId: Int64) {
+        databaseService.resetUnreadCount(roomId)
+    }
+    
     private func getSyncTimestamp(for type: SyncType) -> Int64 {
         switch type {
             

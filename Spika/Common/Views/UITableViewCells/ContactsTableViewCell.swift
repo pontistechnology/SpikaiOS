@@ -31,7 +31,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         button.imageView?.contentMode = .center
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setContentHuggingPriority(.required, for: .horizontal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.textPrimary, for: .normal)
         button.publisher(for: .touchUpInside)
             .map { [unowned self] _ in self }
             .subscribe(self.onRightClickAction)

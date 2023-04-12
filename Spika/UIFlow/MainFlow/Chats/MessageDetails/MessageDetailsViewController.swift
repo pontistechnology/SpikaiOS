@@ -58,12 +58,13 @@ extension MessageDetailsViewController: UITableViewDataSource {
         else {
             return EmptyTableViewCell()
         }
+        cell.backgroundColor = .secondaryBackground // TODO: - move to cell
         if indexPath.section == 0 {
-            cell.configureCell(title: data.name, description: data.time, leftImage: data.avatarUrl,
+            cell.configureCell(title: data.name, description: data.telephoneNumber, leftImage: data.avatarUrl,
                                type: .doubleEntry(firstText: data.time, firstImage: .sent,
-                                                  secondText: data.time, secondImage: .mutedIcon))
+                                                  secondText: data.editedTime, secondImage: .editIcon))
         } else {
-            cell.configureCell(title: data.name, description: data.time, leftImage: data.avatarUrl, type: .normal)
+            cell.configureCell(title: data.name, description: data.telephoneNumber, leftImage: data.avatarUrl, type: .text(text: data.time))
         }
         return cell
     }

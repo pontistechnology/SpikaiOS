@@ -26,7 +26,6 @@ enum RepositoryType {
 protocol Repository {
     // Properties
     var subs: Set<AnyCancellable>{ get set}
-    var unreadRoomsPublisher: CurrentValueSubject<Int,Never> { get }
 
 
 // MARK: - NETWORKING:
@@ -123,6 +122,7 @@ protocol Repository {
     func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error>
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
     func updateUnreadCounts(unreadCounts: [UnreadCount])
+    func updateUnreadCountToZeroFor(roomId: Int64)
     
         // File
     func getFileData(id: String?, context: NSManagedObjectContext) -> FileData?
@@ -149,6 +149,8 @@ protocol Repository {
     func updateBlockedUsers(users: [User])
     func blockedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never>
     
-    // MARK: - test
+    // MARK: - Notifications
+    
+    func removeNotificationsWith(roomId: Int64)
     
 }
