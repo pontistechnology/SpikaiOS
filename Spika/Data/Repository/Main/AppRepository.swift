@@ -16,8 +16,6 @@ class AppRepository: Repository {
     var subs = Set<AnyCancellable>()
     let userDefaults: UserDefaults
     
-    let unreadRoomsPublisher = CurrentValueSubject<Int,Never>(0)
-    
     init(networkService: NetworkService, databaseService: DatabaseService, userDefaults: UserDefaults) {
         self.networkService = networkService
         self.databaseService = databaseService
