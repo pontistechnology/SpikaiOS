@@ -181,6 +181,7 @@ extension AppRepository {
             guard let records = response.data?.messageRecords else { return }
             _ = self?.saveMessageRecords(records)
             self?.updateUnreadCountToZeroFor(roomId: roomId)
+            self?.removeNotificationsWith(roomId: roomId)
         }.store(in: &subs)
     }
 }

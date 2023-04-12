@@ -84,7 +84,6 @@
 		6C78B7B529AF5ADB004BF881 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81926C2721E2E400D5BE48 /* UIControl+Combine.swift */; };
 		6C78B7B629AF5ADB004BF881 /* ChatSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86527B671270099BA9E /* ChatSearchView.swift */; };
 		6C78B7B729AF5ADB004BF881 /* AllChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192682721D5BD00D5BE48 /* AllChatsViewModel.swift */; };
-		6C78B7B829AF5ADB004BF881 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
 		6C78B7B929AF5ADB004BF881 /* BlockedUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175ECB297ED94400804275 /* BlockedUsersView.swift */; };
 		6C78B7BA29AF5ADB004BF881 /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
 		6C78B7BB29AF5ADB004BF881 /* SharedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86127B65C9C0099BA9E /* SharedView.swift */; };
@@ -389,7 +388,6 @@
 		6C78B90829AF5D89004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F036A282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift */; };
 		6C78B90929AF5D89004BF881 /* CoreDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */; };
 		6C78B90A29AF5D89004BF881 /* RoomEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */; };
-		6C78B90B29AF5D89004BF881 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
 		6C78B90C29AF5D89004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93711DFA28E475A30074A50B /* MessageEntity+CoreDataProperties.swift */; };
 		6C78B90D29AF5D89004BF881 /* BlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C7729700D6E00198EC1 /* BlockModel.swift */; };
 		6C78B90E29AF5D89004BF881 /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
@@ -412,7 +410,7 @@
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6CFB46C22948C1D7000D26BB /* Localizable.strings */; };
-		6E1AA22EBF32F5F6B1E36042 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		6E1AA22EBF32F5F6B1E36042 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		7E72A0473D6052432982C00A /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2511C3428ADAAF827BEC0E72 /* Pods_Spika.framework */; };
 		89ECD2F713F7863059BAC021 /* Pods_Spika_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414A4A1E472811F66834C409 /* Pods_Spika_Dev.framework */; };
 		93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
@@ -426,7 +424,6 @@
 		9319416B2819CB510067566C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9319416A2819CB510067566C /* NotificationService.swift */; };
 		9319416F2819CB510067566C /* SpikaNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 931941682819CB510067566C /* SpikaNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		931B14D6281FD91100A0CD35 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
-		931B14D7281FD91100A0CD35 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
 		931B14D8281FD91100A0CD35 /* AppRepository+Rooms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */; };
 		931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
 		931B14DC2821182800A0CD35 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503F2270DE39A009D50CB /* NetworkService.swift */; };
@@ -523,6 +520,13 @@
 		934F2EDD28172BD10086C343 /* UpdatePushResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */; };
 		934F2EDF28172D150086C343 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
 		934F2EE128172EEA0086C343 /* UpdatePushRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */; };
+		934F6DE429E694670010FED9 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
+		934F6DEF29E698360010FED9 /* NotificationsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F6DEE29E698360010FED9 /* NotificationsHelpers.swift */; };
+		934F6DF029E698360010FED9 /* NotificationsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F6DEE29E698360010FED9 /* NotificationsHelpers.swift */; };
+		934F6DF129E698360010FED9 /* NotificationsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F6DEE29E698360010FED9 /* NotificationsHelpers.swift */; };
+		934F6DF229E698360010FED9 /* NotificationsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F6DEE29E698360010FED9 /* NotificationsHelpers.swift */; };
+		934F6DF329E699070010FED9 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
+		934F6DF429E699070010FED9 /* AppRepository+Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDE28172D150086C343 /* AppRepository+Device.swift */; };
 		934FF16D2977774F002C76F7 /* ContextMenuActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF16C2977774F002C76F7 /* ContextMenuActionView.swift */; };
 		934FF16F29778A65002C76F7 /* SendReactionRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF16E29778A65002C76F7 /* SendReactionRequestModel.swift */; };
 		934FF17129778AF9002C76F7 /* SendReactionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF17029778AF9002C76F7 /* SendReactionResponseModel.swift */; };
@@ -902,6 +906,7 @@
 		934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePushResponseModel.swift; sourceTree = "<group>"; };
 		934F2EDE28172D150086C343 /* AppRepository+Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Device.swift"; sourceTree = "<group>"; };
 		934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePushRequestModel.swift; sourceTree = "<group>"; };
+		934F6DEE29E698360010FED9 /* NotificationsHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsHelpers.swift; sourceTree = "<group>"; };
 		934FF16C2977774F002C76F7 /* ContextMenuActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuActionView.swift; sourceTree = "<group>"; };
 		934FF16E29778A65002C76F7 /* SendReactionRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReactionRequestModel.swift; sourceTree = "<group>"; };
 		934FF17029778AF9002C76F7 /* SendReactionResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReactionResponseModel.swift; sourceTree = "<group>"; };
@@ -1137,7 +1142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E1AA22EBF32F5F6B1E36042 /* BuildFile in Frameworks */,
+				6E1AA22EBF32F5F6B1E36042 /* (null) in Frameworks */,
 				7E72A0473D6052432982C00A /* Pods_Spika.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2074,6 +2079,7 @@
 				ADD503B1270DC3C7009D50CB /* AppDelegate.swift */,
 				ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */,
 				ADD503BD270DC3CA009D50CB /* Assets.xcassets */,
+				934F6DEE29E698360010FED9 /* NotificationsHelpers.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -2676,7 +2682,6 @@
 				6C78B7B529AF5ADB004BF881 /* UIControl+Combine.swift in Sources */,
 				6C78B7B629AF5ADB004BF881 /* ChatSearchView.swift in Sources */,
 				6C78B7B729AF5ADB004BF881 /* AllChatsViewModel.swift in Sources */,
-				6C78B7B829AF5ADB004BF881 /* AppRepository+Device.swift in Sources */,
 				6C78B7B929AF5ADB004BF881 /* BlockedUsersView.swift in Sources */,
 				6C78B7BA29AF5ADB004BF881 /* SSENewMessage.swift in Sources */,
 				6C78B7BB29AF5ADB004BF881 /* SharedView.swift in Sources */,
@@ -2895,10 +2900,12 @@
 				6C78B89829AF5ADB004BF881 /* PopUpManager.swift in Sources */,
 				6C78B89929AF5ADB004BF881 /* FetchedContact.swift in Sources */,
 				6C78B89A29AF5ADB004BF881 /* ContactsView.swift in Sources */,
+				934F6DF129E698360010FED9 /* NotificationsHelpers.swift in Sources */,
 				6C78B89B29AF5ADB004BF881 /* ChatBlockingView.swift in Sources */,
 				6C78B89C29AF5ADB004BF881 /* AppRepository+User.swift in Sources */,
 				6C78B89E29AF5ADB004BF881 /* CoreDataStack.swift in Sources */,
 				6C78B89F29AF5ADB004BF881 /* DeliveredResponseModel.swift in Sources */,
+				934F6DE429E694670010FED9 /* AppRepository+Device.swift in Sources */,
 				6C78B8A029AF5ADB004BF881 /* TabBarItemView.swift in Sources */,
 				6C78B8A129AF5ADB004BF881 /* SettingsModel.swift in Sources */,
 				6C78B8A229AF5ADB004BF881 /* ParkBenchTimer.swift in Sources */,
@@ -2918,6 +2925,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				934F6DF229E698360010FED9 /* NotificationsHelpers.swift in Sources */,
 				6C78B8CA29AF5D89004BF881 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				6C78B8CB29AF5D89004BF881 /* AppRepository+Blocked_Notification.swift in Sources */,
 				6C78B8CC29AF5D89004BF881 /* NotificationService.swift in Sources */,
@@ -2985,12 +2993,12 @@
 				6C78B90829AF5D89004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				6C78B90929AF5D89004BF881 /* CoreDatabase.xcdatamodeld in Sources */,
 				6C78B90A29AF5D89004BF881 /* RoomEntity+CoreDataClass.swift in Sources */,
-				6C78B90B29AF5D89004BF881 /* AppRepository+Device.swift in Sources */,
 				6C78B90C29AF5D89004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6C78B90D29AF5D89004BF881 /* BlockModel.swift in Sources */,
 				6C78B90E29AF5D89004BF881 /* EmptyResponse.swift in Sources */,
 				6C78B90F29AF5D89004BF881 /* SendReactionResponseModel.swift in Sources */,
 				6C78B91029AF5D89004BF881 /* Constants+Strings.swift in Sources */,
+				934F6DF429E699070010FED9 /* AppRepository+Device.swift in Sources */,
 				6C78B91129AF5D89004BF881 /* Date+Extensions.swift in Sources */,
 				6C78B91229AF5D89004BF881 /* SendMessageResponse.swift in Sources */,
 				6C78B91529AF5D89004BF881 /* VerifyFileResponseModel.swift in Sources */,
@@ -3003,6 +3011,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				934F6DF029E698360010FED9 /* NotificationsHelpers.swift in Sources */,
 				931B150F28211ACB00A0CD35 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				6CBD43A9298282F100A1059E /* AppRepository+Blocked_Notification.swift in Sources */,
 				9319416B2819CB510067566C /* NotificationService.swift in Sources */,
@@ -3070,12 +3079,12 @@
 				934F036E282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */,
 				931B150E28211ACB00A0CD35 /* RoomEntity+CoreDataClass.swift in Sources */,
-				931B14D7281FD91100A0CD35 /* AppRepository+Device.swift in Sources */,
 				93711DFC28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6C056C7929700D9E00198EC1 /* BlockModel.swift in Sources */,
 				6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */,
 				934FF17229778E02002C76F7 /* SendReactionResponseModel.swift in Sources */,
 				6C153BF129486F2B00D400A7 /* Constants+Strings.swift in Sources */,
+				934F6DF329E699070010FED9 /* AppRepository+Device.swift in Sources */,
 				9347CCE4286457C900018AEB /* Date+Extensions.swift in Sources */,
 				931B150028211AC600A0CD35 /* SendMessageResponse.swift in Sources */,
 				931B150928211AC600A0CD35 /* VerifyFileResponseModel.swift in Sources */,
@@ -3345,6 +3354,7 @@
 				6C6AD21D291E41DD0026CDAC /* ChatMembersView.swift in Sources */,
 				9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */,
 				EAC81D782810422F0004D835 /* FetchedContact.swift in Sources */,
+				934F6DEF29E698360010FED9 /* NotificationsHelpers.swift in Sources */,
 				AD81925C2721D45100D5BE48 /* ContactsView.swift in Sources */,
 				6CD1915A29A35E2300A8041A /* ChatBlockingView.swift in Sources */,
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
@@ -3419,7 +3429,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/SpikaDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3436,7 +3446,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$APP_VERSION";
+				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3457,7 +3467,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/SpikaDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3474,7 +3484,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$APP_VERSION";
+				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3491,7 +3501,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationServiceDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfoDev.plist;
@@ -3503,7 +3513,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = "$APP_VERSION";
+				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "-DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3520,7 +3530,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationServiceDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfoDev.plist;
@@ -3532,7 +3542,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = "$APP_VERSION";
+				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "-DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3549,7 +3559,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationService.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
@@ -3561,7 +3571,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = "$APP_VERSION";
+				MARKETING_VERSION = $APP_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika.Spika3NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3577,7 +3587,7 @@
 				CODE_SIGN_ENTITLEMENTS = SpikaNotificationService/SpikaNotificationService.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
@@ -3589,7 +3599,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = "$APP_VERSION";
+				MARKETING_VERSION = $APP_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika.Spika3NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3731,7 +3741,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3748,7 +3758,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$APP_VERSION";
+				MARKETING_VERSION = $APP_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3768,7 +3778,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$APP_BUILD_VERSION";
+				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3785,7 +3795,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$APP_VERSION";
+				MARKETING_VERSION = $APP_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -149,6 +149,8 @@ protocol Repository {
     func updateBlockedUsers(users: [User])
     func blockedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never>
     
-    // MARK: - test
+    // MARK: - Notifications
+    
+    func removeNotificationsWith(roomId: Int64)
     
 }

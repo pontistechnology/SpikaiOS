@@ -185,7 +185,7 @@ extension CurrentChatViewModel {
 extension CurrentChatViewModel {
     func sendSeenStatus() {
         repository.sendSeenStatus(roomId: room.id)
-        
+        repository.removeNotificationsWith(roomId: room.id)
     }
 }
 

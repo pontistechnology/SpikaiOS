@@ -15,6 +15,7 @@ class AppRepository: Repository {
     let databaseService: DatabaseService
     var subs = Set<AnyCancellable>()
     let userDefaults: UserDefaults
+    let notificationHelpers = NotificationHelpers()
     
     init(networkService: NetworkService, databaseService: DatabaseService, userDefaults: UserDefaults) {
         self.networkService = networkService
