@@ -44,7 +44,7 @@ class NotificationService: UNNotificationServiceExtension {
     override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
-        show(title: "Error", text: "serviceExtensionTimeWillExpire")
+        show(title: "Error", text: "serviceExtensionTimeWillExpire - report")
     }
 }
 
@@ -56,8 +56,8 @@ extension NotificationService {
         } receiveValue: { [weak self] isSaved in
             guard let self else { return }
             if let id = message.id {
-                self.repository.sendDeliveredStatus(messageIds: [id]).sink(receiveValue: { _ in
-                    self.getMessageNotificationInfo(message: message)
+                self.repository.sendDeliveredStatus(messageIds: [id]).sink(receiveValue: { [weak self] _ in
+                    self?.getMessageNotificationInfo(message: message)
                 }).store(in: &self.subs)
             }
         }.store(in: &subs)
