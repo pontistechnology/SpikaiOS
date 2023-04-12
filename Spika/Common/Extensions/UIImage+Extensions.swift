@@ -84,6 +84,7 @@ enum AssetName: String {
     case slideReply = "slideReply"
     case slideDelete = "slideDelete"
     case slideDetails = "slideDetails"
+    case editIcon = "editIcon"
 }
 
 extension UIImage {    
