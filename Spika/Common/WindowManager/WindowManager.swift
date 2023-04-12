@@ -21,6 +21,7 @@ final class WindowManager {
     
     let notificationTapPublisher = PassthroughSubject<MessageNotificationInfo, Never>()
     let popUpPublisher = PassthroughSubject<PopUpPublisherType, Never>()
+    private let roomIdPublisher = PassthroughSubject<Int64, Never>()
     
     init(scene: UIWindowScene) {
         self.scene = scene
@@ -58,7 +59,7 @@ extension WindowManager {
 // MARK: - Notification window
 
 extension WindowManager {
-    func showNotificationWindow(info: MessageNotificationInfo) {
+    func showNotificationWindow(info: MessageNotificationInfo) -> PassthroughSubject<Int64, Never> {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.notificationWindow = nil
@@ -72,6 +73,7 @@ extension WindowManager {
             self.notificationWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
             self.dismissNotificationWindowAfter(seconds: 3)
         }
+        return roomIdPublisher
     }
 }
 
@@ -102,7 +104,8 @@ private extension WindowManager {
     func setupBindings() {
         notificationTapPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] info in
+                self?.roomIdPublisher.send(info.roomId)
                 self?.notificationWindow = nil
             }.store(in: &subs)
         

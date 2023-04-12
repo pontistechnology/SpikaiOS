@@ -16,7 +16,7 @@ class MessageDetailsView: UIView {
     init() {
         super.init(frame: .zero)
         setupView()
-        recordsTableView.register(MessageDetailTableViewCell.self, forCellReuseIdentifier: MessageDetailTableViewCell.reuseIdentifier)
+        recordsTableView.register(ContactsTableViewCell.self, forCellReuseIdentifier: ContactsTableViewCell.reuseIdentifier)
     }
     
     required init?(coder: NSCoder) {

@@ -26,7 +26,6 @@ enum RepositoryType {
 protocol Repository {
     // Properties
     var subs: Set<AnyCancellable>{ get set}
-    var unreadRoomsPublisher: CurrentValueSubject<Int,Never> { get }
 
 
 // MARK: - NETWORKING:
@@ -59,22 +58,25 @@ protocol Repository {
     
         // Message
     func sendMessage(body: RequestMessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<SendMessageResponse, Error>
-    func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error>
-    func sendSeenStatus(roomId: Int64) -> AnyPublisher<SeenResponseModel, Error>
+    func sendDeliveredStatus(messageIds: [Int64]) -> Future<Bool, Never>
+    func sendSeenStatus(roomId: Int64)
     func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error>
     func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<SendMessageResponse, Error>
     
         // Sync
-    func syncRooms(timestamp: Int64) -> AnyPublisher<SyncRoomsResponseModel, Error>
-    func syncModifiedMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error>
-    func syncAllMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error>
-    func syncUndeliveredMessages() -> AnyPublisher<SyncMessagesResponseModel, Error>
-    func syncMessageRecords(timestamp: Int64) -> AnyPublisher<SyncMessageRecordsResponseModel, Error>
-    func syncUsers(timestamp: Int64) -> AnyPublisher<SyncUsersResponseModel, Error>
+    func syncRooms()
+    func syncUsers()
+    func syncMessageRecords()
+    func syncMessages()
+
+        // Block
     func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
-    func unblockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
     func getBlockedUsers() -> AnyPublisher<BlockedUsersResponseModel, Error>
-    func getUnreadCounts() -> AnyPublisher<UnreadCountResponseModel, Error>
+    func unblockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
+    func syncBlockedList()
+    
+        // Unread counts
+    func refreshUnreadCounts()
     
         // Device
     func updatePushToken() -> AnyPublisher<UpdatePushResponseModel, Error>
@@ -91,15 +93,14 @@ protocol Repository {
         // User
     func getLocalUsers() -> Future<[User], Error>
     func getLocalUser(withId id: Int64) -> Future<User, Error>
-//    func saveUser(_ user: User) -> Future<User, Error>
     func saveUsers(_ users: [User]) -> Future<[User], Error>
     
         // RoomUser
     func getRoomUsers(roomId: Int64, context: NSManagedObjectContext) -> [RoomUser]?
     
         // Messages
-    func saveMessages(_ messages: [Message]) -> Future<[Message], Error>
-    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error>
+    func saveMessages(_ messages: [Message]) -> Future<Bool, Error>
+    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<Bool, Error>
     func getLastMessage(roomId: Int64, context: NSManagedObjectContext) -> Message?
     func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error>
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64)
@@ -121,6 +122,7 @@ protocol Repository {
     func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error>
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
     func updateUnreadCounts(unreadCounts: [UnreadCount])
+    func updateUnreadCountToZeroFor(roomId: Int64)
     
         // File
     func getFileData(id: String?, context: NSManagedObjectContext) -> FileData?
@@ -131,8 +133,6 @@ protocol Repository {
     func saveUserInfo(user: User, device: Device?, telephoneNumber: TelephoneNumber?)
     func getMyUserId() -> Int64
     func getMyTelephoneNumber() -> TelephoneNumber?
-    func getSyncTimestamp(for type: SyncType) -> Int64
-    func setSyncTimestamp(for type: SyncType, timestamp: Int64)
     func getCurrentAppereance() -> Int
 
         // Device
@@ -147,7 +147,10 @@ protocol Repository {
     // TODO: - move, refactor
     func serialWriteQueue() -> DispatchQueue
     func updateBlockedUsers(users: [User])
-    func updateConfirmedUsers(confirmedUsers: [User])
-    func confirmedUsersPublisher() -> CurrentValueSubject<Set<Int64>,Never>
     func blockedUsersPublisher() -> CurrentValueSubject<Set<Int64>?,Never>
+    
+    // MARK: - Notifications
+    
+    func removeNotificationsWith(roomId: Int64)
+    
 }

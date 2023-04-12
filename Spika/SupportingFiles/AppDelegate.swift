@@ -13,6 +13,8 @@ import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    let notificationHelper = NotificationHelpers()
         
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -63,10 +65,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        
-        guard let messageData = userInfo["message"] as? String,
-              let jsonData = messageData.data(using: .utf8),
-              let message = try? JSONDecoder().decode(Message.self, from: jsonData) else {
+       
+        guard let message = notificationHelper.decodeMessageFrom(userInfo: userInfo) else {
             completionHandler()
             return
         }
@@ -76,9 +76,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
             completionHandler()
             return
         }
-        
+        notificationHelper.removeNotifications(withRoomId: message.roomId)
         DispatchQueue.main.async {
-//            let config = HomeViewController.HomeViewControllerStartConfig(startingTab: 0, startWithMessage: message)
             sd.appCoordinator?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: message.roomId))
             completionHandler()
         }

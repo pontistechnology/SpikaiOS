@@ -8,13 +8,8 @@
 import CoreData
 import Combine
 
+// MARK: Network
 extension AppRepository {
-    
-    // MARK: UserDefaults
-    
-    
-    // MARK: Network
-    
     func sendMessage(body: RequestMessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<SendMessageResponse, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
@@ -52,13 +47,12 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func sendDeliveredStatus(messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error> {
+    private func sendDeliveredIds(_ messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else { return Fail<DeliveredResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-//        print("message id u repos: ", messageIds)
         
         let resources = Resources<DeliveredResponseModel, DeliveredRequestModel>(
             path: Constants.Endpoints.deliveredStatus,
@@ -69,7 +63,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func sendSeenStatus(roomId: Int64) -> AnyPublisher<SeenResponseModel, Error> {
+    private func sendSeenRoomId(_ roomId: Int64) -> AnyPublisher<SeenResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else {
             return Fail(error: NetworkError.noAccessToken)
@@ -85,11 +79,7 @@ extension AppRepository {
         
         return networkService.performRequest(resources: resources)
     }
-    
-    func printAllMessages() {
-//        databaseService.messageEntityService.printAllMessages()
-    }
-    
+        
     func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else {
@@ -116,40 +106,82 @@ extension AppRepository {
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
         databaseService.updateMessageSeenDeliveredCount(messageId: messageId, seenCount: seenCount, deliveredCount: deliveredCount)
     }
-    
-//    func getMessageRecordsAfter(timestamp: Int) -> AnyPublisher<MessageRecordSyncResponseModel, Error> {
-//        guard let accessToken = getAccessToken()
-//        else {
-//            return Fail<MessageRecordSyncResponseModel, Error>(error: NetworkError.noAccessToken)
-//                .receive(on: DispatchQueue.main)
-//                .eraseToAnyPublisher()
-//        }
-//        
-//        let resources = Resources<MessageRecordSyncResponseModel, EmptyRequestBody>(
-//            path: Constants.Endpoints.messageRecordSync + "\(timestamp)",
-//            requestType: .GET,
-//            bodyParameters: nil,
-//            httpHeaderFields: ["accesstoken" : accessToken])
-//        
-//        return networkService.performRequest(resources: resources)
-//    }
-    
+        
     // MARK: Database
     
-    func saveMessages(_ messages: [Message]) -> Future<[Message], Error> {
+    func saveMessages(_ messages: [Message]) -> Future<Bool, Error> {
         return databaseService.saveMessages(messages)
     }
     
     func getLastMessage(roomId: Int64, context: NSManagedObjectContext) -> Message? {
         return databaseService.getLastMessage(roomId: roomId, context: context)
     }
-
-    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<[MessageRecord], Error> {
+    
+    func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<Bool, Error> {
         self.databaseService.saveMessageRecords(messageRecords)
     }
     
+    // first push missing room problem is solved, be careful
     func getNotificationInfoForMessage(_ message: Message) -> Future<MessageNotificationInfo, Error> {
-        self.databaseService.getNotificationInfoForMessage(message: message)
+        Future { [weak self] promise in
+            guard let self else { return }
+            self.databaseService.missingRoomIds(ids: [message.roomId]).sink { _ in
+                
+            } receiveValue: { [weak self] missingIds in
+                guard let self else { return }
+                if missingIds.isEmpty {
+                    self.databaseService.getNotificationInfoForMessage(message: message).sink { c in
+                        
+                    } receiveValue: { [weak self] info in
+                        promise(.success(info))
+                    }.store(in: &self.subs)
+                } else {
+                    self.checkOnlineRoom(forRoomId: message.roomId).sink { _ in
+                        
+                    } receiveValue: { [weak self] response in
+                        guard let self else { return }
+                        guard let room = response.data?.room else { return }
+                        self.saveLocalRooms(rooms: [room]).sink { _ in
+                            
+                        } receiveValue: { [weak self] rooms in
+                            guard let self else { return }
+                            self.databaseService.getNotificationInfoForMessage(message: message).sink { _ in
+                                
+                            } receiveValue: { [weak self] info in
+                                promise(.success(info))
+                            }.store(in: &self.subs)
+                        }.store(in: &self.subs)
+                    }.store(in: &self.subs)
+                }
+            }.store(in: &self.subs)
+        }
     }
 
+}
+
+// MARK: - public
+extension AppRepository {
+    func sendDeliveredStatus(messageIds: [Int64]) -> Future<Bool, Never> {
+        Future { [weak self] promise in
+            guard let self else { return }
+            self.sendDeliveredIds(messageIds).sink { _ in
+                
+            } receiveValue: { [weak self] response in
+                guard let records = response.data?.messageRecords else { return }
+                _ = self?.saveMessageRecords(records)
+                promise(.success(true))
+            }.store(in: &self.subs)
+        }
+    }
+    
+    func sendSeenStatus(roomId: Int64) {
+        sendSeenRoomId(roomId).sink { _ in
+        
+        } receiveValue: { [weak self] response in
+            guard let records = response.data?.messageRecords else { return }
+            _ = self?.saveMessageRecords(records)
+            self?.updateUnreadCountToZeroFor(roomId: roomId)
+            self?.removeNotificationsWith(roomId: roomId)
+        }.store(in: &subs)
+    }
 }

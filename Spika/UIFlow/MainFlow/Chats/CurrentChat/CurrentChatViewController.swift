@@ -28,7 +28,6 @@ struct SelectedFile {
 class CurrentChatViewController: BaseViewController {
     
     private let currentChatView = CurrentChatView()
-    let chatBlockingView = ChatBlockingView()
     var viewModel: CurrentChatViewModel!
     private let friendInfoView = ChatNavigationBarView()
     
@@ -42,8 +41,6 @@ class CurrentChatViewController: BaseViewController {
         super.viewDidLoad()
         setupView(currentChatView)
         setupNavigationItems()
-        addSubviews()
-        positionSubviews()
         setupBindings()
         self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
@@ -52,16 +49,6 @@ class CurrentChatViewController: BaseViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
         viewModel.sendSeenStatus()
-    }
-    
-    func addSubviews() {
-        view.addSubview(chatBlockingView)
-    }
-    
-    func positionSubviews() {
-        chatBlockingView.constraintBottom()
-        chatBlockingView.constraintLeading()
-        chatBlockingView.constraintTrailing()
     }
     
     deinit {
@@ -144,48 +131,7 @@ extension CurrentChatViewController {
             self?.viewModel.sendCameraImage(pickedImage)
         }.store(in: &subscriptions)
         
-        let isBlocked = self.viewModel.isBlocked
-            .receive(on: DispatchQueue.main)
-            .map { isBlocked -> ChatBlockingViewState in
-                return isBlocked ? .userBlocked : .notUsed
-            }
-        
-        let offerBlock = self.viewModel.offerToBlock
-            .receive(on: DispatchQueue.main)
-            .map { offerBlock -> ChatBlockingViewState in
-                return offerBlock ? .newChat : .notUsed
-            }
-        
-        let isMember = self.viewModel.isMember
-            .receive(on: DispatchQueue.main)
-            .map { isMember -> ChatBlockingViewState in
-                return !isMember ? .notInChat : .notUsed
-            }
-        
-        Publishers.CombineLatest3(isBlocked, offerBlock, isMember)
-            .map { blockingState in
-                return [blockingState.0, blockingState.1, blockingState.2].reduce(into: ChatBlockingViewState.notUsed) { partialResult, new in
-                    if new != .notUsed {
-                        partialResult = new
-                    }
-                }
-            }
-            .sink { [weak self] viewState in
-                self?.chatBlockingView.updateState(state: viewState)
-            }.store(in: &subscriptions)
-        
-        self.chatBlockingView.chatBlockingUserAction
-            .sink { [weak self] action in
-                switch action {
-                case.unblockUser:
-                    self?.viewModel.unblockUser()
-                case .blockUser:
-                    self?.viewModel.blockUser()
-                case .ok:
-                    self?.chatBlockingView.updateState(state: .notUsed)
-                    self?.viewModel.userConfirmed()
-                }
-            }.store(in: &subscriptions)
+        // TODO: fetch is blocked and delete input field
         
         viewModel.setFetch()
         viewModel.frc?.delegate = self
@@ -241,20 +187,14 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         print("TYPE: ", type.rawValue)
         switch type {
         case .insert:
-//            print("DIDCHANGE: rows insert")
-            guard let newIndexPath = newIndexPath else {
-                return
-            }
+            guard let newIndexPath = newIndexPath else { return }
             viewModel.sendSeenStatus()
             currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
             currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
             frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             
         case .delete:
-//            print("DIDCHANGE: rows delete")
-            guard let indexPath = indexPath else {
-                return
-            }
+            guard let indexPath = indexPath else { return }
             currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .none)
             frcIsChangingPublisher.send(.other)
         
@@ -275,10 +215,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             frcIsChangingPublisher.send(.other)
         
         case .update:
-//            print("DIDCHANGE: rows update")
-            guard let indexPath = indexPath else {
-                return
-            }
+            guard let indexPath = indexPath else { return }
             UIView.performWithoutAnimation { [weak self] in
                 currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
             }

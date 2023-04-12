@@ -8,6 +8,7 @@
 import UIKit
 import Swinject
 import Combine
+import CoreData
 
 class HomeViewController: UIPageViewController {
     
@@ -23,6 +24,7 @@ class HomeViewController: UIPageViewController {
         self.startTab = startTab
         self.viewModel = viewModel
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        viewModel.frc?.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -33,7 +35,6 @@ class HomeViewController: UIPageViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barStyle = .default
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        
         viewModel.updatePush()
     }
     
@@ -51,17 +52,6 @@ class HomeViewController: UIPageViewController {
     }
     
     func setupBinding() {
-        self.viewModel.repository
-            .unreadRoomsPublisher
-            .sink { [weak self] value in
-                let stringValue = value > 0 ? String(value) : ""
-                self?.navigationItem.backButtonTitle = stringValue
-            }.store(in: &self.subscriptions)
-        
-        self.viewModel.repository.unreadRoomsPublisher
-            .subscribe(self.homeTabBar.unreadRoomsPublisher)
-            .store(in: &self.subscriptions)
-        
         self.homeTabBar
             .tabSelectedPublisher
             .sink { [weak self] tab in
@@ -96,4 +86,12 @@ class HomeViewController: UIPageViewController {
         self.homeTabBar.updateSelectedTab(selectedTab: tab)
     }
     
+}
+
+extension HomeViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard let count = viewModel.frc?.sections?.first?.numberOfObjects else { return }
+        homeTabBar.updateUnreadChatsCount(count)
+        navigationItem.backButtonTitle = count > 0 ? String(count) : ""
+    }
 }

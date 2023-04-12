@@ -68,14 +68,9 @@ class TabBarItemView: UIView, BaseView {
         }, completion: nil)
     }
     
-    func updateMessage(message: String?) {
-        self.counterLabel.text = message
-
-        if let _ = message {
-            self.counterLabel.isHidden = false
-        } else {
-            self.counterLabel.isHidden = true
-        }
+    func updateCountLabel(_ text: String?) {
+        counterLabel.text = text
+        counterLabel.isHidden = text == nil
     }
     
     required init?(coder: NSCoder) {

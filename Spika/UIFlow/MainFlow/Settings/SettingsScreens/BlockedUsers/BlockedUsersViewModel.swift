@@ -51,13 +51,7 @@ class BlockedUsersViewModel: BaseSettingsViewModel {
     
     func updateBlockedList() {
         repository.getBlockedUsers()
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    return
-                case .failure(_):
-                    return
-                }
+            .sink { _ in
             } receiveValue: { [weak self] response in
                 self?.repository.updateBlockedUsers(users: response.data.blockedUsers)
             }.store(in: &subscriptions)

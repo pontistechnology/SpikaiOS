@@ -33,6 +33,10 @@ class NotificationService: UNNotificationServiceExtension {
                 show(title: "Error", text: "Decoding error")
                 return
             }
+            // this contains number of unread messages in that room only
+//            if let unreadCount = message.unreadCount {
+//                bestAttemptContent.badge = NSNumber(value: unreadCount)
+//            }
             saveMessage(message: message)
         }
     }
@@ -46,64 +50,27 @@ class NotificationService: UNNotificationServiceExtension {
 
 extension NotificationService {
     
-    func sendDeliveredStatus(messageIds: [Int64]) {
-        repository.sendDeliveredStatus(messageIds: messageIds).sink { c in
+    func saveMessage(message: Message) {
+        repository.saveMessages([message]).sink { _ in
             
-        } receiveValue: { [weak self] response in
-            guard let bestAttemptContent = self?.bestAttemptContent,
-                  let contentHandler = self?.contentHandler
-            else { return }
-            contentHandler(bestAttemptContent)
+        } receiveValue: { [weak self] isSaved in
+            guard let self else { return }
+            if let id = message.id {
+                self.repository.sendDeliveredStatus(messageIds: [id]).sink(receiveValue: { _ in
+                    self.getMessageNotificationInfo(message: message)
+                }).store(in: &self.subs)
+            }
         }.store(in: &subs)
     }
-    
-    func saveMessage(message: Message, firstTry: Bool = true) {
-        repository.saveMessages([message]).sink { [weak self] c in
-            switch c {
-            case .finished:
-                break
-            case let .failure(error):
-                if firstTry {
-                    self?.getOnlineRoom(message: message)
-                } else {
-                    self?.show(title: "Can't save message. - REPORT", text: error.localizedDescription)
-                }
-            }
-        } receiveValue: { [weak self] messages in
-            self?.getMessageNotificationInfo(message: messages.first!)
-        }.store(in: &subs)
-    }
-    
-    func getOnlineRoom(message: Message) {
-        repository.checkOnlineRoom(forRoomId: message.roomId).sink { [weak self] c in
-            switch c {
-            case .finished:
-                break
-            case .failure(let error):
-                self?.show(title: "Can't get online room. - REPORT", text: error.localizedDescription)
-            }
-        } receiveValue: { [weak self] response in
-            guard let room = response.data?.room,
-                  let self
-            else {
-                self?.show(title: "Can't parse online room - REPORT", text: "Please report.")
-                return
-            }
-            self.repository.saveLocalRooms(rooms: [room]).sink(receiveCompletion: { c in
-                
-            }, receiveValue: { [weak self] _ in
-                self?.saveMessage(message: message, firstTry: false)
-            }).store(in: &self.subs)
-        }.store(in: &subs)
-    }
-    
+
     func getMessageNotificationInfo(message: Message) {
         repository.getNotificationInfoForMessage(message).sink { [weak self] c in
             switch c {
             case .finished:
                 break
             case let .failure(error):
-                self?.show(title: "get not info error", text: error.localizedDescription)
+                // maybe write check app for new messages
+                self?.show(title: "get notification info error", text: error.localizedDescription)
             }
         } receiveValue: { [weak self] info in
             self?.show(title: info.title, text: info.messageText)

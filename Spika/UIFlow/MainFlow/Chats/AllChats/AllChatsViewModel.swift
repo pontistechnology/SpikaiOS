@@ -119,12 +119,7 @@ extension AllChatsViewModel {
 
 extension AllChatsViewModel {
     func refreshUnreadCounts() {
-        repository.getUnreadCounts().sink { c in
-            
-        } receiveValue: { [weak self] response in
-            guard let unreadCounts = response.data?.unreadCounts else { return }
-            self?.repository.updateUnreadCounts(unreadCounts: unreadCounts)
-        }.store(in: &subscriptions)
+        repository.refreshUnreadCounts()
     }
 }
 

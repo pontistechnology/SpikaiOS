@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import UIKit
 
 extension AppRepository {
     
@@ -27,5 +28,11 @@ extension AppRepository {
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
+    }
+    
+    // MARK: - Notifications
+    
+    func removeNotificationsWith(roomId: Int64) {
+        notificationHelpers.removeNotifications(withRoomId: roomId)
     }
 }

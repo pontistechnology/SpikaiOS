@@ -28,7 +28,7 @@ class SettingsViewController: BaseViewController {
         self.viewModel
             .user
             .compactMap { $0?.avatarFileId?.fullFilePathFromId() }
-            .sink { c in
+            .sink { _ in
             } receiveValue: { [weak self] url in
                 self?.settingsView.userImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
             }.store(in: &self.subscriptions)
@@ -36,7 +36,7 @@ class SettingsViewController: BaseViewController {
         self.viewModel
             .user
             .compactMap { $0?.displayName }
-            .sink { c in
+            .sink { _ in
             } receiveValue: { [weak self] text in
                 self?.settingsView.userName.setTitle(text, for: .normal)
                 self?.settingsView.userNameTextField.text = text
@@ -45,7 +45,7 @@ class SettingsViewController: BaseViewController {
         self.viewModel
             .user
             .compactMap { $0?.telephoneNumber }
-            .sink { c in
+            .sink { _ in
             } receiveValue: { [weak self] text in
                 self?.settingsView.userPhoneNumber.setText(text: text)
             }.store(in: &self.subscriptions)
