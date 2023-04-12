@@ -371,12 +371,14 @@ extension DatabaseService {
                     info = MessageNotificationInfo(title: user.getDisplayName(),
                                                    photoUrl: user.avatarFileId?.fullFilePathFromId(),
                                                    messageText: message.pushNotificationText,
-                                                   roomId: room.id)
+                                                   roomId: room.id,
+                                                   isRoomMuted: room.muted)
                 } else {
                     info = MessageNotificationInfo(title: room.name ?? "no name",
                                                    photoUrl: room.avatarFileId.fullFilePathFromId(),
                                                    messageText: "\(user.getDisplayName()): " +  message.pushNotificationText,
-                                                   roomId: room.id)
+                                                   roomId: room.id,
+                                                   isRoomMuted: room.muted)
                 }
                 promise(.success(info))
                 

@@ -28,6 +28,7 @@ struct MessageNotificationInfo {
     let photoUrl: URL?
     let messageText: String
     let roomId: Int64
+    let isRoomMuted: Bool
 }
 
 enum SyncType {
