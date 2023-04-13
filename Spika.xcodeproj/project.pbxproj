@@ -2426,23 +2426,11 @@
 				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
-					6C78B78D29AF5ADB004BF881 = {
-						DevelopmentTeam = YU755VYJCP;
-						ProvisioningStyle = Automatic;
-					};
-					6C78B8C829AF5D89004BF881 = {
-						DevelopmentTeam = YU755VYJCP;
-						ProvisioningStyle = Automatic;
-					};
 					931941672819CB510067566C = {
 						CreatedOnToolsVersion = 13.3;
-						DevelopmentTeam = YU755VYJCP;
-						ProvisioningStyle = Automatic;
 					};
 					ADD503AD270DC3C7009D50CB = {
 						CreatedOnToolsVersion = 13.0;
-						DevelopmentTeam = YU755VYJCP;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -3625,7 +3613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 34;
+				APP_BUILD_VERSION = 35;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -3689,7 +3677,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 34;
+				APP_BUILD_VERSION = 35;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;

@@ -19,13 +19,14 @@ extension RoomEntity {
     @NSManaged public var avatarFileId: Int64
     @NSManaged public var createdAt: Int64
     @NSManaged public var id: Int64
-    @NSManaged public var lastMessageTimestamp: Int64
     @NSManaged public var name: String?
     @NSManaged public var type: String?
     @NSManaged public var muted: Bool
     @NSManaged public var roomDeleted: Bool
     @NSManaged public var pinned: Bool
     @NSManaged public var unreadCount: Int64
+    // only local
+    @NSManaged public var lastMessageTimestamp: Int64
 }
 
 extension RoomEntity : Identifiable {

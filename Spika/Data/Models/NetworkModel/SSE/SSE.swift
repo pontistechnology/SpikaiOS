@@ -133,7 +133,9 @@ private extension SSE {
         repository.getNotificationInfoForMessage(message).sink { _ in
 
         } receiveValue: { [weak self] info in
-            self?.showNotification(info: info)
+            if !info.isRoomMuted {
+                self?.showNotification(info: info)                
+            }
         }.store(in: &subs)
     }
 }
