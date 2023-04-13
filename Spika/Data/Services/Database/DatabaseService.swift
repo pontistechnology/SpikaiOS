@@ -213,11 +213,14 @@ extension DatabaseService {
             self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for room in rooms {
-                    let _ = RoomEntity(room: room, context: context)
+                    let roomEntity = RoomEntity(room: room, context: context)
                     for roomUser in room.users {
                         _ = RoomUserEntity(roomUser: roomUser, insertInto: context)
                         _ = UserEntity(user: roomUser.user, context: context)
                     }
+                    // this is because mute or unmute will update room and reset it to zero
+                    // TODO: - maybe add functions for update pin, mute
+                    roomEntity.lastMessageTimestamp = self?.getLastMessage(roomId: room.id, context: context)?.createdAt ?? 0
                 }
                 do {
                     try context.save()
@@ -371,12 +374,14 @@ extension DatabaseService {
                     info = MessageNotificationInfo(title: user.getDisplayName(),
                                                    photoUrl: user.avatarFileId?.fullFilePathFromId(),
                                                    messageText: message.pushNotificationText,
-                                                   roomId: room.id)
+                                                   roomId: room.id,
+                                                   isRoomMuted: room.muted)
                 } else {
                     info = MessageNotificationInfo(title: room.name ?? "no name",
                                                    photoUrl: room.avatarFileId.fullFilePathFromId(),
                                                    messageText: "\(user.getDisplayName()): " +  message.pushNotificationText,
-                                                   roomId: room.id)
+                                                   roomId: room.id,
+                                                   isRoomMuted: room.muted)
                 }
                 promise(.success(info))
                 
