@@ -94,6 +94,7 @@ extension MessageDetailsViewModel {
                 time, editedTime, user?.telephoneNumber)
     }
     
+    // TODO: - check sorting
     func refreshData() {
         guard let allRecords = frc?.fetchedObjects?.map({ MessageRecord(messageRecordEntity: $0) }) else { return }
         self.allRecords = allRecords
