@@ -24,6 +24,7 @@ class SettingsView: BaseSettingsView {
     
     
     let appVersion = CustomLabel(text: "", textSize: 16, textColor: .textTertiary, fontName: .MontserratLight, alignment: .center)
+    let accessToken = UITextField() // delete later
     
     let userNameChanged = PassthroughSubject<String,Never>()
     
@@ -49,6 +50,7 @@ class SettingsView: BaseSettingsView {
         mainStackView.addArrangedSubview(privacyOptionButton)
         
         mainStackView.addArrangedSubview(appVersion)
+        mainStackView.addArrangedSubview(accessToken)
         
         self.contentView.addSubview(self.userNameTextField)
     }
