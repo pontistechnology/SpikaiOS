@@ -178,12 +178,11 @@ extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
         let model = self.members[indexPath.row]
         
         var cellType: ContactsTableViewCellType = .normal
-        if self.editable.value {
-            if model.isAdmin ?? false {
-                cellType = .text(text: .getStringFor(.admin))
-            } else {
-                cellType = .remove
-            }
+        
+        if model.isAdmin ?? false {
+            cellType = .text(text: .getStringFor(.admin))
+        } else if self.editable.value {
+            cellType = .remove
         }
         
         let userName = self.ownId == model.userId ? .getStringFor(.you) : model.user.getDisplayName()
