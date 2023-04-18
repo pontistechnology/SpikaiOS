@@ -12,6 +12,7 @@
 		6C056C7829700D6E00198EC1 /* BlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C7729700D6E00198EC1 /* BlockModel.swift */; };
 		6C056C7929700D9E00198EC1 /* BlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C7729700D6E00198EC1 /* BlockModel.swift */; };
 		6C0AA21E2966D55D00E87304 /* Publisher+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0AA21D2966D55D00E87304 /* Publisher+Extensions.swift */; };
+		6C0D480A29EEC66D00D8ACD4 /* ChatUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0D480929EEC66D00D8ACD4 /* ChatUsersView.swift */; };
 		6C10E97529AF71CD0070D617 /* SpikaNotificationServiceDev.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C78B91D29AF5D89004BF881 /* SpikaNotificationServiceDev.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6C14B43E296EE67F00F30F63 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C14B43D296EE67F00F30F63 /* RoundedImageView.swift */; };
 		6C153BEC2948693200D400A7 /* Constants+Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */; };
@@ -807,6 +808,7 @@
 		6C056C74297008AC00198EC1 /* BlockedUsersResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersResponseModel.swift; sourceTree = "<group>"; };
 		6C056C7729700D6E00198EC1 /* BlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockModel.swift; sourceTree = "<group>"; };
 		6C0AA21D2966D55D00E87304 /* Publisher+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extensions.swift"; sourceTree = "<group>"; };
+		6C0D480929EEC66D00D8ACD4 /* ChatUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUsersView.swift; sourceTree = "<group>"; };
 		6C14B43D296EE67F00F30F63 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Endpoints.swift"; sourceTree = "<group>"; };
 		6C153BED2948693B00D400A7 /* Constants+Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Database.swift"; sourceTree = "<group>"; };
@@ -1277,6 +1279,7 @@
 				6C76903A291D451A007F13D2 /* ChatDetailsView.swift */,
 				6C6AD21A291E3B8E0026CDAC /* ChatContentView.swift */,
 				6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */,
+				6C0D480929EEC66D00D8ACD4 /* ChatUsersView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3268,6 +3271,7 @@
 				933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */,
 				93C07A9C290139B5003DFD61 /* Message+Extensions.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
+				6C0D480A29EEC66D00D8ACD4 /* ChatUsersView.swift in Sources */,
 				936A28EC2926C4C900E7333D /* DebugUtils.swift in Sources */,
 				93A76B2C27F6789500B6A03E /* NotificationAlertView.swift in Sources */,
 				939B30482850DE4300FFA537 /* SyncMessageRecordsResponseModel.swift in Sources */,

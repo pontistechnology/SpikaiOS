@@ -33,10 +33,10 @@ class NewGroupChatViewController: BaseViewController {
     
     func setupBindings() {
         // TODO: - dbr check with Vedran
-//        self.viewModel.selectedUsers
-//            .sink { [weak self] users in
-//                self?.newGroupChatView.chatMembersView.updateWithUsers(users: users.map { RoomUser(user: $0) })
-//            }.store(in: &self.viewModel.subscriptions)
+        self.viewModel.selectedUsers
+            .sink { [weak self] users in
+                self?.newGroupChatView.chatMembersView.updateWithUsers(users: users)
+            }.store(in: &self.viewModel.subscriptions)
         
         self.newGroupChatView.chatMembersView
             .onRemoveUser
@@ -81,7 +81,8 @@ class NewGroupChatViewController: BaseViewController {
             .getAppCoordinator()?
             .showAlert(actions: [.regular(title: .getStringFor(.takeAPhoto)),
                                  .regular(title: .getStringFor(.chooseFromGallery)),
-                                 .destructive(title: .getStringFor(.removePhoto))])
+                                 .destructive(title: .getStringFor(.removePhoto))],
+                       viewController: self)
             .sink(receiveValue: { [weak self] tappedIndex in
                 switch tappedIndex {
                 case 0:
@@ -89,7 +90,8 @@ class NewGroupChatViewController: BaseViewController {
                 case 1:
                     self?.showUIImagePicker(source: .photoLibrary)
                 case 2:
-                    // TODO: - delete avatar
+                    self?.viewModel.fileData = nil
+                    self?.newGroupChatView.avatarPictureView.setImage(UIImage(safeImage: .cameraImage), for: .normal)
                     break
                 default:
                     break

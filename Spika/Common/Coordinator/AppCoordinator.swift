@@ -286,8 +286,20 @@ extension AppCoordinator {
         getWindowManager().showPopUp(for: .errorMessage(message))
     }
     
-    func showAlert(title: String? = nil, message: String? = nil, style: UIAlertController.Style = .actionSheet,
-                   actions: [AlertViewButton], cancelText: String? = .getStringFor(.cancel)) -> Future<Int, Never> {
+    func showAlert(title: String? = nil,
+                   message: String? = nil,
+                   style: UIAlertController.Style = .actionSheet,
+                   actions: [AlertViewButton],
+                   cancelText: String? = .getStringFor(.cancel)) -> Future<Int, Never> {
+        self.showAlert(title: title, message: message, style: style, actions: actions, cancelText: cancelText, viewController: self.navigationController)
+    }
+        
+    func showAlert(title: String? = nil,
+                   message: String? = nil,
+                   style: UIAlertController.Style = .actionSheet,
+                   actions: [AlertViewButton],
+                   cancelText: String? = .getStringFor(.cancel),
+                   viewController: UIViewController) -> Future<Int, Never> {
         Future { [weak self] promise in
             let actionSheet = UIAlertController(title: title, message: message, preferredStyle: style)
             
@@ -299,7 +311,7 @@ extension AppCoordinator {
             if let cancelText = cancelText {
                 actionSheet.addAction(UIAlertAction(title:  cancelText, style: .cancel, handler: nil))
             }
-            self?.navigationController.present(actionSheet, animated: true)
+            viewController.present(actionSheet, animated: true)
             
             if actions.isEmpty {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
