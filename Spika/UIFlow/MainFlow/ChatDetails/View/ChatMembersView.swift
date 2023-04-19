@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-final class ChatMembersView: UIView, BaseView {
+class ChatMembersView: UIView, BaseView {
     
     //MARK: - Variables
     var ownId: Int64?
@@ -19,7 +19,7 @@ final class ChatMembersView: UIView, BaseView {
     
     var viewIsExpanded = false
     
-    var users: [RoomUser] = [] //TODO:  Add sort
+    private var members: [RoomUser] = [] //TODO:  Add sort
     
     var tableViewHeightConstraint: NSLayoutConstraint!
     
@@ -96,8 +96,8 @@ final class ChatMembersView: UIView, BaseView {
             }.store(in: &self.subscriptions)
     }
     
-    func updateWithUsers(users: [RoomUser]) {
-        self.users = users
+    func updateWithMembers(users: [RoomUser]) {
+        self.members = users.sorted(by: { $0.user.getDisplayName().localizedCaseInsensitiveCompare($1.user.getDisplayName()) == .orderedAscending })
 
         self.titleLabel.text = "\(users.count) " + .getStringFor(.members)
         self.tableView.reloadData()
@@ -110,8 +110,8 @@ final class ChatMembersView: UIView, BaseView {
     }
     
     func setupForInitialHeight() {
-        if self.users.count <= 3 {
-            self.tableViewHeightConstraint.constant = CGFloat(self.users.count) * self.cellHeight
+        if self.members.count <= 3 {
+            self.tableViewHeightConstraint.constant = CGFloat(self.members.count) * self.cellHeight
             self.showMoreButton.isHidden = true
         } else {
             self.tableViewHeightConstraint.constant = 3 * self.cellHeight
@@ -121,7 +121,7 @@ final class ChatMembersView: UIView, BaseView {
     }
     
     func setupExpandedView() {
-        self.tableViewHeightConstraint.constant = CGFloat(self.users.count) * self.cellHeight
+        self.tableViewHeightConstraint.constant = CGFloat(self.members.count) * self.cellHeight
         self.showMoreButton.setTitle(.getStringFor(.showLess), for: .normal)
     }
     
@@ -169,21 +169,20 @@ extension ChatMembersView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.users.count
+        return self.members.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier,
                                                  for: indexPath) as! ContactsTableViewCell
-        let model = self.users[indexPath.row]
+        let model = self.members[indexPath.row]
         
         var cellType: ContactsTableViewCellType = .normal
-        if self.editable.value {
-            if model.isAdmin ?? false {
-                cellType = .text(text: .getStringFor(.admin))
-            } else {
-                cellType = .remove
-            }
+        
+        if model.isAdmin ?? false {
+            cellType = .text(text: .getStringFor(.admin))
+        } else if self.editable.value {
+            cellType = .remove
         }
         
         let userName = self.ownId == model.userId ? .getStringFor(.you) : model.user.getDisplayName()

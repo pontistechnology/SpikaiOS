@@ -80,7 +80,7 @@ final class ChatDetailsViewController: BaseViewController {
         self.viewModel.room
             .map { $0.users }
             .sink { [weak self] users in
-                self?.chatDetailView.contentView.chatMembersView.updateWithUsers(users: users)
+                self?.chatDetailView.contentView.chatMembersView.updateWithMembers(users: users)
             }
             .store(in: &self.viewModel.subscriptions)
         
