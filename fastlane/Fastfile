@@ -28,7 +28,7 @@ platform :ios do
 	)
 
     cocoapods(
-      clean_install: true,
+      clean_install: true
     )
 
     build_app(workspace: "Spika.xcworkspace", 
