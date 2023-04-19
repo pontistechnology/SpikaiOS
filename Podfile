@@ -18,11 +18,12 @@ def shared_pods
   pod 'Swinject', '~> 2.8'
   source 'https://github.com/CocoaPods/Specs.git'
   pod 'PhoneNumberKit', :git => 'https://github.com/marmelroy/PhoneNumberKit'
+  pod 'Firebase/Sessions', '~> 9'
   pod 'Firebase/Core', '~> 10.8'
-  pod 'Kingfisher', '~> 7.6'
   pod 'Firebase/Analytics', '~> 10.8'
   pod 'Firebase/Crashlytics', '~> 10.8'
   pod 'Firebase/Messaging', '~> 10.8'
+  pod 'Kingfisher', '~> 7.6'
   pod 'IKEventSource', '~> 2.2'
 end
 
