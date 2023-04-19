@@ -27,6 +27,11 @@ platform :ios do
   		path: "Spika.xcodeproj"
 	)
 
+    cocoapods(
+      clean_install: true,
+      podfile: "./CustomPodfile"
+    )
+
     build_app(workspace: "Spika.xcworkspace", 
         silent: true,
 	scheme: "Spika", 
