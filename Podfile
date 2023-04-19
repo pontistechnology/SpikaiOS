@@ -14,14 +14,11 @@ end
 
 # Pods for Spika
 def shared_pods
-  pod 'GoogleDataTransport', '~> 9.2'
   pod 'Swinject', '~> 2.8'
   source 'https://github.com/CocoaPods/Specs.git'
   pod 'PhoneNumberKit', :git => 'https://github.com/marmelroy/PhoneNumberKit'
-  pod 'Firebase/Sessions', '~> 9'
-  pod 'Firebase/Core', '~> 10.8'
-  pod 'Firebase/Analytics', '~> 10.8'
-  pod 'Firebase/Crashlytics', '~> 10.8'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
   pod 'Firebase/Messaging'
   pod 'Kingfisher', '~> 7.6'
   pod 'IKEventSource', '~> 2.2'

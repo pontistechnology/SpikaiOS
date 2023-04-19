@@ -28,7 +28,6 @@ platform :ios do
 	)
 
     cocoapods(
-      clean_install: true,
       use_bundle_exec: false
     )
 
