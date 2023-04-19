@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2533056856E2342EF31A2D30 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA4906D94AD1211ADAFA65A /* Pods_Spika.framework */; };
 		6C056C75297008AC00198EC1 /* BlockedUsersResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C74297008AC00198EC1 /* BlockedUsersResponseModel.swift */; };
 		6C056C76297009D600198EC1 /* BlockedUsersResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C74297008AC00198EC1 /* BlockedUsersResponseModel.swift */; };
 		6C056C7829700D6E00198EC1 /* BlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C7729700D6E00198EC1 /* BlockModel.swift */; };
@@ -37,6 +38,7 @@
 		6C2F972929AF67BD001F170B /* ConstantsDev.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F972729AF67A5001F170B /* ConstantsDev.swift */; };
 		6C326A6728FECAAE00E00A59 /* OTPCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C326A6628FECAAE00E00A59 /* OTPCodeTextField.swift */; };
 		6C4755F429096C6800BC1D9E /* ParkBenchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4755F329096C6800BC1D9E /* ParkBenchTimer.swift */; };
+		6C53D4E629F0322600F0F17D /* ChatUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0D480929EEC66D00D8ACD4 /* ChatUsersView.swift */; };
 		6C5A01C6298C096900BF4A01 /* TextAndImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5A01C5298C096900BF4A01 /* TextAndImageView.swift */; };
 		6C65B550291B9B2B007C5B92 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65B54F291B9B2B007C5B92 /* TabBarItem.swift */; };
 		6C65B552291BD1B8007C5B92 /* TabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C65B551291BD1B8007C5B92 /* TabBarItemView.swift */; };
@@ -411,9 +413,6 @@
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6CFB46C22948C1D7000D26BB /* Localizable.strings */; };
-		6E1AA22EBF32F5F6B1E36042 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		7E72A0473D6052432982C00A /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2511C3428ADAAF827BEC0E72 /* Pods_Spika.framework */; };
-		89ECD2F713F7863059BAC021 /* Pods_Spika_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414A4A1E472811F66834C409 /* Pods_Spika_Dev.framework */; };
 		93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
 		930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BB27A9FB180064BED1 /* UserRequestModel.swift */; };
 		930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BD27A9FCE30064BED1 /* UserResponseModel.swift */; };
@@ -744,6 +743,7 @@
 		ADD5040127101B69009D50CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040027101B69009D50CB /* ContentView.swift */; };
 		ADD5041027173FD9009D50CB /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5040F27173FD9009D50CB /* DatabaseService.swift */; };
 		ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
+		D54F3FE77108A19658EFC2E0 /* Pods_Spika_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A234B632B86036B0B01E0551 /* Pods_Spika_Dev.framework */; };
 		EA9B662228227CB70009228C /* FetchedContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC81D772810422F0004D835 /* FetchedContact.swift */; };
 		EA9D14DB27BA540A0070BE2B /* ContactsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DA27BA540A0070BE2B /* ContactsUtils.swift */; };
 		EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */; };
@@ -798,13 +798,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		05AE93FDC8E4FE6FD37B579F /* Pods-Spika-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		2511C3428ADAAF827BEC0E72 /* Pods_Spika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2C6FD443E5B34723A34CDDE9 /* Pods-Spika Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika Dev.release.xcconfig"; path = "Target Support Files/Pods-Spika Dev/Pods-Spika Dev.release.xcconfig"; sourceTree = "<group>"; };
-		334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
-		400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
-		414A4A1E472811F66834C409 /* Pods_Spika_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		068C060676870717CABA5AB2 /* Pods-Spika.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.debug.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.debug.xcconfig"; sourceTree = "<group>"; };
+		2FA4906D94AD1211ADAFA65A /* Pods_Spika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		44E9C9057FA70E44A0AC8614 /* Pods-Spika.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika.release.xcconfig"; path = "Target Support Files/Pods-Spika/Pods-Spika.release.xcconfig"; sourceTree = "<group>"; };
 		6C056C74297008AC00198EC1 /* BlockedUsersResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersResponseModel.swift; sourceTree = "<group>"; };
 		6C056C7729700D6E00198EC1 /* BlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockModel.swift; sourceTree = "<group>"; };
 		6C0AA21D2966D55D00E87304 /* Publisher+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extensions.swift"; sourceTree = "<group>"; };
@@ -855,7 +851,7 @@
 		6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+BlockedUsers.swift"; sourceTree = "<group>"; };
 		6CFB46BC2948C19A000D26BB /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		6CFB46C12948C1D7000D26BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		79890A1D59540264EFE61CF3 /* Pods-Spika Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika Dev.debug.xcconfig"; path = "Target Support Files/Pods-Spika Dev/Pods-Spika Dev.debug.xcconfig"; sourceTree = "<group>"; };
+		87CA01291235DC0D0B724D7D /* Pods-Spika Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika Dev.release.xcconfig"; path = "Target Support Files/Pods-Spika Dev/Pods-Spika Dev.release.xcconfig"; sourceTree = "<group>"; };
 		93017B1627F8D1EC00A0582D /* SSENewMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSENewMessage.swift; sourceTree = "<group>"; };
 		930290BB27A9FB180064BED1 /* UserRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestModel.swift; sourceTree = "<group>"; };
 		930290BD27A9FCE30064BED1 /* UserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseModel.swift; sourceTree = "<group>"; };
@@ -1022,6 +1018,7 @@
 		93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailTableViewCell.swift; sourceTree = "<group>"; };
 		93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		93FFFE5E296DD50C0058DDB2 /* MessageReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReactionsView.swift; sourceTree = "<group>"; };
+		A234B632B86036B0B01E0551 /* Pods_Spika_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Messages.swift"; sourceTree = "<group>"; };
 		AD819245272173F500D5BE48 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		AD8192472721741600D5BE48 /* CallHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryViewController.swift; sourceTree = "<group>"; };
@@ -1105,7 +1102,7 @@
 		ADD5040027101B69009D50CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		ADD5040F27173FD9009D50CB /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		ADD5041927174B82009D50CB /* AppRepository+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+User.swift"; sourceTree = "<group>"; };
-		B8CA5DFA6002C6B3AF963036 /* Pods-Spika-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika-AppTests.release.xcconfig"; path = "Target Support Files/Pods-Spika-AppTests/Pods-Spika-AppTests.release.xcconfig"; sourceTree = "<group>"; };
+		D92B13B268231CE2DDECD884 /* Pods-Spika Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika Dev.debug.xcconfig"; path = "Target Support Files/Pods-Spika Dev/Pods-Spika Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		EA9D14DA27BA540A0070BE2B /* ContactsUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsUtils.swift; sourceTree = "<group>"; };
 		EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsRequestModel.swift; sourceTree = "<group>"; };
 		EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsResponseModel.swift; sourceTree = "<group>"; };
@@ -1122,7 +1119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89ECD2F713F7863059BAC021 /* Pods_Spika_Dev.framework in Frameworks */,
+				D54F3FE77108A19658EFC2E0 /* Pods_Spika_Dev.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1144,8 +1141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E1AA22EBF32F5F6B1E36042 /* (null) in Frameworks */,
-				7E72A0473D6052432982C00A /* Pods_Spika.framework in Frameworks */,
+				2533056856E2342EF31A2D30 /* Pods_Spika.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2042,7 +2038,7 @@
 				6CFB46BD2948C1B0000D26BB /* Localization */,
 				ADD503AF270DC3C7009D50CB /* Products */,
 				CC12D1B198A94B9651C98AB6 /* Pods */,
-				E2C678E9AAA86BDAFF0B632C /* Frameworks */,
+				B17464C0B2C2B909AFCF1227 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2300,27 +2296,24 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
+		B17464C0B2C2B909AFCF1227 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2FA4906D94AD1211ADAFA65A /* Pods_Spika.framework */,
+				A234B632B86036B0B01E0551 /* Pods_Spika_Dev.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CC12D1B198A94B9651C98AB6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */,
-				334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */,
-				05AE93FDC8E4FE6FD37B579F /* Pods-Spika-AppTests.debug.xcconfig */,
-				B8CA5DFA6002C6B3AF963036 /* Pods-Spika-AppTests.release.xcconfig */,
-				79890A1D59540264EFE61CF3 /* Pods-Spika Dev.debug.xcconfig */,
-				2C6FD443E5B34723A34CDDE9 /* Pods-Spika Dev.release.xcconfig */,
+				068C060676870717CABA5AB2 /* Pods-Spika.debug.xcconfig */,
+				44E9C9057FA70E44A0AC8614 /* Pods-Spika.release.xcconfig */,
+				D92B13B268231CE2DDECD884 /* Pods-Spika Dev.debug.xcconfig */,
+				87CA01291235DC0D0B724D7D /* Pods-Spika Dev.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		E2C678E9AAA86BDAFF0B632C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				583CD611716704E2606BAC3F /* Pods_Spika_AppTests.framework */,
-				414A4A1E472811F66834C409 /* Pods_Spika_Dev.framework */,
-				2511C3428ADAAF827BEC0E72 /* Pods_Spika.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		EA29CE3A27E0B42A00B392E6 /* ServerModels */ = {
@@ -2345,13 +2338,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6C78B8C329AF5ADB004BF881 /* Build configuration list for PBXNativeTarget "Spika Dev" */;
 			buildPhases = (
-				6C78B79029AF5ADB004BF881 /* [CP] Check Pods Manifest.lock */,
+				034A55542AAF97D39E3E1D03 /* [CP] Check Pods Manifest.lock */,
 				6C78B79129AF5ADB004BF881 /* Sources */,
 				6C78B8AD29AF5ADB004BF881 /* Frameworks */,
 				6C78B8AF29AF5ADB004BF881 /* Resources */,
 				6C78B8BF29AF5ADB004BF881 /* ShellScript */,
 				6C10E97429AF71AC0070D617 /* Embed App Extensions */,
-				1516D16CA2F86F5672D363C3 /* [CP] Embed Pods Frameworks */,
+				A0387D13643AFC5E34741095 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2401,13 +2394,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADD503C5270DC3CA009D50CB /* Build configuration list for PBXNativeTarget "Spika" */;
 			buildPhases = (
-				85136E67FAFA6A131C920030 /* [CP] Check Pods Manifest.lock */,
+				8A3CEA4639B7D1642B692D5A /* [CP] Check Pods Manifest.lock */,
 				ADD503AA270DC3C7009D50CB /* Sources */,
 				ADD503AB270DC3C7009D50CB /* Frameworks */,
 				ADD503AC270DC3C7009D50CB /* Resources */,
 				EAA6A3A127CCF88C00B7E01F /* ShellScript */,
 				931941702819CB510067566C /* Embed App Extensions */,
-				4F9474C9C525305A5BA710A9 /* [CP] Embed Pods Frameworks */,
+				D4AD240C05C1849145A98AAF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2523,41 +2516,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1516D16CA2F86F5672D363C3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4F9474C9C525305A5BA710A9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6C78B79029AF5ADB004BF881 /* [CP] Check Pods Manifest.lock */ = {
+		034A55542AAF97D39E3E1D03 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2598,7 +2557,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
-		85136E67FAFA6A131C920030 /* [CP] Check Pods Manifest.lock */ = {
+		8A3CEA4639B7D1642B692D5A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2618,6 +2577,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A0387D13643AFC5E34741095 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D4AD240C05C1849145A98AAF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EAA6A3A127CCF88C00B7E01F /* ShellScript */ = {
@@ -2817,6 +2810,7 @@
 				6C78B84029AF5ADB004BF881 /* UIView+Extensions.swift in Sources */,
 				6C78B84129AF5ADB004BF881 /* DebugUtils.swift in Sources */,
 				6C78B84229AF5ADB004BF881 /* NotificationAlertView.swift in Sources */,
+				6C53D4E629F0322600F0F17D /* ChatUsersView.swift in Sources */,
 				6C78B84329AF5ADB004BF881 /* SyncMessageRecordsResponseModel.swift in Sources */,
 				6C78B84429AF5ADB004BF881 /* BaseViewModel.swift in Sources */,
 				6C78B84529AF5ADB004BF881 /* DetailsViewController.swift in Sources */,
@@ -3425,7 +3419,7 @@
 /* Begin XCBuildConfiguration section */
 		6C78B8C429AF5ADB004BF881 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79890A1D59540264EFE61CF3 /* Pods-Spika Dev.debug.xcconfig */;
+			baseConfigurationReference = D92B13B268231CE2DDECD884 /* Pods-Spika Dev.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
@@ -3463,7 +3457,7 @@
 		};
 		6C78B8C529AF5ADB004BF881 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C6FD443E5B34723A34CDDE9 /* Pods-Spika Dev.release.xcconfig */;
+			baseConfigurationReference = 87CA01291235DC0D0B724D7D /* Pods-Spika Dev.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
@@ -3737,7 +3731,7 @@
 		};
 		ADD503C6270DC3CA009D50CB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 400690D135DE4D01210E02A2 /* Pods-Spika.debug.xcconfig */;
+			baseConfigurationReference = 068C060676870717CABA5AB2 /* Pods-Spika.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3774,7 +3768,7 @@
 		};
 		ADD503C7270DC3CA009D50CB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 334BD1AEFBFDFE5DB5A8E197 /* Pods-Spika.release.xcconfig */;
+			baseConfigurationReference = 44E9C9057FA70E44A0AC8614 /* Pods-Spika.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
