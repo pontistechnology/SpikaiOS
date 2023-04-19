@@ -22,9 +22,9 @@ platform :ios do
     setup_ci if ENV['CI']
     #increment_build_number(xcodeproj: "Spika.xcodeproj")
 
-        update_code_signing_settings(
+    update_code_signing_settings(
 		use_automatic_signing: true,
-  		path: "Spika.xcworkspace"
+  		path: "Spika.xcodeproj"
 	)
 
     build_app(workspace: "Spika.xcworkspace", 
