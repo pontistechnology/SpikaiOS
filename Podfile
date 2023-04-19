@@ -3,18 +3,24 @@ platform :ios, '15.0'
 
 use_frameworks!
 
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
+    end
+  end
+end
+
 # Pods for Spika
 def shared_pods
-  pod 'GoogleDataTransport', '~> 9.2'
-  pod 'Swinject', '~> 2.8'
+  pod 'Swinject'
   source 'https://github.com/CocoaPods/Specs.git'
   pod 'PhoneNumberKit', :git => 'https://github.com/marmelroy/PhoneNumberKit'
-  pod 'Firebase/Core', '~> 10.7'
   pod 'Kingfisher', '~> 7.6'
-  pod 'Firebase/Analytics', '~> 10.7'
-  pod 'Firebase/Crashlytics', '~> 10.7'
-  pod 'Firebase/Messaging', '~> 10.7'
-  pod 'IKEventSource', '~> 2.2'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
+  pod 'Firebase/Messaging'
+  pod 'IKEventSource'
 end
 
 target 'Spika' do
