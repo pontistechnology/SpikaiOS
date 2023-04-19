@@ -32,8 +32,6 @@ platform :ios do
     )
 
     build_app(workspace: "Spika.xcworkspace", 
-	clean:true,
-        silent: true,
 	scheme: "Spika", 
 	include_bitcode:false,
         export_options:{ 
