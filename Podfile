@@ -5,7 +5,7 @@ use_frameworks!
 
 # Pods for Spika
 def shared_pods
-  pod 'Swinject'
+  pod 'Swinject', '~> 2.8'
   source 'https://github.com/CocoaPods/Specs.git'
   pod 'PhoneNumberKit', :git => 'https://github.com/marmelroy/PhoneNumberKit'
   pod 'Kingfisher', '~> 7.6'
