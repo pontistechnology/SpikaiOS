@@ -2349,9 +2349,9 @@
 				6C78B79129AF5ADB004BF881 /* Sources */,
 				6C78B8AD29AF5ADB004BF881 /* Frameworks */,
 				6C78B8AF29AF5ADB004BF881 /* Resources */,
-				6C78B8BF29AF5ADB004BF881 /* ShellScript */,
 				6C10E97429AF71AC0070D617 /* Embed App Extensions */,
 				1516D16CA2F86F5672D363C3 /* [CP] Embed Pods Frameworks */,
+				6C78B8BF29AF5ADB004BF881 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2405,9 +2405,9 @@
 				ADD503AA270DC3C7009D50CB /* Sources */,
 				ADD503AB270DC3C7009D50CB /* Frameworks */,
 				ADD503AC270DC3C7009D50CB /* Resources */,
-				EAA6A3A127CCF88C00B7E01F /* ShellScript */,
 				931941702819CB510067566C /* Embed App Extensions */,
 				4F9474C9C525305A5BA710A9 /* [CP] Embed Pods Frameworks */,
+				EAA6A3A127CCF88C00B7E01F /* ShellScript */,
 			);
 			buildRules = (
 			);
