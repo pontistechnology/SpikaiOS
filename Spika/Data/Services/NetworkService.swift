@@ -78,7 +78,7 @@ class NetworkService {
                 case 200:
                     break
 //                    print("STATUS CODE 200")
-                case 401, 403:
+                case 401:
                     let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)!
                     userDefaults.removeObject(forKey: Constants.Database.accessToken)
                 case 404:

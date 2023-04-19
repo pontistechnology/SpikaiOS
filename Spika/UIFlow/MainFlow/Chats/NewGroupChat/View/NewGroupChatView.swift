@@ -19,7 +19,7 @@ class NewGroupChatView: UIView, BaseView {
         return btn
     } ()
     let groupNameTextfield = TextField(textPlaceholder: .getStringFor(.groupName))
-    let chatMembersView = ChatMembersView(canAddNewMore: false)
+    let chatMembersView = ChatUsersView(canAddNewMore: false)
     
     
     override init(frame: CGRect) {
