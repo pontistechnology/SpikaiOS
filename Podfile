@@ -22,7 +22,7 @@ def shared_pods
   pod 'Firebase/Core', '~> 10.8'
   pod 'Firebase/Analytics', '~> 10.8'
   pod 'Firebase/Crashlytics', '~> 10.8'
-  pod 'Firebase/Messaging', '~> 10.8'
+  pod 'Firebase/Messaging'
   pod 'Kingfisher', '~> 7.6'
   pod 'IKEventSource', '~> 2.2'
 end
