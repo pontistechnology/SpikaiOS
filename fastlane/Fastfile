@@ -28,10 +28,12 @@ platform :ios do
 	)
 
     cocoapods(
-      use_bundle_exec: false
+        clean_install: true,
+        use_bundle_exec: false
     )
 
     build_app(workspace: "Spika.xcworkspace", 
+	clean:true,
 	scheme: "Spika", 
 	include_bitcode:false,
         export_options:{ 
