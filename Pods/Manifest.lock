@@ -165,7 +165,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   PhoneNumberKit:
-    :commit: b79f99346ea5d06543b641fdccfeaa5c8a2d3cc4
+    :commit: 68ec00cf45e93cf6d2dd58c13fc8f952c593d4b6
     :git: https://github.com/marmelroy/PhoneNumberKit
 
 SPEC CHECKSUMS:

@@ -1,0 +1,6 @@
+framework module Pods_Spika {
+  umbrella header "Pods-Spika-umbrella.h"
+
+  export *
+  module * { export * }
+}
