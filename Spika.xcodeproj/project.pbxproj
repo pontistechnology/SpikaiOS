@@ -805,6 +805,7 @@
 		6C056C7729700D6E00198EC1 /* BlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockModel.swift; sourceTree = "<group>"; };
 		6C0AA21D2966D55D00E87304 /* Publisher+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extensions.swift"; sourceTree = "<group>"; };
 		6C0D480929EEC66D00D8ACD4 /* ChatUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUsersView.swift; sourceTree = "<group>"; };
+		6C144EB729F159EF0039A7C4 /* Spika 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Spika 2.xcdatamodel"; sourceTree = "<group>"; };
 		6C14B43D296EE67F00F30F63 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Endpoints.swift"; sourceTree = "<group>"; };
 		6C153BED2948693B00D400A7 /* Constants+Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Database.swift"; sourceTree = "<group>"; };
@@ -3857,9 +3858,10 @@
 		ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6C144EB729F159EF0039A7C4 /* Spika 2.xcdatamodel */,
 				ADD503BB270DC3C7009D50CB /* Spika.xcdatamodel */,
 			);
-			currentVersion = ADD503BB270DC3C7009D50CB /* Spika.xcdatamodel */;
+			currentVersion = 6C144EB729F159EF0039A7C4 /* Spika 2.xcdatamodel */;
 			path = CoreDatabase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
