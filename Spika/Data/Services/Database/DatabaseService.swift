@@ -32,17 +32,18 @@ class DatabaseService {
 // MARK: -  User
 
 extension DatabaseService {
+    
     func getLocalUsers() -> Future<[User], Error> {
         return Future { [weak self] promise in
             guard let self else { return }
-            self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+            self.coreDataStack.persistentContainer.performBackgroundTask { context in
                 let fetchRequest = UserEntity.fetchRequest()
                 do {
                     let userEntities = try context.fetch(fetchRequest)
                     let users = userEntities.map{ User(entity: $0) }
                     promise(.success(users.compactMap{ $0 }))
                 } catch {
-                    print("Error loading: ", error)
+                    print("Core Data Error loading: ", error)
                     promise(.failure(DatabaseError.requestFailed))
                 }
             }
@@ -51,7 +52,7 @@ extension DatabaseService {
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for user in users {
                     if user.displayName == nil {
@@ -63,7 +64,7 @@ extension DatabaseService {
                     try context.save()
                     promise(.success(users))
                 } catch {
-                    print("Error saving: ", error)
+                    print("Core Data Error saving: ", error)
                     promise(.failure(DatabaseError.savingError))
                 }
             }
@@ -72,7 +73,7 @@ extension DatabaseService {
     
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for contact in contacts {
                     let _ = ContactEntity(phoneNumber: contact.telephone,
@@ -84,7 +85,7 @@ extension DatabaseService {
                     try context.save()
                     promise(.success(contacts))
                 } catch {
-                    print("Error saving: ", error)
+                    print("Core Data Error saving: ", error)
                     promise(.failure(DatabaseError.savingError))
                 }
             }
@@ -111,7 +112,7 @@ extension DatabaseService {
                         }
                         _ = self?.saveUsers([user])
                     } catch {
-                        print("Error loading: ", error)
+                        print("Core Data Error loading: ", error)
                         promise(.failure(DatabaseError.requestFailed))
                     }
                     
@@ -254,7 +255,7 @@ extension DatabaseService {
                     try context.save()
                     promise(.success(room))
                 } catch {
-                    print("Error deleting RoomUsers: \(error)")
+                    print("Core Data Error deleting RoomUsers: \(error)")
                     promise(.failure(DatabaseError.savingError))
                 }
             }
@@ -433,7 +434,7 @@ extension DatabaseService {
     }
     
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
-        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+        coreDataStack.persistentContainer.performBackgroundTask { context in
             context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             let messageFR = MessageEntity.fetchRequest()
             messageFR.predicate = NSPredicate(format: "id == %d", messageId)
@@ -448,26 +449,30 @@ extension DatabaseService {
             }
             do {
                 try context.save()
-            } catch {
-                
+            } catch let error {
+                NSLog("Core Data Error: saving seen delivered count: \(error.localizedDescription)")
             }
         }
     }
     
     private func updateMessagesDummyValue(ids: [Int64]) {
-        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+        coreDataStack.persistentContainer.performBackgroundTask { context in
             let messagesFR = MessageEntity.fetchRequest()
             messagesFR.predicate = NSPredicate(format: "id IN %@", ids)
             
             guard let messageEntities = try? context.fetch(messagesFR) else { return }
             
             messageEntities.forEach { $0.dummyValue = $0.dummyValue + 1 }
-            try? context.save()
+            do {
+                try context.save()
+            } catch let error {
+                NSLog("Core Data Error: updating message dummy value: \(error.localizedDescription)")
+            }
         }
     }
     
     private func updateRoomLastMessageTimestamp(roomId: Int64, timestamp: Int64) {
-        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+        coreDataStack.persistentContainer.performBackgroundTask { context in
             let roomsFR = RoomEntity.fetchRequest()
             roomsFR.predicate = NSPredicate(format: "id == %d", roomId)
             guard let roomEntities = try? context.fetch(roomsFR),
@@ -480,7 +485,11 @@ extension DatabaseService {
             if entity.lastMessageTimestamp < timestamp {
                 entity.lastMessageTimestamp = timestamp
             }
-            try? context.save()
+            do {
+                try context.save()
+            } catch let error {
+                NSLog("Core Data Error: updating Room last message timestamp: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -499,25 +508,34 @@ extension DatabaseService {
     }
     
     func updateUnreadCounts(_ counts: [UnreadCount]) {
-        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+        coreDataStack.persistentContainer.performBackgroundTask { context in
             let roomsFR = RoomEntity.fetchRequest()
 
             guard let entities = try? context.fetch(roomsFR) else { return }
-            entities.forEach { $0.unreadCount = 0 }
+            entities.forEach { $0.unreadCount = Int64(0) }
             for count in counts {
                 entities.first { $0.id == count.roomId }?.unreadCount = count.unreadCount
             }
-            try? context.save()
+            
+            do {
+                try context.save()
+            } catch let error {
+                NSLog("Core Data Error: saving Unread Count: \(error.localizedDescription)")
+            }
         }
     }
     
     func resetUnreadCount(_ roomId: Int64) {
-        coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+        coreDataStack.persistentContainer.performBackgroundTask { context in
             let roomsFR = RoomEntity.fetchRequest()
             roomsFR.predicate = NSPredicate(format: "id = %d", roomId)
             guard let entities = try? context.fetch(roomsFR) else { return }
             entities.forEach { $0.unreadCount = 0 }
-            try? context.save()
+            do {
+                try context.save()
+            } catch let error {
+                NSLog("Core Data Error: Resetting Unread Count: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -554,7 +572,7 @@ extension DatabaseService {
 extension DatabaseService {
     func missingRoomIds(ids: Set<Int64>) -> Future<Set<Int64>, Error> {
         Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let roomsFR = RoomEntity.fetchRequest()
                 roomsFR.predicate = NSPredicate(format: "id IN %@", ids)
