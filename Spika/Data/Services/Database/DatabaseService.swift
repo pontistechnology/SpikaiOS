@@ -53,16 +53,16 @@ class DatabaseService {
     /// - Parameters:
     ///   - entity: Core data entity
     ///   - completion: Completion returning fetch results or error object
-    func fetchData<T:NSManagedObject>(entity: T.Type, completion: @escaping ([T],Error?) -> Void ) {
+    func fetchAsyncEntity<T:NSManagedObject>(entity: T.Type, completion: @escaping ([T],Error?) -> Void ) {
         let fetchRequest = T.fetchRequest() as! NSFetchRequest<T>
-        self.fetchData(fetchRequest: fetchRequest, completion: completion)
+        self.fetchAsyncData(fetchRequest: fetchRequest, completion: completion)
     }
     
     /// Asynchronous Fetch - use in methods where fetch might require more time
     /// - Parameters:
     ///   - fetchRequest: Core data fetch request
     ///   - completion: Completion returning fetch results or error object
-    func fetchData<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>, completion: @escaping ([T],Error?) -> Void ) {
+    func fetchAsyncData<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>, completion: @escaping ([T],Error?) -> Void ) {
         self.coreDataStack.persistentContainer.performBackgroundTask { context in
             context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             do {
