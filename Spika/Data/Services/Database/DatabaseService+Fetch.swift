@@ -14,6 +14,7 @@ extension DatabaseService {
         return Future { [weak self] promise in
             self?.fetchAsyncEntity(entity: UserEntity.self, completion: { userEntities, error in
                 if let error {
+                    NSLog("Core Data Error: local user: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.requestFailed))
                 } else {
                     let users = userEntities.map{ User(entity: $0) }
@@ -25,29 +26,25 @@ extension DatabaseService {
     
     func getLocalUser(withId id: Int64) -> Future<User, Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                let fetchRequest = UserEntity.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
-                do {
-                    let dbUsers = try context.fetch(fetchRequest)
-                    if dbUsers.count == 0 {
-                        promise(.failure(DatabaseError.noSuchRecord))
-                    } else if dbUsers.count > 1 {
-                        promise(.failure(DatabaseError.moreThanOne))
-                    } else {
-                        guard let userEntity = dbUsers.first else {
-                            print("GUARD getLocalUser(withId id: Int64) error: ")
-                            promise(.failure(DatabaseError.unknown))
-                            return
-                        }
-                        let user = User(entity: userEntity)
-                        promise(.success(user))
+            let fetchRequest = UserEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
+            
+            self?.fetchAsyncData(fetchRequest: fetchRequest, completion: { dbUsers, error in
+                if let error {
+                    NSLog("Core Data Error: fetching local user: \(error.localizedDescription)")
+                    promise(.failure(DatabaseError.noSuchRecord))
+                } else if dbUsers.count > 1 {
+                    promise(.failure(DatabaseError.moreThanOne))
+                } else {
+                    guard let userEntity = dbUsers.first else {
+                        print("GUARD getLocalUser(withId id: Int64) error: ")
+                        promise(.failure(DatabaseError.unknown))
+                        return
                     }
-                } catch {
-                    promise(.failure(error))
+                    let user = User(entity: userEntity)
+                    promise(.success(user))
                 }
-            }
+            })
         }
     }
     
@@ -74,11 +71,9 @@ extension DatabaseService {
     private func getUsers(id: [Int64], context: NSManagedObjectContext) -> [User]? {
         let usersFR = UserEntity.fetchRequest()
         usersFR.predicate = NSPredicate(format: "id IN %@", id) // check
-        guard let userEntities = try? context.fetch(usersFR)
-        else {
-            return nil
-        }
-        return userEntities.map {
+        
+        let userEntities = self.fetchDataAndWait(fetchRequest: usersFR)
+        return userEntities?.map {
             User(entity: $0)
         }
     }
@@ -96,6 +91,7 @@ extension DatabaseService {
                 guard let self else { return }
                 
                 if let error {
+                    NSLog("Core Data Error: fetching private room: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.noSuchRecord))
                 } else {
                     let possibleRoomsIds = roomUsers.map { $0.roomId }
