@@ -156,40 +156,35 @@ extension DatabaseService {
      // TODO: - refactorIt
     func getNotificationInfoForMessage(message: Message) -> Future<MessageNotificationInfo, Error> {
         return Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                guard let self else { return }
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                
-                // fetch room from database
-                let roomEntiryFR = RoomEntity.fetchRequest()
-                roomEntiryFR.predicate = NSPredicate(format: "id == %d", message.roomId)
-                
-                guard let rooms = try? context.fetch(roomEntiryFR),
-                      rooms.count == 1,
-                      let room = rooms.first,
-                      let user = self.getUsers(id: [message.fromUserId], context: context)?.first
-                else {
-                    promise(.failure(DatabaseError.unknown))
-                    return
-                }
-                
-                let info: MessageNotificationInfo
-                
-                if room.type == RoomType.privateRoom.rawValue {
-                    info = MessageNotificationInfo(title: user.getDisplayName(),
-                                                   photoUrl: user.avatarFileId?.fullFilePathFromId(),
-                                                   messageText: message.pushNotificationText,
-                                                   roomId: room.id,
-                                                   isRoomMuted: room.muted)
-                } else {
-                    info = MessageNotificationInfo(title: room.name ?? "no name",
-                                                   photoUrl: room.avatarFileId.fullFilePathFromId(),
-                                                   messageText: "\(user.getDisplayName()): " +  message.pushNotificationText,
-                                                   roomId: room.id,
-                                                   isRoomMuted: room.muted)
-                }
-                promise(.success(info))
+            guard let self else { return }
+            
+            let roomEntiryFR = RoomEntity.fetchRequest()
+            roomEntiryFR.predicate = NSPredicate(format: "id == %d", message.roomId)
+            
+            guard let rooms = self.fetchDataAndWait(fetchRequest: roomEntiryFR),
+                  rooms.count == 1,
+                  let room = rooms.first,
+                  let user = self.getUsers(id: [message.fromUserId], context: self.coreDataStack.mainMOC)?.first else {
+                promise(.failure(DatabaseError.unknown))
+                return
             }
+            
+            let info: MessageNotificationInfo
+            
+            if room.type == RoomType.privateRoom.rawValue {
+                info = MessageNotificationInfo(title: user.getDisplayName(),
+                                               photoUrl: user.avatarFileId?.fullFilePathFromId(),
+                                               messageText: message.pushNotificationText,
+                                               roomId: room.id,
+                                               isRoomMuted: room.muted)
+            } else {
+                info = MessageNotificationInfo(title: room.name ?? "no name",
+                                               photoUrl: room.avatarFileId.fullFilePathFromId(),
+                                               messageText: "\(user.getDisplayName()): " +  message.pushNotificationText,
+                                               roomId: room.id,
+                                               isRoomMuted: room.muted)
+            }
+            promise(.success(info))
         }
     }
     
@@ -227,7 +222,7 @@ extension DatabaseService {
             guard let id = id else { return }
             let fr = FileEntity.fetchRequest()
             fr.predicate = NSPredicate(format: "id == %@", id)
-            guard let entity = try? context.fetch(fr).first else { return }
+            guard let entity = self.fetchDataAndWait(fetchRequest: fr)?.first else { return }
             fileData = FileData(entity: entity)
         }
         return fileData
