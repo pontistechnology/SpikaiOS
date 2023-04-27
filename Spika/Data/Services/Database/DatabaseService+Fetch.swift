@@ -117,39 +117,36 @@ extension DatabaseService {
     
     func getRoom(forRoomId id: Int64) -> Future<Room, Error> {
         Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                guard let self else { return }
-                let roomsFR = RoomEntity.fetchRequest()
-                roomsFR.predicate = NSPredicate(format: "id == %d", id)
-                guard let roomEntities = try? context.fetch(roomsFR),
-                      roomEntities.count == 1,
-                      let roomEntity = roomEntities.first,
-                      let roomUsers = self.getRoomUsers(roomId: roomEntity.id, context: context)
-                else {
-                    promise(.failure(DatabaseError.moreThanOne)) // check zero
-                    return
-                }
-                let room = Room(roomEntity: roomEntity, users: roomUsers)
-                promise(.success(room))
+            guard let self else { return }
+            let roomsFR = RoomEntity.fetchRequest()
+            roomsFR.predicate = NSPredicate(format: "id == %d", id)
+            
+            guard let roomEntities = self.fetchDataAndWait(fetchRequest: roomsFR),
+                  roomEntities.count == 1,
+                  let roomEntity = roomEntities.first,
+                  let roomUsers = self.getRoomUsers(roomId: roomEntity.id, context: self.coreDataStack.mainMOC) else {
+                promise(.failure(DatabaseError.moreThanOne)) // check zero
+                return
             }
+            
+            let room = Room(roomEntity: roomEntity, users: roomUsers)
+            promise(.success(room))
         }
     }
     
     func missingRoomIds(ids: Set<Int64>) -> Future<Set<Int64>, Error> {
         Future { [weak self] promise in
-            self?.coreDataStack.persistentContainer.performBackgroundTask { context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                let roomsFR = RoomEntity.fetchRequest()
-                roomsFR.predicate = NSPredicate(format: "id IN %@", ids)
-                
-                guard let roomsEntities = try? context.fetch(roomsFR) else {
-                    promise(.failure(DatabaseError.requestFailed))
-                    return
-                }
-                let fetchedIds = Set(roomsEntities.map { $0.id })
-                let dif = ids.subtracting(fetchedIds)
-                promise(.success(dif))
+            let roomsFR = RoomEntity.fetchRequest()
+            roomsFR.predicate = NSPredicate(format: "id IN %@", ids)
+            
+            guard let roomsEntities = self?.fetchDataAndWait(fetchRequest: roomsFR) else {
+                promise(.failure(DatabaseError.requestFailed))
+                return
             }
+            
+            let fetchedIds = Set(roomsEntities.map { $0.id })
+            let dif = ids.subtracting(fetchedIds)
+            promise(.success(dif))
         }
     }
 }
@@ -217,20 +214,12 @@ extension DatabaseService {
 // MARK: - Message Record & Helper
 extension DatabaseService {
     func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]? {
-        var records: [MessageRecord]?
-        context.performAndWait {
-            guard let id = Int64(messageId ?? "failIsOk") else { return }
-            let recordsFR = MessageRecordEntity.fetchRequest()
-            recordsFR.predicate = NSPredicate(format: "messageId == %d AND type == %@", id, MessageRecordType.reaction.rawValue)
-            guard let entities = try? context.fetch(recordsFR),
-                  !entities.isEmpty
-            else { return }
-            records = entities.map { MessageRecord(messageRecordEntity: $0) }
-        }
-        return records
+        guard let id = Int64(messageId ?? "failIsOk") else { return nil }
+        let recordsFR = MessageRecordEntity.fetchRequest()
+        recordsFR.predicate = NSPredicate(format: "messageId == %d AND type == %@", id, MessageRecordType.reaction.rawValue)
+        
+        return self.fetchDataAndWait(fetchRequest: recordsFR)?.map { MessageRecord(messageRecordEntity: $0) }
     }
-    
-
     
     func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
         var fileData: FileData?
