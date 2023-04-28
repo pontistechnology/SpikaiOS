@@ -64,7 +64,6 @@ class DatabaseService {
     ///   - completion: Completion returning fetch results or error object
     func fetchAsyncData<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>, completion: @escaping ([T],Error?) -> Void ) {
         self.coreDataStack.persistentContainer.performBackgroundTask { context in
-            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             do {
                 let result:[T] = try context.fetch(fetchRequest)
                 completion(result,nil)
@@ -93,6 +92,8 @@ class DatabaseService {
     /// - Parameter completion: completion for error handling
     func saveContextAsync(completion: @escaping(Error?) -> Void ) {
         self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            
             do {
                 try context.save()
                 completion(nil)
