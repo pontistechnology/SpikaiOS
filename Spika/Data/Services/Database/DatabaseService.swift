@@ -52,7 +52,7 @@ class DatabaseService {
     /// - Parameter context: takes context to perform fetch on
     func fetchDataAndWait<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>, context: NSManagedObjectContext) -> [T]? {
         var data: [T]?
-        self.coreDataStack.mainMOC.performAndWait {
+        context.performAndWait {
             guard let result = try? self.coreDataStack.mainMOC.fetch(fetchRequest),
                   !result.isEmpty else { return }
             data = result
