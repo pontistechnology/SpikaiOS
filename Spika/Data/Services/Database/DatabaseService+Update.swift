@@ -75,11 +75,12 @@ extension DatabaseService {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 for var user in users {
-                    //                    saveUsers(users)
                     let fetchRequest = ContactEntity.fetchRequest()
                     fetchRequest.predicate = NSPredicate(format: "phoneNumber = %@", user.telephoneNumber ?? "") // check =
-                    do {
-                        let fetchResult = try context.fetch(fetchRequest)
+                        guard let fetchResult = self?.fetchDataAndWait(fetchRequest: fetchRequest, context: context) else {
+                            promise(.failure(DatabaseError.requestFailed))
+                            return
+                        }
                         if let contactEntity = fetchResult.first {
                             let contact = FetchedContact(firstName: contactEntity.givenName,
                                                          lastName: contactEntity.familyName,
@@ -89,11 +90,6 @@ extension DatabaseService {
                             + (contact.lastName ?? "")
                         }
                         _ = self?.saveUsers([user])
-                    } catch {
-                        print("Core Data Error loading: ", error)
-                        promise(.failure(DatabaseError.requestFailed))
-                    }
-                    
                 }
                 promise(.success(users))
             }
@@ -161,7 +157,7 @@ extension DatabaseService {
         coreDataStack.persistentContainer.performBackgroundTask { context in
             let roomsFR = RoomEntity.fetchRequest()
             roomsFR.predicate = NSPredicate(format: "id == %d", roomId)
-            guard let roomEntities = try? context.fetch(roomsFR),
+            guard let roomEntities = self.fetchDataAndWait(fetchRequest: roomsFR, context: context),
                   roomEntities.count == 1,
                   let entity = roomEntities.first
             else {
@@ -307,7 +303,7 @@ extension DatabaseService {
             let messagesFR = MessageEntity.fetchRequest()
             messagesFR.predicate = NSPredicate(format: "id IN %@", ids)
             
-            guard let messageEntities = try? context.fetch(messagesFR) else { return }
+            guard let messageEntities = self?.fetchDataAndWait(fetchRequest: messagesFR, context: context) else { return }
             
             messageEntities.forEach { $0.dummyValue = $0.dummyValue + 1 }
             do {
@@ -335,7 +331,7 @@ extension DatabaseService {
         self.performBackgroundTask { [weak self] context in
             let roomsFR = RoomEntity.fetchRequest()
             roomsFR.predicate = NSPredicate(format: "id = %d", roomId)
-            guard let entities = try? context.fetch(roomsFR) else { return }
+            guard let entities = self?.fetchDataAndWait(fetchRequest: roomsFR, context: context) else { return }
             entities.forEach { $0.unreadCount = 0 }
             do {
                 try self?.save(withContext: context)
@@ -360,7 +356,7 @@ extension DatabaseService {
         self.performBackgroundTask { [weak self] context in
             let roomsFR = RoomEntity.fetchRequest()
             
-            guard let entities = try? context.fetch(roomsFR) else { return }
+            guard let entities = self?.fetchDataAndWait(fetchRequest: roomsFR, context: context) else { return }
             entities.forEach { $0.unreadCount = Int64(0) }
             for count in counts {
                 entities.first { $0.id == count.roomId }?.unreadCount = count.unreadCount
