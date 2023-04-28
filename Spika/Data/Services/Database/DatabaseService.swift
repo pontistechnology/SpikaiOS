@@ -29,18 +29,28 @@ class DatabaseService {
         self.coreDataStack = coreDataStack
     }
     
+    /// Background task method
+    /// - Parameter task: task closure to be executed on a new context
+    func performBackgroundTask(task: @escaping(NSManagedObjectContext) -> Void) {
+        self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            task(context)
+        }
+    }
+    
     /// Synchronous Fetch - use in methods with immediate result
     /// - Parameter entity: Core data entity
     /// - Returns: Array of fetched object
-    func fetchEntityAndWait<T:NSManagedObject>(entity: T.Type) -> [T]? {
+    /// - Parameter context: takes context to perform fetch on
+    func fetchEntityAndWait<T:NSManagedObject>(entity: T.Type, context: NSManagedObjectContext) -> [T]? {
         let fetchRequest = T.fetchRequest() as! NSFetchRequest<T>
-        return self.fetchDataAndWait(fetchRequest: fetchRequest)
+        return self.fetchDataAndWait(fetchRequest: fetchRequest, context: context)
     }
     
     /// Synchronous Fetch - use in methods with immediate result
     /// - Parameter fetchRequest: Core data fetch request
     /// - Returns: Array of fetched object
-    func fetchDataAndWait<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>) -> [T]? {
+    /// - Parameter context: takes context to perform fetch on
+    func fetchDataAndWait<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>, context: NSManagedObjectContext) -> [T]? {
         var data: [T]?
         self.coreDataStack.mainMOC.performAndWait {
             guard let result = try? self.coreDataStack.mainMOC.fetch(fetchRequest),
@@ -89,25 +99,12 @@ class DatabaseService {
         }
     }
     
-    /// Save CoreData contect Asynchronously
-    /// - Parameter completion: completion for error handling
+    
+    /// Save function for Core data
+    /// - Parameter context: takes context to perform save on
     func save(withContext context: NSManagedObjectContext) throws {
-//        self.coreDataStack.persistentContainer.performBackgroundTask { context in
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         try context.save()
-//            do {
-//                try context.save()
-//                completion(nil)
-//            } catch let error {
-//                completion(error)
-//            }
-//        }
-    }
-    
-    func performBackgroundTask(task: @escaping(NSManagedObjectContext) -> Void) {
-        self.coreDataStack.persistentContainer.performBackgroundTask { context in
-            task(context)
-        }
     }
     
 }
