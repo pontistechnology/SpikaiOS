@@ -43,7 +43,8 @@ class DatabaseService {
     func fetchDataAndWait<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>) -> [T]? {
         var data: [T]?
         self.coreDataStack.mainMOC.performAndWait {
-            guard let result = try? self.coreDataStack.mainMOC.fetch(fetchRequest) else { return }
+            guard let result = try? self.coreDataStack.mainMOC.fetch(fetchRequest),
+                  !result.isEmpty else { return }
             data = result
         }
         return data
@@ -90,16 +91,22 @@ class DatabaseService {
     
     /// Save CoreData contect Asynchronously
     /// - Parameter completion: completion for error handling
-    func saveContextAsync(completion: @escaping(Error?) -> Void ) {
+    func save(withContext context: NSManagedObjectContext) throws {
+//        self.coreDataStack.persistentContainer.performBackgroundTask { context in
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        try context.save()
+//            do {
+//                try context.save()
+//                completion(nil)
+//            } catch let error {
+//                completion(error)
+//            }
+//        }
+    }
+    
+    func performBackgroundTask(task: @escaping(NSManagedObjectContext) -> Void) {
         self.coreDataStack.persistentContainer.performBackgroundTask { context in
-            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-            
-            do {
-                try context.save()
-                completion(nil)
-            } catch let error {
-                completion(error)
-            }
+            task(context)
         }
     }
     

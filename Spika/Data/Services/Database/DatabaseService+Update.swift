@@ -13,6 +13,23 @@ extension DatabaseService {
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
+            self?.performBackgroundTask(task: { [weak self] context in
+                for user in users {
+                    if user.displayName == nil {
+                        continue // TODO: check
+                    }
+                    let _ = UserEntity(user: user, context: context)
+                }
+                
+                do {
+                    try self?.save(withContext: context)
+                    promise(.success(users))
+                } catch {
+                    NSLog("Core Data Error: saving users: \(error.localizedDescription)")
+                    promise(.failure(DatabaseError.savingError))
+                }
+            })
+            /*
             self?.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for user in users {
@@ -28,7 +45,7 @@ extension DatabaseService {
                     print("Core Data Error saving: ", error)
                     promise(.failure(DatabaseError.savingError))
                 }
-            }
+            }*/
         }
     }
     
@@ -167,6 +184,43 @@ extension DatabaseService {
 extension DatabaseService {
     func saveMessages(_ messages: [Message]) -> Future<Bool, Error> {
         return Future { [weak self] promise in
+            self?.performBackgroundTask(task: { [weak self] context in
+                var uniqueRoomIds = Set<Int64>()
+                for message in messages {
+                    _ = MessageEntity(message: message, context: context)
+                    
+                    if let file = message.body?.file {
+                        _ = FileEntity(file: file, context: context)
+                    }
+                    
+                    if let thumb = message.body?.thumb {
+                        _ = FileEntity(file: thumb, context: context)
+                    }
+                    
+                    if let records = message.records {
+                        records.forEach { record in
+                            _ = MessageRecordEntity(record: record, context: context)
+                        }
+                    }
+                    uniqueRoomIds.insert(message.roomId)
+                }
+                
+                // if save is from sync, refresh every room lastMessageTimestamp
+                for roomId in uniqueRoomIds {
+                    if let lastMessage = messages.filter({ $0.roomId == roomId }).max(by: {$0.createdAt < $1.createdAt}) {
+                        self?.updateRoomLastMessageTimestamp(roomId: lastMessage.roomId, timestamp: lastMessage.createdAt)
+                    }
+                }
+                
+                do {
+                    try self?.save(withContext: context)
+                    promise(.success(true))
+                } catch {
+                    NSLog("Core Data Error: saving seen updated messages: \(error.localizedDescription)")
+                    promise(.failure(DatabaseError.savingError))
+                }
+            })
+            /*
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 var uniqueRoomIds = Set<Int64>()
@@ -202,11 +256,31 @@ extension DatabaseService {
                 } catch {
                     promise(.failure(DatabaseError.savingError))
                 }
-            }
+            }*/
         }
     }
     
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
+        self.performBackgroundTask { [weak self] context in
+            let messageFR = MessageEntity.fetchRequest()
+            messageFR.predicate = NSPredicate(format: "id == %d", messageId)
+            guard let entity = try? context.fetch(messageFR).first else { return }
+            
+            if seenCount > entity.seenCount {
+                entity.seenCount = seenCount
+            }
+            
+            if deliveredCount > entity.deliveredCount {
+                entity.deliveredCount = deliveredCount
+            }
+            do {
+                try self?.save(withContext: context)
+            } catch let error {
+                NSLog("Core Data Error: saving seen delivered count: \(error.localizedDescription)")
+            }
+        }
+        
+        /*
         coreDataStack.persistentContainer.performBackgroundTask { context in
             context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             let messageFR = MessageEntity.fetchRequest()
@@ -225,11 +299,11 @@ extension DatabaseService {
             } catch let error {
                 NSLog("Core Data Error: saving seen delivered count: \(error.localizedDescription)")
             }
-        }
+        }*/
     }
     
     private func updateMessagesDummyValue(ids: [Int64]) {
-        coreDataStack.persistentContainer.performBackgroundTask { context in
+        self.performBackgroundTask { [weak self] context in
             let messagesFR = MessageEntity.fetchRequest()
             messagesFR.predicate = NSPredicate(format: "id IN %@", ids)
             
@@ -237,28 +311,68 @@ extension DatabaseService {
             
             messageEntities.forEach { $0.dummyValue = $0.dummyValue + 1 }
             do {
-                try context.save()
-            } catch let error {
+                try self?.save(withContext: context)
+            } catch {
                 NSLog("Core Data Error: updating message dummy value: \(error.localizedDescription)")
             }
         }
+//        coreDataStack.persistentContainer.performBackgroundTask { context in
+//            let messagesFR = MessageEntity.fetchRequest()
+//            messagesFR.predicate = NSPredicate(format: "id IN %@", ids)
+//
+//            guard let messageEntities = try? context.fetch(messagesFR) else { return }
+//
+//            messageEntities.forEach { $0.dummyValue = $0.dummyValue + 1 }
+//            do {
+//                try context.save()
+//            } catch let error {
+//                NSLog("Core Data Error: updating message dummy value: \(error.localizedDescription)")
+//            }
+//        }
     }
     
     func resetUnreadCount(_ roomId: Int64) {
-        coreDataStack.persistentContainer.performBackgroundTask { context in
+        self.performBackgroundTask { [weak self] context in
             let roomsFR = RoomEntity.fetchRequest()
             roomsFR.predicate = NSPredicate(format: "id = %d", roomId)
             guard let entities = try? context.fetch(roomsFR) else { return }
             entities.forEach { $0.unreadCount = 0 }
             do {
-                try context.save()
-            } catch let error {
+                try self?.save(withContext: context)
+            } catch {
                 NSLog("Core Data Error: Resetting Unread Count: \(error.localizedDescription)")
             }
         }
+//        coreDataStack.persistentContainer.performBackgroundTask { context in
+//            let roomsFR = RoomEntity.fetchRequest()
+//            roomsFR.predicate = NSPredicate(format: "id = %d", roomId)
+//            guard let entities = try? context.fetch(roomsFR) else { return }
+//            entities.forEach { $0.unreadCount = 0 }
+//            do {
+//                try context.save()
+//            } catch let error {
+//                NSLog("Core Data Error: Resetting Unread Count: \(error.localizedDescription)")
+//            }
+//        }
     }
     
     func updateUnreadCounts(_ counts: [UnreadCount]) {
+        self.performBackgroundTask { [weak self] context in
+            let roomsFR = RoomEntity.fetchRequest()
+            
+            guard let entities = try? context.fetch(roomsFR) else { return }
+            entities.forEach { $0.unreadCount = Int64(0) }
+            for count in counts {
+                entities.first { $0.id == count.roomId }?.unreadCount = count.unreadCount
+            }
+            
+            do {
+                try self?.save(withContext: context)
+            } catch let error {
+                NSLog("Core Data Error: saving Unread Count: \(error.localizedDescription)")
+            }
+        }
+        /*
         coreDataStack.persistentContainer.performBackgroundTask { context in
             let roomsFR = RoomEntity.fetchRequest()
             
@@ -273,7 +387,7 @@ extension DatabaseService {
             } catch let error {
                 NSLog("Core Data Error: saving Unread Count: \(error.localizedDescription)")
             }
-        }
+        }*/
     }
     
 }
