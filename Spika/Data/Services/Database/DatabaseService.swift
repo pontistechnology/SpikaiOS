@@ -84,22 +84,6 @@ class DatabaseService {
         }
     }
     
-    /// Save CoreData contect Synchronously
-    func saveContextSync() throws {
-        var error: Error?
-        self.coreDataStack.persistentContainer.viewContext.performAndWait {
-            do {
-                try self.coreDataStack.mainMOC.save()
-            } catch let err {
-                error = err
-            }
-        }
-        if let error {
-            throw error
-        }
-    }
-    
-    
     /// Save function for Core data
     /// - Parameter context: takes context to perform save on
     func save(withContext context: NSManagedObjectContext) throws {

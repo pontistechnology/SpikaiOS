@@ -51,6 +51,23 @@ extension DatabaseService {
     
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
         return Future { [weak self] promise in
+            self?.performBackgroundTask(task: { [weak self] context in
+                for contact in contacts {
+                    let _ = ContactEntity(phoneNumber: contact.telephone,
+                                          givenName: contact.firstName,
+                                          familyName: contact.lastName,
+                                          context: context)
+                }
+                
+                do {
+                    try self?.save(withContext: context)
+                    promise(.success(contacts))
+                } catch {
+                    NSLog("Core Data Error: saving contacts: \(error.localizedDescription)")
+                    promise(.failure(DatabaseError.savingError))
+                }
+            })
+            /*
             self?.coreDataStack.persistentContainer.performBackgroundTask { context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for contact in contacts {
@@ -66,13 +83,34 @@ extension DatabaseService {
                     print("Core Data Error saving: ", error)
                     promise(.failure(DatabaseError.savingError))
                 }
-            }
+            }*/
         }
     }
     
     // TODO: - check
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
+            self?.performBackgroundTask(task: { [weak self] context in
+                for var user in users {
+                    let fetchRequest = ContactEntity.fetchRequest()
+                    fetchRequest.predicate = NSPredicate(format: "phoneNumber = %@", user.telephoneNumber ?? "") // check =
+                        guard let fetchResult = self?.fetchDataAndWait(fetchRequest: fetchRequest, context: context) else {
+                            promise(.failure(DatabaseError.requestFailed))
+                            return
+                        }
+                        if let contactEntity = fetchResult.first {
+                            let contact = FetchedContact(firstName: contactEntity.givenName,
+                                                         lastName: contactEntity.familyName,
+                                                         telephone: contactEntity.phoneNumber)
+                            user.contactsName = contact.firstName ?? ""
+                            + " "
+                            + (contact.lastName ?? "")
+                        }
+                        _ = self?.saveUsers([user])
+                }
+                promise(.success(users))
+            })
+            /*
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 for var user in users {
                     let fetchRequest = ContactEntity.fetchRequest()
@@ -92,7 +130,7 @@ extension DatabaseService {
                         _ = self?.saveUsers([user])
                 }
                 promise(.success(users))
-            }
+            }*/
         }
     }
 }
@@ -101,6 +139,27 @@ extension DatabaseService {
 extension DatabaseService {
     func saveRooms(_ rooms: [Room]) -> Future<[Room], Error> {
         Future { [weak self] promise in
+            self?.performBackgroundTask(task: { [weak self] context in
+                for room in rooms {
+                    let roomEntity = RoomEntity(room: room, context: context)
+                    for roomUser in room.users {
+                        _ = RoomUserEntity(roomUser: roomUser, insertInto: context)
+                        _ = UserEntity(user: roomUser.user, context: context)
+                    }
+                    // this is because mute or unmute will update room and reset it to zero
+                    // TODO: - maybe add functions for update pin, mute
+                    roomEntity.lastMessageTimestamp = self?.getLastMessage(roomId: room.id, context: context)?.createdAt ?? 0
+                }
+                
+                do {
+                    try self?.save(withContext: context)
+                    promise(.success(rooms))
+                } catch {
+                    NSLog("Core Data Error: saving rooms: \(error.localizedDescription)")
+                    promise(.failure(DatabaseError.savingError))
+                }
+            })
+            /*
             guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -120,7 +179,7 @@ extension DatabaseService {
                 } catch {
                     promise(.failure(DatabaseError.savingError))
                 }
-            }
+            }*/
         }
     }
     
@@ -138,7 +197,7 @@ extension DatabaseService {
                     for roomUser in roomUsers {
                         context.delete(roomUser)
                     }
-                    try context.save()
+                    try context.save() // TODO: - This needs testing, it might not be necessary to save context in mid deletion
                     
                     room.users.forEach { rU in
                         _ = RoomUserEntity(roomUser: rU, insertInto: context)
@@ -154,6 +213,26 @@ extension DatabaseService {
     }
     
     private func updateRoomLastMessageTimestamp(roomId: Int64, timestamp: Int64) {
+        self.performBackgroundTask { [weak self] context in
+            let roomsFR = RoomEntity.fetchRequest()
+            roomsFR.predicate = NSPredicate(format: "id == %d", roomId)
+            guard let roomEntities = self?.fetchDataAndWait(fetchRequest: roomsFR, context: context),
+                  roomEntities.count == 1,
+                  let entity = roomEntities.first
+            else {
+                // TODO: - add warning
+                return
+            }
+            if entity.lastMessageTimestamp < timestamp {
+                entity.lastMessageTimestamp = timestamp
+            }
+            do {
+                try self?.save(withContext: context)
+            } catch {
+                NSLog("Core Data Error: updating Room last message timestamp: \(error.localizedDescription)")
+            }
+        }
+        /*
         coreDataStack.persistentContainer.performBackgroundTask { context in
             let roomsFR = RoomEntity.fetchRequest()
             roomsFR.predicate = NSPredicate(format: "id == %d", roomId)
@@ -172,7 +251,7 @@ extension DatabaseService {
             } catch let error {
                 NSLog("Core Data Error: updating Room last message timestamp: \(error.localizedDescription)")
             }
-        }
+        }*/
     }
 }
 
@@ -392,6 +471,20 @@ extension DatabaseService {
 extension DatabaseService {
     func saveMessageRecords(_ messageRecords: [MessageRecord]) -> Future<Bool, Error> {
         return Future { [weak self] promise in
+            self?.performBackgroundTask(task: { [weak self] context in
+                for messageRecord in messageRecords {
+                    _ = MessageRecordEntity(record: messageRecord, context: context)
+                }
+                
+                self?.updateMessagesDummyValue(ids: messageRecords.map({ $0.messageId }))
+                
+                do {
+                    try self?.save(withContext: context)
+                } catch let error {
+                    NSLog("Core Data Error: updating message records: \(error.localizedDescription)")
+                }
+            })
+            /*
             guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -408,7 +501,7 @@ extension DatabaseService {
                 } catch {
                     promise(.failure(DatabaseError.savingError))
                 }
-            }
+            }*/
         }
     }
     
