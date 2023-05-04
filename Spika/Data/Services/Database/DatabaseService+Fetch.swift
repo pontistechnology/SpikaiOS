@@ -54,7 +54,7 @@ extension DatabaseService {
         let roomUsersFR = RoomUserEntity.fetchRequest()
         roomUsersFR.predicate = NSPredicate(format: "roomId == %d", roomId)
         
-        let roomUserEntities = self.fetchDataAndWait(fetchRequest: roomUsersFR, context: self.coreDataStack.mainMOC) ?? []
+        let roomUserEntities = fetchDataAndWait(fetchRequest: roomUsersFR, context: context) ?? []
         let users = getUsers(id: roomUserEntities.map({ $0.userId }), context: context)
         
         roomUsers = roomUserEntities.compactMap { roomUserEntity in
@@ -72,7 +72,7 @@ extension DatabaseService {
         let usersFR = UserEntity.fetchRequest()
         usersFR.predicate = NSPredicate(format: "id IN %@", id) // check
         
-        let userEntities = self.fetchDataAndWait(fetchRequest: usersFR, context: self.coreDataStack.mainMOC)
+        let userEntities = fetchDataAndWait(fetchRequest: usersFR, context: context)
         return userEntities?.map {
             User(entity: $0)
         }
@@ -99,7 +99,7 @@ extension DatabaseService {
                     roomFR.predicate = NSPredicate(format: "type == 'private' AND id IN %@",
                                                    possibleRoomsIds)
                     
-                    guard let rooms = self.fetchDataAndWait(fetchRequest: roomFR, context: self.coreDataStack.mainMOC),
+                    guard let rooms = fetchDataAndWait(fetchRequest: roomFR, context: self.coreDataStack.mainMOC),
                           rooms.count == 1,
                           let roomEntity = rooms.first,
                           let roomUsers = self.getRoomUsers(roomId: roomEntity.id, context: self.coreDataStack.mainMOC) // get all RoomUsers for room, should be always be 2, roomUserEntity and my user
@@ -214,7 +214,7 @@ extension DatabaseService {
         let recordsFR = MessageRecordEntity.fetchRequest()
         recordsFR.predicate = NSPredicate(format: "messageId == %d AND type == %@", id, MessageRecordType.reaction.rawValue)
         
-        return self.fetchDataAndWait(fetchRequest: recordsFR, context: self.coreDataStack.mainMOC)?.map { MessageRecord(messageRecordEntity: $0) }
+        return fetchDataAndWait(fetchRequest: recordsFR, context: context)?.map { MessageRecord(messageRecordEntity: $0) }
     }
     
     func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
@@ -223,7 +223,7 @@ extension DatabaseService {
             guard let id = id else { return }
             let fr = FileEntity.fetchRequest()
             fr.predicate = NSPredicate(format: "id == %@", id)
-            guard let entity = self.fetchDataAndWait(fetchRequest: fr, context: self.coreDataStack.mainMOC)?.first else { return }
+            guard let entity = fetchDataAndWait(fetchRequest: fr, context: context)?.first else { return }
             fileData = FileData(entity: entity)
         }
         return fileData

@@ -73,7 +73,7 @@ class DatabaseService {
     ///   - entity: Core data entity
     ///   - completion: Completion returning fetch results or error object
     func fetchAsyncEntity<T:NSManagedObject>(entity: T.Type, completion: @escaping ([T],Error?) -> Void ) {
-        let fetchRequest = T.fetchRequest() as! NSFetchRequest<T>
+        guard let fetchRequest = T.fetchRequest() as? NSFetchRequest<T> else { return }
         self.fetchAsyncData(fetchRequest: fetchRequest, completion: completion)
     }
     

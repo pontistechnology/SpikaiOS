@@ -36,7 +36,8 @@ class AppRepository: Repository {
     }
     
     func getMainContext() -> NSManagedObjectContext {
-        return databaseService.coreDataStack.mainMOC
+        NSManagedObjectContext()
+//        return databaseService.coreDataStack.mainMOC
     }
     
     func getCurrentAppereance() -> Int {
