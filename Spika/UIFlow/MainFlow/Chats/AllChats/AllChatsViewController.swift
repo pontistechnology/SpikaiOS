@@ -139,6 +139,7 @@ extension AllChatsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
         if let value = value {
             self.viewModel.changePredicate(to: value)
+            allChatsView.allChatsTableView.reloadData()
         }
     }
     

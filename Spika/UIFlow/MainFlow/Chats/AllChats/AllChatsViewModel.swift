@@ -14,10 +14,18 @@ class AllChatsViewModel: BaseViewModel {
     var frc: NSFetchedResultsController<RoomEntity>?
     
     private var defaultChatsPredicate: NSPredicate = {
-        let predicate1 =  NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR lastMessageTimestamp > 0 OR unreadCount > 0")
-        let predicate2 = NSPredicate(format: "roomDeleted == false")
+        let predicate1 =  NSPredicate(format: "\(#keyPath(RoomEntity.type)) == '\(RoomType.groupRoom.rawValue)' OR \(#keyPath(RoomEntity.lastMessageTimestamp)) > 0 OR \(#keyPath(RoomEntity.unreadCount)) > 0")
+        let predicate2 = NSPredicate(format: "\(#keyPath(RoomEntity.roomDeleted)) == false")
         return NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
     } ()
+    
+    private func predicateWithSearch(search: String) -> NSPredicate {
+        let searchPredicate = NSPredicate(format: "\(#keyPath(RoomEntity.name)) CONTAINS[c] %@", search)
+        let predicate1 =  NSPredicate(format: "\(#keyPath(RoomEntity.type)) == '\(RoomType.groupRoom.rawValue)' OR \(#keyPath(RoomEntity.lastMessageTimestamp)) > 0 OR \(#keyPath(RoomEntity.unreadCount)) > 0")
+        let predicate2 = NSPredicate(format: "\(#keyPath(RoomEntity.roomDeleted)) == false")
+        return NSCompoundPredicate(andPredicateWithSubpredicates: [searchPredicate, predicate1, predicate2])
+    }
+    
 }
 
 // MARK: - Navigation
@@ -89,7 +97,7 @@ extension AllChatsViewModel {
 // MARK: - NSFetchedResultsController
 
 extension AllChatsViewModel {
-    func setRoomsFetch() {
+    func setRoomsFetch(withSearch: String? = nil) {
         let fetchRequest = RoomEntity.fetchRequest()
         fetchRequest.predicate = self.defaultChatsPredicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
@@ -106,7 +114,8 @@ extension AllChatsViewModel {
     }
     
     func changePredicate(to newString: String) {
-        let searchPredicate = newString.isEmpty ? defaultChatsPredicate : NSPredicate(format: "name CONTAINS[c] '\(newString)' and roomDeleted = false") // TODO: check, private rooms cant be searched like this, maybe change room name before saving room to database
+        let searchPredicate = newString.isEmpty ? defaultChatsPredicate : self.predicateWithSearch(search: newString)
+        //NSPredicate(format: "name CONTAINS[c] '\(newString)' and roomDeleted = false") // TODO: check, private rooms cant be searched like this, maybe change room name before saving room to database
         self.frc?.fetchRequest.predicate = searchPredicate
         self.frc?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
                                                   NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
