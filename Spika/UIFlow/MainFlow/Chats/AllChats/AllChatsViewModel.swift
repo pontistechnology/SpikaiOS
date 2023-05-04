@@ -24,14 +24,9 @@ class AllChatsViewModel: BaseViewModel {
         }
     }
     
-    lazy var roomsForSearch: Future<[Room], Error> = {
-        guard let rooms = self.frc?.fetchedObjects else {
-            return  Future { promise in
-                promise(.failure(DatabaseError.noSuchRecord))
-            }
-        }
-        return self.repository.generateRoomModelsWithUsers(roomEntities: rooms)
-    } ()
+    let search = CurrentValueSubject<String?, Error>(nil)
+    let fetchedRoomEntities = CurrentValueSubject<[RoomEntity]?,Never>(nil)
+    let rooms = CurrentValueSubject<[Room],Never>([])
     
 }
 
@@ -51,16 +46,10 @@ extension AllChatsViewModel {
 // MARK: - Tableview data source
 
 extension AllChatsViewModel {
-    func numberOfRows(in section: Int) -> Int {
-        guard let sections = frc?.sections else { return 0 }
-        return sections[section].numberOfObjects
-    }
-    
     func getDataForCell(at indexPath: IndexPath) -> (avatarUrl: URL?, name: String,
                                                      description: String, time: String,
-                                                     badgeNumber: Int64, muted: Bool, pinned: Bool)?
-    {
-        guard let room = getRoom(for: indexPath) else { return nil }
+                                                     badgeNumber: Int64, muted: Bool, pinned: Bool)? {
+        let room = self.rooms.value[indexPath.row]
         let lastMessage = getLastMessage(for: indexPath)
         
         if room.type == .privateRoom,
@@ -104,7 +93,36 @@ extension AllChatsViewModel {
 // MARK: - NSFetchedResultsController
 
 extension AllChatsViewModel {
-    func setRoomsFetch(withSearch: String? = nil) {
+    func setupBinding() {
+        self.fetchedRoomEntities
+            .throttle(for: .seconds(2), scheduler: DispatchQueue.main, latest: true)
+            .flatMap(maxPublishers: .unlimited) { [weak self] entities in
+                guard let self,
+                        let context = self.frc?.managedObjectContext,
+                      let entities, entities.count > 0 else {
+                    return Future<[Room], Error> { promise in
+                        promise(.success([]))
+                    }
+                }
+                return self.repository.generateRoomModelsWithUsers(context: context, roomEntities: entities)
+            }
+            .combineLatest(self.search, { rooms, search in
+                guard let search, !search.isEmpty else {
+                    return rooms
+                }
+                return rooms.filter { room in
+                    return room.compareWith(string: search)
+                }
+            })
+            .sink(receiveCompletion: { c in
+
+            }, receiveValue: { dt in
+                self.rooms.send(dt)
+            })
+            .store(in: &subscriptions)
+    }
+    
+    func setRoomsFetch() {
         let fetchRequest = RoomEntity.fetchRequest()
         fetchRequest.predicate = self.predicateWithSearch()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
@@ -112,22 +130,14 @@ extension AllChatsViewModel {
                                         NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
         self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: self.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
+        self.frc?.delegate = self
         do {
             try self.frc?.performFetch()
+            self.fetchedRoomEntities.send(self.frc?.fetchedObjects)
         } catch {
             fatalError("Failed to fetch entities: \(error)")
             // TODO: handle error and change main context to func
         }
-    }
-    
-    func changePredicate(to newString: String) {
-        let searchPredicate = newString.isEmpty ? predicateWithSearch() : self.predicateWithSearch(search: newString)
-        //NSPredicate(format: "name CONTAINS[c] '\(newString)' and roomDeleted = false") // TODO: check, private rooms cant be searched like this, maybe change room name before saving room to database
-        self.frc?.fetchRequest.predicate = searchPredicate
-        self.frc?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
-                                                  NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
-                                                  NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
-        try? frc?.performFetch()
     }
 }
 
@@ -143,17 +153,19 @@ extension AllChatsViewModel {
 
 private extension AllChatsViewModel {
     func getRoom(for indexPath: IndexPath) -> Room? {
-        guard let entity = frc?.object(at: indexPath),
-              let context = entity.managedObjectContext,
-              let roomUsers = repository.getRoomUsers(roomId: entity.id, context: context)
-        else { return nil }
-        return Room(roomEntity: entity, users: roomUsers)
+        let room = self.rooms.value[indexPath.row]
+        return room
     }
     
     func getLastMessage(for indexPath: IndexPath) -> Message? {
-        guard let entity = frc?.object(at: indexPath),
-              let context = entity.managedObjectContext
-        else { return nil }
-        return repository.getLastMessage(roomId: entity.id, context: context)
+        let room = self.rooms.value[indexPath.row]
+        guard let context = self.frc?.managedObjectContext else { return nil }
+        return repository.getLastMessage(roomId: room.id, context: context)
+    }
+}
+
+extension AllChatsViewModel: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.fetchedRoomEntities.send(self.frc?.fetchedObjects)
     }
 }

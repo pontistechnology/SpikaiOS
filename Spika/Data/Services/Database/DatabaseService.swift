@@ -31,9 +31,15 @@ class DatabaseService {
     
     /// Background task method
     /// - Parameter task: task closure to be executed on a new context
-    func performBackgroundTask(task: @escaping(NSManagedObjectContext) -> Void) {
-        self.coreDataStack.persistentContainer.performBackgroundTask { context in
-            task(context)
+    func performBackgroundTask(onContext: NSManagedObjectContext? = nil, task: @escaping(NSManagedObjectContext) -> Void) {
+        if let onContext {
+            onContext.perform {
+                task(onContext)
+            }
+        } else {
+            self.coreDataStack.persistentContainer.performBackgroundTask { context in
+                task(context)
+            }
         }
     }
     
@@ -53,7 +59,7 @@ class DatabaseService {
     func fetchDataAndWait<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>, context: NSManagedObjectContext) -> [T]? {
         var data: [T]?
         context.performAndWait {
-            guard let result = try? self.coreDataStack.mainMOC.fetch(fetchRequest),
+            guard let result = try? context.fetch(fetchRequest),
                   !result.isEmpty else { return }
             data = result
         }

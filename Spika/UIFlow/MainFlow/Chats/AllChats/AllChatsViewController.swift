@@ -40,9 +40,16 @@ class AllChatsViewController: BaseViewController {
                 self?.onCreateNewRoom()
             }.store(in: &self.subscriptions)
         
+        viewModel.setupBinding()
         viewModel.setRoomsFetch()
-        viewModel.frc?.delegate = self
-        allChatsView.allChatsTableView.reloadData()
+        
+        viewModel.rooms
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.allChatsView.allChatsTableView.reloadData()
+            }.store(in: &self.subscriptions)
+//        viewModel.frc?.delegate = self
+//        allChatsView.allChatsTableView.reloadData()
     }
     
     // TODO: - move to viewmodel under navigation
@@ -54,12 +61,7 @@ class AllChatsViewController: BaseViewController {
 
 // MARK: - NSFetchedResultsController
 
-extension AllChatsViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        allChatsView.allChatsTableView.reloadData()
-    }
-}
+
 
 // MARK: - UITableview
 
@@ -76,7 +78,7 @@ extension AllChatsViewController: UITableViewDelegate {
 
 extension AllChatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfRows(in: section)
+        return viewModel.rooms.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,14 +139,10 @@ extension AllChatsViewController {
 
 extension AllChatsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
-        if let value = value {
-            self.viewModel.changePredicate(to: value)
-            allChatsView.allChatsTableView.reloadData()
-        }
+        self.viewModel.search.send(value)
     }
     
     func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
-        viewModel.changePredicate(to: "")
-        allChatsView.allChatsTableView.reloadData()
+        self.viewModel.search.send(nil)
     }
 }
