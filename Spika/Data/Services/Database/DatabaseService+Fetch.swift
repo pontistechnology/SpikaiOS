@@ -99,10 +99,11 @@ extension DatabaseService {
                     roomFR.predicate = NSPredicate(format: "type == 'private' AND id IN %@",
                                                    possibleRoomsIds)
                     
-                    guard let rooms = fetchDataAndWait(fetchRequest: roomFR, context: self.coreDataStack.mainMOC),
+                    guard let context = roomUsers.first?.managedObjectContext,
+                          let rooms = self.fetchDataAndWait(fetchRequest: roomFR, context: context),
                           rooms.count == 1,
                           let roomEntity = rooms.first,
-                          let roomUsers = self.getRoomUsers(roomId: roomEntity.id, context: self.coreDataStack.mainMOC) // get all RoomUsers for room, should be always be 2, roomUserEntity and my user
+                          let roomUsers = self.getRoomUsers(roomId: roomEntity.id, context: context) // get all RoomUsers for room, should be always be 2, roomUserEntity and my user
                     else {
                         promise(.failure(DatabaseError.moreThanOne)) // check zero
                         return
