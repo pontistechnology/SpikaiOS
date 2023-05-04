@@ -5,7 +5,6 @@
 //  Created by Marko on 21.10.2021..
 //
 
-import Foundation
 import Combine
 import CoreData
 
@@ -13,18 +12,26 @@ class AllChatsViewModel: BaseViewModel {
     
     var frc: NSFetchedResultsController<RoomEntity>?
     
-    private var defaultChatsPredicate: NSPredicate = {
+    private func predicateWithSearch(search: String? = nil) -> NSPredicate {
         let predicate1 =  NSPredicate(format: "\(#keyPath(RoomEntity.type)) == '\(RoomType.groupRoom.rawValue)' OR \(#keyPath(RoomEntity.lastMessageTimestamp)) > 0 OR \(#keyPath(RoomEntity.unreadCount)) > 0")
         let predicate2 = NSPredicate(format: "\(#keyPath(RoomEntity.roomDeleted)) == false")
-        return NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
-    } ()
-    
-    private func predicateWithSearch(search: String) -> NSPredicate {
-        let searchPredicate = NSPredicate(format: "\(#keyPath(RoomEntity.name)) CONTAINS[c] %@", search)
-        let predicate1 =  NSPredicate(format: "\(#keyPath(RoomEntity.type)) == '\(RoomType.groupRoom.rawValue)' OR \(#keyPath(RoomEntity.lastMessageTimestamp)) > 0 OR \(#keyPath(RoomEntity.unreadCount)) > 0")
-        let predicate2 = NSPredicate(format: "\(#keyPath(RoomEntity.roomDeleted)) == false")
-        return NSCompoundPredicate(andPredicateWithSubpredicates: [searchPredicate, predicate1, predicate2])
+        
+        if let search {
+            let searchPredicate = NSPredicate(format: "\(#keyPath(RoomEntity.name)) CONTAINS[c] %@", search)
+            return NSCompoundPredicate(andPredicateWithSubpredicates: [searchPredicate, predicate1, predicate2])
+        } else {
+            return NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
+        }
     }
+    
+    lazy var roomsForSearch: Future<[Room], Error> = {
+        guard let rooms = self.frc?.fetchedObjects else {
+            return  Future { promise in
+                promise(.failure(DatabaseError.noSuchRecord))
+            }
+        }
+        return self.repository.generateRoomModelsWithUsers(roomEntities: rooms)
+    } ()
     
 }
 
@@ -99,7 +106,7 @@ extension AllChatsViewModel {
 extension AllChatsViewModel {
     func setRoomsFetch(withSearch: String? = nil) {
         let fetchRequest = RoomEntity.fetchRequest()
-        fetchRequest.predicate = self.defaultChatsPredicate
+        fetchRequest.predicate = self.predicateWithSearch()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
@@ -114,7 +121,7 @@ extension AllChatsViewModel {
     }
     
     func changePredicate(to newString: String) {
-        let searchPredicate = newString.isEmpty ? defaultChatsPredicate : self.predicateWithSearch(search: newString)
+        let searchPredicate = newString.isEmpty ? predicateWithSearch() : self.predicateWithSearch(search: newString)
         //NSPredicate(format: "name CONTAINS[c] '\(newString)' and roomDeleted = false") // TODO: check, private rooms cant be searched like this, maybe change room name before saving room to database
         self.frc?.fetchRequest.predicate = searchPredicate
         self.frc?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),

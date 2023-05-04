@@ -123,6 +123,7 @@ protocol Repository {
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
     func updateUnreadCounts(unreadCounts: [UnreadCount])
     func updateUnreadCountToZeroFor(roomId: Int64)
+    func generateRoomModelsWithUsers(roomEntities: [RoomEntity]) -> Future<[Room], Error>
     
         // File
     func getFileData(id: String?, context: NSManagedObjectContext) -> FileData?
