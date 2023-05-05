@@ -52,7 +52,6 @@ extension DatabaseService {
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for user in users {
                     if user.displayName == nil {
                         continue // TODO: check
@@ -60,7 +59,7 @@ extension DatabaseService {
                     let _ = UserEntity(user: user, context: context)
                 }
                 do {
-                    try context.save()
+                    try context.safeSave()
                     promise(.success(users))
                 } catch {
                     print("Error saving: ", error)
@@ -73,7 +72,6 @@ extension DatabaseService {
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for contact in contacts {
                     let _ = ContactEntity(phoneNumber: contact.telephone,
                                           givenName: contact.firstName,
@@ -81,7 +79,7 @@ extension DatabaseService {
                                           context: context)
                 }
                 do {
-                    try context.save()
+                    try context.safeSave()
                     promise(.success(contacts))
                 } catch {
                     print("Error saving: ", error)
@@ -124,7 +122,6 @@ extension DatabaseService {
     func getLocalUser(withId id: Int64) -> Future<User, Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let fetchRequest = UserEntity.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
                 do {
@@ -211,7 +208,6 @@ extension DatabaseService {
         Future { [weak self] promise in
             guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 for room in rooms {
                     let roomEntity = RoomEntity(room: room, context: context)
                     for roomUser in room.users {
@@ -223,7 +219,7 @@ extension DatabaseService {
                     roomEntity.lastMessageTimestamp = self?.getLastMessage(roomId: room.id, context: context)?.createdAt ?? 0
                 }
                 do {
-                    try context.save()
+                    try context.safeSave()
                     promise(.success(rooms))
                 } catch {
                     promise(.failure(DatabaseError.savingError))
@@ -236,8 +232,6 @@ extension DatabaseService {
         Future { [weak self] promise in
             guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                
                 let roomUserFR = RoomUserEntity.fetchRequest()
                 roomUserFR.predicate = NSPredicate(format: "roomId == %d", room.id)
 
@@ -246,12 +240,12 @@ extension DatabaseService {
                     for roomUser in roomUsers {
                         context.delete(roomUser)
                     }
-                    try context.save()
+                    try context.safeSave()
                     
                     room.users.forEach { rU in
                         _ = RoomUserEntity(roomUser: rU, insertInto: context)
                     }
-                    try context.save()
+                    try context.safeSave()
                     promise(.success(room))
                 } catch {
                     print("Error deleting RoomUsers: \(error)")
@@ -265,15 +259,13 @@ extension DatabaseService {
         Future { [weak self] promise in
             guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                
                 let fr = RoomEntity.fetchRequest()
                 fr.predicate = NSPredicate(format: "id == %d", roomId)
                 guard let roomEntity = try? context.fetch(fr).first else { return }
                 
                 context.delete(roomEntity)
                 do {
-                    try context.save()
+                    try context.safeSave()
                     promise(.success(true))
                 } catch {
                     promise(.failure((DatabaseError.savingError)))
@@ -289,7 +281,6 @@ extension DatabaseService {
     func saveMessages(_ messages: [Message]) -> Future<Bool, Error> {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 var uniqueRoomIds = Set<Int64>()
                 for message in messages {
                     _ = MessageEntity(message: message, context: context)
@@ -318,7 +309,7 @@ extension DatabaseService {
                 }
                 
                 do {
-                    try context.save()
+                    try context.safeSave()
                     promise(.success(true))
                 } catch {
                     promise(.failure(DatabaseError.savingError))
@@ -331,8 +322,6 @@ extension DatabaseService {
         return Future { [weak self] promise in
             guard let self else { return }
             self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                
                 for messageRecord in messageRecords {
                     _ = MessageRecordEntity(record: messageRecord, context: context)
                 }
@@ -340,7 +329,7 @@ extension DatabaseService {
                 self?.updateMessagesDummyValue(ids: messageRecords.map({ $0.messageId }))
               
                 do {
-                    try context.save()
+                    try context.safeSave()
                     promise(.success(true))
                 } catch {
                     promise(.failure(DatabaseError.savingError))
@@ -353,8 +342,6 @@ extension DatabaseService {
         return Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
                 guard let self else { return }
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                
                 // fetch room from database
                 let roomEntiryFR = RoomEntity.fetchRequest()
                 roomEntiryFR.predicate = NSPredicate(format: "id == %d", message.roomId)
@@ -434,7 +421,6 @@ extension DatabaseService {
     
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
         coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             let messageFR = MessageEntity.fetchRequest()
             messageFR.predicate = NSPredicate(format: "id == %d", messageId)
             guard let entity = try? context.fetch(messageFR).first else { return }
@@ -447,7 +433,7 @@ extension DatabaseService {
                 entity.deliveredCount = deliveredCount
             }
             do {
-                try context.save()
+                try context.safeSave()
             } catch {
                 
             }
@@ -462,7 +448,7 @@ extension DatabaseService {
             guard let messageEntities = try? context.fetch(messagesFR) else { return }
             
             messageEntities.forEach { $0.dummyValue = $0.dummyValue + 1 }
-            try? context.save()
+            try? context.safeSave()
         }
     }
     
@@ -480,7 +466,7 @@ extension DatabaseService {
             if entity.lastMessageTimestamp < timestamp {
                 entity.lastMessageTimestamp = timestamp
             }
-            try? context.save()
+            try? context.safeSave()
         }
     }
     
@@ -507,7 +493,7 @@ extension DatabaseService {
             for count in counts {
                 entities.first { $0.id == count.roomId }?.unreadCount = count.unreadCount
             }
-            try? context.save()
+            try? context.safeSave()
         }
     }
     
@@ -517,7 +503,7 @@ extension DatabaseService {
             roomsFR.predicate = NSPredicate(format: "id = %d", roomId)
             guard let entities = try? context.fetch(roomsFR) else { return }
             entities.forEach { $0.unreadCount = 0 }
-            try? context.save()
+            try? context.safeSave()
         }
     }
     
@@ -555,7 +541,6 @@ extension DatabaseService {
     func missingRoomIds(ids: Set<Int64>) -> Future<Set<Int64>, Error> {
         Future { [weak self] promise in
             self?.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
-                context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 let roomsFR = RoomEntity.fetchRequest()
                 roomsFR.predicate = NSPredicate(format: "id IN %@", ids)
                 
