@@ -203,7 +203,7 @@ extension DatabaseService {
         fr.fetchLimit = 1
         fr.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
-        guard let entity = self.fetchDataAndWait(fetchRequest: fr, context: self.coreDataStack.mainMOC)?.first else { return nil }
+        guard let entity = self.fetchDataAndWait(fetchRequest: fr, context: context)?.first else { return nil }
         
         message = Message(messageEntity: entity,
                           fileData: getFileData(id: entity.bodyFileId, context: context),

@@ -96,3 +96,10 @@ class DatabaseService {
     }
     
 }
+
+extension NSManagedObjectContext {
+    func safeSave() {
+        mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        try? save()
+    }
+}
