@@ -62,7 +62,7 @@ extension DatabaseService {
                     try context.safeSave()
                     promise(.success(users))
                 } catch {
-                    print("Error saving: ", error)
+                    NSLog("Core Data Error: saving users: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.savingError))
                 }
             }
@@ -82,7 +82,7 @@ extension DatabaseService {
                     try context.safeSave()
                     promise(.success(contacts))
                 } catch {
-                    print("Error saving: ", error)
+                    NSLog("Core Data Error: saving contacts: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.savingError))
                 }
             }
@@ -222,6 +222,7 @@ extension DatabaseService {
                     try context.safeSave()
                     promise(.success(rooms))
                 } catch {
+                    NSLog("Core Data Error: saving rooms: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.savingError))
                 }
             }
@@ -248,7 +249,7 @@ extension DatabaseService {
                     try context.safeSave()
                     promise(.success(room))
                 } catch {
-                    print("Error deleting RoomUsers: \(error)")
+                    NSLog("Core Data Error: update room users: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.savingError))
                 }
             }
@@ -268,6 +269,7 @@ extension DatabaseService {
                     try context.safeSave()
                     promise(.success(true))
                 } catch {
+                    NSLog("Core Data Error: delete room: \(error.localizedDescription)")
                     promise(.failure((DatabaseError.savingError)))
                 }
             }
@@ -312,6 +314,7 @@ extension DatabaseService {
                     try context.safeSave()
                     promise(.success(true))
                 } catch {
+                    NSLog("Core Data Error: saving messages: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.savingError))
                 }
             }
@@ -332,6 +335,7 @@ extension DatabaseService {
                     try context.safeSave()
                     promise(.success(true))
                 } catch {
+                    NSLog("Core Data Error: saving message records: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.savingError))
                 }
             }
@@ -435,7 +439,7 @@ extension DatabaseService {
             do {
                 try context.safeSave()
             } catch {
-                
+                NSLog("Core Data Error: update seen delivered count: \(error.localizedDescription)")
             }
         }
     }
@@ -448,7 +452,11 @@ extension DatabaseService {
             guard let messageEntities = try? context.fetch(messagesFR) else { return }
             
             messageEntities.forEach { $0.dummyValue = $0.dummyValue + 1 }
-            try? context.safeSave()
+            do {
+                try context.safeSave()
+            } catch {
+                NSLog("Core Data Error: updateMessagesDummyValue: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -466,7 +474,11 @@ extension DatabaseService {
             if entity.lastMessageTimestamp < timestamp {
                 entity.lastMessageTimestamp = timestamp
             }
-            try? context.safeSave()
+            do {
+                try context.safeSave()
+            } catch {
+                NSLog("Core Data Error: updateRoomLastMessageTimestamp: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -493,7 +505,11 @@ extension DatabaseService {
             for count in counts {
                 entities.first { $0.id == count.roomId }?.unreadCount = count.unreadCount
             }
-            try? context.safeSave()
+            do {
+                try context.safeSave()
+            } catch {
+                NSLog("Core Data Error: updateUnreadCounts: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -503,7 +519,11 @@ extension DatabaseService {
             roomsFR.predicate = NSPredicate(format: "id = %d", roomId)
             guard let entities = try? context.fetch(roomsFR) else { return }
             entities.forEach { $0.unreadCount = 0 }
-            try? context.safeSave()
+            do {
+                try context.safeSave()
+            } catch {
+                NSLog("Core Data Error: resetUnreadCount: \(error.localizedDescription)")
+            }
         }
     }
     
