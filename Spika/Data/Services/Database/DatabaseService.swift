@@ -59,13 +59,9 @@ class DatabaseService {
     /// - Returns: Array of fetched object
     /// - Parameter context: takes context to perform fetch on
     func fetchDataAndWait<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>, context: NSManagedObjectContext) -> [T]? {
-        var data: [T]?
-        context.performAndWait {
-            guard let result = try? context.fetch(fetchRequest),
-                  !result.isEmpty else { return }
-            data = result
-        }
-        return data
+        guard let result = try? context.fetch(fetchRequest), !result.isEmpty
+        else { return nil }
+        return result
     }
     
     /// Asynchronous Fetch - use in methods where fetch might require more time
@@ -74,7 +70,7 @@ class DatabaseService {
     ///   - completion: Completion returning fetch results or error object
     func fetchAsyncEntity<T:NSManagedObject>(entity: T.Type, completion: @escaping ([T],Error?) -> Void ) {
         guard let fetchRequest = T.fetchRequest() as? NSFetchRequest<T> else { return }
-        self.fetchAsyncData(fetchRequest: fetchRequest, completion: completion)
+        fetchAsyncData(fetchRequest: fetchRequest, completion: completion)
     }
     
     /// Asynchronous Fetch - use in methods where fetch might require more time
@@ -82,12 +78,12 @@ class DatabaseService {
     ///   - fetchRequest: Core data fetch request
     ///   - completion: Completion returning fetch results or error object
     func fetchAsyncData<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>, completion: @escaping ([T],Error?) -> Void ) {
-        self.coreDataStack.persistentContainer.performBackgroundTask { context in
+        coreDataStack.persistentContainer.performBackgroundTask { context in
             do {
                 let result:[T] = try context.fetch(fetchRequest)
-                completion(result,nil)
+                completion(result, nil)
             } catch let error {
-                completion([],error)
+                completion([], error)
             }
         }
     }

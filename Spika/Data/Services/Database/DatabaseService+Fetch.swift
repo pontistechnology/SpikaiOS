@@ -119,36 +119,41 @@ extension DatabaseService {
     func getRoom(forRoomId id: Int64) -> Future<Room, Error> {
         Future { [weak self] promise in
             guard let self else { return }
-            let roomsFR = RoomEntity.fetchRequest()
-            roomsFR.predicate = NSPredicate(format: "id == %d", id)
-            
-            guard let roomEntities = self.fetchDataAndWait(fetchRequest: roomsFR, context: self.coreDataStack.mainMOC),
-                  roomEntities.count == 1,
-                  let roomEntity = roomEntities.first,
-                  let roomUsers = self.getRoomUsers(roomId: roomEntity.id, context: self.coreDataStack.mainMOC) else {
-                promise(.failure(DatabaseError.moreThanOne)) // check zero
-                return
+            self.performBackgroundTask { [weak self] context in
+                let roomsFR = RoomEntity.fetchRequest()
+                roomsFR.predicate = NSPredicate(format: "id == %d", id)
+                
+                guard let roomEntities = self?.fetchDataAndWait(fetchRequest: roomsFR, context: context),
+                      roomEntities.count == 1,
+                      let roomEntity = roomEntities.first,
+                      let roomUsers = self?.getRoomUsers(roomId: roomEntity.id, context: context) else {
+                    promise(.failure(DatabaseError.moreThanOne)) // check zero
+                    return
+                }
+                
+                let room = Room(roomEntity: roomEntity, users: roomUsers)
+                promise(.success(room))
             }
-            
-            let room = Room(roomEntity: roomEntity, users: roomUsers)
-            promise(.success(room))
         }
     }
     
     func missingRoomIds(ids: Set<Int64>) -> Future<Set<Int64>, Error> {
         Future { [weak self] promise in
             guard let self else { return }
-            let roomsFR = RoomEntity.fetchRequest()
-            roomsFR.predicate = NSPredicate(format: "id IN %@", ids)
-            
-            guard let roomsEntities = self.fetchDataAndWait(fetchRequest: roomsFR, context: self.coreDataStack.mainMOC) else {
-                promise(.failure(DatabaseError.requestFailed))
-                return
+            self.performBackgroundTask { [weak self] context in
+                guard let self else { return }
+                let roomsFR = RoomEntity.fetchRequest()
+                roomsFR.predicate = NSPredicate(format: "id IN %@", ids)
+                
+                guard let roomsEntities = self.fetchDataAndWait(fetchRequest: roomsFR, context: context) else {
+                    promise(.failure(DatabaseError.requestFailed))
+                    return
+                }
+                
+                let fetchedIds = Set(roomsEntities.map { $0.id })
+                let dif = ids.subtracting(fetchedIds)
+                promise(.success(dif))
             }
-            
-            let fetchedIds = Set(roomsEntities.map { $0.id })
-            let dif = ids.subtracting(fetchedIds)
-            promise(.success(dif))
         }
     }
 }
@@ -159,34 +164,35 @@ extension DatabaseService {
     func getNotificationInfoForMessage(message: Message) -> Future<MessageNotificationInfo, Error> {
         return Future { [weak self] promise in
             guard let self else { return }
-            
-            let roomEntiryFR = RoomEntity.fetchRequest()
-            roomEntiryFR.predicate = NSPredicate(format: "id == %d", message.roomId)
-            
-            guard let rooms = self.fetchDataAndWait(fetchRequest: roomEntiryFR, context: self.coreDataStack.mainMOC),
-                  rooms.count == 1,
-                  let room = rooms.first,
-                  let user = self.getUsers(id: [message.fromUserId], context: self.coreDataStack.mainMOC)?.first else {
-                promise(.failure(DatabaseError.unknown))
-                return
+            self.performBackgroundTask { context in
+                let roomEntiryFR = RoomEntity.fetchRequest()
+                roomEntiryFR.predicate = NSPredicate(format: "id == %d", message.roomId)
+                
+                guard let rooms = self.fetchDataAndWait(fetchRequest: roomEntiryFR, context: context),
+                      rooms.count == 1,
+                      let room = rooms.first,
+                      let user = self.getUsers(id: [message.fromUserId], context: context)?.first else {
+                    promise(.failure(DatabaseError.unknown))
+                    return
+                }
+                
+                let info: MessageNotificationInfo
+                
+                if room.type == RoomType.privateRoom.rawValue {
+                    info = MessageNotificationInfo(title: user.getDisplayName(),
+                                                   photoUrl: user.avatarFileId?.fullFilePathFromId(),
+                                                   messageText: message.pushNotificationText,
+                                                   roomId: room.id,
+                                                   isRoomMuted: room.muted)
+                } else {
+                    info = MessageNotificationInfo(title: room.name ?? "no name",
+                                                   photoUrl: room.avatarFileId.fullFilePathFromId(),
+                                                   messageText: "\(user.getDisplayName()): " +  message.pushNotificationText,
+                                                   roomId: room.id,
+                                                   isRoomMuted: room.muted)
+                }
+                promise(.success(info))
             }
-            
-            let info: MessageNotificationInfo
-            
-            if room.type == RoomType.privateRoom.rawValue {
-                info = MessageNotificationInfo(title: user.getDisplayName(),
-                                               photoUrl: user.avatarFileId?.fullFilePathFromId(),
-                                               messageText: message.pushNotificationText,
-                                               roomId: room.id,
-                                               isRoomMuted: room.muted)
-            } else {
-                info = MessageNotificationInfo(title: room.name ?? "no name",
-                                               photoUrl: room.avatarFileId.fullFilePathFromId(),
-                                               messageText: "\(user.getDisplayName()): " +  message.pushNotificationText,
-                                               roomId: room.id,
-                                               isRoomMuted: room.muted)
-            }
-            promise(.success(info))
         }
     }
     
