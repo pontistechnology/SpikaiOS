@@ -10,7 +10,7 @@ import CoreData
 
 class AllChatsViewModel: BaseViewModel {
     
-    var frc: NSFetchedResultsController<RoomEntity>?
+    private var frc: NSFetchedResultsController<RoomEntity>?
     
     private func predicateWithSearch(search: String? = nil) -> NSPredicate {
         let predicate1 =  NSPredicate(format: "\(#keyPath(RoomEntity.type)) == '\(RoomType.groupRoom.rawValue)' OR \(#keyPath(RoomEntity.lastMessageTimestamp)) > 0 OR \(#keyPath(RoomEntity.unreadCount)) > 0")
@@ -25,7 +25,7 @@ class AllChatsViewModel: BaseViewModel {
     }
     
     let search = CurrentValueSubject<String?, Error>(nil)
-    let fetchedRoomEntities = CurrentValueSubject<[RoomEntity]?,Never>(nil)
+    private let fetchedRoomEntities = CurrentValueSubject<[RoomEntity]?,Never>(nil)
     let rooms = CurrentValueSubject<[Room],Never>([])
     
 }
@@ -95,7 +95,6 @@ extension AllChatsViewModel {
 extension AllChatsViewModel {
     func setupBinding() {
         self.fetchedRoomEntities
-            .throttle(for: .seconds(2), scheduler: DispatchQueue.main, latest: true)
             .flatMap(maxPublishers: .unlimited) { [weak self] entities in
                 guard let self,
                         let context = self.frc?.managedObjectContext,
@@ -110,14 +109,14 @@ extension AllChatsViewModel {
                 guard let search, !search.isEmpty else {
                     return rooms
                 }
-                return rooms.filter { room in
+                let filteredRooms = rooms.filter { room in
                     return room.compareWith(string: search)
                 }
+                return filteredRooms.sorted { $0.type > $1.type }
             })
-            .sink(receiveCompletion: { c in
-
-            }, receiveValue: { dt in
-                self.rooms.send(dt)
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: { [weak self] dt in
+                self?.rooms.send(dt)
             })
             .store(in: &subscriptions)
     }

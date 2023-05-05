@@ -70,17 +70,17 @@ class DatabaseService {
     /// - Parameters:
     ///   - entity: Core data entity
     ///   - completion: Completion returning fetch results or error object
-    func fetchAsyncEntity<T:NSManagedObject>(entity: T.Type, completion: @escaping ([T],Error?) -> Void ) {
+    func fetchAsyncEntity<T:NSManagedObject>(context: NSManagedObjectContext, entity: T.Type, completion: @escaping ([T],Error?) -> Void ) {
         let fetchRequest = T.fetchRequest() as! NSFetchRequest<T>
-        self.fetchAsyncData(fetchRequest: fetchRequest, completion: completion)
+        self.fetchAsyncData(context: context, fetchRequest: fetchRequest, completion: completion)
     }
     
     /// Asynchronous Fetch - use in methods where fetch might require more time
     /// - Parameters:
     ///   - fetchRequest: Core data fetch request
     ///   - completion: Completion returning fetch results or error object
-    func fetchAsyncData<T:NSManagedObject>(fetchRequest: NSFetchRequest<T>, completion: @escaping ([T],Error?) -> Void ) {
-        self.coreDataStack.persistentContainer.performBackgroundTask { context in
+    func fetchAsyncData<T:NSManagedObject>(context: NSManagedObjectContext, fetchRequest: NSFetchRequest<T>, completion: @escaping ([T],Error?) -> Void ) {
+        context.perform {
             do {
                 let result:[T] = try context.fetch(fetchRequest)
                 completion(result,nil)

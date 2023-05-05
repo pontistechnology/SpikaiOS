@@ -310,7 +310,6 @@ extension AppRepository {
                     guard let roomUsers = self?.getRoomUsers(roomId: roomEntity.id, context: context) else { return nil }
                     return Room(roomEntity: roomEntity, users: roomUsers)
                 }
-                print("Blaaaa")
                 promise(.success(rooms))
             })
         }

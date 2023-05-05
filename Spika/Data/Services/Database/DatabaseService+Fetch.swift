@@ -12,7 +12,8 @@ extension DatabaseService {
     
     func getLocalUsers() -> Future<[User], Error> {
         return Future { [weak self] promise in
-            self?.fetchAsyncEntity(entity: UserEntity.self, completion: { userEntities, error in
+            guard let self else { return }
+            self.fetchAsyncEntity(context: self.coreDataStack.mainMOC, entity: UserEntity.self, completion: { userEntities, error in
                 if let error {
                     NSLog("Core Data Error: local user: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.requestFailed))
@@ -26,10 +27,12 @@ extension DatabaseService {
     
     func getLocalUser(withId id: Int64) -> Future<User, Error> {
         return Future { [weak self] promise in
+            guard let self else { return }
+
             let fetchRequest = UserEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %@", "\(id)")
             
-            self?.fetchAsyncData(fetchRequest: fetchRequest, completion: { dbUsers, error in
+            self.fetchAsyncData(context: self.coreDataStack.mainMOC, fetchRequest: fetchRequest, completion: { dbUsers, error in
                 if let error {
                     NSLog("Core Data Error: fetching local user: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.noSuchRecord))
@@ -84,10 +87,11 @@ extension DatabaseService {
 extension DatabaseService {
     func getPrivateRoom(forUserId id: Int64) -> Future<Room, Error> {
         Future { [weak self] promise in
+            guard let self else { return }
             let roomUsersFR = RoomUserEntity.fetchRequest()
             roomUsersFR.predicate = NSPredicate(format: "userId == %d", id)
             
-            self?.fetchAsyncData(fetchRequest: roomUsersFR, completion: { roomUsers, error in
+            self.fetchAsyncData(context: self.coreDataStack.mainMOC,fetchRequest: roomUsersFR, completion: { [weak self] roomUsers, error in
                 guard let self else { return }
                 
                 if let error {
@@ -136,18 +140,20 @@ extension DatabaseService {
     
     func missingRoomIds(ids: Set<Int64>) -> Future<Set<Int64>, Error> {
         Future { [weak self] promise in
-            guard let self else { return }
-            let roomsFR = RoomEntity.fetchRequest()
-            roomsFR.predicate = NSPredicate(format: "id IN %@", ids)
-            
-            guard let roomsEntities = self.fetchDataAndWait(fetchRequest: roomsFR, context: self.coreDataStack.mainMOC) else {
-                promise(.failure(DatabaseError.requestFailed))
-                return
-            }
-            
-            let fetchedIds = Set(roomsEntities.map { $0.id })
-            let dif = ids.subtracting(fetchedIds)
-            promise(.success(dif))
+            self?.performBackgroundTask(task: { [weak self] context in
+                guard let self else { return }
+                let roomsFR = RoomEntity.fetchRequest()
+                roomsFR.predicate = NSPredicate(format: "id IN %@", ids)
+                
+                guard let roomsEntities = self.fetchDataAndWait(fetchRequest: roomsFR, context: self.coreDataStack.mainMOC) else {
+                    promise(.failure(DatabaseError.requestFailed))
+                    return
+                }
+                
+                let fetchedIds = Set(roomsEntities.map { $0.id })
+                let dif = ids.subtracting(fetchedIds)
+                promise(.success(dif))
+            })
         }
     }
 }

@@ -197,12 +197,12 @@ extension DatabaseService {
                     for roomUser in roomUsers {
                         context.delete(roomUser)
                     }
-                    try context.save() // TODO: - This needs testing, it might not be necessary to save context in mid deletion
+                    try self?.save(withContext: context)
                     
                     room.users.forEach { rU in
                         _ = RoomUserEntity(roomUser: rU, insertInto: context)
                     }
-                    try context.save()
+                    try self?.save(withContext: context)
                     promise(.success(room))
                 } catch {
                     print("Core Data Error deleting RoomUsers: \(error)")

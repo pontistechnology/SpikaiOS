@@ -22,7 +22,7 @@ extension DatabaseService {
                 
                 context.delete(roomEntity)
                 do {
-                    try context.save()
+                    try self?.save(withContext: context)
                     promise(.success(true))
                 } catch {
                     promise(.failure((DatabaseError.savingError)))
