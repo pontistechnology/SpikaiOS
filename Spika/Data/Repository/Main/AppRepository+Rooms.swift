@@ -305,13 +305,13 @@ extension AppRepository {
     
     func generateRoomModelsWithUsers(context: NSManagedObjectContext, roomEntities: [RoomEntity]) -> Future<[Room], Error> {
         Future { [weak self] promise in
-            self?.databaseService.performBackgroundTask(onContext: context, task: { [weak self] context in
+            context.perform {
                 let rooms:[Room] = roomEntities.compactMap { roomEntity in
                     guard let roomUsers = self?.getRoomUsers(roomId: roomEntity.id, context: context) else { return nil }
                     return Room(roomEntity: roomEntity, users: roomUsers)
                 }
                 promise(.success(rooms))
-            })
+            }
         }
     }
 }
