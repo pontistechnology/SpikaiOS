@@ -145,7 +145,7 @@ extension DatabaseService {
                 let roomsFR = RoomEntity.fetchRequest()
                 roomsFR.predicate = NSPredicate(format: "id IN %@", ids)
                 
-                guard let roomsEntities = self.fetchDataAndWait(fetchRequest: roomsFR, context: self.coreDataStack.mainMOC) else {
+                guard let roomsEntities = self.fetchDataAndWait(fetchRequest: roomsFR, context: context) else {
                     promise(.failure(DatabaseError.requestFailed))
                     return
                 }
