@@ -12,18 +12,6 @@ class AllChatsViewModel: BaseViewModel {
     
     private var frc: NSFetchedResultsController<RoomEntity>?
     
-    private func predicateWithSearch(search: String? = nil) -> NSPredicate {
-        let predicate1 =  NSPredicate(format: "\(#keyPath(RoomEntity.type)) == '\(RoomType.groupRoom.rawValue)' OR \(#keyPath(RoomEntity.lastMessageTimestamp)) > 0 OR \(#keyPath(RoomEntity.unreadCount)) > 0")
-        let predicate2 = NSPredicate(format: "\(#keyPath(RoomEntity.roomDeleted)) == false")
-        
-        if let search {
-            let searchPredicate = NSPredicate(format: "\(#keyPath(RoomEntity.name)) CONTAINS[c] %@", search)
-            return NSCompoundPredicate(andPredicateWithSubpredicates: [searchPredicate, predicate1, predicate2])
-        } else {
-            return NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
-        }
-    }
-    
     let search = CurrentValueSubject<String?, Error>(nil)
     private let fetchedRoomEntities = CurrentValueSubject<[RoomEntity]?,Never>(nil)
     let rooms = CurrentValueSubject<[Room],Never>([])
@@ -94,10 +82,10 @@ extension AllChatsViewModel {
 
 extension AllChatsViewModel {
     func setupBinding() {
-        self.fetchedRoomEntities
+        fetchedRoomEntities
             .flatMap(maxPublishers: .unlimited) { [weak self] entities in
                 guard let self,
-                        let context = self.frc?.managedObjectContext,
+                      let context = self.frc?.managedObjectContext,
                       let entities, entities.count > 0 else {
                     return Future<[Room], Error> { promise in
                         promise(.success([]))
@@ -105,7 +93,7 @@ extension AllChatsViewModel {
                 }
                 return self.repository.generateRoomModelsWithUsers(context: context, roomEntities: entities)
             }
-            .combineLatest(self.search, { rooms, search in
+            .combineLatest(search, { rooms, search in
                 guard let search, !search.isEmpty else {
                     return rooms
                 }
@@ -123,7 +111,7 @@ extension AllChatsViewModel {
     
     func setRoomsFetch() {
         let fetchRequest = RoomEntity.fetchRequest()
-        fetchRequest.predicate = self.predicateWithSearch()
+        fetchRequest.predicate = searchPredicate()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
@@ -137,6 +125,12 @@ extension AllChatsViewModel {
             fatalError("Failed to fetch entities: \(error)")
             // TODO: handle error and change main context to func
         }
+    }
+    
+    private func searchPredicate() -> NSPredicate {
+        let predicate1 =  NSPredicate(format: "\(#keyPath(RoomEntity.type)) == '\(RoomType.groupRoom.rawValue)' OR \(#keyPath(RoomEntity.lastMessageTimestamp)) > 0 OR \(#keyPath(RoomEntity.unreadCount)) > 0")
+        let predicate2 = NSPredicate(format: "\(#keyPath(RoomEntity.roomDeleted)) == false")
+        return NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
     }
 }
 
@@ -152,19 +146,19 @@ extension AllChatsViewModel {
 
 private extension AllChatsViewModel {
     func getRoom(for indexPath: IndexPath) -> Room? {
-        let room = self.rooms.value[indexPath.row]
+        let room = rooms.value[indexPath.row]
         return room
     }
     
     func getLastMessage(for indexPath: IndexPath) -> Message? {
-        let room = self.rooms.value[indexPath.row]
-        guard let context = self.frc?.managedObjectContext else { return nil }
+        let room = rooms.value[indexPath.row]
+        guard let context = frc?.managedObjectContext else { return nil }
         return repository.getLastMessage(roomId: room.id, context: context)
     }
 }
 
 extension AllChatsViewModel: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.fetchedRoomEntities.send(self.frc?.fetchedObjects)
+        fetchedRoomEntities.send(self.frc?.fetchedObjects)
     }
 }

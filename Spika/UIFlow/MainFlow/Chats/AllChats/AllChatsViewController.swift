@@ -45,11 +45,9 @@ class AllChatsViewController: BaseViewController {
         
         viewModel.rooms
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.allChatsView.allChatsTableView.reloadData()
+            .sink { [weak self] _ in
+                self?.allChatsView.allChatsTableView.reloadData()
             }.store(in: &self.subscriptions)
-//        viewModel.frc?.delegate = self
-//        allChatsView.allChatsTableView.reloadData()
     }
     
     // TODO: - move to viewmodel under navigation
@@ -139,10 +137,10 @@ extension AllChatsViewController {
 
 extension AllChatsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
-        self.viewModel.search.send(value)
+        viewModel.search.send(value)
     }
     
     func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
-        self.viewModel.search.send(nil)
+        viewModel.search.send(nil)
     }
 }
