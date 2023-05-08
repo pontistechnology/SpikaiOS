@@ -100,6 +100,8 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         case .text(let text):
             self.rightButton.isHidden = false
             self.rightButton.setTitle(text, for: .normal)
+            self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratLight.rawValue, size: 14)
+            self.rightButton.setTitleColor(.textPrimary, for: .normal)
         case .remove:
             self.rightButton.isHidden = false
             self.rightButton.setImage(UIImage(safeImage: .close), for: .normal)
