@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AppereanceSettingsViewModel: BaseViewModel {
+class AppereanceSettingsViewModel: BaseSettingsViewModel {
     func changeAppereanceMode(to mode: UIUserInterfaceStyle) {
         getAppCoordinator()?.changeAppereance(to: mode)
     }

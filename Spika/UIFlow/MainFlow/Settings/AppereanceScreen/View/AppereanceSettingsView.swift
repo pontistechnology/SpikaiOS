@@ -8,52 +8,47 @@
 import Foundation
 import UIKit
 
-class AppereanceSettingsView: UIView {
+class AppereanceSettingsView: BaseSettingsView {
     
-    let currentLabel = CustomLabel(text: "")
-    let darkModeLabel = CustomLabel(text: .getStringFor(.darkMode))
-    let lightModeLabel = CustomLabel(text: .getStringFor(.lightMode))
-    let systemModeLabel = CustomLabel(text: .getStringFor(.systemMode))
+    let darkModeSwitch = CheckmarkView(text: .getStringFor(.darkMode))
+    let lightModeSwitch = CheckmarkView(text: .getStringFor(.lightMode))
+    let systemModeSwitch = CheckmarkView(text: .getStringFor(.systemMode))
     
-    private let stackView = CustomStackView(axis: .vertical, distribution: .fillEqually, spacing: 15)
-    
-    init() {
-        super.init(frame: .zero)
-        setupView()
+    override func styleSubviews() {
+        super.styleSubviews()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension AppereanceSettingsView: BaseView {
-    func addSubviews() {
-        addSubview(stackView)
-        stackView.addArrangedSubview(darkModeLabel)
-        stackView.addArrangedSubview(lightModeLabel)
-        stackView.addArrangedSubview(systemModeLabel)
-        stackView.addArrangedSubview(currentLabel)
+    override func addSubviews() {
+        super.addSubviews()
+        self.mainStackView.addArrangedSubview(darkModeSwitch)
+        self.mainStackView.addArrangedSubview(lightModeSwitch)
+        self.mainStackView.addArrangedSubview(systemModeSwitch)
     }
     
-    func styleSubviews() {
+    override func positionSubviews() {
+        super.positionSubviews()
+        darkModeSwitch.constrainHeight(50)
+        lightModeSwitch.constrainHeight(50)
+        systemModeSwitch.constrainHeight(50)
     }
     
-    func positionSubviews() {
-        stackView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 10))
-        stackView.constrainHeight(100)
-    }
 }
 
 extension AppereanceSettingsView {
     func changeCurrentLabel(to value: Int) {
-        currentLabel.text = ""
-        if value == 0 {
-            currentLabel.text = "Currently we are using system mode."
-        } else if value == 1 {
-            currentLabel.text = "Currently we are forcing light mode"
-        } else if value == 2 {
-            currentLabel.text = "Currently we are forcing dark mode"
+        darkModeSwitch.updateIsSelected(isSelected: false)
+        lightModeSwitch.updateIsSelected(isSelected: false)
+        systemModeSwitch.updateIsSelected(isSelected: false)
+        
+        switch value {
+        case 0:
+            systemModeSwitch.updateIsSelected(isSelected: true)
+        case 1:
+            lightModeSwitch.updateIsSelected(isSelected: true)
+        case 2:
+            darkModeSwitch.updateIsSelected(isSelected: true)
+        default:
+            systemModeSwitch.updateIsSelected(isSelected: true)
         }
     }
 }
