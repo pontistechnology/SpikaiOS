@@ -409,6 +409,8 @@
 		6CBBEC67298AB1F5004281D3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBBEC66298AB1F5004281D3 /* CustomButton.swift */; };
 		6CBD43A52982801D00A1059E /* AppRepository+BlockedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */; };
 		6CBD43A9298282F100A1059E /* AppRepository+Blocked_Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */; };
+		6CBEAB772A091FD00087382E /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB762A091FD00087382E /* CheckmarkView.swift */; };
+		6CBEAB782A091FD00087382E /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB762A091FD00087382E /* CheckmarkView.swift */; };
 		6CD1915A29A35E2300A8041A /* ChatBlockingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1915929A35E2300A8041A /* ChatBlockingView.swift */; };
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
@@ -850,6 +852,7 @@
 		6C9C7241291E743A0089AB4C /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		6CBBEC66298AB1F5004281D3 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Blocked_Notification.swift"; sourceTree = "<group>"; };
+		6CBEAB762A091FD00087382E /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		6CD1915929A35E2300A8041A /* ChatBlockingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBlockingView.swift; sourceTree = "<group>"; };
 		6CD30FF22922865D0017918B /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+BlockedUsers.swift"; sourceTree = "<group>"; };
@@ -1772,9 +1775,9 @@
 		AD819244272173AB00D5BE48 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				93D993042992AB7F0038565F /* AppereanceScreen */,
 				6C175EBB297ECC2A00804275 /* MainSettingsScreen */,
 				6C175EB1297EC3E400804275 /* SettingsScreens */,
+				93D993042992AB7F0038565F /* AppereanceScreen */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2268,6 +2271,7 @@
 				9323EC6827B3702000FA0EB1 /* DetailsView.swift */,
 				9323EC6A27B3E8D500FA0EB1 /* NavView.swift */,
 				9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */,
+				6CBEAB762A091FD00087382E /* CheckmarkView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2695,6 +2699,7 @@
 				6C78B7C329AF5ADB004BF881 /* ChatsAssembly.swift in Sources */,
 				6C78B7C429AF5ADB004BF881 /* CountryPickerViewController.swift in Sources */,
 				6C78B7C629AF5ADB004BF881 /* DocsTableViewCell.swift in Sources */,
+				6CBEAB782A091FD00087382E /* CheckmarkView.swift in Sources */,
 				6C78B7C729AF5ADB004BF881 /* AppRepository+Sync.swift in Sources */,
 				6C78B7C829AF5ADB004BF881 /* HomeViewModel.swift in Sources */,
 				6C78B7C929AF5ADB004BF881 /* AllChatsViewController.swift in Sources */,
@@ -3153,6 +3158,7 @@
 				933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */,
 				93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
+				6CBEAB772A091FD00087382E /* CheckmarkView.swift in Sources */,
 				93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */,
 				939B30402850DC1F00FFA537 /* AppRepository+Sync.swift in Sources */,
 				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
