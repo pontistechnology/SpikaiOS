@@ -73,8 +73,23 @@ extension MessageDetailsViewController: UITableViewDataSource {
         viewModel.numberOfSections()
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        viewModel.sectionTitles[section]
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let customFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as! TableViewHeaderWithIcon
+        let title = viewModel.sectionTitles[section]
+        customFooterView.title.text = title
+        switch section {
+        case 0:
+            customFooterView.icon.image = UIImage(safeImage: .senderAction)
+        case 1:
+            customFooterView.icon.image = UIImage(safeImage: .seen)
+        case 2:
+            customFooterView.icon.image = UIImage(safeImage: .delivered)
+        case 3:
+            customFooterView.icon.image = UIImage(safeImage: .sent)
+        default:
+            break
+        }
+        return customFooterView
     }
 }
 
