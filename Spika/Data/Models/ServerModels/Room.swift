@@ -33,6 +33,24 @@ extension Room {
                   unreadCount: roomEntity.unreadCount,
                   pinned: roomEntity.pinned)
     }
+    
+    
+    func compareWith(string: String) -> Bool {
+        if let name,
+           name.range(of: string, options: .caseInsensitive) != nil {
+            return true
+        }
+        
+        for user in self.users {
+            if let userName = user.user.displayName,
+               userName.range(of: string, options: .caseInsensitive) != nil {
+                return true
+            }
+        }
+        
+        return false
+    }
+
 }
 
 extension Room {
