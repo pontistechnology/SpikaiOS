@@ -574,4 +574,17 @@ extension DatabaseService {
             }
         }
     }
+    
+    // TODO: - check perform, because getRoomUsers will call perform and wait
+    func generateRoomModelsWithUsers(roomEntities: [RoomEntity], context: NSManagedObjectContext) -> Future<[Room], Error> {
+        Future { [weak self] promise in
+            context.perform { [weak self] in
+                let rooms:[Room] = roomEntities.compactMap { roomEntity in
+                    guard let roomUsers = self?.getRoomUsers(roomId: roomEntity.id, context: context) else { return nil }
+                    return Room(roomEntity: roomEntity, users: roomUsers)
+                }
+                promise(.success(rooms))
+            }
+        }
+    }
 }
