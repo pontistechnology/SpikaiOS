@@ -7,9 +7,15 @@
 
 import UIKit
 
-enum RoomType: String, Codable {
+enum RoomType: String, Codable, Comparable {
     case privateRoom = "private"
     case groupRoom = "group"
+    
+    static func <(lhs: RoomType, rhs: RoomType) -> Bool {
+        if lhs == rhs { return false }
+        return lhs == .groupRoom
+    }
+
 }
 
 enum MessageRecordType: String, Codable {

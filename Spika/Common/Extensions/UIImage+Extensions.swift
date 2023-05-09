@@ -43,6 +43,7 @@ enum AssetName: String {
     case cameraImage = "camera_image"
     case mutedIcon = "mutedIcon"
     case pinnedChatIcon = "pinnedChatIcon"
+    case senderAction = "SenderAction"
     
     // File icons Ken
     case pdfThumbnail = "pdfThumbnail"
@@ -85,6 +86,7 @@ enum AssetName: String {
     case slideDelete = "slideDelete"
     case slideDetails = "slideDetails"
     case editIcon = "editIcon"
+    case checkmark = "checkmark"
 }
 
 extension UIImage {    

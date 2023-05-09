@@ -302,4 +302,8 @@ extension AppRepository {
     func getRoomUsers(roomId: Int64, context: NSManagedObjectContext) -> [RoomUser]? {
         databaseService.getRoomUsers(roomId: roomId, context: context)
     }
+    
+    func generateRoomModelsWithUsers(context: NSManagedObjectContext, roomEntities: [RoomEntity]) -> Future<[Room], Error> {
+        databaseService.generateRoomModelsWithUsers(roomEntities: roomEntities, context: context)
+    }
 }

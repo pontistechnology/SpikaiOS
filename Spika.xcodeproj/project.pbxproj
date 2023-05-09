@@ -409,6 +409,12 @@
 		6CBBEC67298AB1F5004281D3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBBEC66298AB1F5004281D3 /* CustomButton.swift */; };
 		6CBD43A52982801D00A1059E /* AppRepository+BlockedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */; };
 		6CBD43A9298282F100A1059E /* AppRepository+Blocked_Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */; };
+		6CBEAB772A091FD00087382E /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB762A091FD00087382E /* CheckmarkView.swift */; };
+		6CBEAB782A091FD00087382E /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB762A091FD00087382E /* CheckmarkView.swift */; };
+		6CBEAB7A2A0933AB0087382E /* TableViewHeaderWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */; };
+		6CBEAB7B2A0933AB0087382E /* TableViewHeaderWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */; };
+		6CC5CECE2A0A298F003BDC54 /* MessageDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */; };
+		6CC5CECF2A0A298F003BDC54 /* MessageDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */; };
 		6CD1915A29A35E2300A8041A /* ChatBlockingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1915929A35E2300A8041A /* ChatBlockingView.swift */; };
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
@@ -633,6 +639,10 @@
 		93CF47412963287A00213DBE /* AppRepository+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF473C2963240200213DBE /* AppRepository+File.swift */; };
 		93CFFA4F293587EB001EBACF /* MessageReplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFFA4E293587EB001EBACF /* MessageReplyView.swift */; };
 		93CFFA5129358CCB001EBACF /* IconAndLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */; };
+		93D0CFA52A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */; };
+		93D0CFA62A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */; };
+		93D0CFA72A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */; };
+		93D0CFA82A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */; };
 		93D4034D29245B5400DC77D3 /* AppRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */; };
 		93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */; };
 		93D86DB827BAA15900F275B0 /* DocsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DB727BAA15900F275B0 /* DocsTableView.swift */; };
@@ -846,6 +856,9 @@
 		6C9C7241291E743A0089AB4C /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		6CBBEC66298AB1F5004281D3 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Blocked_Notification.swift"; sourceTree = "<group>"; };
+		6CBEAB762A091FD00087382E /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
+		6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeaderWithIcon.swift; sourceTree = "<group>"; };
+		6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailSection.swift; sourceTree = "<group>"; };
 		6CD1915929A35E2300A8041A /* ChatBlockingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBlockingView.swift; sourceTree = "<group>"; };
 		6CD30FF22922865D0017918B /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+BlockedUsers.swift"; sourceTree = "<group>"; };
@@ -990,6 +1003,7 @@
 		93CF473C2963240200213DBE /* AppRepository+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+File.swift"; sourceTree = "<group>"; };
 		93CFFA4E293587EB001EBACF /* MessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyView.swift; sourceTree = "<group>"; };
 		93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconAndLabelView.swift; sourceTree = "<group>"; };
+		93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Extensions.swift"; sourceTree = "<group>"; };
 		93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionView.swift; sourceTree = "<group>"; };
 		93D86DB727BAA15900F275B0 /* DocsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocsTableView.swift; sourceTree = "<group>"; };
 		93D86DBB27BAA17E00F275B0 /* LinksTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksTableView.swift; sourceTree = "<group>"; };
@@ -1721,6 +1735,8 @@
 				93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */,
 				93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */,
 				9383879429D596E40057714A /* MessageDetailsViewModel.swift */,
+				6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */,
+				6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */,
 			);
 			path = MessageDetails;
 			sourceTree = "<group>";
@@ -1767,9 +1783,9 @@
 		AD819244272173AB00D5BE48 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				93D993042992AB7F0038565F /* AppereanceScreen */,
 				6C175EBB297ECC2A00804275 /* MainSettingsScreen */,
 				6C175EB1297EC3E400804275 /* SettingsScreens */,
+				93D993042992AB7F0038565F /* AppereanceScreen */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2139,6 +2155,7 @@
 				9325720928B8F0140078D489 /* UTType+Extensions.swift */,
 				932462D728FCB9B100E8C1B9 /* UIFont+Extensions.swift */,
 				6C0AA21D2966D55D00E87304 /* Publisher+Extensions.swift */,
+				93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2262,6 +2279,7 @@
 				9323EC6827B3702000FA0EB1 /* DetailsView.swift */,
 				9323EC6A27B3E8D500FA0EB1 /* NavView.swift */,
 				9323EC6C27B3EC9200FA0EB1 /* SwitchView.swift */,
+				6CBEAB762A091FD00087382E /* CheckmarkView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2689,6 +2707,7 @@
 				6C78B7C329AF5ADB004BF881 /* ChatsAssembly.swift in Sources */,
 				6C78B7C429AF5ADB004BF881 /* CountryPickerViewController.swift in Sources */,
 				6C78B7C629AF5ADB004BF881 /* DocsTableViewCell.swift in Sources */,
+				6CBEAB782A091FD00087382E /* CheckmarkView.swift in Sources */,
 				6C78B7C729AF5ADB004BF881 /* AppRepository+Sync.swift in Sources */,
 				6C78B7C829AF5ADB004BF881 /* HomeViewModel.swift in Sources */,
 				6C78B7C929AF5ADB004BF881 /* AllChatsViewController.swift in Sources */,
@@ -2811,10 +2830,12 @@
 				6C78B84129AF5ADB004BF881 /* DebugUtils.swift in Sources */,
 				6C78B84229AF5ADB004BF881 /* NotificationAlertView.swift in Sources */,
 				6C53D4E629F0322600F0F17D /* ChatUsersView.swift in Sources */,
+				93D0CFA72A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */,
 				6C78B84329AF5ADB004BF881 /* SyncMessageRecordsResponseModel.swift in Sources */,
 				6C78B84429AF5ADB004BF881 /* BaseViewModel.swift in Sources */,
 				6C78B84529AF5ADB004BF881 /* DetailsViewController.swift in Sources */,
 				6C78B84629AF5ADB004BF881 /* MessageInputView.swift in Sources */,
+				6CC5CECF2A0A298F003BDC54 /* MessageDetailSection.swift in Sources */,
 				6C78B84729AF5ADB004BF881 /* MessageStateView.swift in Sources */,
 				6C78B84829AF5ADB004BF881 /* EnterNumberTextField.swift in Sources */,
 				6C78B84929AF5ADB004BF881 /* EnterNumberViewController.swift in Sources */,
@@ -2828,6 +2849,7 @@
 				6C78B85129AF5ADB004BF881 /* ChatDetailsView.swift in Sources */,
 				6C78B85229AF5ADB004BF881 /* MessageActionsViewController.swift in Sources */,
 				6C78B85329AF5ADB004BF881 /* Assembler+Extensions.swift in Sources */,
+				6CBEAB7B2A0933AB0087382E /* TableViewHeaderWithIcon.swift in Sources */,
 				6C78B85429AF5ADB004BF881 /* OldAlertView.swift in Sources */,
 				6C78B85529AF5ADB004BF881 /* LoginAssembly.swift in Sources */,
 				6C78B85629AF5ADB004BF881 /* ImageViewWithIcon.swift in Sources */,
@@ -2961,6 +2983,7 @@
 				6C2F972929AF67BD001F170B /* ConstantsDev.swift in Sources */,
 				6C78B8EA29AF5D89004BF881 /* DatabaseService.swift in Sources */,
 				6C78B8EB29AF5D89004BF881 /* NetworkService.swift in Sources */,
+				93D0CFA82A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */,
 				6C78B8EC29AF5D89004BF881 /* SendMessageRequest.swift in Sources */,
 				6C78B8ED29AF5D89004BF881 /* SendReactionRequestModel.swift in Sources */,
 				6C78B8EE29AF5D89004BF881 /* MessageEntity+CoreDataClass.swift in Sources */,
@@ -3047,6 +3070,7 @@
 				931B14DD2821182D00A0CD35 /* DatabaseService.swift in Sources */,
 				931B14DC2821182800A0CD35 /* NetworkService.swift in Sources */,
 				931B14F728211AC100A0CD35 /* SendMessageRequest.swift in Sources */,
+				93D0CFA62A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */,
 				934FF17329778E09002C76F7 /* SendReactionRequestModel.swift in Sources */,
 				9324B254281BDFD700E7D76D /* MessageEntity+CoreDataClass.swift in Sources */,
 				939B304C2850E01800FFA537 /* SyncRoomsResponseModel.swift in Sources */,
@@ -3144,6 +3168,7 @@
 				933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */,
 				93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
+				6CBEAB772A091FD00087382E /* CheckmarkView.swift in Sources */,
 				93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */,
 				939B30402850DC1F00FFA537 /* AppRepository+Sync.swift in Sources */,
 				ADD503ED270DE2B9009D50CB /* HomeViewModel.swift in Sources */,
@@ -3266,10 +3291,12 @@
 				93C07A9C290139B5003DFD61 /* Message+Extensions.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
 				6C0D480A29EEC66D00D8ACD4 /* ChatUsersView.swift in Sources */,
+				93D0CFA52A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */,
 				936A28EC2926C4C900E7333D /* DebugUtils.swift in Sources */,
 				93A76B2C27F6789500B6A03E /* NotificationAlertView.swift in Sources */,
 				939B30482850DE4300FFA537 /* SyncMessageRecordsResponseModel.swift in Sources */,
 				ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */,
+				6CC5CECE2A0A298F003BDC54 /* MessageDetailSection.swift in Sources */,
 				ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */,
 				9396AE1327CBAC410041B4A6 /* MessageInputView.swift in Sources */,
 				931E23A927D2DCDA0065FFFC /* MessageStateView.swift in Sources */,
@@ -3283,6 +3310,7 @@
 				ADD503D5270DD5F4009D50CB /* AppAssembly.swift in Sources */,
 				93FC0DA427FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift in Sources */,
 				6C76903B291D451A007F13D2 /* ChatDetailsView.swift in Sources */,
+				6CBEAB7A2A0933AB0087382E /* TableViewHeaderWithIcon.swift in Sources */,
 				9352A5702977667900E0D90E /* MessageActionsViewController.swift in Sources */,
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
 				9367456127C71D3700F43CCD /* OldAlertView.swift in Sources */,
@@ -3611,7 +3639,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 38;
+				APP_BUILD_VERSION = 39;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -3675,7 +3703,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 38;
+				APP_BUILD_VERSION = 39;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;

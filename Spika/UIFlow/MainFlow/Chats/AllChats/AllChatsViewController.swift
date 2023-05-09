@@ -38,28 +38,28 @@ class AllChatsViewController: BaseViewController {
             .tap()
             .sink { [weak self] _ in
                 self?.onCreateNewRoom()
-            }.store(in: &self.subscriptions)
+            }.store(in: &subscriptions)
         
+        viewModel.setupBinding()
         viewModel.setRoomsFetch()
-        viewModel.frc?.delegate = self
-        allChatsView.allChatsTableView.reloadData()
+        
+        viewModel.rooms
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.allChatsView.allChatsTableView.reloadData()
+            }.store(in: &subscriptions)
     }
     
     // TODO: - move to viewmodel under navigation
     func onCreateNewRoom() {
-        self.viewModel.getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
+        viewModel.getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
     }
     
 }
 
 // MARK: - NSFetchedResultsController
 
-extension AllChatsViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        allChatsView.allChatsTableView.reloadData()
-    }
-}
+
 
 // MARK: - UITableview
 
@@ -70,13 +70,13 @@ extension AllChatsViewController: UITableViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.view.endEditing(true) // TODO: - check, maybe use tableview keyboard handling method
+        view.endEditing(true) // TODO: - check, maybe use tableview keyboard handling method
     }
 }
 
 extension AllChatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfRows(in: section)
+        return viewModel.rooms.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,13 +137,10 @@ extension AllChatsViewController {
 
 extension AllChatsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
-        if let value = value {
-            self.viewModel.changePredicate(to: value)
-        }
+        viewModel.search.send(value)
     }
     
     func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
-        viewModel.changePredicate(to: "")
-        allChatsView.allChatsTableView.reloadData()
+        viewModel.search.send(nil)
     }
 }
