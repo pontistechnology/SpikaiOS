@@ -413,6 +413,8 @@
 		6CBEAB782A091FD00087382E /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB762A091FD00087382E /* CheckmarkView.swift */; };
 		6CBEAB7A2A0933AB0087382E /* TableViewHeaderWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */; };
 		6CBEAB7B2A0933AB0087382E /* TableViewHeaderWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */; };
+		6CC5CECE2A0A298F003BDC54 /* MessageDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */; };
+		6CC5CECF2A0A298F003BDC54 /* MessageDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */; };
 		6CD1915A29A35E2300A8041A /* ChatBlockingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1915929A35E2300A8041A /* ChatBlockingView.swift */; };
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
@@ -856,6 +858,7 @@
 		6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Blocked_Notification.swift"; sourceTree = "<group>"; };
 		6CBEAB762A091FD00087382E /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeaderWithIcon.swift; sourceTree = "<group>"; };
+		6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailSection.swift; sourceTree = "<group>"; };
 		6CD1915929A35E2300A8041A /* ChatBlockingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBlockingView.swift; sourceTree = "<group>"; };
 		6CD30FF22922865D0017918B /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+BlockedUsers.swift"; sourceTree = "<group>"; };
@@ -1733,6 +1736,7 @@
 				93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */,
 				9383879429D596E40057714A /* MessageDetailsViewModel.swift */,
 				6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */,
+				6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */,
 			);
 			path = MessageDetails;
 			sourceTree = "<group>";
@@ -2831,6 +2835,7 @@
 				6C78B84429AF5ADB004BF881 /* BaseViewModel.swift in Sources */,
 				6C78B84529AF5ADB004BF881 /* DetailsViewController.swift in Sources */,
 				6C78B84629AF5ADB004BF881 /* MessageInputView.swift in Sources */,
+				6CC5CECF2A0A298F003BDC54 /* MessageDetailSection.swift in Sources */,
 				6C78B84729AF5ADB004BF881 /* MessageStateView.swift in Sources */,
 				6C78B84829AF5ADB004BF881 /* EnterNumberTextField.swift in Sources */,
 				6C78B84929AF5ADB004BF881 /* EnterNumberViewController.swift in Sources */,
@@ -3291,6 +3296,7 @@
 				93A76B2C27F6789500B6A03E /* NotificationAlertView.swift in Sources */,
 				939B30482850DE4300FFA537 /* SyncMessageRecordsResponseModel.swift in Sources */,
 				ADD503E1270DD755009D50CB /* BaseViewModel.swift in Sources */,
+				6CC5CECE2A0A298F003BDC54 /* MessageDetailSection.swift in Sources */,
 				ADD503FC27101B20009D50CB /* DetailsViewController.swift in Sources */,
 				9396AE1327CBAC410041B4A6 /* MessageInputView.swift in Sources */,
 				931E23A927D2DCDA0065FFFC /* MessageStateView.swift in Sources */,

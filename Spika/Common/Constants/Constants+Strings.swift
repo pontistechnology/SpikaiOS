@@ -93,6 +93,7 @@ public extension Constants {
         case deliveredTo = "Delivered to"
         case sentTo = "Sent to"
         case waiting = "waiting"
+        case senderActions = "Sender actions"
         
         // MARK: - NewGroupChatViewController
         case create = "Create"

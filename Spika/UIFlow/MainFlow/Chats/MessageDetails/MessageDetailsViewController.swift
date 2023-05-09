@@ -33,17 +33,7 @@ extension MessageDetailsViewController {
     }
 }
 
-extension MessageDetailsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        if let headerView = view as? UITableViewHeaderFooterView {
-            headerView.contentView.backgroundColor = .secondaryBackground
-            headerView.textLabel?.textColor = .textPrimary
-            headerView.textLabel?.font = .customFont(name: .MontserratRegular, size: 12)
-        }
-    }
-}
-
-extension MessageDetailsViewController: UITableViewDataSource {
+extension MessageDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.numberOfRows(in: section)
     }
@@ -75,7 +65,7 @@ extension MessageDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let customFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as! TableViewHeaderWithIcon
-        let title = viewModel.sectionTitles[section]
+        let title = viewModel.sections[section].type.titleString()//viewModel.sectionTitles[section]
         customFooterView.title.text = title
         switch section {
         case 0:
