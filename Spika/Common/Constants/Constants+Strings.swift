@@ -87,6 +87,7 @@ public extension Constants {
         case selected = "selected"
         case selectUsers = "Select users"
         case searchForContact = "Search for contact"
+        case searchByGroupOrContactName = "Search by group or contact name"
         
         // MARK: - MessageDetailsViewController
         case readBy = "Read by"
