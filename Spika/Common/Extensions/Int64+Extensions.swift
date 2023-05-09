@@ -15,7 +15,7 @@ enum DateFormat: String {
         case .HHmm:
             return "HH:mm"
         case .ddMMyyyyHHmm:
-            return "dd.MM.yyyy HH:mm"
+            return "dd.MM.yyyy. HH:mm"
         case .ddMM:
             return "dd.MM."
         case .allChatsTimeFormat:
@@ -36,7 +36,7 @@ extension Int64 {
             if self.isToday() {
                 return convertTimestamp(to: .HHmm)
             } else {
-                return convertTimestamp(to: .ddMM)
+                return convertTimestamp(to: .ddMMyyyyHHmm)
             }
         case .ddMM:
             return convertTimestamp(to: .ddMM)

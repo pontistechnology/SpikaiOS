@@ -11,16 +11,13 @@ import CoreData
 class MessageDetailsViewModel: BaseViewModel {
     private let allUsers: [User]
     private let message: Message
-    private var allRecords: [MessageRecord] = []
-    private var seenRecords: [MessageRecord] = []
-    private var deliveredRecords: [MessageRecord] = []
-    private var sentUsers: [User] = []
-    let sectionTitles = ["Sender actions", .getStringFor(.readBy), .getStringFor(.deliveredTo), .getStringFor(.sentTo)]
+    
+    var sections = [MessageDetailsSection]()
     
     var frc: NSFetchedResultsController<MessageRecordEntity>?
 
     init(repository: Repository, coordinator: Coordinator, users: [User], message: Message) {
-        self.allUsers = users
+        self.allUsers = users.sorted(by: { $0.getDisplayName().localizedCaseInsensitiveCompare($1.getDisplayName()) == .orderedAscending })
         self.message = message
         super.init(repository: repository, coordinator: coordinator)
     }
@@ -50,61 +47,44 @@ extension MessageDetailsViewModel {
 
 extension MessageDetailsViewModel {
     func numberOfRows(in section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return seenRecords.count
-        case 2:
-            return deliveredRecords.count
-        case 3:
-            return sentUsers.count
-        default:
-            return 0
-        }
+        return sections[section].numberOfRows()
     }
     
     func numberOfSections() -> Int {
-        return sectionTitles.count
+        return sections.count
     }
     
     func getDataForCell(at indexPath: IndexPath) -> (avatarUrl: URL?, name: String, time: String, editedTime: String?, telephoneNumber: String?)? {
-        let user: User?
-        let time: String
-        var editedTime: String?
-        switch indexPath.section {
-        case 0:
-            user = allUsers.first(where: { $0.id == message.fromUserId })
-            time = message.createdAt.convert(to: .allChatsTimeFormat)
-            editedTime = message.modifiedAt.convert(to: .allChatsTimeFormat)
-        case 1:
-            user = allUsers.first(where: { $0.id == seenRecords[indexPath.row].userId })
-            time = seenRecords[indexPath.row].createdAt.convert(to: .allChatsTimeFormat)
-        case 2:
-            user = allUsers.first(where: { $0.id == deliveredRecords[indexPath.row].userId })
-            time = deliveredRecords[indexPath.row].createdAt.convert(to: .allChatsTimeFormat)
-        case 3:
-            user = sentUsers[indexPath.row]
-            time = "-"
-        default:
-            return nil
-        }
-        return (user?.avatarFileId?.fullFilePathFromId() ?? nil,
-                user?.getDisplayName() ?? "unknown",
-                time, editedTime, user?.telephoneNumber)
+        return sections[indexPath.section].getDataForCell(at: indexPath)
     }
     
     // TODO: - check sorting
     func refreshData() {
         guard let allRecords = frc?.fetchedObjects?.map({ MessageRecord(messageRecordEntity: $0) }) else { return }
-        self.allRecords = allRecords
-        seenRecords = allRecords.filter({ $0.type == .seen })
-        deliveredRecords = allRecords.filter({ record in
+        let user = allUsers.first(where: { $0.id == message.fromUserId })
+
+        let seenRecords = allRecords.filter({ $0.type == .seen })
+        let deliveredRecords = allRecords.filter({ record in
             record.type == .delivered && !seenRecords.contains(where: { r in r.userId == record.userId })
         })
-        sentUsers = allUsers.filter({ user in
+        let sentUsers = allUsers.filter({ user in
             !(seenRecords.contains { r in r.userId == user.id } ||
              deliveredRecords.contains { r in r.userId == user.id })
         })
+        
+        var sections = [MessageDetailsSection]()
+        
+        sections.append(MessageDetailsSection(type: .senderActions, message:message, records: [], user: user, sentContacts: allUsers))
+        if !seenRecords.isEmpty {
+            sections.append(MessageDetailsSection(type: .readBy, message:message, records: seenRecords, user: user, sentContacts: allUsers))
+        }
+        if !deliveredRecords.isEmpty {
+            sections.append(MessageDetailsSection(type: .deliveredTo, message:message, records: deliveredRecords, user: user, sentContacts: allUsers))
+        }
+        if !sentUsers.isEmpty {
+            sections.append(MessageDetailsSection(type: .sentTo, message:message, records: [], user: user, sentContacts: sentUsers))
+        }
+        
+        self.sections = sections
     }
 }
