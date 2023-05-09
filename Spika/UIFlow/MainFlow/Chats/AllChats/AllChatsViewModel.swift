@@ -37,7 +37,7 @@ extension AllChatsViewModel {
     func getDataForCell(at indexPath: IndexPath) -> (avatarUrl: URL?, name: String,
                                                      description: String, time: String,
                                                      badgeNumber: Int64, muted: Bool, pinned: Bool)? {
-        let room = self.rooms.value[indexPath.row]
+        let room = rooms.value[indexPath.row]
         let lastMessage = getLastMessage(for: indexPath)
         
         if room.type == .privateRoom,
@@ -115,12 +115,12 @@ extension AllChatsViewModel {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
-        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                              managedObjectContext: self.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
-        self.frc?.delegate = self
+        frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                              managedObjectContext: repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
+        frc?.delegate = self
         do {
-            try self.frc?.performFetch()
-            self.fetchedRoomEntities.send(self.frc?.fetchedObjects)
+            try frc?.performFetch()
+            fetchedRoomEntities.send(frc?.fetchedObjects)
         } catch {
             fatalError("Failed to fetch entities: \(error)")
             // TODO: handle error and change main context to func
@@ -159,6 +159,6 @@ private extension AllChatsViewModel {
 
 extension AllChatsViewModel: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        fetchedRoomEntities.send(self.frc?.fetchedObjects)
+        fetchedRoomEntities.send(frc?.fetchedObjects)
     }
 }
