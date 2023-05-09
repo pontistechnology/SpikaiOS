@@ -11,7 +11,7 @@ class AllChatsView: UIView, BaseView {
     
     let chatLabel = CustomLabel(text: .getStringFor(.chat), textSize: 28, textColor: .textPrimary)
     let newChatButton = UIButton()
-    let searchBar = SearchBar(placeholder: .getStringFor(.searchForContact), shouldShowCancel: false)
+    let searchBar = SearchBar(placeholder: .getStringFor(.searchByGroupOrContactName), shouldShowCancel: false)
     let allChatsTableView = UITableView()
     
     override init(frame: CGRect) {

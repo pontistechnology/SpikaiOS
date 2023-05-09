@@ -38,7 +38,7 @@ class AllChatsViewController: BaseViewController {
             .tap()
             .sink { [weak self] _ in
                 self?.onCreateNewRoom()
-            }.store(in: &self.subscriptions)
+            }.store(in: &subscriptions)
         
         viewModel.setupBinding()
         viewModel.setRoomsFetch()
@@ -47,12 +47,12 @@ class AllChatsViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.allChatsView.allChatsTableView.reloadData()
-            }.store(in: &self.subscriptions)
+            }.store(in: &subscriptions)
     }
     
     // TODO: - move to viewmodel under navigation
     func onCreateNewRoom() {
-        self.viewModel.getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
+        viewModel.getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
     }
     
 }
@@ -70,7 +70,7 @@ extension AllChatsViewController: UITableViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.view.endEditing(true) // TODO: - check, maybe use tableview keyboard handling method
+        view.endEditing(true) // TODO: - check, maybe use tableview keyboard handling method
     }
 }
 
