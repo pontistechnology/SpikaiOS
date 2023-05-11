@@ -27,17 +27,18 @@ extension MessageDetailsViewModel {
     func setFetch() {
         guard let messageId = message.id else { return }
         let fetchRequest = MessageRecordEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "(type != 'reaction' AND messageId == %d)", messageId)
+        fetchRequest.predicate =
+        NSPredicate(format: "\(#keyPath(MessageRecordEntity.type)) != %@ AND \(#keyPath(MessageRecordEntity.messageId)) == %d", MessageRecordType.reaction.rawValue, messageId)
 
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: #keyPath(MessageRecordEntity.type), ascending: true),
             NSSortDescriptor(key: #keyPath(MessageRecordEntity.createdAt), ascending: true)]
-        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+        frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(),
                                               sectionNameKeyPath: #keyPath(MessageRecordEntity.type),
                                               cacheName: nil)
         do {
-            try self.frc?.performFetch()
+            try frc?.performFetch()
         } catch {
             fatalError("Failed to fetch entities: \(error)") // TODO: handle error
         }
@@ -74,7 +75,7 @@ extension MessageDetailsViewModel {
         
         var sections = [MessageDetailsSection]()
         
-        sections.append(MessageDetailsSection(type: .senderActions, message:message, records: [], user: user, sentContacts: allUsers))
+        sections.append(MessageDetailsSection(type: .senderActions, message: message, records: [], user: user, sentContacts: allUsers))
         if !seenRecords.isEmpty {
             sections.append(MessageDetailsSection(type: .readBy, message:message, records: seenRecords, user: user, sentContacts: allUsers))
         }
