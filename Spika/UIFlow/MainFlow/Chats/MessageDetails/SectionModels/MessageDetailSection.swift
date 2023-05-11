@@ -51,17 +51,21 @@ class MessageDetailsSection {
     
     
     func getDataForCell(at indexPath: IndexPath) -> (avatarUrl: URL?, name: String, time: String, editedTime: String?, telephoneNumber: String?)? {
-        let time = "-"
+        var time = "-"
+        var editedTime: String? = nil
+        
         var user: User!
         if type == .senderActions {
             user = self.user
+            time = message.createdAt.convert(to: .allChatsTimeFormat)
+            editedTime = message.modifiedAt.convert(to: .allChatsTimeFormat)
         } else {
             user = sentContacts[indexPath.row]
         }
         
         return (user.avatarFileId?.fullFilePathFromId() ?? nil,
                 user.getDisplayName(),
-                time, nil, user.telephoneNumber)
+                time, editedTime, user.telephoneNumber)
     }
     
 }
