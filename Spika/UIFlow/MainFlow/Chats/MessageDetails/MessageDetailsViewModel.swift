@@ -30,11 +30,11 @@ extension MessageDetailsViewModel {
         fetchRequest.predicate = NSPredicate(format: "(type != 'reaction' AND messageId == %d)", messageId)
 
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "type", ascending: true),
+            NSSortDescriptor(key: #keyPath(MessageRecordEntity.type), ascending: true),
             NSSortDescriptor(key: #keyPath(MessageRecordEntity.createdAt), ascending: true)]
         self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(),
-                                              sectionNameKeyPath: "type",
+                                              sectionNameKeyPath: #keyPath(MessageRecordEntity.type),
                                               cacheName: nil)
         do {
             try self.frc?.performFetch()
