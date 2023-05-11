@@ -51,7 +51,7 @@ extension MessageDetailsViewController: UITableViewDataSource, UITableViewDelega
         cell.backgroundColor = .secondaryBackground // TODO: - move to cell
         if indexPath.section == 0 {
             cell.configureCell(title: data.name, description: data.telephoneNumber, leftImage: data.avatarUrl,
-                               type: .doubleEntry(firstText: data.time, firstImage: .sent,
+                               type: .doubleEntry(firstText: data.time, firstImage: .done,
                                                   secondText: data.editedTime, secondImage: .editIcon))
         } else {
             cell.configureCell(title: data.name, description: data.telephoneNumber, leftImage: data.avatarUrl, type: .text(text: data.time))
