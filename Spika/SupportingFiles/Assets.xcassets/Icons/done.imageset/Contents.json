@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Action.svg",
+      "filename" : "done_24px_light.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "light"
         }
       ],
-      "filename" : "Action 1.svg",
+      "filename" : "done_24px_light 1.svg",
       "idiom" : "universal"
     },
     {
@@ -21,7 +21,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Action-2.svg",
+      "filename" : "done_24px-2.svg",
       "idiom" : "universal"
     }
   ],

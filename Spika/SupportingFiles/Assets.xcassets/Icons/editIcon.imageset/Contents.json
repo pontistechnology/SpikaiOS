@@ -3,6 +3,26 @@
     {
       "filename" : "create_24px.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "light"
+        }
+      ],
+      "filename" : "create_24px 1.svg",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "create_24px 2.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
