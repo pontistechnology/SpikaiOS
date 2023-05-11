@@ -358,6 +358,10 @@ extension CurrentChatViewController: UITableViewDataSource {
             cell.showReactions(reactionRecords: reactionsRecords)
         }
         
+        if message.modifiedAt != message.createdAt {
+            cell.showEditedIcon()
+        }
+        
         (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
         
         cell.tapPublisher.sink(receiveValue: { [weak self] state in

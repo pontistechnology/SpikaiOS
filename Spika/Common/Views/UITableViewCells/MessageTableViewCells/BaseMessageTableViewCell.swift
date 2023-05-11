@@ -23,6 +23,7 @@ class BaseMessageTableViewCell: UITableViewCell {
     private var replyView: MessageReplyView?
     private let progressView = CircularProgressBar(spinnerWidth: 20)
     private var reactionsView: MessageReactionsView?
+    private var editedIconImageView = UIImageView(image: UIImage(safeImage: .editIcon))
     
     private var containerBottomConstraint: NSLayoutConstraint?
     
@@ -129,6 +130,7 @@ extension BaseMessageTableViewCell {
         replyView?.removeFromSuperview()
         progressView.removeFromSuperview()
         reactionsView?.removeFromSuperview()
+        editedIconImageView.removeFromSuperview()
         self.replyView = nil
         self.reactionsView = nil
         containerBottomConstraint?.constant = -2
@@ -207,5 +209,23 @@ extension BaseMessageTableViewCell {
     
     func hideUploadProgress() {
         progressView.removeFromSuperview()
+    }
+    
+    func showEditedIcon() {
+        guard let reuseIdentifier,
+              let sender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
+        else { return }
+        if editedIconImageView.superview == nil {
+            contentView.addSubview(editedIconImageView)
+            editedIconImageView.constrainWidth(12)
+            editedIconImageView.constrainHeight(12)
+            editedIconImageView.topAnchor.constraint(equalTo: containerStackView.topAnchor).isActive = true
+            switch sender {
+            case .me:
+                editedIconImageView.anchor(trailing: containerStackView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 2))
+            case .friend, .group:
+                editedIconImageView.anchor(leading: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0))
+            }
+        }
     }
 }
