@@ -64,7 +64,8 @@ extension MessageDetailsViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let customFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as! TableViewHeaderWithIcon
+        guard let customFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as? TableViewHeaderWithIcon
+        else { return nil }
         let title = viewModel.sections[section].type.titleString()//viewModel.sectionTitles[section]
         customFooterView.title.text = title
         switch section {
