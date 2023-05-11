@@ -112,6 +112,7 @@ enum FRCChangeType {
 
 enum SSEEventType: String, Codable {
     case newMessage = "NEW_MESSAGE"
+    case updateMessage = "UPDATE_MESSAGE"
     case newMessageRecord = "NEW_MESSAGE_RECORD"
     case deletedMessageRecord = "DELETED_MESSAGE_RECORD"
     case newRoom = "NEW_ROOM"

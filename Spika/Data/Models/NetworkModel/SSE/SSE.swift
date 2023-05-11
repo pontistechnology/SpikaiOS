@@ -86,7 +86,7 @@ private extension SSE {
                 return
             }
             switch type {
-            case .newMessage:
+            case .newMessage, .updateMessage:
                 guard let message = sseNewMessage.message else { return }
                 self.saveMessage(message)
                 self.repository.refreshUnreadCounts()
