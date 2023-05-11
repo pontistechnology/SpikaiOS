@@ -72,21 +72,22 @@ extension CurrentChatViewModel {
         getAppCoordinator()?
             .presentMessageActionsSheet()
             .sink(receiveValue: { [weak self] action in
-                self?.getAppCoordinator()?.dismissViewController()
+                guard let self else { return }
+                self.getAppCoordinator()?.dismissViewController()
                 guard let id = message.id else { return }
                 switch action {
                 case .reaction(emoji: let emoji):
-                    self?.sendReaction(reaction: emoji, messageId: id)
+                    self.sendReaction(reaction: emoji, messageId: id)
                 case .reply:
-                    self?.selectedMessageToReplyPublisher.send(message)
+                    self.selectedMessageToReplyPublisher.send(message)
                 case .copy:
                     UIPasteboard.general.string = message.body?.text
-                    self?.showOneSecAlert(type: .copy)
+                    self.showOneSecAlert(type: .copy)
                 case .details:
-                    break
-//                    self?.presentMessageDetails(for: <#T##IndexPath#>)
+                    let users = self.room.users.compactMap { $0.user }
+                    self.getAppCoordinator()?.presentMessageDetails(users: users, message: message)
                 case .delete:
-                    self?.showDeleteConfirmDialog(message: message)
+                    self.showDeleteConfirmDialog(message: message)
                 default:
                     break
                 }

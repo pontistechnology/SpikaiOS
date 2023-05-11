@@ -415,6 +415,8 @@
 		6CBEAB7B2A0933AB0087382E /* TableViewHeaderWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */; };
 		6CC5CECE2A0A298F003BDC54 /* MessageDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */; };
 		6CC5CECF2A0A298F003BDC54 /* MessageDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */; };
+		6CC6B0782A0CECD300CA6287 /* MessageDetailSectionRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC6B0772A0CECD300CA6287 /* MessageDetailSectionRecords.swift */; };
+		6CC6B07A2A0D046000CA6287 /* MessageDetailSectionRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC6B0772A0CECD300CA6287 /* MessageDetailSectionRecords.swift */; };
 		6CD1915A29A35E2300A8041A /* ChatBlockingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1915929A35E2300A8041A /* ChatBlockingView.swift */; };
 		6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
 		6CD30FF42922869B0017918B /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD30FF22922865D0017918B /* EmptyResponse.swift */; };
@@ -859,6 +861,7 @@
 		6CBEAB762A091FD00087382E /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeaderWithIcon.swift; sourceTree = "<group>"; };
 		6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailSection.swift; sourceTree = "<group>"; };
+		6CC6B0772A0CECD300CA6287 /* MessageDetailSectionRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailSectionRecords.swift; sourceTree = "<group>"; };
 		6CD1915929A35E2300A8041A /* ChatBlockingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBlockingView.swift; sourceTree = "<group>"; };
 		6CD30FF22922865D0017918B /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+BlockedUsers.swift"; sourceTree = "<group>"; };
@@ -1292,6 +1295,15 @@
 				6C0D480929EEC66D00D8ACD4 /* ChatUsersView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		6CC6B0792A0CF66000CA6287 /* SectionModels */ = {
+			isa = PBXGroup;
+			children = (
+				6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */,
+				6CC6B0772A0CECD300CA6287 /* MessageDetailSectionRecords.swift */,
+			);
+			path = SectionModels;
 			sourceTree = "<group>";
 		};
 		6CFB46BD2948C1B0000D26BB /* Localization */ = {
@@ -1732,11 +1744,11 @@
 		93F4A89A282DE9A300CEA637 /* MessageDetails */ = {
 			isa = PBXGroup;
 			children = (
+				6CC6B0792A0CF66000CA6287 /* SectionModels */,
 				93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */,
 				93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */,
 				9383879429D596E40057714A /* MessageDetailsViewModel.swift */,
 				6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */,
-				6CC5CECD2A0A298F003BDC54 /* MessageDetailSection.swift */,
 			);
 			path = MessageDetails;
 			sourceTree = "<group>";
@@ -2908,6 +2920,7 @@
 				6C78B88D29AF5ADB004BF881 /* ContactsResponseModel.swift in Sources */,
 				6C78B88E29AF5ADB004BF881 /* BaseMessageTableViewCell.swift in Sources */,
 				6C78B88F29AF5ADB004BF881 /* CustomTextView.swift in Sources */,
+				6CC6B07A2A0D046000CA6287 /* MessageDetailSectionRecords.swift in Sources */,
 				6C78B89029AF5ADB004BF881 /* BaseView.swift in Sources */,
 				6C78B89129AF5ADB004BF881 /* Message.swift in Sources */,
 				6C78B89229AF5ADB004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
@@ -3369,6 +3382,7 @@
 				ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */,
 				EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */,
 				939260E8287E619100CF6497 /* BaseMessageTableViewCell.swift in Sources */,
+				6CC6B0782A0CECD300CA6287 /* MessageDetailSectionRecords.swift in Sources */,
 				932462DA28FCBF0400E8C1B9 /* CustomTextView.swift in Sources */,
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
 				93E48EB027CEA6C3003B4188 /* Message.swift in Sources */,
@@ -3639,7 +3653,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 39;
+				APP_BUILD_VERSION = 40;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -3703,7 +3717,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 39;
+				APP_BUILD_VERSION = 40;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;

@@ -44,7 +44,7 @@ class NotificationService: UNNotificationServiceExtension {
     override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
-        show(title: "Error", text: "serviceExtensionTimeWillExpire - report")
+        show(title: "Check the app", text: "Open the app to check for new messages.")
     }
 }
 

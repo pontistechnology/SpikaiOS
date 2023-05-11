@@ -51,7 +51,7 @@ extension MessageDetailsViewController: UITableViewDataSource, UITableViewDelega
         cell.backgroundColor = .secondaryBackground // TODO: - move to cell
         if indexPath.section == 0 {
             cell.configureCell(title: data.name, description: data.telephoneNumber, leftImage: data.avatarUrl,
-                               type: .doubleEntry(firstText: data.time, firstImage: .sent,
+                               type: .doubleEntry(firstText: data.time, firstImage: .done,
                                                   secondText: data.editedTime, secondImage: .editIcon))
         } else {
             cell.configureCell(title: data.name, description: data.telephoneNumber, leftImage: data.avatarUrl, type: .text(text: data.time))
@@ -64,7 +64,8 @@ extension MessageDetailsViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let customFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as! TableViewHeaderWithIcon
+        guard let customFooterView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as? TableViewHeaderWithIcon
+        else { return nil }
         let title = viewModel.sections[section].type.titleString()//viewModel.sectionTitles[section]
         customFooterView.title.text = title
         switch section {
