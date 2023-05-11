@@ -8,7 +8,7 @@
 import Foundation
 
 enum DateFormat: String {
-    case HHmm, ddMMyyyyHHmm, ddMM, allChatsTimeFormat
+    case HHmm, ddMMyyyyHHmm, ddMM, allChatsTimeFormat, messageDetailsTimeFormat, ddMMyyyy
     
     var format: String {
         switch self {
@@ -20,6 +20,10 @@ enum DateFormat: String {
             return "dd.MM."
         case .allChatsTimeFormat:
             return "calculate"
+        case .messageDetailsTimeFormat:
+            return "dd.MM.yyyy. HH:mm"
+        case .ddMMyyyy:
+            return "dd.MM.yyyy."
         }
     }
 }
@@ -35,11 +39,17 @@ extension Int64 {
         case .allChatsTimeFormat:
             if self.isToday() {
                 return convertTimestamp(to: .HHmm)
+            } else if self.isThisYear() {
+                return convertTimestamp(to: .ddMM)
             } else {
-                return convertTimestamp(to: .ddMMyyyyHHmm)
+                return convertTimestamp(to: .ddMMyyyy)
             }
+        case.messageDetailsTimeFormat:
+            return convertTimestamp(to: .messageDetailsTimeFormat)
         case .ddMM:
             return convertTimestamp(to: .ddMM)
+        case .ddMMyyyy:
+            return convertTimestamp(to: .ddMMyyyy)
         }
     }
     
@@ -55,9 +65,9 @@ extension Int64 {
         return Calendar.current.isDateInToday(Date(timeIntervalSince1970: Double(self)/1000))
     }
     
-//    func isThisYear() -> Bool {
-//        return true // todo
-//    }
+    func isThisYear() -> Bool {
+        return Calendar.current.isDate(Date(timeIntervalSince1970: Double(self)/1000), equalTo: Date(), toGranularity: .year)
+    }
 }
 
 // MARK: - File path

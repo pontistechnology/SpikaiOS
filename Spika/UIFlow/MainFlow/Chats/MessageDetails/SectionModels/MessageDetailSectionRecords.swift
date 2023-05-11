@@ -41,7 +41,7 @@ class MessageDetailSectionRecords: MessageDetailsSection {
         
         if self.type == .deliveredTo || self.type == .readBy {
             user = records[indexPath.row].user
-            time = records[indexPath.row].record.createdAt.convert(to: .allChatsTimeFormat)
+            time = records[indexPath.row].record.createdAt.convert(to: .messageDetailsTimeFormat)
         }
         
         return (user?.avatarFileId?.fullFilePathFromId() ?? nil,
