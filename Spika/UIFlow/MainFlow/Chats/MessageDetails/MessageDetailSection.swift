@@ -44,8 +44,10 @@ final class MessageDetailsSection {
         self.user = user
         self.sentContacts = sentContacts
         
+        guard let sentContacts else { return }
+        
         if !records.isEmpty {
-            self.records = self.sortRecords(records: records, contacts: sentContacts!)
+            self.records = sortRecords(records: records, contacts: sentContacts)
         }
     }
     
@@ -62,8 +64,8 @@ final class MessageDetailsSection {
     
     func numberOfRows() -> Int {
         if type == .senderActions { return 1 }
-        if type == .sentTo { return sentContacts!.count }
-        return records!.count
+        if type == .sentTo { return sentContacts?.count ?? 0 }
+        return records?.count ?? 0
     }
     
     
@@ -77,12 +79,12 @@ final class MessageDetailsSection {
             editedTime = message.modifiedAt.convert(to: .allChatsTimeFormat)
         case .readBy:
             user = records?[indexPath.row].user
-            time = records![indexPath.row].record.createdAt.convert(to: .allChatsTimeFormat)
+            time = records?[indexPath.row].record.createdAt.convert(to: .allChatsTimeFormat) ?? " "
         case .deliveredTo:
             user = records?[indexPath.row].user
-            time = records![indexPath.row].record.createdAt.convert(to: .allChatsTimeFormat)
+            time = records?[indexPath.row].record.createdAt.convert(to: .allChatsTimeFormat) ?? " "
         case .sentTo:
-            user = sentContacts![indexPath.row]
+            user = sentContacts?[indexPath.row]
             time = "-"
         }
         return (user?.avatarFileId?.fullFilePathFromId() ?? nil,
