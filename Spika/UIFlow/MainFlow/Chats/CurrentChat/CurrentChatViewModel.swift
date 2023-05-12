@@ -91,11 +91,21 @@ extension CurrentChatViewModel {
                     self.showDeleteConfirmDialog(message: message)
                 case .edit:
                     // TODO: - add edit
+                    self.editMessage(message: message, text: "jozoBozo")
                     break
                 default:
                     break
                 }
             }).store(in: &subscriptions)
+    }
+    
+    func editMessage(message: Message, text: String) {
+        guard let id = message.id else { return }
+        repository.updateMessage(messageId: id, text: "jozoBozo").sink { c in
+        } receiveValue: { [weak self] response in
+            guard let message = response.data?.message else { return }
+            self?.saveMessage(message: message)
+        }.store(in: &subscriptions)
     }
     
     func showDeleteConfirmDialog(message: Message) {
