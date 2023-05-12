@@ -8,6 +8,5 @@
 import Foundation
 
 struct UpdateMessageRequest: Codable {
-    let id: Int64
     let text: String
 }
