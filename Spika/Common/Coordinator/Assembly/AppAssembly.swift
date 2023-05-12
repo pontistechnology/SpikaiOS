@@ -240,14 +240,14 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleMessageActionsViewController(_ container: Container) {
-        container.register(MessageActionsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+        container.register(MessageActionsViewModel.self) { (resolver, coordinator: AppCoordinator, isMyMessage: Bool) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            let viewModel = MessageActionsViewModel(repository: repository, coordinator: coordinator)
+            let viewModel = MessageActionsViewModel(repository: repository, coordinator: coordinator, isMyMessage: isMyMessage)
             return viewModel
         }.inObjectScope(.transient)
         
-        container.register(MessageActionsViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let viewModel = container.resolve(MessageActionsViewModel.self, argument: coordinator)!
+        container.register(MessageActionsViewController.self) { (resolver, coordinator: AppCoordinator, isMyMessage: Bool) in
+            let viewModel = container.resolve(MessageActionsViewModel.self, arguments: coordinator, isMyMessage)!
             let controller = MessageActionsViewController(viewModel: viewModel)
             return controller
         }.inObjectScope(.transient)

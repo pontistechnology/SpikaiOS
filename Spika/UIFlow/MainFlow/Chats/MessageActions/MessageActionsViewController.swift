@@ -11,7 +11,8 @@ import UIKit
 
 class MessageActionsViewController: BaseViewController {
     private let viewModel: MessageActionsViewModel
-    private lazy var mainView = MessageActionsView(reactions: viewModel.reactions, actions: viewModel.actions)
+    private lazy var mainView = MessageActionsView(reactions: viewModel.reactions,
+                                                   actions: viewModel.actions)
     let tapPublisher = PassthroughSubject<MessageAction, Never>()
 
     init(viewModel: MessageActionsViewModel) {

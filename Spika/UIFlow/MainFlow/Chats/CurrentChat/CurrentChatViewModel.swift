@@ -70,7 +70,7 @@ extension CurrentChatViewModel {
     func showMessageActions(_ message: Message) {
         guard !message.deleted else { return }
         getAppCoordinator()?
-            .presentMessageActionsSheet()
+            .presentMessageActionsSheet(isMyMessage: message.fromUserId == getMyUserId())
             .sink(receiveValue: { [weak self] action in
                 guard let self else { return }
                 self.getAppCoordinator()?.dismissViewController()

@@ -151,6 +151,7 @@ enum MessageAction {
     case details
     case favorite
     case delete
+    case edit
     
     var textForLabel: String {
         switch self {
@@ -168,6 +169,8 @@ enum MessageAction {
             return .getStringFor(.favorite)
         case .delete:
             return .getStringFor(.delete)
+        case .edit:
+            return .getStringFor(.edit)
         }
     }
     
@@ -187,6 +190,8 @@ enum MessageAction {
             return .favoriteMessage
         case .delete:
             return .deleteMessage
+        case .edit:
+            return .editIcon
         }
     }
 }
