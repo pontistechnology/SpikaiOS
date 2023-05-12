@@ -24,6 +24,7 @@ class CurrentChatViewModel: BaseViewModel {
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
+//    let selectedMessageToEditPublisher = CurrentValueSubject<Message>
     
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
@@ -88,6 +89,9 @@ extension CurrentChatViewModel {
                     self.getAppCoordinator()?.presentMessageDetails(users: users, message: message)
                 case .delete:
                     self.showDeleteConfirmDialog(message: message)
+                case .edit:
+                    // TODO: - add edit
+                    break
                 default:
                     break
                 }

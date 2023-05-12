@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct SendMessageResponse: Codable {
+struct MessageResponse: Codable {
     let status: String?
-    let data: SendMessageData?
+    let data: MessageData?
     let error: String?
     let message: String?
 }
 
-struct SendMessageData: Codable {
+struct MessageData: Codable {
     let message: Message
 }

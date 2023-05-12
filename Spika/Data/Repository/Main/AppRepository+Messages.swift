@@ -10,14 +10,14 @@ import Combine
 
 // MARK: Network
 extension AppRepository {
-    func sendMessage(body: RequestMessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<SendMessageResponse, Error> {
+    func sendMessage(body: RequestMessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<MessageResponse, Error> {
         guard let accessToken = getAccessToken()
-        else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
+        else {return Fail<MessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<SendMessageResponse, SendMessageRequest>(
+        let resources = Resources<MessageResponse, SendMessageRequest>(
             path: Constants.Endpoints.sendMessage,
             requestType: .POST,
             bodyParameters: SendMessageRequest(roomId: roomId,
@@ -30,14 +30,14 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<SendMessageResponse, Error> {
+    func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<MessageResponse, Error> {
         guard let accessToken = getAccessToken()
-        else {return Fail<SendMessageResponse, Error>(error: NetworkError.noAccessToken)
+        else {return Fail<MessageResponse, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<SendMessageResponse, EmptyRequestBody>(
+        let resources = Resources<MessageResponse, EmptyRequestBody>(
             path: Constants.Endpoints.sendMessage + "/\(messageId)",
             requestType: .DELETE,
             bodyParameters: nil,
