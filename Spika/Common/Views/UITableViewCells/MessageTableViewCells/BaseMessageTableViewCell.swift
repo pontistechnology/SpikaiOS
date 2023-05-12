@@ -23,7 +23,9 @@ class BaseMessageTableViewCell: UITableViewCell {
     private var replyView: MessageReplyView?
     private let progressView = CircularProgressBar(spinnerWidth: 20)
     private var reactionsView: MessageReactionsView?
+    
     private var editedIconImageView = UIImageView(image: UIImage(safeImage: .editIcon))
+    private var editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: .textSecondary)
     
     private var containerBottomConstraint: NSLayoutConstraint?
     
@@ -131,6 +133,7 @@ extension BaseMessageTableViewCell {
         progressView.removeFromSuperview()
         reactionsView?.removeFromSuperview()
         editedIconImageView.removeFromSuperview()
+        editedLabel.removeFromSuperview()
         self.replyView = nil
         self.reactionsView = nil
         containerBottomConstraint?.constant = -2
@@ -215,16 +218,20 @@ extension BaseMessageTableViewCell {
         guard let reuseIdentifier,
               let sender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
         else { return }
-        if editedIconImageView.superview == nil {
+        if editedIconImageView.superview == nil, editedLabel.superview == nil {
             contentView.addSubview(editedIconImageView)
+            contentView.addSubview(editedLabel)
             editedIconImageView.constrainWidth(12)
             editedIconImageView.constrainHeight(12)
-            editedIconImageView.topAnchor.constraint(equalTo: containerStackView.topAnchor).isActive = true
+            editedIconImageView.anchor(top: containerStackView.topAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            editedLabel.anchor(top: containerStackView.topAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
             switch sender {
             case .me:
                 editedIconImageView.anchor(trailing: containerStackView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 2))
+                editedLabel.anchor(trailing: editedIconImageView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))
             case .friend, .group:
                 editedIconImageView.anchor(leading: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0))
+                editedLabel.anchor(leading: editedIconImageView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0))
             }
         }
     }
