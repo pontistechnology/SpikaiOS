@@ -93,6 +93,10 @@ class CurrentChatView: UIView, BaseView {
     func hideScrollToBottomButton(should: Bool) {
         downArrowImageView.isHidden = should
     }
+    
+    func setEditedMessageText() {
+        messageInputView
+    }
 }
 
 

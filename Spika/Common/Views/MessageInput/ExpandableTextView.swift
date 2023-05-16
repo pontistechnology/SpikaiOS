@@ -55,11 +55,16 @@ extension ExpandableTextView {
 }
 
 extension ExpandableTextView {
+    func setText(_ value: String) {
+        text = value
+        textViewDidChange(self)
+    }
+    
     func clearTextField(closeKeyboard: Bool = false) {
         text = ""
         textViewDidChange(self)
         if closeKeyboard {
-            self.resignFirstResponder()            
+            resignFirstResponder()
         }
     }
 }

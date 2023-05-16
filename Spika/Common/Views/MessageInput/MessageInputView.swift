@@ -9,19 +9,29 @@ import Foundation
 import UIKit
 import Combine
 
-enum MessageInputViewState {
+enum MessageInputViewButtonAction {
     case send(message: String)
     case camera
     case microphone
     case emoji
     case scrollToReply
     case plus
+    case save(input: String)
     case hideReply
+    case everythisErased
+    case cancelEditing
+}
+
+enum MessageInputViewState: Comparable {
+    case empty
+    case writing
+    case editing(String)
 }
 
 class MessageInputView: UIStackView, BaseView {
     
-    let inputViewTapPublisher = PassthroughSubject<MessageInputViewState, Never>()
+    let inputViewTapPublisher = PassthroughSubject<MessageInputViewButtonAction, Never>()
+    let currentStatePublisher = CurrentValueSubject<MessageInputViewState, Never>(.empty)
     private var subscriptions = Set<AnyCancellable>()
 
     private let dividerLine = UIView()
@@ -31,6 +41,7 @@ class MessageInputView: UIStackView, BaseView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        setupBindings()
     }
     
     required init(coder: NSCoder) {
@@ -50,6 +61,12 @@ class MessageInputView: UIStackView, BaseView {
     func positionSubviews() {
         dividerLine.constrainHeight(0.5)
         dividerLine.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+    }
+    
+    func setupBindings() {
+        currentStatePublisher.sink { [weak self] state in
+            self?.inputTextAndControlsView.animateMessageView(to: state)
+        }.store(in: &subscriptions)
     }
 }
 
@@ -86,5 +103,10 @@ extension MessageInputView {
         replyView?.containerView.tap().sink(receiveValue: { [weak self] _ in
             self?.inputViewTapPublisher.send(.scrollToReply)
         }).store(in: &subscriptions)
+    }
+    
+    func beInEditMode(text: String?) {
+        guard let text else { return }
+        inputTextAndControlsView.setText(text)
     }
 }

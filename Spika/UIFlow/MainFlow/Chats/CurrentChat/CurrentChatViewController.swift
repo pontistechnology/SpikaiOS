@@ -79,7 +79,7 @@ extension CurrentChatViewController {
         }.store(in: &subscriptions)
         
         viewModel.selectedMessageToReplyPublisher.sink { [weak self] selectedMessage in
-            guard let selectedMessage = selectedMessage
+            guard let selectedMessage
             else {
                 self?.currentChatView.messageInputView.hideReplyView()
                 return
@@ -89,6 +89,15 @@ extension CurrentChatViewController {
                 .messageInputView
                 .showReplyView(senderName: senderName ?? .getStringFor(.unknown),
                                message: selectedMessage)
+        }.store(in: &subscriptions)
+        
+        viewModel.selectedMessageToEditPublisher.sink { [weak self] selectedMessage in
+            guard let text = selectedMessage?.body?.text
+            else {
+                self?.currentChatView.messageInputView.currentStatePublisher.send(.empty)
+                return
+            }
+            self?.currentChatView.messageInputView.currentStatePublisher.send(.editing(text))
         }.store(in: &subscriptions)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
@@ -238,7 +247,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
 
 extension CurrentChatViewController {
     
-    func handleInput(_ state: MessageInputViewState) {
+    func handleInput(_ state: MessageInputViewButtonAction) {
         switch state {
         case .plus:
             presentMoreActions()
@@ -257,6 +266,13 @@ extension CurrentChatViewController {
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .hideReply:
             viewModel.selectedMessageToReplyPublisher.send(nil)
+        case .save(let inputText):
+            viewModel.editSelectedMessage(text: inputText)
+        case .everythisErased:
+            guard viewModel.selectedMessageToEditPublisher.value == nil else { return }
+            currentChatView.messageInputView.currentStatePublisher.send(.empty)
+        case .cancelEditing:
+            viewModel.selectedMessageToEditPublisher.send(nil)
         }
     }
 }

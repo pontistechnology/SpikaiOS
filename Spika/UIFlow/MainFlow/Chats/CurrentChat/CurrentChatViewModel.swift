@@ -24,7 +24,7 @@ class CurrentChatViewModel: BaseViewModel {
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
-//    let selectedMessageToEditPublisher = CurrentValueSubject<Message>
+    let selectedMessageToEditPublisher = CurrentValueSubject<Message?, Never>(nil)
     
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
@@ -90,18 +90,17 @@ extension CurrentChatViewModel {
                 case .delete:
                     self.showDeleteConfirmDialog(message: message)
                 case .edit:
-                    // TODO: - add edit
-                    self.editMessage(message: message, text: "jozoBozo")
-                    break
+                    self.selectedMessageToEditPublisher.send(message)
                 default:
                     break
                 }
             }).store(in: &subscriptions)
     }
     
-    func editMessage(message: Message, text: String) {
-        guard let id = message.id else { return }
-        repository.updateMessage(messageId: id, text: "jozoBozo").sink { c in
+    func editSelectedMessage(text: String) {
+        guard let id = selectedMessageToEditPublisher.value?.id else { return }
+        selectedMessageToEditPublisher.send(nil)
+        repository.updateMessage(messageId: id, text: text).sink { c in
         } receiveValue: { [weak self] response in
             guard let message = response.data?.message else { return }
             self?.saveMessage(message: message)
