@@ -168,7 +168,9 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        currentChatView.messagesTableView.beginUpdates()
+        DispatchQueue.main.async { [weak self] in
+            self?.currentChatView.messagesTableView.beginUpdates()
+        }
     }
     
     // MARK: - sections
@@ -176,10 +178,14 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
 //            print("DIDCHANGE: sections insert")
-            currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+            DispatchQueue.main.async { [weak self] in
+                self?.currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+            }
         case .delete:
 //            print("DIDCHANGE: sections delete")
-            currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+            DispatchQueue.main.async { [weak self] in
+                self?.currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+            }
         case .move:
 //            print("DIDCHANGE: sections move")
             break
@@ -198,8 +204,10 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
             viewModel.sendSeenStatus()
-            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-            currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
+            DispatchQueue.main.async { [weak self] in
+                self?.currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
+                self?.currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
+            }
             frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             
         case .delete:
@@ -215,18 +223,24 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
                 return
             }
             if indexPath == newIndexPath {
-                UIView.performWithoutAnimation { [weak self] in
-                    currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
+                DispatchQueue.main.async { [weak self] in
+                    UIView.performWithoutAnimation { [weak self] in
+                        self?.currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
+                    }
                 }
             } else {
-                currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+                DispatchQueue.main.async { [weak self] in
+                    self?.currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+                }
             }
             frcIsChangingPublisher.send(.other)
         
         case .update:
             guard let indexPath = indexPath else { return }
-            UIView.performWithoutAnimation { [weak self] in
-                currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
+            DispatchQueue.main.async { [weak self] in
+                UIView.performWithoutAnimation { [weak self] in
+                    self?.currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
+                }
             }
             frcIsChangingPublisher.send(.other)
         
@@ -237,7 +251,9 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        currentChatView.messagesTableView.endUpdates()
+        DispatchQueue.main.async { [weak self] in
+            self?.currentChatView.messagesTableView.endUpdates()
+        }
         frcDidChangePublisher.send(true)
     }
 }
