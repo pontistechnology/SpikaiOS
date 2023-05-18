@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 enum MessageDetailsSectionType {
     case senderActions, readBy, deliveredTo, sentTo
+    
     func titleString() -> String {
         switch self {
         case .senderActions:
@@ -19,6 +21,19 @@ enum MessageDetailsSectionType {
             return .getStringFor(.deliveredTo)
         case .sentTo :
             return .getStringFor(.sentTo)
+        }
+    }
+    
+    func sectionIcon() -> UIImage {
+        switch self {
+        case .senderActions:
+            return UIImage(safeImage: .senderAction)
+        case .readBy:
+            return UIImage(safeImage: .seen)
+        case .deliveredTo:
+            return UIImage(safeImage: .delivered)
+        case .sentTo :
+            return UIImage(safeImage: .sent)
         }
     }
 }
