@@ -56,16 +56,18 @@ class TabBarItemView: UIView, BaseView {
     func updateIsSelected(isSelected: Bool) {
         let options: UIView.AnimationOptions = isSelected ? [.curveEaseIn] : [.curveEaseOut]
         
-        UIView.animate(withDuration: 0.4,
-                       delay: 0.0,
-                       usingSpringWithDamping: 1.0,
-                       initialSpringVelocity: 0.5,
-                       options: options,
-                       animations: { [weak self] in
-            self?.highlightsView.backgroundColor = .clear
-            self?.button.setImage(isSelected ? self?.tab.imageSelected : self?.tab.imageNormal, for: .normal)
-            (self?.superview as? UIStackView)?.layoutIfNeeded()
-        }, completion: nil)
+        DispatchQueue.main.async { [weak self] in
+            UIView.animate(withDuration: 0.4,
+                           delay: 0.0,
+                           usingSpringWithDamping: 1.0,
+                           initialSpringVelocity: 0.5,
+                           options: options,
+                           animations: { [weak self] in
+                self?.highlightsView.backgroundColor = .clear
+                self?.button.setImage(isSelected ? self?.tab.imageSelected : self?.tab.imageNormal, for: .normal)
+                (self?.superview as? UIStackView)?.layoutIfNeeded()
+            }, completion: nil)            
+        }
     }
     
     func updateCountLabel(_ text: String?) {

@@ -79,8 +79,8 @@ extension AppRepository {
         } receiveValue: { [weak self] response in
             guard let counts = response.data?.unreadCounts else { return }
             self?.updateUnreadCounts(unreadCounts: counts)
+            self?.notificationHelpers.removeNotificationsThatAreNot(roomIds: counts.map({ $0.roomId }))
         }.store(in: &subs)
-
     }
     
     private func getUnreadCounts() -> AnyPublisher<UnreadCountResponseModel, Error> {

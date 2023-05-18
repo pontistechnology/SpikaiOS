@@ -79,7 +79,7 @@ extension CurrentChatViewController {
         }.store(in: &subscriptions)
         
         viewModel.selectedMessageToReplyPublisher.sink { [weak self] selectedMessage in
-            guard let selectedMessage = selectedMessage
+            guard let selectedMessage
             else {
                 self?.currentChatView.messageInputView.hideReplyView()
                 return
@@ -89,6 +89,15 @@ extension CurrentChatViewController {
                 .messageInputView
                 .showReplyView(senderName: senderName ?? .getStringFor(.unknown),
                                message: selectedMessage)
+        }.store(in: &subscriptions)
+        
+        viewModel.selectedMessageToEditPublisher.sink { [weak self] selectedMessage in
+            guard let text = selectedMessage?.body?.text
+            else {
+                self?.currentChatView.messageInputView.currentStatePublisher.send(.empty)
+                return
+            }
+            self?.currentChatView.messageInputView.currentStatePublisher.send(.editing(text))
         }.store(in: &subscriptions)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
@@ -114,7 +123,9 @@ extension CurrentChatViewController {
                 }
             }.store(in: &subscriptions)
         
-        self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (percent, file) in
+        self.viewModel.uploadProgressPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (percent, file) in
             guard let localId = file?.localId,
                   let indexPath = self?.viewModel.getIndexPathFor(localId: localId),
                   let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
@@ -159,7 +170,9 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        currentChatView.messagesTableView.beginUpdates()
+        DispatchQueue.main.async { [weak self] in
+            self?.currentChatView.messagesTableView.beginUpdates()
+        }
     }
     
     // MARK: - sections
@@ -167,10 +180,14 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
 //            print("DIDCHANGE: sections insert")
-            currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+            DispatchQueue.main.async { [weak self] in
+                self?.currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+            }
         case .delete:
 //            print("DIDCHANGE: sections delete")
-            currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+            DispatchQueue.main.async { [weak self] in
+                self?.currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+            }
         case .move:
 //            print("DIDCHANGE: sections move")
             break
@@ -189,8 +206,10 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
             viewModel.sendSeenStatus()
-            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-            currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
+            DispatchQueue.main.async { [weak self] in
+                self?.currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
+                self?.currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
+            }
             frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             
         case .delete:
@@ -206,18 +225,24 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
                 return
             }
             if indexPath == newIndexPath {
-                UIView.performWithoutAnimation { [weak self] in
-                    currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
+                DispatchQueue.main.async { [weak self] in
+                    UIView.performWithoutAnimation { [weak self] in
+                        self?.currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
+                    }
                 }
             } else {
-                currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+                DispatchQueue.main.async { [weak self] in
+                    self?.currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+                }
             }
             frcIsChangingPublisher.send(.other)
         
         case .update:
             guard let indexPath = indexPath else { return }
-            UIView.performWithoutAnimation { [weak self] in
-                currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
+            DispatchQueue.main.async { [weak self] in
+                UIView.performWithoutAnimation { [weak self] in
+                    self?.currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
+                }
             }
             frcIsChangingPublisher.send(.other)
         
@@ -228,7 +253,9 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        currentChatView.messagesTableView.endUpdates()
+        DispatchQueue.main.async { [weak self] in
+            self?.currentChatView.messagesTableView.endUpdates()
+        }
         frcDidChangePublisher.send(true)
     }
 }
@@ -238,7 +265,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
 
 extension CurrentChatViewController {
     
-    func handleInput(_ state: MessageInputViewState) {
+    func handleInput(_ state: MessageInputViewButtonAction) {
         switch state {
         case .plus:
             presentMoreActions()
@@ -257,6 +284,12 @@ extension CurrentChatViewController {
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .hideReply:
             viewModel.selectedMessageToReplyPublisher.send(nil)
+        case .save(let inputText):
+            viewModel.editSelectedMessage(text: inputText)
+        case .cancelEditing:
+            viewModel.selectedMessageToEditPublisher.send(nil)
+        default:
+            break
         }
     }
 }
@@ -356,6 +389,10 @@ extension CurrentChatViewController: UITableViewDataSource {
         
         if let reactionsRecords = message.records {
             cell.showReactions(reactionRecords: reactionsRecords)
+        }
+        
+        if message.modifiedAt != message.createdAt {
+            cell.showEditedIcon()
         }
         
         (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)

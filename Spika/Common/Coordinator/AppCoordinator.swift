@@ -203,16 +203,12 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewControllerToPresent, animated: true)
     }
     
-    func presentMessageActionsSheet() -> PassthroughSubject<MessageAction, Never> {
-        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageActionsViewController.self, argument: self)!
-        if #available(iOS 15.0, *) {
-            if let sheet = viewControllerToPresent.sheetPresentationController {
-                sheet.detents = [.medium()] // can be changed to custom height when iOS 16
-                sheet.prefersGrabberVisible = false
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            }
-        } else {
-            // TODO: Fallback on earlier versions
+    func presentMessageActionsSheet(isMyMessage: Bool) -> PassthroughSubject<MessageAction, Never> {
+        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageActionsViewController.self, arguments: self, isMyMessage)!
+        if let sheet = viewControllerToPresent.sheetPresentationController {
+            sheet.detents = [.medium()] // can be changed to custom height when iOS 16
+            sheet.prefersGrabberVisible = false
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
         }
         navigationController.present(viewControllerToPresent, animated: true)
         return viewControllerToPresent.tapPublisher

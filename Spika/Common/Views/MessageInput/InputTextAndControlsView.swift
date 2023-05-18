@@ -14,14 +14,16 @@ class InputTextAndControlsView: UIView {
     private let cameraButton = UIButton()
     private let microphoneButton = UIButton()
     private let emojiButton = UIButton()
-    private let closeButton = UIButton()
+    private let closeEditModeButton = UIButton()
+    private let saveButton = UIButton()
+    private let editingModeLabel = CustomLabel(text: "Editing mode", textColor: .textPrimary)
     private let messageTextView = ExpandableTextView()
     private var messageTextViewTrailingConstraint = NSLayoutConstraint()
     
     private var subscriptions = Set<AnyCancellable>()
-    let publisher: PassthroughSubject<MessageInputViewState, Never>
+    let publisher: PassthroughSubject<MessageInputViewButtonAction, Never>
     
-    init(publisher: PassthroughSubject<MessageInputViewState, Never>) {
+    init(publisher: PassthroughSubject<MessageInputViewButtonAction, Never>) {
         self.publisher = publisher
         super.init(frame: .zero)
         setupView()
@@ -41,19 +43,26 @@ extension InputTextAndControlsView: BaseView {
         addSubview(microphoneButton)
         addSubview(cameraButton)
         addSubview(emojiButton)
+        addSubview(saveButton)
         addSubview(sendButton)
-        addSubview(closeButton)
+        addSubview(closeEditModeButton)
+        addSubview(editingModeLabel)
     }
     
     func styleSubviews() {
-        closeButton.setImage(UIImage(safeImage: .close), for: .normal)
+        closeEditModeButton.setImage(UIImage(safeImage: .close), for: .normal)
         plusButton.setImage(UIImage(safeImage: .plus), for: .normal)
         sendButton.setImage(UIImage(safeImage: .send), for: .normal)
         emojiButton.setImage(UIImage(safeImage: .smile), for: .normal)
         cameraButton.setImage(UIImage(safeImage: .camera), for: .normal)
         microphoneButton.setImage(UIImage(safeImage: .microphone), for: .normal)
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(.primaryColor, for: .normal)
+        saveButton.setTitleColor(.textSecondary, for: .disabled)
         sendButton.alpha = 0
-        closeButton.alpha = 0
+        closeEditModeButton.alpha = 0
+        saveButton.alpha = 0
+        editingModeLabel.alpha = 0
     }
     
     func positionSubviews() {
@@ -61,9 +70,12 @@ extension InputTextAndControlsView: BaseView {
         messageTextViewTrailingConstraint = messageTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -95)
         messageTextViewTrailingConstraint.isActive = true
         
+        editingModeLabel.centerXToSuperview()
+        editingModeLabel.anchor(top: messageTextView.bottomAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
+        
         plusButton.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 0), size: CGSize(width: 24, height: 24))
         
-        closeButton.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 0), size: CGSize(width: 16, height: 16))
+        closeEditModeButton.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 0), size: CGSize(width: 16, height: 16))
         
         sendButton.anchor(bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 56, height: 56))
         
@@ -72,21 +84,35 @@ extension InputTextAndControlsView: BaseView {
         cameraButton.anchor(bottom: microphoneButton.bottomAnchor ,trailing: microphoneButton.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20), size: CGSize(width: 20, height: 20))
         
         emojiButton.anchor(bottom: messageTextView.bottomAnchor, trailing: messageTextView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 13), size: CGSize(width: 20, height: 20))
+        
+        saveButton.anchor(bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4), size: CGSize(width: 56, height: 56))
     }
 }
 
 // MARK: - Animations
 
-private extension InputTextAndControlsView {
-    func animateMessageView(isEmpty: Bool) {
-        self.messageTextViewTrailingConstraint.constant = isEmpty ? -95 : -60
+extension InputTextAndControlsView {
+    func animateMessageView(to state: MessageInputViewState) {
+        messageTextViewTrailingConstraint.constant =
+            .empty == state ? -95 : -60
         DispatchQueue.main.async { [weak self] in
             UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.plusButton.alpha = isEmpty ? 1 : 0
-                self?.closeButton.alpha = isEmpty ? 0 : 1
-                self?.sendButton.alpha = isEmpty ? 0 : 1
-                self?.cameraButton.alpha = isEmpty ? 1 : 0
-                self?.microphoneButton.alpha = isEmpty ? 1 : 0
+                self?.cameraButton.alpha = .empty == state ? 1 : 0
+                self?.microphoneButton.alpha = .empty == state ? 1 : 0
+                self?.sendButton.alpha = .writing == state ? 1 : 0
+                
+                if case .editing(let string) = state {
+                    self?.plusButton.alpha = 0
+                    self?.saveButton.alpha = 1
+                    self?.editingModeLabel.alpha = 1
+                    self?.messageTextView.setText(string)
+                    self?.closeEditModeButton.alpha = 1
+                } else {
+                    self?.plusButton.alpha = 1
+                    self?.saveButton.alpha = 0
+                    self?.editingModeLabel.alpha = 0
+                    self?.closeEditModeButton.alpha = 0
+                }
                 
                 self?.layoutIfNeeded()
             }
@@ -94,8 +120,9 @@ private extension InputTextAndControlsView {
     }
     
     func setupBindings() {
-        messageTextView.textViewIsEmptyPublisher.sink { [weak self] state in
-            self?.animateMessageView(isEmpty: state)
+        messageTextView.textViewIsEmptyPublisher.sink { [weak self] isEmpty in
+            self?.publisher.send(.inputIsEmpty(isEmpty))
+            self?.saveButton.isEnabled = !isEmpty
         }.store(in: &subscriptions)
         
         plusButton.tap().sink { [weak self] _ in
@@ -103,12 +130,21 @@ private extension InputTextAndControlsView {
             self?.publisher.send(.plus)
         }.store(in: &subscriptions)
         
-        closeButton.tap().sink { [weak self] _ in
+        closeEditModeButton.tap().sink { [weak self] _ in
             self?.messageTextView.clearTextField(closeKeyboard: true)
+            self?.publisher.send(.cancelEditing)
         }.store(in: &subscriptions)
 
         emojiButton.tap().sink { [weak self] _ in
             self?.publisher.send(.emoji)
+        }.store(in: &subscriptions)
+        
+        saveButton.tap().sink { [weak self] _ in
+            guard let self else { return }
+            let text = self.messageTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !text.isEmpty else { return }
+            self.publisher.send(.save(input: text))
+            self.messageTextView.clearTextField()
         }.store(in: &subscriptions)
 
         sendButton.tap().sink { [weak self] _ in

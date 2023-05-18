@@ -68,18 +68,7 @@ extension MessageDetailsViewController: UITableViewDataSource, UITableViewDelega
         else { return nil }
         let title = viewModel.sections[section].type.titleString()//viewModel.sectionTitles[section]
         customFooterView.title.text = title
-        switch section {
-        case 0:
-            customFooterView.icon.image = UIImage(safeImage: .senderAction)
-        case 1:
-            customFooterView.icon.image = UIImage(safeImage: .seen)
-        case 2:
-            customFooterView.icon.image = UIImage(safeImage: .delivered)
-        case 3:
-            customFooterView.icon.image = UIImage(safeImage: .sent)
-        default:
-            break
-        }
+        customFooterView.icon.image = viewModel.sections[section].type.sectionIcon()
         return customFooterView
     }
 }

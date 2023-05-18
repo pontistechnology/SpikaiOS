@@ -8,6 +8,15 @@
 import Foundation
 
 class MessageActionsViewModel: BaseViewModel {
+    private let isMyMessage: Bool
     let reactions = ["👍", "❤️", "😂", "😲", "😥", "🙏"]
-    let actions: [MessageAction] = [.reply, .forward, .copy, .details, .favorite, .delete]
+    let actions: [MessageAction]
+    
+    init(repository: Repository, coordinator: Coordinator, isMyMessage: Bool) {
+        self.isMyMessage = isMyMessage
+        self.actions = isMyMessage
+        ? [.reply, .forward, .copy, .edit, .details, .favorite, .delete]
+        : [.reply, .forward, .copy, .details, .favorite, .delete]
+        super.init(repository: repository, coordinator: coordinator)
+    }
 }
