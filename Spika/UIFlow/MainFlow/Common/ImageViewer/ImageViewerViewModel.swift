@@ -23,4 +23,10 @@ class ImageViewerViewModel: BaseViewModel {
         else { return nil }
         return url        
     }
+    
+    func getThumbOnlineURL() -> URL? {
+        guard let url = message.body?.thumb?.id?.fullFilePathFromId()
+        else { return nil }
+        return url
+    }
 }
