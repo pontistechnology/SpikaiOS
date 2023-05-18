@@ -205,8 +205,8 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             DispatchQueue.main.async { [weak self] in
                 self?.currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
                 self?.currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
+                self?.frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             }
-            frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             
         case .delete:
             guard let indexPath = indexPath else { return }
