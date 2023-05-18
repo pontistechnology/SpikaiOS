@@ -18,7 +18,8 @@ class ImageViewerViewController: BaseViewController {
         if let localURL = viewModel.getLocalURL() {
             imageViewerView.setImage(path: localURL.path)
         } else {
-            imageViewerView.setImage(link: viewModel.getOnlineURL())
+            imageViewerView.setImage(link: viewModel.getOnlineURL(),
+                                     thumbLink: viewModel.getThumbOnlineURL())
         }
     }
 }

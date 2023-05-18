@@ -41,8 +41,10 @@ extension UITableView {
         let currentRow = indexPath.row
         guard currentRow > 0 else { return }
         let previousCellIndexPath = IndexPath(row: currentRow - 1, section: indexPath.section)
-        UIView.performWithoutAnimation { [weak self] in
-            self?.reloadRows(at: [previousCellIndexPath], with: .none)
+        DispatchQueue.main.async { [weak self] in
+            UIView.performWithoutAnimation { [weak self] in
+                self?.reloadRows(at: [previousCellIndexPath], with: .none)
+            }            
         }
     }
     

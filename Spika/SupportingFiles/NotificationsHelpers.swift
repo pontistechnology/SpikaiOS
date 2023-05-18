@@ -19,6 +19,16 @@ class NotificationHelpers {
         }
     }
     
+    func removeNotificationsThatAreNot(roomIds: [Int64]) {
+        UNUserNotificationCenter.current().getDeliveredNotifications { [weak self] notifications in
+            let identifiers = notifications.filter { notification in
+                guard let message = self?.decodeMessageFrom(userInfo: notification.request.content.userInfo) else { return false }
+                return !roomIds.contains(message.roomId)
+            }.map { $0.request.identifier }
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: identifiers)
+        }
+    }
+    
     func decodeMessageFrom(userInfo: [AnyHashable : Any]) -> Message? {
         guard let messageData = userInfo["message"] as? String,
               let jsonData = messageData.data(using: .utf8),

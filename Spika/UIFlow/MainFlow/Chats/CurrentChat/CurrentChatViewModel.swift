@@ -24,6 +24,7 @@ class CurrentChatViewModel: BaseViewModel {
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
+    let selectedMessageToEditPublisher = CurrentValueSubject<Message?, Never>(nil)
     
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
@@ -70,7 +71,7 @@ extension CurrentChatViewModel {
     func showMessageActions(_ message: Message) {
         guard !message.deleted else { return }
         getAppCoordinator()?
-            .presentMessageActionsSheet()
+            .presentMessageActionsSheet(isMyMessage: message.fromUserId == getMyUserId())
             .sink(receiveValue: { [weak self] action in
                 guard let self else { return }
                 self.getAppCoordinator()?.dismissViewController()
@@ -88,10 +89,22 @@ extension CurrentChatViewModel {
                     self.getAppCoordinator()?.presentMessageDetails(users: users, message: message)
                 case .delete:
                     self.showDeleteConfirmDialog(message: message)
+                case .edit:
+                    self.selectedMessageToEditPublisher.send(message)
                 default:
                     break
                 }
             }).store(in: &subscriptions)
+    }
+    
+    func editSelectedMessage(text: String) {
+        guard let id = selectedMessageToEditPublisher.value?.id else { return }
+        selectedMessageToEditPublisher.send(nil)
+        repository.updateMessage(messageId: id, text: text).sink { c in
+        } receiveValue: { [weak self] response in
+            guard let message = response.data?.message else { return }
+            self?.saveMessage(message: message)
+        }.store(in: &subscriptions)
     }
     
     func showDeleteConfirmDialog(message: Message) {
