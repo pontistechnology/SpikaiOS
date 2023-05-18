@@ -546,6 +546,8 @@
 		9352A5722977667900E0D90E /* MessageActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9352A56F2977667900E0D90E /* MessageActionsView.swift */; };
 		9355BEDA28056D1A00B9EC85 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9355BED928056D1A00B9EC85 /* CoreDataStack.swift */; };
 		93583D9828A3DE9F00CC5642 /* SelectedFileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93583D9728A3DE9F00CC5642 /* SelectedFileImageView.swift */; };
+		936155562A16619A0089536D /* UIScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936155552A16619A0089536D /* UIScrollView+Extensions.swift */; };
+		936155572A16619A0089536D /* UIScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936155552A16619A0089536D /* UIScrollView+Extensions.swift */; };
 		9361E5A82879B4760049F218 /* ImageMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9361E5A72879B4760049F218 /* ImageMessageTableViewCell.swift */; };
 		9362B48E28623A44009F617D /* RoomEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9362B48D28623A44009F617D /* RoomEntity+CoreDataProperties.swift */; };
 		9362B48F28623A44009F617D /* RoomEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9362B48D28623A44009F617D /* RoomEntity+CoreDataProperties.swift */; };
@@ -934,6 +936,7 @@
 		9352A56F2977667900E0D90E /* MessageActionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageActionsView.swift; sourceTree = "<group>"; };
 		9355BED928056D1A00B9EC85 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		93583D9728A3DE9F00CC5642 /* SelectedFileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFileImageView.swift; sourceTree = "<group>"; };
+		936155552A16619A0089536D /* UIScrollView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		9361E5A72879B4760049F218 /* ImageMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageTableViewCell.swift; sourceTree = "<group>"; };
 		9362B48D28623A44009F617D /* RoomEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		9364873428B8E5D00069D538 /* FileMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -2174,6 +2177,7 @@
 				932462D728FCB9B100E8C1B9 /* UIFont+Extensions.swift */,
 				6C0AA21D2966D55D00E87304 /* Publisher+Extensions.swift */,
 				93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */,
+				936155552A16619A0089536D /* UIScrollView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2923,6 +2927,7 @@
 				931BDBA129D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C78B88B29AF5ADB004BF881 /* AppCoordinator+PushNotifications.swift in Sources */,
 				6C78B88C29AF5ADB004BF881 /* UserEntity+CoreDataClass.swift in Sources */,
+				936155572A16619A0089536D /* UIScrollView+Extensions.swift in Sources */,
 				6C78B88D29AF5ADB004BF881 /* ContactsResponseModel.swift in Sources */,
 				6C78B88E29AF5ADB004BF881 /* BaseMessageTableViewCell.swift in Sources */,
 				6C78B88F29AF5ADB004BF881 /* CustomTextView.swift in Sources */,
@@ -3388,6 +3393,7 @@
 				6C175EBD297ECC5200804275 /* PrivacySettingsViewController.swift in Sources */,
 				931BDB9F29D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C75CE1E291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift in Sources */,
+				936155562A16619A0089536D /* UIScrollView+Extensions.swift in Sources */,
 				ADB9D523271E83F3000793E2 /* UserEntity+CoreDataClass.swift in Sources */,
 				EA9D14DF27BD0FD10070BE2B /* ContactsResponseModel.swift in Sources */,
 				939260E8287E619100CF6497 /* BaseMessageTableViewCell.swift in Sources */,
@@ -3663,7 +3669,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 44;
+				APP_BUILD_VERSION = 45;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -3727,7 +3733,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 44;
+				APP_BUILD_VERSION = 45;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
