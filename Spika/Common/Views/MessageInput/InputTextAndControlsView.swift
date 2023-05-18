@@ -58,6 +58,7 @@ extension InputTextAndControlsView: BaseView {
         microphoneButton.setImage(UIImage(safeImage: .microphone), for: .normal)
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(.primaryColor, for: .normal)
+        saveButton.setTitleColor(.textSecondary, for: .disabled)
         sendButton.alpha = 0
         closeEditModeButton.alpha = 0
         saveButton.alpha = 0
@@ -121,6 +122,7 @@ extension InputTextAndControlsView {
     func setupBindings() {
         messageTextView.textViewIsEmptyPublisher.sink { [weak self] isEmpty in
             self?.publisher.send(.inputIsEmpty(isEmpty))
+            self?.saveButton.isEnabled = !isEmpty
         }.store(in: &subscriptions)
         
         plusButton.tap().sink { [weak self] _ in
