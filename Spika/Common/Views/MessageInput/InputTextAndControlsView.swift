@@ -16,7 +16,7 @@ class InputTextAndControlsView: UIView {
     private let emojiButton = UIButton()
     private let closeEditModeButton = UIButton()
     private let saveButton = UIButton()
-    private let editingModeLabel = CustomLabel(text: "Editing mode", textColor: .textPrimary)
+    private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .textPrimary)
     private let messageTextView = ExpandableTextView()
     private var messageTextViewTrailingConstraint = NSLayoutConstraint()
     
@@ -71,7 +71,7 @@ extension InputTextAndControlsView: BaseView {
         messageTextViewTrailingConstraint.isActive = true
         
         editingModeLabel.centerXToSuperview()
-        editingModeLabel.anchor(top: messageTextView.bottomAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
+        editingModeLabel.anchor(top: messageTextView.bottomAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 0))
         
         plusButton.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 0), size: CGSize(width: 24, height: 24))
         

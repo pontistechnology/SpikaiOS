@@ -157,11 +157,7 @@ extension CurrentChatViewController {
 
 extension CurrentChatViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffset = scrollView.contentOffset
-        let contentHeight = scrollView.contentSize.height
-        let frameHeight = scrollView.frame.height
-        let distanceFromBottom = contentHeight - contentOffset.y - frameHeight
-        currentChatView.hideScrollToBottomButton(should: distanceFromBottom <= 50.0)
+        currentChatView.hideScrollToBottomButton(should: scrollView.distanceFromBottom() <= 50.0)
     }
 }
 

@@ -15,17 +15,17 @@ extension UITableView {
             guard let self else { return }
             switch type {
             case .ifLastCellVisible:
-                if self.isCellVisible(at: lastCellIndexPath) {
+                if self.isLastCellVisible() {
                     self.scrollToRow(at: lastCellIndexPath, at: .bottom, animated: false)
                 }
             case .force:
-                self.scrollToRow(at: lastCellIndexPath, at: .bottom, animated: false)
+                self.scrollToRow(at: lastCellIndexPath, at: .top, animated: false)
             }
         }
     }
     
-    func isCellVisible(at indexPath: IndexPath) -> Bool {
-        return cellForRow(at: indexPath) != nil
+    func isLastCellVisible() -> Bool {
+        return distanceFromBottom() < 20
     }
     
     var lastCellIndexPath: IndexPath? {
