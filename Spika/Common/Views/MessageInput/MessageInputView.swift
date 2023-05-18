@@ -18,7 +18,6 @@ enum MessageInputViewButtonAction {
     case plus
     case save(input: String)
     case hideReply
-    case everythisErased
     case cancelEditing
 }
 
@@ -103,10 +102,5 @@ extension MessageInputView {
         replyView?.containerView.tap().sink(receiveValue: { [weak self] _ in
             self?.inputViewTapPublisher.send(.scrollToReply)
         }).store(in: &subscriptions)
-    }
-    
-    func beInEditMode(text: String?) {
-        guard let text else { return }
-        inputTextAndControlsView.setText(text)
     }
 }

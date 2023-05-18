@@ -14,9 +14,9 @@ class InputTextAndControlsView: UIView {
     private let cameraButton = UIButton()
     private let microphoneButton = UIButton()
     private let emojiButton = UIButton()
-    private let closeButton = UIButton()
+    private let closeEditModeButton = UIButton()
     private let saveButton = UIButton()
-    private let cancelEditingLabel = CustomLabel(text: "Cancel editing")
+    private let editingModeLabel = CustomLabel(text: "Editing mode", textColor: .textPrimary)
     private let messageTextView = ExpandableTextView()
     private var messageTextViewTrailingConstraint = NSLayoutConstraint()
     
@@ -45,22 +45,23 @@ extension InputTextAndControlsView: BaseView {
         addSubview(emojiButton)
         addSubview(saveButton)
         addSubview(sendButton)
-        addSubview(closeButton)
-        addSubview(cancelEditingLabel)
+        addSubview(closeEditModeButton)
+        addSubview(editingModeLabel)
     }
     
     func styleSubviews() {
-        closeButton.setImage(UIImage(safeImage: .close), for: .normal)
+        closeEditModeButton.setImage(UIImage(safeImage: .close), for: .normal)
         plusButton.setImage(UIImage(safeImage: .plus), for: .normal)
         sendButton.setImage(UIImage(safeImage: .send), for: .normal)
         emojiButton.setImage(UIImage(safeImage: .smile), for: .normal)
         cameraButton.setImage(UIImage(safeImage: .camera), for: .normal)
         microphoneButton.setImage(UIImage(safeImage: .microphone), for: .normal)
         saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(.primaryColor, for: .normal)
         sendButton.alpha = 0
-        closeButton.alpha = 0
+        closeEditModeButton.alpha = 0
         saveButton.alpha = 0
-        cancelEditingLabel.alpha = 0
+        editingModeLabel.alpha = 0
     }
     
     func positionSubviews() {
@@ -68,12 +69,12 @@ extension InputTextAndControlsView: BaseView {
         messageTextViewTrailingConstraint = messageTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -95)
         messageTextViewTrailingConstraint.isActive = true
         
-        cancelEditingLabel.centerXToSuperview()
-        cancelEditingLabel.anchor(top: messageTextView.bottomAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
+        editingModeLabel.centerXToSuperview()
+        editingModeLabel.anchor(top: messageTextView.bottomAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0))
         
         plusButton.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 0), size: CGSize(width: 24, height: 24))
         
-        closeButton.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 0), size: CGSize(width: 16, height: 16))
+        closeEditModeButton.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 0), size: CGSize(width: 16, height: 16))
         
         sendButton.anchor(bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 56, height: 56))
         
@@ -85,14 +86,6 @@ extension InputTextAndControlsView: BaseView {
         
         saveButton.anchor(bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 56, height: 56))
     }
-    
-    func setText(_ text: String) {
-        messageTextView.setText(text)
-        saveButton.alpha = 1
-        sendButton.alpha = 0
-        cancelEditingLabel.alpha = 1
-        cancelEditingLabel.text = "Edit mode"
-    }
 }
 
 // MARK: - Animations
@@ -103,19 +96,23 @@ extension InputTextAndControlsView {
             .empty == state ? -95 : -60
         DispatchQueue.main.async { [weak self] in
             UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.plusButton.alpha = .empty == state ? 1 : 0
-                self?.closeButton.alpha = .empty == state ? 0 : 1
-                self?.sendButton.alpha = .writing == state ? 1 : 0
                 self?.cameraButton.alpha = .empty == state ? 1 : 0
                 self?.microphoneButton.alpha = .empty == state ? 1 : 0
+                self?.sendButton.alpha = .writing == state ? 1 : 0
                 
                 if case .editing(let string) = state {
+                    self?.plusButton.alpha = 0
                     self?.saveButton.alpha = 1
-                    self?.cancelEditingLabel.alpha = 1
+                    self?.editingModeLabel.alpha = 1
                     self?.messageTextView.setText(string)
+                    self?.closeEditModeButton.alpha = 1
+                    self?.editingModeLabel.alpha = 1
                 } else {
+                    self?.plusButton.alpha = 1
                     self?.saveButton.alpha = 0
-                    self?.cancelEditingLabel.alpha = 0
+                    self?.editingModeLabel.alpha = 0
+                    self?.closeEditModeButton.alpha = 0
+                    self?.editingModeLabel.alpha = 0
                 }
                 
                 self?.layoutIfNeeded()
@@ -124,9 +121,11 @@ extension InputTextAndControlsView {
     }
     
     func setupBindings() {
-        messageTextView.textViewIsEmptyPublisher.sink { [weak self] state in
-            if state {
-                self?.publisher.send(.everythisErased)
+        messageTextView.textViewIsEmptyPublisher.sink { [weak self] isEmpty in
+            if isEmpty {
+                self?.animateMessageView(to: .empty)
+            } else {
+                self?.animateMessageView(to: .writing)
             }
         }.store(in: &subscriptions)
         
@@ -135,9 +134,9 @@ extension InputTextAndControlsView {
             self?.publisher.send(.plus)
         }.store(in: &subscriptions)
         
-        closeButton.tap().sink { [weak self] _ in
+        closeEditModeButton.tap().sink { [weak self] _ in
             self?.messageTextView.clearTextField(closeKeyboard: true)
-//            self?.publisher.send() edit
+            self?.publisher.send(.cancelEditing)
         }.store(in: &subscriptions)
 
         emojiButton.tap().sink { [weak self] _ in
@@ -168,10 +167,6 @@ extension InputTextAndControlsView {
         cameraButton.tap().sink { [weak self] _ in
             guard let self else { return }
             self.publisher.send(.camera)
-        }.store(in: &subscriptions)
-        
-        cancelEditingLabel.tap().sink { [weak self] _  in
-            self?.publisher.send(.cancelEditing)
         }.store(in: &subscriptions)
     }
 }

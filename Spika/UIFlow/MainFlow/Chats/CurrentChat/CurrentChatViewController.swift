@@ -268,9 +268,6 @@ extension CurrentChatViewController {
             viewModel.selectedMessageToReplyPublisher.send(nil)
         case .save(let inputText):
             viewModel.editSelectedMessage(text: inputText)
-        case .everythisErased:
-            guard viewModel.selectedMessageToEditPublisher.value == nil else { return }
-            currentChatView.messageInputView.currentStatePublisher.send(.empty)
         case .cancelEditing:
             viewModel.selectedMessageToEditPublisher.send(nil)
         }
