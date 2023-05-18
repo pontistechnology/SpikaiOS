@@ -38,7 +38,7 @@ class ContactsViewController: BaseViewController {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 }
 
@@ -134,7 +134,9 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        contactsView.tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.contactsView.tableView.reloadData()
+        }
     }
 }
 

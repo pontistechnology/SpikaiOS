@@ -123,7 +123,9 @@ extension CurrentChatViewController {
                 }
             }.store(in: &subscriptions)
         
-        self.viewModel.uploadProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] (percent, file) in
+        self.viewModel.uploadProgressPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (percent, file) in
             guard let localId = file?.localId,
                   let indexPath = self?.viewModel.getIndexPathFor(localId: localId),
                   let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
