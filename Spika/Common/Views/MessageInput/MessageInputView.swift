@@ -19,6 +19,7 @@ enum MessageInputViewButtonAction {
     case save(input: String)
     case hideReply
     case cancelEditing
+    case inputIsEmpty(Bool)
 }
 
 enum MessageInputViewState: Comparable {
@@ -65,6 +66,20 @@ class MessageInputView: UIStackView, BaseView {
     func setupBindings() {
         currentStatePublisher.sink { [weak self] state in
             self?.inputTextAndControlsView.animateMessageView(to: state)
+        }.store(in: &subscriptions)
+        
+        inputViewTapPublisher.sink { [weak self] state in
+            switch state {
+            case .inputIsEmpty(let isEmpty):
+                if self?.currentStatePublisher.value == .writing && isEmpty {
+                    self?.currentStatePublisher.send(.empty)
+                }
+                if self?.currentStatePublisher.value == .empty && !isEmpty {
+                    self?.currentStatePublisher.send(.writing)
+                }
+            default:
+                break
+            }
         }.store(in: &subscriptions)
     }
 }

@@ -84,7 +84,7 @@ extension InputTextAndControlsView: BaseView {
         
         emojiButton.anchor(bottom: messageTextView.bottomAnchor, trailing: messageTextView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 13), size: CGSize(width: 20, height: 20))
         
-        saveButton.anchor(bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 56, height: 56))
+        saveButton.anchor(bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4), size: CGSize(width: 56, height: 56))
     }
 }
 
@@ -106,13 +106,11 @@ extension InputTextAndControlsView {
                     self?.editingModeLabel.alpha = 1
                     self?.messageTextView.setText(string)
                     self?.closeEditModeButton.alpha = 1
-                    self?.editingModeLabel.alpha = 1
                 } else {
                     self?.plusButton.alpha = 1
                     self?.saveButton.alpha = 0
                     self?.editingModeLabel.alpha = 0
                     self?.closeEditModeButton.alpha = 0
-                    self?.editingModeLabel.alpha = 0
                 }
                 
                 self?.layoutIfNeeded()
@@ -122,11 +120,7 @@ extension InputTextAndControlsView {
     
     func setupBindings() {
         messageTextView.textViewIsEmptyPublisher.sink { [weak self] isEmpty in
-            if isEmpty {
-                self?.animateMessageView(to: .empty)
-            } else {
-                self?.animateMessageView(to: .writing)
-            }
+            self?.publisher.send(.inputIsEmpty(isEmpty))
         }.store(in: &subscriptions)
         
         plusButton.tap().sink { [weak self] _ in

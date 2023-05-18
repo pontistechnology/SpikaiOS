@@ -270,6 +270,8 @@ extension CurrentChatViewController {
             viewModel.editSelectedMessage(text: inputText)
         case .cancelEditing:
             viewModel.selectedMessageToEditPublisher.send(nil)
+        default:
+            break
         }
     }
 }
