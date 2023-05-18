@@ -76,17 +76,21 @@ class CurrentChatView: UIView, BaseView {
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             messageInputViewBottomConstraint.constant = -keyboardSize.height
+            if messagesTableView.distanceFromBottom() < 50 {
+                messagesTableView.scrollToBottom(.force)
+            }
             DispatchQueue.main.async { [weak self] in
-                // check again, because 0.1 sometimes it will not scroll
-                self?.messagesTableView.scrollToBottom(.ifLastCellVisible)
                 self?.layoutIfNeeded()
             }
+            
         }
     }
     
     @objc func keyboardWillHide(notification: Notification) {
         messageInputViewBottomConstraint.constant = 0
-        layoutIfNeeded()
+        DispatchQueue.main.async { [weak self] in
+            self?.layoutIfNeeded()
+        }
     }
     
     deinit {
