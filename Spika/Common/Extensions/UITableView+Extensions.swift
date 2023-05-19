@@ -11,12 +11,12 @@ extension UITableView {
     
     func scrollToBottom(_ type: ScrollToBottomType){
         guard let lastCellIndexPath else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             switch type {
             case .ifLastCellVisible:
                 if self.isLastCellVisible() {
-                    self.scrollToRow(at: lastCellIndexPath, at: .bottom, animated: false)
+                    self.scrollToRow(at: lastCellIndexPath, at: .top, animated: false)
                 }
             case .force:
                 self.scrollToRow(at: lastCellIndexPath, at: .top, animated: false)
@@ -25,7 +25,7 @@ extension UITableView {
     }
     
     func isLastCellVisible() -> Bool {
-        return distanceFromBottom() < 20
+        return distanceFromBottom() < 50
     }
     
     var lastCellIndexPath: IndexPath? {
