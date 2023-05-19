@@ -11,7 +11,7 @@ extension UITableView {
     
     func scrollToBottom(_ type: ScrollToBottomType){
         guard let lastCellIndexPath else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             switch type {
             case .ifLastCellVisible:
