@@ -148,9 +148,7 @@ extension CurrentChatViewController {
         viewModel.setFetch()
         viewModel.frc?.delegate = self
         currentChatView.messagesTableView.reloadData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-            self?.currentChatView.messagesTableView.scrollToBottom(.force)
-        }
+        currentChatView.messagesTableView.scrollToBottom(.force)
     }
     
     func handleScroll(isMyMessage: Bool) {
@@ -169,9 +167,7 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        DispatchQueue.main.async { [weak self] in
             currentChatView.messagesTableView.beginUpdates()
-//        }
     }
     
     // MARK: - sections
