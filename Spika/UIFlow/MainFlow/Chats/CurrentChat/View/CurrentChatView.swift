@@ -75,12 +75,14 @@ class CurrentChatView: UIView, BaseView {
     
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let should = messagesTableView.distanceFromBottom() < 50
+            print("keyboard will show pozvan, should: ", should)
             messageInputViewBottomConstraint.constant = -keyboardSize.height
-            if messagesTableView.distanceFromBottom() < 50 {
-                messagesTableView.scrollToBottom(.force)
-            }
             DispatchQueue.main.async { [weak self] in
                 self?.layoutIfNeeded()
+                if should {
+                    self?.messagesTableView.scrollToBottom(.force)                    
+                }
             }
             
         }

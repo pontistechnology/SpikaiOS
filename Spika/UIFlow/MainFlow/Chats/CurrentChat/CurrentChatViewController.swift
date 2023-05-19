@@ -110,6 +110,7 @@ extension CurrentChatViewController {
         
         Publishers
             .Zip(frcIsChangingPublisher, frcDidChangePublisher)
+            .receive(on: DispatchQueue.main)
             .filter{$1}
             .sink { [weak self] (frcChange, frcDidChange) in
                 guard let self else { return }
@@ -146,8 +147,8 @@ extension CurrentChatViewController {
         
         viewModel.setFetch()
         viewModel.frc?.delegate = self
-        self.currentChatView.messagesTableView.reloadData()
-        self.currentChatView.messagesTableView.scrollToBottom(.force)
+        currentChatView.messagesTableView.reloadData()
+        currentChatView.messagesTableView.scrollToBottom(.force)
     }
     
     func handleScroll(isMyMessage: Bool) {
@@ -166,29 +167,19 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        DispatchQueue.main.async { [weak self] in
-            self?.currentChatView.messagesTableView.beginUpdates()
-        }
+            currentChatView.messagesTableView.beginUpdates()
     }
     
     // MARK: - sections
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
         case .insert:
-//            print("DIDCHANGE: sections insert")
-            DispatchQueue.main.async { [weak self] in
-                self?.currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-            }
+                currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
         case .delete:
-//            print("DIDCHANGE: sections delete")
-            DispatchQueue.main.async { [weak self] in
-                self?.currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-            }
+                currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
         case .move:
-//            print("DIDCHANGE: sections move")
             break
         case .update:
-//            print("DIDCHANGE: sections update")
             break
         @unknown default:
             break
@@ -202,10 +193,8 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
             viewModel.sendSeenStatus()
-            DispatchQueue.main.async { [weak self] in
-                self?.currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-                self?.currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
-            }
+            currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
+            currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
             frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             
         case .delete:
@@ -221,37 +210,28 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
                 return
             }
             if indexPath == newIndexPath {
-                DispatchQueue.main.async { [weak self] in
-                    UIView.performWithoutAnimation { [weak self] in
-                        self?.currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
-                    }
+                UIView.performWithoutAnimation {
+                    currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
                 }
             } else {
-                DispatchQueue.main.async { [weak self] in
-                    self?.currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
-                }
+                currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
             }
             frcIsChangingPublisher.send(.other)
         
         case .update:
             guard let indexPath = indexPath else { return }
-            DispatchQueue.main.async { [weak self] in
-                UIView.performWithoutAnimation { [weak self] in
-                    self?.currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
-                }
+            UIView.performWithoutAnimation {
+                currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
             }
             frcIsChangingPublisher.send(.other)
         
         default:
             frcIsChangingPublisher.send(.other)
-            break
         }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        DispatchQueue.main.async { [weak self] in
-            self?.currentChatView.messagesTableView.endUpdates()
-        }
+        currentChatView.messagesTableView.endUpdates()
         frcDidChangePublisher.send(true)
     }
 }
