@@ -97,6 +97,7 @@ protocol Repository {
     func getLocalUsers() -> Future<[User], Error>
     func getLocalUser(withId id: Int64) -> Future<User, Error>
     func saveUsers(_ users: [User]) -> Future<[User], Error>
+    func deleteAllUsers()
     
         // RoomUser
     func getRoomUsers(roomId: Int64, context: NSManagedObjectContext) -> [RoomUser]?

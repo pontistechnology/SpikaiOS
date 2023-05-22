@@ -140,9 +140,9 @@ extension AppRepository {
         return databaseService.getLocalUser(withId: id)
     }
     
-//    func saveUser(_ user: User) -> Future<User, Error> {
-//        return databaseService.saveUser(user)
-//    }
+    func deleteAllUsers() {
+        databaseService.deleteAllUsers()
+    }
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return databaseService.saveUsers(users)

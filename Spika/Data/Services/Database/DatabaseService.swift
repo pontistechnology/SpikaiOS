@@ -187,6 +187,16 @@ extension DatabaseService {
             }
         }
     }
+    
+    func deleteAllUsers() {
+        let fetch = UserEntity.fetchRequest()
+        let users = try? self.coreDataStack.mainMOC.fetch(fetch)
+        guard let users else { return }
+        for user in users {
+            self.coreDataStack.mainMOC.delete(user)
+        }
+        try? self.coreDataStack.mainMOC.save()
+    }
 }
 
 // MARK: - Room
