@@ -44,7 +44,7 @@ final class AppAssembly: Assembly {
         
         container.register(DatabaseService.self) { r in
             let coreDataStack = container.resolve(CoreDataStack.self)!
-            return DatabaseService(coreDataStack: coreDataStack)
+            return DatabaseService(coreDataStack: coreDataStack, phoneNumberParser: PhoneNumberParser())
         }.inObjectScope(.container)
 
         container.register(Repository.self, name: RepositoryType.production.name) { r in

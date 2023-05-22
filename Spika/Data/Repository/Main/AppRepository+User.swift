@@ -148,6 +148,10 @@ extension AppRepository {
         return databaseService.saveUsers(users)
     }
     
+    func getPhoneContacts() -> Future<ContactFetchResult, Error> {
+        return databaseService.getPhoneContacts()
+    }
+    
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
         return databaseService.saveContacts(contacts)
     }

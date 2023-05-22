@@ -88,6 +88,7 @@ protocol Repository {
     func getMainContext() -> NSManagedObjectContext
     
         // Contacts
+    func getPhoneContacts() -> Future<ContactFetchResult, Error>
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error>
     @discardableResult func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error>
     

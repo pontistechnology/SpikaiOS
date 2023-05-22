@@ -44,7 +44,7 @@ class ContactsViewModel: BaseViewModel {
     }
     
     func getContacts() {
-        ContactsUtils().getContacts().sink { [weak self] completion in
+        self.repository.getPhoneContacts().sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
             case let .failure(error):
@@ -53,15 +53,14 @@ class ContactsViewModel: BaseViewModel {
             }
         } receiveValue: { [weak self] contacts in
             guard let self else { return }
-            self.repository.saveContacts(contacts).sink { _ in
-                
-            } receiveValue: { contactss in
-//                print("saved contatssssss", contactss)
-            }.store(in: &self.subscriptions)
-
-            let phoneHashes = contacts.map { $0.telephone.getSHA256() }
+//            self.repository.saveContacts(contacts).sink { _ in
+//
+//            } receiveValue: { contactss in
+////                print("saved contatssssss", contactss)
+//            }.store(in: &self.subscriptions)
+//            let phoneHashes = contacts.fetchedContacts?.map { $0.telephone.getSHA256() }
 //            print(phoneHashes)
-            self.postContacts(hashes: phoneHashes)
+//            self.postContacts(hashes: phoneHashes)
         }.store(in: &subscriptions)
     }
     
