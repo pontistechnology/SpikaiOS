@@ -5,9 +5,7 @@
 //  Created by Marko on 13.10.2021..
 //
 
-import Contacts
-import CoreTelephony
-import CoreData
+import Foundation
 import Combine
 import CryptoKit
 
@@ -147,42 +145,6 @@ extension AppRepository {
     
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return databaseService.saveUsers(users)
-    }
-    
-    func getPhoneContacts() -> Future<ContactFetchResult, Error> {
-        return Future() { promise in
-            let store = CNContactStore()
-            var contacts = [FetchedContact]()
-            CNContactStore().requestAccess(for: .contacts) { granted, error in
-                if let error = error {
-                    print("failed to request access", error)
-                    promise(.success(ContactFetchResult(error: error)))
-                    return
-                }
-                
-                if granted {
-                    let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
-                    let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
-                    DispatchQueue.global(qos: .background).async {
-//                        let timer = ParkBenchTimer()
-                        do {
-                            try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
-                                let fetchedContacts = self.phoneNumberParser.parse(contact.phoneNumbers.map { $0.value.stringValue })
-                                    .map { FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: $0) }
-                                
-                                contacts.append(contentsOf: fetchedContacts)
-                            })
-                        } catch let error {
-                            print("Failed to enumerate contact", error)
-                        }
-//                        print("Contact Pull finished: \(contacts.count), duration: \(timer.stop())")
-                        promise(.success(ContactFetchResult(fetchedContacts: contacts)))
-                    }
-                } else {
-                    promise(.success(ContactFetchResult()))
-                }
-            }
-        }
     }
     
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
