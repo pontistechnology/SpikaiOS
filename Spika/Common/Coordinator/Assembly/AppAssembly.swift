@@ -44,13 +44,16 @@ final class AppAssembly: Assembly {
         
         container.register(DatabaseService.self) { r in
             let coreDataStack = container.resolve(CoreDataStack.self)!
-            return DatabaseService(coreDataStack: coreDataStack, phoneNumberParser: PhoneNumberParser())
+            return DatabaseService(coreDataStack: coreDataStack)
         }.inObjectScope(.container)
 
         container.register(Repository.self, name: RepositoryType.production.name) { r in
             let networkService = container.resolve(NetworkService.self)!
             let databaseService = container.resolve(DatabaseService.self)!
-            return AppRepository(networkService: networkService, databaseService: databaseService, userDefaults: r.resolve(UserDefaults.self)!)
+            return AppRepository(networkService: networkService,
+                                 databaseService: databaseService,
+                                 userDefaults: r.resolve(UserDefaults.self)!,
+                                 phoneNumberParser: PhoneNumberParser())
         }.inObjectScope(.container)
     }
     

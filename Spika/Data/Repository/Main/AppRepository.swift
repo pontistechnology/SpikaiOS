@@ -16,11 +16,16 @@ class AppRepository: Repository {
     var subs = Set<AnyCancellable>()
     let userDefaults: UserDefaults
     let notificationHelpers = NotificationHelpers()
+    let phoneNumberParser: PhoneNumberParser
     
-    init(networkService: NetworkService, databaseService: DatabaseService, userDefaults: UserDefaults) {
+    init(networkService: NetworkService,
+         databaseService: DatabaseService,
+         userDefaults: UserDefaults,
+         phoneNumberParser: PhoneNumberParser) {
         self.networkService = networkService
         self.databaseService = databaseService
         self.userDefaults = userDefaults
+        self.phoneNumberParser = phoneNumberParser
     }
     
     deinit {

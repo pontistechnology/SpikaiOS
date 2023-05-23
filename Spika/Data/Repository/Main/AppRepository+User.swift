@@ -5,7 +5,9 @@
 //  Created by Marko on 13.10.2021..
 //
 
-import UIKit
+import Contacts
+import CoreTelephony
+import CoreData
 import Combine
 import CryptoKit
 
@@ -58,7 +60,6 @@ extension AppRepository {
     }
     
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
-//        print("Phone number SHA256: ", telephoneNumber.getSHA256())
         let resources = Resources<AuthResponseModel, AuthRequestModel>(
             path: Constants.Endpoints.authenticateUser,
             requestType: .POST,
@@ -149,16 +150,44 @@ extension AppRepository {
     }
     
     func getPhoneContacts() -> Future<ContactFetchResult, Error> {
-        return databaseService.getPhoneContacts()
+        return Future() { promise in
+            let store = CNContactStore()
+            var contacts = [FetchedContact]()
+            CNContactStore().requestAccess(for: .contacts) { granted, error in
+                if let error = error {
+                    print("failed to request access", error)
+                    promise(.success(ContactFetchResult(error: error)))
+                    return
+                }
+                
+                if granted {
+                    let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
+                    let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
+                    DispatchQueue.global(qos: .background).async {
+//                        let timer = ParkBenchTimer()
+                        do {
+                            try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
+                                let fetchedContacts = self.phoneNumberParser.parse(contact.phoneNumbers.map { $0.value.stringValue })
+                                    .map { FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: $0) }
+                                
+                                contacts.append(contentsOf: fetchedContacts)
+                            })
+                        } catch let error {
+                            print("Failed to enumerate contact", error)
+                        }
+//                        print("Contact Pull finished: \(contacts.count), duration: \(timer.stop())")
+                        promise(.success(ContactFetchResult(fetchedContacts: contacts)))
+                    }
+                } else {
+                    promise(.success(ContactFetchResult()))
+                }
+            }
+        }
     }
     
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
         return databaseService.saveContacts(contacts)
     }
-    
-//    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
-//        return databaseService.getContact(phoneNumber: phoneNumber)
-//    }
     
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         return databaseService.updateUsersWithContactData(users)
