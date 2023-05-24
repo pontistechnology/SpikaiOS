@@ -182,55 +182,21 @@ extension AppRepository {
             self?.setSyncTimestamp(for: .users, timestamp: syncTimestamp)
         }.store(in: &subs)
     }
-    func syncContacts() {
-        getPhoneContacts()
-            .flatMap { contacts in
-                let phoneHashes = contacts.fetchedContacts?.map { $0.telephone.getSHA256() } ?? [String]()
-                return self.postContacts(hashes: phoneHashes)
-            }
-            .sink(receiveCompletion: { _ in
-            }, receiveValue: { [weak self] response in
-                guard let users = response.data?.list else { return }
-                self?.saveUsers(users)
-            })
-            .store(in: &subs)
-    }
     
-    func getPhoneContacts() -> Future<ContactFetchResult, Error> {
-        return Future() { promise in
-            let store = CNContactStore()
-            var contacts = [FetchedContact]()
-            CNContactStore().requestAccess(for: .contacts) { granted, error in
-                if let error = error {
-                    print("failed to request access", error)
-                    promise(.success(ContactFetchResult(error: error)))
-                    return
-                }
-                
-                if granted {
-                    let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
-                    let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
-                    DispatchQueue.global(qos: .background).async {
-//                        let timer = ParkBenchTimer()
-                        do {
-                            try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
-                                let fetchedContacts = self.phoneNumberParser.parse(contact.phoneNumbers.map { $0.value.stringValue })
-                                    .map { FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: $0) }
-                                
-                                contacts.append(contentsOf: fetchedContacts)
-                            })
-                        } catch let error {
-                            print("Failed to enumerate contact", error)
-                        }
-//                        print("Contact Pull finished: \(contacts.count), duration: \(timer.stop())")
-                        promise(.success(ContactFetchResult(fetchedContacts: contacts)))
-                    }
-                } else {
-                    promise(.success(ContactFetchResult()))
-                }
-            }
-        }
-    }
+//    func syncContacts() {
+//        getPhoneContacts()
+//            .flatMap { contacts in
+//                let phoneHashes = contacts.fetchedContacts?.map { $0.telephone.getSHA256() } ?? [String]()
+//                return self.postContacts(hashes: phoneHashes)
+//            }
+//            .sink(receiveCompletion: { _ in
+//            }, receiveValue: { [weak self] response in
+//                guard let users = response.data?.list else { return }
+//                self?.saveUsers(users)
+//            })
+//            .store(in: &subs)
+//    }
+    
 }
 
 extension AppRepository {

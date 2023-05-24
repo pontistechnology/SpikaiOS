@@ -23,6 +23,7 @@ def shared_pods
   pod 'Firebase/Messaging', '10.8.0'
   pod 'Kingfisher', '7.6.2'
   pod 'IKEventSource', '3.0.1'
+  pod 'ContactsChangeNotifier'
 end
 
 target 'Spika' do

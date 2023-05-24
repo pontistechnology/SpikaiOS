@@ -67,6 +67,7 @@ protocol Repository {
         // Sync
     func syncRooms()
     func syncUsers()
+    func setupContactSync()
     func syncContacts()
     func syncMessageRecords()
     func syncMessages()

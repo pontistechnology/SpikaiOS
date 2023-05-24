@@ -30,6 +30,8 @@
 		6C175EC7297ED93300804275 /* BlockedUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EC6297ED93300804275 /* BlockedUsersViewController.swift */; };
 		6C175EC9297ED93A00804275 /* BlockedUsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EC8297ED93A00804275 /* BlockedUsersViewModel.swift */; };
 		6C175ECC297ED94400804275 /* BlockedUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175ECB297ED94400804275 /* BlockedUsersView.swift */; };
+		6C1777852A1CE2B700273FEE /* AppRepository+DeviceContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1777842A1CE2B700273FEE /* AppRepository+DeviceContacts.swift */; };
+		6C1777862A1CE2B700273FEE /* AppRepository+DeviceContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1777842A1CE2B700273FEE /* AppRepository+DeviceContacts.swift */; };
 		6C2497DF2924FB3000594A55 /* UserSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497DE2924FB3000594A55 /* UserSelectionViewController.swift */; };
 		6C2497E12924FB3700594A55 /* UserSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497E02924FB3700594A55 /* UserSelectionViewModel.swift */; };
 		6C2497E42924FB4200594A55 /* UserSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497E32924FB4200594A55 /* UserSelectionView.swift */; };
@@ -837,6 +839,7 @@
 		6C175EC6297ED93300804275 /* BlockedUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersViewController.swift; sourceTree = "<group>"; };
 		6C175EC8297ED93A00804275 /* BlockedUsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersViewModel.swift; sourceTree = "<group>"; };
 		6C175ECB297ED94400804275 /* BlockedUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersView.swift; sourceTree = "<group>"; };
+		6C1777842A1CE2B700273FEE /* AppRepository+DeviceContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+DeviceContacts.swift"; sourceTree = "<group>"; };
 		6C2497DE2924FB3000594A55 /* UserSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionViewController.swift; sourceTree = "<group>"; };
 		6C2497E02924FB3700594A55 /* UserSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionViewModel.swift; sourceTree = "<group>"; };
 		6C2497E32924FB4200594A55 /* UserSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionView.swift; sourceTree = "<group>"; };
@@ -1897,6 +1900,7 @@
 			children = (
 				ADD503DB270DD6DC009D50CB /* AppRepository.swift */,
 				ADD5041927174B82009D50CB /* AppRepository+User.swift */,
+				6C1777842A1CE2B700273FEE /* AppRepository+DeviceContacts.swift */,
 				AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */,
 				938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */,
 				934087B727EBAD7100209571 /* AppRepository+Tests.swift */,
@@ -2939,6 +2943,7 @@
 				6C78B89029AF5ADB004BF881 /* BaseView.swift in Sources */,
 				6C78B89129AF5ADB004BF881 /* Message.swift in Sources */,
 				6C78B89229AF5ADB004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
+				6C1777862A1CE2B700273FEE /* AppRepository+DeviceContacts.swift in Sources */,
 				6C78B89329AF5ADB004BF881 /* AppRepository.swift in Sources */,
 				6C78B89429AF5ADB004BF881 /* Constants+Database.swift in Sources */,
 				6C78B89529AF5ADB004BF881 /* EnterNumberViewModel.swift in Sources */,
@@ -3407,6 +3412,7 @@
 				932462DA28FCBF0400E8C1B9 /* CustomTextView.swift in Sources */,
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
 				93E48EB027CEA6C3003B4188 /* Message.swift in Sources */,
+				6C1777852A1CE2B700273FEE /* AppRepository+DeviceContacts.swift in Sources */,
 				934F036D282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
 				6C153BEE2948693B00D400A7 /* Constants+Database.swift in Sources */,

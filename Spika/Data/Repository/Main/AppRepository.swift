@@ -18,6 +18,8 @@ class AppRepository: Repository {
     let notificationHelpers = NotificationHelpers()
     let phoneNumberParser: PhoneNumberParser
     
+    var manualContactTrigger: PassthroughSubject<Void,Error>?
+    
     init(networkService: NetworkService,
          databaseService: DatabaseService,
          userDefaults: UserDefaults,

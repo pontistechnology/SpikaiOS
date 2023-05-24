@@ -37,7 +37,7 @@ class SSE {
     private func startSyncs() {
         repository.syncRooms()
         repository.syncUsers()
-//        repository.syncContacts()
+//        repository.setupContactSync()
 //        repository.deleteAllUsers()
         repository.syncMessages()
         repository.syncBlockedList()
