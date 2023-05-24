@@ -24,9 +24,11 @@ extension AppRepository {
     }
     
     func setupContactSync() {
+        // 1. Instantiating manual trigger if none
         if let _ = manualContactTrigger { return }
         manualContactTrigger = PassthroughSubject()
         
+        // 2. Two triggers, manual pulls all device contacts, contacts changed pulls only modified / added contacts
         let manualContact = PassthroughSubject<[FetchedContact],Error>()
         let contactsChanged = PassthroughSubject<[FetchedContact],Error>()
         
@@ -36,6 +38,7 @@ extension AppRepository {
                     .compactMap { $0.fetchedContacts }
                     .subscribe(manualContact)
                     .store(in: &subs)
+        
         
         self.phoneNumberParser.contactStoreChanged
             .compactMap { update -> CNContact? in
@@ -52,12 +55,9 @@ extension AppRepository {
             }.subscribe(contactsChanged)
             .store(in: &subs)
         
+        // 3. Combined stream posts all contact hashes, receives response from server that is saved in local Database
         manualContact.merge(with: contactsChanged)
             .flatMap { contacts in
-                print("\n\nContacts Fetched")
-                for cntch in contacts {
-                    print("Contact " + (cntch.firstName ?? "") + " " + (cntch.lastName ?? ""))
-                }
                 let phoneHashes = contacts.map { $0.telephone.getSHA256() }
                 return self.postContacts(hashes: phoneHashes)
             }
@@ -68,6 +68,7 @@ extension AppRepository {
             })
             .store(in: &subs)
 
+        // On App start all contacts are synced once
         self.manualContactTrigger?.send(Void())
     }
     
