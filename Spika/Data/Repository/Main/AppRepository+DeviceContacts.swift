@@ -45,7 +45,7 @@ extension AppRepository {
                 switch update {
                 case .contactAdded(let contact): return contact
                 case .contactModified(let contact): return contact
-                case .contactDeleted(_): return nil
+                case .contactDeleted(_): return nil //TODO: - Currently there's no handling for deleted contacts
                 default: return nil
                 }
             }
