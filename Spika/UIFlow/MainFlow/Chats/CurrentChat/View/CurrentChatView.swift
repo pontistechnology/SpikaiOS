@@ -35,7 +35,7 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.separatorStyle  = .none
         messagesTableView.keyboardDismissMode = .interactive
         messagesTableView.rowHeight = UITableView.automaticDimension
-        messagesTableView.estimatedRowHeight = 5
+
         messagesTableView.backgroundColor = .clear
         messagesTableView.showsHorizontalScrollIndicator = false
         
@@ -75,13 +75,13 @@ class CurrentChatView: UIView, BaseView {
     
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let should = messagesTableView.distanceFromBottom() < 50
-            print("keyboard will show pozvan, should: ", should)
+            guard let lastCell = messagesTableView.visibleCells.last else { return }
+            let indexPath = messagesTableView.indexPath(for: lastCell)
             messageInputViewBottomConstraint.constant = -keyboardSize.height
             DispatchQueue.main.async { [weak self] in
                 self?.layoutIfNeeded()
-                if should {
-                    self?.messagesTableView.scrollToBottom(.force)                    
+                if let indexPath {
+                    self?.messagesTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
             }
             

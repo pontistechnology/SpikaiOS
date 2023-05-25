@@ -104,7 +104,7 @@ extension CurrentChatViewController {
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
         currentChatView.downArrowImageView.tap().sink { [weak self] _ in
-            self?.currentChatView.messagesTableView.scrollToBottom(.force)
+            self?.currentChatView.messagesTableView.scrollToBottom(.force(animated: true))
             self?.currentChatView.hideScrollToBottomButton(should: true)
         }.store(in: &self.subscriptions)
         
@@ -118,7 +118,15 @@ extension CurrentChatViewController {
                 switch frcChange {
                 case .insert(indexPath: let indexPath):
                     guard let message = self.viewModel.getMessage(for: indexPath) else { return }
-                    self.handleScroll(isMyMessage: message.fromUserId == self.viewModel.getMyUserId())
+                    let isMyMessage = message.fromUserId == self.viewModel.getMyUserId()
+                    self.handleScroll(isMyMessage: isMyMessage)
+                    if isMyMessage {
+                        
+                    } else if self.viewModel.room.type == .groupRoom {
+                        if self.viewModel.isPreviousCellSameSender(for: indexPath) {
+                            self.currentChatView.messagesTableView.reloadPreviousRow(for: indexPath)
+                        }
+                    }
                 case .other:
                     break
                 }
@@ -147,12 +155,11 @@ extension CurrentChatViewController {
         
         viewModel.setFetch()
         viewModel.frc?.delegate = self
-        currentChatView.messagesTableView.reloadData()
-        currentChatView.messagesTableView.scrollToBottom(.force)
+        currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
     }
     
     func handleScroll(isMyMessage: Bool) {
-        currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force : .ifLastCellVisible)
+        currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force(animated: true) : .ifLastCellVisible)
     }
 }
 
@@ -188,13 +195,13 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     // MARK: - rows
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        print("TYPE: ", type.rawValue)
+//        print("TYPE: ", type.rawValue)
         switch type {
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
             viewModel.sendSeenStatus()
             currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-            currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
+//            currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
             frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             
         case .delete:
@@ -210,19 +217,16 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
                 return
             }
             if indexPath == newIndexPath {
-                UIView.performWithoutAnimation {
-                    currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
-                }
+                currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
             } else {
                 currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
             }
             frcIsChangingPublisher.send(.other)
         
         case .update:
+            print("update in cc")
             guard let indexPath = indexPath else { return }
-            UIView.performWithoutAnimation {
-                currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
-            }
+            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
             frcIsChangingPublisher.send(.other)
         
         default:
@@ -326,6 +330,7 @@ extension CurrentChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("cellforrow at ", indexPath)
         guard let message = viewModel.getMessage(for: indexPath)
         else { return EmptyTableViewCell()}
         let roomType = viewModel.room.type
@@ -337,11 +342,12 @@ extension CurrentChatViewController: UITableViewDataSource {
               let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
         else { return EmptyTableViewCell() }
         
-        if let user = viewModel.getUser(for: message.fromUserId) {
-            if !viewModel.isPreviousCellMine(for: indexPath) {
+        if let user = viewModel.getUser(for: message.fromUserId),
+            viewModel.room.type == .groupRoom {
+            if !viewModel.isPreviousCellSameSender(for: indexPath) {
                 cell.updateSender(name: user.getDisplayName())
             }
-            if !viewModel.isNextCellMine(for: indexPath) {
+            if !viewModel.isNextCellSameSender(for: indexPath) {
                 cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
             }
         }
@@ -377,7 +383,9 @@ extension CurrentChatViewController: UITableViewDataSource {
             self?.handleCellTap(state, message: message)
         }).store(in: &cell.subs)
         
-        cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        if message.fromUserId == myUserId {
+            cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        }
         cell.updateTime(to: message.createdAt)
         
         return cell

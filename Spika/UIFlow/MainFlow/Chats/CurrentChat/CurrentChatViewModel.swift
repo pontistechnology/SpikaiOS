@@ -171,7 +171,7 @@ extension CurrentChatViewModel {
                 print("send text message error: ", error)
             }
         } receiveValue: { [weak self] response in
-            print("SendMessage response: ", response)
+//            print("SendMessage response: ", response)
             guard let self,
                   let message = response.data?.message
             else { return }
@@ -433,7 +433,7 @@ extension CurrentChatViewModel {
         return name
     }
     
-    func isPreviousCellMine(for indexPath: IndexPath) -> Bool {
+    func isPreviousCellSameSender(for indexPath: IndexPath) -> Bool {
         let previousRow = indexPath.row - 1
         if previousRow >= 0 {
             let currentMessageEntity  = frc?.object(at: indexPath)
@@ -444,7 +444,7 @@ extension CurrentChatViewModel {
         return false
     }
     
-    func isNextCellMine(for indexPath: IndexPath) -> Bool {
+    func isNextCellSameSender(for indexPath: IndexPath) -> Bool {
         guard let sections = frc?.sections else { return true }
         let maxRowsIndex = sections[indexPath.section].numberOfObjects - 1
         let nextRow = indexPath.row + 1

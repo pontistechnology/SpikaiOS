@@ -11,6 +11,8 @@ import CoreData
 extension NSManagedObjectContext {
     func safeSave() throws {
         mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        try save()
+        if hasChanges {
+            try save()            
+        }
     }
 }

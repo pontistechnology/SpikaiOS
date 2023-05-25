@@ -102,7 +102,7 @@ enum MessageSender {
 
 enum ScrollToBottomType {
     case ifLastCellVisible
-    case force
+    case force(animated: Bool)
 }
 
 enum FRCChangeType {
