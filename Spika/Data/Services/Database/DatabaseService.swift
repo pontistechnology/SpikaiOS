@@ -149,12 +149,12 @@ extension DatabaseService {
     }
     
     func deleteAllUsers() {
-        self.coreDataStack.persistentContainer.performBackgroundTask { [weak self] context in
+        self.coreDataStack.persistentContainer.performBackgroundTask { context in
             let fetch = UserEntity.fetchRequest()
             let users = try? context.fetch(fetch)
             guard let users else { return }
             for user in users {
-                self?.coreDataStack.mainMOC.delete(user)
+                context.delete(user)
             }
             try? context.safeSave()
         }

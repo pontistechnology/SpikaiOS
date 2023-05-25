@@ -19,11 +19,21 @@ enum ContactStoreChanged {
 
 extension AppRepository {
     
-    func syncContacts() {
-        self.manualContactTrigger?.send(Void())
+    func syncContacts(force: Bool?) {
+        guard let _ = manualContactTrigger else {
+            self.setupContactSync()
+            self.manualContactTrigger?.send(Void())
+            return
+        }
+        
+        if force ?? false {
+            self.manualContactTrigger?.send(Void())
+        } else if !self.contactsLastSynced.isInToday {
+            self.manualContactTrigger?.send(Void())
+        }
     }
     
-    func setupContactSync() {
+    private func setupContactSync() {
         // 1. Instantiating manual trigger if none
         if let _ = manualContactTrigger { return }
         manualContactTrigger = PassthroughSubject()
@@ -65,11 +75,9 @@ extension AppRepository {
             }, receiveValue: { [weak self] response in
                 guard let users = response.data?.list else { return }
                 _ = self?.saveUsers(users)
+                self?.contactsLastSynced = Date()
             })
             .store(in: &subs)
-
-        // On App start all contacts are synced once
-        self.manualContactTrigger?.send(Void())
     }
     
     func getPhoneContacts() -> Future<ContactFetchResult, Error> {

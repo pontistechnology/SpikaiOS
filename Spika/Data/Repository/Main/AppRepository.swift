@@ -19,6 +19,7 @@ class AppRepository: Repository {
     let phoneNumberParser: PhoneNumberParser
     
     var manualContactTrigger: PassthroughSubject<Void,Error>?
+    var contactsLastSynced = Date()
     
     init(networkService: NetworkService,
          databaseService: DatabaseService,
