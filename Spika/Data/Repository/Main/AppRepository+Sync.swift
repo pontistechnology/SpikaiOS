@@ -183,20 +183,6 @@ extension AppRepository {
         }.store(in: &subs)
     }
     
-//    func syncContacts() {
-//        getPhoneContacts()
-//            .flatMap { contacts in
-//                let phoneHashes = contacts.fetchedContacts?.map { $0.telephone.getSHA256() } ?? [String]()
-//                return self.postContacts(hashes: phoneHashes)
-//            }
-//            .sink(receiveCompletion: { _ in
-//            }, receiveValue: { [weak self] response in
-//                guard let users = response.data?.list else { return }
-//                self?.saveUsers(users)
-//            })
-//            .store(in: &subs)
-//    }
-    
 }
 
 extension AppRepository {
