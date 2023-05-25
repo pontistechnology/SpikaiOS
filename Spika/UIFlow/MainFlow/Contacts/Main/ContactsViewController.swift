@@ -33,6 +33,19 @@ class ContactsViewController: BaseViewController {
         contactsView.tableView.delegate   = self
         contactsView.searchBar.delegate = self
         
+        contactsView.refreshControl
+            .publisher(for: .valueChanged)
+            .sink { [weak self] _ in
+                self?.viewModel.repository.syncUsers()
+//                self?.viewModel.repository.syncContacts(force: true)
+            }.store(in: &subscriptions)
+        contactsView.refreshControl
+            .publisher(for: .valueChanged)
+            .delay(for: .seconds(3), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.contactsView.refreshControl.endRefreshing()
+            }.store(in: &subscriptions)
+        
         viewModel.getContacts()
         viewModel.getOnlineContacts(page: 1)
     }
