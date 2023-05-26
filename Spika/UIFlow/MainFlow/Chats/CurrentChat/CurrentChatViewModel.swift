@@ -25,6 +25,7 @@ class CurrentChatViewModel: BaseViewModel {
     
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
     let selectedMessageToEditPublisher = CurrentValueSubject<Message?, Never>(nil)
+    let numberOfUnreadMessages = CurrentValueSubject<Int, Never>(0)
     
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room

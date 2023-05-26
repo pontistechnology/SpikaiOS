@@ -103,10 +103,15 @@ extension CurrentChatViewController {
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
-        currentChatView.downArrowImageView.tap().sink { [weak self] _ in
-            self?.currentChatView.messagesTableView.scrollToBottom(.force(animated: true))
-            self?.currentChatView.hideScrollToBottomButton(should: true)
-        }.store(in: &self.subscriptions)
+        currentChatView.scrollToBottomStackView.tap().sink { [weak self] _ in
+            guard let self else { return }
+            self.currentChatView.messagesTableView.scrollToBottom(.force(animated: true))
+            self.currentChatView.handleScrollToBottomButton(show: false, number: self.viewModel.numberOfUnreadMessages.value)
+        }.store(in: &subscriptions)
+        
+        viewModel.numberOfUnreadMessages.sink { [weak self] number in
+            self?.currentChatView.handleScrollToBottomButton(show: number > 0, number: number)
+        }.store(in: &subscriptions)
         
         Publishers
             .Zip(frcIsChangingPublisher, frcDidChangePublisher)
@@ -120,12 +125,13 @@ extension CurrentChatViewController {
                     guard let message = self.viewModel.getMessage(for: indexPath) else { return }
                     let isMyMessage = message.fromUserId == self.viewModel.getMyUserId()
                     self.handleScroll(isMyMessage: isMyMessage)
-                    if isMyMessage {
-                        
-                    } else if self.viewModel.room.type == .groupRoom {
+                    if self.viewModel.room.type == .groupRoom && !isMyMessage {
                         if self.viewModel.isPreviousCellSameSender(for: indexPath) {
                             self.currentChatView.messagesTableView.reloadPreviousRow(for: indexPath)
                         }
+                    }
+                    if self.currentChatView.messagesTableView.distanceFromBottom() > 50 {
+                        self.viewModel.numberOfUnreadMessages.send(self.viewModel.numberOfUnreadMessages.value + 1)
                     }
                 case .other:
                     break
@@ -165,7 +171,11 @@ extension CurrentChatViewController {
 
 extension CurrentChatViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        currentChatView.hideScrollToBottomButton(should: scrollView.distanceFromBottom() <= 50.0)
+        if currentChatView.messagesTableView.distanceFromBottom() < 50 {
+            viewModel.numberOfUnreadMessages.send(0)
+        } else {
+            currentChatView.handleScrollToBottomButton(show: true, number: 0)
+        }
     }
 }
 
@@ -201,7 +211,6 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             guard let newIndexPath = newIndexPath else { return }
             viewModel.sendSeenStatus()
             currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-//            currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
             frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             
         case .delete:
