@@ -103,10 +103,15 @@ extension CurrentChatViewController {
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
-        currentChatView.downArrowImageView.tap().sink { [weak self] _ in
-            self?.currentChatView.messagesTableView.scrollToBottom(.force)
-            self?.currentChatView.hideScrollToBottomButton(should: true)
-        }.store(in: &self.subscriptions)
+        currentChatView.scrollToBottomStackView.tap().sink { [weak self] _ in
+            guard let self else { return }
+            self.currentChatView.messagesTableView.scrollToBottom(.force(animated: true))
+            self.currentChatView.handleScrollToBottomButton(show: false, number: self.viewModel.numberOfUnreadMessages.value)
+        }.store(in: &subscriptions)
+        
+        viewModel.numberOfUnreadMessages.sink { [weak self] number in
+            self?.currentChatView.handleScrollToBottomButton(show: number > 0, number: number)
+        }.store(in: &subscriptions)
         
         Publishers
             .Zip(frcIsChangingPublisher, frcDidChangePublisher)
@@ -118,7 +123,16 @@ extension CurrentChatViewController {
                 switch frcChange {
                 case .insert(indexPath: let indexPath):
                     guard let message = self.viewModel.getMessage(for: indexPath) else { return }
-                    self.handleScroll(isMyMessage: message.fromUserId == self.viewModel.getMyUserId())
+                    let isMyMessage = message.fromUserId == self.viewModel.getMyUserId()
+                    self.handleScroll(isMyMessage: isMyMessage)
+                    if self.viewModel.room.type == .groupRoom && !isMyMessage {
+                        if self.viewModel.isPreviousCellSameSender(for: indexPath) {
+                            self.currentChatView.messagesTableView.reloadPreviousRow(for: indexPath)
+                        }
+                    }
+                    if self.currentChatView.messagesTableView.distanceFromBottom() > 50 {
+                        self.viewModel.numberOfUnreadMessages.send(self.viewModel.numberOfUnreadMessages.value + 1)
+                    }
                 case .other:
                     break
                 }
@@ -147,18 +161,21 @@ extension CurrentChatViewController {
         
         viewModel.setFetch()
         viewModel.frc?.delegate = self
-        currentChatView.messagesTableView.reloadData()
-        currentChatView.messagesTableView.scrollToBottom(.force)
+        currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
     }
     
     func handleScroll(isMyMessage: Bool) {
-        currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force : .ifLastCellVisible)
+        currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force(animated: true) : .ifLastCellVisible)
     }
 }
 
 extension CurrentChatViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        currentChatView.hideScrollToBottomButton(should: scrollView.distanceFromBottom() <= 50.0)
+        if currentChatView.messagesTableView.distanceFromBottom() < 50 {
+            viewModel.numberOfUnreadMessages.send(0)
+        } else {
+            currentChatView.handleScrollToBottomButton(show: true, number: viewModel.numberOfUnreadMessages.value)
+        }
     }
 }
 
@@ -188,13 +205,12 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     // MARK: - rows
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        print("TYPE: ", type.rawValue)
+//        print("TYPE: ", type.rawValue)
         switch type {
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
             viewModel.sendSeenStatus()
             currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-            currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
             frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             
         case .delete:
@@ -210,9 +226,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
                 return
             }
             if indexPath == newIndexPath {
-                UIView.performWithoutAnimation {
-                    currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
-                }
+                currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
             } else {
                 currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
             }
@@ -220,9 +234,7 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
         
         case .update:
             guard let indexPath = indexPath else { return }
-            UIView.performWithoutAnimation {
-                currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
-            }
+            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
             frcIsChangingPublisher.send(.other)
         
         default:
@@ -337,11 +349,12 @@ extension CurrentChatViewController: UITableViewDataSource {
               let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
         else { return EmptyTableViewCell() }
         
-        if let user = viewModel.getUser(for: message.fromUserId) {
-            if !viewModel.isPreviousCellMine(for: indexPath) {
+        if let user = viewModel.getUser(for: message.fromUserId),
+            viewModel.room.type == .groupRoom {
+            if !viewModel.isPreviousCellSameSender(for: indexPath) {
                 cell.updateSender(name: user.getDisplayName())
             }
-            if !viewModel.isNextCellMine(for: indexPath) {
+            if !viewModel.isNextCellSameSender(for: indexPath) {
                 cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
             }
         }
@@ -377,7 +390,9 @@ extension CurrentChatViewController: UITableViewDataSource {
             self?.handleCellTap(state, message: message)
         }).store(in: &cell.subs)
         
-        cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        if message.fromUserId == myUserId {
+            cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        }
         cell.updateTime(to: message.createdAt)
         
         return cell

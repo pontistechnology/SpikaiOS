@@ -329,7 +329,7 @@ extension DatabaseService {
                     _ = MessageRecordEntity(record: messageRecord, context: context)
                 }
                 
-                self?.updateMessagesDummyValue(ids: messageRecords.map({ $0.messageId }))
+                self?.updateMessagesDummyValue(ids: messageRecords.filter({ $0.type == .reaction}).map({ $0.messageId }))
               
                 do {
                     try context.safeSave()
@@ -429,11 +429,11 @@ extension DatabaseService {
             messageFR.predicate = NSPredicate(format: "id == %d", messageId)
             guard let entity = try? context.fetch(messageFR).first else { return }
             
-            if seenCount > entity.seenCount {
+            if (seenCount > entity.seenCount && seenCount == entity.totalUserCount) {
                 entity.seenCount = seenCount
             }
-            
-            if deliveredCount > entity.deliveredCount {
+            // MARK: - this two ifs are here for now (we dont want refresh with every change that is not visible in design)
+            if (deliveredCount > entity.deliveredCount && deliveredCount == entity.totalUserCount) {
                 entity.deliveredCount = deliveredCount
             }
             do {

@@ -11,7 +11,9 @@ class CurrentChatView: UIView, BaseView {
     
     let messagesTableView = UITableView(frame: .zero, style: .grouped)
     let messageInputView = MessageInputView()
-    let downArrowImageView = UIImageView(image: UIImage(safeImage: .downArrow))
+    private let newMessagesLabel = CustomLabel(text: "You have new messages.", textSize: 16, textColor: .textPrimary, fontName: .MontserratMedium)
+    private let downArrowImageView = UIImageView(image: UIImage(safeImage: .downArrow))
+    let scrollToBottomStackView = UIStackView()
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
     
@@ -27,7 +29,9 @@ class CurrentChatView: UIView, BaseView {
     
     func addSubviews() {
         addSubview(messagesTableView)
-        addSubview(downArrowImageView)
+        addSubview(scrollToBottomStackView)
+        scrollToBottomStackView.addArrangedSubview(newMessagesLabel)
+        scrollToBottomStackView.addArrangedSubview(downArrowImageView)
         addSubview(messageInputView)
     }
     
@@ -35,11 +39,16 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.separatorStyle  = .none
         messagesTableView.keyboardDismissMode = .interactive
         messagesTableView.rowHeight = UITableView.automaticDimension
-        messagesTableView.estimatedRowHeight = 5
+
         messagesTableView.backgroundColor = .clear
         messagesTableView.showsHorizontalScrollIndicator = false
         
-        downArrowImageView.isHidden = true
+        scrollToBottomStackView.backgroundColor = .chatBackground
+        scrollToBottomStackView.layer.cornerRadius = 10
+        scrollToBottomStackView.layer.shadowOpacity = 0.25
+        scrollToBottomStackView.layer.shadowRadius = 4
+        scrollToBottomStackView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        downArrowImageView.contentMode = .scaleAspectFit
         
         backgroundColor = .primaryBackground
     }
@@ -47,8 +56,14 @@ class CurrentChatView: UIView, BaseView {
     func positionSubviews() {        
         messagesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: messageInputView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left:0, bottom: 0, right: 0))
         
-        downArrowImageView.anchor(bottom: messagesTableView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0))
-        downArrowImageView.centerXToSuperview()
+        scrollToBottomStackView.anchor(bottom: messagesTableView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0))
+        scrollToBottomStackView.centerXToSuperview()
+        scrollToBottomStackView.constrainHeight(36)
+        
+        scrollToBottomStackView.isLayoutMarginsRelativeArrangement = true
+        scrollToBottomStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        scrollToBottomStackView.setCustomSpacing(8, after: newMessagesLabel)
+        
     
         messageInputView.anchor(leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         messageInputViewBottomConstraint = messageInputView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
@@ -75,16 +90,15 @@ class CurrentChatView: UIView, BaseView {
     
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let should = messagesTableView.distanceFromBottom() < 50
-            print("keyboard will show pozvan, should: ", should)
+            guard let lastCell = messagesTableView.visibleCells.last else { return }
+            let indexPath = messagesTableView.indexPath(for: lastCell)
             messageInputViewBottomConstraint.constant = -keyboardSize.height
             DispatchQueue.main.async { [weak self] in
                 self?.layoutIfNeeded()
-                if should {
-                    self?.messagesTableView.scrollToBottom(.force)                    
+                if let indexPath {
+                    self?.messagesTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
             }
-            
         }
     }
     
@@ -100,8 +114,10 @@ class CurrentChatView: UIView, BaseView {
         NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
     }
     
-    func hideScrollToBottomButton(should: Bool) {
-        downArrowImageView.isHidden = should
+    func handleScrollToBottomButton(show: Bool, number: Int) {
+        scrollToBottomStackView.isHidden = !show
+        newMessagesLabel.isHidden = number == 0
+        newMessagesLabel.text = "You have \(number) new message" + (number > 1 ? "s" : "") // todo: - localization
     }
 }
 

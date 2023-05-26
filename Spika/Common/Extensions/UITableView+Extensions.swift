@@ -15,23 +15,19 @@ extension UITableView {
             guard let self else { return }
             switch type {
             case .ifLastCellVisible:
-                if self.isLastCellVisible() {
-                    self.scrollToRow(at: lastCellIndexPath, at: .top, animated: false)
+                if self.distanceFromBottom() < 100 {
+                    self.scrollToRow(at: lastCellIndexPath, at: .top, animated: true)
                 }
-            case .force:
-                self.scrollToRow(at: lastCellIndexPath, at: .top, animated: false)
+            case .force(let animated):
+                self.scrollToRow(at: lastCellIndexPath, at: .top, animated: animated)
             }
         }
     }
     
-    func isLastCellVisible() -> Bool {
-        return distanceFromBottom() < 50
-    }
-    
     var lastCellIndexPath: IndexPath? {
-        let lastSectionIndex = self.numberOfSections - 1
-        if lastSectionIndex < 0 { return nil}
-        let lastRowIndex = self.numberOfRows(inSection: lastSectionIndex) - 1
+        let lastSectionIndex = numberOfSections - 1
+        if lastSectionIndex < 0 { return nil }
+        let lastRowIndex = numberOfRows(inSection: lastSectionIndex) - 1
         if lastRowIndex < 0 { return nil}
         let lastCellIndexPath = IndexPath(row: lastRowIndex, section: lastSectionIndex)
         return lastCellIndexPath
@@ -42,9 +38,7 @@ extension UITableView {
         guard currentRow > 0 else { return }
         let previousCellIndexPath = IndexPath(row: currentRow - 1, section: indexPath.section)
         DispatchQueue.main.async { [weak self] in
-            UIView.performWithoutAnimation { [weak self] in
-                self?.reloadRows(at: [previousCellIndexPath], with: .none)
-            }            
+            self?.reloadRows(at: [previousCellIndexPath], with: .none)
         }
     }
     

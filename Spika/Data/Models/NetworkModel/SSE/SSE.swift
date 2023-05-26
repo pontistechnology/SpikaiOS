@@ -92,9 +92,9 @@ private extension SSE {
                 self.repository.refreshUnreadCounts()
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
-                _ = self.repository.saveMessageRecords([record])
+                _ = self.repository.saveMessageRecords([record]) // this will update cc
                 guard let newDetails = sseNewMessage.messageRecord?.message else { return }
-                self.updateMessage(messageCounts: newDetails)
+                self.updateMessage(messageCounts: newDetails) // this will update cc
             case .newRoom, .updateRoom:
                 guard let room = sseNewMessage.room else { return }
                 _ = self.repository.saveLocalRooms(rooms: [room])
