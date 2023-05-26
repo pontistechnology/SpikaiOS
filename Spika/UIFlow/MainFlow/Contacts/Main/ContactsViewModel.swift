@@ -66,7 +66,7 @@ class ContactsViewModel: BaseViewModel {
     
     // TODO: add paging
     func postContacts(hashes: [String]) {
-        repository.postContacts(hashes: hashes).sink { [weak self] completion in
+        repository.postContacts(hashes: hashes, lastPage: false).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
             case let .failure(error):

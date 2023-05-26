@@ -98,13 +98,13 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error> {
+    func postContacts(hashes: [String], lastPage: Bool) -> AnyPublisher<ContactsResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else { return Fail<ContactsResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let contacts = ContactsRequestModel(contacts: hashes)
+        let contacts = ContactsRequestModel(contacts: hashes, isLastPage: lastPage)
         let resources = Resources<ContactsResponseModel, ContactsRequestModel>(
             path: Constants.Endpoints.contacts,
             requestType: .POST,

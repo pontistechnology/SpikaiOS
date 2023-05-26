@@ -34,6 +34,15 @@ extension AppRepository {
     }
     
     private func setupContactSync() {
+        class PhoneNumberPage {
+            let hashes: [String]
+            let lastPage: Bool
+            init(hashes: [String], lastPage: Bool) {
+                self.hashes = hashes
+                self.lastPage = lastPage
+            }
+        }
+        
         // 1. Instantiating manual trigger if none
         if let _ = manualContactTrigger { return }
         manualContactTrigger = PassthroughSubject()
@@ -41,6 +50,8 @@ extension AppRepository {
         // 2. Two triggers, manual pulls all device contacts, contacts changed pulls only modified / added contacts
         let manualContact = PassthroughSubject<[FetchedContact],Error>()
         let contactsChanged = PassthroughSubject<[FetchedContact],Error>()
+        
+        let hashedContacts = PassthroughSubject<[String],Error>()
         
         manualContactTrigger!.flatMap { _ in self.acces() }
                     .filter { $0 }
@@ -51,29 +62,29 @@ extension AppRepository {
         
         
         self.phoneNumberParser.contactStoreChanged
-            .compactMap { update -> CNContact? in
-                switch update {
-                case .contactAdded(let contact): return contact
-                case .contactModified(let contact): return contact
-                case .contactDeleted(_): return nil //TODO: - Currently there's no handling for deleted contacts
-                default: return nil
-                }
-            }
-            .map { contact in
-                return self.phoneNumberParser.parse(contact.phoneNumbers.map { $0.value.stringValue })
-                    .map { FetchedContact(firstName: contact.givenName, lastName: contact.familyName, telephone: $0) }
-            }.subscribe(contactsChanged)
+            .flatMap { _ in self.getPhoneContacts() }
+            .compactMap { $0.fetchedContacts }
+            .subscribe(contactsChanged)
             .store(in: &subs)
         
         // 3. Combined stream posts all contact hashes, receives response from server that is saved in local Database
         manualContact.merge(with: contactsChanged)
-            .flatMap { contacts in
-                let phoneHashes = contacts.map { $0.telephone.getSHA256() }
-                return self.postContacts(hashes: phoneHashes)
+            .flatMap { contacts -> AnyPublisher<PhoneNumberPage,Never> in
+                let phoneHashes = contacts.map { $0.telephone.getSHA256() }.chunked(into: 40)
+                let objects = phoneHashes.enumerated().map { element in
+                    PhoneNumberPage(hashes: element.element, lastPage: element.offset == (phoneHashes.count - 1))
+                }
+                return Publishers.Sequence(sequence: objects ).eraseToAnyPublisher()
             }
+            .buffer(size: .max, prefetch: .byRequest, whenFull: .dropNewest)
+            .flatMap(maxPublishers: .max(1), { phoneHashes in
+                print("Sync number of contacts: \(phoneHashes.hashes.count) last page: \(phoneHashes.lastPage)")
+                return self.postContacts(hashes: phoneHashes.hashes, lastPage: phoneHashes.lastPage)
+            })
             .sink(receiveCompletion: { _ in
             }, receiveValue: { [weak self] response in
                 guard let users = response.data?.list else { return }
+                print("Sync received response: \(users.first?.displayName ?? "")")
                 _ = self?.saveUsers(users)
                 self?.contactsLastSynced = Date()
             })

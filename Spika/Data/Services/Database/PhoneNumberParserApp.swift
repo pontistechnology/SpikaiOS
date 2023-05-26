@@ -17,7 +17,7 @@ class PhoneNumberParser {
     
     private let contactStore = CNContactStore()
     
-    let contactStoreChanged = PassthroughSubject<ContactStoreChanged,Error>()
+    let contactStoreChanged = PassthroughSubject<ContactStoreChanged,Never>()
     
     private var contactsChangeNotifier: ContactsChangeNotifier?
     
@@ -34,7 +34,10 @@ class PhoneNumberParser {
             store: self.contactStore,
             fetchRequest: request)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(contactStoreChanged(notification: )), name: ContactsChangeNotifier.didChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(contactStoreChanged(notification: )),
+                                               name: ContactsChangeNotifier.didChangeNotification,
+                                               object: nil)
     }
     
     public func parse(_ numberStrings: [String]) -> [String] {

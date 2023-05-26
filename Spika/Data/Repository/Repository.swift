@@ -44,7 +44,7 @@ protocol Repository {
     func updateUser(username: String?, avatarFileId: Int64?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>
     
         // Contacts
-    func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error>
+    func postContacts(hashes: [String], lastPage: Bool) -> AnyPublisher<ContactsResponseModel, Error>
     func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>
     
         // Room
