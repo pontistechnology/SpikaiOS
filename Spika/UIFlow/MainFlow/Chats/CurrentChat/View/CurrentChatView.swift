@@ -90,14 +90,15 @@ class CurrentChatView: UIView, BaseView {
     
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            guard let lastCell = messagesTableView.visibleCells.last else { return }
-            let indexPath = messagesTableView.indexPath(for: lastCell)
             messageInputViewBottomConstraint.constant = -keyboardSize.height
+            var indexPath: IndexPath?
+            if let lastCell = messagesTableView.visibleCells.last {
+                indexPath = messagesTableView.indexPath(for: lastCell)
+            }
             DispatchQueue.main.async { [weak self] in
                 self?.layoutIfNeeded()
-                if let indexPath {
-                    self?.messagesTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                }
+                guard let indexPath else { return }
+                self?.messagesTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             }
         }
     }
