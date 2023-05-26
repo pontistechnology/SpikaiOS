@@ -233,7 +233,6 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
             frcIsChangingPublisher.send(.other)
         
         case .update:
-            print("update in cc")
             guard let indexPath = indexPath else { return }
             currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
             frcIsChangingPublisher.send(.other)
@@ -339,7 +338,6 @@ extension CurrentChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("cellforrow at ", indexPath)
         guard let message = viewModel.getMessage(for: indexPath)
         else { return EmptyTableViewCell()}
         let roomType = viewModel.room.type
