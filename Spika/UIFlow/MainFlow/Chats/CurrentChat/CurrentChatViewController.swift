@@ -130,7 +130,7 @@ extension CurrentChatViewController {
                             self.currentChatView.messagesTableView.reloadPreviousRow(for: indexPath)
                         }
                     }
-                    if self.currentChatView.messagesTableView.distanceFromBottom() > 50 {
+                    if !isMyMessage && self.currentChatView.messagesTableView.distanceFromBottom() > 50 {
                         self.viewModel.numberOfUnreadMessages.send(self.viewModel.numberOfUnreadMessages.value + 1)
                     }
                 case .other:
