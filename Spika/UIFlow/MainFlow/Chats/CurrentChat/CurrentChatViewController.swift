@@ -174,7 +174,7 @@ extension CurrentChatViewController {
         if currentChatView.messagesTableView.distanceFromBottom() < 50 {
             viewModel.numberOfUnreadMessages.send(0)
         } else {
-            currentChatView.handleScrollToBottomButton(show: true, number: 0)
+            currentChatView.handleScrollToBottomButton(show: true, number: viewModel.numberOfUnreadMessages.value)
         }
     }
 }
