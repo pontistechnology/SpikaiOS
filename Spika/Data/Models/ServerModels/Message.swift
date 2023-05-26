@@ -64,7 +64,7 @@ extension Message {
     
     func getMessageState(myUserId: Int64) -> MessageState {
         // TODO: check first seen, then delivered, then sent, waiting, error, (check fail)
-        
+//        print("getMessageState: \(id)", "dc: ", deliveredCount, "tc: ", totalUserCount)
         if seenCount == totalUserCount {
             return .seen
         }
