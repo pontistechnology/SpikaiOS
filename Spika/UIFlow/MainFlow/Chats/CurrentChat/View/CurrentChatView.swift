@@ -47,7 +47,6 @@ class CurrentChatView: UIView, BaseView {
         scrollToBottomStackView.layer.cornerRadius = 10
         scrollToBottomStackView.layer.shadowOpacity = 0.25
         scrollToBottomStackView.layer.shadowRadius = 4
-        scrollToBottomStackView.layer.shadowColor = UIColor.textPrimary.cgColor
         scrollToBottomStackView.layer.shadowOffset = CGSize(width: 0, height: 4)
         downArrowImageView.contentMode = .scaleAspectFit
         
