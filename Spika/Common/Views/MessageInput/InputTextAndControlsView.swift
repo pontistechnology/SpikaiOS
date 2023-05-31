@@ -9,13 +9,13 @@ import UIKit
 import Combine
 
 class InputTextAndControlsView: UIStackView {
-    private let plusButton = UIButton()
-    private let sendButton = UIButton()
-    private let cameraButton = UIButton()
-    private let microphoneButton = UIButton()
-    private let emojiButton = UIButton()
-    private let closeEditModeButton = UIButton()
-    private let saveButton = UIButton()
+    private let plusButton = CustomButton(assetName: .plus)
+    private let sendButton = CustomButton(assetName: .send)
+    private let cameraButton = CustomButton(assetName: .camera)
+    private let microphoneButton = CustomButton(assetName: .microphone)
+    private let emojiButton = CustomButton(assetName: .smile)
+    private let closeEditModeButton = CustomButton(assetName: .close)
+    private let saveButton = CustomButton(text: "Save", textSize: 16, textColor: .primaryColor, fontName: .MontserratBold)
     private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .textPrimary)
     private let messageTextView = ExpandableTextView()
     
@@ -51,15 +51,6 @@ extension InputTextAndControlsView: BaseView {
     }
     
     func styleSubviews() {
-        closeEditModeButton.setImage(UIImage(safeImage: .close), for: .normal)
-        plusButton.setImage(UIImage(safeImage: .plus), for: .normal)
-        sendButton.setImage(UIImage(safeImage: .send), for: .normal)
-        emojiButton.setImage(UIImage(safeImage: .smile), for: .normal)
-        cameraButton.setImage(UIImage(safeImage: .camera), for: .normal)
-        microphoneButton.setImage(UIImage(safeImage: .microphone), for: .normal)
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.setTitleColor(.primaryColor, for: .normal)
-        saveButton.setTitleColor(.textSecondary, for: .disabled)
         sendButton.hide()
         closeEditModeButton.hide()
         saveButton.hide()
