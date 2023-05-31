@@ -38,7 +38,7 @@ final class CheckmarkView: UIButton, BaseView {
         label.text = text
         checkmark.translatesAutoresizingMaskIntoConstraints = false
         checkmark.contentMode = .scaleAspectFit
-        checkmark.isHidden = true
+        checkmark.hide()
     }
     
     func positionSubviews() {

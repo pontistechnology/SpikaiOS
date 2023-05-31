@@ -67,7 +67,7 @@ extension InputTextAndControlsView: BaseView {
     }
     
     func positionSubviews() {
-        alignment = .lastBaseline
+        alignment = .bottom
         spacing = 10
         directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 11, bottom: 12, trailing: 11)
         isLayoutMarginsRelativeArrangement = true
@@ -76,8 +76,6 @@ extension InputTextAndControlsView: BaseView {
             $0.constrainWidth(34)
             $0.constrainHeight(34)
         }
-//        saveButton.constrainHeight(34)
-//        saveButton.contentVerticalAlignment = .top
         
         setCustomSpacing(-40, after: messageTextView)
         setCustomSpacing(0, after: microphoneButton)

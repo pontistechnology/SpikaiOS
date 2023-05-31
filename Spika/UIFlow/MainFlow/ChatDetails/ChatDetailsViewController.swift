@@ -36,11 +36,11 @@ final class ChatDetailsViewController: BaseViewController {
         }
         
         if self.viewModel.room.value.type == .privateRoom {
-            self.chatDetailView.contentView.blockButton.isHidden = false
-            self.chatDetailView.contentView.leaveButton.isHidden = true
+            self.chatDetailView.contentView.blockButton.unhide()
+            self.chatDetailView.contentView.leaveButton.hide()
         } else {
-            self.chatDetailView.contentView.blockButton.isHidden = true
-            self.chatDetailView.contentView.leaveButton.isHidden = false
+            self.chatDetailView.contentView.blockButton.hide()
+            self.chatDetailView.contentView.leaveButton.unhide()
         }
         
         // View Model Binding
@@ -150,7 +150,7 @@ final class ChatDetailsViewController: BaseViewController {
         
         self.chatDetailView.contentView.chatNameChanged
             .sink { [weak self] newName in
-                self?.chatDetailView.contentView.chatNameTextField.isHidden = true
+                self?.chatDetailView.contentView.chatNameTextField.hide()
                 self?.viewModel.onChangeChatName(newName: newName)
             }.store(in: &self.subscriptions)
         
@@ -273,7 +273,7 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     func onChangeChatName() {
-        self.chatDetailView.contentView.chatNameTextField.isHidden = false
+        self.chatDetailView.contentView.chatNameTextField.unhide()
         self.chatDetailView.contentView.chatNameTextField.becomeFirstResponder()
     }
     

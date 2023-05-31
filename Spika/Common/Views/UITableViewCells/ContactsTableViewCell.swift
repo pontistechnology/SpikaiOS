@@ -73,7 +73,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         nameLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 1
 //        backgroundColor = .primaryBackground
-        rightView.isHidden = true
+        rightView.hide()
     }
     
     func positionSubviews() {
@@ -89,28 +89,28 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         self.descriptionLabel.text = description
         leftImageView.kf.setImage(with: leftImage, placeholder: UIImage(safeImage: .userImage))
         
-        self.rightButton.isHidden = true
+        self.rightButton.hide()
         self.rightButton.setImage(nil, for: .normal)
         self.rightButton.setTitle(nil, for: .normal)
-        self.rightView.isHidden = true
+        self.rightView.hide()
         
         switch type {
         case .normal:
             break
         case .text(let text):
-            self.rightButton.isHidden = false
+            self.rightButton.unhide()
             self.rightButton.setTitle(text, for: .normal)
             self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratLight.rawValue, size: 14)
             self.rightButton.setTitleColor(.textPrimary, for: .normal)
         case .remove:
-            self.rightButton.isHidden = false
+            self.rightButton.unhide()
             self.rightButton.setImage(UIImage(safeImage: .close), for: .normal)
         case .emoji(let emoji, let size):
-            self.rightButton.isHidden = false
+            self.rightButton.unhide()
             self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)
             self.rightButton.setTitle(emoji, for: .normal)
         case .doubleEntry(let firstText,let firstImage,let secondText,let secondImage):
-            self.rightView.isHidden = false
+            self.rightView.unhide()
             
             self.rightView.firstRow.label.text = firstText
             if let image = firstImage {

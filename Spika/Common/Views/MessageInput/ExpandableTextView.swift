@@ -75,11 +75,11 @@ extension ExpandableTextView: UITextViewDelegate {
         if textView.text.count == 0 {
             textViewIsEmptyPublisher.send(true)
             wasMessageTextViewEmpty = true
-            placeholderLabel.isHidden = false
+            placeholderLabel.unhide()
         } else if wasMessageTextViewEmpty {
             textViewIsEmptyPublisher.send(false)
             wasMessageTextViewEmpty = false
-            placeholderLabel.isHidden = true
+            placeholderLabel.hide()
         }
         
         var heightOfTextView: CGFloat = 32

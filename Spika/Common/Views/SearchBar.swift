@@ -51,7 +51,7 @@ class SearchBar: UIView, BaseView {
     func styleSubviews() {
         backgroundColor = .clear
         
-        deleteImage.isHidden = true
+        deleteImage.hide()
         
         searchTextField.autocorrectionType = .no
         searchTextField.textColor = .textPrimary
@@ -108,7 +108,7 @@ class SearchBar: UIView, BaseView {
             if value.isEmpty {
                 self.clearTextField()
             } else {
-                self.deleteImage.isHidden = false
+                self.deleteImage.unhide()
                 delegate?.searchBar(self, valueDidChange: value)
             }
         } else {
@@ -119,7 +119,7 @@ class SearchBar: UIView, BaseView {
     
     func clearTextField() {
         self.searchTextField.text = ""
-        self.deleteImage.isHidden = true
+        self.deleteImage.hide()
         delegate?.searchBar(self, valueDidChange: "")
     }
 }
