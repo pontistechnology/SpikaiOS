@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class InputTextAndControlsView: UIView {
+class InputTextAndControlsView: UIStackView {
     private let plusButton = UIButton()
     private let sendButton = UIButton()
     private let cameraButton = UIButton()
@@ -18,7 +18,6 @@ class InputTextAndControlsView: UIView {
     private let saveButton = UIButton()
     private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .textPrimary)
     private let messageTextView = ExpandableTextView()
-    private var messageTextViewTrailingConstraint = NSLayoutConstraint()
     
     private var subscriptions = Set<AnyCancellable>()
     let publisher: PassthroughSubject<MessageInputViewButtonAction, Never>
@@ -30,7 +29,7 @@ class InputTextAndControlsView: UIView {
         setupBindings()
     }
     
-    required init?(coder: NSCoder) {
+    required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -38,14 +37,16 @@ class InputTextAndControlsView: UIView {
 
 extension InputTextAndControlsView: BaseView {
     func addSubviews() {
-        addSubview(plusButton)
-        addSubview(messageTextView)
-        addSubview(microphoneButton)
-        addSubview(cameraButton)
-        addSubview(emojiButton)
-        addSubview(saveButton)
-        addSubview(sendButton)
-        addSubview(closeEditModeButton)
+        // order matters
+        addArrangedSubview(plusButton)
+        addArrangedSubview(closeEditModeButton)
+        addArrangedSubview(messageTextView)
+        addArrangedSubview(emojiButton)
+        addArrangedSubview(microphoneButton)
+        addArrangedSubview(cameraButton)
+        addArrangedSubview(saveButton)
+        addArrangedSubview(sendButton)
+        
         addSubview(editingModeLabel)
     }
     
@@ -59,33 +60,30 @@ extension InputTextAndControlsView: BaseView {
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(.primaryColor, for: .normal)
         saveButton.setTitleColor(.textSecondary, for: .disabled)
-        sendButton.alpha = 0
-        closeEditModeButton.alpha = 0
-        saveButton.alpha = 0
-        editingModeLabel.alpha = 0
+        sendButton.hide()
+        closeEditModeButton.hide()
+        saveButton.hide()
+        editingModeLabel.hide()
     }
     
     func positionSubviews() {
-        messageTextView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 12, left: 56, bottom: 12, right: 0))
-        messageTextViewTrailingConstraint = messageTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -95)
-        messageTextViewTrailingConstraint.isActive = true
+        alignment = .lastBaseline
+        spacing = 10
+        directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 11, bottom: 12, trailing: 11)
+        isLayoutMarginsRelativeArrangement = true
+        
+        [plusButton, closeEditModeButton, microphoneButton, cameraButton, sendButton, emojiButton].forEach {
+            $0.constrainWidth(34)
+            $0.constrainHeight(34)
+        }
+//        saveButton.constrainHeight(34)
+//        saveButton.contentVerticalAlignment = .top
+        
+        setCustomSpacing(-40, after: messageTextView)
+        setCustomSpacing(0, after: microphoneButton)
         
         editingModeLabel.centerXToSuperview()
         editingModeLabel.anchor(top: messageTextView.bottomAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 0))
-        
-        plusButton.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 0), size: CGSize(width: 24, height: 24))
-        
-        closeEditModeButton.anchor(leading: leadingAnchor, bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 0), size: CGSize(width: 16, height: 16))
-        
-        sendButton.anchor(bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 56, height: 56))
-        
-        microphoneButton.anchor(bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 18, right: 20), size: CGSize(width: 20, height: 20))
-        
-        cameraButton.anchor(bottom: microphoneButton.bottomAnchor ,trailing: microphoneButton.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20), size: CGSize(width: 20, height: 20))
-        
-        emojiButton.anchor(bottom: messageTextView.bottomAnchor, trailing: messageTextView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 13), size: CGSize(width: 20, height: 20))
-        
-        saveButton.anchor(bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4), size: CGSize(width: 56, height: 56))
     }
 }
 
@@ -93,25 +91,25 @@ extension InputTextAndControlsView: BaseView {
 
 extension InputTextAndControlsView {
     func animateMessageView(to state: MessageInputViewState) {
-        messageTextViewTrailingConstraint.constant =
-            .empty == state ? -95 : -60
         DispatchQueue.main.async { [weak self] in
             UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.cameraButton.alpha = .empty == state ? 1 : 0
-                self?.microphoneButton.alpha = .empty == state ? 1 : 0
-                self?.sendButton.alpha = .writing == state ? 1 : 0
+                .empty == state ? self?.cameraButton.unhide() : self?.cameraButton.hide()
+                
+                (.empty == state) ? self?.microphoneButton.unhide() : self?.microphoneButton.hide()
+                
+                (.writing == state) ? self?.sendButton.unhide() : self?.sendButton.hide()
                 
                 if case .editing(let string) = state {
-                    self?.plusButton.alpha = 0
-                    self?.saveButton.alpha = 1
-                    self?.editingModeLabel.alpha = 1
+                    self?.plusButton.hide()
+                    self?.saveButton.unhide()
+                    self?.editingModeLabel.unhide()
                     self?.messageTextView.setText(string)
-                    self?.closeEditModeButton.alpha = 1
+                    self?.closeEditModeButton.unhide()
                 } else {
-                    self?.plusButton.alpha = 1
-                    self?.saveButton.alpha = 0
-                    self?.editingModeLabel.alpha = 0
-                    self?.closeEditModeButton.alpha = 0
+                    self?.plusButton.unhide()
+                    self?.saveButton.hide()
+                    self?.editingModeLabel.hide()
+                    self?.closeEditModeButton.hide()
                 }
                 
                 self?.layoutIfNeeded()
