@@ -52,16 +52,16 @@ extension AppRepository {
         let manualContact = PassthroughSubject<[FetchedContact],Error>()
         let contactsChanged = PassthroughSubject<[FetchedContact],Error>()
         
-        manualContactTrigger!.flatMap { _ in self.acces() }
+        manualContactTrigger!.flatMap { [unowned self] _ in self.access() }
                     .filter { $0 }
-                    .flatMap { _ in self.getPhoneContacts() }
+                    .flatMap { [unowned self] _ in self.getPhoneContacts() }
                     .compactMap { $0.fetchedContacts }
                     .subscribe(manualContact)
                     .store(in: &subs)
         
         
         self.phoneNumberParser.contactStoreChanged
-            .flatMap { _ in self.getPhoneContacts() }
+            .flatMap { [unowned self] _ in self.getPhoneContacts() }
             .compactMap { $0.fetchedContacts }
             .subscribe(contactsChanged)
             .store(in: &subs)
@@ -77,7 +77,7 @@ extension AppRepository {
                 return Publishers.Sequence(sequence: objects ).eraseToAnyPublisher()
             }
             .buffer(size: .max, prefetch: .byRequest, whenFull: .dropNewest)
-            .flatMap(maxPublishers: .max(1), { phoneHashes in
+            .flatMap(maxPublishers: .max(1), { [unowned self] phoneHashes in
                 print("Sync number of contacts: \(phoneHashes.hashes.count) last page: \(phoneHashes.lastPage)")
                 return self.postContacts(hashes: phoneHashes.hashes, lastPage: phoneHashes.lastPage)
             })
@@ -127,7 +127,7 @@ extension AppRepository {
         }
     }
     
-    private func acces() -> Future<Bool,Never> {
+    private func access() -> Future<Bool,Never> {
         return Future { promise in
             CNContactStore().requestAccess(for: .contacts) { granted, error in
                 if let _ = error {
