@@ -20,12 +20,13 @@ enum ContactStoreChanged {
 extension AppRepository {
     
     func syncContacts(force: Bool?) {
+        // Setup the Rx stream at app start
         guard let _ = manualContactTrigger else {
             self.setupContactSync()
             self.manualContactTrigger?.send(Void())
             return
         }
-        
+        // If force sync - sync immediately, if not check timestamp if older than 24h
         if force ?? false {
             self.manualContactTrigger?.send(Void())
         } else if !self.contactsLastSynced.isInToday {
@@ -51,8 +52,6 @@ extension AppRepository {
         let manualContact = PassthroughSubject<[FetchedContact],Error>()
         let contactsChanged = PassthroughSubject<[FetchedContact],Error>()
         
-        let hashedContacts = PassthroughSubject<[String],Error>()
-        
         manualContactTrigger!.flatMap { _ in self.acces() }
                     .filter { $0 }
                     .flatMap { _ in self.getPhoneContacts() }
@@ -67,8 +66,9 @@ extension AppRepository {
             .subscribe(contactsChanged)
             .store(in: &subs)
         
-        // 3. Combined stream posts all contact hashes, receives response from server that is saved in local Database
-        manualContact.merge(with: contactsChanged)
+        // 3. Combined stream posts all contact hashes, receives response from server and saves in local Database
+        let syncContacts = manualContact.merge(with: contactsChanged)
+        syncContacts
             .flatMap { contacts -> AnyPublisher<PhoneNumberPage,Never> in
                 let phoneHashes = contacts.map { $0.telephone.getSHA256() }.chunked(into: 40)
                 let objects = phoneHashes.enumerated().map { element in
