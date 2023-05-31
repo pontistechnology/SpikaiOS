@@ -78,8 +78,8 @@ extension BaseMessageTableViewCell: BaseView {
         containerStackView.distribution = .fill
         senderPhotoImageview.layer.cornerRadius = 10
         senderPhotoImageview.clipsToBounds = true
-        senderPhotoImageview.isHidden = true
-        timeLabel.isHidden = true
+        senderPhotoImageview.hide()
+        timeLabel.hide()
         backgroundColor = .primaryBackground
     }
     
@@ -125,7 +125,7 @@ extension BaseMessageTableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        timeLabel.isHidden = true
+        timeLabel.hide()
         senderNameLabel.text = ""
         senderPhotoImageview.image = nil
         subs.removeAll()
@@ -137,7 +137,7 @@ extension BaseMessageTableViewCell {
         self.replyView = nil
         self.reactionsView = nil
         containerBottomConstraint?.constant = -2
-        //        senderPhotoImageview.isHidden = true
+        //        senderPhotoImageview.hide()
     }
     
     func updateCellState(to state: MessageState) {
@@ -153,7 +153,7 @@ extension BaseMessageTableViewCell {
     }
     
     func updateSender(photoUrl: URL?) {
-        senderPhotoImageview.isHidden = false
+        senderPhotoImageview.unhide()
         senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(safeImage: .userImage))
     }
     

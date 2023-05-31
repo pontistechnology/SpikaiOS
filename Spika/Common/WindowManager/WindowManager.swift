@@ -42,7 +42,7 @@ extension WindowManager {
                                             width: width,
                                             height: width)
             self.indicatorWindow?.backgroundColor = .appRed
-            self.indicatorWindow?.isHidden = false
+            self.indicatorWindow?.unhide()
             self.indicatorWindow?.layer.cornerRadius = width / 2
             self.indicatorWindow?.clipsToBounds = true
             self.indicatorWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
@@ -69,7 +69,7 @@ extension WindowManager {
             self.notificationWindow?.clipsToBounds = true
             self.notificationWindow?.rootViewController = NotificationAlertViewController(info: info, tapPublisher: self.notificationTapPublisher)
             //        self.notificationWindow?.backgroundColor = .blue
-            self.notificationWindow?.isHidden = false
+            self.notificationWindow?.unhide()
             self.notificationWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
             self.dismissNotificationWindowAfter(seconds: 3)
         }
@@ -94,7 +94,7 @@ extension WindowManager {
             self.popUpWindow?.rootViewController = PopUpViewController(type, publisher: self.popUpPublisher)
             self.popUpWindow?.backgroundColor = type.isBlockingUI ? .gray.withAlphaComponent(0.5) : .clear
             self.popUpWindow?.clipsToBounds = true
-            self.popUpWindow?.isHidden = false
+            self.popUpWindow?.unhide()
             self.popUpWindow?.overrideUserInterfaceStyle = .light // TODO: - remove later, when dark mode design is ready
         }
     }

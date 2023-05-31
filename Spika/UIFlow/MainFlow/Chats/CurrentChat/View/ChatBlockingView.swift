@@ -32,7 +32,7 @@ class ChatBlockingView: UIView, BaseView {
         super.init(frame: CGRectZero)
         self.setupView()
         
-        self.isHidden = true
+        self.hide()
         self.blockUnblockButton
             .tap()
             .map { [unowned self] _ -> ChatBlockingViewAction in
@@ -62,33 +62,33 @@ class ChatBlockingView: UIView, BaseView {
         self.state = state
         switch state {
         case .newChat:
-            okButton.isHidden = false
+            okButton.unhide()
             self.label.text = .getStringFor(.newContact)
-            blockUnblockButton.isHidden = false
+            blockUnblockButton.unhide()
             blockUnblockButton.setTitle(.getStringFor(.block), for: .normal)
         case .notInChat:
-            okButton.isHidden = true
+            okButton.hide()
             self.label.text = .getStringFor(.youAreNoLongerMember)
-            blockUnblockButton.isHidden = true
+            blockUnblockButton.hide()
             blockUnblockButton.setTitle(.getStringFor(.unblock), for: .normal)
         case .userBlocked:
-            okButton.isHidden = true
+            okButton.hide()
             self.label.text = .getStringFor(.youBlockedTheContact)
-            blockUnblockButton.isHidden = false
+            blockUnblockButton.unhide()
             blockUnblockButton.setTitle(.getStringFor(.unblock), for: .normal)
         case .notUsed:
             break
         }
         
         if case .notUsed = state {
-            self.isHidden = true
+            self.hide()
         } else {
-            self.isHidden = false
+            self.unhide()
         }
     }
     //self.label.text = .getStringFor(.youAreNoLongerMember)
     func styleSubviews() {
-//        self.isHidden = true
+//        self.hide()
         self.backgroundColor = .textTertiary
         self.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0

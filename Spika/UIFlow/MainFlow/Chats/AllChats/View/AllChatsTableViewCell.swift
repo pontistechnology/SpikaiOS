@@ -52,7 +52,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.backgroundColor = .primaryColor
         messagesNumberLabel.layer.cornerRadius = 10
         messagesNumberLabel.clipsToBounds = true
-        messagesNumberLabel.isHidden = true
+        messagesNumberLabel.hide()
         
         pinnedIcon.translatesAutoresizingMaskIntoConstraints = false
         pinnedIcon.contentMode = .center

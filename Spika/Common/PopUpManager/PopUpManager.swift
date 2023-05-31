@@ -47,7 +47,7 @@
 //        
 //        let alertWindow = UIWindow(windowScene: windowScene)
 //        alertWindow.rootViewController = viewController
-//        alertWindow.isHidden = false
+//        alertWindow.unhide()
 //        alertWindow.overrideUserInterfaceStyle = .light // TODO: check colors, theme
 //        self.alertWindow = alertWindow
 //    }
