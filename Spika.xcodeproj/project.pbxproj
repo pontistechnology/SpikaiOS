@@ -404,6 +404,10 @@
 		6C78B91729AF5D89004BF881 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B93280EFFD200F9B321 /* User.swift */; };
 		6C78B92029AF6468004BF881 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C78B91F29AF6467004BF881 /* GoogleService-Info.plist */; };
 		6C8FF1C32949D27000955592 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6C8FF1C52949D27000955592 /* InfoPlist.strings */; };
+		6C9B40862A28B075003FA11B /* ServerSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9B40852A28B075003FA11B /* ServerSettingsModel.swift */; };
+		6C9B40872A28B075003FA11B /* ServerSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9B40852A28B075003FA11B /* ServerSettingsModel.swift */; };
+		6C9B40882A28B232003FA11B /* ServerSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9B40852A28B075003FA11B /* ServerSettingsModel.swift */; };
+		6C9B40892A28B232003FA11B /* ServerSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9B40852A28B075003FA11B /* ServerSettingsModel.swift */; };
 		6C9C5C7C29262610009D3E2B /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */; };
 		6C9C5C7E29262657009D3E2B /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7D29262657009D3E2B /* CustomStackView.swift */; };
 		6C9C7242291E743A0089AB4C /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C7241291E743A0089AB4C /* SettingsModel.swift */; };
@@ -866,6 +870,7 @@
 		6C78B92429AF66CD004BF881 /* SpikaDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpikaDev.entitlements; sourceTree = "<group>"; };
 		6C78B92529AF66F4004BF881 /* SpikaNotificationServiceDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpikaNotificationServiceDev.entitlements; sourceTree = "<group>"; };
 		6C8FF1C42949D27000955592 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6C9B40852A28B075003FA11B /* ServerSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerSettingsModel.swift; sourceTree = "<group>"; };
 		6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		6C9C5C7D29262657009D3E2B /* CustomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
 		6C9C7241291E743A0089AB4C /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
@@ -2036,6 +2041,7 @@
 				93227E9927D6EE47002E3DED /* MessageResponse.swift */,
 				9396AB7027FED6F000696757 /* VerifyFileResponseModel.swift */,
 				934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */,
+				6C9B40852A28B075003FA11B /* ServerSettingsModel.swift */,
 				931B15172821295600A0CD35 /* DeliveredResponseModel.swift */,
 				939B30432850DD2200FFA537 /* SyncRoomsResponseModel.swift */,
 				939B30452850DDE700FFA537 /* SyncMessagesResponseModel.swift */,
@@ -2806,6 +2812,7 @@
 				6C78B80529AF5ADB004BF881 /* ExpandableTextView.swift in Sources */,
 				6C78B80629AF5ADB004BF881 /* AppereanceSettingsViewModel.swift in Sources */,
 				6C78B80729AF5ADB004BF881 /* UserSelectionView.swift in Sources */,
+				6C9B40872A28B075003FA11B /* ServerSettingsModel.swift in Sources */,
 				6C78B80829AF5ADB004BF881 /* TabBarItem.swift in Sources */,
 				6C78B80929AF5ADB004BF881 /* SelectUsersView.swift in Sources */,
 				6C78B80A29AF5ADB004BF881 /* EnterVerifyCodeViewModel.swift in Sources */,
@@ -3014,6 +3021,7 @@
 				6C78B8E129AF5D89004BF881 /* Repository.swift in Sources */,
 				6CF916BD2A1B719F002AD09B /* PhoneNumberParserNotification.swift in Sources */,
 				6C78B8E229AF5D89004BF881 /* AppRepository+User.swift in Sources */,
+				6C9B40892A28B232003FA11B /* ServerSettingsModel.swift in Sources */,
 				6C78B8E329AF5D89004BF881 /* ContactEntity+CoreDataClass.swift in Sources */,
 				6C78B8E429AF5D89004BF881 /* VerifyFileRequestModel.swift in Sources */,
 				6C78B8E529AF5D89004BF881 /* Room.swift in Sources */,
@@ -3103,6 +3111,7 @@
 				931B151228211B1300A0CD35 /* Repository.swift in Sources */,
 				6CF916BC2A1B719E002AD09B /* PhoneNumberParserNotification.swift in Sources */,
 				93179C3D28B709B6006F928B /* AppRepository+User.swift in Sources */,
+				6C9B40882A28B232003FA11B /* ServerSettingsModel.swift in Sources */,
 				931B150D28211ACB00A0CD35 /* ContactEntity+CoreDataClass.swift in Sources */,
 				931B14F628211AC100A0CD35 /* VerifyFileRequestModel.swift in Sources */,
 				939AAE3D28F62F6600DD5142 /* Room.swift in Sources */,
@@ -3276,6 +3285,7 @@
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
 				93C77B6E2922F76100F676C5 /* ExpandableTextView.swift in Sources */,
 				93D993092992AB7F0038565F /* AppereanceSettingsViewModel.swift in Sources */,
+				6C9B40862A28B075003FA11B /* ServerSettingsModel.swift in Sources */,
 				6C2497E42924FB4200594A55 /* UserSelectionView.swift in Sources */,
 				6C65B550291B9B2B007C5B92 /* TabBarItem.swift in Sources */,
 				93E4F6F027C2BB9700432CFA /* SelectUsersView.swift in Sources */,

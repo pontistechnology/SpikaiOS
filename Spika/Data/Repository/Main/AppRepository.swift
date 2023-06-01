@@ -51,4 +51,39 @@ class AppRepository: Repository {
         return userDefaults.integer(forKey: Constants.Database.selectedAppereanceMode)
     }
     
+    func getAppModeIsTeamChat() -> Future<Bool?, Error> {
+        return Future { [unowned self] promise in
+            guard let settings = self.userDefaults.object(forKey: "serverSettings") as? Data,
+                  let settings = try? JSONDecoder().decode(ServerSettingsModel.self, from: settings) else {
+                self.getServerSettings()
+                    .sink { c in
+                        if case .failure(let error) = c {
+                            promise(.failure(error))
+                        }
+                    } receiveValue: { [unowned self] apiSettings in
+                        guard let data = apiSettings.data else {
+                            promise(.success(nil))
+                            return
+                        }
+                        promise(.success(data.teamMode))
+                        guard let encoded = try? JSONEncoder().encode(data) else { return }
+                        self.userDefaults.setValue(encoded, forKey: "serverSettings")
+                    }
+                    .store(in: &self.subs)
+                return
+            }
+            promise(.success(settings.teamMode))
+        }
+    }
+    
+    func getServerSettings() -> AnyPublisher<ServerSettingsResponseModel, Error> {
+        let resources = Resources<ServerSettingsResponseModel, EmptyRequestBody>(
+            path: Constants.Endpoints.messengerSettings,
+            requestType: .GET,
+            bodyParameters: nil,
+            httpHeaderFields: nil)
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
 }

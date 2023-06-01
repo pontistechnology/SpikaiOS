@@ -40,6 +40,16 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
+        let repository = Assembler.sharedAssembler.resolver.resolve(Repository.self, name: RepositoryType.production.name)!
+        repository.getAppModeIsTeamChat()
+            .sink { _ in
+                
+            } receiveValue: { [weak self] isTeamChat in
+                self?.continueAfterServerSettings()
+            }.store(in: &subs)
+    }
+    
+    func continueAfterServerSettings() {
         if let _ = userDefaults.string(forKey: Constants.Database.accessToken),
            let userName = userDefaults.string(forKey: Constants.Database.displayName),
            !userName.isEmpty {

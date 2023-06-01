@@ -31,6 +31,8 @@ protocol Repository {
 // MARK: - NETWORKING:
     
         // Auth
+    func getAppModeIsTeamChat() -> Future<Bool?, Error>
+    func getServerSettings() -> AnyPublisher<ServerSettingsResponseModel, Error>
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
     func verifyCode(code: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
     

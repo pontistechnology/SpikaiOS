@@ -29,5 +29,6 @@ public extension Constants {
         static let usersSyncTimestamp = "usersSyncTimestamp"
         static let messagesSyncTimestamp = "messagesSyncTimestamp"
         static let messageRecordsSyncTimestamp = "messageRecordsSyncTimestamp"
+        static let appIsInMessangerMode = "appIsInMessangerMode"
     }
 }
