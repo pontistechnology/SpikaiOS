@@ -53,7 +53,7 @@ class AppRepository: Repository {
     
     func getAppModeIsTeamChat() -> Future<Bool?, Error> {
         return Future { [unowned self] promise in
-            guard let settings = self.userDefaults.object(forKey: "serverSettings") as? Data,
+            guard let settings = self.userDefaults.object(forKey: Constants.Database.serverSettings) as? Data,
                   let settings = try? JSONDecoder().decode(ServerSettingsModel.self, from: settings) else {
                 self.getServerSettings()
                     .sink { c in
@@ -67,7 +67,7 @@ class AppRepository: Repository {
                         }
                         promise(.success(data.teamMode))
                         guard let encoded = try? JSONEncoder().encode(data) else { return }
-                        self.userDefaults.setValue(encoded, forKey: "serverSettings")
+                        self.userDefaults.setValue(encoded, forKey: Constants.Database.serverSettings)
                     }
                     .store(in: &self.subs)
                 return

@@ -36,8 +36,7 @@ class ContactsViewController: BaseViewController {
         contactsView.refreshControl
             .publisher(for: .valueChanged)
             .sink { [weak self] _ in
-                self?.viewModel.repository.syncUsers()
-//                self?.viewModel.repository.syncContacts(force: true)
+                self?.viewModel.refreshContacts()
             }.store(in: &subscriptions)
         contactsView.refreshControl
             .publisher(for: .valueChanged)
@@ -45,9 +44,6 @@ class ContactsViewController: BaseViewController {
             .sink { [weak self] _ in
                 self?.contactsView.refreshControl.endRefreshing()
             }.store(in: &subscriptions)
-        
-        viewModel.getContacts()
-        viewModel.getOnlineContacts(page: 1)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

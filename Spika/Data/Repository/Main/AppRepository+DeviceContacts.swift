@@ -45,14 +45,14 @@ extension AppRepository {
         }
         
         // 1. Instantiating manual trigger if none
-        if let _ = manualContactTrigger { return }
+        if let manualContactTrigger { return }
         manualContactTrigger = PassthroughSubject()
         
         // 2. Two triggers, manual pulls all device contacts, contacts changed pulls only modified / added contacts
         let manualContact = PassthroughSubject<[FetchedContact],Error>()
         let contactsChanged = PassthroughSubject<[FetchedContact],Error>()
         
-        manualContactTrigger!.flatMap { [unowned self] _ in self.access() }
+        manualContactTrigger?.flatMap { [unowned self] _ in self.access() }
                     .filter { $0 }
                     .flatMap { [unowned self] _ in self.getPhoneContacts() }
                     .compactMap { $0.fetchedContacts }
