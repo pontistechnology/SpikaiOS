@@ -1,4 +1,5 @@
 PODS:
+  - ContactsChangeNotifier (1.0.3)
   - Firebase/Analytics (10.8.0):
     - Firebase/Core
   - Firebase/Core (10.8.0):
@@ -130,6 +131,7 @@ PODS:
   - Swinject (2.8.3)
 
 DEPENDENCIES:
+  - ContactsChangeNotifier
   - Firebase/Analytics (= 10.8.0)
   - Firebase/Crashlytics (= 10.8.0)
   - Firebase/Messaging (= 10.8.0)
@@ -140,6 +142,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - ContactsChangeNotifier
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -169,6 +172,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/marmelroy/PhoneNumberKit
 
 SPEC CHECKSUMS:
+  ContactsChangeNotifier: 289413cae08e40b20f227cb7717fcb4ac5a0c08a
   Firebase: b49ef44e5ec9a3d0c1f6450f410337e97872279c
   FirebaseAnalytics: e1fc758bd5d71823bba970c076abee4b2450a5f4
   FirebaseCore: e78636a990b54be427ce300aa09a0e359f4e0e87
@@ -189,6 +193,6 @@ SPEC CHECKSUMS:
   PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
   Swinject: 893c9a543000ac2f10ee4cbaf0933c6992c935d5
 
-PODFILE CHECKSUM: 57d8aec3663e08f42cf6bf0441a369d1a2708226
+PODFILE CHECKSUM: cb602141a1f93c6b2fcdc069c0f37e3095c273e4
 
 COCOAPODS: 1.12.1

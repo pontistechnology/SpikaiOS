@@ -50,7 +50,10 @@ final class AppAssembly: Assembly {
         container.register(Repository.self, name: RepositoryType.production.name) { r in
             let networkService = container.resolve(NetworkService.self)!
             let databaseService = container.resolve(DatabaseService.self)!
-            return AppRepository(networkService: networkService, databaseService: databaseService, userDefaults: r.resolve(UserDefaults.self)!)
+            return AppRepository(networkService: networkService,
+                                 databaseService: databaseService,
+                                 userDefaults: r.resolve(UserDefaults.self)!,
+                                 phoneNumberParser: PhoneNumberParser())
         }.inObjectScope(.container)
     }
     

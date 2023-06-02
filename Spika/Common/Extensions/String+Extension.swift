@@ -8,6 +8,7 @@
 import Foundation
 import CryptoKit
 import UIKit
+import CoreTelephony
 
 extension String {
     static func getStringFor(_ value: Constants.Strings) -> String {
@@ -63,4 +64,20 @@ extension String {
             character.isNumber
         }
     }
+    
+    // Get a user's default region code
+    ///
+    /// - returns: A computed value for the user's current region - based on the iPhone's carrier and if not available, the device region.
+    static func defaultRegionCode() -> String? {
+#if os(iOS) && !targetEnvironment(simulator) && !targetEnvironment(macCatalyst)
+        if let isoCountryCode = CTTelephonyNetworkInfo().serviceSubscriberCellularProviders?.values.first?.isoCountryCode {
+            return isoCountryCode.uppercased()
+        }
+#endif
+        if let countryCode = Locale.current.regionCode {
+            return countryCode.uppercased()
+        }
+        return nil
+    }
+    
 }

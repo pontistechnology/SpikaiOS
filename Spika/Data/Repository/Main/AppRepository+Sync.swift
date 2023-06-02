@@ -1,3 +1,12 @@
+//
+//  AppRepository+Device.swift
+//  Spika
+//
+//  Created by Nikola Barbarić on 25.04.2022..
+//
+
+import Contacts
+import CoreTelephony
 import Combine
 import Foundation
 
@@ -173,6 +182,7 @@ extension AppRepository {
             self?.setSyncTimestamp(for: .users, timestamp: syncTimestamp)
         }.store(in: &subs)
     }
+    
 }
 
 extension AppRepository {

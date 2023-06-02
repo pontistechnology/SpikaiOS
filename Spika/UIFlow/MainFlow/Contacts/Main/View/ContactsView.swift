@@ -14,6 +14,8 @@ class ContactsView: UIView, BaseView {
     let searchBar = SearchBar(placeholder: .getStringFor(.searchForContactsMessages))
     let tableView = ContactsTableView()
     
+    let refreshControl = UIRefreshControl()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -28,6 +30,8 @@ class ContactsView: UIView, BaseView {
         addSubview(searchBar)
         addSubview(detailsButton)
         addSubview(tableView)
+        
+        tableView.addSubview(refreshControl)
     }
     
     func styleSubviews() {

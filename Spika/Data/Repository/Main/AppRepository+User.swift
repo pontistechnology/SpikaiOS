@@ -5,7 +5,7 @@
 //  Created by Marko on 13.10.2021..
 //
 
-import UIKit
+import Foundation
 import Combine
 import CryptoKit
 
@@ -58,7 +58,6 @@ extension AppRepository {
     }
     
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
-//        print("Phone number SHA256: ", telephoneNumber.getSHA256())
         let resources = Resources<AuthResponseModel, AuthRequestModel>(
             path: Constants.Endpoints.authenticateUser,
             requestType: .POST,
@@ -99,13 +98,13 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error> {
+    func postContacts(hashes: [String], lastPage: Bool) -> AnyPublisher<ContactsResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else { return Fail<ContactsResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let contacts = ContactsRequestModel(contacts: hashes)
+        let contacts = ContactsRequestModel(contacts: hashes, isLastPage: lastPage)
         let resources = Resources<ContactsResponseModel, ContactsRequestModel>(
             path: Constants.Endpoints.contacts,
             requestType: .POST,
@@ -140,10 +139,6 @@ extension AppRepository {
         return databaseService.getLocalUser(withId: id)
     }
     
-//    func saveUser(_ user: User) -> Future<User, Error> {
-//        return databaseService.saveUser(user)
-//    }
-    
     func saveUsers(_ users: [User]) -> Future<[User], Error> {
         return databaseService.saveUsers(users)
     }
@@ -151,10 +146,6 @@ extension AppRepository {
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error> {
         return databaseService.saveContacts(contacts)
     }
-    
-//    func getContact(phoneNumber: String) -> Future<FetchedContact, Error> {
-//        return databaseService.getContact(phoneNumber: phoneNumber)
-//    }
     
     func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error> {
         return databaseService.updateUsersWithContactData(users)

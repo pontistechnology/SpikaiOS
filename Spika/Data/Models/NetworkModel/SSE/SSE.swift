@@ -37,6 +37,14 @@ class SSE {
     private func startSyncs() {
         repository.syncRooms()
         repository.syncUsers()
+        repository.getAppModeIsTeamChat()
+            .sink { _ in
+                
+            } receiveValue: { [weak self] isTeamMode in
+                guard let isTeamMode, !isTeamMode else { return }
+                self?.repository.syncContacts(force: false)
+            }.store(in: &subs)
+        
         repository.syncMessages()
         repository.syncBlockedList()
         repository.syncMessageRecords()
