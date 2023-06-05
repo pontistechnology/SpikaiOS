@@ -134,7 +134,13 @@ extension AppRepository {
     
     func copyFile(from fromURL: URL, name: String) -> URL? {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        guard let targetURL = documentsDirectory?.appendingPathComponent(name) else { return nil}
+        print("copy from URL: ", fromURL)
+        guard let targetURL = documentsDirectory?
+            .appendingPathComponent(name)
+            .appendingPathExtension(fromURL.pathExtension)
+        else { return nil }
+        print("copy target URL: ", targetURL)
+
         do {
             if FileManager.default.fileExists(atPath: targetURL.path) {
                 try FileManager.default.removeItem(at: targetURL)

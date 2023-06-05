@@ -27,9 +27,20 @@ class CurrentChatViewModel: BaseViewModel {
     let selectedMessageToEditPublisher = CurrentValueSubject<Message?, Never>(nil)
     let numberOfUnreadMessages = CurrentValueSubject<Int, Never>(0)
     
+//    let aaaaT = PassthroughSubject<Int, Never>()
+    
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
         super.init(repository: repository, coordinator: coordinator)
+        setupBindings()
+    }
+}
+
+// MARK: - Bindings
+
+extension CurrentChatViewModel {
+    func setupBindings() {
+        
     }
 }
 
@@ -293,6 +304,101 @@ extension CurrentChatViewModel {
         sendFile(file: file)
     }
     
+    func getVideoMetadata(url: URL, name: String) async {
+        
+        let asset = AVAsset(url: url)
+        
+        do {
+            let duration = try await asset.load(.duration)
+            guard let dimensions = try await asset.load(.tracks).first?.load(.naturalSize),
+            let thumbnail = url.videoThumbnail(),
+            let jpegData = thumbnail.jpegData(compressionQuality: 1)
+            else { return }
+            
+            let thumbUrl = repository.saveDataToFile(jpegData, name: "\(name)thumb")
+            
+            guard let es = AVAssetExportSession(asset: asset, presetName: AVAssetExportPreset960x540),
+                  let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            else { return }
+            
+            let filePath = documentsDirectory.appendingPathComponent("render.mp4")
+            if FileManager.default.fileExists(atPath: filePath.path) {
+                do {
+                    try FileManager.default.removeItem(at: filePath)
+                }
+            }
+            
+            es.outputURL = filePath
+            es.outputFileType = .mp4
+            es.shouldOptimizeForNetworkUse = true
+            let start = CMTimeMakeWithSeconds(0.0, preferredTimescale: 0)
+            let range = CMTimeRangeMake(start: start, duration: duration)
+            es.timeRange = range
+            
+            print("trajat ce: ", try await es.estimatedMaximumDuration.seconds)
+            await es.export()
+            
+            print("status sad: ", es.status)
+            switch es.status {
+            case .unknown:
+                print("aa, unknown:")
+            case .waiting:
+                print("aa, waiting:")
+            case .exporting:
+                print("aa, exporting:")
+            case .completed:
+                print("aa, completed:")
+            case .failed:
+                print("aa, failed:")
+            case .cancelled:
+                print("aa, cancelled:")
+            @unknown default:
+                print("aa, unknown default")
+            }
+            
+            
+            
+//            es.exportAsynchronously(completionHandler: {() -> Void in
+//                    switch exportSession.status {
+//                    case .failed:
+//                        print(exportSession.error ?? "NO ERROR")
+//                        completionHandler?(nil, exportSession.error)
+//                    case .cancelled:
+//                        print("Export canceled")
+//                        completionHandler?(nil, nil)
+//                    case .completed:
+//                        //Video conversion finished
+//                        let endDate = Date()
+//
+//                        let time = endDate.timeIntervalSince(startDate)
+//                        print(time)
+//                        print("Successful!")
+//                        print(exportSession.outputURL ?? "NO OUTPUT URL")
+//                        completionHandler?(exportSession.outputURL, nil)
+//
+//                        default: break
+//                    }
+//
+//                })
+            
+            sendFile(file: SelectedFile(fileType: .video,
+                                        name: "mogucenbitno za doc ce bit",
+                                        fileUrl: filePath,
+                                        thumbUrl: thumbUrl,
+                                        thumbMetadata: MetaData(width: 72,
+                                                                height: 72,
+                                                                duration: 0),
+                                        metaData: MetaData(width: Int64(dimensions.width.rounded()),
+                                                           height: Int64(dimensions.height.rounded()),
+                                                           duration: Int64(duration.seconds.rounded())),
+                                        mimeType: "video/mp4",
+                                        size: 0,
+                                        localId: name))
+        } catch {
+            print("durationelo: ", error)
+        }
+    }
+    
     func sendMultimedia(_ results: [PHPickerResult]) {
         for result in results {
             
@@ -302,6 +408,21 @@ extension CurrentChatViewModel {
                           let downsampledImage = url.downsample()
                     else { return }
                     self?.sendResized(resizedImage: downsampledImage)
+                }
+            }
+            
+            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
+                    // this url is valid only here, copy file and pass it forward
+                    let uuid = UUID().uuidString
+                    print("uuid generirani: ", uuid)
+                    guard let url,
+                    let fileUrl = self?.repository.copyFile(from: url, name: uuid)
+                    else { return }
+                    print("extension: ", fileUrl.pathExtension)
+                    Task { [weak self] in
+                        await self?.getVideoMetadata(url:fileUrl, name: uuid)
+                    }
                 }
             }
             

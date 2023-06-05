@@ -23,9 +23,9 @@ extension URL {
     
     func videoThumbnail() -> UIImage? {
         let asset = AVURLAsset(url: self)
-        let imgGenerator = AVAssetImageGenerator(asset: asset) // TODO: will be deprecated ˇ
+        let imgGenerator = AVAssetImageGenerator(asset: asset)
         guard let cgImage = try? imgGenerator.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 1), actualTime: nil)
-        else { return nil}
+        else { return nil }
         return UIImage(cgImage: cgImage)
     }
     
