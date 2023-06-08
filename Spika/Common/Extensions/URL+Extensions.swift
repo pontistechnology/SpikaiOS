@@ -72,3 +72,61 @@ extension URL {
         return min < 1080 ? max : (1080 * max / min)
     }
 }
+
+// MARK: - video exporting
+
+extension URL {
+    func compressAsMP4(name: String, duration: CMTime) async -> URL? {
+        print("u compress as mp4: ", name, duration)
+        let allowedExtensions = ["mov", "mp4"]
+        guard allowedExtensions.contains(self.pathExtension) else { return nil }
+        guard let es = AVAssetExportSession(asset: AVAsset(url: self),
+                                            presetName: AVAssetExportPreset960x540),
+              let documentsDirectory = FileManager.default.urls(for: .documentDirectory,
+                                                                in: .userDomainMask).first
+        else { return nil }
+        
+        // TODO: - move to constants
+        let filePath = documentsDirectory.appendingPathComponent("\(name).mp4")
+        if FileManager.default.fileExists(atPath: filePath.path) {
+            try? FileManager.default.removeItem(at: filePath)
+            // TODO: - add error handling
+        }
+        
+        es.outputURL = filePath
+        es.outputFileType = .mp4
+        es.shouldOptimizeForNetworkUse = true
+        
+        // TODO: - uncomment later for trim
+//        let start = CMTimeMakeWithSeconds(0.0, preferredTimescale: 0)
+//        let range = CMTimeRangeMake(start: start, duration: duration)
+//        es.timeRange = range
+        
+        print("jojo ", filePath)
+        await es.export()
+        
+        // after export, delete old file
+        try? FileManager.default.removeItem(at: self)
+        switch es.status {
+            
+        case .unknown:
+            print("unknown")
+        case .waiting:
+            print("waiting")
+        case .exporting:
+            print("exporting")
+        case .completed:
+            return filePath
+        case .failed:
+            print("evo errora: ", es.error)
+            print("failed")
+        case .cancelled:
+            print("cancelled")
+            // TODO: - handle cancell
+        @unknown default:
+            print("unknown new cases")
+        }
+        
+        return nil
+    }
+}
