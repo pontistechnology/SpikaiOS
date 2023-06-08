@@ -76,24 +76,24 @@ extension URL {
 // MARK: - video exporting
 
 extension URL {
-    func compressAsMP4(name: String, duration: CMTime) async -> URL? {
-        print("u compress as mp4: ", name, duration)
+    func compressAsMP4(name: String) async -> URL? {
         let allowedExtensions = ["mov", "mp4"]
-        guard allowedExtensions.contains(self.pathExtension) else { return nil }
-        guard let es = AVAssetExportSession(asset: AVAsset(url: self),
+        guard allowedExtensions.contains(self.pathExtension),
+              let es = AVAssetExportSession(asset: AVAsset(url: self),
                                             presetName: AVAssetExportPreset960x540),
               let documentsDirectory = FileManager.default.urls(for: .documentDirectory,
                                                                 in: .userDomainMask).first
         else { return nil }
         
         // TODO: - move to constants
-        let filePath = documentsDirectory.appendingPathComponent("\(name).mp4")
-        if FileManager.default.fileExists(atPath: filePath.path) {
-            try? FileManager.default.removeItem(at: filePath)
+//        let newFileUrl = documentsDirectory.appendingPathComponent("render\(Date().timeIntervalSince1970).mp4")
+        let newFileUrl = documentsDirectory.appendingPathComponent("\(name)).mp4")
+        if FileManager.default.fileExists(atPath: newFileUrl.path) {
+            try? FileManager.default.removeItem(at: newFileUrl)
             // TODO: - add error handling
         }
         
-        es.outputURL = filePath
+        es.outputURL = newFileUrl
         es.outputFileType = .mp4
         es.shouldOptimizeForNetworkUse = true
         
@@ -102,7 +102,7 @@ extension URL {
 //        let range = CMTimeRangeMake(start: start, duration: duration)
 //        es.timeRange = range
         
-        print("jojo ", filePath)
+        print("jojo ", newFileUrl)
         await es.export()
         
         // after export, delete old file
@@ -116,7 +116,7 @@ extension URL {
         case .exporting:
             print("exporting")
         case .completed:
-            return filePath
+            return newFileUrl
         case .failed:
             print("evo errora: ", es.error)
             print("failed")

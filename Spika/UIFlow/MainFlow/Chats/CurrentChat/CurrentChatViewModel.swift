@@ -61,11 +61,19 @@ extension CurrentChatViewModel {
     }
     
     func playVideo(message: Message) {
-        guard let url = message.body?.file?.id?.fullFilePathFromId(),
-              let mimeType = message.body?.file?.mimeType
-        else { return }
-        let asset = AVURLAsset(url: url, mimeType: mimeType)
-        getAppCoordinator()?.presentAVVideoController(asset: asset)
+        // TODO: - move to repo file manager logic?
+        if let localId = message.localId,
+           let localUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(localId+")").appendingPathExtension("mp4"),
+           FileManager.default.fileExists(atPath: localUrl.path) {
+            let asset = AVAsset(url: localUrl)
+            getAppCoordinator()?.presentAVVideoController(asset: asset)
+        } else {
+            guard let url = message.body?.file?.id?.fullFilePathFromId(),
+                  let mimeType = message.body?.file?.mimeType
+            else { return }
+            let asset = AVURLAsset(url: url, mimeType: mimeType)
+            getAppCoordinator()?.presentAVVideoController(asset: asset)
+        }
     }
     
     func showImage(message: Message) {
@@ -322,7 +330,7 @@ extension CurrentChatViewModel {
             let thumbUrl = repository.saveDataToFile(jpegData, name: "\(name)thumb.jpg")
             
             // export
-            guard let mp4Path = await url.compressAsMP4(name: name, duration: duration) else { return }
+            guard let mp4Path = await url.compressAsMP4(name: name) else { return }
             
             print("u cc dodje: ", mp4Path)
             
@@ -366,7 +374,7 @@ extension CurrentChatViewModel {
                     else { return }
                     
                     Task { [weak self] in
-                        await self?.getVideoMetadata(url:fileUrl, name: uuid)
+                        await self?.getVideoMetadata(url: fileUrl, name: uuid)
                     }
                 }
             }
