@@ -26,20 +26,9 @@ extension URL {
         let imgGenerator = AVAssetImageGenerator(asset: asset)
         guard let cgImage = try? imgGenerator.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 1), actualTime: nil)
         else { return nil }
-        return UIImage(cgImage: cgImage)
-    }
-    
-    func videoMetaData() -> MetaData? {
-//        let asset = AVURLAsset(url: self)
-//        // A CMTime value.
-//        let duration = try? await asset.load(.duration)
-//        // An array of AVMetadataItem for the asset.
-//        let metadata = try? await asset.load(.metadata)
-//        let imgGenerator = AVAssetImageGenerator(asset: asset) // TODO: will be deprecated
-//        guard let cgImage = try? imgGenerator.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 1), actualTime: nil)
-//        else { return nil}
         
-        return MetaData(width: 100, height: 100, duration: 1)
+        return UIImage(cgImage: cgImage)
+            .scalePreservingAspectRatio(targetSize: CGSizeMake(85, 85)) // 256px, scale factor is 3
     }
     
     func downsample(isForThumbnail: Bool = false) -> UIImage? {
@@ -87,7 +76,7 @@ extension URL {
         
         // TODO: - move to constants
 //        let newFileUrl = documentsDirectory.appendingPathComponent("render\(Date().timeIntervalSince1970).mp4")
-        let newFileUrl = documentsDirectory.appendingPathComponent("\(name)).mp4")
+        let newFileUrl = documentsDirectory.appendingPathComponent("\(name).mp4")
         if FileManager.default.fileExists(atPath: newFileUrl.path) {
             try? FileManager.default.removeItem(at: newFileUrl)
             // TODO: - add error handling
