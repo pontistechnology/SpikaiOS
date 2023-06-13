@@ -63,7 +63,7 @@ extension CurrentChatViewModel {
     func playVideo(message: Message) {
         // TODO: - move to repo file manager logic?
         if let localId = message.localId,
-           let localUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(localId+")").appendingPathExtension("mp4"),
+           let localUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(localId).appendingPathExtension("mp4"),
            FileManager.default.fileExists(atPath: localUrl.path) {
             let asset = AVAsset(url: localUrl)
             getAppCoordinator()?.presentAVVideoController(asset: asset)
