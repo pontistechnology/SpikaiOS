@@ -30,7 +30,7 @@ class TabBarItemView: UIView, BaseView {
         label.backgroundColor = .appRed
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
-        label.isHidden = true
+        label.hide()
         return label
     } ()
     

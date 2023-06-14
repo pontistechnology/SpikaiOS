@@ -28,10 +28,10 @@ final class ChatUsersView: ChatMembersView {
     override func setupForInitialHeight() {
         if self.users.count <= 3 {
             self.tableViewHeightConstraint.constant = CGFloat(self.users.count) * self.cellHeight
-            self.showMoreButton.isHidden = true
+            self.showMoreButton.hide()
         } else {
             self.tableViewHeightConstraint.constant = 3 * self.cellHeight
-            self.showMoreButton.isHidden = false
+            self.showMoreButton.unhide()
         }
         self.showMoreButton.setTitle(.getStringFor(.showMore), for: .normal)
     }

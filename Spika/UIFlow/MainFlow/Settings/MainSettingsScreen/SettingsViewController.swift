@@ -61,7 +61,7 @@ class SettingsViewController: BaseViewController {
         
         self.settingsView.userNameChanged
             .sink { [weak self] newName in
-                self?.settingsView.userNameTextField.isHidden = true
+                self?.settingsView.userNameTextField.hide()
                 self?.viewModel.onChangeUserName(newName: newName)
             }.store(in: &self.subscriptions)
         
@@ -117,7 +117,7 @@ class SettingsViewController: BaseViewController {
     }
     
     func onChangeUserName() {
-        self.settingsView.userNameTextField.isHidden = false
+        self.settingsView.userNameTextField.unhide()
         self.settingsView.userNameTextField.becomeFirstResponder()
     }
     

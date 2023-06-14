@@ -87,14 +87,14 @@ class ChatContentView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        self.blockButton.isHidden = true
+        self.blockButton.hide()
         
         chatNameTextField.translatesAutoresizingMaskIntoConstraints = false
         chatNameTextField.autocorrectionType = .no
         chatNameTextField.autocapitalizationType = .none
         chatNameTextField.returnKeyType = .done
         chatNameTextField.delegate = self
-        chatNameTextField.isHidden = true
+        chatNameTextField.hide()
     }
     
     func positionSubviews() {

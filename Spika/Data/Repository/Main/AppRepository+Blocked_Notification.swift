@@ -29,4 +29,10 @@ extension AppRepository {
         return CurrentValueSubject<Set<Int64>,Never>([])
     }
     
+    func syncContacts(force: Bool?) {}
+    
+    func getPhoneContacts() -> Future<ContactFetchResult, Error> {
+        Future() { _ in }
+    }
+    
 }

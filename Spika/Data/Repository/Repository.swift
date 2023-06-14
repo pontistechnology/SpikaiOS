@@ -31,6 +31,8 @@ protocol Repository {
 // MARK: - NETWORKING:
     
         // Auth
+    func getAppModeIsTeamChat() -> Future<Bool?, Error>
+    func getServerSettings() -> AnyPublisher<ServerSettingsResponseModel, Error>
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
     func verifyCode(code: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
     
@@ -44,7 +46,7 @@ protocol Repository {
     func updateUser(username: String?, avatarFileId: Int64?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>
     
         // Contacts
-    func postContacts(hashes: [String]) -> AnyPublisher<ContactsResponseModel, Error>
+    func postContacts(hashes: [String], lastPage: Bool) -> AnyPublisher<ContactsResponseModel, Error>
     func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>
     
         // Room
@@ -67,6 +69,7 @@ protocol Repository {
         // Sync
     func syncRooms()
     func syncUsers()
+    func syncContacts(force: Bool?)
     func syncMessageRecords()
     func syncMessages()
 
@@ -88,6 +91,7 @@ protocol Repository {
     func getMainContext() -> NSManagedObjectContext
     
         // Contacts
+    func getPhoneContacts() -> Future<ContactFetchResult, Error>
     func saveContacts(_ contacts: [FetchedContact]) -> Future<[FetchedContact], Error>
     @discardableResult func updateUsersWithContactData(_ users: [User]) -> Future<[User], Error>
     

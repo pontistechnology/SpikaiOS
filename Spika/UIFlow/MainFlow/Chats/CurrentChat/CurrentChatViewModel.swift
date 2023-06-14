@@ -23,13 +23,32 @@ class CurrentChatViewModel: BaseViewModel {
     
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
+    private let currentNumberOfCompressingVideos = CurrentValueSubject<Int, Never>(0)
+    
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
     let selectedMessageToEditPublisher = CurrentValueSubject<Message?, Never>(nil)
     let numberOfUnreadMessages = CurrentValueSubject<Int, Never>(0)
     
+//    let aaaaT = PassthroughSubject<Int, Never>()
+    
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
         super.init(repository: repository, coordinator: coordinator)
+        setupBindings()
+    }
+}
+
+// MARK: - Bindings
+
+extension CurrentChatViewModel {
+    func setupBindings() {
+        currentNumberOfCompressingVideos.sink { [weak self] number in
+            if number == 0 {
+                self?.getAppCoordinator()?.removeAlert()
+            } else {
+                self?.getAppCoordinator()?.showAlert(title: "In development still 🤫", message: "Compressing \(number) video(s)", style: .alert, actions: [.destructive(title: "Wait")], cancelText: "Please")
+            }
+        }.store(in: &subscriptions)
     }
 }
 
@@ -50,11 +69,19 @@ extension CurrentChatViewModel {
     }
     
     func playVideo(message: Message) {
-        guard let url = message.body?.file?.id?.fullFilePathFromId(),
-              let mimeType = message.body?.file?.mimeType
-        else { return }
-        let asset = AVURLAsset(url: url, mimeType: mimeType)
-        getAppCoordinator()?.presentAVVideoController(asset: asset)
+        // TODO: - move to repo file manager logic?
+        if let localId = message.localId,
+           let localUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(localId).appendingPathExtension("mp4"),
+           FileManager.default.fileExists(atPath: localUrl.path) {
+            let asset = AVAsset(url: localUrl)
+            getAppCoordinator()?.presentAVVideoController(asset: asset)
+        } else {
+            guard let url = message.body?.file?.id?.fullFilePathFromId(),
+                  let mimeType = message.body?.file?.mimeType
+            else { return }
+            let asset = AVURLAsset(url: url, mimeType: mimeType)
+            getAppCoordinator()?.presentAVVideoController(asset: asset)
+        }
     }
     
     func showImage(message: Message) {
@@ -265,7 +292,11 @@ extension CurrentChatViewModel {
                                                                mimeType: file.mimeType,
                                                                size: file.size,
                                                                metaData: file.metaData),
-                                                thumb: nil),
+                                                thumb: FileData(id: nil,
+                                                                fileName: nil,
+                                                                mimeType: nil,
+                                                                size: nil,
+                                                                metaData: file.thumbMetadata)),
                               replyId: nil,
                               localId: uuid)
         
@@ -293,6 +324,43 @@ extension CurrentChatViewModel {
         sendFile(file: file)
     }
     
+    func compressAndSendVideo(url: URL, uuid: String) async {
+        do {
+            // generate jpg thumbnail, save it to uuidthumb.jpg
+            guard let thumbnail = url.videoThumbnail(),
+                  let jpegData = thumbnail.jpegData(compressionQuality: 1)
+            else { return }
+            let thumbUrl = repository.saveDataToFile(jpegData, name: "\(uuid)thumb.jpg")
+            
+            // compress and export as uuid.mp4, get metadata
+            currentNumberOfCompressingVideos.send(currentNumberOfCompressingVideos.value + 1)
+            guard let mp4Url = await url.compressAsMP4(name: uuid) else { return }
+            currentNumberOfCompressingVideos.send(currentNumberOfCompressingVideos.value - 1)
+            let asset = AVAsset(url: mp4Url)
+            let duration = try await asset.load(.duration)
+            guard let dimensions = try await asset.load(.tracks).first?
+                .load(.naturalSize)
+            else { return }
+            
+            // send file
+            sendFile(file: SelectedFile(fileType: .video,
+                                        name: "mogucenbitno za doc ce bit",
+                                        fileUrl: mp4Url,
+                                        thumbUrl: thumbUrl,
+                                        thumbMetadata: MetaData(width: thumbnail.size.width.roundedInt64,
+                                                                height: thumbnail.size.height.roundedInt64,
+                                                                duration: 0),
+                                        metaData: MetaData(width: dimensions.width.roundedInt64,
+                                                           height: dimensions.height.roundedInt64,
+                                                           duration: duration.seconds.roundedInt64),
+                                        mimeType: "video/mp4",
+                                        size: 0,
+                                        localId: uuid))
+        } catch {
+            print("durationelo: ", error)
+        }
+    }
+    
     func sendMultimedia(_ results: [PHPickerResult]) {
         for result in results {
             
@@ -305,28 +373,24 @@ extension CurrentChatViewModel {
                 }
             }
             
-//            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-//                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
-//                    
-//                    let uuid = UUID().uuidString
-//                    let thumbImage = UIImage(safeImage: .playVideo)
-//                    guard let url = url,
-//                          let fileUrl = self?.repository.copyFile(from: url, name: uuid),
-//                          let videoMetadata = fileUrl.videoMetaData(),
-//                          //                          let thumbImage = fileUrl.videoThumbnail(),
-//                          let resizedData = self?.resizeImage(thumbImage)?.jpegData(compressionQuality: 1),
-//                          let thumbUrl = self?.repository.saveDataToFile(resizedData, name: "\(uuid)thumb"),
-//                          let thumbMetadata = thumbUrl.imageMetaData()
-//                            
-//                    else { return }
-//                    
-//                    let file = SelectedFile(fileType: .video,
-//                                            name: uuid,
-//                                            fileUrl: fileUrl,
-//                                            thumbUrl: thumbUrl, thumbMetadata: thumbMetadata, metaData: videoMetadata, mimeType: "video/mp4", size: nil, localId: uuid)
-//                    self?.sendFile(file: file)
-//                }
-//            }
+            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
+                    // this url is valid only here, copy file and pass it forward
+                    // todo: add some check for file size maybe and skip large files
+                    // flow: 1. copy file with new name uuidoriginal.originalExtension
+                    // flow: 2. compress and convert to uuid.mp4
+                    // flow: 3. delete uuidoriginal.originalExtension
+                    // flow: 4. send uuid.mp4
+                    let uuid = UUID().uuidString
+                    guard let url,
+                    let fileUrl = self?.repository.copyFile(from: url, name: uuid+"original")
+                    else { return }
+                    
+                    Task { [weak self] in
+                        await self?.compressAndSendVideo(url: fileUrl, uuid: uuid)
+                    }
+                }
+            }
         }
     }
     

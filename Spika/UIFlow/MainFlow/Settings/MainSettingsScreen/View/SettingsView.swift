@@ -35,7 +35,7 @@ class SettingsView: BaseSettingsView {
         userNameTextField.autocapitalizationType = .none
         userNameTextField.returnKeyType = .done
         userNameTextField.delegate = self
-        userNameTextField.isHidden = true
+        userNameTextField.hide()
     }
     
     override func addSubviews() {

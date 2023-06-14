@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct ContactFetchResult {
+    var error: Error?
+    var fetchedContacts: [FetchedContact]?
+}
+
 struct FetchedContact {
     var firstName: String?
     var lastName: String?

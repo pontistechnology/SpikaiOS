@@ -49,6 +49,17 @@ class CurrentChatViewController: BaseViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
         viewModel.sendSeenStatus()
+        
+//        let a = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+//        let pa = a?.appendingPathComponent("E7F76A8E-34B4-4915-8EC9-705A6BAED336.mov")
+//        let uiu = UIImageView()
+//        view.addSubview(uiu)
+//        uiu.constrainHeight(200)
+//        uiu.constrainWidth(200)
+//        uiu.centerInSuperview()
+//        uiu.backgroundColor = .red
+        
+//        uiu.image = pa?.videoThumbnail()
     }
     
     deinit {

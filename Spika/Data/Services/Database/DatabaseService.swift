@@ -4,6 +4,8 @@
 //
 //  Created by Marko on 13.10.2021..
 //
+import Contacts
+import CoreTelephony
 import CoreData
 import Combine
 
@@ -143,6 +145,18 @@ extension DatabaseService {
                     promise(.failure(error))
                 }
             }
+        }
+    }
+    
+    func deleteAllUsers() {
+        self.coreDataStack.persistentContainer.performBackgroundTask { context in
+            let fetch = UserEntity.fetchRequest()
+            let users = try? context.fetch(fetch)
+            guard let users else { return }
+            for user in users {
+                context.delete(user)
+            }
+            try? context.safeSave()
         }
     }
 }

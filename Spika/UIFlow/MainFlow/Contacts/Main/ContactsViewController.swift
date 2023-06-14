@@ -33,8 +33,17 @@ class ContactsViewController: BaseViewController {
         contactsView.tableView.delegate   = self
         contactsView.searchBar.delegate = self
         
-        viewModel.getContacts()
-        viewModel.getOnlineContacts(page: 1)
+        contactsView.refreshControl
+            .publisher(for: .valueChanged)
+            .sink { [weak self] _ in
+                self?.viewModel.refreshContacts()
+            }.store(in: &subscriptions)
+        contactsView.refreshControl
+            .publisher(for: .valueChanged)
+            .delay(for: .seconds(3), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.contactsView.refreshControl.endRefreshing()
+            }.store(in: &subscriptions)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

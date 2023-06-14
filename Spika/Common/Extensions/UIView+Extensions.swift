@@ -220,5 +220,18 @@ extension UIView {
         isUserInteractionEnabled = true
         return .init(view: self, isLong: true)
     }
+}
+
+extension UIView {
+    func hide() {
+        if isHidden == false {
+            isHidden = true            
+        }
+    }
     
+    func unhide() {
+        if isHidden == true {
+            isHidden = false
+        }
+    }
 }

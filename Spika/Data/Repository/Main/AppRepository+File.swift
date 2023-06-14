@@ -46,7 +46,7 @@ extension AppRepository {
     @available(iOSApplicationExtension 13.4, *)
     func uploadWholeFile(fromUrl url: URL, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>) {
         
-        let chunkSize: Int = 1024 * 64
+        let chunkSize: Int = 1024 * 1024 // TODO: - determine best
         let clientId = UUID().uuidString
         var hasher = SHA256()
         var hash: String?
@@ -134,7 +134,11 @@ extension AppRepository {
     
     func copyFile(from fromURL: URL, name: String) -> URL? {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        guard let targetURL = documentsDirectory?.appendingPathComponent(name) else { return nil}
+        guard let targetURL = documentsDirectory?
+            .appendingPathComponent(name)
+            .appendingPathExtension(fromURL.pathExtension)
+        else { return nil }
+
         do {
             if FileManager.default.fileExists(atPath: targetURL.path) {
                 try FileManager.default.removeItem(at: targetURL)
