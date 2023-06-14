@@ -317,13 +317,22 @@ extension AppCoordinator {
             if let cancelText = cancelText {
                 actionSheet.addAction(UIAlertAction(title:  cancelText, style: .cancel, handler: nil))
             }
-            viewController.present(actionSheet, animated: true)
+            DispatchQueue.main.async { [weak self] in
+                viewController.dismiss(animated: true)
+                viewController.present(actionSheet, animated: true)
+            }
             
             if actions.isEmpty {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
                     actionSheet.dismiss(animated: true)
                 }
             }
+        }
+    }
+    
+    func removeAlert() {
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController.dismiss(animated: true)
         }
     }
 }

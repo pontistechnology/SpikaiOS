@@ -23,6 +23,8 @@ class CurrentChatViewModel: BaseViewModel {
     
     let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
     
+    private let currentNumberOfCompressingVideos = CurrentValueSubject<Int, Never>(0)
+    
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
     let selectedMessageToEditPublisher = CurrentValueSubject<Message?, Never>(nil)
     let numberOfUnreadMessages = CurrentValueSubject<Int, Never>(0)
@@ -40,7 +42,13 @@ class CurrentChatViewModel: BaseViewModel {
 
 extension CurrentChatViewModel {
     func setupBindings() {
-        
+        currentNumberOfCompressingVideos.sink { [weak self] number in
+            if number == 0 {
+                self?.getAppCoordinator()?.removeAlert()
+            } else {
+                self?.getAppCoordinator()?.showAlert(title: "In development still 🤫", message: "Compressing \(number) video(s)", style: .alert, actions: [.destructive(title: "Wait")], cancelText: "Please")
+            }
+        }.store(in: &subscriptions)
     }
 }
 
@@ -284,7 +292,11 @@ extension CurrentChatViewModel {
                                                                mimeType: file.mimeType,
                                                                size: file.size,
                                                                metaData: file.metaData),
-                                                thumb: nil),
+                                                thumb: FileData(id: nil,
+                                                                fileName: nil,
+                                                                mimeType: nil,
+                                                                size: nil,
+                                                                metaData: file.thumbMetadata)),
                               replyId: nil,
                               localId: uuid)
         
@@ -314,7 +326,6 @@ extension CurrentChatViewModel {
     
     func compressAndSendVideo(url: URL, uuid: String) async {
         do {
-            // get video duration, thumbnail and metadata
             // generate jpg thumbnail, save it to uuidthumb.jpg
             guard let thumbnail = url.videoThumbnail(),
                   let jpegData = thumbnail.jpegData(compressionQuality: 1)
@@ -322,13 +333,16 @@ extension CurrentChatViewModel {
             let thumbUrl = repository.saveDataToFile(jpegData, name: "\(uuid)thumb.jpg")
             
             // compress and export as uuid.mp4, get metadata
+            currentNumberOfCompressingVideos.send(currentNumberOfCompressingVideos.value + 1)
             guard let mp4Url = await url.compressAsMP4(name: uuid) else { return }
+            currentNumberOfCompressingVideos.send(currentNumberOfCompressingVideos.value - 1)
             let asset = AVAsset(url: mp4Url)
             let duration = try await asset.load(.duration)
             guard let dimensions = try await asset.load(.tracks).first?
                 .load(.naturalSize)
             else { return }
-            print("sizo: ", thumbnail.size)
+            
+            // send file
             sendFile(file: SelectedFile(fileType: .video,
                                         name: "mogucenbitno za doc ce bit",
                                         fileUrl: mp4Url,

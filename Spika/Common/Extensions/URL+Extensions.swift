@@ -68,36 +68,34 @@ extension URL {
     func compressAsMP4(name: String) async -> URL? {
         let allowedExtensions = ["mov", "mp4"]
         guard allowedExtensions.contains(self.pathExtension),
-              let es = AVAssetExportSession(asset: AVAsset(url: self),
+              let exportSession = AVAssetExportSession(asset: AVAsset(url: self),
                                             presetName: AVAssetExportPreset960x540),
               let documentsDirectory = FileManager.default.urls(for: .documentDirectory,
                                                                 in: .userDomainMask).first
         else { return nil }
         
         // TODO: - move to constants
-//        let newFileUrl = documentsDirectory.appendingPathComponent("render\(Date().timeIntervalSince1970).mp4")
         let newFileUrl = documentsDirectory.appendingPathComponent("\(name).mp4")
         if FileManager.default.fileExists(atPath: newFileUrl.path) {
             try? FileManager.default.removeItem(at: newFileUrl)
             // TODO: - add error handling
         }
         
-        es.outputURL = newFileUrl
-        es.outputFileType = .mp4
-        es.shouldOptimizeForNetworkUse = true
+        exportSession.outputURL = newFileUrl
+        exportSession.outputFileType = .mp4
+        exportSession.shouldOptimizeForNetworkUse = true
         
         // TODO: - uncomment later for trim
 //        let start = CMTimeMakeWithSeconds(0.0, preferredTimescale: 0)
 //        let range = CMTimeRangeMake(start: start, duration: duration)
-//        es.timeRange = range
+//        exportSession.timeRange = range
         
-        print("jojo ", newFileUrl)
-        await es.export()
+        await exportSession.export()
         
         // after export, delete old file
         try? FileManager.default.removeItem(at: self)
-        switch es.status {
-            
+        
+        switch exportSession.status {
         case .unknown:
             print("unknown")
         case .waiting:
@@ -107,7 +105,7 @@ extension URL {
         case .completed:
             return newFileUrl
         case .failed:
-            print("evo errora: ", es.error)
+            print("evo errora: ", exportSession.error)
             print("failed")
         case .cancelled:
             print("cancelled")

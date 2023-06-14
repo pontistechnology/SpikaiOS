@@ -32,7 +32,7 @@ extension VideoMessageTableViewCell: BaseMessageTableViewCellProtocol {
     }
     
     func updateCell(message: Message) {
-        let duration = "\((message.body?.file?.metaData?.duration ?? 0))" + " s"
+        let duration = "\((message.body?.file?.metaData?.duration ?? -1))" + " s"
         let ratio = ImageRatio(width: message.body?.thumb?.metaData?.width ?? 1,
                                height: message.body?.thumb?.metaData?.height ?? 1)
         // TODO: -  move to rep
@@ -52,8 +52,4 @@ extension VideoMessageTableViewCell: BaseMessageTableViewCellProtocol {
             self?.tapPublisher.send(.playVideo)
         }.store(in: &subs)
     }
-    
-//    func setTempThumbnail(duration: String, url: URL?) {
-//        videoView.setup(duration: duration, thumbnailURL: url)
-//    }
 }
