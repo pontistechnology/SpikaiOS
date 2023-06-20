@@ -22,8 +22,6 @@ struct Message: Codable {
     let type: MessageType
     let body: MessageBody?
     let records: [MessageRecord]?
-    
-    var unreadCount: Int64? // TODO: - ask Stjepan to move this out
 }
 
 extension Message {

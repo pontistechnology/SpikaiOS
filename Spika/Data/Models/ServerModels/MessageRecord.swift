@@ -15,8 +15,6 @@ struct MessageRecord: Codable {
     let type: MessageRecordType?
     let reaction: String?
     let modifiedAt: Int64?
-    
-    let message: SomeMessageDetails? // Ask stjepan to move this out of messageRecord and add it to sse
 }
 
 struct SomeMessageDetails: Codable {
@@ -24,7 +22,6 @@ struct SomeMessageDetails: Codable {
     let totalUserCount: Int64
     let deliveredCount: Int64
     let seenCount: Int64
-    let roomId: Int64
 }
 
 extension MessageRecord {
@@ -35,7 +32,6 @@ extension MessageRecord {
                   createdAt: messageRecordEntity.createdAt,
                   type: MessageRecordType(rawValue: messageRecordEntity.type ?? ""),
                   reaction: messageRecordEntity.reaction,
-                  modifiedAt: messageRecordEntity.modifiedAt,
-                  message: nil)
+                  modifiedAt: messageRecordEntity.modifiedAt)
     }
 }
