@@ -77,7 +77,7 @@ extension AppRepository {
                 return Publishers.Sequence(sequence: objects ).eraseToAnyPublisher()
             }
             .buffer(size: .max, prefetch: .byRequest, whenFull: .dropNewest)
-            .flatMap(maxPublishers: .max(1), { [unowned self] phoneHashes in
+            .flatMap(maxPublishers: .max(1), { [unowned self] phoneHashes -> AnyPublisher<ContactsResponseModel, Error> in
                 print("Sync number of contacts: \(phoneHashes.hashes.count) last page: \(phoneHashes.lastPage)")
                 return self.postContacts(hashes: phoneHashes.hashes, lastPage: phoneHashes.lastPage)
             })
