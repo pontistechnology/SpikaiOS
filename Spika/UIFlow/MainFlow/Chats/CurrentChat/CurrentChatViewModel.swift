@@ -12,6 +12,11 @@ import IKEventSource
 import AVFoundation
 import PhotosUI
 
+struct UploadProgess: Hashable {
+    let uuid: String
+    let percentUploaded: CGFloat
+}
+
 class CurrentChatViewModel: BaseViewModel {
     
     var frc: NSFetchedResultsController<MessageEntity>?
@@ -21,34 +26,18 @@ class CurrentChatViewModel: BaseViewModel {
         room.getFriendUserInPrivateRoom(myUserId: getMyUserId())
     }
     
-    let uploadProgressPublisher = PassthroughSubject<(percentUploaded: CGFloat, selectedFile: SelectedFile?), Never>()
+    let uploadProgressPublisher = PassthroughSubject<String, Never>()
     
-    private let currentNumberOfCompressingVideos = CurrentValueSubject<Int, Never>(0)
+    var compressionsInProgress = Set<String>()
+    var uploadsInProgress: [String : CGFloat] = [:]
     
     let selectedMessageToReplyPublisher = CurrentValueSubject<Message?, Never>(nil)
     let selectedMessageToEditPublisher = CurrentValueSubject<Message?, Never>(nil)
     let numberOfUnreadMessages = CurrentValueSubject<Int, Never>(0)
     
-//    let aaaaT = PassthroughSubject<Int, Never>()
-    
     init(repository: Repository, coordinator: Coordinator, room: Room) {
         self.room = room
         super.init(repository: repository, coordinator: coordinator)
-        setupBindings()
-    }
-}
-
-// MARK: - Bindings
-
-extension CurrentChatViewModel {
-    func setupBindings() {
-        currentNumberOfCompressingVideos.sink { [weak self] number in
-            if number == 0 {
-                self?.getAppCoordinator()?.removeAlert()
-            } else {
-                self?.getAppCoordinator()?.showAlert(title: "In development still 🤫", message: "Compressing \(number) video(s)", style: .alert, actions: [.destructive(title: "Wait")], cancelText: "Please")
-            }
-        }.store(in: &subscriptions)
     }
 }
 
@@ -231,6 +220,15 @@ extension CurrentChatViewModel {
     }
 }
 
+// MARK: - Upload handling
+
+extension CurrentChatViewModel {
+    func addToUploads(_ up: UploadProgess) {
+        uploadsInProgress[up.uuid] = up.percentUploaded
+        uploadProgressPublisher.send(up.uuid)
+    }
+}
+
 // MARK: - sending pictures/video
 
 extension CurrentChatViewModel {
@@ -241,7 +239,7 @@ extension CurrentChatViewModel {
             guard let thumbURL = file.thumbUrl,
                   let thumbMetadata = file.thumbMetadata
             else { return }
-            uploadProgressPublisher.send((percentUploaded: 0.01, selectedFile: file))
+            addToUploads(UploadProgess(uuid: file.localId, percentUploaded: 0.01))
             repository
                 .uploadWholeFile(fromUrl: thumbURL, mimeType: "image/*", metaData: thumbMetadata)
                 .sink { _ in
@@ -255,13 +253,13 @@ extension CurrentChatViewModel {
                             
                         } receiveValue: { [weak self] fileb, percent in
                             guard let self else { return }
-                            self.uploadProgressPublisher.send((percentUploaded: percent, selectedFile: file))
+                            self.addToUploads(UploadProgess(uuid: file.localId, percentUploaded: percent))
                             guard let fileb = fileb else { return }
                             self.sendMessage(body: RequestMessageBody(text: nil, fileId: fileb.id, thumbId: filea.id), localId: file.localId, type: file.fileType, replyId: nil)
                         }.store(in: &self.subscriptions)
                 }.store(in: &subscriptions)
         default:
-            uploadProgressPublisher.send((percentUploaded: 0.01, selectedFile: nil))
+//            uploadProgressPublisher.send(UploadProgess(uuid: file.localId, percentUploaded: 0.02))
             repository
                 .uploadWholeFile(fromUrl: file.fileUrl,
                                  mimeType: file.mimeType,
@@ -269,7 +267,7 @@ extension CurrentChatViewModel {
                 .sink { _ in
                     
                 } receiveValue: { [weak self] filea, percent in
-                    self?.uploadProgressPublisher.send((percentUploaded: percent, selectedFile: nil))
+//                    self?.uploadProgressPublisher.send(UploadProgess(uuid: file.localId, percentUploaded: percent))
                     self?.sendMessage(body: RequestMessageBody(text: nil, fileId: filea?.id, thumbId: nil),
                                       localId: file.localId,
                                       type: file.fileType,
@@ -277,6 +275,25 @@ extension CurrentChatViewModel {
                 }.store(in: &subscriptions)
         }
         
+    }
+    
+    func saveTempVideoMessage(uuid: String, width: CGFloat, height: CGFloat) {
+        let message = Message(createdAt: Date().currentTimeMillis(),
+                              fromUserId: getMyUserId(),
+                              roomId: room.id,
+                              type: .video,
+                              body: MessageBody(text: nil,
+                                                file: nil,
+                                                thumb: FileData(id: nil,
+                                                                fileName: nil,
+                                                                mimeType: nil,
+                                                                size: nil,
+                                                                metaData: MetaData(width: width.roundedInt64,
+                                                                                   height: height.roundedInt64,
+                                                                                   duration: 13))),
+                              replyId: nil,
+                              localId: uuid)
+        repository.saveMessages([message])
     }
     
     func sendFile(file: SelectedFile) {
@@ -332,17 +349,21 @@ extension CurrentChatViewModel {
             else { return }
             let thumbUrl = repository.saveDataToFile(jpegData, name: "\(uuid)thumb.jpg")
             
+            // save temp message and start spinning "compresing" label, order matters
+            compressionsInProgress.insert(uuid)
+            saveTempVideoMessage(uuid: uuid, width: thumbnail.size.width, height: thumbnail.size.height)
+            
             // compress and export as uuid.mp4, get metadata
-            currentNumberOfCompressingVideos.send(currentNumberOfCompressingVideos.value + 1)
             guard let mp4Url = await url.compressAsMP4(name: uuid) else { return }
-            currentNumberOfCompressingVideos.send(currentNumberOfCompressingVideos.value - 1)
+            compressionsInProgress.remove(uuid)
+
             let asset = AVAsset(url: mp4Url)
             let duration = try await asset.load(.duration)
             guard let dimensions = try await asset.load(.tracks).first?
                 .load(.naturalSize)
             else { return }
             
-            // send file
+            // send file, and show upload progress
             sendFile(file: SelectedFile(fileType: .video,
                                         name: "mogucenbitno za doc ce bit",
                                         fileUrl: mp4Url,
