@@ -214,6 +214,15 @@ extension BaseMessageTableViewCell {
         progressView.removeFromSuperview()
     }
     
+    func startSpinning(with text: String?) {
+        if progressView.superview == nil {
+            containerStackView.addSubview(progressView)
+            progressView.fillSuperview()
+            containerStackView.bringSubviewToFront(progressView)
+        }
+        progressView.startSpinning(with: text)
+    }
+    
     func showEditedIcon() {
         guard let reuseIdentifier,
               let sender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
