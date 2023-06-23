@@ -40,7 +40,6 @@
 		6C2F972829AF67B7001F170B /* ConstantsDev.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F972729AF67A5001F170B /* ConstantsDev.swift */; };
 		6C2F972929AF67BD001F170B /* ConstantsDev.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F972729AF67A5001F170B /* ConstantsDev.swift */; };
 		6C326A6728FECAAE00E00A59 /* OTPCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C326A6628FECAAE00E00A59 /* OTPCodeTextField.swift */; };
-		6C34D92A2A45B0D30009A449 /* InfoMessenger.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C3FF90F2A45A584003522FC /* InfoMessenger.plist */; };
 		6C34D92B2A45B21A0009A449 /* InfoMessenger.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C3FF90F2A45A584003522FC /* InfoMessenger.plist */; };
 		6C34D92E2A45B5A60009A449 /* ConstantsMessenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C34D92C2A45B5980009A449 /* ConstantsMessenger.swift */; };
 		6C34D9322A45BFB10009A449 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C34D92F2A45BEEA0009A449 /* GoogleService-Info.plist */; };
@@ -2918,7 +2917,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C34D9322A45BFB10009A449 /* GoogleService-Info.plist in Resources */,
-				6C34D92A2A45B0D30009A449 /* InfoMessenger.plist in Resources */,
 				6CF649B02A459FE100E0DE0B /* Montserrat-Light.ttf in Resources */,
 				6CF649B12A459FE100E0DE0B /* Montserrat-Regular.ttf in Resources */,
 				6CF649B22A459FE100E0DE0B /* Localizable.strings in Resources */,
@@ -3035,6 +3033,7 @@
 		};
 		6CF649BF2A459FE100E0DE0B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
