@@ -11,7 +11,7 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.studio.clover.Spika.groupSpikaDev</string>
+		<string>group.studio.clover.spikaMessenger</string>
 	</array>
 </dict>
 </plist>
