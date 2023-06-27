@@ -659,6 +659,10 @@
 		93D0CFA72A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */; };
 		93D0CFA82A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */; };
 		93D4034D29245B5400DC77D3 /* AppRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */; };
+		93D7F0882A320ABF0098FDF9 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */; };
+		93D7F0892A320ABF0098FDF9 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */; };
+		93D7F08B2A320B8F0098FDF9 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */; };
+		93D7F08C2A320B8F0098FDF9 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */; };
 		93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */; };
 		93D86DB827BAA15900F275B0 /* DocsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DB727BAA15900F275B0 /* DocsTableView.swift */; };
 		93D86DBC27BAA17E00F275B0 /* LinksTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DBB27BAA17E00F275B0 /* LinksTableView.swift */; };
@@ -682,6 +686,10 @@
 		93E4F6FC27C4687100432CFA /* CurrentChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FB27C4687100432CFA /* CurrentChatViewController.swift */; };
 		93E4F6FE27C4688C00432CFA /* CurrentChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FD27C4688C00432CFA /* CurrentChatViewModel.swift */; };
 		93E4F70127C468BB00432CFA /* CurrentChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F70027C468BB00432CFA /* CurrentChatView.swift */; };
+		93E753102A4A6591000D51D6 /* AVAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */; };
+		93E753112A4A6591000D51D6 /* AVAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */; };
+		93E753142A4A8C50000D51D6 /* PdfViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E753132A4A8C50000D51D6 /* PdfViewerViewController.swift */; };
+		93E753152A4A8C50000D51D6 /* PdfViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E753132A4A8C50000D51D6 /* PdfViewerViewController.swift */; };
 		93EACD062A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
 		93EACD072A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
 		93EACD082A0E47AB003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
@@ -1029,6 +1037,8 @@
 		93CFFA4E293587EB001EBACF /* MessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyView.swift; sourceTree = "<group>"; };
 		93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconAndLabelView.swift; sourceTree = "<group>"; };
 		93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Extensions.swift"; sourceTree = "<group>"; };
+		93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionView.swift; sourceTree = "<group>"; };
 		93D86DB727BAA15900F275B0 /* DocsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocsTableView.swift; sourceTree = "<group>"; };
 		93D86DBB27BAA17E00F275B0 /* LinksTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksTableView.swift; sourceTree = "<group>"; };
@@ -1052,6 +1062,8 @@
 		93E4F6FB27C4687100432CFA /* CurrentChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatViewController.swift; sourceTree = "<group>"; };
 		93E4F6FD27C4688C00432CFA /* CurrentChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatViewModel.swift; sourceTree = "<group>"; };
 		93E4F70027C468BB00432CFA /* CurrentChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatView.swift; sourceTree = "<group>"; };
+		93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAsset+Extensions.swift"; sourceTree = "<group>"; };
+		93E753132A4A8C50000D51D6 /* PdfViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerViewController.swift; sourceTree = "<group>"; };
 		93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMessageRequest.swift; sourceTree = "<group>"; };
 		93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewController.swift; sourceTree = "<group>"; };
 		93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsView.swift; sourceTree = "<group>"; };
@@ -1690,6 +1702,7 @@
 		93DE585527BC7A9800C45EB4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				93E753122A4A8C3D000D51D6 /* PdfViewer */,
 				936A28EE2926E95200E7333D /* ImageViewer */,
 				93DE585627BC7AA100C45EB4 /* VideoCall */,
 			);
@@ -1761,6 +1774,14 @@
 				93E4F70027C468BB00432CFA /* CurrentChatView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		93E753122A4A8C3D000D51D6 /* PdfViewer */ = {
+			isa = PBXGroup;
+			children = (
+				93E753132A4A8C50000D51D6 /* PdfViewerViewController.swift */,
+			);
+			path = PdfViewer;
 			sourceTree = "<group>";
 		};
 		93F4A89A282DE9A300CEA637 /* MessageDetails */ = {
@@ -2194,6 +2215,9 @@
 				93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */,
 				936155552A16619A0089536D /* UIScrollView+Extensions.swift */,
 				6CDE3F872A20DC3700A29DDE /* Array+Extensions.swift */,
+				93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */,
+				93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */,
+				93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2402,7 +2426,7 @@
 				6C78B8AF29AF5ADB004BF881 /* Resources */,
 				6C78B8BF29AF5ADB004BF881 /* ShellScript */,
 				6C10E97429AF71AC0070D617 /* Embed App Extensions */,
-				BA1D90148C5634DF738576B7 /* [CP] Embed Pods Frameworks */,
+				D413F27E6F41F2F7E2C94DB1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2458,7 +2482,7 @@
 				ADD503AC270DC3C7009D50CB /* Resources */,
 				EAA6A3A127CCF88C00B7E01F /* ShellScript */,
 				931941702819CB510067566C /* Embed App Extensions */,
-				DB038FD1F84A7C7EA398F7ED /* [CP] Embed Pods Frameworks */,
+				41EC19FB562B4882A9B17E35 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2596,6 +2620,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		41EC19FB562B4882A9B17E35 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		6C78B8BF29AF5ADB004BF881 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2637,7 +2678,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BA1D90148C5634DF738576B7 /* [CP] Embed Pods Frameworks */ = {
+		D413F27E6F41F2F7E2C94DB1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2652,23 +2693,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika Dev/Pods-Spika Dev-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DB038FD1F84A7C7EA398F7ED /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spika/Pods-Spika-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EAA6A3A127CCF88C00B7E01F /* ShellScript */ = {
@@ -2743,9 +2767,11 @@
 				6C78B7BE29AF5ADB004BF881 /* AlertView.swift in Sources */,
 				6C78B7BF29AF5ADB004BF881 /* AppRepository+Tests.swift in Sources */,
 				6C78B7C129AF5ADB004BF881 /* NotificationAlertViewController.swift in Sources */,
+				93D7F08C2A320B8F0098FDF9 /* CGFloat+Extensions.swift in Sources */,
 				6C78B7C229AF5ADB004BF881 /* FavoritesView.swift in Sources */,
 				6C78B7C329AF5ADB004BF881 /* ChatsAssembly.swift in Sources */,
 				6C78B7C429AF5ADB004BF881 /* CountryPickerViewController.swift in Sources */,
+				93E753112A4A6591000D51D6 /* AVAsset+Extensions.swift in Sources */,
 				6C78B7C629AF5ADB004BF881 /* DocsTableViewCell.swift in Sources */,
 				6CBEAB782A091FD00087382E /* CheckmarkView.swift in Sources */,
 				6C78B7C729AF5ADB004BF881 /* AppRepository+Sync.swift in Sources */,
@@ -2755,6 +2781,7 @@
 				6C78B7CB29AF5ADB004BF881 /* MediaCollectionViewCell.swift in Sources */,
 				6C78B7CC29AF5ADB004BF881 /* ContactsTableViewCell.swift in Sources */,
 				6C78B7CD29AF5ADB004BF881 /* Data+Extension.swift in Sources */,
+				93D7F0892A320ABF0098FDF9 /* Double+Extensions.swift in Sources */,
 				6C78B7CE29AF5ADB004BF881 /* EnumsShared.swift in Sources */,
 				6C78B7CF29AF5ADB004BF881 /* AllChatsTableViewCell.swift in Sources */,
 				6C78B7D029AF5ADB004BF881 /* FavoritesViewController.swift in Sources */,
@@ -2841,6 +2868,7 @@
 				6C78B82129AF5ADB004BF881 /* AppRepository+File.swift in Sources */,
 				6C78B82229AF5ADB004BF881 /* SendReactionRequestModel.swift in Sources */,
 				6C78B82329AF5ADB004BF881 /* AppRepository+Messages.swift in Sources */,
+				93E753152A4A8C50000D51D6 /* PdfViewerViewController.swift in Sources */,
 				6C78B82429AF5ADB004BF881 /* MessageDetailsViewController.swift in Sources */,
 				6C78B82529AF5ADB004BF881 /* Constants+Strings.swift in Sources */,
 				6C78B82629AF5ADB004BF881 /* OTPCodeTextField.swift in Sources */,
@@ -3216,9 +3244,11 @@
 				9323EC6D27B3EC9200FA0EB1 /* SwitchView.swift in Sources */,
 				937055DB291497610052EC77 /* AlertView.swift in Sources */,
 				934087B827EBAD7100209571 /* AppRepository+Tests.swift in Sources */,
+				93D7F08B2A320B8F0098FDF9 /* CGFloat+Extensions.swift in Sources */,
 				93BED3D8290C746000DEE9D1 /* NotificationAlertViewController.swift in Sources */,
 				933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */,
 				93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */,
+				93E753102A4A6591000D51D6 /* AVAsset+Extensions.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
 				6CBEAB772A091FD00087382E /* CheckmarkView.swift in Sources */,
 				93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */,
@@ -3228,6 +3258,7 @@
 				939128ED293575EF00A79FBA /* MessageImageView.swift in Sources */,
 				93D86DC427BAEEA000F275B0 /* MediaCollectionViewCell.swift in Sources */,
 				930290C227AC96040064BED1 /* ContactsTableViewCell.swift in Sources */,
+				93D7F0882A320ABF0098FDF9 /* Double+Extensions.swift in Sources */,
 				93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */,
 				93BF627528EB9B7900B48BBF /* EnumsShared.swift in Sources */,
 				93E4F6F827C3A4B100432CFA /* AllChatsTableViewCell.swift in Sources */,
@@ -3314,6 +3345,7 @@
 				AD8192632721D54A00D5BE48 /* AllChatsView.swift in Sources */,
 				938D053227D59DD3002E5CE5 /* NewGroupChatViewModel.swift in Sources */,
 				93CF473D2963240200213DBE /* AppRepository+File.swift in Sources */,
+				93E753142A4A8C50000D51D6 /* PdfViewerViewController.swift in Sources */,
 				934FF16F29778A65002C76F7 /* SendReactionRequestModel.swift in Sources */,
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
 				93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */,
@@ -3591,7 +3623,7 @@
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfoDev.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SpikaNotificationServiceDev;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3620,7 +3652,7 @@
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfoDev.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SpikaNotificationServiceDev;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3649,7 +3681,7 @@
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SpikaNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3677,7 +3709,7 @@
 				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SpikaNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3697,7 +3729,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 53;
+				APP_BUILD_VERSION = 56;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -3761,7 +3793,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 53;
+				APP_BUILD_VERSION = 56;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;

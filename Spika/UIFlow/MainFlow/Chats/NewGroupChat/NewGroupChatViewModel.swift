@@ -29,7 +29,7 @@ class NewGroupChatViewModel: BaseViewModel {
     func createRoom(name: String) {
         if let fileData = fileData,
            let fileUrl = repository.saveDataToFile(fileData, name: "newAvatar"){
-            repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
+            repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0), specificFileName: nil)
                 .sink { [weak self] completion in
                     guard let self else { return }
                     switch completion {

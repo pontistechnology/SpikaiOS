@@ -9,6 +9,9 @@ import UIKit
 
 class MessageVideoView: UIView {
     let thumbnailImageView = UIImageView()
+    private var imageWidthConstraint: NSLayoutConstraint?
+    private var imageHeightConstraint: NSLayoutConstraint?
+    
     private let playVideoIconImageView = UIImageView(image: UIImage(safeImage: .playVideo))
     private let durationLabel = CustomLabel(text: "", textColor: .primaryBackground)
     
@@ -38,8 +41,10 @@ extension MessageVideoView: BaseView {
     
     func positionSubviews() {
         thumbnailImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
-        thumbnailImageView.constrainHeight(256)
-        thumbnailImageView.constrainWidth(256)
+        imageWidthConstraint = thumbnailImageView.widthAnchor.constraint(equalToConstant: 246)
+        imageHeightConstraint = thumbnailImageView.heightAnchor.constraint(equalToConstant: 246)
+        imageWidthConstraint?.isActive = true
+        imageHeightConstraint?.isActive = true
         
         playVideoIconImageView.centerInSuperview(size: CGSize(width: 48, height: 48))
         
@@ -48,9 +53,26 @@ extension MessageVideoView: BaseView {
 }
 
 extension MessageVideoView {
-    func setup(duration: String, thumbnailURL: URL?) {
-        durationLabel.text = duration
+    
+    private func setRatio(to ratio: ImageRatio) {
+        switch ratio {
+        case .portrait:
+            imageWidthConstraint?.constant = 140
+            imageHeightConstraint?.constant = 246
+        case .landscape:
+            imageWidthConstraint?.constant = 240
+            imageHeightConstraint?.constant = 114
+        case .square:
+            imageWidthConstraint?.constant = 246
+            imageHeightConstraint?.constant = 246
+        }
+    }
+    
+    func setup(duration: Int64?, thumbnailURL: URL?, as ratio: ImageRatio) {
+        setRatio(to: ratio)
         thumbnailImageView.kf.setImage(with: thumbnailURL)
+        guard let duration else { return }
+        durationLabel.text = "\(duration) s"
     }
     
     func reset() {

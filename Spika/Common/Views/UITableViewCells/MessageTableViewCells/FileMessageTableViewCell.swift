@@ -38,7 +38,11 @@ extension FileMessageTableViewCell: BaseMessageTableViewCellProtocol {
         let image = UIImage.imageFor(mimeType: message.body?.file?.mimeType ?? "unknown")
         let name  = message.body?.file?.fileName ?? "fileName"
         let size  = Float(message.body?.file?.size ?? 0) / 1000000
-        let s = String(format: "%.2f MB", size)
+        let s = size > 0 ? String(format: "%.2f MB", size) : ""
         fileView.setup(icon: image, name: name, size: s)
+        
+        fileView.tap().sink { [weak self] _ in
+            self?.tapPublisher.send(.openFile)
+        }.store(in: &subs)
     }
 }

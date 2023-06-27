@@ -106,7 +106,7 @@ extension BaseViewController: UIImagePickerControllerDelegate & UINavigationCont
         imagePicker.allowsEditing = allowsEdit
         if case UIImagePickerController.SourceType.camera = source {
             imagePicker.cameraCaptureMode = .photo
-            imagePicker.cameraDevice = .front
+            imagePicker.cameraDevice = .rear
         }
         self.present(imagePicker, animated: true, completion: nil)
     }

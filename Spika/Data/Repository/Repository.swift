@@ -37,7 +37,7 @@ protocol Repository {
     func verifyCode(code: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
     
         // File upload
-    @available(iOSApplicationExtension 13.4, *) func uploadWholeFile(fromUrl url: URL, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>)
+    func uploadWholeFile(fromUrl url: URL, mimeType: String, metaData: MetaData, specificFileName: String?) -> (AnyPublisher<(File?, CGFloat), Error>)
     func uploadChunk(chunk: String, offset: Int, clientId: String) -> AnyPublisher<UploadChunkResponseModel, Error>
     func verifyUpload(total: Int, size: Int, mimeType: String, fileName: String, clientId: String, fileHash: String, type: String, relationId: Int, metaData: MetaData) -> AnyPublisher<VerifyFileResponseModel, Error>
     
@@ -132,6 +132,7 @@ protocol Repository {
     
         // File
     func getFileData(id: String?, context: NSManagedObjectContext) -> FileData?
+    func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData?
 
     // MARK: - USERDEFAULTS:
     

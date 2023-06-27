@@ -301,12 +301,14 @@ extension DatabaseService {
                 for message in messages {
                     _ = MessageEntity(message: message, context: context)
                     
-                    if let file = message.body?.file {
-                        _ = FileEntity(file: file, context: context)
+                    if let file = message.body?.file,
+                       let localId = message.localId {
+                        _ = FileEntity(file: file, localId: localId, context: context)
                     }
                     
-                    if let thumb = message.body?.thumb {
-                        _ = FileEntity(file: thumb, context: context)
+                    if let thumb = message.body?.thumb,
+                       let localId = message.localId {
+                        _ = FileEntity(file: thumb, localId: localId.appending("thumb"), context: context)
                     }
                     
                     if let records = message.records {
@@ -551,11 +553,23 @@ extension DatabaseService {
             guard let entity = try? context.fetch(fr).first else { return }
             
             message = Message(messageEntity: entity,
-                              fileData: getFileData(id: entity.bodyFileId, context: context),
-                              thumbData: getFileData(id: entity.bodyThumbId, context: context),
+                              fileData: getFileData(localId: entity.localId, context: context),
+                              thumbData: getFileData(localId: entity.localId?.appending("thumb"), context: context),
                            records: [])
         }
         return message
+    }
+    
+    func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData? {
+        var fileData: FileData?
+        context.performAndWait {
+            guard let localId = localId else { return }
+            let fr = FileEntity.fetchRequest()
+            fr.predicate = NSPredicate(format: "localId == %@", localId)
+            guard let entity = try? context.fetch(fr).first else { return }
+            fileData = FileData(entity: entity)
+        }
+        return fileData
     }
     
     func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {

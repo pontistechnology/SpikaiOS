@@ -239,6 +239,12 @@ class AppCoordinator: Coordinator {
         navigationController.pushViewController(imageViewerViewController, animated: true)
     }
     
+    func presentPdfViewer(url: URL) {
+        let pdfViewerViewController = Assembler.sharedAssembler.resolver
+            .resolve(PdfViewerViewController.self, arguments: self, url)!
+        navigationController.pushViewController(pdfViewerViewController, animated: true)
+    }
+    
     func presentPrivacySettingsScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(PrivacySettingsViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)
@@ -317,13 +323,22 @@ extension AppCoordinator {
             if let cancelText = cancelText {
                 actionSheet.addAction(UIAlertAction(title:  cancelText, style: .cancel, handler: nil))
             }
-            viewController.present(actionSheet, animated: true)
+            DispatchQueue.main.async { [weak self] in
+                viewController.dismiss(animated: true)
+                viewController.present(actionSheet, animated: true)
+            }
             
             if actions.isEmpty {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
                     actionSheet.dismiss(animated: true)
                 }
             }
+        }
+    }
+    
+    func removeAlert() {
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController.dismiss(animated: true)
         }
     }
 }

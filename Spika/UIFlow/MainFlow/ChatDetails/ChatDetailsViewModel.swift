@@ -261,7 +261,7 @@ class ChatDetailsViewModel: BaseViewModel {
             self.updateRoomWithAvatar(avatarId: 0)
             return
         }
-        repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0))
+        repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 72, height: 72, duration: 0), specificFileName: nil)
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:

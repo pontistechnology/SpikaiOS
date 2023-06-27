@@ -17,7 +17,7 @@ class EnterUsernameViewModel: BaseViewModel {
     func updateUser(username: String, imageFileData: Data?) {
         if let imageFileData = imageFileData,
            let fileUrl = repository.saveDataToFile(imageFileData, name: "newAvatar") {
-            let tuple = repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 512, height: 512, duration: 0))
+            let tuple = repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 512, height: 512, duration: 0), specificFileName: nil)
             tuple.sink { [weak self] completion in
                 guard let self else { return }
                 switch completion {
