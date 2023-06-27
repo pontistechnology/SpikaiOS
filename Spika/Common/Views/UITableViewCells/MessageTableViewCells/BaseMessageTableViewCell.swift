@@ -150,7 +150,7 @@ extension BaseMessageTableViewCell {
     }
     
     func updateSender(name: String) {
-        senderNameLabel.text = name
+        senderNameLabel.text = name.isEmpty ? "(missing username)" : name
     }
     
     func updateSender(photoUrl: URL?) {
