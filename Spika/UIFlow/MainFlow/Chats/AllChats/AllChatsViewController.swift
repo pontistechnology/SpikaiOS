@@ -137,6 +137,7 @@ extension AllChatsViewController {
 
 extension AllChatsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
+        allChatsView.segmentedControl.isHidden = value?.isEmpty ?? true
         viewModel.search.send(value)
     }
     
