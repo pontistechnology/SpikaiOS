@@ -85,7 +85,7 @@ private extension SSE {
         }
         
         eventSource?.onMessage { [weak self] id, event, data in
-//            print("SSE DATA: ", data) // this is for see actual data
+            print("SSE DATA: ", data) // this is to see actual data
             guard let self,
                   let jsonData = data?.data(using: .utf8),
                   let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData),
@@ -101,7 +101,14 @@ private extension SSE {
             case .newMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
                 _ = self.repository.saveMessageRecords([record]) // this will update cc
-                guard let newDetails = sseNewMessage.messageRecord?.message else { return }
+                guard let seenCount = sseNewMessage.seenCount,
+                      let deliveredCount = sseNewMessage.deliveredCount,
+                      let totalUsersCount = sseNewMessage.totalUserCount
+                else { return }
+                let newDetails = SomeMessageDetails(id: record.messageId,
+                                                    totalUserCount: totalUsersCount, // check, is not used
+                                                    deliveredCount: deliveredCount,
+                                                    seenCount: seenCount)
                 self.updateMessage(messageCounts: newDetails) // this will update cc
             case .newRoom, .updateRoom:
                 guard let room = sseNewMessage.room else { return }

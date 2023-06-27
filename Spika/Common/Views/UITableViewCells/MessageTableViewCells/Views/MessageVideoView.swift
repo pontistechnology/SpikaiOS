@@ -68,10 +68,11 @@ extension MessageVideoView {
         }
     }
     
-    func setup(duration: String, thumbnailURL: URL?, as ratio: ImageRatio) {
+    func setup(duration: Int64?, thumbnailURL: URL?, as ratio: ImageRatio) {
         setRatio(to: ratio)
-        durationLabel.text = duration
         thumbnailImageView.kf.setImage(with: thumbnailURL)
+        guard let duration else { return }
+        durationLabel.text = "\(duration) s"
     }
     
     func reset() {

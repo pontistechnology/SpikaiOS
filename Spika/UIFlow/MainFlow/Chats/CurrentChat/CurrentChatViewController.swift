@@ -12,19 +12,6 @@ import PhotosUI
 import Combine
 import UniformTypeIdentifiers
 
-// TODO: - move
-struct SelectedFile {
-    let fileType: MessageType
-    let name: String?
-    let fileUrl: URL
-    let thumbUrl: URL?
-    let thumbMetadata: MetaData?
-    let metaData: MetaData
-    let mimeType: String
-    let size: Int64?
-    let localId: String
-}
-
 class CurrentChatViewController: BaseViewController {
     
     private let currentChatView = CurrentChatView()
@@ -49,17 +36,6 @@ class CurrentChatViewController: BaseViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
         viewModel.sendSeenStatus()
-        
-//        let a = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-//        let pa = a?.appendingPathComponent("E7F76A8E-34B4-4915-8EC9-705A6BAED336.mov")
-//        let uiu = UIImageView()
-//        view.addSubview(uiu)
-//        uiu.constrainHeight(200)
-//        uiu.constrainWidth(200)
-//        uiu.centerInSuperview()
-//        uiu.backgroundColor = .red
-        
-//        uiu.image = pa?.videoThumbnail()
     }
     
     deinit {
@@ -151,16 +127,16 @@ extension CurrentChatViewController {
         
         self.viewModel.uploadProgressPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (percent, file) in
-            guard let localId = file?.localId,
-                  let indexPath = self?.viewModel.getIndexPathFor(localId: localId),
-                  let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
-            else { return }
-            (cell as? BaseMessageTableViewCell)?.showUploadProgress(at: percent)
-
-            if percent == 1.0 {
-                (cell as? BaseMessageTableViewCell)?.hideUploadProgress()
-            }
+            .sink { [weak self] uuid in
+                guard let percentUploaded = self?.viewModel.uploadsInProgress[uuid],
+                      let indexPath = self?.viewModel.getIndexPathFor(localId: uuid),
+                      let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
+                else { return }
+                (cell as? BaseMessageTableViewCell)?.showUploadProgress(at: percentUploaded)
+                    
+                if percentUploaded == 1.0 {
+                    (cell as? BaseMessageTableViewCell)?.hideUploadProgress()
+                }
         }.store(in: &subscriptions)
         
         self.imagePickerPublisher.sink { [weak self] pickedImage in
@@ -321,6 +297,8 @@ extension CurrentChatViewController {
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .showReactions:
             viewModel.showReactions(records: message.records ?? []) // TODO: change maybe to vm
+        case .openFile:
+            viewModel.openFile(message: message)
         }
     }
 }
@@ -396,6 +374,14 @@ extension CurrentChatViewController: UITableViewDataSource {
         }
         
         (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
+        
+        if viewModel.compressionsInProgress.contains(where: { $0 == message.localId }) {
+            cell.startSpinning()
+        }
+    
+        if let localId = message.localId, let percentUploaded = viewModel.uploadsInProgress[localId] {
+            percentUploaded < 1 ? cell.showUploadProgress(at: percentUploaded) : cell.hideUploadProgress()
+        }
         
         cell.tapPublisher.sink(receiveValue: { [weak self] state in
             self?.handleCellTap(state, message: message)

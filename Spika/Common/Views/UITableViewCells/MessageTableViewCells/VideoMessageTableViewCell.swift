@@ -32,21 +32,21 @@ extension VideoMessageTableViewCell: BaseMessageTableViewCellProtocol {
     }
     
     func updateCell(message: Message) {
-        let duration = "\((message.body?.file?.metaData?.duration ?? -1))" + " s"
         let ratio = ImageRatio(width: message.body?.thumb?.metaData?.width ?? 1,
                                height: message.body?.thumb?.metaData?.height ?? 1)
+        
+        let url: URL?
         // TODO: -  move to rep
         if let localId = message.localId,
-           let localUrl = FileManager.default.urls(for: .documentDirectory,
-                                                   in: .userDomainMask)
+           let localUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             .first?.appendingPathComponent(localId+"thumb.jpg"),
            FileManager.default.fileExists(atPath: localUrl.path) {
-            videoView.setup(duration: duration, thumbnailURL: localUrl, as: ratio)
+            url = localUrl
         } else {
-            let url = message.body?.thumb?.id?.fullFilePathFromId()
-            videoView.setup(duration: duration, thumbnailURL: url, as: ratio)
+            url = message.body?.thumb?.id?.fullFilePathFromId()
         }
-        
+        videoView.setup(duration: message.body?.file?.metaData?.duration,
+                        thumbnailURL: url, as: ratio)
         
         videoView.thumbnailImageView.tap().sink { [weak self] _ in
             self?.tapPublisher.send(.playVideo)

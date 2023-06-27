@@ -43,8 +43,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    @available(iOSApplicationExtension 13.4, *)
-    func uploadWholeFile(fromUrl url: URL, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>) {
+    func uploadWholeFile(fromUrl url: URL, mimeType: String, metaData: MetaData, specificFileName: String?) -> (AnyPublisher<(File?, CGFloat), Error>) {
         
         let chunkSize: Int = 1024 * 1024 // TODO: - determine best
         let clientId = UUID().uuidString
@@ -59,7 +58,7 @@ extension AppRepository {
         else {
             return somePublisher.eraseToAnyPublisher()
         }
-        let fileName = resources.name ?? "unknownName"
+        let fileName = specificFileName ?? resources.name ?? "unknownName"
         
         let totalChunks = fileSize / chunkSize + (fileSize % chunkSize != 0 ? 1 : 0)
         var chunk = try? outputFileHandle.read(upToCount: chunkSize)
@@ -110,7 +109,7 @@ extension AppRepository {
         }
         
         try? outputFileHandle.close()
-        print("File reading complete")
+//        print("File reading complete")
         
         return somePublisher.eraseToAnyPublisher()
     }
@@ -157,6 +156,10 @@ extension AppRepository {
               FileManager.default.fileExists(atPath: targetURL.path)
         else { return nil }
         return targetURL
+    }
+    
+    func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData? {
+        databaseService.getFileData(localId: localId, context: context)
     }
     
     func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {

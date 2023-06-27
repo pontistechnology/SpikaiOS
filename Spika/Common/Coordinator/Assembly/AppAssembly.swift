@@ -26,6 +26,7 @@ final class AppAssembly: Assembly {
         self.assembleAppereanceSettingsViewController(container)
         self.assembleBlockedUsersSettingsViewController(container)
         self.assembleImageViewerViewController(container)
+        self.assemblePdfViewerViewController(container)
         self.assembleUserSelectionViewController(container)
         self.assembleMessageActionsViewController(container)
         self.assembleMessageDetailsViewController(container)
@@ -238,6 +239,13 @@ final class AppAssembly: Assembly {
         container.register(ImageViewerViewController.self) { (resolver, coordinator: AppCoordinator, message: Message) in
             let controller = ImageViewerViewController()
             controller.viewModel = container.resolve(ImageViewerViewModel.self, arguments: coordinator, message)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assemblePdfViewerViewController(_ container: Container) {
+        container.register(PdfViewerViewController.self) { (resolver, coordinator: AppCoordinator, url: URL) in
+            let controller = PdfViewerViewController(url: url)
             return controller
         }.inObjectScope(.transient)
     }

@@ -19,6 +19,7 @@ extension FileEntity {
     @NSManaged public var fileName: String?
     @NSManaged public var fileSize: Int64
     @NSManaged public var id: Int64
+    @NSManaged public var localId: String?
     @NSManaged public var metaDataDuration: Int64
     @NSManaged public var metaDataHeight: Int64
     @NSManaged public var metaDataWidth: Int64
