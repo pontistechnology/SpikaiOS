@@ -93,6 +93,7 @@ extension BaseMessageTableViewCell: BaseView {
         messageStateView.isHidden = sender != .me
         
         containerBottomConstraint = containerStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2)
+        containerBottomConstraint?.priority = .defaultLow
         containerBottomConstraint?.isActive = true
         
         switch sender {
@@ -200,13 +201,17 @@ extension BaseMessageTableViewCell {
             self?.tapPublisher.send(.showReactions)
         }.store(in: &subs)
     }
-    
-    func showUploadProgress(at percent: CGFloat) {
+
+    func showProgressViewIfNecessary() {
         if progressView.superview == nil {
             containerStackView.addSubview(progressView)
             progressView.fillSuperview()
             containerStackView.bringSubviewToFront(progressView)
         }
+    }
+    
+    func showUploadProgress(at percent: CGFloat) {
+        showProgressViewIfNecessary()
         progressView.setProgress(to: percent)
     }
     
@@ -214,13 +219,9 @@ extension BaseMessageTableViewCell {
         progressView.removeFromSuperview()
     }
     
-    func startSpinning(with text: String?) {
-        if progressView.superview == nil {
-            containerStackView.addSubview(progressView)
-            progressView.fillSuperview()
-            containerStackView.bringSubviewToFront(progressView)
-        }
-        progressView.startSpinning(with: text)
+    func startSpinning() {
+        showProgressViewIfNecessary()
+        progressView.startSpinning()
     }
     
     func showEditedIcon() {

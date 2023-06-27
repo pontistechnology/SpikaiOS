@@ -29,6 +29,19 @@ enum MessageRecordType: String, Codable {
     }
 }
 
+// TODO: - move structs
+struct SelectedFile {
+    let fileType: MessageType
+    let name: String?
+    let fileUrl: URL
+    let thumbUrl: URL?
+    let thumbMetadata: MetaData?
+    let metaData: MetaData
+    let mimeType: String
+    let size: Int64?
+    let localId: String
+}
+
 struct MessageNotificationInfo {
     let title: String
     let photoUrl: URL?

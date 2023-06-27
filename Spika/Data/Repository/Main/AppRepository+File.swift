@@ -110,7 +110,7 @@ extension AppRepository {
         }
         
         try? outputFileHandle.close()
-        print("File reading complete")
+//        print("File reading complete")
         
         return somePublisher.eraseToAnyPublisher()
     }
@@ -159,7 +159,7 @@ extension AppRepository {
         return targetURL
     }
     
-    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
-        databaseService.getFileData(id: id, context: context)
+    func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData? {
+        databaseService.getFileData(localId: localId, context: context)
     }
 }

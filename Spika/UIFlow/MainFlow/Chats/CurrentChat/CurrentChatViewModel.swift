@@ -183,7 +183,7 @@ extension CurrentChatViewModel {
             switch completion {
                 
             case .finished:
-                print("finished")
+                break
             case let .failure(error):
                 print("send text message error: ", error)
             }
@@ -229,6 +229,50 @@ extension CurrentChatViewModel {
     }
 }
 
+// MARK: - video handling
+
+extension CurrentChatViewModel {
+    func saveTempVideoMessage(uuid: String, width: CGFloat, height: CGFloat) {
+        let message = Message(createdAt: Date().currentTimeMillis(),
+                              fromUserId: getMyUserId(), roomId: room.id, type: .video,
+                              body: MessageBody(text: nil, file: nil,
+                                                thumb: FileData(id: nil, fileName: nil,
+                                                                mimeType: nil, size: nil,
+                                                                metaData: MetaData(width: width.roundedInt64, height: height.roundedInt64, duration: 0))),
+                              replyId: nil, localId: uuid)
+        repository.saveMessages([message])
+    }
+    
+    func compressAndSendVideo(url: URL, uuid: String) async {
+        // generate jpg thumbnail, save it to uuidthumb.jpg
+        guard let thumbnail = url.videoThumbnail(),
+              let jpegData = thumbnail.jpegData(compressionQuality: 1)
+        else { return }
+        let thumbUrl = repository.saveDataToFile(jpegData, name: "\(uuid)thumb.jpg")
+        
+        // save temp message and start spinning
+        compressionsInProgress.insert(uuid)
+        saveTempVideoMessage(uuid: uuid, width: thumbnail.size.width, height: thumbnail.size.height)
+        
+        // compress and export as uuid.mp4, get metadata
+        guard let mp4Url = await url.compressAsMP4(name: uuid),
+              let videoMetadata = await AVAsset(url: mp4Url).videoMetadata()
+        else { return }
+        compressionsInProgress.remove(uuid)
+
+        // send file (will show upload progress)
+        sendFile(file: SelectedFile(fileType: .video,
+                                    name: "moguce bitno za doc ce bit",
+                                    fileUrl: mp4Url,
+                                    thumbUrl: thumbUrl,
+                                    thumbMetadata: thumbUrl?.imageMetaData(),
+                                    metaData: videoMetadata,
+                                    mimeType: "video/mp4",
+                                    size: nil,
+                                    localId: uuid))
+    }
+}
+
 // MARK: - sending pictures/video
 
 extension CurrentChatViewModel {
@@ -259,7 +303,6 @@ extension CurrentChatViewModel {
                         }.store(in: &self.subscriptions)
                 }.store(in: &subscriptions)
         default:
-//            uploadProgressPublisher.send(UploadProgess(uuid: file.localId, percentUploaded: 0.02))
             repository
                 .uploadWholeFile(fromUrl: file.fileUrl,
                                  mimeType: file.mimeType,
@@ -267,7 +310,6 @@ extension CurrentChatViewModel {
                 .sink { _ in
                     
                 } receiveValue: { [weak self] filea, percent in
-//                    self?.uploadProgressPublisher.send(UploadProgess(uuid: file.localId, percentUploaded: percent))
                     self?.sendMessage(body: RequestMessageBody(text: nil, fileId: filea?.id, thumbId: nil),
                                       localId: file.localId,
                                       type: file.fileType,
@@ -275,25 +317,6 @@ extension CurrentChatViewModel {
                 }.store(in: &subscriptions)
         }
         
-    }
-    
-    func saveTempVideoMessage(uuid: String, width: CGFloat, height: CGFloat) {
-        let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: getMyUserId(),
-                              roomId: room.id,
-                              type: .video,
-                              body: MessageBody(text: nil,
-                                                file: nil,
-                                                thumb: FileData(id: nil,
-                                                                fileName: nil,
-                                                                mimeType: nil,
-                                                                size: nil,
-                                                                metaData: MetaData(width: width.roundedInt64,
-                                                                                   height: height.roundedInt64,
-                                                                                   duration: 13))),
-                              replyId: nil,
-                              localId: uuid)
-        repository.saveMessages([message])
     }
     
     func sendFile(file: SelectedFile) {
@@ -341,47 +364,6 @@ extension CurrentChatViewModel {
         sendFile(file: file)
     }
     
-    func compressAndSendVideo(url: URL, uuid: String) async {
-        do {
-            // generate jpg thumbnail, save it to uuidthumb.jpg
-            guard let thumbnail = url.videoThumbnail(),
-                  let jpegData = thumbnail.jpegData(compressionQuality: 1)
-            else { return }
-            let thumbUrl = repository.saveDataToFile(jpegData, name: "\(uuid)thumb.jpg")
-            
-            // save temp message and start spinning "compresing" label, order matters
-            compressionsInProgress.insert(uuid)
-            saveTempVideoMessage(uuid: uuid, width: thumbnail.size.width, height: thumbnail.size.height)
-            
-            // compress and export as uuid.mp4, get metadata
-            guard let mp4Url = await url.compressAsMP4(name: uuid) else { return }
-            compressionsInProgress.remove(uuid)
-
-            let asset = AVAsset(url: mp4Url)
-            let duration = try await asset.load(.duration)
-            guard let dimensions = try await asset.load(.tracks).first?
-                .load(.naturalSize)
-            else { return }
-            
-            // send file, and show upload progress
-            sendFile(file: SelectedFile(fileType: .video,
-                                        name: "mogucenbitno za doc ce bit",
-                                        fileUrl: mp4Url,
-                                        thumbUrl: thumbUrl,
-                                        thumbMetadata: MetaData(width: thumbnail.size.width.roundedInt64,
-                                                                height: thumbnail.size.height.roundedInt64,
-                                                                duration: 0),
-                                        metaData: MetaData(width: dimensions.width.roundedInt64,
-                                                           height: dimensions.height.roundedInt64,
-                                                           duration: duration.seconds.roundedInt64),
-                                        mimeType: "video/mp4",
-                                        size: 0,
-                                        localId: uuid))
-        } catch {
-            print("durationelo: ", error)
-        }
-    }
-    
     func sendMultimedia(_ results: [PHPickerResult]) {
         for result in results {
             
@@ -397,11 +379,6 @@ extension CurrentChatViewModel {
             if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
                 result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
                     // this url is valid only here, copy file and pass it forward
-                    // todo: add some check for file size maybe and skip large files
-                    // flow: 1. copy file with new name uuidoriginal.originalExtension
-                    // flow: 2. compress and convert to uuid.mp4
-                    // flow: 3. delete uuidoriginal.originalExtension
-                    // flow: 4. send uuid.mp4
                     let uuid = UUID().uuidString
                     guard let url,
                     let fileUrl = self?.repository.copyFile(from: url, name: uuid+"original")
@@ -466,8 +443,8 @@ extension CurrentChatViewModel {
         guard let entity = frc?.object(at: indexPath),
               let context = entity.managedObjectContext
         else { return nil }
-        let fileData = repository.getFileData(id: entity.bodyFileId, context: context)
-        let thumbData = repository.getFileData(id: entity.bodyThumbId, context: context)
+        let fileData = repository.getFileData(localId: entity.localId, context: context)
+        let thumbData = repository.getFileData(localId: entity.localId?.appending("thumb"), context: context)
         let reactionRecords = repository.getReactionRecords(messageId: entity.id, context: context)
 
         return Message(messageEntity: entity,

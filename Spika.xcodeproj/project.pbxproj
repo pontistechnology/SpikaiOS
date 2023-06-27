@@ -686,6 +686,8 @@
 		93E4F6FC27C4687100432CFA /* CurrentChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FB27C4687100432CFA /* CurrentChatViewController.swift */; };
 		93E4F6FE27C4688C00432CFA /* CurrentChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FD27C4688C00432CFA /* CurrentChatViewModel.swift */; };
 		93E4F70127C468BB00432CFA /* CurrentChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F70027C468BB00432CFA /* CurrentChatView.swift */; };
+		93E753102A4A6591000D51D6 /* AVAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */; };
+		93E753112A4A6591000D51D6 /* AVAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */; };
 		93EACD062A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
 		93EACD072A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
 		93EACD082A0E47AB003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
@@ -1058,6 +1060,7 @@
 		93E4F6FB27C4687100432CFA /* CurrentChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatViewController.swift; sourceTree = "<group>"; };
 		93E4F6FD27C4688C00432CFA /* CurrentChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatViewModel.swift; sourceTree = "<group>"; };
 		93E4F70027C468BB00432CFA /* CurrentChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatView.swift; sourceTree = "<group>"; };
+		93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAsset+Extensions.swift"; sourceTree = "<group>"; };
 		93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMessageRequest.swift; sourceTree = "<group>"; };
 		93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewController.swift; sourceTree = "<group>"; };
 		93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsView.swift; sourceTree = "<group>"; };
@@ -2202,6 +2205,7 @@
 				6CDE3F872A20DC3700A29DDE /* Array+Extensions.swift */,
 				93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */,
 				93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */,
+				93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2755,6 +2759,7 @@
 				6C78B7C229AF5ADB004BF881 /* FavoritesView.swift in Sources */,
 				6C78B7C329AF5ADB004BF881 /* ChatsAssembly.swift in Sources */,
 				6C78B7C429AF5ADB004BF881 /* CountryPickerViewController.swift in Sources */,
+				93E753112A4A6591000D51D6 /* AVAsset+Extensions.swift in Sources */,
 				6C78B7C629AF5ADB004BF881 /* DocsTableViewCell.swift in Sources */,
 				6CBEAB782A091FD00087382E /* CheckmarkView.swift in Sources */,
 				6C78B7C729AF5ADB004BF881 /* AppRepository+Sync.swift in Sources */,
@@ -3230,6 +3235,7 @@
 				93BED3D8290C746000DEE9D1 /* NotificationAlertViewController.swift in Sources */,
 				933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */,
 				93E4F6F227C2C1E500432CFA /* ChatsAssembly.swift in Sources */,
+				93E753102A4A6591000D51D6 /* AVAsset+Extensions.swift in Sources */,
 				AD9BFD37272AB2F000736318 /* CountryPickerViewController.swift in Sources */,
 				6CBEAB772A091FD00087382E /* CheckmarkView.swift in Sources */,
 				93D86DC027BAB49D00F275B0 /* DocsTableViewCell.swift in Sources */,

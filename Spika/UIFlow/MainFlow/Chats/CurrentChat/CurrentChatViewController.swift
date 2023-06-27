@@ -12,19 +12,6 @@ import PhotosUI
 import Combine
 import UniformTypeIdentifiers
 
-// TODO: - move
-struct SelectedFile {
-    let fileType: MessageType
-    let name: String?
-    let fileUrl: URL
-    let thumbUrl: URL?
-    let thumbMetadata: MetaData?
-    let metaData: MetaData
-    let mimeType: String
-    let size: Int64?
-    let localId: String
-}
-
 class CurrentChatViewController: BaseViewController {
     
     private let currentChatView = CurrentChatView()
@@ -386,17 +373,12 @@ extension CurrentChatViewController: UITableViewDataSource {
         
         (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
         
-        // TODO: - check, refactor, rename
         if viewModel.compressionsInProgress.contains(where: { $0 == message.localId }) {
-            cell.startSpinning(with: "Compressing")
+            cell.startSpinning()
         }
     
-        if let percentUploaded = viewModel.uploadsInProgress[message.localId ?? "aa"] {
-            if percentUploaded < 1 {
-                cell.showUploadProgress(at: percentUploaded)
-            } else {
-                cell.hideUploadProgress()
-            }
+        if let localId = message.localId, let percentUploaded = viewModel.uploadsInProgress[localId] {
+            percentUploaded < 1 ? cell.showUploadProgress(at: percentUploaded) : cell.hideUploadProgress()
         }
         
         cell.tapPublisher.sink(receiveValue: { [weak self] state in
