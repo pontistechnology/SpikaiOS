@@ -460,8 +460,20 @@ extension CurrentChatViewModel {
         guard let entity = frc?.object(at: indexPath),
               let context = entity.managedObjectContext
         else { return nil }
-        let fileData = repository.getFileData(localId: entity.localId, context: context)
-        let thumbData = repository.getFileData(localId: entity.localId?.appending("thumb"), context: context)
+        let fileData: FileData?
+        let thumbData: FileData?
+        if let fileId = entity.bodyFileId {
+            fileData = repository.getFileData(id: fileId, context: context)
+        } else {
+            fileData = repository.getFileData(localId: entity.localId, context: context)
+        }
+        
+        if let thumbId = entity.bodyThumbId {
+            thumbData = repository.getFileData(id: thumbId, context: context)
+        } else {
+            thumbData = repository.getFileData(localId: entity.localId?.appending("thumb"), context: context)
+        }
+        
         let reactionRecords = repository.getReactionRecords(messageId: entity.id, context: context)
 
         return Message(messageEntity: entity,

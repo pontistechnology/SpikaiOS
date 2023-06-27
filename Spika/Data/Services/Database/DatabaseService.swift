@@ -571,6 +571,18 @@ extension DatabaseService {
         }
         return fileData
     }
+    
+    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
+        var fileData: FileData?
+        context.performAndWait {
+            guard let id = id else { return }
+            let fr = FileEntity.fetchRequest()
+            fr.predicate = NSPredicate(format: "id == %@", id)
+            guard let entity = try? context.fetch(fr).first else { return }
+            fileData = FileData(entity: entity)
+        }
+        return fileData
+    }
 }
 
 extension DatabaseService {

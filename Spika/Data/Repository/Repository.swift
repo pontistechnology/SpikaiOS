@@ -131,6 +131,7 @@ protocol Repository {
     func generateRoomModelsWithUsers(context: NSManagedObjectContext, roomEntities: [RoomEntity]) -> Future<[Room], Error>
     
         // File
+    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData?
     func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData?
 
     // MARK: - USERDEFAULTS:

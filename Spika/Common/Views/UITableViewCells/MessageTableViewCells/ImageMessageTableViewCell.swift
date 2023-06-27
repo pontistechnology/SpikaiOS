@@ -43,7 +43,8 @@ extension ImageMessageTableViewCell: BaseMessageTableViewCellProtocol {
                                     height: message.body?.file?.metaData?.height ?? 1)
         
         // TODO: - use repository
-        if let localPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(message.localId ?? "").path,
+        if let localId = message.localId,
+           let localPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(localId.appending("thumb")).path,
            FileManager.default.fileExists(atPath: localPath) {
             photoImageView.setImage(path: localPath, as: imageRatio)
         } else {

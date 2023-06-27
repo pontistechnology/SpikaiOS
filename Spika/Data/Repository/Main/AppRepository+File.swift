@@ -161,4 +161,8 @@ extension AppRepository {
     func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData? {
         databaseService.getFileData(localId: localId, context: context)
     }
+    
+    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
+        databaseService.getFileData(id: id, context: context)
+    }
 }
