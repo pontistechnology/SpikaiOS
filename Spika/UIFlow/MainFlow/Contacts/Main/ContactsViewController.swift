@@ -76,7 +76,7 @@ extension ContactsViewController: UITableViewDataSource {
         guard let sections = self.frc?.sections else { return 0 }
         return sections[section].numberOfObjects
     }
-    
+        
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
         guard let userEntity = frc?.object(at: indexPath) else {
