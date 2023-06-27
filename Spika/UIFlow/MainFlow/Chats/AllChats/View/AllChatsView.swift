@@ -41,6 +41,7 @@ class AllChatsView: UIView, BaseView {
         allChatsTableView.rowHeight = 70
         stackview.axis = .vertical
         segmentedControl.isHidden = true
+        segmentedControl.selectedSegmentIndex = 0
     }
     
     func positionSubviews() {
