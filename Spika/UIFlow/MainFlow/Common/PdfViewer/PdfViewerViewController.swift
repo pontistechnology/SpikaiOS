@@ -33,6 +33,7 @@ class PdfViewerViewController: BaseViewController {
             if let document = PDFDocument(url: url) {
                 DispatchQueue.main.async { [weak self] in
                     self?.pdfView.document = document
+                    self?.pdfView.autoScales = true    
                 }
             }
         }
