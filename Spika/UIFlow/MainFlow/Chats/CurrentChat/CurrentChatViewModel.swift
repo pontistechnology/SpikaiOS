@@ -409,14 +409,19 @@ extension CurrentChatViewModel {
     func sendDocuments(urls: [URL]) {
         for url in urls {
             let uuid = UUID().uuidString
-            guard let fileUrl = self.repository.copyFile(from: url, name: uuid) else { return }
             let fileName = url.lastPathComponent
-            guard let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey, .fileSizeKey]) else { return }
+            guard let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey, .fileSizeKey, .fileSizeKey]) else { return }
             let mimeType = resourceValues.contentType?.preferredMIMEType ?? "application/octet-stream"
             
+            guard let fileSize = resourceValues.fileSize, fileSize < 128000000
+            else {
+                // TODO: - show pop up
+                _ = getAppCoordinator()?.showAlert(title: "Large file", message: "Some files are greater than 128 MB.", style: .alert, actions: [.regular(title: "Ok")])
+                return
+            }
             let file = SelectedFile(fileType: .file,
                                     name: fileName,
-                                    fileUrl: fileUrl,
+                                    fileUrl: url,
                                     thumbUrl: nil,
                                     thumbMetadata: nil,
                                     metaData: MetaData(width: 0, height: 0, duration: 0),
