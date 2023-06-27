@@ -240,7 +240,7 @@ extension CurrentChatViewModel {
                                                                 mimeType: nil, size: nil,
                                                                 metaData: MetaData(width: width.roundedInt64, height: height.roundedInt64, duration: 0))),
                               replyId: nil, localId: uuid)
-        repository.saveMessages([message])
+        saveMessage(message: message)
     }
     
     func compressAndSendVideo(url: URL, uuid: String) async {
@@ -268,8 +268,19 @@ extension CurrentChatViewModel {
                                     thumbMetadata: thumbUrl?.imageMetaData(),
                                     metaData: videoMetadata,
                                     mimeType: "video/mp4",
-                                    size: nil,
                                     localId: uuid))
+    }
+}
+
+// MARK: - files handling
+extension CurrentChatViewModel {
+    func openFile(message: Message) {
+        guard let url = message.body?.file?.id?.fullFilePathFromId() else { return }
+        if message.body?.file?.mimeType == "application/pdf" {
+            getAppCoordinator()?.presentPdfViewer(url: url)
+        } else if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
     }
 }
 
@@ -285,14 +296,14 @@ extension CurrentChatViewModel {
             else { return }
             addToUploads(UploadProgess(uuid: file.localId, percentUploaded: 0.01))
             repository
-                .uploadWholeFile(fromUrl: thumbURL, mimeType: "image/*", metaData: thumbMetadata)
+                .uploadWholeFile(fromUrl: thumbURL, mimeType: "image/*", metaData: thumbMetadata, specificFileName: nil)
                 .sink { _ in
                     
                 } receiveValue: { [weak self] filea, percent in
                     guard let filea = filea else { return }
                     guard let self else { return }
                     self.repository
-                        .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData)
+                        .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData, specificFileName: nil)
                         .sink { _ in
                             
                         } receiveValue: { [weak self] fileb, percent in
@@ -303,16 +314,19 @@ extension CurrentChatViewModel {
                         }.store(in: &self.subscriptions)
                 }.store(in: &subscriptions)
         default:
+            addToUploads(UploadProgess(uuid: file.localId, percentUploaded: 0.01))
             repository
                 .uploadWholeFile(fromUrl: file.fileUrl,
                                  mimeType: file.mimeType,
-                                 metaData: file.metaData)
+                                 metaData: file.metaData,
+                                 specificFileName: file.name)
                 .sink { _ in
                     
                 } receiveValue: { [weak self] filea, percent in
+                    self?.addToUploads(UploadProgess(uuid: file.localId, percentUploaded: percent))
                     self?.sendMessage(body: RequestMessageBody(text: nil, fileId: filea?.id, thumbId: nil),
                                       localId: file.localId,
-                                      type: file.fileType,
+                                      type: .file,
                                       replyId: nil)
                 }.store(in: &subscriptions)
         }
@@ -330,7 +344,7 @@ extension CurrentChatViewModel {
                                                 file: FileData(id: nil,
                                                                fileName: file.name,
                                                                mimeType: file.mimeType,
-                                                               size: file.size,
+                                                               size: nil,
                                                                metaData: file.metaData),
                                                 thumb: FileData(id: nil,
                                                                 fileName: nil,
@@ -360,7 +374,7 @@ extension CurrentChatViewModel {
         let file = SelectedFile(fileType: .image, name: uuid,
                                 fileUrl: fileURL, thumbUrl: thumbURL,
                                 thumbMetadata: thumbMetadata, metaData: fileMetadata,
-                                mimeType: "image/*", size: nil, localId: uuid)
+                                mimeType: "image/*", localId: uuid)
         sendFile(file: file)
     }
     
@@ -393,25 +407,23 @@ extension CurrentChatViewModel {
     }
     
     func sendDocuments(urls: [URL]) {
-        //        for url in urls {
-        //            guard let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-        //                  url.copyFileFromURL(to: targetURL) == true,
-        //                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey, .fileSizeKey]),
-        //                  let type = resourceValues.contentType,
-        //                  let size = resourceValues.fileSize
-        //            else { return }
-        //            let fileName = resourceValues.name ?? "unknownName"
-        //
-        //            print("TYPEE: ", type)
-        //            let file = SelectedFile(fileType: .file,
-        //                                    name: fileName,
-        //                                    fileUrl: targetURL,
-        //                                    thumbnail: nil,
-        //                                    metaData: MetaData(width: 0, height: 0, duration: 0),
-        //                                    mimeType: "\(type)",
-        //                                    size: Int64(size))
-        //            sendFile(file: file)
-        //        }
+        for url in urls {
+            let uuid = UUID().uuidString
+            guard let fileUrl = self.repository.copyFile(from: url, name: uuid) else { return }
+            let fileName = url.lastPathComponent
+            guard let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey, .fileSizeKey]) else { return }
+            let mimeType = resourceValues.contentType?.preferredMIMEType ?? "application/octet-stream"
+            
+            let file = SelectedFile(fileType: .file,
+                                    name: fileName,
+                                    fileUrl: fileUrl,
+                                    thumbUrl: nil,
+                                    thumbMetadata: nil,
+                                    metaData: MetaData(width: 0, height: 0, duration: 0),
+                                    mimeType: mimeType,
+                                    localId: uuid)
+            sendFile(file: file)
+        }
     }
     
     func sendCameraImage(_ image: UIImage) {

@@ -43,8 +43,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    @available(iOSApplicationExtension 13.4, *)
-    func uploadWholeFile(fromUrl url: URL, mimeType: String, metaData: MetaData) -> (AnyPublisher<(File?, CGFloat), Error>) {
+    func uploadWholeFile(fromUrl url: URL, mimeType: String, metaData: MetaData, specificFileName: String?) -> (AnyPublisher<(File?, CGFloat), Error>) {
         
         let chunkSize: Int = 1024 * 1024 // TODO: - determine best
         let clientId = UUID().uuidString
@@ -59,7 +58,7 @@ extension AppRepository {
         else {
             return somePublisher.eraseToAnyPublisher()
         }
-        let fileName = resources.name ?? "unknownName"
+        let fileName = specificFileName ?? resources.name ?? "unknownName"
         
         let totalChunks = fileSize / chunkSize + (fileSize % chunkSize != 0 ? 1 : 0)
         var chunk = try? outputFileHandle.read(upToCount: chunkSize)

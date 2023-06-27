@@ -239,6 +239,12 @@ class AppCoordinator: Coordinator {
         navigationController.pushViewController(imageViewerViewController, animated: true)
     }
     
+    func presentPdfViewer(url: URL) {
+        let pdfViewerViewController = Assembler.sharedAssembler.resolver
+            .resolve(PdfViewerViewController.self, arguments: self, url)!
+        navigationController.pushViewController(pdfViewerViewController, animated: true)
+    }
+    
     func presentPrivacySettingsScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(PrivacySettingsViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)

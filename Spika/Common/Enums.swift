@@ -141,6 +141,7 @@ enum MessageCellTaps {
     case openImage
     case scrollToReply
     case showReactions
+    case openFile
 }
 
 enum MessageAction {

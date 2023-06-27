@@ -38,7 +38,6 @@ struct SelectedFile {
     let thumbMetadata: MetaData?
     let metaData: MetaData
     let mimeType: String
-    let size: Int64?
     let localId: String
 }
 

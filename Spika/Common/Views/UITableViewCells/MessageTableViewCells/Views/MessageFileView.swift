@@ -31,7 +31,7 @@ extension MessageFileView: BaseView {
     }
     
     func styleSubviews() {
-        
+        nameLabel.lineBreakMode = .byTruncatingMiddle
     }
     
     func positionSubviews() {
