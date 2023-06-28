@@ -412,7 +412,6 @@
 		6C78B8B529AF5ADB004BF881 /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD81927B2722D57400D5BE48 /* Montserrat-ExtraBold.ttf */; };
 		6C78B8B629AF5ADB004BF881 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */; };
 		6C78B8B729AF5ADB004BF881 /* Montserrat-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD81927A2722D57400D5BE48 /* Montserrat-ExtraLight.ttf */; };
-		6C78B8B829AF5ADB004BF881 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
 		6C78B8B929AF5ADB004BF881 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192782722D57400D5BE48 /* Montserrat-Bold.ttf */; };
 		6C78B8BA29AF5ADB004BF881 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192762722D57400D5BE48 /* Montserrat-Black.ttf */; };
 		6C78B8BB29AF5ADB004BF881 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192742722D57300D5BE48 /* Montserrat-Thin.ttf */; };
@@ -807,7 +806,6 @@
 		6CF649B52A459FE100E0DE0B /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD81927B2722D57400D5BE48 /* Montserrat-ExtraBold.ttf */; };
 		6CF649B62A459FE100E0DE0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */; };
 		6CF649B72A459FE100E0DE0B /* Montserrat-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD81927A2722D57400D5BE48 /* Montserrat-ExtraLight.ttf */; };
-		6CF649B82A459FE100E0DE0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
 		6CF649B92A459FE100E0DE0B /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192782722D57400D5BE48 /* Montserrat-Bold.ttf */; };
 		6CF649BA2A459FE100E0DE0B /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192762722D57400D5BE48 /* Montserrat-Black.ttf */; };
 		6CF649BB2A459FE100E0DE0B /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD8192742722D57300D5BE48 /* Montserrat-Thin.ttf */; };
@@ -824,6 +822,12 @@
 		9300D9CF2A4C541900B7B695 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */; };
 		9300D9D02A4C542000B7B695 /* AVAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */; };
 		9300D9D12A4C542900B7B695 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */; };
+		9300D9D22A4C57E600B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
+		9300D9D32A4C57E700B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
+		9300D9D42A4C57E800B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
+		9300D9D92A4C58C700B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9300D9D82A4C58C700B7B695 /* Assets.xcassets */; };
+		9300D9DB2A4C58DC00B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9300D9DA2A4C58DC00B7B695 /* Assets.xcassets */; };
+		9300D9DD2A4C58E700B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9300D9DC2A4C58E700B7B695 /* Assets.xcassets */; };
 		93017B1727F8D1EC00A0582D /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
 		930290BC27A9FB180064BED1 /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BB27A9FB180064BED1 /* UserRequestModel.swift */; };
 		930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BD27A9FCE30064BED1 /* UserResponseModel.swift */; };
@@ -1150,7 +1154,6 @@
 		ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503B1270DC3C7009D50CB /* AppDelegate.swift */; };
 		ADD503B4270DC3C7009D50CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503B3270DC3C7009D50CB /* SceneDelegate.swift */; };
 		ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */; };
-		ADD503BE270DC3CA009D50CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
 		ADD503C1270DC3CA009D50CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */; };
 		ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503CD270DD31D009D50CB /* UIView+Extensions.swift */; };
 		ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D0270DD57D009D50CB /* Coordinator.swift */; };
@@ -1318,6 +1321,9 @@
 		6CFB46BC2948C19A000D26BB /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		6CFB46C12948C1D7000D26BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		87CA01291235DC0D0B724D7D /* Pods-Spika Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika Dev.release.xcconfig"; path = "Target Support Files/Pods-Spika Dev/Pods-Spika Dev.release.xcconfig"; sourceTree = "<group>"; };
+		9300D9D82A4C58C700B7B695 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9300D9DA2A4C58DC00B7B695 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9300D9DC2A4C58E700B7B695 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93017B1627F8D1EC00A0582D /* SSENewMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSENewMessage.swift; sourceTree = "<group>"; };
 		930290BB27A9FB180064BED1 /* UserRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestModel.swift; sourceTree = "<group>"; };
 		930290BD27A9FCE30064BED1 /* UserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseModel.swift; sourceTree = "<group>"; };
@@ -1793,6 +1799,30 @@
 				6C8FF1C52949D27000955592 /* InfoPlist.strings */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		9300D9D52A4C589100B7B695 /* Spika */ = {
+			isa = PBXGroup;
+			children = (
+				9300D9DC2A4C58E700B7B695 /* Assets.xcassets */,
+			);
+			path = Spika;
+			sourceTree = "<group>";
+		};
+		9300D9D62A4C58A200B7B695 /* SpikaDev */ = {
+			isa = PBXGroup;
+			children = (
+				9300D9DA2A4C58DC00B7B695 /* Assets.xcassets */,
+			);
+			path = SpikaDev;
+			sourceTree = "<group>";
+		};
+		9300D9D72A4C58A800B7B695 /* SpikaMessenger */ = {
+			isa = PBXGroup;
+			children = (
+				9300D9D82A4C58C700B7B695 /* Assets.xcassets */,
+			);
+			path = SpikaMessenger;
 			sourceTree = "<group>";
 		};
 		93017B1527F8D19700A0582D /* SSE */ = {
@@ -2600,6 +2630,9 @@
 		ADD503C8270DC42E009D50CB /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				9300D9D72A4C58A800B7B695 /* SpikaMessenger */,
+				9300D9D62A4C58A200B7B695 /* SpikaDev */,
+				9300D9D52A4C589100B7B695 /* Spika */,
 				ADD503B3270DC3C7009D50CB /* SceneDelegate.swift */,
 				ADD503B1270DC3C7009D50CB /* AppDelegate.swift */,
 				ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */,
@@ -3049,15 +3082,16 @@
 				6C78B8B329AF5ADB004BF881 /* Localizable.strings in Resources */,
 				6C78B92029AF6468004BF881 /* GoogleService-Info.plist in Resources */,
 				6C78B8B429AF5ADB004BF881 /* InfoPlist.strings in Resources */,
+				9300D9DB2A4C58DC00B7B695 /* Assets.xcassets in Resources */,
 				6C78B8B529AF5ADB004BF881 /* Montserrat-ExtraBold.ttf in Resources */,
 				6C78B8B629AF5ADB004BF881 /* LaunchScreen.storyboard in Resources */,
 				6C78B8B729AF5ADB004BF881 /* Montserrat-ExtraLight.ttf in Resources */,
-				6C78B8B829AF5ADB004BF881 /* Assets.xcassets in Resources */,
 				6C78B8B929AF5ADB004BF881 /* Montserrat-Bold.ttf in Resources */,
 				6C78B8BA29AF5ADB004BF881 /* Montserrat-Black.ttf in Resources */,
 				6C78B8BB29AF5ADB004BF881 /* Montserrat-Thin.ttf in Resources */,
 				6C78B8BC29AF5ADB004BF881 /* Montserrat-Medium.ttf in Resources */,
 				6C78B8BD29AF5ADB004BF881 /* Montserrat-SemiBold.ttf in Resources */,
+				9300D9D32A4C57E700B7B695 /* Assets.xcassets in Resources */,
 				6C78B8BE29AF5ADB004BF881 /* CountryCodes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3077,16 +3111,17 @@
 				6CF649B02A459FE100E0DE0B /* Montserrat-Light.ttf in Resources */,
 				6CF649B12A459FE100E0DE0B /* Montserrat-Regular.ttf in Resources */,
 				6CF649B22A459FE100E0DE0B /* Localizable.strings in Resources */,
+				9300D9D42A4C57E800B7B695 /* Assets.xcassets in Resources */,
 				6CF649B42A459FE100E0DE0B /* InfoPlist.strings in Resources */,
 				6CF649B52A459FE100E0DE0B /* Montserrat-ExtraBold.ttf in Resources */,
 				6CF649B62A459FE100E0DE0B /* LaunchScreen.storyboard in Resources */,
 				6CF649B72A459FE100E0DE0B /* Montserrat-ExtraLight.ttf in Resources */,
-				6CF649B82A459FE100E0DE0B /* Assets.xcassets in Resources */,
 				6CF649B92A459FE100E0DE0B /* Montserrat-Bold.ttf in Resources */,
 				6CF649BA2A459FE100E0DE0B /* Montserrat-Black.ttf in Resources */,
 				6CF649BB2A459FE100E0DE0B /* Montserrat-Thin.ttf in Resources */,
 				6CF649BC2A459FE100E0DE0B /* Montserrat-Medium.ttf in Resources */,
 				6CF649BD2A459FE100E0DE0B /* Montserrat-SemiBold.ttf in Resources */,
+				9300D9D92A4C58C700B7B695 /* Assets.xcassets in Resources */,
 				6CF649BE2A459FE100E0DE0B /* CountryCodes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3108,16 +3143,17 @@
 				6C758CB829AF8A3F00895C9A /* InfoDev.plist in Resources */,
 				AD81927E2722D5AF00D5BE48 /* Montserrat-Regular.ttf in Resources */,
 				6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */,
+				9300D9D22A4C57E600B7B695 /* Assets.xcassets in Resources */,
 				6C8FF1C32949D27000955592 /* InfoPlist.strings in Resources */,
 				AD8192802722D5AF00D5BE48 /* Montserrat-ExtraBold.ttf in Resources */,
 				ADD503C1270DC3CA009D50CB /* LaunchScreen.storyboard in Resources */,
 				AD8192812722D5AF00D5BE48 /* Montserrat-ExtraLight.ttf in Resources */,
-				ADD503BE270DC3CA009D50CB /* Assets.xcassets in Resources */,
 				AD8192832722D5AF00D5BE48 /* Montserrat-Bold.ttf in Resources */,
 				AD81927D2722D5A900D5BE48 /* Montserrat-Black.ttf in Resources */,
 				AD8192822722D5AF00D5BE48 /* Montserrat-Thin.ttf in Resources */,
 				AD8192852722D5AF00D5BE48 /* Montserrat-Medium.ttf in Resources */,
 				AD81927F2722D5AF00D5BE48 /* Montserrat-SemiBold.ttf in Resources */,
+				9300D9DD2A4C58E700B7B695 /* Assets.xcassets in Resources */,
 				AD9BFD2E2729AB8F00736318 /* CountryCodes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4576,7 +4612,7 @@
 			baseConfigurationReference = D92B13B268231CE2DDECD884 /* Pods-Spika Dev.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Spika/SpikaDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -4614,7 +4650,7 @@
 			baseConfigurationReference = 87CA01291235DC0D0B724D7D /* Pods-Spika Dev.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Spika/SpikaDev.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -4710,7 +4746,7 @@
 			baseConfigurationReference = 2F4B5085DBB84F5A0087FFE6 /* Pods-Spika Messenger.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Messenger";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Spika/SpikaMessenger.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -4748,7 +4784,7 @@
 			baseConfigurationReference = 18C44B0252383B5211252C4E /* Pods-Spika Messenger.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Messenger";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Spika/SpikaMessenger.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -4841,7 +4877,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 57;
+				APP_BUILD_VERSION = 58;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -4905,7 +4941,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 57;
+				APP_BUILD_VERSION = 58;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -4969,7 +5005,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = 57;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -5006,7 +5042,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = 57;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
