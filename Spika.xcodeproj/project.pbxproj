@@ -822,9 +822,9 @@
 		9300D9CF2A4C541900B7B695 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */; };
 		9300D9D02A4C542000B7B695 /* AVAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */; };
 		9300D9D12A4C542900B7B695 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */; };
-		9300D9D22A4C57E600B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
-		9300D9D32A4C57E700B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
-		9300D9D42A4C57E800B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Assets.xcassets */; };
+		9300D9D22A4C57E600B7B695 /* Shared Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Shared Assets.xcassets */; };
+		9300D9D32A4C57E700B7B695 /* Shared Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Shared Assets.xcassets */; };
+		9300D9D42A4C57E800B7B695 /* Shared Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Shared Assets.xcassets */; };
 		9300D9D92A4C58C700B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9300D9D82A4C58C700B7B695 /* Assets.xcassets */; };
 		9300D9DB2A4C58DC00B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9300D9DA2A4C58DC00B7B695 /* Assets.xcassets */; };
 		9300D9DD2A4C58E700B7B695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9300D9DC2A4C58E700B7B695 /* Assets.xcassets */; };
@@ -1557,7 +1557,7 @@
 		ADD503B1270DC3C7009D50CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADD503B3270DC3C7009D50CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		ADD503BB270DC3C7009D50CB /* Spika.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Spika.xcdatamodel; sourceTree = "<group>"; };
-		ADD503BD270DC3CA009D50CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ADD503BD270DC3CA009D50CB /* Shared Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Shared Assets.xcassets"; sourceTree = "<group>"; };
 		ADD503C0270DC3CA009D50CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ADD503C2270DC3CA009D50CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADD503CD270DD31D009D50CB /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -2636,7 +2636,7 @@
 				ADD503B3270DC3C7009D50CB /* SceneDelegate.swift */,
 				ADD503B1270DC3C7009D50CB /* AppDelegate.swift */,
 				ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */,
-				ADD503BD270DC3CA009D50CB /* Assets.xcassets */,
+				ADD503BD270DC3CA009D50CB /* Shared Assets.xcassets */,
 				934F6DEE29E698360010FED9 /* NotificationsHelpers.swift */,
 			);
 			path = SupportingFiles;
@@ -3091,7 +3091,7 @@
 				6C78B8BB29AF5ADB004BF881 /* Montserrat-Thin.ttf in Resources */,
 				6C78B8BC29AF5ADB004BF881 /* Montserrat-Medium.ttf in Resources */,
 				6C78B8BD29AF5ADB004BF881 /* Montserrat-SemiBold.ttf in Resources */,
-				9300D9D32A4C57E700B7B695 /* Assets.xcassets in Resources */,
+				9300D9D32A4C57E700B7B695 /* Shared Assets.xcassets in Resources */,
 				6C78B8BE29AF5ADB004BF881 /* CountryCodes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3111,7 +3111,7 @@
 				6CF649B02A459FE100E0DE0B /* Montserrat-Light.ttf in Resources */,
 				6CF649B12A459FE100E0DE0B /* Montserrat-Regular.ttf in Resources */,
 				6CF649B22A459FE100E0DE0B /* Localizable.strings in Resources */,
-				9300D9D42A4C57E800B7B695 /* Assets.xcassets in Resources */,
+				9300D9D42A4C57E800B7B695 /* Shared Assets.xcassets in Resources */,
 				6CF649B42A459FE100E0DE0B /* InfoPlist.strings in Resources */,
 				6CF649B52A459FE100E0DE0B /* Montserrat-ExtraBold.ttf in Resources */,
 				6CF649B62A459FE100E0DE0B /* LaunchScreen.storyboard in Resources */,
@@ -3143,7 +3143,7 @@
 				6C758CB829AF8A3F00895C9A /* InfoDev.plist in Resources */,
 				AD81927E2722D5AF00D5BE48 /* Montserrat-Regular.ttf in Resources */,
 				6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */,
-				9300D9D22A4C57E600B7B695 /* Assets.xcassets in Resources */,
+				9300D9D22A4C57E600B7B695 /* Shared Assets.xcassets in Resources */,
 				6C8FF1C32949D27000955592 /* InfoPlist.strings in Resources */,
 				AD8192802722D5AF00D5BE48 /* Montserrat-ExtraBold.ttf in Resources */,
 				ADD503C1270DC3CA009D50CB /* LaunchScreen.storyboard in Resources */,
