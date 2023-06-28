@@ -42,6 +42,8 @@ class AllChatsView: UIView, BaseView {
         searchBar.placeholder = .getStringFor(.searchByGroupOrContactName)
         searchBar.scopeButtonTitles = ["Chats", "Messages"]
         searchBar.showsScopeBar = false
+        searchBar.searchBarStyle = .minimal
+        
         
         searchedMessagesTableView.backgroundColor = .orange
         searchedMessagesTableView.isHidden = true
