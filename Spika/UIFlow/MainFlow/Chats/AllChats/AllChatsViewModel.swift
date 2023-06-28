@@ -11,9 +11,11 @@ import CoreData
 class AllChatsViewModel: BaseViewModel {
     
     private var frc: NSFetchedResultsController<RoomEntity>?
+    var frc2: NSFetchedResultsController<MessageEntity>?
     
     let search = CurrentValueSubject<String?, Error>(nil)
     private let fetchedRoomEntities = CurrentValueSubject<[RoomEntity]?,Never>(nil)
+//    private let fetchedMessageEntities =
     let rooms = CurrentValueSubject<[Room],Never>([])
     
 }
@@ -134,6 +136,26 @@ extension AllChatsViewModel {
     }
 }
 
+// MARK: - NSFRC for messages
+
+extension AllChatsViewModel {
+    func setMessagesFetch(searchTerm: String) {
+        let fetchRequest = MessageEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(MessageEntity.bodyText)) == %@", searchTerm)
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
+        self.frc2 = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                              managedObjectContext: repository.getMainContext(),
+                                              sectionNameKeyPath: nil, cacheName: nil)
+        do {
+            frc2?.delegate = self
+            try self.frc2?.performFetch()
+        } catch {
+            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
+        }
+    }
+}
+
 // MARK: - Networking
 
 extension AllChatsViewModel {
@@ -159,6 +181,12 @@ private extension AllChatsViewModel {
 
 extension AllChatsViewModel: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        fetchedRoomEntities.send(frc?.fetchedObjects)
+        if controller == frc {
+            fetchedRoomEntities.send(frc?.fetchedObjects)
+            print("sobice")
+        } else if controller == frc2 {
+            print(frc2?.fetchedObjects?.count)
+            print("porukice")
+        }
     }
 }

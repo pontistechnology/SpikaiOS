@@ -15,11 +15,13 @@ class AllChatsView: UIView, BaseView {
     let searchBar = SearchBar(placeholder: .getStringFor(.searchByGroupOrContactName), shouldShowCancel: false)
     let segmentedControl = UISegmentedControl(items: ["Chats", "Messages"])
     let allChatsTableView = UITableView()
+    let searchedMessagesTableView = UITableView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
         allChatsTableView.register(AllChatsTableViewCell.self, forCellReuseIdentifier: AllChatsTableViewCell.reuseIdentifier)
+        searchedMessagesTableView.register(AllChatsSearchedMessageCell.self, forCellReuseIdentifier: AllChatsSearchedMessageCell.reuseIdentifier)
     }
     
     required init?(coder: NSCoder) {
@@ -33,6 +35,7 @@ class AllChatsView: UIView, BaseView {
         stackview.addArrangedSubview(searchBar)
         stackview.addArrangedSubview(segmentedControl)
         addSubview(allChatsTableView)
+        addSubview(searchedMessagesTableView)
     }
     
     func styleSubviews() {
@@ -42,6 +45,9 @@ class AllChatsView: UIView, BaseView {
         stackview.axis = .vertical
         segmentedControl.isHidden = true
         segmentedControl.selectedSegmentIndex = 0
+        
+        searchedMessagesTableView.backgroundColor = .orange
+        searchedMessagesTableView.isHidden = true
     }
     
     func positionSubviews() {
@@ -49,5 +55,6 @@ class AllChatsView: UIView, BaseView {
         newChatButton.anchor(top: topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 20), size: CGSize(width: 28, height: 28))
         stackview.anchor(top: chatLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20))
         allChatsTableView.anchor(top: stackview.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: HomeTabBar.tabBarHeight, right: 0))
+        searchedMessagesTableView.anchor(top: allChatsTableView.topAnchor, leading: allChatsTableView.leadingAnchor, bottom: allChatsTableView.bottomAnchor, trailing: allChatsTableView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
     }
 }

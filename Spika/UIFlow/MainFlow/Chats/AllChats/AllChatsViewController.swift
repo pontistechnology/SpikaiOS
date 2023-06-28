@@ -28,6 +28,8 @@ class AllChatsViewController: BaseViewController {
     func setupBindings() {
         allChatsView.allChatsTableView.delegate = self
         allChatsView.allChatsTableView.dataSource = self
+        allChatsView.searchedMessagesTableView.delegate = self
+        allChatsView.searchedMessagesTableView.dataSource = self
         allChatsView.searchBar.delegate = self
         
         allChatsView.newChatButton.tap().sink { [weak self] _ in
@@ -42,12 +44,15 @@ class AllChatsViewController: BaseViewController {
         
         viewModel.setupBinding()
         viewModel.setRoomsFetch()
+        viewModel.setMessagesFetch(searchTerm: "test")
         
         viewModel.rooms
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.allChatsView.allChatsTableView.reloadData()
             }.store(in: &subscriptions)
+        
+        allChatsView.segmentedControl.addTarget(self, action: #selector(segmentedControlChanges), for: .valueChanged)
     }
     
     // TODO: - move to viewmodel under navigation
@@ -57,15 +62,12 @@ class AllChatsViewController: BaseViewController {
     
 }
 
-// MARK: - NSFetchedResultsController
-
-
-
 // MARK: - UITableview
 
 extension AllChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard tableView == allChatsView.allChatsTableView else { return }
         viewModel.presentCurrentChatScreen(for: indexPath)
     }
     
@@ -80,12 +82,19 @@ extension AllChatsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
-        guard let data = viewModel.getDataForCell(at: indexPath) else { return EmptyTableViewCell() }
-        cell?.configureCell(avatarUrl: data.avatarUrl, name: data.name,
-                            description: data.description, time: data.time,
-                            badgeNumber: data.badgeNumber, muted: data.muted, pinned: data.pinned)
-        return cell ?? EmptyTableViewCell()
+        if tableView == allChatsView.searchedMessagesTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsSearchedMessageCell.reuseIdentifier, for: indexPath) as? AllChatsSearchedMessageCell
+//            guard let data = viewModel.getDataForCell(at: indexPath) else { return EmptyTableViewCell() }
+            cell?.configureCell(text: "aa")
+            return cell ?? EmptyTableViewCell()
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
+            guard let data = viewModel.getDataForCell(at: indexPath) else { return EmptyTableViewCell() }
+            cell?.configureCell(avatarUrl: data.avatarUrl, name: data.name,
+                                description: data.description, time: data.time,
+                                badgeNumber: data.badgeNumber, muted: data.muted, pinned: data.pinned)
+            return cell ?? EmptyTableViewCell()
+        }
     }
 }
 
@@ -98,6 +107,7 @@ extension AllChatsViewController {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard tableView == allChatsView.allChatsTableView else { return nil }
         let firstLeft = UIContextualAction(style: .normal, title: "First left") { [weak self] (action, view, completionHandler) in
                 self?.printSwipe()
                 completionHandler(true)
@@ -117,6 +127,7 @@ extension AllChatsViewController {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard tableView == allChatsView.allChatsTableView else { return nil }
         let firstRightAction = UIContextualAction(style: .normal, title: "First Right") { [weak self] (action, view, completionHandler) in
                 self?.printSwipe()
                 completionHandler(true)
@@ -139,9 +150,17 @@ extension AllChatsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
         allChatsView.segmentedControl.isHidden = value?.isEmpty ?? true
         viewModel.search.send(value)
+        allChatsView.searchedMessagesTableView.reloadData()
     }
     
     func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
         viewModel.search.send(nil)
+    }
+}
+
+extension AllChatsViewController {
+    @objc func segmentedControlChanges() {
+        allChatsView.searchedMessagesTableView.isHidden = allChatsView.segmentedControl.selectedSegmentIndex == 0
+        allChatsView.allChatsTableView.isHidden = allChatsView.segmentedControl.selectedSegmentIndex == 1
     }
 }
