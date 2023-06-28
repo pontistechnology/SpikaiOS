@@ -50,8 +50,6 @@ class AllChatsViewController: BaseViewController {
             .sink { [weak self] _ in
                 self?.allChatsView.allChatsTableView.reloadData()
             }.store(in: &subscriptions)
-        
-        allChatsView.segmentedControl.addTarget(self, action: #selector(segmentedControlChanges), for: .valueChanged)
     }
     
     // TODO: - move to viewmodel under navigation
@@ -149,23 +147,27 @@ extension AllChatsViewController {
 
 // MARK: - SearchBarDelegate
 
-extension AllChatsViewController: SearchBarDelegate {
-    func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
-        allChatsView.segmentedControl.isHidden = value?.isEmpty ?? true
-        viewModel.search.send(value)
-        guard let value, allChatsView.segmentedControl.selectedSegmentIndex == 1 else { return }
-        viewModel.setMessagesFetch(searchTerm: value)
+extension AllChatsViewController: UISearchBarDelegate {
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.setShowsScope(true, animated: false)
+        return true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.setShowsScope(false, animated: false)
+        return true
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        allChatsView.searchBar.showsScopeBar = !searchText.isEmpty
+        viewModel.search.send(searchText)
+        guard allChatsView.searchBar.selectedScopeButtonIndex == 1 else { return }
+        viewModel.setMessagesFetch(searchTerm: searchText)
         allChatsView.searchedMessagesTableView.reloadData()
     }
     
-    func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         viewModel.search.send(nil)
-    }
-}
-
-extension AllChatsViewController {
-    @objc func segmentedControlChanges() {
-        allChatsView.searchedMessagesTableView.isHidden = allChatsView.segmentedControl.selectedSegmentIndex == 0
-        allChatsView.allChatsTableView.isHidden = allChatsView.segmentedControl.selectedSegmentIndex == 1
     }
 }
