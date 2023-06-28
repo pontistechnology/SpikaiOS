@@ -141,7 +141,7 @@ extension AllChatsViewModel {
 extension AllChatsViewModel {
     func setMessagesFetch(searchTerm: String) {
         let fetchRequest = MessageEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(MessageEntity.bodyText)) == %@", searchTerm)
+        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(MessageEntity.bodyText)) CONTAINS[cd] %@", searchTerm)
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
         self.frc2 = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -153,6 +153,14 @@ extension AllChatsViewModel {
         } catch {
             fatalError("Failed to fetch entities: \(error)") // TODO: handle error
         }
+    }
+    
+    func numberOfRows() -> Int {
+        return frc2?.fetchedObjects?.count ?? 0
+    }
+    
+    func dataForRow(indexPath: IndexPath) -> String? {
+        return frc2?.object(at: indexPath).bodyText
     }
 }
 

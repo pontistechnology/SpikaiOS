@@ -44,7 +44,6 @@ class AllChatsViewController: BaseViewController {
         
         viewModel.setupBinding()
         viewModel.setRoomsFetch()
-        viewModel.setMessagesFetch(searchTerm: "test")
         
         viewModel.rooms
             .receive(on: DispatchQueue.main)
@@ -78,14 +77,18 @@ extension AllChatsViewController: UITableViewDelegate {
 
 extension AllChatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.rooms.value.count
+        if tableView == allChatsView.searchedMessagesTableView {
+            return viewModel.frc2?.fetchedObjects?.count ?? 0
+        } else {
+            return viewModel.rooms.value.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == allChatsView.searchedMessagesTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsSearchedMessageCell.reuseIdentifier, for: indexPath) as? AllChatsSearchedMessageCell
 //            guard let data = viewModel.getDataForCell(at: indexPath) else { return EmptyTableViewCell() }
-            cell?.configureCell(text: "aa")
+            cell?.configureCell(text: viewModel.dataForRow(indexPath: indexPath))
             return cell ?? EmptyTableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
@@ -150,6 +153,8 @@ extension AllChatsViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
         allChatsView.segmentedControl.isHidden = value?.isEmpty ?? true
         viewModel.search.send(value)
+        guard let value, allChatsView.segmentedControl.selectedSegmentIndex == 1 else { return }
+        viewModel.setMessagesFetch(searchTerm: value)
         allChatsView.searchedMessagesTableView.reloadData()
     }
     

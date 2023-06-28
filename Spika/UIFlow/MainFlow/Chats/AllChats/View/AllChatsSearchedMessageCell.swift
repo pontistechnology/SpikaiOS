@@ -28,14 +28,14 @@ extension AllChatsSearchedMessageCell: BaseView {
     }
     
     func styleSubviews() {
-        
+        nameLabel.numberOfLines = 0
     }
     
     func positionSubviews() {
-        nameLabel.centerInSuperview()
+        nameLabel.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: contentView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
     }
     
-    func configureCell(text: String) {
+    func configureCell(text: String?) {
         nameLabel.text = text
     }
 }
