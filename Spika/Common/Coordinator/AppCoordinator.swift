@@ -219,6 +219,10 @@ class AppCoordinator: Coordinator {
         let avPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
         let avPlayerVC = AVPlayerViewController()
         avPlayerVC.player = avPlayer
+        try? AVAudioSession.sharedInstance()
+            .setCategory(AVAudioSession.Category.playback,
+                         mode: AVAudioSession.Mode.default,
+                         options: [])
         navigationController.present(avPlayerVC, animated: true) {
             avPlayer.play()
         }
