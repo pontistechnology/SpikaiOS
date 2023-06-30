@@ -174,16 +174,14 @@ extension AllChatsViewModel {
         return frc2?.fetchedObjects?.count ?? 0
     }
     
-    func dataForRow(indexPath: IndexPath) -> String? {
+    func dataForRow(indexPath: IndexPath) -> (String, String, String) {
         let messageEntity = frc2?.object(at: indexPath)
         let room = allRooms.value.first { $0.id == messageEntity?.roomId }
-        let user = room?.getDisplayNameFor(userId: messageEntity!.fromUserId)
-        let text = """
-\(user)
-\(messageEntity?.createdAt.convert(to: .ddMMyyyyHHmm))
-\(messageEntity?.bodyText)
-"""
-        return text
+        let userName = room?.getDisplayNameFor(userId: messageEntity!.fromUserId)
+        
+        return (userName ?? "-",
+                messageEntity?.createdAt.convert(to: .ddMMyyyyHHmm) ?? "-",
+                messageEntity?.bodyText ?? "-")
     }
     
     func titleForSection(section: Int) -> String {

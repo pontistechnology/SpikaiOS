@@ -101,7 +101,8 @@ extension AllChatsViewController: UITableViewDataSource {
         if tableView == allChatsView.searchedMessagesTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsSearchedMessageCell.reuseIdentifier, for: indexPath) as? AllChatsSearchedMessageCell
 //            guard let data = viewModel.getDataForCell(at: indexPath) else { return EmptyTableViewCell() }
-            cell?.configureCell(text: viewModel.dataForRow(indexPath: indexPath))
+            let data = viewModel.dataForRow(indexPath: indexPath)
+            cell?.configureCell(senderName: data.0, time: data.1, text: data.2)
             return cell ?? EmptyTableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
