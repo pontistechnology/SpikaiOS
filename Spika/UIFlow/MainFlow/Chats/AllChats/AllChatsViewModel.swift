@@ -175,13 +175,13 @@ extension AllChatsViewModel {
     }
     
     func dataForRow(indexPath: IndexPath) -> (String, String, String) {
-        let messageEntity = frc2?.object(at: indexPath)
-        let room = allRooms.value.first { $0.id == messageEntity?.roomId }
-        let userName = room?.getDisplayNameFor(userId: messageEntity!.fromUserId)
+        guard let messageEntity = frc2?.object(at: indexPath) else { return ("-", "-", "-")}
+        let room = allRooms.value.first { $0.id == messageEntity.roomId }
+        let userName = messageEntity.fromUserId == getMyUserId() ? "Me" : room?.getDisplayNameFor(userId: messageEntity.fromUserId)
         
         return (userName ?? "-",
-                messageEntity?.createdAt.convert(to: .ddMMyyyyHHmm) ?? "-",
-                messageEntity?.bodyText ?? "-")
+                messageEntity.createdAt.convert(to: .ddMMyyyyHHmm),
+                messageEntity.bodyText ?? "-")
     }
     
     func titleForSection(section: Int) -> String {
@@ -222,10 +222,8 @@ extension AllChatsViewModel: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         if controller == frc {
             fetchedRoomEntities.send(frc?.fetchedObjects)
-            print("sobice")
         } else if controller == frc2 {
-            print(frc2?.fetchedObjects?.count)
-            print("porukice")
+//            print(frc2?.fetchedObjects?.count)
         }
     }
 }

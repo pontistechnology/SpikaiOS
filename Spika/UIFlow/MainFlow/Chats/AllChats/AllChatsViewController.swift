@@ -166,22 +166,23 @@ extension AllChatsViewController {
 extension AllChatsViewController: UISearchBarDelegate {
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.setShowsScope(true, animated: true)
+        searchBar.setShowsScope(true, animated: false)
         return true
     }
     
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
 //        print("pop ", searchBar.selectedScopeButtonIndex)
 //        if (searchBar.text?.isEmpty ?? true) {
-//            searchBar.setShowsScope(false, animated: true)
+//            searchBar.setShowsScope(false, animated: false)
 //        }
         return true
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        viewModel.search.send(searchText)
+        let input = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        viewModel.search.send(input)
         guard allChatsView.searchBar.selectedScopeButtonIndex == 1 else { return }
-        viewModel.setMessagesFetch(searchTerm: searchText)
+        viewModel.setMessagesFetch(searchTerm: input)
         allChatsView.searchedMessagesTableView.reloadData()
     }
     
@@ -191,7 +192,7 @@ extension AllChatsViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         test(index: selectedScope)
-        searchBar.setShowsScope(true, animated: true)
+        searchBar.setShowsScope(true, animated: false)
     }
     
     func test(index: Int) {
