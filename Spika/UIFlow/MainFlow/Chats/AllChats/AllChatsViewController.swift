@@ -26,8 +26,8 @@ class AllChatsViewController: BaseViewController {
     }
     
     func setupBindings() {
-        allChatsView.allChatsTableView.delegate = self
-        allChatsView.allChatsTableView.dataSource = self
+        allChatsView.roomsTableView.delegate = self
+        allChatsView.roomsTableView.dataSource = self
         allChatsView.searchedMessagesTableView.delegate = self
         allChatsView.searchedMessagesTableView.dataSource = self
         allChatsView.searchBar.delegate = self
@@ -48,7 +48,7 @@ class AllChatsViewController: BaseViewController {
         viewModel.rooms
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.allChatsView.allChatsTableView.reloadData()
+                self?.allChatsView.roomsTableView.reloadData()
             }.store(in: &subscriptions)
     }
 }
@@ -58,7 +58,7 @@ class AllChatsViewController: BaseViewController {
 extension AllChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == allChatsView.allChatsTableView {
+        if tableView == allChatsView.roomsTableView {
             viewModel.presentCurrentChatScreen(for: indexPath, scrollToMessage: false)
         } else if tableView == allChatsView.searchedMessagesTableView {
             viewModel.presentCurrentChatScreen(for: indexPath, scrollToMessage: true)
@@ -144,7 +144,7 @@ extension AllChatsViewController: UISearchBarDelegate {
     }
     
     func showSelectedTableView(selectedIndex: Int) {
-        allChatsView.allChatsTableView.isHidden = selectedIndex == 1
+        allChatsView.roomsTableView.isHidden = selectedIndex == 1
         allChatsView.searchedMessagesTableView.isHidden = selectedIndex == 0
     }
     
@@ -163,7 +163,7 @@ extension AllChatsViewController {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard tableView == allChatsView.allChatsTableView else { return nil }
+        guard tableView == allChatsView.roomsTableView else { return nil }
         let firstLeft = UIContextualAction(style: .normal, title: "First left") { [weak self] (action, view, completionHandler) in
                 self?.printSwipe()
                 completionHandler(true)
@@ -183,7 +183,7 @@ extension AllChatsViewController {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard tableView == allChatsView.allChatsTableView else { return nil }
+        guard tableView == allChatsView.roomsTableView else { return nil }
         let firstRightAction = UIContextualAction(style: .normal, title: "First Right") { [weak self] (action, view, completionHandler) in
                 self?.printSwipe()
                 completionHandler(true)
