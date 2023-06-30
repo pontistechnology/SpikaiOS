@@ -10,8 +10,8 @@ import CoreData
 
 class AllChatsViewModel: BaseViewModel {
     
-    private var frc: NSFetchedResultsController<RoomEntity>?
-    var frc2: NSFetchedResultsController<MessageEntity>?
+    private var roomsFRC: NSFetchedResultsController<RoomEntity>?
+    private var messagesFRC: NSFetchedResultsController<MessageEntity>? // only for search
     
     let search = CurrentValueSubject<String?, Error>(nil)
     private let fetchedRoomEntities = CurrentValueSubject<[RoomEntity]?,Never>(nil)
@@ -28,11 +28,10 @@ extension AllChatsViewModel {
     }
     
     func presentCurrentChatScreen(for indexPath: IndexPath, scrollToMessage: Bool) {
-        if scrollToMessage,
-           let messageEntity = frc2?.object(at: indexPath),
+        if scrollToMessage, let messageEntity = messagesFRC?.object(at: indexPath),
            let messageId = Message(messageEntity: messageEntity, fileData: nil, thumbData: nil, records: nil).id
         {
-            guard let roomId = frc2?.object(at: indexPath).roomId,
+            guard let roomId = messagesFRC?.object(at: indexPath).roomId,
                   let room = allRooms.value.first(where: { $0.id == roomId })
             else { return }
             getAppCoordinator()?.presentCurrentChatScreen(room: room, scrollToMessageId: messageId)
@@ -41,12 +40,42 @@ extension AllChatsViewModel {
             getAppCoordinator()?.presentCurrentChatScreen(room: room)
         }
     }
+    
+    func onCreateNewRoom() {
+        getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
+    }
 }
 
 // MARK: - Tableview data source
 
 extension AllChatsViewModel {
-    func getDataForCell(at indexPath: IndexPath) -> (avatarUrl: URL?, name: String,
+    // MARK: - Sections
+    func getNumberOfSectionForMessages() -> Int {
+        return messagesFRC?.sections?.count ?? 0
+    }
+    
+    func titleForSectionForMessages(section: Int) -> String {
+        guard let roomId = (messagesFRC?.sections?[section].objects?.first as? MessageEntity)?.roomId,
+              let room = allRooms.value.first(where: { $0.id == roomId }),
+              let title = .groupRoom == room.type
+                ? room.name
+                : room.getFriendUserInPrivateRoom(myUserId: getMyUserId())?.getDisplayName()
+        else { return "(unknown)" }
+        return title
+    }
+    
+    // MARK: - Rows
+    
+    func getNumberOfRowsForMessages(section: Int) -> Int {
+        return messagesFRC?.sections?[section].numberOfObjects ?? 0
+    }
+    
+    func getNumberOfRowsForRooms() -> Int {
+        return rooms.value.count
+    }
+    
+    // MARK: - Data
+    func dataForCellForRooms(at indexPath: IndexPath) -> (avatarUrl: URL?, name: String,
                                                      description: String, time: String,
                                                      badgeNumber: Int64, muted: Bool, pinned: Bool)? {
         let room = rooms.value[indexPath.row]
@@ -75,6 +104,16 @@ extension AllChatsViewModel {
         }
     }
     
+    func dataForCellForMessages(at indexPath: IndexPath) -> (String, String, String) {
+        guard let messageEntity = messagesFRC?.object(at: indexPath) else { return ("-", "-", "-")}
+        let room = allRooms.value.first { $0.id == messageEntity.roomId }
+        let userName = messageEntity.fromUserId == getMyUserId() ? "Me" : room?.getDisplayNameFor(userId: messageEntity.fromUserId)
+        
+        return (userName ?? "-",
+                messageEntity.createdAt.convert(to: .ddMMyyyyHHmm),
+                messageEntity.bodyText ?? "-")
+    }
+    
     func description(message: Message?, room: Room) -> String {
         // TODO: - add strings to loc. strings?, this func is needed somewhere else too, move it
         guard let message = message else { return "(No messages)"}
@@ -97,7 +136,7 @@ extension AllChatsViewModel {
         fetchedRoomEntities
             .flatMap(maxPublishers: .unlimited) { [weak self] entities in
                 guard let self,
-                      let context = self.frc?.managedObjectContext,
+                      let context = self.roomsFRC?.managedObjectContext,
                       let entities, entities.count > 0 else {
                     return Future<[Room], Error> { promise in
                         promise(.success([]))
@@ -130,12 +169,12 @@ extension AllChatsViewModel {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
                                         NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
-        frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+        roomsFRC = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
-        frc?.delegate = self
+        roomsFRC?.delegate = self
         do {
-            try frc?.performFetch()
-            fetchedRoomEntities.send(frc?.fetchedObjects)
+            try roomsFRC?.performFetch()
+            fetchedRoomEntities.send(roomsFRC?.fetchedObjects)
         } catch {
             fatalError("Failed to fetch entities: \(error)")
             // TODO: handle error and change main context to func
@@ -154,44 +193,16 @@ extension AllChatsViewModel {
 extension AllChatsViewModel {
     func setMessagesFetch(searchTerm: String) {
         let fetchRequest = MessageEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(MessageEntity.bodyText)) CONTAINS[cd] %@", searchTerm)
+        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(MessageEntity.bodyText)) CONTAINS[cd] %@ AND \(#keyPath(MessageEntity.isRemoved)) == false ", searchTerm)
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: #keyPath(MessageEntity.roomId), ascending: false),
             NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: false)
             ]
-        self.frc2 = NSFetchedResultsController(fetchRequest: fetchRequest,
+        self.messagesFRC = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(),
                                                sectionNameKeyPath: #keyPath(MessageEntity.roomId), cacheName: nil)
-        do {
-            frc2?.delegate = self
-            try self.frc2?.performFetch()
-        } catch {
-            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
-        }
-    }
-    
-    func numberOfRows() -> Int {
-        return frc2?.fetchedObjects?.count ?? 0
-    }
-    
-    func dataForRow(indexPath: IndexPath) -> (String, String, String) {
-        guard let messageEntity = frc2?.object(at: indexPath) else { return ("-", "-", "-")}
-        let room = allRooms.value.first { $0.id == messageEntity.roomId }
-        let userName = messageEntity.fromUserId == getMyUserId() ? "Me" : room?.getDisplayNameFor(userId: messageEntity.fromUserId)
-        
-        return (userName ?? "-",
-                messageEntity.createdAt.convert(to: .ddMMyyyyHHmm),
-                messageEntity.bodyText ?? "-")
-    }
-    
-    func titleForSection(section: Int) -> String {
-        guard let roomId = (frc2?.sections?[section].objects?.first as? MessageEntity)?.roomId,
-              let room = allRooms.value.first(where: { $0.id == roomId }),
-              let title = .groupRoom == room.type
-                ? room.name
-                : room.getFriendUserInPrivateRoom(myUserId: getMyUserId())?.getDisplayName()
-        else { return "(unknown)" }
-        return title
+        messagesFRC?.delegate = self
+        try? messagesFRC?.performFetch()
     }
 }
 
@@ -207,23 +218,22 @@ extension AllChatsViewModel {
 
 private extension AllChatsViewModel {
     func getRoom(for indexPath: IndexPath) -> Room? {
-        let room = rooms.value[indexPath.row]
-        return room
+        return rooms.value[indexPath.row]
     }
     
     func getLastMessage(for indexPath: IndexPath) -> Message? {
         let room = rooms.value[indexPath.row]
-        guard let context = frc?.managedObjectContext else { return nil }
+        guard let context = roomsFRC?.managedObjectContext else { return nil }
         return repository.getLastMessage(roomId: room.id, context: context)
     }
 }
 
 extension AllChatsViewModel: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        if controller == frc {
-            fetchedRoomEntities.send(frc?.fetchedObjects)
-        } else if controller == frc2 {
-//            print(frc2?.fetchedObjects?.count)
+        if controller == roomsFRC {
+            fetchedRoomEntities.send(roomsFRC?.fetchedObjects)
+        } else {
+            // MARK: - new message will not appear in search if it arrive while something is searched
         }
     }
 }

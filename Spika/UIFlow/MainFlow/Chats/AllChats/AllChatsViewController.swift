@@ -39,7 +39,7 @@ class AllChatsViewController: BaseViewController {
         allChatsView.newChatButton
             .tap()
             .sink { [weak self] _ in
-                self?.onCreateNewRoom()
+                self?.viewModel.onCreateNewRoom()
             }.store(in: &subscriptions)
         
         viewModel.setupBinding()
@@ -51,12 +51,6 @@ class AllChatsViewController: BaseViewController {
                 self?.allChatsView.allChatsTableView.reloadData()
             }.store(in: &subscriptions)
     }
-    
-    // TODO: - move to viewmodel under navigation
-    func onCreateNewRoom() {
-        viewModel.getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
-    }
-    
 }
 
 // MARK: - UITableview
@@ -77,41 +71,86 @@ extension AllChatsViewController: UITableViewDelegate {
 }
 
 extension AllChatsViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        tableView == allChatsView.searchedMessagesTableView
+        ? viewModel.getNumberOfSectionForMessages()
+        : 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == allChatsView.searchedMessagesTableView {
-            return viewModel.frc2?.sections?[section].numberOfObjects ?? 0
-        } else {
-            return viewModel.rooms.value.count
-        }
+        tableView == allChatsView.searchedMessagesTableView
+        ? viewModel.getNumberOfRowsForMessages(section: section)
+        : viewModel.getNumberOfRowsForRooms()
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        tableView == allChatsView.searchedMessagesTableView ? viewModel.titleForSection(section: section) : nil
+        tableView == allChatsView.searchedMessagesTableView
+        ? viewModel.titleForSectionForMessages(section: section)
+        : nil
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if tableView == allChatsView.searchedMessagesTableView {
-            return viewModel.frc2?.sections?.count ?? 0
-        } else {
-            return 1
-        }
-    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == allChatsView.searchedMessagesTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsSearchedMessageCell.reuseIdentifier, for: indexPath) as? AllChatsSearchedMessageCell
-//            guard let data = viewModel.getDataForCell(at: indexPath) else { return EmptyTableViewCell() }
-            let data = viewModel.dataForRow(indexPath: indexPath)
+
+            let data = viewModel.dataForCellForMessages(at: indexPath)
             cell?.configureCell(senderName: data.0, time: data.1, text: data.2)
             return cell ?? EmptyTableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
-            guard let data = viewModel.getDataForCell(at: indexPath) else { return EmptyTableViewCell() }
+            guard let data = viewModel.dataForCellForRooms(at: indexPath) else { return EmptyTableViewCell() }
             cell?.configureCell(avatarUrl: data.avatarUrl, name: data.name,
                                 description: data.description, time: data.time,
                                 badgeNumber: data.badgeNumber, muted: data.muted, pinned: data.pinned)
             return cell ?? EmptyTableViewCell()
         }
+    }
+}
+
+// MARK: - SearchBarDelegate
+
+extension AllChatsViewController: UISearchBarDelegate {
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.setShowsScope(true, animated: false)
+        return true
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let input = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        viewModel.search.send(input)
+        guard allChatsView.searchBar.selectedScopeButtonIndex == 1 else { return }
+        fetchMessages(input: input)
+    }
+
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        if searchBar.selectedScopeButtonIndex == 0 {
+            searchBar.setShowsScope(false, animated: false)
+        }
+        return true
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        showSelectedTableView(selectedIndex: selectedScope)
+        searchBar.setShowsScope(true, animated: false)
+        guard let inputText = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        if allChatsView.searchBar.selectedScopeButtonIndex == 0 && inputText.isEmpty {
+            searchBar.setShowsScope(false, animated: false)
+        }
+        if allChatsView.searchBar.selectedScopeButtonIndex == 1 {
+            fetchMessages(input: inputText)
+        }
+    }
+    
+    func showSelectedTableView(selectedIndex: Int) {
+        allChatsView.allChatsTableView.isHidden = selectedIndex == 1
+        allChatsView.searchedMessagesTableView.isHidden = selectedIndex == 0
+    }
+    
+    func fetchMessages(input: String) {
+        viewModel.setMessagesFetch(searchTerm: input)
+        allChatsView.searchedMessagesTableView.reloadData()
     }
 }
 
@@ -158,45 +197,5 @@ extension AllChatsViewController {
         secondRightAction.backgroundColor = .systemRed
         
         return UISwipeActionsConfiguration(actions: [secondRightAction, firstRightAction])
-    }
-}
-
-// MARK: - SearchBarDelegate
-
-extension AllChatsViewController: UISearchBarDelegate {
-    
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.setShowsScope(true, animated: false)
-        return true
-    }
-    
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-//        print("pop ", searchBar.selectedScopeButtonIndex)
-//        if (searchBar.text?.isEmpty ?? true) {
-//            searchBar.setShowsScope(false, animated: false)
-//        }
-        return true
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let input = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        viewModel.search.send(input)
-        guard allChatsView.searchBar.selectedScopeButtonIndex == 1 else { return }
-        viewModel.setMessagesFetch(searchTerm: input)
-        allChatsView.searchedMessagesTableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.search.send(nil)
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        test(index: selectedScope)
-        searchBar.setShowsScope(true, animated: false)
-    }
-    
-    func test(index: Int) {
-        allChatsView.allChatsTableView.isHidden = index == 1
-        allChatsView.searchedMessagesTableView.isHidden = index == 0
     }
 }
