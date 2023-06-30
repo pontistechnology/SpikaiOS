@@ -64,8 +64,11 @@ class AllChatsViewController: BaseViewController {
 extension AllChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard tableView == allChatsView.allChatsTableView else { return }
-        viewModel.presentCurrentChatScreen(for: indexPath)
+        if tableView == allChatsView.allChatsTableView {
+            viewModel.presentCurrentChatScreen(for: indexPath, scrollToMessage: false)
+        } else if tableView == allChatsView.searchedMessagesTableView {
+            viewModel.presentCurrentChatScreen(for: indexPath, scrollToMessage: true)
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -76,9 +79,21 @@ extension AllChatsViewController: UITableViewDelegate {
 extension AllChatsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == allChatsView.searchedMessagesTableView {
-            return viewModel.frc2?.fetchedObjects?.count ?? 0
+            return viewModel.frc2?.sections?[section].numberOfObjects ?? 0
         } else {
             return viewModel.rooms.value.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        tableView == allChatsView.searchedMessagesTableView ? viewModel.titleForSection(section: section) : nil
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if tableView == allChatsView.searchedMessagesTableView {
+            return viewModel.frc2?.sections?.count ?? 0
+        } else {
+            return 1
         }
     }
     

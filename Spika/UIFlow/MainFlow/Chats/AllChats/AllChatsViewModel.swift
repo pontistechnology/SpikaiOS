@@ -15,8 +15,8 @@ class AllChatsViewModel: BaseViewModel {
     
     let search = CurrentValueSubject<String?, Error>(nil)
     private let fetchedRoomEntities = CurrentValueSubject<[RoomEntity]?,Never>(nil)
-//    private let fetchedMessageEntities =
     let rooms = CurrentValueSubject<[Room],Never>([])
+    let allRooms = CurrentValueSubject<[Room],Never>([])
     
 }
 
@@ -27,9 +27,19 @@ extension AllChatsViewModel {
         getAppCoordinator()?.presentSelectUserScreen()
     }
     
-    func presentCurrentChatScreen(for indexPath: IndexPath) {
-        guard let room = getRoom(for: indexPath) else { return }
-        getAppCoordinator()?.presentCurrentChatScreen(room: room)
+    func presentCurrentChatScreen(for indexPath: IndexPath, scrollToMessage: Bool) {
+        if scrollToMessage,
+           let messageEntity = frc2?.object(at: indexPath),
+           let messageId = Message(messageEntity: messageEntity, fileData: nil, thumbData: nil, records: nil).id
+        {
+            guard let roomId = frc2?.object(at: indexPath).roomId,
+                  let room = allRooms.value.first(where: { $0.id == roomId })
+            else { return }
+            getAppCoordinator()?.presentCurrentChatScreen(room: room, scrollToMessageId: messageId)
+        } else {
+            guard let room = getRoom(for: indexPath) else { return }
+            getAppCoordinator()?.presentCurrentChatScreen(room: room)
+        }
     }
 }
 
@@ -93,9 +103,12 @@ extension AllChatsViewModel {
                         promise(.success([]))
                     }
                 }
+                
                 return self.repository.generateRoomModelsWithUsers(context: context, roomEntities: entities)
+                
             }
             .combineLatest(search, { rooms, search in
+                self.allRooms.send(rooms)
                 guard let search, !search.isEmpty else {
                     return rooms
                 }
@@ -143,10 +156,12 @@ extension AllChatsViewModel {
         let fetchRequest = MessageEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "\(#keyPath(MessageEntity.bodyText)) CONTAINS[cd] %@", searchTerm)
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
+            NSSortDescriptor(key: #keyPath(MessageEntity.roomId), ascending: false),
+            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: false)
+            ]
         self.frc2 = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(),
-                                              sectionNameKeyPath: nil, cacheName: nil)
+                                               sectionNameKeyPath: #keyPath(MessageEntity.roomId), cacheName: nil)
         do {
             frc2?.delegate = self
             try self.frc2?.performFetch()
@@ -160,7 +175,25 @@ extension AllChatsViewModel {
     }
     
     func dataForRow(indexPath: IndexPath) -> String? {
-        return frc2?.object(at: indexPath).bodyText
+        let messageEntity = frc2?.object(at: indexPath)
+        let room = allRooms.value.first { $0.id == messageEntity?.roomId }
+        let user = room?.getDisplayNameFor(userId: messageEntity!.fromUserId)
+        let text = """
+\(user)
+\(messageEntity?.createdAt.convert(to: .ddMMyyyyHHmm))
+\(messageEntity?.bodyText)
+"""
+        return text
+    }
+    
+    func titleForSection(section: Int) -> String {
+        guard let roomId = (frc2?.sections?[section].objects?.first as? MessageEntity)?.roomId,
+              let room = allRooms.value.first(where: { $0.id == roomId }),
+              let title = .groupRoom == room.type
+                ? room.name
+                : room.getFriendUserInPrivateRoom(myUserId: getMyUserId())?.getDisplayName()
+        else { return "(unknown)" }
+        return title
     }
 }
 

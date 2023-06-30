@@ -45,7 +45,7 @@ class AllChatsView: UIView, BaseView {
         searchBar.searchBarStyle = .minimal
         
         
-        searchedMessagesTableView.backgroundColor = .orange
+//        searchedMessagesTableView.backgroundColor = .orange
         searchedMessagesTableView.isHidden = true
     }
     

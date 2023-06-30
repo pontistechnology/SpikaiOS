@@ -30,14 +30,14 @@ class ChatsAssembly: Assembly {
     }
     
     private func assembleCurrentChatViewController(_ container: Container) {        
-        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, room: Room) in
+        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return CurrentChatViewModel(repository: repository, coordinator: coordinator, room: room)
+            return CurrentChatViewModel(repository: repository, coordinator: coordinator, room: room, scrollToMessageId: messageId)
         }.inObjectScope(.transient)
 
-        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, room: Room) in
+        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
             let controller = CurrentChatViewController()
-            controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, room)
+            controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, room, messageId)
             return controller
         }.inObjectScope(.transient)
     }
