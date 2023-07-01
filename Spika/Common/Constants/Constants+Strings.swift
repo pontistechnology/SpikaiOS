@@ -55,6 +55,7 @@ public extension Constants {
         
         // MARK: - ChatDetailsViewController
         case group = "Group"
+        case addToContacts = "Add to contacts"
         case sharedMediaLinksDocs = "Shared Media, Links and Docs"
         case chatSearch = "Chat search"
         case notes = "Notes"

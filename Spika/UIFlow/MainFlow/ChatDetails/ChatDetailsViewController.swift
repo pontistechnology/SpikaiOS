@@ -6,6 +6,8 @@
 //
 
 import UIKit
+//import Contacts
+import ContactsUI
 
 final class ChatDetailsViewController: BaseViewController {
     
@@ -149,6 +151,9 @@ final class ChatDetailsViewController: BaseViewController {
             }.store(in: &self.subscriptions)
         
         self.chatDetailView.contentView.phoneNubmerLabel.text = viewModel.getPhoneNumberText()
+        self.chatDetailView.contentView.phoneNubmerLabel.tap().sink { [weak self] _ in
+            self?.phoneNumberLabelTapped()
+        }.store(in: &subscriptions)
         
         self.chatDetailView.contentView.chatNameChanged
             .sink { [weak self] newName in
@@ -277,6 +282,42 @@ final class ChatDetailsViewController: BaseViewController {
     func onChangeChatName() {
         self.chatDetailView.contentView.chatNameTextField.unhide()
         self.chatDetailView.contentView.chatNameTextField.becomeFirstResponder()
+    }
+    
+    func phoneNumberLabelTapped() {
+        viewModel
+            .getAppCoordinator()?
+            .showAlert(actions: [.regular(title: .getStringFor(.copy)),
+                                 .regular(title: .getStringFor(.addToContacts))
+            ], cancelText: .getStringFor(.cancel))
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.copyPhoneNumber()
+                case 1:
+                    self?.addToContacts()
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
+    }
+    
+    func copyPhoneNumber() {
+        UIPasteboard.general.string = self.chatDetailView.contentView.phoneNubmerLabel.text
+        viewModel.showOneSecAlert(type: .copy)
+    }
+    
+    func addToContacts() {
+        guard let phoneNumber = self.chatDetailView.contentView.phoneNubmerLabel.text,
+              let name = self.chatDetailView.contentView.chatName.text
+        else { return }
+        
+        var contact = CNMutableContact()
+        
+        contact.phoneNumbers = [CNLabeledValue(label: nil, value: CNPhoneNumber(stringValue: phoneNumber))]
+        contact.givenName = name
+        let vc = CNContactViewController(forNewContact: contact)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
