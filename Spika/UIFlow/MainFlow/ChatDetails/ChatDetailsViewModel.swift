@@ -337,5 +337,14 @@ class ChatDetailsViewModel: BaseViewModel {
     deinit {
 //        print("Deinit Works")
     }
-    
+}
+
+extension ChatDetailsViewModel {
+    func getPhoneNumberText() -> String {
+        if room.value.type == .privateRoom {
+            return room.value.getFriendUserInPrivateRoom(myUserId: getMyUserId())?.telephoneNumber ?? ""
+        } else {
+            return ""
+        }
+    }
 }

@@ -148,6 +148,8 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.onChangeChatName()
             }.store(in: &self.subscriptions)
         
+        self.chatDetailView.contentView.phoneNubmerLabel.text = viewModel.getPhoneNumberText()
+        
         self.chatDetailView.contentView.chatNameChanged
             .sink { [weak self] newName in
                 self?.chatDetailView.contentView.chatNameTextField.hide()
