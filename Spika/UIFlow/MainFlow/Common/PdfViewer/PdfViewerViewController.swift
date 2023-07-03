@@ -9,7 +9,8 @@ import Foundation
 import PDFKit
 
 class PdfViewerViewController: BaseViewController {
-    let pdfView = PDFView()
+    private let pdfView = PDFView()
+    private let saveLabel = CustomLabel(text: "Save")
     let url: URL
     
     init(url: URL) {
@@ -24,7 +25,12 @@ class PdfViewerViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(pdfView)
+        view.addSubview(saveLabel)
         pdfView.fillSuperview()
+        saveLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 4))
+        saveLabel.backgroundColor = .primaryColor
+        saveLabel.layer.cornerRadius = 4
+        setupBindings()
 //        pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         DispatchQueue.global().async { [weak self] in
@@ -37,6 +43,16 @@ class PdfViewerViewController: BaseViewController {
                 }
             }
         }
+    }
+    
+    func setupBindings() {
+        saveLabel.tap().sink { [weak self] _ in
+            print("joj")
+            guard let self else { return }
+            
+            let vv = UIActivityViewController(activityItems: [self.url], applicationActivities: nil)
+            self.present(vv, animated: true)
+        }.store(in: &subscriptions)
     }
 }
 
