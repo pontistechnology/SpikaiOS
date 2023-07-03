@@ -397,6 +397,11 @@ extension CurrentChatViewModel {
                 result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
                     // this url is valid only here, copy file and pass it forward
                     let uuid = UUID().uuidString
+                    guard let fileSize = try? url?.resourceValues(forKeys: [.fileSizeKey])
+                        .fileSize, fileSize < 256000000
+                    else {
+                        _ = self?.getAppCoordinator()?.showAlert(title: "Large file", message: "Some files are larger than 256 MB and will not be sent.", style: .alert, actions: [.regular(title: "Ok")])
+                        return }
                     guard let url,
                     let fileUrl = self?.repository.copyFile(from: url, name: uuid+"original")
                     else { return }
@@ -413,13 +418,12 @@ extension CurrentChatViewModel {
         for url in urls {
             let uuid = UUID().uuidString
             let fileName = url.lastPathComponent
-            guard let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey, .fileSizeKey, .fileSizeKey]) else { return }
+            guard let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey, .fileSizeKey]) else { return }
             let mimeType = resourceValues.contentType?.preferredMIMEType ?? "application/octet-stream"
             
             guard let fileSize = resourceValues.fileSize, fileSize < 128000000
             else {
-                // TODO: - show pop up
-                _ = getAppCoordinator()?.showAlert(title: "Large file", message: "Some files are greater than 128 MB.", style: .alert, actions: [.regular(title: "Ok")])
+                _ = getAppCoordinator()?.showAlert(title: "Large file", message: "Some files are larger than 128 MB and will not be sent.", style: .alert, actions: [.regular(title: "Ok")])
                 return
             }
             let file = SelectedFile(fileType: .file,
