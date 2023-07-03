@@ -41,6 +41,18 @@ platform :ios do
         })
     pilot( api_key_path: "fastlane/Q4Y97SL8HA.json",
         skip_waiting_for_build_processing: true)
+
+
+    build_app(workspace: "Spika.xcworkspace", 
+	clean:true,
+	scheme: "Spika Messenger", 
+	include_bitcode:false,
+        export_options:{ 
+            manageAppVersionAndBuildNumber: false
+        })
+    pilot( api_key_path: "fastlane/Q4Y97SL8HA.json",
+        skip_waiting_for_build_processing: true)
+
   end
 
 end
