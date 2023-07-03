@@ -992,6 +992,7 @@
 		9383879529D596E40057714A /* MessageDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383879429D596E40057714A /* MessageDetailsViewModel.swift */; };
 		9383879729D596E40057714A /* MessageDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383879429D596E40057714A /* MessageDetailsViewModel.swift */; };
 		938B477D27E29C9F004B36FD /* ChatNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */; };
+		938B56992A52EEAC0036440E /* AllChatsSearchedMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939549F32A4B8133006B6139 /* AllChatsSearchedMessageCell.swift */; };
 		938CC7C9293BB9F600606DA8 /* InputTextAndControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CC7C8293BB9F600606DA8 /* InputTextAndControlsView.swift */; };
 		938D052E27D59D83002E5CE5 /* NewGroupChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D052D27D59D83002E5CE5 /* NewGroupChatView.swift */; };
 		938D053027D59DC1002E5CE5 /* NewGroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D052F27D59DC1002E5CE5 /* NewGroupChatViewController.swift */; };
@@ -3932,6 +3933,7 @@
 				6CF648F22A459FE100E0DE0B /* TextAndImageView.swift in Sources */,
 				6CF648F32A459FE100E0DE0B /* RoomEntity+CoreDataProperties.swift in Sources */,
 				6CF648F42A459FE100E0DE0B /* SearchBar.swift in Sources */,
+				938B56992A52EEAC0036440E /* AllChatsSearchedMessageCell.swift in Sources */,
 				6CF648F52A459FE100E0DE0B /* MessageTextView.swift in Sources */,
 				6CF648F62A459FE100E0DE0B /* CoreDatabase.xcdatamodeld in Sources */,
 				6CF648F72A459FE100E0DE0B /* AuthResponseModel.swift in Sources */,
