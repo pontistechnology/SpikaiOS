@@ -150,8 +150,8 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.onChangeChatName()
             }.store(in: &self.subscriptions)
         
-        self.chatDetailView.contentView.phoneNubmerLabel.text = viewModel.getPhoneNumberText()
-        self.chatDetailView.contentView.phoneNubmerLabel.tap().sink { [weak self] _ in
+        self.chatDetailView.contentView.phoneNumberLabel.text = viewModel.getPhoneNumberText()
+        self.chatDetailView.contentView.phoneNumberLabel.tap().sink { [weak self] _ in
             self?.phoneNumberLabelTapped()
         }.store(in: &subscriptions)
         
@@ -303,12 +303,12 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     func copyPhoneNumber() {
-        UIPasteboard.general.string = self.chatDetailView.contentView.phoneNubmerLabel.text
+        UIPasteboard.general.string = self.chatDetailView.contentView.phoneNumberLabel.text
         viewModel.showOneSecAlert(type: .copy)
     }
     
     func addToContacts() {
-        guard let phoneNumber = self.chatDetailView.contentView.phoneNubmerLabel.text,
+        guard let phoneNumber = self.chatDetailView.contentView.phoneNumberLabel.text,
               let name = self.chatDetailView.contentView.chatName.text
         else { return }
         let contact = CNMutableContact()
