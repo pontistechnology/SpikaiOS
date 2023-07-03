@@ -10,7 +10,7 @@ import PDFKit
 
 class PdfViewerViewController: BaseViewController {
     private let pdfView = PDFView()
-    private let saveLabel = RoundedLabel("Save", cornerRadius: 10)
+    private let saveLabel = RoundedLabel("Download with Safari", cornerRadius: 10)
     let url: URL
     
     init(url: URL) {
@@ -27,9 +27,8 @@ class PdfViewerViewController: BaseViewController {
         view.addSubview(pdfView)
         view.addSubview(saveLabel)
         pdfView.fillSuperview()
-        saveLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 4))
-        saveLabel.backgroundColor = .primaryColor
-        saveLabel.layer.cornerRadius = 4
+        saveLabel.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+        saveLabel.centerXToSuperview()
         setupBindings()
 //        pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
@@ -49,9 +48,9 @@ class PdfViewerViewController: BaseViewController {
         saveLabel.tap().sink { [weak self] _ in
             print("joj")
             guard let self else { return }
-            
-            let vv = UIActivityViewController(activityItems: [self.url], applicationActivities: nil)
-            self.present(vv, animated: true)
+            if UIApplication.shared.canOpenURL(self.url) {
+                UIApplication.shared.open(self.url)
+            }
         }.store(in: &subscriptions)
     }
 }
