@@ -311,13 +311,9 @@ final class ChatDetailsViewController: BaseViewController {
         guard let phoneNumber = self.chatDetailView.contentView.phoneNubmerLabel.text,
               let name = self.chatDetailView.contentView.chatName.text
         else { return }
-        
-        var contact = CNMutableContact()
-        
+        let contact = CNMutableContact()
         contact.phoneNumbers = [CNLabeledValue(label: nil, value: CNPhoneNumber(stringValue: phoneNumber))]
         contact.givenName = name
-        let vc = CNContactViewController(forNewContact: contact)
-        self.navigationController?.pushViewController(vc, animated: true)
+        viewModel.presentAddToContactsScreen(contact: contact)
     }
-    
 }

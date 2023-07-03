@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import ContactsUI
 
 class ChatDetailsViewModel: BaseViewModel {
     let room: CurrentValueSubject<Room,Never>
@@ -346,5 +347,15 @@ extension ChatDetailsViewModel {
         } else {
             return ""
         }
+    }
+    
+    func presentAddToContactsScreen(contact: CNContact) {
+        getAppCoordinator()?.presentAddToContactsScreen(contact: contact).delegate = self
+    }
+}
+
+extension ChatDetailsViewModel: CNContactViewControllerDelegate {
+    func contactViewController(_ viewController: CNContactViewController, didCompleteWith contact: CNContact?) {
+        getAppCoordinator()?.popTopViewController()
     }
 }

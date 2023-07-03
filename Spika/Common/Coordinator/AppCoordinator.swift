@@ -10,6 +10,8 @@ import Swinject
 import Combine
 import AVKit
 import AVFoundation
+import Contacts
+import ContactsUI
 
 class AppCoordinator: Coordinator {
     
@@ -243,6 +245,12 @@ class AppCoordinator: Coordinator {
     func presentPrivacySettingsScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(PrivacySettingsViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentAddToContactsScreen(contact: CNContact) -> CNContactViewController {
+        let vc = CNContactViewController(forNewContact: contact)
+        self.navigationController.pushViewController(vc, animated: true)
+        return vc
     }
     
     func presentAppereanceSettingsScreen() {
