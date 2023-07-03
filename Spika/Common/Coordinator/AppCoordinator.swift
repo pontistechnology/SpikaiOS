@@ -10,6 +10,8 @@ import Swinject
 import Combine
 import AVKit
 import AVFoundation
+import Contacts
+import ContactsUI
 
 class AppCoordinator: Coordinator {
     
@@ -185,14 +187,10 @@ class AppCoordinator: Coordinator {
     
     func presentMoreActionsSheet() -> PassthroughSubject<MoreActions, Never> {
         let viewControllerToPresent = MoreActionsViewController()
-        if #available(iOS 15.0, *) {
-            if let sheet = viewControllerToPresent.sheetPresentationController {
-                sheet.detents = [.large()]
-                sheet.prefersGrabberVisible = false
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            }
-        } else {
-            // TODO: Fallback on earlier versions
+        if let sheet = viewControllerToPresent.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = false
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
         }
         navigationController.present(viewControllerToPresent, animated: true)
         return viewControllerToPresent.publisher
@@ -200,15 +198,10 @@ class AppCoordinator: Coordinator {
     
     func presentReactionsSheet(users: [User], records: [MessageRecord]) {
         let viewControllerToPresent = ReactionsViewController(users: users, records: records)
-        
-        if #available(iOS 15.0, *) {
-            if let sheet = viewControllerToPresent.sheetPresentationController {
-                sheet.detents = [.medium(), .large()]
-                sheet.prefersGrabberVisible = true
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            }
-        } else {
-            // Fallback on earlier versions
+        if let sheet = viewControllerToPresent.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
         }
         navigationController.present(viewControllerToPresent, animated: true)
     }
@@ -228,6 +221,10 @@ class AppCoordinator: Coordinator {
         let avPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
         let avPlayerVC = AVPlayerViewController()
         avPlayerVC.player = avPlayer
+        try? AVAudioSession.sharedInstance()
+            .setCategory(AVAudioSession.Category.playback,
+                         mode: AVAudioSession.Mode.default,
+                         options: [])
         navigationController.present(avPlayerVC, animated: true) {
             avPlayer.play()
         }
@@ -248,6 +245,12 @@ class AppCoordinator: Coordinator {
     func presentPrivacySettingsScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(PrivacySettingsViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentAddToContactsScreen(contact: CNContact) -> CNContactViewController {
+        let vc = CNContactViewController(forNewContact: contact)
+        self.navigationController.pushViewController(vc, animated: true)
+        return vc
     }
     
     func presentAppereanceSettingsScreen() {

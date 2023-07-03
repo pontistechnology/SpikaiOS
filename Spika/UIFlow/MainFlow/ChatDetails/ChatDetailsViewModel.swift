@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import ContactsUI
 
 class ChatDetailsViewModel: BaseViewModel {
     let room: CurrentValueSubject<Room,Never>
@@ -337,5 +338,27 @@ class ChatDetailsViewModel: BaseViewModel {
     deinit {
 //        print("Deinit Works")
     }
+}
+
+extension ChatDetailsViewModel {
+    func getPhoneNumberText() -> String {
+        if room.value.type == .privateRoom {
+            return room.value.getFriendUserInPrivateRoom(myUserId: getMyUserId())?.telephoneNumber ?? ""
+        } else {
+            return ""
+        }
+    }
     
+    func presentAddToContactsScreen(name: String, number: String) {
+        let contact = CNMutableContact()
+        contact.phoneNumbers = [CNLabeledValue(label: nil, value: CNPhoneNumber(stringValue: number))]
+        contact.givenName = name
+        getAppCoordinator()?.presentAddToContactsScreen(contact: contact).delegate = self
+    }
+}
+
+extension ChatDetailsViewModel: CNContactViewControllerDelegate {
+    func contactViewController(_ viewController: CNContactViewController, didCompleteWith contact: CNContact?) {
+        getAppCoordinator()?.popTopViewController()
+    }
 }

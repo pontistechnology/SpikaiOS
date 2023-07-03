@@ -419,11 +419,12 @@ extension CurrentChatViewController {
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room.type == .privateRoom {
-            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarFileId?.fullFilePathFromId(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
+            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarFileId?.fullFilePathFromId(), name: viewModel.friendUser?.getDisplayName(), lastSeen: viewModel.friendUser?.telephoneNumber ?? "")
         } else {
             friendInfoView.change(avatarUrl: viewModel.room.avatarFileId?.fullFilePathFromId(),
                                   name: viewModel.room.name,
-                                  lastSeen: .getStringFor(.today))
+                                  lastSeen: "\(viewModel.room.users.count) members")
+            // TODO: - will be changed to last seen, then move to localization
         }
         
         let vtest = UIBarButtonItem(customView: friendInfoView)

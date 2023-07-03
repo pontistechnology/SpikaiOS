@@ -13,6 +13,7 @@ class ChatContentView: UIView, BaseView {
     let chatImage = ImageViewWithIcon(image:  UIImage(safeImage: .userImage),size: CGSize(width: 120, height: 120))
     
     let chatName = CustomLabel(text: .getStringFor(.group), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
+    let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
     let chatNameTextField = TextField()
     
     let sharedMediaOptionButton = NavView(text: .getStringFor(.sharedMediaLinksDocs))
@@ -65,6 +66,7 @@ class ChatContentView: UIView, BaseView {
     func addSubviews() {
         self.addSubview(chatImage)
         self.addSubview(chatName)
+        self.addSubview(phoneNumberLabel)
         self.addSubview(mainStackView)
         self.addSubview(chatNameTextField)
         
@@ -107,7 +109,10 @@ class ChatContentView: UIView, BaseView {
         chatName.anchor(top: chatImage.bottomAnchor, padding: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0))
         chatName.centerXToSuperview()
         
-        mainStackView.anchor(top: chatName.bottomAnchor,
+        phoneNumberLabel.anchor(top: chatName.bottomAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0))
+        phoneNumberLabel.centerXToSuperview()
+        
+        mainStackView.anchor(top: phoneNumberLabel.bottomAnchor,
                              leading: self.leadingAnchor,
                              bottom: self.bottomAnchor,
                              trailing: self.trailingAnchor,

@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import ContactsUI
 
 class DetailsViewModel: BaseViewModel {
     
@@ -141,5 +142,27 @@ extension DetailsViewModel {
     func presentCurrentChatScreen() {
         guard let room = room else { return }
         getAppCoordinator()?.presentCurrentChatScreen(room: room)
+    }
+    
+    func presentAddToContactsScreen(name: String, number: String) {
+        let contact = CNMutableContact()
+        contact.phoneNumbers = [CNLabeledValue(label: nil, value: CNPhoneNumber(stringValue: number))]
+        contact.givenName = name
+        getAppCoordinator()?.presentAddToContactsScreen(contact: contact).delegate = self
+    }
+}
+
+extension DetailsViewModel: CNContactViewControllerDelegate {
+    
+    func getPhoneNumberText() -> String {
+        if room?.type == .privateRoom {
+            return room?.getFriendUserInPrivateRoom(myUserId: getMyUserId())?.telephoneNumber ?? ""
+        } else {
+            return ""
+        }
+    }
+    
+    func contactViewController(_ viewController: CNContactViewController, didCompleteWith contact: CNContact?) {
+        getAppCoordinator()?.popTopViewController()
     }
 }
