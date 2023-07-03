@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 class RoundedLabel: UILabel {
+    let cornerRadius: Double
     init(_ text: String, cornerRadius: Double) {
+        self.cornerRadius = cornerRadius
         super.init(frame: .zero)
         layer.cornerRadius = cornerRadius
         layer.masksToBounds = true
@@ -21,7 +23,7 @@ class RoundedLabel: UILabel {
     
     override var intrinsicContentSize: CGSize {
         let original = super.intrinsicContentSize
-        return .init(width: original.width + 20, height: original.height + 10)
+        return .init(width: original.width + 2 * cornerRadius, height: original.height + 2 * cornerRadius)
     }
     
     required init?(coder: NSCoder) {

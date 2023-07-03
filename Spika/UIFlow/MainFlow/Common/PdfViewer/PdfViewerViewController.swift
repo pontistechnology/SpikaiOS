@@ -10,7 +10,7 @@ import PDFKit
 
 class PdfViewerViewController: BaseViewController {
     private let pdfView = PDFView()
-    private let saveLabel = CustomLabel(text: "Save")
+    private let saveLabel = RoundedLabel("Save", cornerRadius: 10)
     let url: URL
     
     init(url: URL) {
