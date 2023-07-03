@@ -151,8 +151,8 @@ class AppCoordinator: Coordinator {
         navigationController.pushViewController(roomDetailsViewController, animated: true)
     }
     
-    func presentCurrentChatScreen(room: Room) {
-        let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, room)!
+    func presentCurrentChatScreen(room: Room, scrollToMessageId: Int64? = nil) {
+        let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, room, scrollToMessageId)!
         
         navigationController.pushViewController(currentChatViewController, animated: true)
     }

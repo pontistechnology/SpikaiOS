@@ -144,11 +144,16 @@ extension CurrentChatViewController {
             self?.viewModel.sendCameraImage(pickedImage)
         }.store(in: &subscriptions)
         
-        // TODO: fetch is blocked and delete input field
+        // TODO: fetch isBlocked and delete input field
         
         viewModel.setFetch()
         viewModel.frc?.delegate = self
-        currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
+        if let messageId = viewModel.scrollToMessageId,
+           let indexPath = viewModel.getIndexPathFor(messageId: messageId) {
+            currentChatView.messagesTableView.blinkRow(at: indexPath)
+        } else {
+            currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
+        }
     }
     
     func handleScroll(isMyMessage: Bool) {
