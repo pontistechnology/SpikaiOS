@@ -12,6 +12,7 @@ enum OneSecPopUpType {
     case copy
     case forward
     case favorite
+    case save
     
     var title: String {
         switch self {
@@ -21,6 +22,8 @@ enum OneSecPopUpType {
             return "Forwarded"
         case .favorite:
             return "Added to favorite"
+        case .save:
+            return "Saved"
         }
     }
 }
