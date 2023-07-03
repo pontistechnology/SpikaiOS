@@ -144,11 +144,16 @@ extension CurrentChatViewController {
             self?.viewModel.sendCameraImage(pickedImage)
         }.store(in: &subscriptions)
         
-        // TODO: fetch is blocked and delete input field
+        // TODO: fetch isBlocked and delete input field
         
         viewModel.setFetch()
         viewModel.frc?.delegate = self
-        currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
+        if let messageId = viewModel.scrollToMessageId,
+           let indexPath = viewModel.getIndexPathFor(messageId: messageId) {
+            currentChatView.messagesTableView.blinkRow(at: indexPath)
+        } else {
+            currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
+        }
     }
     
     func handleScroll(isMyMessage: Bool) {
@@ -414,11 +419,12 @@ extension CurrentChatViewController {
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room.type == .privateRoom {
-            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarFileId?.fullFilePathFromId(), name: viewModel.friendUser?.getDisplayName(), lastSeen: .getStringFor(.yesterday))
+            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarFileId?.fullFilePathFromId(), name: viewModel.friendUser?.getDisplayName(), lastSeen: viewModel.friendUser?.telephoneNumber ?? "")
         } else {
             friendInfoView.change(avatarUrl: viewModel.room.avatarFileId?.fullFilePathFromId(),
                                   name: viewModel.room.name,
-                                  lastSeen: .getStringFor(.today))
+                                  lastSeen: "\(viewModel.room.users.count) members")
+            // TODO: - will be changed to last seen, then move to localization
         }
         
         let vtest = UIBarButtonItem(customView: friendInfoView)

@@ -44,6 +44,7 @@
 "System mode" = "System mode";
 
 "Group" = "Group";
+"Add to contacts" = "Add to contacts";
 "Shared Media, Links and Docs" = "Shared Media, Links and Docs";
 "Chat search" = "Chat search";
 "Notes" = "Notes";
@@ -66,7 +67,6 @@
 "selected" = "selected";
 "Select users" = "Select users";
 "Search for contact" = "Search for contact";
-"Search by group or contact name" = "Search by group or contact name";
 
 "Read by" = "Read by";
 "Delivered to" = "Delivered to";
@@ -83,7 +83,6 @@
 
 "Unknown" = "Unknown";
 "Today" = "Today";
-"Yesterday" = "Yesterday";
 "Reply" = "Reply";
 
 "New chat" = "New chat";

@@ -35,7 +35,10 @@ class CurrentChatViewModel: BaseViewModel {
     let selectedMessageToEditPublisher = CurrentValueSubject<Message?, Never>(nil)
     let numberOfUnreadMessages = CurrentValueSubject<Int, Never>(0)
     
-    init(repository: Repository, coordinator: Coordinator, room: Room) {
+    let scrollToMessageId: Int64?
+    
+    init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?) {
+        self.scrollToMessageId = scrollToMessageId
         self.room = room
         super.init(repository: repository, coordinator: coordinator)
     }

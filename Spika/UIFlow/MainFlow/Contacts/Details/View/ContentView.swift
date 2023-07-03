@@ -11,6 +11,7 @@ class ContentView: UIView, BaseView {
     
     let profilePhoto = UIImageView()
     let nameLabel = CustomLabel(text: .getStringFor(.nameAndSurname), fontName: .MontserratSemiBold)
+    let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
     let messageButton = ImageButton(image: UIImage(safeImage: .chatBubble))
     let phoneCallButton = ImageButton(image: UIImage(safeImage: .phoneCall))
     let videoCallButton = ImageButton(image: UIImage(safeImage: .videoCall))
@@ -39,6 +40,7 @@ class ContentView: UIView, BaseView {
     
     func addSubviews() {
         addSubview(nameLabel)
+        addSubview(phoneNumberLabel)
         addSubview(profilePhoto)
         addSubview(messageButton)
         addSubview(phoneCallButton)
@@ -84,7 +86,10 @@ class ContentView: UIView, BaseView {
         nameLabel.anchor(top: profilePhoto.bottomAnchor, padding: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0))
         nameLabel.centerXToSuperview()
         
-        phoneCallButton.anchor(top: nameLabel.bottomAnchor, padding: UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0))
+        phoneNumberLabel.anchor(top: nameLabel.bottomAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0))
+        phoneNumberLabel.centerXToSuperview()
+        
+        phoneCallButton.anchor(top: phoneNumberLabel.bottomAnchor, padding: UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0))
         phoneCallButton.centerXToSuperview()
         
         videoCallButton.anchor(top: phoneCallButton.topAnchor, leading: phoneCallButton.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0))

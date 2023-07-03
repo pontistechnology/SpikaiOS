@@ -148,6 +148,11 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.onChangeChatName()
             }.store(in: &self.subscriptions)
         
+        self.chatDetailView.contentView.phoneNumberLabel.text = viewModel.getPhoneNumberText()
+        self.chatDetailView.contentView.phoneNumberLabel.tap().sink { [weak self] _ in
+            self?.phoneNumberLabelTapped()
+        }.store(in: &subscriptions)
+        
         self.chatDetailView.contentView.chatNameChanged
             .sink { [weak self] newName in
                 self?.chatDetailView.contentView.chatNameTextField.hide()
@@ -277,4 +282,33 @@ final class ChatDetailsViewController: BaseViewController {
         self.chatDetailView.contentView.chatNameTextField.becomeFirstResponder()
     }
     
+    func phoneNumberLabelTapped() {
+        viewModel
+            .getAppCoordinator()?
+            .showAlert(actions: [.regular(title: .getStringFor(.copy)),
+                                 .regular(title: .getStringFor(.addToContacts))
+            ], cancelText: .getStringFor(.cancel))
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.copyPhoneNumber()
+                case 1:
+                    self?.addToContacts()
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
+    }
+    
+    func copyPhoneNumber() {
+        UIPasteboard.general.string = self.chatDetailView.contentView.phoneNumberLabel.text
+        viewModel.showOneSecAlert(type: .copy)
+    }
+    
+    func addToContacts() {
+        guard let phoneNumber = self.chatDetailView.contentView.phoneNumberLabel.text,
+              let name = self.chatDetailView.contentView.chatName.text
+        else { return }
+        viewModel.presentAddToContactsScreen(name: name, number: phoneNumber)
+    }
 }

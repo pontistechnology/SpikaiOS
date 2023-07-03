@@ -55,6 +55,7 @@ public extension Constants {
         
         // MARK: - ChatDetailsViewController
         case group = "Group"
+        case addToContacts = "Add to contacts"
         case sharedMediaLinksDocs = "Shared Media, Links and Docs"
         case chatSearch = "Chat search"
         case notes = "Notes"
@@ -88,7 +89,6 @@ public extension Constants {
         case selected = "selected"
         case selectUsers = "Select users"
         case searchForContact = "Search for contact"
-        case searchByGroupOrContactName = "Search by group or contact name"
         
         // MARK: - MessageDetailsViewController
         case readBy = "Read by"
@@ -111,7 +111,7 @@ public extension Constants {
         // MARK: - CurrentChatViewController
         case unknown = "Unknown"
         case today = "Today"
-        case yesterday = "Yesterday"
+        
         case youAreNoLongerMember = "You are no longer a member of this group"
         
         // MARK: - SelectUsersViewController
