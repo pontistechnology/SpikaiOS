@@ -6,8 +6,6 @@
 //
 
 import UIKit
-//import Contacts
-import ContactsUI
 
 final class ChatDetailsViewController: BaseViewController {
     
@@ -311,9 +309,6 @@ final class ChatDetailsViewController: BaseViewController {
         guard let phoneNumber = self.chatDetailView.contentView.phoneNumberLabel.text,
               let name = self.chatDetailView.contentView.chatName.text
         else { return }
-        let contact = CNMutableContact()
-        contact.phoneNumbers = [CNLabeledValue(label: nil, value: CNPhoneNumber(stringValue: phoneNumber))]
-        contact.givenName = name
-        viewModel.presentAddToContactsScreen(contact: contact)
+        viewModel.presentAddToContactsScreen(name: name, number: phoneNumber)
     }
 }

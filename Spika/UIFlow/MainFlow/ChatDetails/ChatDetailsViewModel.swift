@@ -349,7 +349,10 @@ extension ChatDetailsViewModel {
         }
     }
     
-    func presentAddToContactsScreen(contact: CNContact) {
+    func presentAddToContactsScreen(name: String, number: String) {
+        let contact = CNMutableContact()
+        contact.phoneNumbers = [CNLabeledValue(label: nil, value: CNPhoneNumber(stringValue: number))]
+        contact.givenName = name
         getAppCoordinator()?.presentAddToContactsScreen(contact: contact).delegate = self
     }
 }
