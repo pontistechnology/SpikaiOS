@@ -8,3 +8,10 @@ jobs:
       - run: fastlane Spika
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+  build_spika_messenger:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - run: fastlane Spika_Messenger
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
