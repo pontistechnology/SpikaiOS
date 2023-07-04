@@ -81,9 +81,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ADD503AD270DC3C7009D50CB"
-            BuildableName = "Spika.app"
-            BlueprintName = "Spika"
+            BlueprintIdentifier = "6CF648892A459FE100E0DE0B"
+            BuildableName = "Spika Messenger.app"
+            BlueprintName = "Spika Messenger"
             ReferencedContainer = "container:Spika.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
