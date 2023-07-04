@@ -1,8 +1,17 @@
-app_identifier("studio.clover.Spika") # The bundle identifier of your app
-apple_id("ivo.peric@clover.studio") # Your Apple Developer Portal username
-
-itc_team_id("834733") # App Store Connect Team ID
-team_id("YU755VYJCP") # Developer Portal Team ID
-
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile
+
+for_platform :ios do
+    
+    apple_id("ivo.peric@clover.studio")
+    itc_team_id("834733") # App Store Connect Team ID
+    team_id("YU755VYJCP") # Developer Portal Team ID
+
+    for_lane :Spika do
+        app_identifier("studio.clover.Spika")
+    end
+
+    for_lane :Spika_Messenger do
+        app_identifier("studio.clover.SpikaMessenger")
+      end
+  end
