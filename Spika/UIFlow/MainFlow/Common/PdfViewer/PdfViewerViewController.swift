@@ -9,7 +9,8 @@ import Foundation
 import PDFKit
 
 class PdfViewerViewController: BaseViewController {
-    let pdfView = PDFView()
+    private let pdfView = PDFView()
+    private let saveLabel = RoundedLabel("Download with Safari", cornerRadius: 10)
     let url: URL
     
     init(url: URL) {
@@ -24,7 +25,11 @@ class PdfViewerViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(pdfView)
+        view.addSubview(saveLabel)
         pdfView.fillSuperview()
+        saveLabel.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+        saveLabel.centerXToSuperview()
+        setupBindings()
 //        pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         DispatchQueue.global().async { [weak self] in
@@ -37,6 +42,16 @@ class PdfViewerViewController: BaseViewController {
                 }
             }
         }
+    }
+    
+    func setupBindings() {
+        saveLabel.tap().sink { [weak self] _ in
+            print("joj")
+            guard let self else { return }
+            if UIApplication.shared.canOpenURL(self.url) {
+                UIApplication.shared.open(self.url)
+            }
+        }.store(in: &subscriptions)
     }
 }
 
