@@ -993,6 +993,9 @@
 		9383879729D596E40057714A /* MessageDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383879429D596E40057714A /* MessageDetailsViewModel.swift */; };
 		938B477D27E29C9F004B36FD /* ChatNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */; };
 		938B56992A52EEAC0036440E /* AllChatsSearchedMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939549F32A4B8133006B6139 /* AllChatsSearchedMessageCell.swift */; };
+		938B569F2A5381960036440E /* RoundedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B569E2A5381950036440E /* RoundedLabel.swift */; };
+		938B56A02A5381960036440E /* RoundedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B569E2A5381950036440E /* RoundedLabel.swift */; };
+		938B56A12A5381960036440E /* RoundedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B569E2A5381950036440E /* RoundedLabel.swift */; };
 		938CC7C9293BB9F600606DA8 /* InputTextAndControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938CC7C8293BB9F600606DA8 /* InputTextAndControlsView.swift */; };
 		938D052E27D59D83002E5CE5 /* NewGroupChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D052D27D59D83002E5CE5 /* NewGroupChatView.swift */; };
 		938D053027D59DC1002E5CE5 /* NewGroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D052F27D59DC1002E5CE5 /* NewGroupChatViewController.swift */; };
@@ -1420,6 +1423,7 @@
 		9383878F29D5253D0057714A /* FileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileData.swift; sourceTree = "<group>"; };
 		9383879429D596E40057714A /* MessageDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewModel.swift; sourceTree = "<group>"; };
 		938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNavigationBarView.swift; sourceTree = "<group>"; };
+		938B569E2A5381950036440E /* RoundedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedLabel.swift; sourceTree = "<group>"; };
 		938CC7C8293BB9F600606DA8 /* InputTextAndControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextAndControlsView.swift; sourceTree = "<group>"; };
 		938D052D27D59D83002E5CE5 /* NewGroupChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupChatView.swift; sourceTree = "<group>"; };
 		938D052F27D59DC1002E5CE5 /* NewGroupChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupChatViewController.swift; sourceTree = "<group>"; };
@@ -2763,6 +2767,7 @@
 				AD9BFCF42729828100736318 /* LogoImageView.swift */,
 				AD9A68172739084A00BDC439 /* ActionButton.swift */,
 				6CBBEC66298AB1F5004281D3 /* CustomButton.swift */,
+				938B569E2A5381950036440E /* RoundedLabel.swift */,
 				93708E1A279F95DB00F81095 /* CustomLabel.swift */,
 				931E23A827D2DCDA0065FFFC /* MessageStateView.swift */,
 				93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */,
@@ -3472,6 +3477,7 @@
 				6C78B7B029AF5ADB004BF881 /* AppRepository+BlockedUsers.swift in Sources */,
 				6C78B7B129AF5ADB004BF881 /* UserSelectionViewController.swift in Sources */,
 				6C78B7B229AF5ADB004BF881 /* ActionButton.swift in Sources */,
+				938B56A02A5381960036440E /* RoundedLabel.swift in Sources */,
 				6C78B7B329AF5ADB004BF881 /* CallHistoryView.swift in Sources */,
 				6C78B7B429AF5ADB004BF881 /* SelectedFileImageView.swift in Sources */,
 				6C78B7B529AF5ADB004BF881 /* UIControl+Combine.swift in Sources */,
@@ -3860,6 +3866,7 @@
 				6CF648AC2A459FE100E0DE0B /* Room.swift in Sources */,
 				9300D9CE2A4C540900B7B695 /* PdfViewerViewController.swift in Sources */,
 				6CF648AD2A459FE100E0DE0B /* AppRepository+BlockedUsers.swift in Sources */,
+				938B56A12A5381960036440E /* RoundedLabel.swift in Sources */,
 				6CF648AE2A459FE100E0DE0B /* UserSelectionViewController.swift in Sources */,
 				6CF648AF2A459FE100E0DE0B /* ActionButton.swift in Sources */,
 				6CF648B02A459FE100E0DE0B /* CallHistoryView.swift in Sources */,
@@ -4248,6 +4255,7 @@
 				6CBD43A52982801D00A1059E /* AppRepository+BlockedUsers.swift in Sources */,
 				6C2497DF2924FB3000594A55 /* UserSelectionViewController.swift in Sources */,
 				AD9A68182739084A00BDC439 /* ActionButton.swift in Sources */,
+				938B569F2A5381960036440E /* RoundedLabel.swift in Sources */,
 				AD8192612721D52200D5BE48 /* CallHistoryView.swift in Sources */,
 				93583D9828A3DE9F00CC5642 /* SelectedFileImageView.swift in Sources */,
 				AD81926D2721E2E400D5BE48 /* UIControl+Combine.swift in Sources */,
@@ -4885,7 +4893,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 61;
+				APP_BUILD_VERSION = 63;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -4949,7 +4957,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 61;
+				APP_BUILD_VERSION = 63;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -5021,6 +5029,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need your permission to save a photo.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -5058,6 +5067,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need your permission to save a photo.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

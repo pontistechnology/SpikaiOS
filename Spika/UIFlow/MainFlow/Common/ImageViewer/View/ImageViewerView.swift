@@ -10,7 +10,8 @@ import UIKit
 class ImageViewerView: UIView, UIScrollViewDelegate {
     
     private let scrollView = UIScrollView()
-    private let imageView = UIImageView()
+    let imageView = UIImageView()
+    let saveLabel = RoundedLabel("Save to photos", cornerRadius: 10)
     
     init() {
         super.init(frame: .zero)
@@ -34,18 +35,20 @@ class ImageViewerView: UIView, UIScrollViewDelegate {
 extension ImageViewerView: BaseView {
     func addSubviews() {
         addSubview(scrollView)
+        addSubview(saveLabel)
         scrollView.addSubview(imageView)
     }
     
     func styleSubviews() {
         scrollView.minimumZoomScale = 1
         scrollView.maximumZoomScale = 5
-
         imageView.contentMode = .scaleAspectFit
     }
     
     func positionSubviews() {
         scrollView.fillSuperview()
+        saveLabel.anchor(bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
+        saveLabel.centerXToSuperview()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         imageView.heightAnchor.constraint(equalTo: scrollView.heightAnchor).isActive = true
