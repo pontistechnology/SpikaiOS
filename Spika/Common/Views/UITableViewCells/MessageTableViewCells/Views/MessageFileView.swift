@@ -10,7 +10,7 @@ import UIKit
 class MessageFileView: UIView {
     
     private let iconImageView = UIImageView()
-    private let nameLabel = CustomLabel(text: "-", textSize: 14, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .center)
+    private let nameLabel = CustomLabel(text: "-", textSize: 14, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .left)
     private let sizeLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular)
     
     init() {
@@ -32,7 +32,6 @@ extension MessageFileView: BaseView {
     
     func styleSubviews() {
         nameLabel.lineBreakMode = .byTruncatingMiddle
-        nameLabel.textAlignment = .left
     }
     
     func positionSubviews() {
