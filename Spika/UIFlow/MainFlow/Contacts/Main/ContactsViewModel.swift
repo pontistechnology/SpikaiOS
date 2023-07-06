@@ -24,7 +24,7 @@ class ContactsViewModel: BaseViewModel {
             .sink { _ in
                 
             } receiveValue: { [weak self] isTeamMode in
-                self?.repository.syncUsers()
+                self?.repository.syncUsers(page: 1, startingTimestamp: Date().currentTimeMillis())
                 guard let isTeamMode, !isTeamMode else { return }
                 self?.repository.syncContacts(force: true)
             }.store(in: &subs)

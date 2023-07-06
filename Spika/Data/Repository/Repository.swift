@@ -67,11 +67,11 @@ protocol Repository {
     func updateMessage(messageId: Int64, text: String) -> AnyPublisher<MessageResponse, Error>
     
         // Sync
-    func syncRooms()
-    func syncUsers()
+    func syncRooms(page: Int, startingTimestamp: Int64)
+    func syncUsers(page: Int, startingTimestamp: Int64)
+    func syncMessageRecords(page: Int, startingTimestamp: Int64)
+    func syncMessages(page: Int, startingTimestamp: Int64)
     func syncContacts(force: Bool?)
-    func syncMessageRecords()
-    func syncMessages()
 
         // Block
     func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
