@@ -45,7 +45,7 @@ class SSE {
                 self?.repository.syncContacts(force: false)
             }.store(in: &subs)
         
-        repository.syncMessages()
+        repository.syncMessages(page: 1, startingTimestamp: Date().currentTimeMillis())
         repository.syncBlockedList()
         repository.syncMessageRecords()
     }

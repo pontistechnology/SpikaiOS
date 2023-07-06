@@ -46,7 +46,7 @@ private extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func syncAllMessages(timestamp: Int64) -> AnyPublisher<SyncMessagesResponseModel, Error> {
+    func syncAllMessages(timestamp: Int64, page: Int) -> AnyPublisher<SyncMessagesResponseModel, Error> {
         guard let accessToken = getAccessToken() else {
             return Fail<SyncMessagesResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -57,7 +57,8 @@ private extension AppRepository {
             path: Constants.Endpoints.syncAllMessages + "/\(timestamp)",
             requestType: .GET,
             bodyParameters: nil,
-            httpHeaderFields: ["accesstoken" : accessToken])
+            httpHeaderFields: ["accesstoken" : accessToken],
+            queryParameters: ["page" : page])
         
         return networkService.performRequest(resources: resources)
     }
@@ -207,22 +208,27 @@ extension AppRepository {
 }
 
 extension AppRepository {
-    func syncMessages() {
-        let timeStampNow = Date().currentTimeMillis()
-        syncAllMessages(timestamp: getSyncTimestamp(for: .messages)).sink { c in
+    func syncMessages(page: Int, startingTimestamp: Int64) {
+        syncAllMessages(timestamp: getSyncTimestamp(for: .messages), page: page).sink { c in
             
         } receiveValue: { [weak self] response in
             guard let messages = response.data?.list else { return }
-            self?.saveMessages(messages, syncTimestamp: timeStampNow)
+            if let hasNext = response.data?.hasNext, hasNext {
+                self?.syncMessages(page: page+1, startingTimestamp: startingTimestamp)
+                self?.saveMessages(messages, syncTimestamp: nil)
+            } else {
+                self?.saveMessages(messages, syncTimestamp: startingTimestamp)
+            }
         }.store(in: &subs)
     }
     
-    private func saveMessages(_ messages: [Message], syncTimestamp: Int64) {
+    private func saveMessages(_ messages: [Message], syncTimestamp: Int64?) {
         saveMessages(messages).sink { _ in
             
         } receiveValue: { [weak self] isSaved in
+            _ = self?.sendDeliveredStatus(messageIds: messages.compactMap{ $0.id } )
+            guard let syncTimestamp else { return }
             self?.setSyncTimestamp(for: .messages, timestamp: syncTimestamp)
-            self?.sendDeliveredStatus(messageIds: messages.compactMap{ $0.id } )
         }.store(in: &subs)
     }
 }

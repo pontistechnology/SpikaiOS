@@ -71,7 +71,7 @@ protocol Repository {
     func syncUsers()
     func syncContacts(force: Bool?)
     func syncMessageRecords()
-    func syncMessages()
+    func syncMessages(page: Int, startingTimestamp: Int64)
 
         // Block
     func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
