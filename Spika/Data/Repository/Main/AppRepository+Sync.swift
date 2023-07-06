@@ -212,7 +212,7 @@ extension AppRepository {
         syncAllMessages(timestamp: getSyncTimestamp(for: .messages)).sink { c in
             
         } receiveValue: { [weak self] response in
-            guard let messages = response.data?.messages else { return }
+            guard let messages = response.data?.list else { return }
             self?.saveMessages(messages, syncTimestamp: timeStampNow)
         }.store(in: &subs)
     }
