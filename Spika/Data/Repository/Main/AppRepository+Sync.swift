@@ -12,7 +12,7 @@ import Foundation
 
 // network calls
 private extension AppRepository {
-    func syncRooms(timestamp: Int64) -> AnyPublisher<SyncRoomsResponseModel, Error> {
+    func syncRooms(timestamp: Int64, page: Int) -> AnyPublisher<SyncRoomsResponseModel, Error> {
         
         guard let accessToken = getAccessToken() else { return
             Fail<SyncRoomsResponseModel, Error>(error: NetworkError.noAccessToken)
@@ -24,12 +24,13 @@ private extension AppRepository {
             path: Constants.Endpoints.syncRooms + "/\(timestamp)",
             requestType: .GET,
             bodyParameters: nil,
-            httpHeaderFields: ["accesstoken" : accessToken])
+            httpHeaderFields: ["accesstoken" : accessToken],
+            queryParameters: ["page" : page])
         
         return networkService.performRequest(resources: resources)
     }
     
-    func syncUsers(timestamp: Int64) -> AnyPublisher<SyncUsersResponseModel, Error> {
+    func syncUsers(timestamp: Int64, page: Int) -> AnyPublisher<SyncUsersResponseModel, Error> {
         guard let accessToken = getAccessToken() else { return
             Fail<SyncUsersResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -40,7 +41,8 @@ private extension AppRepository {
             path: Constants.Endpoints.syncUsers + "/\(timestamp)",
             requestType: .GET,
             bodyParameters: nil,
-            httpHeaderFields: ["accesstoken" : accessToken])
+            httpHeaderFields: ["accesstoken" : accessToken],
+            queryParameters: ["page" : page])
         
         
         return networkService.performRequest(resources: resources)
@@ -63,7 +65,7 @@ private extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func syncMessageRecords(timestamp: Int64) -> AnyPublisher<SyncMessageRecordsResponseModel, Error> {
+    func syncMessageRecords(timestamp: Int64, page: Int) -> AnyPublisher<SyncMessageRecordsResponseModel, Error> {
         guard let accessToken = getAccessToken() else { return
             Fail<SyncMessageRecordsResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
@@ -74,7 +76,8 @@ private extension AppRepository {
             path: Constants.Endpoints.syncMessageRecords + "/\(timestamp)",
             requestType: .GET,
             bodyParameters: nil,
-            httpHeaderFields: ["accesstoken" : accessToken])
+            httpHeaderFields: ["accesstoken" : accessToken],
+            queryParameters: ["page" : page])
         
         
         return networkService.performRequest(resources: resources)
@@ -146,40 +149,50 @@ extension AppRepository {
 }
 
 extension AppRepository {
-    func syncRooms() {
-        let timestampNow = Date().currentTimeMillis()
-        syncRooms(timestamp: getSyncTimestamp(for: .rooms)).sink { _ in
+    func syncRooms(page: Int, startingTimestamp: Int64) {
+        syncRooms(timestamp: getSyncTimestamp(for: .rooms), page: page).sink { _ in
             
         } receiveValue: { [weak self] response in
-            guard let rooms = response.data?.rooms else { return }
-            self?.saveLocalRooms(rooms, syncTimestamp: timestampNow)
+            guard let rooms = response.data?.list else { return }
+            if let hasNext = response.data?.hasNext, hasNext {
+                self?.syncRooms(page: page + 1, startingTimestamp: startingTimestamp)
+                self?.saveLocalRooms(rooms, syncTimestamp: nil)
+            } else {
+                self?.saveLocalRooms(rooms, syncTimestamp: startingTimestamp)
+            }
         }.store(in: &subs)
     }
     
-    private func saveLocalRooms(_ rooms: [Room], syncTimestamp: Int64) {
+    private func saveLocalRooms(_ rooms: [Room], syncTimestamp: Int64?) {
         saveLocalRooms(rooms: rooms).sink { _ in
             
         } receiveValue: { [weak self] rooms in
+            guard let syncTimestamp else { return }
             self?.setSyncTimestamp(for: .rooms, timestamp: syncTimestamp)
         }.store(in: &subs)
     }
 }
 
 extension AppRepository {
-    func syncUsers() {
-        let timestampNow = Date().currentTimeMillis()
-        syncUsers(timestamp: getSyncTimestamp(for: .users)).sink { _ in
+    func syncUsers(page: Int, startingTimestamp: Int64) {
+        syncUsers(timestamp: getSyncTimestamp(for: .users), page: page).sink { _ in
             
         } receiveValue: { [weak self] response in
-            guard let users = response.data?.users else { return }
-            self?.saveUsers(users, syncTimestamp: timestampNow)
+            guard let users = response.data?.list else { return }
+            if let hasNext = response.data?.hasNext, hasNext {
+                self?.syncUsers(page: page+1, startingTimestamp: startingTimestamp)
+                self?.saveUsers(users, syncTimestamp: nil)
+            } else {
+                self?.saveUsers(users, syncTimestamp: startingTimestamp)
+            }
         }.store(in: &subs)
     }
     
-    private func saveUsers(_ users: [User], syncTimestamp: Int64) {
+    private func saveUsers(_ users: [User], syncTimestamp: Int64?) {
         saveUsers(users).sink { _ in
             
         } receiveValue: { [weak self] users in
+            guard let syncTimestamp else { return }
             self?.setSyncTimestamp(for: .users, timestamp: syncTimestamp)
         }.store(in: &subs)
     }
@@ -187,21 +200,26 @@ extension AppRepository {
 }
 
 extension AppRepository {
-    func syncMessageRecords() {
-        let timestampNow = Date().currentTimeMillis()
-        syncMessageRecords(timestamp: getSyncTimestamp(for: .messageRecords)).sink { _ in
+    func syncMessageRecords(page: Int, startingTimestamp: Int64) {
+        syncMessageRecords(timestamp: getSyncTimestamp(for: .messageRecords), page: page).sink { _ in
             
         } receiveValue: { [weak self] response in
-            guard let records = response.data?.messageRecords else { return }
-            self?.saveMessageRecords(records, syncTimestamp: timestampNow)
+            guard let records = response.data?.list else { return }
+            if let hasNext = response.data?.hasNext, hasNext {
+                self?.syncMessageRecords(page: page+1, startingTimestamp: startingTimestamp)
+                self?.saveMessageRecords(records, syncTimestamp: nil)
+            } else {
+                self?.saveMessageRecords(records, syncTimestamp: startingTimestamp)
+            }
         }.store(in: &subs)
     }
     
-    private func saveMessageRecords(_ records: [MessageRecord], syncTimestamp: Int64) {
+    private func saveMessageRecords(_ records: [MessageRecord], syncTimestamp: Int64?) {
         print("SSE: message records recieved: ", records.count)
         saveMessageRecords(records).sink { _ in
             
         } receiveValue: { [weak self] _ in
+            guard let syncTimestamp else { return }
             self?.setSyncTimestamp(for: .messageRecords, timestamp: syncTimestamp)
         }.store(in: &subs)
     }

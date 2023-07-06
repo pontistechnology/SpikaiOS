@@ -35,8 +35,8 @@ class SSE {
     }
     
     private func startSyncs() {
-        repository.syncRooms()
-        repository.syncUsers()
+        repository.syncRooms(page: 1, startingTimestamp: Date().currentTimeMillis())
+        repository.syncUsers(page: 1, startingTimestamp: Date().currentTimeMillis())
         repository.getAppModeIsTeamChat()
             .sink { _ in
                 
@@ -47,7 +47,7 @@ class SSE {
         
         repository.syncMessages(page: 1, startingTimestamp: Date().currentTimeMillis())
         repository.syncBlockedList()
-        repository.syncMessageRecords()
+        repository.syncMessageRecords(page: 1, startingTimestamp: Date().currentTimeMillis())
     }
 }
 
