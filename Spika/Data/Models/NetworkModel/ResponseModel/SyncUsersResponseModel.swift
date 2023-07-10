@@ -8,5 +8,8 @@ struct SyncUsersResponseModel: Codable {
 }
 
 struct SyncUsersData: Codable {
-    let users: [User]
+    let list: [User]
+    let limit: Int64
+    let count: Int64
+    let hasNext: Bool
 }

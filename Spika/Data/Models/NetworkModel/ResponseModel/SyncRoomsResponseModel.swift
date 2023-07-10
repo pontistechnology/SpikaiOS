@@ -8,5 +8,8 @@ struct SyncRoomsResponseModel: Codable {
 }
 
 struct SyncRoomsData: Codable {
-    let rooms: [Room]
+    let list: [Room]
+    let limit: Int64
+    let count: Int64
+    let hasNext: Bool
 }

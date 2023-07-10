@@ -80,6 +80,7 @@ extension AllChatsViewModel {
                                                      badgeNumber: Int64, muted: Bool, pinned: Bool)? {
         let room = rooms.value[indexPath.row]
         let lastMessage = getLastMessage(for: indexPath)
+        let badgeNumber = lastMessage != nil ? room.unreadCount : 0
         
         if room.type == .privateRoom,
            let friendUser = room.getFriendUserInPrivateRoom(myUserId: getMyUserId()) {
@@ -88,7 +89,7 @@ extension AllChatsViewModel {
                                 name: friendUser.getDisplayName(),
                                 description: description(message: lastMessage, room: room),
                                 time: lastMessage?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
-                                badgeNumber: room.unreadCount,
+                                badgeNumber: badgeNumber,
                                 muted: room.muted,
                                 pinned: room.pinned)
             
@@ -98,7 +99,7 @@ extension AllChatsViewModel {
                                 name: room.name ?? .getStringFor(.noName),
                                 description: description(message: lastMessage, room: room),
                                 time: lastMessage?.createdAt.convert(to: .allChatsTimeFormat) ?? "",
-                                badgeNumber: room.unreadCount,
+                                badgeNumber: badgeNumber,
                                 muted: room.muted,
                                 pinned: room.pinned)
         }
