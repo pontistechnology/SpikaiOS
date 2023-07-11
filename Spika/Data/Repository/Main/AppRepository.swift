@@ -86,4 +86,22 @@ class AppRepository: Repository {
         return networkService.performRequest(resources: resources)
     }
     
+    func deleteLocalDatabase() {
+        databaseService.deleteEverything()
+    }
+    
+    func deleteUserDefaults() {
+        userDefaults.dictionaryRepresentation().forEach { key, value in
+            userDefaults.removeObject(forKey: key)
+        }
+    }
+    
+    func deleteAllFiles() {
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+              let fileUrls = try? FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil)
+        else { return }
+        for fileUrl in fileUrls {
+            try? FileManager.default.removeItem(at: fileUrl)
+        }
+    }
 }

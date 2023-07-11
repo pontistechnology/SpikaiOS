@@ -98,6 +98,18 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func deleteMyAccount() -> AnyPublisher<DeleteAccountResponseModel, Error> {
+        guard let accessToken = getAccessToken()
+        else {return Fail<DeleteAccountResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        let resources = Resources<DeleteAccountResponseModel, EmptyRequestBody>(path: Constants.Endpoints.userInfo, requestType: .DELETE, bodyParameters: nil, httpHeaderFields: ["accesstoken" : accessToken]
+        )
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
     func postContacts(hashes: [String], lastPage: Bool) -> AnyPublisher<ContactsResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else { return Fail<ContactsResponseModel, Error>(error: NetworkError.noAccessToken)
