@@ -79,6 +79,10 @@ class SettingsViewController: BaseViewController {
             self?.viewModel.presentAppereanceSettingsScreen()
         }.store(in: &subscriptions)
         
+        settingsView.deleteMyAccountButton.tap().sink { [weak self] _ in
+            self?.viewModel.askForDeleteConformation()
+        }.store(in: &subscriptions)
+        
         self.imagePickerPublisher.sink { [weak self] selectedImage in
             let statusOfPhoto = selectedImage.statusOfPhoto(for: .avatar)
             switch statusOfPhoto {

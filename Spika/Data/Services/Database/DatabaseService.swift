@@ -616,3 +616,12 @@ extension DatabaseService {
         }
     }
 }
+
+extension DatabaseService {
+    func deleteEverything() {
+        coreDataStack.persistentContainer.persistentStoreCoordinator.persistentStores.forEach { store in
+            guard let url = store.url else { return }
+            try? coreDataStack.persistentContainer.persistentStoreCoordinator.destroyPersistentStore(at: url, ofType: store.type)
+        }
+    }
+}

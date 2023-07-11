@@ -144,6 +144,7 @@ public extension Constants {
         case blockedUsers = "Blocked users"
         case somethingWentWrongFetchingBlockedUsers = "Something went wrong fetching blocked users"
         case somethingWentWrongUnblockingUser = "Something went wrong unblocking the contact"
+        case deleteMyAccount = "Delete my account"
         
         // MARK: - UIImage status
         case pleaseSelectSquare = "Please select a square"
