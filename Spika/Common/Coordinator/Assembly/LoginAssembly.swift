@@ -10,10 +10,24 @@ import Swinject
 
 class LoginAssembly: Assembly {
     func assemble(container: Container) {
+        assembleTermsAndConditionViewController(container)
         assembleEnterNumberViewController(container)
         assembleCountryPickerViewController(container)
         assembleEnterVerifyCodeViewController(container)
         assembleEnterUsernameViewController(container)
+    }
+    
+    private func assembleTermsAndConditionViewController(_ container: Container) {
+        container.register(TermsAndConditionViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return TermsAndConditionViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(TermsAndConditionViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = TermsAndConditionViewController()
+            controller.viewModel = container.resolve(TermsAndConditionViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
     }
     
     private func assembleEnterNumberViewController(_ container: Container) {

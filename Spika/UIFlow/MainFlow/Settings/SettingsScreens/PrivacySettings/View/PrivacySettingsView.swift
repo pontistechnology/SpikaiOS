@@ -10,6 +10,7 @@ import Foundation
 final class PrivacySettingsView: BaseSettingsView {
     
     let blockedUsersButton = NavView(text: .getStringFor(.blockedUsers))
+    let termsAndConditionsButton = NavView(text: .getStringFor(.termsAndConditions), isArrowHidden: true)
     
     override func styleSubviews() {
         super.styleSubviews()
@@ -17,7 +18,8 @@ final class PrivacySettingsView: BaseSettingsView {
     
     override func addSubviews() {
         super.addSubviews()
-        self.mainStackView.addArrangedSubview(blockedUsersButton)
+        mainStackView.addArrangedSubview(blockedUsersButton)
+        mainStackView.addArrangedSubview(termsAndConditionsButton)
     }
     
 }

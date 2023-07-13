@@ -59,11 +59,16 @@ class AppCoordinator: Coordinator {
         } else if let _ = userDefaults.string(forKey: Constants.Database.accessToken){
             presentEnterUsernameScreen()
         } else {
-            presentEnterNumberScreen()
+            presentTermsAndConditionsScreen()
         }
     }
     
     // MARK: LOGIN FLOW
+    func presentTermsAndConditionsScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(TermsAndConditionViewController.self, argument: self)!
+        self.navigationController.setViewControllers([viewController], animated: true)
+    }
+    
     func presentEnterNumberScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(EnterNumberViewController.self, argument: self)!
         self.navigationController.setViewControllers([viewController], animated: true)

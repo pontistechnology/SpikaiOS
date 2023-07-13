@@ -13,9 +13,10 @@ class NavView: UIView, BaseView {
     let arrowImageView = UIImageView()
     let text: String
     
-    init(text: String) {
+    init(text: String, isArrowHidden: Bool = false) {
         self.text = text
         super.init(frame: .zero)
+        arrowImageView.isHidden = isArrowHidden
         setupView()
     }
     
