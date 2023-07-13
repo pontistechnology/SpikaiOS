@@ -29,6 +29,12 @@ public extension Constants {
         case search = "Search"
         case allCountries = "ALL COUNTRIES"
         
+        // MARK: - Terms and conditions
+        case termsAndConditions = "Terms & Conditions"
+        case agreeAndContinue = "Agree & Continue"
+        case welcomeToSpika = "Welcome to Spika Messenger"
+        case tapAgreeAndContinueToAcceptThe = "Tap Agree & Continue to accept the"
+        
         // MARK: - EnterNumberViewController
         case couldNotAuthUser = "Could not auth user"
         case enterYourPhoneToUserSpika = "Enter your phone number to start using Spika"

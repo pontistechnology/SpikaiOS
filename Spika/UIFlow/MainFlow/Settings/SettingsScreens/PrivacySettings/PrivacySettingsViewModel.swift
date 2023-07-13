@@ -10,6 +10,7 @@ import Combine
 
 class PrivacySettingsViewModel: BaseSettingsViewModel {
  
-    
-    
+    func openTermsAndConditions() {
+        repository.openTermsAndConditions()
+    }
 }

@@ -35,4 +35,7 @@ extension AppRepository {
         Future() { _ in }
     }
     
+    func openTermsAndConditions() {
+        // TODO: - real one is in apprepository+shared
+    }
 }
