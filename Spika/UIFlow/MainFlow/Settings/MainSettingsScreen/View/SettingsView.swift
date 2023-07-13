@@ -22,6 +22,7 @@ class SettingsView: BaseSettingsView {
     let appereanceOptionButton = NavView(text: .getStringFor(.appereance))
     let privacyOptionButton = NavView(text: .getStringFor(.privacy))
     
+    let deleteMyAccountButton = NavView(text: .getStringFor(.deleteMyAccount), isArrowHidden: true)
     
     let appVersion = CustomLabel(text: "", textSize: 16, textColor: .textTertiary, fontName: .MontserratLight, alignment: .center)
     let accessToken = UITextField() // delete later
@@ -36,6 +37,8 @@ class SettingsView: BaseSettingsView {
         userNameTextField.returnKeyType = .done
         userNameTextField.delegate = self
         userNameTextField.hide()
+        
+        deleteMyAccountButton.label.textColor = .appRed
     }
     
     override func addSubviews() {
@@ -48,6 +51,7 @@ class SettingsView: BaseSettingsView {
         
         mainStackView.addArrangedSubview(appereanceOptionButton)
         mainStackView.addArrangedSubview(privacyOptionButton)
+        mainStackView.addArrangedSubview(deleteMyAccountButton)
         
         mainStackView.addArrangedSubview(appVersion)
         mainStackView.addArrangedSubview(accessToken)

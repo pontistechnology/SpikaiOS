@@ -85,7 +85,7 @@ private extension SSE {
         }
         
         eventSource?.onMessage { [weak self] id, event, data in
-            print("SSE DATA: ", data) // this is to see actual data
+//            print("SSE DATA: ", data) // this is to see actual data
             guard let self,
                   let jsonData = data?.data(using: .utf8),
                   let sseNewMessage = try? JSONDecoder().decode(SSENewMessage.self, from: jsonData),

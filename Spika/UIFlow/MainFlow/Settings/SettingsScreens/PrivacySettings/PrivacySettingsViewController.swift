@@ -20,10 +20,14 @@ class PrivacySettingsViewController: BaseViewController {
     }
     
     func setupBinding() {
-        self.settingsView.blockedUsersButton.tap()
+        settingsView.blockedUsersButton.tap()
             .sink { [weak self] _ in
                 self?.viewModel.getAppCoordinator()?.presentBlockedUsersSettingsScreen()
             }.store(in: &self.subscriptions)
+        
+        settingsView.termsAndConditionsButton.tap().sink { [weak self] _ in
+            self?.viewModel.openTermsAndConditions()
+        }.store(in: &subscriptions)
     }
     
 }

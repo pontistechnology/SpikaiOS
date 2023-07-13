@@ -31,6 +31,7 @@ protocol Repository {
 // MARK: - NETWORKING:
     
         // Auth
+    func openTermsAndConditions()
     func getAppModeIsTeamChat() -> Future<Bool?, Error>
     func getServerSettings() -> AnyPublisher<ServerSettingsResponseModel, Error>
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error>
@@ -44,6 +45,7 @@ protocol Repository {
         // User
     func fetchMyUserDetails() -> AnyPublisher<AuthResponseModel, Error>
     func updateUser(username: String?, avatarFileId: Int64?, telephoneNumber: String?, email: String?) -> AnyPublisher<UserResponseModel, Error>
+    func deleteMyAccount() -> AnyPublisher<DeleteAccountResponseModel, Error>
     
         // Contacts
     func postContacts(hashes: [String], lastPage: Bool) -> AnyPublisher<ContactsResponseModel, Error>
@@ -89,6 +91,7 @@ protocol Repository {
     // MARK: - COREDATA
     
     func getMainContext() -> NSManagedObjectContext
+    func deleteLocalDatabase()
     
         // Contacts
     func getPhoneContacts() -> Future<ContactFetchResult, Error>
@@ -136,6 +139,8 @@ protocol Repository {
 
     // MARK: - USERDEFAULTS:
     
+    func deleteUserDefaults()
+    
         // User
     func saveUserInfo(user: User, device: Device?, telephoneNumber: TelephoneNumber?)
     func getMyUserId() -> Int64
@@ -150,6 +155,7 @@ protocol Repository {
     func saveDataToFile(_ data: Data, name: String) -> URL?
     func copyFile(from fromURL: URL, name: String) -> URL?
     func getFile(name: String) -> URL?
+    func deleteAllFiles()
     
     // TODO: - move, refactor
     func serialWriteQueue() -> DispatchQueue
