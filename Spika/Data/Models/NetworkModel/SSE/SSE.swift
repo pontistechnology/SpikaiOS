@@ -71,12 +71,12 @@ private extension SSE {
         eventSource = EventSource(url: serverURL)
         
         eventSource?.onOpen { [weak self] in
-            self?.changeIndicatorColor(to: .appGreen)
+//            self?.changeIndicatorColor(to: .appGreen)
             self?.startSyncs()
         }
         
         eventSource?.onComplete { [weak self] statusCode, reconnect, error in
-            self?.changeIndicatorColor(to: .appRed)
+//            self?.changeIndicatorColor(to: .appRed)
             guard UIApplication.shared.applicationState == .active else { return }
             self?.startSSEAndSync()
 //            guard reconnect ?? false else { return }
@@ -156,9 +156,9 @@ private extension SSE {
 }
 
 private extension SSE {
-    func changeIndicatorColor(to color: UIColor) {
-        (coordinator as? AppCoordinator)?.changeIndicatorColor(to: color)
-    }
+//    func changeIndicatorColor(to color: UIColor) {
+//        (coordinator as? AppCoordinator)?.changeIndicatorColor(to: color)
+//    }
     
     func showNotification(info: MessageNotificationInfo) {
         (coordinator as? AppCoordinator)?.showNotification(info: info)
