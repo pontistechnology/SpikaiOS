@@ -101,7 +101,8 @@ class EnterNumberTextField: UIView, BaseView {
     }
     
     func getNumber() -> String? {
-        return textField.text
+        guard let substring = textField.text?.drop(while: { $0 == "0" }) else { return nil }
+        return String(substring)
     }
     
     func setRestOfNumber(_ string: String) {
