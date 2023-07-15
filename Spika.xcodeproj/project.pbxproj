@@ -4700,8 +4700,8 @@
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/InfoDev.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Can we get permission to access your camera to capture a photo?";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Can we get permission to access your contacts to discover who is in your network?";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -4741,8 +4741,8 @@
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/InfoDev.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Can we get permission to access your camera to capture a photo?";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Can we get permission to access your contacts to discover who is in your network?";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -4840,8 +4840,8 @@
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/InfoMessenger.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Can we get permission to access your camera to capture a photo?";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Can we get permission to access your contacts to discover who is in your network?";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -4881,8 +4881,8 @@
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/InfoMessenger.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Can we get permission to access your camera to capture a photo?";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Can we get permission to access your contacts to discover who is in your network?";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -5100,8 +5100,8 @@
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Can we get permission to access your camera to capture a photo?";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Can we get permission to access your contacts to discover who is in your network?";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need your permission to save a photo.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -5141,8 +5141,8 @@
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Can we get permission to access your camera to capture a photo?";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Can we get permission to access your contacts to discover who is in your network?";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need your permission to save a photo.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
