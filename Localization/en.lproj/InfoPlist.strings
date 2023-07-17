@@ -6,8 +6,8 @@
   
 */
 
-"NSCameraUsageDescription" = "Can we use your camera?";
-"NSContactsUsageDescription" = "Can we use your contacts?";
-"NSMicrophoneUsageDescription" = "Can we use your microphone?";
+"NSCameraUsageDescription" = "Can we get permission to access your camera to capture a photo?";
+"NSContactsUsageDescription" = "Can we get permission to access your contacts to discover who is in your network?";
+"NSPhotoLibraryAddUsageDescription" = ""
 
 

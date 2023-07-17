@@ -25,7 +25,7 @@ class SettingsView: BaseSettingsView {
     let deleteMyAccountButton = NavView(text: .getStringFor(.deleteMyAccount), isArrowHidden: true)
     
     let appVersion = CustomLabel(text: "", textSize: 16, textColor: .textTertiary, fontName: .MontserratLight, alignment: .center)
-    let accessToken = UITextField() // delete later
+//    let accessToken = UITextField() // delete later
     
     let userNameChanged = PassthroughSubject<String,Never>()
     
@@ -54,7 +54,7 @@ class SettingsView: BaseSettingsView {
         mainStackView.addArrangedSubview(deleteMyAccountButton)
         
         mainStackView.addArrangedSubview(appVersion)
-        mainStackView.addArrangedSubview(accessToken)
+//        mainStackView.addArrangedSubview(accessToken)
         
         self.contentView.addSubview(self.userNameTextField)
     }

@@ -25,7 +25,7 @@ final class WindowManager {
     
     init(scene: UIWindowScene) {
         self.scene = scene
-        setupIndicatorWindow()
+//        setupIndicatorWindow()
         setupBindings()
     }
 }
