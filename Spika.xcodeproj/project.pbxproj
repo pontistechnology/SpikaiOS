@@ -41,7 +41,6 @@
 		6C2F972829AF67B7001F170B /* ConstantsDev.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F972729AF67A5001F170B /* ConstantsDev.swift */; };
 		6C2F972929AF67BD001F170B /* ConstantsDev.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F972729AF67A5001F170B /* ConstantsDev.swift */; };
 		6C326A6728FECAAE00E00A59 /* OTPCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C326A6628FECAAE00E00A59 /* OTPCodeTextField.swift */; };
-		6C34D92B2A45B21A0009A449 /* InfoMessenger.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C3FF90F2A45A584003522FC /* InfoMessenger.plist */; };
 		6C34D92E2A45B5A60009A449 /* ConstantsMessenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C34D92C2A45B5980009A449 /* ConstantsMessenger.swift */; };
 		6C34D9322A45BFB10009A449 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C34D92F2A45BEEA0009A449 /* GoogleService-Info.plist */; };
 		6C4755F429096C6800BC1D9E /* ParkBenchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4755F329096C6800BC1D9E /* ParkBenchTimer.swift */; };
@@ -134,8 +133,6 @@
 		6C753DDE2A4C128800697AA6 /* VerifyCodeRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD45272AECFA00736318 /* VerifyCodeRequestModel.swift */; };
 		6C753DDF2A4C128800697AA6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B93280EFFD200F9B321 /* User.swift */; };
 		6C753DE72A4C137700697AA6 /* SpikaMessengerNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C753DE52A4C128800697AA6 /* SpikaMessengerNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		6C758CB829AF8A3F00895C9A /* InfoDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C758CB729AF8A3F00895C9A /* InfoDev.plist */; };
-		6C758CB929AF8C9800895C9A /* InfoDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C758CB729AF8A3F00895C9A /* InfoDev.plist */; };
 		6C75CE1E291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C75CE1D291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift */; };
 		6C769036291D36B5007F13D2 /* ChatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */; };
 		6C769038291D36BF007F13D2 /* ChatDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */; };
@@ -1298,12 +1295,10 @@
 		6C2497E02924FB3700594A55 /* UserSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionViewModel.swift; sourceTree = "<group>"; };
 		6C2497E32924FB4200594A55 /* UserSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectionView.swift; sourceTree = "<group>"; };
 		6C2638942907DB4400E7E79E /* CustomTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewHeader.swift; sourceTree = "<group>"; };
-		6C2CEE3A2A4C4D3400D04EB0 /* SpikaMessengerNotificationServiceInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SpikaMessengerNotificationServiceInfo.plist; sourceTree = "<group>"; };
 		6C2F972729AF67A5001F170B /* ConstantsDev.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsDev.swift; sourceTree = "<group>"; };
 		6C326A6628FECAAE00E00A59 /* OTPCodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPCodeTextField.swift; sourceTree = "<group>"; };
 		6C34D92C2A45B5980009A449 /* ConstantsMessenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsMessenger.swift; sourceTree = "<group>"; };
 		6C34D92F2A45BEEA0009A449 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6C3FF90F2A45A584003522FC /* InfoMessenger.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InfoMessenger.plist; sourceTree = "<group>"; };
 		6C4755F329096C6800BC1D9E /* ParkBenchTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkBenchTimer.swift; sourceTree = "<group>"; };
 		6C5A01C5298C096900BF4A01 /* TextAndImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAndImageView.swift; sourceTree = "<group>"; };
 		6C65B54F291B9B2B007C5B92 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
@@ -1311,7 +1306,6 @@
 		6C6AD21A291E3B8E0026CDAC /* ChatContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentView.swift; sourceTree = "<group>"; };
 		6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMembersView.swift; sourceTree = "<group>"; };
 		6C753DE52A4C128800697AA6 /* SpikaMessengerNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpikaMessengerNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C758CB729AF8A3F00895C9A /* InfoDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InfoDev.plist; sourceTree = "<group>"; };
 		6C75CE1D291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppCoordinator+PushNotifications.swift"; sourceTree = "<group>"; };
 		6C769035291D36B5007F13D2 /* ChatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewController.swift; sourceTree = "<group>"; };
 		6C769037291D36BF007F13D2 /* ChatDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -1319,7 +1313,6 @@
 		6C78B8C629AF5ADB004BF881 /* Spika Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spika Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C78B91D29AF5D89004BF881 /* SpikaNotificationServiceDev.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpikaNotificationServiceDev.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C78B91F29AF6467004BF881 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6C78B92129AF65F1004BF881 /* NotificationInfoDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NotificationInfoDev.plist; sourceTree = "<group>"; };
 		6C78B92429AF66CD004BF881 /* SpikaDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpikaDev.entitlements; sourceTree = "<group>"; };
 		6C78B92529AF66F4004BF881 /* SpikaNotificationServiceDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpikaNotificationServiceDev.entitlements; sourceTree = "<group>"; };
 		6C8FF1C42949D27000955592 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1873,8 +1866,6 @@
 				6CB29ED12A4C1480002E6D7E /* SpikaMessengerNotificationService.entitlements */,
 				9319416A2819CB510067566C /* NotificationService.swift */,
 				9319416C2819CB510067566C /* NotificationInfo.plist */,
-				6C78B92129AF65F1004BF881 /* NotificationInfoDev.plist */,
-				6C2CEE3A2A4C4D3400D04EB0 /* SpikaMessengerNotificationServiceInfo.plist */,
 			);
 			path = SpikaNotificationService;
 			sourceTree = "<group>";
@@ -2674,8 +2665,6 @@
 				ADD503C8270DC42E009D50CB /* SupportingFiles */,
 				ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */,
 				ADD503C2270DC3CA009D50CB /* Info.plist */,
-				6C758CB729AF8A3F00895C9A /* InfoDev.plist */,
-				6C3FF90F2A45A584003522FC /* InfoMessenger.plist */,
 			);
 			path = Spika;
 			sourceTree = "<group>";
@@ -3130,7 +3119,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C758CB929AF8C9800895C9A /* InfoDev.plist in Resources */,
 				6C78B8B129AF5ADB004BF881 /* Montserrat-Light.ttf in Resources */,
 				6C78B8B229AF5ADB004BF881 /* Montserrat-Regular.ttf in Resources */,
 				6C78B8B329AF5ADB004BF881 /* Localizable.strings in Resources */,
@@ -3191,10 +3179,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C34D92B2A45B21A0009A449 /* InfoMessenger.plist in Resources */,
 				EAA6A39F27CCF30C00B7E01F /* GoogleService-Info.plist in Resources */,
 				AD8192842722D5AF00D5BE48 /* Montserrat-Light.ttf in Resources */,
-				6C758CB829AF8A3F00895C9A /* InfoDev.plist in Resources */,
 				AD81927E2722D5AF00D5BE48 /* Montserrat-Regular.ttf in Resources */,
 				6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */,
 				9300D9D22A4C57E600B7B695 /* Shared Assets.xcassets in Resources */,
@@ -4636,7 +4622,7 @@
 				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SpikaNotificationService/SpikaMessengerNotificationServiceInfo.plist;
+				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SpikaMessengerNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -4652,7 +4638,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -4665,7 +4651,7 @@
 				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SpikaNotificationService/SpikaMessengerNotificationServiceInfo.plist;
+				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SpikaMessengerNotificationService;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -4681,7 +4667,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -4699,14 +4685,11 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Spika/InfoDev.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
+				INFOPLIST_FILE = Spika/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4717,9 +4700,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -4737,14 +4723,11 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Spika/InfoDev.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
+				INFOPLIST_FILE = Spika/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4755,9 +4738,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -4770,7 +4756,7 @@
 				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SpikaNotificationService/NotificationInfoDev.plist;
+				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SpikaNotificationServiceDev;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -4786,7 +4772,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -4799,7 +4785,7 @@
 				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SpikaNotificationService/NotificationInfoDev.plist;
+				INFOPLIST_FILE = SpikaNotificationService/NotificationInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SpikaNotificationServiceDev;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -4815,7 +4801,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -4833,14 +4819,11 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Spika/InfoMessenger.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
+				INFOPLIST_FILE = Spika/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4851,9 +4834,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaMessenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -4871,14 +4857,11 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Spika/InfoMessenger.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
+				INFOPLIST_FILE = Spika/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4889,9 +4872,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaMessenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -4919,7 +4905,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -4947,7 +4933,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -4955,7 +4941,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 68;
+				APP_BUILD_VERSION = 71;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -5005,6 +4991,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "check localizable file";
+				INFOPLIST_KEY_NSContactsUsageDescription = "check localizable file";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "check localizable file";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -5019,7 +5009,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 68;
+				APP_BUILD_VERSION = 71;
 				APP_VERSION = 1.0.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -5063,6 +5053,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "check localizable file";
+				INFOPLIST_KEY_NSContactsUsageDescription = "check localizable file";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "check localizable file";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -5088,14 +5082,9 @@
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need your permission to save a photo.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5105,9 +5094,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -5126,14 +5118,9 @@
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Spika/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Can we use your camera?";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Can we use your contacts?";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Can we use your microphone?";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need your permission to save a photo.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5143,9 +5130,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
