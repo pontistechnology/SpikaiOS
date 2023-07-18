@@ -150,16 +150,16 @@ extension AppRepository {
 
 extension AppRepository {
     func syncRooms(page: Int, startingTimestamp: Int64) {
-        syncRooms(timestamp: getSyncTimestamp(for: .rooms), page: page).sink { _ in
+        syncRooms(timestamp: startingTimestamp, page: page).sink { _ in
             
         } receiveValue: { [weak self] response in
             guard let rooms = response.data?.list else { return }
             if let hasNext = response.data?.hasNext, hasNext {
                 self?.syncRooms(page: page + 1, startingTimestamp: startingTimestamp)
-                self?.saveLocalRooms(rooms, syncTimestamp: nil)
-            } else {
-                self?.saveLocalRooms(rooms, syncTimestamp: startingTimestamp)
             }
+            let maxTimestamp = rooms.max { $0.modifiedAt < $1.modifiedAt
+            }?.modifiedAt
+            self?.saveLocalRooms(rooms, syncTimestamp: maxTimestamp)
         }.store(in: &subs)
     }
     
@@ -175,16 +175,15 @@ extension AppRepository {
 
 extension AppRepository {
     func syncUsers(page: Int, startingTimestamp: Int64) {
-        syncUsers(timestamp: getSyncTimestamp(for: .users), page: page).sink { _ in
+        syncUsers(timestamp: startingTimestamp, page: page).sink { _ in
             
         } receiveValue: { [weak self] response in
             guard let users = response.data?.list else { return }
             if let hasNext = response.data?.hasNext, hasNext {
                 self?.syncUsers(page: page+1, startingTimestamp: startingTimestamp)
-                self?.saveUsers(users, syncTimestamp: nil)
-            } else {
-                self?.saveUsers(users, syncTimestamp: startingTimestamp)
             }
+            let maxTimestamp = users.max { $0.modifiedAt < $1.modifiedAt }?.modifiedAt
+            self?.saveUsers(users, syncTimestamp: maxTimestamp)
         }.store(in: &subs)
     }
     
@@ -226,16 +225,16 @@ extension AppRepository {
 
 extension AppRepository {
     func syncMessages(page: Int, startingTimestamp: Int64) {
-        syncAllMessages(timestamp: getSyncTimestamp(for: .messages), page: page).sink { c in
+        syncAllMessages(timestamp: startingTimestamp, page: page).sink { c in
             
         } receiveValue: { [weak self] response in
             guard let messages = response.data?.list else { return }
             if let hasNext = response.data?.hasNext, hasNext {
                 self?.syncMessages(page: page+1, startingTimestamp: startingTimestamp)
-                self?.saveMessages(messages, syncTimestamp: nil)
-            } else {
-                self?.saveMessages(messages, syncTimestamp: startingTimestamp)
             }
+            let maxTimestamp = messages.max { $0.modifiedAt < $1.modifiedAt
+            }?.modifiedAt
+            self?.saveMessages(messages, syncTimestamp: maxTimestamp)
         }.store(in: &subs)
     }
     
