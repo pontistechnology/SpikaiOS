@@ -213,7 +213,6 @@ extension AppRepository {
     }
     
     private func saveMessageRecords(_ records: [MessageRecord], syncTimestamp: Int64?) {
-        print("SSE: message records recieved: ", records.count)
         saveMessageRecords(records).sink { _ in
             
         } receiveValue: { [weak self] _ in
