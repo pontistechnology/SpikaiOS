@@ -21,6 +21,7 @@ public class RoomEntity: NSManagedObject {
         self.name = room.name
         self.avatarFileId = room.avatarFileId ?? 0
         self.createdAt = room.createdAt
+        self.modifiedAt = room.modifiedAt
         self.type = room.type.rawValue
         self.muted = room.muted
         self.roomDeleted = room.deleted

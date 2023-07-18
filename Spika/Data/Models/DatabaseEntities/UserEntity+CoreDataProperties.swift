@@ -18,6 +18,7 @@ extension UserEntity {
 
     @NSManaged public var avatarFileId: Int64
     @NSManaged public var createdAt: Int64
+    @NSManaged public var modifiedAt: Int64
     @NSManaged public var displayName: String?
     @NSManaged public var emailAddress: String?
     @NSManaged public var contactsName: String?

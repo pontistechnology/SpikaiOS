@@ -16,6 +16,7 @@ struct User: Codable {
     var telephoneNumberHashed: String?
     var emailAddress: String?
     var createdAt: Int64
+    var modifiedAt: Int64
     
     var contactsName: String?
         
@@ -40,6 +41,7 @@ extension User {
                   telephoneNumber: entity.telephoneNumber,
                   emailAddress: entity.emailAddress,
                   createdAt: entity.createdAt,
+                  modifiedAt: entity.modifiedAt,
                   contactsName: entity.contactsName)
     }
 }
