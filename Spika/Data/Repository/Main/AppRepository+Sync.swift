@@ -120,7 +120,7 @@ extension AppRepository {
         databaseService.resetUnreadCount(roomId)
     }
     
-    private func getSyncTimestamp(for type: SyncType) -> Int64 {
+    func getSyncTimestamp(for type: SyncType) -> Int64 {
         switch type {
             
         case .rooms:
@@ -201,16 +201,15 @@ extension AppRepository {
 
 extension AppRepository {
     func syncMessageRecords(page: Int, startingTimestamp: Int64) {
-        syncMessageRecords(timestamp: getSyncTimestamp(for: .messageRecords), page: page).sink { _ in
+        syncMessageRecords(timestamp: startingTimestamp, page: page).sink { _ in
             
         } receiveValue: { [weak self] response in
             guard let records = response.data?.list else { return }
             if let hasNext = response.data?.hasNext, hasNext {
                 self?.syncMessageRecords(page: page+1, startingTimestamp: startingTimestamp)
-                self?.saveMessageRecords(records, syncTimestamp: nil)
-            } else {
-                self?.saveMessageRecords(records, syncTimestamp: startingTimestamp)
             }
+            let maxTimestamp = records.max { $0.createdAt < $1.createdAt }?.createdAt
+            self?.saveMessageRecords(records, syncTimestamp: maxTimestamp)
         }.store(in: &subs)
     }
     

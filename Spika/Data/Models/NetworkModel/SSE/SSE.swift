@@ -47,7 +47,7 @@ class SSE {
         
         repository.syncMessages(page: 1, startingTimestamp: Date().currentTimeMillis())
         repository.syncBlockedList()
-        repository.syncMessageRecords(page: 1, startingTimestamp: Date().currentTimeMillis())
+        repository.syncMessageRecords(page: 1, startingTimestamp: repository.getSyncTimestamp(for: .messageRecords))
     }
 }
 

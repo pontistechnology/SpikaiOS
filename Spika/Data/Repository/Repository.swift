@@ -74,6 +74,7 @@ protocol Repository {
     func syncMessageRecords(page: Int, startingTimestamp: Int64)
     func syncMessages(page: Int, startingTimestamp: Int64)
     func syncContacts(force: Bool?)
+    func getSyncTimestamp(for type: SyncType) -> Int64
 
         // Block
     func blockUser(userId: Int64) -> AnyPublisher<EmptyResponse, Error>
