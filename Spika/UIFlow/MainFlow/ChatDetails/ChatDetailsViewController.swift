@@ -77,12 +77,16 @@ final class ChatDetailsViewController: BaseViewController {
             }
             .store(in: &self.viewModel.subscriptions)
 
-        self.viewModel.room
-            .map { $0.users }
-            .sink { [weak self] users in
-                self?.chatDetailView.contentView.chatMembersView.updateWithMembers(users: users)
-            }
-            .store(in: &self.viewModel.subscriptions)
+        if self.viewModel.room.value.type == .privateRoom {
+            chatDetailView.contentView.chatMembersView.removeFromSuperview()
+        } else {
+            self.viewModel.room
+                .map { $0.users }
+                .sink { [weak self] users in
+                    self?.chatDetailView.contentView.chatMembersView.updateWithMembers(users: users)
+                }
+                .store(in: &self.viewModel.subscriptions)
+        }
         
         self.viewModel.room
             .map { $0.muted }
