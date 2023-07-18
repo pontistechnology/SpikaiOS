@@ -23,6 +23,7 @@ public class UserEntity: NSManagedObject {
         self.emailAddress = user.emailAddress
         self.telephoneNumber = user.telephoneNumber
         self.displayName = user.displayName
+        self.modifiedAt = user.modifiedAt
         
         self.contactsName = user.contactsName ?? user.displayName
     }

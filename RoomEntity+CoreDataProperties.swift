@@ -18,6 +18,7 @@ extension RoomEntity {
 
     @NSManaged public var avatarFileId: Int64
     @NSManaged public var createdAt: Int64
+    @NSManaged public var modifiedAt: Int64
     @NSManaged public var id: Int64
     @NSManaged public var name: String?
     @NSManaged public var type: String?
