@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_drive_ms_word_24px.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -32,11 +32,11 @@ class ImageButton: UIView, BaseView {
     }
     
     func styleSubviews() {
-        backgroundView.backgroundColor = UIColor(named: Constants.Colors.appBlueLight)
+        backgroundView.backgroundColor = .appBlueLight
         backgroundView.layer.cornerRadius = size.height / 2
         backgroundView.clipsToBounds = true
         
-        imageView.image = image.withRenderingMode(.alwaysOriginal).withTintColor(UIColor(named: Constants.Colors.appBlue)!)
+        imageView.image = image.withRenderingMode(.alwaysOriginal)
     }
     
     func positionSubviews() {
@@ -44,7 +44,7 @@ class ImageButton: UIView, BaseView {
         backgroundView.anchor(size: size)
         
         imageView.centerInSuperview()
-        imageView.anchor(size: CGSize(width: size.width * 0.4, height: size.height * 0.4))
+        imageView.anchor(size: CGSize(width: size.width * 0.6, height: size.height * 0.6))
     }
     
 }

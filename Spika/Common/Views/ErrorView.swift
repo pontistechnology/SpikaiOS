@@ -13,9 +13,9 @@ class ErrorView: UIView, BaseView {
     private let errorImage: UIImage
     
     private let errorImageView = UIImageView()
-    private let errorLabel = UILabel()
+    private let errorLabel = CustomLabel(text: "", textSize: 13, textColor: .appRed, fontName: .MontserratMedium)
     
-    init(message: String, errorImage: UIImage = UIImage(named: "error")!) {
+    init(message: String, errorImage: UIImage = UIImage(safeImage: .error)) {
         self.message = message
         self.errorImage = errorImage
         super.init(frame: .zero)
@@ -33,11 +33,9 @@ class ErrorView: UIView, BaseView {
     
     func styleSubviews() {
         self.layer.cornerRadius = 10
-        self.backgroundColor = UIColor(named: Constants.Colors.appRedLight)
+        self.backgroundColor = .errorRedLight
         
-        errorLabel.textColor = UIColor(named: Constants.Colors.appRed)
         errorLabel.numberOfLines = 1
-        errorLabel.font = UIFont(name: "Montserrat-Medium", size: 13)
         errorLabel.text = message
         
         errorImageView.image = errorImage

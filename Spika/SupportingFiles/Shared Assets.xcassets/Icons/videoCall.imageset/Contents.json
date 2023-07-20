@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "missed_video_call_filled_24px.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

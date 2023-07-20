@@ -16,9 +16,9 @@ protocol SearchBarDelegate: AnyObject {
 class SearchBar: UIView, BaseView {
     
     let searchView = UIView()
-    let searchImage = UIImageView(image: UIImage(named: "search"))
+    let searchImage = UIImageView(image: UIImage(safeImage: .search))
     let searchTextField = UITextField()
-    let deleteImage = UIImageView(image: UIImage(named: "delete"))
+    let deleteImage = UIImageView(image: UIImage(safeImage: .delete))
     let cancelButton = UIButton()
     
     weak var delegate: SearchBarDelegate?
@@ -49,22 +49,23 @@ class SearchBar: UIView, BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .white
+        backgroundColor = .clear
         
-        deleteImage.isHidden = true
+        deleteImage.hide()
         
-        searchTextField.textColor = UIColor(named: Constants.Colors.textPrimary)
-        searchTextField.font = UIFont(name: "Montserrat-Medium", size: 14)
+        searchTextField.autocorrectionType = .no
+        searchTextField.textColor = .textPrimary
+        searchTextField.font = .customFont(name: .MontserratMedium, size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: Constants.Colors.textTertiary)!])
+                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
         
-        searchView.backgroundColor = UIColor(named: Constants.Colors.appLightGray)
+        searchView.backgroundColor = .chatBackground
         searchView.layer.cornerRadius = 10
         searchView.clipsToBounds = true
         
-        cancelButton.setTitle(Constants.Strings.cancel, for: .normal)
-        cancelButton.setTitleColor(UIColor(named: Constants.Colors.appBlue), for: .normal)
-        cancelButton.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
+        cancelButton.setTitle(.getStringFor(.cancel), for: .normal)
+        cancelButton.setTitleColor(.primaryColor, for: .normal)
+        cancelButton.titleLabel?.font = .customFont(name: .MontserratMedium, size: 14)
     }
     
     func positionSubviews() {
@@ -76,7 +77,7 @@ class SearchBar: UIView, BaseView {
             
             searchView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: cancelButton.leadingAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0))
         } else {
-            searchView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 16))
+            searchView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0))
         }
         
         searchImage.anchor(leading: searchView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15), size: CGSize(width: 18, height: 18))
@@ -95,7 +96,7 @@ class SearchBar: UIView, BaseView {
         }.store(in: &subscriptions)
         
         cancelButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.delegate?.searchBar(self, didPressCancel: true)
         }.store(in: &subscriptions)
         
@@ -107,7 +108,7 @@ class SearchBar: UIView, BaseView {
             if value.isEmpty {
                 self.clearTextField()
             } else {
-                self.deleteImage.isHidden = false
+                self.deleteImage.unhide()
                 delegate?.searchBar(self, valueDidChange: value)
             }
         } else {
@@ -118,8 +119,7 @@ class SearchBar: UIView, BaseView {
     
     func clearTextField() {
         self.searchTextField.text = ""
-        self.deleteImage.isHidden = true
-        self.searchTextField.endEditing(true)
+        self.deleteImage.hide()
         delegate?.searchBar(self, valueDidChange: "")
     }
 }

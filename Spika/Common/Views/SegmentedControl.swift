@@ -27,11 +27,12 @@ class SegmentedControl: UISegmentedControl {
     func setupControl() {
         selectedSegmentIndex = 0
         backgroundColor = UIColor.clear
-        selectedSegmentTintColor = UIColor(named: Constants.Colors.appBlueLight)
+        selectedSegmentTintColor = .appBlueLight
          
-        SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: Constants.Colors.appBlue)!, NSAttributedString.Key.font: UIFont(name: "Montserrat-SemiBold", size: 14)!], for: .selected)
+        // TODO: - Check color
+        SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.green,  NSAttributedString.Key.font: UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14)!], for: .selected)
          
-        SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Montserrat-SemiBold", size: 14)!], for: .normal)
+        SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14)!], for: .normal)
         
         addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
     }

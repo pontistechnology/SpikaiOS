@@ -1,0 +1,119 @@
+/* 
+  Localizable.strings
+  Spika
+
+  Created by Vedran Vugrin on 13.12.2022..
+*/
+
+"Spika" = "Spika";
+"Cancel" = "Cancel";
+"Done" = "Done";
+"Next" = "Next";
+"Show more" = "Show more";
+"Show less" = "Show less";
+"Members" = "Members";
+"Details" = "Details";
+"shared" = "shared";
+
+"Terms & Conditions" = "Terms & Conditions";
+"Agree & Continue" = "Agree & Continue";
+"Welcome to Spika Messenger" = "Welcome to Spika Messenger";
+"Tap Agree & Continue to accept the" = "Tap Agree & Continue to accept the";
+ 
+"Search" = "Search";
+"ALL COUNTRIES" = "ALL COUNTRIES";
+"Could not auth user" = "Could not auth user";
+"Enter your phone number to start using Spika" = "Enter your phone number to start using Spika";
+"Eg. 98726123" = "Eg. 98726123";
+"Phone number" = "Phone number";
+"We sent you 6 digit verification code on" = "We sent you 6 digit verification code on";
+
+"Username" = "Username";
+"Enter username" = "Enter username";
+"Take a photo" = "Take a photo";
+"Choose from gallery" = "Choose from gallery";
+"Remove photo" = "Remove photo";
+"Please use better quality." = "Please use better quality.";
+"Please select a square" = "Please select a square";
+
+"We sent you 6 digit verification code." = "We sent you 6 digit verification code.";
+"Resend code" = "Resend code";
+
+"Chat" = "Chat";
+"Call History" = "Call History";
+"Contacts" = "Contacts";
+"Settings" = "Settings";
+"Appereance" = "Appereance";
+"Dark mode" = "Dark mode";
+"Light mode" = "Light mode";
+"System mode" = "System mode";
+"Delete my account" = "Delete my account";
+
+"Group" = "Group";
+"Add to contacts" = "Add to contacts";
+"Shared Media, Links and Docs" = "Shared Media, Links and Docs";
+"Chat search" = "Chat search";
+"Notes" = "Notes";
+"Favorites" = "Favorites";
+"Pin chat" = "Pin chat";
+"Mute" = "Mute";
+"Block" = "Block";
+"Report" = "Report";
+"Are you sure you want to delete group?" = "Are you sure you want to delete group?";
+"Something went wrong deleting the room" = "Something went wrong deleting the room";
+"Something went wrong trying to add new users" = "Something went wrong trying to add new users";
+"Something went wrong muting the room" = "Something went wrong muting the room";
+"Something went wrong unmuting the room" = "Something went wrong unmuting the room";
+
+"Search for contact,message, file..." = "Search for contact,message, file...";
+"Media" = "Media";
+"Links" = "Links";
+"Docs" = "Docs";
+
+"selected" = "selected";
+"Select users" = "Select users";
+"Search for contact" = "Search for contact";
+
+"Read by" = "Read by";
+"Delivered to" = "Delivered to";
+"Sent to" = "Sent to";
+"waiting" = "waiting";
+
+"Create" = "Create";
+"people selected" = "people selected";
+"New Group" = "New Group";
+"Group name..." = "Group name...";
+
+"Title" = "Title";
+"noname" = "noname";
+
+"Unknown" = "Unknown";
+"Today" = "Today";
+"Reply" = "Reply";
+
+"New chat" = "New chat";
+"New group chat" = "New group chat";
+"New private chat" = "New private chat";
+
+"Name and Surname" = "Name and Surname";
+"Favorite messages" = "Favorite messages";
+"Reactions" = "Reactions";
+
+"Reply" = "Reply";
+"Forward" = "Forward";
+"Copy" = "Copy";
+"Details" = "Details";
+"Favorite" = "Favorite";
+"Delete" = "Delete";
+"Edit" = "Edit";
+
+"Delete for me" = "Delete for me";
+"Delete for everyone" = "Delete for everyone";
+
+"Please select a square" = "Please select a square";
+"Please select a larger image" = "Please select a larger image";
+"Selected image is too big" = "Selected image is too big";
+"Unsupported format" = "Unsupported format";
+"All ok." = "All ok.";
+
+

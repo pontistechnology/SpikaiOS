@@ -16,12 +16,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         let navController = UINavigationController()
-        appCoordinator = AppCoordinator(navigationController: navController)
-        appCoordinator?.start()
         
         window = UIWindow(windowScene: scene)
         window?.rootViewController = navController
+        setDefaultAppereance()
         window?.makeKeyAndVisible()
+
+        appCoordinator = AppCoordinator(navigationController: navController, windowScene: scene)
+        appCoordinator?.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -32,11 +34,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
+        appCoordinator?.syncAndStartSSE()
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
+        appCoordinator?.stopSSE()
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
     }
@@ -52,9 +56,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-
-
+    
+    func setDefaultAppereance() {
+        let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)
+        let rawValue = userDefaults?.integer(forKey: Constants.Database.selectedAppereanceMode) ?? 0
+        let mode = UIUserInterfaceStyle(rawValue: rawValue) ?? .unspecified
+        window?.overrideUserInterfaceStyle = mode
+    }
 }
 

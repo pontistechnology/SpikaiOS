@@ -7,13 +7,14 @@
 
 import Foundation
 import Combine
+import UIKit
 
 enum RequestType: String {
     case GET, PUT, POST, DELETE
 }
 
 enum NetworkError: Error {
-    case badURL, requestFailed, fileTooLarge, unknown
+    case badURL, requestFailed, fileTooLarge, unknown, noAccessToken, chunkUploadFail, verifyFileFail
 
     var description : String {
         switch self {
@@ -21,6 +22,9 @@ enum NetworkError: Error {
         case .requestFailed: return "Request Failed."
         case .fileTooLarge: return "File too large."
         case .unknown: return "Unknown error."
+        case .noAccessToken: return "No access token."
+        case .chunkUploadFail: return "Chunk upload failed"
+        case .verifyFileFail: return "Verify file failed."
         }
   }
 }
@@ -46,6 +50,7 @@ class NetworkService {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
+//        print("REQUEST URL: ", url)
         var request = URLRequest(url: url)
 
         if let bodyParameters = resources.bodyParameters {
@@ -56,12 +61,35 @@ class NetworkService {
         if let headerFields = resources.httpHeaderFields {
             request.allHTTPHeaderFields = headerFields
         }
-
+        
         request.httpMethod = resources.requestType.rawValue
-        request.addValue("application/json", forHTTPHeaderField:
-                      "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("ios", forHTTPHeaderField: "os-name")
+        request.addValue(UIDevice.current.systemVersion, forHTTPHeaderField: "os-version")
+        request.addValue(UIDevice.current.model, forHTTPHeaderField: "device-name")
+        request.addValue((Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "unknown", forHTTPHeaderField: "app-version")
+        request.addValue(Locale.current.languageCode ?? "unknown", forHTTPHeaderField: "language")
+                
         return URLSession.shared.dataTaskPublisher(for: request)
-                    .map(\.data)
+            .map({ [weak self] (data, response) in
+//                DebugUtils.printRequestAndResponse(request: request, data: data)
+                let statusCode = (response as? HTTPURLResponse)?.statusCode
+                switch statusCode {
+                case 200:
+                    break
+//                    print("STATUS CODE 200")
+                case 401:
+                    let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)!
+                    userDefaults.removeObject(forKey: Constants.Database.accessToken)
+                case 404:
+                    break
+//                    print("STATUS CODE 404: ", response.url)
+                default:
+                    break
+//                    print("STATUS CODE ", statusCode, "for url: ", request.url)
+                }
+                return data
+            })
                     .decode(type: T.self, decoder: JSONDecoder())
                     .receive(on: DispatchQueue.main)
                     .eraseToAnyPublisher()

@@ -7,56 +7,99 @@
 
 import UIKit
 import CoreData
+import AVFoundation
+import Firebase
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
+    let notificationHelper = NotificationHelpers()
+        
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        configureFirebase()
+        configureNotifications(app: application)
+        customization()
+//        test()
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    
+    func configureFirebase() {
+        FirebaseApp.configure()
+        
     }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    
+    func test() {
+            print("_____")
+            Constants.Strings.allCases.enumerated().forEach { index, element in
+                print("C ", index, String.getStringFor(element))
+                print(String.getStringFor(element) == element.rawValue)
+            }
+            print("_____")
     }
+    
+    
+    func customization() {
+        if let token = UserDefaults(suiteName: Constants.Networking.appGroupName)?.string(forKey: Constants.Database.accessToken) as? String {
+            print("TOKEN: ", token)
+        }
+        
+        guard let font =  UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14) else { return }
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+            [   NSAttributedString.Key.font : font,
+                NSAttributedString.Key.foregroundColor : UIColor.primaryColor
+            ], for: .normal)
+        
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+            [   NSAttributedString.Key.font : font,
+            ], for: .disabled)
+    }
+}
 
-    // MARK: - Core Data stack
 
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: Constants.Database.databaseName)
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
+// MARK: Push notifications
 
-    // MARK: - Core Data Saving support
-
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
+extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+       
+        guard let message = notificationHelper.decodeMessageFrom(userInfo: userInfo) else {
+            completionHandler()
+            return
+        }
+        
+        let scene = UIApplication.shared.connectedScenes.first
+        guard let sd : SceneDelegate = (scene?.delegate as? SceneDelegate) else {
+            completionHandler()
+            return
+        }
+        notificationHelper.removeNotifications(withRoomId: message.roomId)
+        DispatchQueue.main.async {
+            sd.appCoordinator?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: message.roomId))
+            completionHandler()
         }
     }
-
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        messaging.token { token, _ in
+            guard let token = token else { return }
+            print("New Push fcmToken: ", token)
+            let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)!
+            userDefaults.set(token, forKey: Constants.Database.pushToken)
+        }
+    }
+    
+    func configureNotifications(app: UIApplication) {
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, _ in
+            guard success else { return }
+            print("APNs registred.")
+        }
+        app.registerForRemoteNotifications()
+    }
 }
 
