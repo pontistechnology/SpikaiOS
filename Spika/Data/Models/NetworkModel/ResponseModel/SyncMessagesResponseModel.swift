@@ -8,5 +8,8 @@ struct SyncMessagesResponseModel: Codable {
 }
 
 struct SyncMessagesData: Codable {
-    let messages: [Message]
+    let list: [Message]
+    let limit: Int64
+    let count: Int64
+    let hasNext: Bool
 }

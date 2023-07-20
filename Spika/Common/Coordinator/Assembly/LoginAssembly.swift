@@ -10,10 +10,24 @@ import Swinject
 
 class LoginAssembly: Assembly {
     func assemble(container: Container) {
+        assembleTermsAndConditionViewController(container)
         assembleEnterNumberViewController(container)
         assembleCountryPickerViewController(container)
         assembleEnterVerifyCodeViewController(container)
         assembleEnterUsernameViewController(container)
+    }
+    
+    private func assembleTermsAndConditionViewController(_ container: Container) {
+        container.register(TermsAndConditionViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return TermsAndConditionViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(TermsAndConditionViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = TermsAndConditionViewController()
+            controller.viewModel = container.resolve(TermsAndConditionViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
     }
     
     private func assembleEnterNumberViewController(_ container: Container) {
@@ -43,12 +57,12 @@ class LoginAssembly: Assembly {
     }
     
     private func assembleEnterVerifyCodeViewController(_ container: Container) {
-        container.register(EnterVerifyCodeViewModel.self) { (resolver, coordinator: AppCoordinator, number: String, deviceId: String) in
+        container.register(EnterVerifyCodeViewModel.self) { (resolver, coordinator: AppCoordinator, phoneNumber: TelephoneNumber, deviceId: String) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return EnterVerifyCodeViewModel(repository: repository, coordinator: coordinator, deviceId: deviceId, phoneNumber: number)
+            return EnterVerifyCodeViewModel(repository: repository, coordinator: coordinator, deviceId: deviceId, phoneNumber: phoneNumber)
         }.inObjectScope(.transient)
         
-        container.register(EnterVerifyCodeViewController.self) { (resolver, coordinator: AppCoordinator, number: String, deviceId: String) in
+        container.register(EnterVerifyCodeViewController.self) { (resolver, coordinator: AppCoordinator, number: TelephoneNumber, deviceId: String) in
             let controller = EnterVerifyCodeViewController()
             controller.viewModel = container.resolve(EnterVerifyCodeViewModel.self, arguments: coordinator, number, deviceId)
             return controller

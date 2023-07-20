@@ -11,11 +11,11 @@ import Combine
 class BaseViewController: UIViewController {
     
     var subscriptions = Set<AnyCancellable>()
-    let circularProgressBar = CircularProgressBar(spinnerWidth: 24)
+    private let circularProgressBar = CircularProgressBar(spinnerWidth: 24)
+    let imagePickerPublisher = PassthroughSubject<UIImage, Never>()
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        title = " "
+    init() {
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -23,7 +23,8 @@ class BaseViewController: UIViewController {
     }
     
     deinit {
-//        print("baseVC deinit")
+//        let name = String(describing: self.self)
+//        print("\(name) deinit")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,15 +39,16 @@ class BaseViewController: UIViewController {
     }
     
     func setupView(_ view: UIView) {
-        self.view.backgroundColor = .whiteAndDarkBackground
+        self.view.backgroundColor = .primaryBackground
         self.view.addSubview(view)
         view.fillSuperviewSafeAreaLayoutGuide()
         hideKeyboardWhenTappedAround()
     }
     
+    // TODO: - move
     private func showLoading(progress: CGFloat?) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             if let _ = self.circularProgressBar.superview {
                 print("jes")
             } else {
@@ -64,14 +66,14 @@ class BaseViewController: UIViewController {
     
     private func hideLoading() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.circularProgressBar.removeFromSuperview()
         }
     }
     
     func sink(networkRequestState publisher: CurrentValueSubject<RequestState, Never>) {
         publisher.sink { [weak self] state in
-            guard let self = self else { return }
+            guard let self else { return }
             switch state {
             case .finished:
                 self.hideLoading()
@@ -84,12 +86,43 @@ class BaseViewController: UIViewController {
 
 extension BaseViewController {
     func hideKeyboardWhenTappedAround() {
-            let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-            tap.cancelsTouchesInView = false
-            view.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
 }
+
+// MARK: UIImagepicker
+
+extension BaseViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func showUIImagePicker(source: UIImagePickerController.SourceType, allowsEdit: Bool = true) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = source
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = allowsEdit
+        if case UIImagePickerController.SourceType.camera = source {
+            imagePicker.cameraCaptureMode = .photo
+            imagePicker.cameraDevice = .rear
+        }
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // TODO: send url
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            imagePickerPublisher.send(pickedImage)
+        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            imagePickerPublisher.send(originalImage)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+

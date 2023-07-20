@@ -21,7 +21,7 @@ struct VerifyFileData: Codable {
 
 // MARK: - File
 struct File: Codable {
-    let id: Int?
+    let id: Int64?
     let type: String?
     let relationId: Int?
     let path: String?

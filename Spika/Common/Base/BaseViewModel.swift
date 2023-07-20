@@ -7,8 +7,9 @@
 
 import Foundation
 import Combine
+import UIKit
 
-class BaseViewModel {
+class BaseViewModel: NSObject {
     let coordinator: Coordinator
     let repository: Repository
     var subscriptions = Set<AnyCancellable>()
@@ -17,6 +18,7 @@ class BaseViewModel {
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
         self.coordinator = coordinator
+        super.init()
     }
     
     func getAppCoordinator() -> AppCoordinator? {
@@ -25,5 +27,23 @@ class BaseViewModel {
     
     func getMyUserId() -> Int64 {
         return repository.getMyUserId()
+    }
+    
+    func showError(_ message: String) {
+        getAppCoordinator()?.showError(message: message)
+    }
+    
+    func showOneSecAlert(type: OneSecPopUpType) {
+        _ = getAppCoordinator()?
+            .showAlert(title: type.title, message: nil, style: .alert, actions: [], cancelText: nil)
+    }
+    
+    // TODO: - move
+    func resizeImage(_ original: UIImage) -> UIImage? {
+        guard let jpgData = original.jpegData(compressionQuality: 1),
+              let tempUrl = repository.saveDataToFile(jpgData, name: "tempFile"),
+              let resizedImage = tempUrl.downsample(isForThumbnail: true)
+        else { return nil }
+        return resizedImage
     }
 }

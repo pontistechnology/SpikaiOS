@@ -9,6 +9,7 @@ import Foundation
 
 struct Message: Codable {
     let createdAt: Int64
+    let modifiedAt: Int64
     let fromUserId: Int64
     let roomId: Int64
     let id: Int64?
@@ -16,91 +17,92 @@ struct Message: Codable {
     let totalUserCount: Int64?
     let deliveredCount: Int64?
     let seenCount: Int64?
-    let type: MessageType?
+    let replyId: Int64?
+    let deleted: Bool
+    let type: MessageType
     let body: MessageBody?
     let records: [MessageRecord]?
 }
 
 extension Message {
-    init(createdAt: Int64, fromUserId: Int64, roomId: Int64, type: MessageType, body: MessageBody, localId: String) {
+    init(createdAt: Int64, fromUserId: Int64, roomId: Int64, type: MessageType, body: MessageBody, replyId: Int64?, localId: String) {
         self.body = body
         self.id = nil
         self.localId = localId
         self.fromUserId = fromUserId
         self.totalUserCount = -1
-        self.deliveredCount = -1
-        self.seenCount = -1
+        self.deliveredCount = -2 // needs to be different all 3 values, because state is calculated from this
+        self.seenCount = -3
+        self.replyId = replyId
         self.roomId = roomId
         self.type = type
+        self.deleted = false
         self.createdAt = createdAt
+        self.modifiedAt = createdAt
         self.records = nil
     }
     
-    init(messageEntity: MessageEntity) {
-        var messageRecords: [MessageRecord] = []
-        
-        if let records = messageEntity.records?.allObjects as? [MessageRecordEntity] {
-            messageRecords = records.map({ entity in
-                MessageRecord(messageRecordEntity: entity)
-            })
-        }
+    init(messageEntity: MessageEntity, fileData: FileData?, thumbData: FileData?, records: [MessageRecord]?) {
         self.init(createdAt: messageEntity.createdAt,
+                  modifiedAt: messageEntity.modifiedAt,
                   fromUserId: messageEntity.fromUserId,
                   roomId: messageEntity.roomId,
-                  id: Int64(messageEntity.id ?? "-2"), // TODO: - check
+                  id: Int64(messageEntity.id ?? "nil"),
                   localId: messageEntity.localId,
                   totalUserCount: messageEntity.totalUserCount,
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
-                  type: MessageType(rawValue: messageEntity.type ?? ""), // check
-                  body: MessageBody(text: messageEntity.bodyText ?? "", file: FileData(fileName: nil, mimeType: nil, path: messageEntity.imagePath, size: nil), fileId: nil, thumbId: nil),
-                  records: messageRecords)
+                  replyId: Int64(messageEntity.replyId ?? "nil"),
+                  deleted: messageEntity.isRemoved,
+                  type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
+                  body: MessageBody(text: messageEntity.bodyText ?? "",
+                                    file: fileData, thumb: thumbData),
+                  records: records)
     }
     
     func getMessageState(myUserId: Int64) -> MessageState {
         // TODO: check first seen, then delivered, then sent, waiting, error, (check fail)
-        guard let records = records,
-              let totalUserCount = totalUserCount
-        else {
-            print("there is no records")
-            return .fail
-        }
-        
-        print("RECORDS: ", records)
-        
-        if records.filter({ $0.type == .seen}).count == totalUserCount {
+//        print("getMessageState: \(id)", "dc: ", deliveredCount, "tc: ", totalUserCount)
+        if seenCount == totalUserCount {
             return .seen
         }
-        
-        let deliveredCount = records.filter({ $0.type == .delivered}).count
         
         if deliveredCount == totalUserCount {
             return .delivered
         }
         
-        if deliveredCount > 0 {
+        if id != nil {
             return .sent
         }
-        
         return .waiting
+    }
+    
+    var pushNotificationText: String {
+        switch type {
+        case .text:
+            return body?.text ?? " "
+        case .image:
+            return "[Photo message]"
+        case .video:
+            return "[Video message]"
+        case .file:
+            return "[File message]"
+        case .audio:
+            return "[Audio message]"
+        case .unknown:
+            return "[Unknown message]"
+        }
     }
 }
 
 struct MessageBody: Codable {
     let text: String?
     let file: FileData?
-    let fileId: Int?
-    let thumbId: Int?
-}
-
-struct FileData: Codable {
-    let fileName: String?
-    let mimeType: String?
-    let path: String?
-    let size: Int?
+    let thumb: FileData?
 }
 
 enum MessageType: String, Codable {
+    // Type is used for MessageCells reuseIdentifier too
     case text
     case image
     case video

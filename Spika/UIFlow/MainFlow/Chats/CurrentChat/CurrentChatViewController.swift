@@ -12,19 +12,14 @@ import PhotosUI
 import Combine
 import UniformTypeIdentifiers
 
-struct SelectedFile {
-    let fileType: UTType
-    let name: String?
-    let fileUrl: URL
-    let thumbnail: UIImage
-}
-
 class CurrentChatViewController: BaseViewController {
     
     private let currentChatView = CurrentChatView()
     var viewModel: CurrentChatViewModel!
-    let friendInfoView = ChatNavigationBarView()
-    var frc: NSFetchedResultsController<MessageEntity>?
+    private let friendInfoView = ChatNavigationBarView()
+    
+    private let audioPlayer = AudioPlayer()
+    private var audioSubscribe: AnyCancellable?
     
     private let frcIsChangingPublisher = PassthroughSubject<FRCChangeType, Never>()
     private let frcDidChangePublisher = PassthroughSubject<Bool, Never>()
@@ -34,107 +29,144 @@ class CurrentChatViewController: BaseViewController {
         setupView(currentChatView)
         setupNavigationItems()
         setupBindings()
-        checkRoom()
+        self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        guard let room = viewModel.room else { return }
-        viewModel.roomVisited(roomId: room.id)
+        viewModel.sendSeenStatus()
     }
     
     deinit {
-//        print("currentChatVC deinit")
+        print("currentChatVC deinit")
     }
 }
 
 // MARK: Functions
 
 extension CurrentChatViewController {
-    func checkRoom() {
-        viewModel.checkLocalRoom()
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        let tableView = currentChatView.messagesTableView
+        guard sender.state == .began,
+              let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
+              let message = viewModel.getMessage(for: indexPath)
+        else { return }
+        viewModel.showMessageActions(message)
     }
     
     func setupBindings() {
-        currentChatView.messageInputView.delegate = self
         currentChatView.messagesTableView.delegate = self
         currentChatView.messagesTableView.dataSource = self
+        
         sink(networkRequestState: viewModel.networkRequestState)
         
-        viewModel.roomPublisher.receive(on: DispatchQueue.main).sink { [weak self] completion in
-            // TODO: pop vc?, presentAlert?
-            guard let self = self else { return }
-            switch completion {
-                
-            case .finished:
-                break
-            case let .failure(error):
-                PopUpManager.shared.presentAlert(with: (title: "Error", message: error.localizedDescription), orientation: .horizontal, closures: [("Ok", {
-                    self.viewModel.getAppCoordinator()?.popTopViewController()
-                })])
-            }
-        } receiveValue: { [weak self] room in
-            guard let self = self else { return }
-            self.setFetch(room: room)
-            self.setupNavigationItems()
-            self.viewModel.sendSeenStatus()
+        currentChatView.messageInputView.inputViewTapPublisher.sink { [weak self] state in
+            self?.handleInput(state)
         }.store(in: &subscriptions)
         
-        currentChatView.downArrowImageView.tap().sink { [weak self] _ in
-            self?.currentChatView.messagesTableView.scrollToBottom(.force)
+        viewModel.selectedMessageToReplyPublisher.sink { [weak self] selectedMessage in
+            guard let selectedMessage
+            else {
+                self?.currentChatView.messageInputView.hideReplyView()
+                return
+            }
+            let senderName = self?.viewModel.room.getDisplayNameFor(userId: selectedMessage.fromUserId) // todo function
+            self?.currentChatView
+                .messageInputView
+                .showReplyView(senderName: senderName ?? .getStringFor(.unknown),
+                               message: selectedMessage)
         }.store(in: &subscriptions)
         
-        viewModel.selectedFiles.receive(on: DispatchQueue.main).sink { [weak self] files in
-            guard let self = self else { return }
-            if files.isEmpty {
-                self.currentChatView.messageInputView.hideSelectedFiles()
-            } else {
-                print("FILES COUNT: ", files.count)
-                self.currentChatView.messageInputView.showSelectedFiles(files)
-                
-                let arrangedSubviews = self.currentChatView.messageInputView.selectedFilesView.itemsStackView.arrangedSubviews
-                
-                arrangedSubviews.forEach { view in
-                    if let iw = view as? SelectedFileImageView {
-                        iw.deleteImageView.tap().sink { [weak self] _ in
-                            guard let self = self,
-                                  let index =  arrangedSubviews.firstIndex(of: view)
-                            else { return }
-                            self.viewModel.selectedFiles.value.remove(at: index)
-                        }.store(in: &self.subscriptions)
-                    }
-                }
+        viewModel.selectedMessageToEditPublisher.sink { [weak self] selectedMessage in
+            guard let text = selectedMessage?.body?.text
+            else {
+                self?.currentChatView.messageInputView.currentStatePublisher.send(.empty)
+                return
             }
+            self?.currentChatView.messageInputView.currentStatePublisher.send(.editing(text))
         }.store(in: &subscriptions)
         
-        viewModel.uploadProgressPublisher.sink { [weak self] (index, progress) in
-            guard let self = self else { return }
-            if let arrangedSubviews = self.currentChatView.messageInputView.selectedFilesView.itemsStackView.arrangedSubviews as? [SelectedFileImageView] {
-                arrangedSubviews[index].showUploadProgress(progress: progress)
-            }
-            
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        currentChatView.messagesTableView.addGestureRecognizer(longPress)
+        
+        currentChatView.scrollToBottomStackView.tap().sink { [weak self] _ in
+            guard let self else { return }
+            self.currentChatView.messagesTableView.scrollToBottom(.force(animated: true))
+            self.currentChatView.handleScrollToBottomButton(show: false, number: self.viewModel.numberOfUnreadMessages.value)
+        }.store(in: &subscriptions)
+        
+        viewModel.numberOfUnreadMessages.sink { [weak self] number in
+            self?.currentChatView.handleScrollToBottomButton(show: number > 0, number: number)
         }.store(in: &subscriptions)
         
         Publishers
             .Zip(frcIsChangingPublisher, frcDidChangePublisher)
+            .receive(on: DispatchQueue.main)
             .filter{$1}
             .sink { [weak self] (frcChange, frcDidChange) in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 switch frcChange {
                 case .insert(indexPath: let indexPath):
-                    guard let messageEntity = self.frc?.object(at: indexPath) else { return }
-                    handleScroll(isMyMessage: messageEntity.fromUserId == self.viewModel.getMyUserId())
+                    guard let message = self.viewModel.getMessage(for: indexPath) else { return }
+                    let isMyMessage = message.fromUserId == self.viewModel.getMyUserId()
+                    self.handleScroll(isMyMessage: isMyMessage)
+                    if self.viewModel.room.type == .groupRoom && !isMyMessage {
+                        if self.viewModel.isPreviousCellSameSender(for: indexPath) {
+                            self.currentChatView.messagesTableView.reloadPreviousRow(for: indexPath)
+                        }
+                    }
+                    if !isMyMessage && self.currentChatView.messagesTableView.distanceFromBottom() > 50 {
+                        self.viewModel.numberOfUnreadMessages.send(self.viewModel.numberOfUnreadMessages.value + 1)
+                    }
                 case .other:
                     break
                 }
             }.store(in: &subscriptions)
         
-        func handleScroll(isMyMessage: Bool) {
-            currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force : .ifLastCellVisible)
+        self.viewModel.uploadProgressPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] uuid in
+                guard let percentUploaded = self?.viewModel.uploadsInProgress[uuid],
+                      let indexPath = self?.viewModel.getIndexPathFor(localId: uuid),
+                      let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
+                else { return }
+                (cell as? BaseMessageTableViewCell)?.showUploadProgress(at: percentUploaded)
+                    
+                if percentUploaded == 1.0 {
+                    (cell as? BaseMessageTableViewCell)?.hideUploadProgress()
+                }
+        }.store(in: &subscriptions)
+        
+        self.imagePickerPublisher.sink { [weak self] pickedImage in
+
+            self?.viewModel.sendCameraImage(pickedImage)
+        }.store(in: &subscriptions)
+        
+        // TODO: fetch isBlocked and delete input field
+        
+        viewModel.setFetch()
+        viewModel.frc?.delegate = self
+        if let messageId = viewModel.scrollToMessageId,
+           let indexPath = viewModel.getIndexPathFor(messageId: messageId) {
+            currentChatView.messagesTableView.blinkRow(at: indexPath)
+        } else {
+            currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
+        }
+    }
+    
+    func handleScroll(isMyMessage: Bool) {
+        currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force(animated: true) : .ifLastCellVisible)
+    }
+}
+
+extension CurrentChatViewController {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if currentChatView.messagesTableView.distanceFromBottom() < 50 {
+            viewModel.numberOfUnreadMessages.send(0)
+        } else {
+            currentChatView.handleScrollToBottomButton(show: true, number: viewModel.numberOfUnreadMessages.value)
         }
     }
 }
@@ -143,44 +175,20 @@ extension CurrentChatViewController {
 
 extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
-    func setFetch(room: Room) {
-        let fetchRequest = MessageEntity.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "createdDate", ascending: true),
-            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
-        fetchRequest.predicate = NSPredicate(format: "room.id == %d", room.id)
-        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: "sectionName", cacheName: nil)
-        self.frc?.delegate = self
-        do {
-            try self.frc?.performFetch()
-            self.currentChatView.messagesTableView.reloadData()
-            self.currentChatView.messagesTableView.layoutIfNeeded()
-            self.currentChatView.messagesTableView.scrollToBottom(.force)
-        } catch {
-            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
-        }
-        
-        viewModel.roomVisited(roomId: room.id)
-    }
-    
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        currentChatView.messagesTableView.beginUpdates()
+            currentChatView.messagesTableView.beginUpdates()
     }
     
     // MARK: - sections
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
         case .insert:
-            print("DIDCHANGE: sections insert")
-            currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+                currentChatView.messagesTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
         case .delete:
-            print("DIDCHANGE: sections delete")
-            currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+                currentChatView.messagesTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
         case .move:
-            print("DIDCHANGE: sections move")
             break
         case .update:
-            print("DIDCHANGE: sections update")
             break
         @unknown default:
             break
@@ -189,49 +197,40 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     
     // MARK: - rows
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        print("TYPE: ", type.rawValue)
+//        print("TYPE: ", type.rawValue)
         switch type {
         case .insert:
-            print("DIDCHANGE: rows insert")
-            guard let newIndexPath = newIndexPath else {
-                return
-            }
+            guard let newIndexPath = newIndexPath else { return }
             viewModel.sendSeenStatus()
             currentChatView.messagesTableView.insertRows(at: [newIndexPath], with: .fade)
-            currentChatView.messagesTableView.reloadPreviousRow(for: newIndexPath)
             frcIsChangingPublisher.send(.insert(indexPath: newIndexPath))
             
         case .delete:
-            print("DIDCHANGE: rows delete")
-            guard let indexPath = indexPath else {
-                return
-            }
+            guard let indexPath = indexPath else { return }
             currentChatView.messagesTableView.deleteRows(at: [indexPath], with: .none)
             frcIsChangingPublisher.send(.other)
         
         case .move:
-            print("DIDCHANGE: rows move")
+            // this is called instead of .update when there is only one object in section
             guard let indexPath = indexPath,
                   let newIndexPath = newIndexPath
             else {
                 return
             }
-            currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+            if indexPath == newIndexPath {
+                currentChatView.messagesTableView.reloadRows(at: [newIndexPath], with: .none)
+            } else {
+                currentChatView.messagesTableView.moveRow(at: indexPath, to: newIndexPath)
+            }
             frcIsChangingPublisher.send(.other)
         
         case .update:
-            print("DIDCHANGE: rows update")
-            guard let indexPath = indexPath else {
-                return
-            }
-            UIView.performWithoutAnimation {
-                currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
-            }
+            guard let indexPath = indexPath else { return }
+            currentChatView.messagesTableView.reloadRows(at: [indexPath], with: .none)
             frcIsChangingPublisher.send(.other)
         
         default:
             frcIsChangingPublisher.send(.other)
-            break
         }
     }
     
@@ -244,33 +243,68 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
 
 // MARK: - MessageInputView actions
 
-extension CurrentChatViewController: MessageInputViewDelegate {
+extension CurrentChatViewController {
     
-    func messageInputView(_ messageVeiw: MessageInputView, didPressSend message: String) {
-        print("send in ccVC ")
-        
-        viewModel.trySendMessage(text: message)
-        currentChatView.messageInputView.clearTextField()
+    func handleInput(_ state: MessageInputViewButtonAction) {
+        switch state {
+        case .plus:
+            presentMoreActions()
+        case .send(let inputText):
+            viewModel.trySendMessage(text: inputText)
+            currentChatView.messageInputView.clean()
+        case .camera, .microphone:
+            print(state, " in ccVC")
+            showUIImagePicker(source: .camera, allowsEdit: false)
+        case .emoji:
+            print("emoji in ccvc")
+        case .scrollToReply:
+            guard let selectedMessageId = viewModel.selectedMessageToReplyPublisher.value?.id,
+                  let indexPath = viewModel.getIndexPathFor(messageId: selectedMessageId)
+            else { return }
+            currentChatView.messagesTableView.blinkRow(at: indexPath)
+        case .hideReply:
+            viewModel.selectedMessageToReplyPublisher.send(nil)
+        case .save(let inputText):
+            viewModel.editSelectedMessage(text: inputText)
+        case .cancelEditing:
+            viewModel.selectedMessageToEditPublisher.send(nil)
+        default:
+            break
+        }
     }
-    
-    func messageInputView(didPressCameraButton messageVeiw: MessageInputView) {
-        print("camera in ccVC")
-    }
-    
-    func messageInputView(didPressMicrophoneButton messageVeiw: MessageInputView) {
-        print("mic in ccVC")
-    }
-    
-    func messageInputView(didPressLibraryButton messageVeiw: MessageInputView) {
-        presentLibraryPicker()
-    }
-    
-    func messageInputView(didPressFilesButton messageVeiw: MessageInputView) {
-        presentFilePicker()
-    }
-    
-    func messageInputView(didPressEmojiButton messageVeiw: MessageInputView) {
-        print("emoji in ccVC")
+}
+
+// MARK: - MessageCell actions
+
+extension CurrentChatViewController {
+    func handleCellTap(_ state: MessageCellTaps, message: Message) {
+        switch state {
+        case .playVideo:
+            viewModel.playVideo(message: message)
+        case let .playAudio(playedPercentPublisher):
+            guard let url = message.body?.file?.id?.fullFilePathFromId(),
+                  let mimeType = message.body?.file?.mimeType
+            else { return }
+            audioSubscribe?.cancel()
+            audioSubscribe = audioPlayer
+                .playAudio(url: url, mimeType: mimeType)?
+                .sink { [weak self] percent in
+                playedPercentPublisher.send(percent)
+            }
+            audioSubscribe?.store(in: &subscriptions)
+        case .openImage:
+            guard let url = message.body?.file?.id?.fullFilePathFromId() else { return }
+            viewModel.showImage(message: message)
+        case .scrollToReply:
+            guard let replyId = message.replyId,
+                  let indexPath = viewModel.getIndexPathFor(messageId: replyId)
+            else { return }
+            currentChatView.messagesTableView.blinkRow(at: indexPath)
+        case .showReactions:
+            viewModel.showReactions(records: message.records ?? []) // TODO: change maybe to vm
+        case .openFile:
+            viewModel.openFile(message: message)
+        }
     }
 }
 
@@ -279,100 +313,98 @@ extension CurrentChatViewController: MessageInputViewDelegate {
 extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? TextMessageTableViewCell else { return }
-        (tableView.visibleCells as? [TextMessageTableViewCell])?.forEach{ $0.setTimeLabelVisible(false)}
+        guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell else { return }
+        (tableView.visibleCells as? [BaseMessageTableViewCell])?.forEach{ $0.setTimeLabelVisible(false)}
         cell.tapHandler()
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        guard let lastIndexPath = tableView.lastCellIndexPath,
-              let shouldHide = tableView.indexPathsForVisibleRows?.contains(lastIndexPath)
-        else { return }
-        currentChatView.hideScrollToBottomButton(should: shouldHide)
     }
 }
 
 extension CurrentChatViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.frc?.sections?.count ?? 0
+        return viewModel.frc?.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = self.frc?.sections else { return 0 }
+        guard let sections = viewModel.frc?.sections else { return 0 }
         return sections[section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let entity = frc?.object(at: indexPath),
-              let roomType = viewModel.room?.type
-        else { return EmptyMessageTableViewCell()}
+        guard let message = viewModel.getMessage(for: indexPath)
+        else { return EmptyTableViewCell()}
+        let roomType = viewModel.room.type
+
+        let myUserId = viewModel.getMyUserId()
         
-        let message = Message(messageEntity: entity)
-        let myUserId = viewModel.repository.getMyUserId()
-        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType) else { return EmptyMessageTableViewCell() }
+        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
+              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell,
+              let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
+        else { return EmptyTableViewCell() }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell
-        
-        switch message.type {
-        case .text:
-            (cell as? TextMessageTableViewCell)?.updateCell(message: message)
-        case .image:
-            (cell as? ImageMessageTableViewCell)?.updateCell(message: message)
-        case .file:
-            (cell as? FileMessageTableViewCell)?.updateCell(message: message)
-        case .unknown, .video, .audio, .none:
-            break
-        }
-        
-        cell?.updateCellState(to: message.getMessageState(myUserId: myUserId))
-        cell?.updateTime(to: message.createdAt)
-        if let user = viewModel.getUser(for: message.fromUserId) {
-            if !isPreviousCellMine(for: indexPath) {
-                cell?.updateSender(name: user.getDisplayName())
+        if let user = viewModel.getUser(for: message.fromUserId),
+            viewModel.room.type == .groupRoom {
+            if !viewModel.isPreviousCellSameSender(for: indexPath) {
+                cell.updateSender(name: user.getDisplayName())
             }
-            if !isNextCellMine(for: indexPath) {
-                cell?.updateSender(photoUrl: URL(string: user.getAvatarUrl() ?? ""))
+            if !viewModel.isNextCellSameSender(for: indexPath) {
+                cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
             }
         }
-        return cell ?? EmptyMessageTableViewCell()
+        
+        guard !message.deleted
+        else {
+            (cell as? DeletedMessageTableViewCell)?.updateCell(message: message)
+            return cell
+        }
+        // Do not add anything before this, because message can be deleted
+        
+        if let replyId = message.replyId,
+           let repliedMessageIndexPath = viewModel.getIndexPathFor(messageId: replyId),
+           let repliedMessage = viewModel.getMessage(for: repliedMessageIndexPath)
+        {
+            let senderName = viewModel.room.getDisplayNameFor(userId: repliedMessage.fromUserId)
+            cell.showReplyView(senderName: senderName,
+                               message: repliedMessage,
+                               sender: senderType)
+        }
+        
+        if let reactionsRecords = message.records {
+            cell.showReactions(reactionRecords: reactionsRecords)
+        }
+        
+        if message.modifiedAt != message.createdAt {
+            cell.showEditedIcon()
+        }
+        
+        (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
+        
+        if viewModel.compressionsInProgress.contains(where: { $0 == message.localId }) {
+            cell.startSpinning()
+        }
+    
+        if let localId = message.localId, let percentUploaded = viewModel.uploadsInProgress[localId] {
+            percentUploaded < 1 ? cell.showUploadProgress(at: percentUploaded) : cell.hideUploadProgress()
+        }
+        
+        cell.tapPublisher.sink(receiveValue: { [weak self] state in
+            self?.handleCellTap(state, message: message)
+        }).store(in: &cell.subs)
+        
+        if message.fromUserId == myUserId {
+            cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
+        }
+        cell.updateTime(to: message.createdAt)
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sections = self.frc?.sections else { return nil }
-        var name = sections[section].name
-        if let time = (sections[section].objects?.first as? MessageEntity)?.createdAt {
-            name.append(", ")
-            name.append(time.convert(to: .HHmm))
+        guard let nameOfSection = viewModel.getNameForSection(section: section) else {
+            return nil
         }
-        let dateLabel = CustomLabel(text: name, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
-        return dateLabel
-    }
-    
-    func isPreviousCellMine(for indexPath: IndexPath) -> Bool {
-        let previousRow = indexPath.row - 1
-        if previousRow >= 0 {
-            let currentMessageEntity  = frc?.object(at: indexPath)
-            let previousMessageEntity = frc?.object(at: IndexPath(row: previousRow,
-                                                                  section: indexPath.section))
-            return currentMessageEntity?.fromUserId == previousMessageEntity?.fromUserId
-        }
-        return false
-    }
-    
-    func isNextCellMine(for indexPath: IndexPath) -> Bool {
-        guard let sections = frc?.sections else { return true }
-        let maxRowsIndex = sections[indexPath.section].numberOfObjects - 1
-        let nextRow = indexPath.row + 1
-        if nextRow <= maxRowsIndex {
-            let currentMessageEntity  = frc?.object(at: indexPath)
-            let nextMessageEntity = frc?.object(at: IndexPath(row: nextRow,
-                                                              section: indexPath.section))
-            return currentMessageEntity?.fromUserId == nextMessageEntity?.fromUserId
-        }
-        return false
+        return CustomLabel(text: nameOfSection, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
     }
 }
 
@@ -386,16 +418,27 @@ extension CurrentChatViewController {
         navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
         
-        if viewModel.room?.type == .privateRoom {
-            friendInfoView.change(avatarUrl: viewModel.friendUser?.getAvatarUrl(), name: viewModel.friendUser?.getDisplayName(), lastSeen: "yesterday")
+        if viewModel.room.type == .privateRoom {
+            friendInfoView.change(avatarUrl: viewModel.friendUser?.avatarFileId?.fullFilePathFromId(), name: viewModel.friendUser?.getDisplayName(), lastSeen: viewModel.friendUser?.telephoneNumber ?? "")
         } else {
-            friendInfoView.change(avatarUrl: viewModel.room?.getAvatarUrl(),
-                                  name: viewModel.room?.name,
-                                  lastSeen: "today")
+            friendInfoView.change(avatarUrl: viewModel.room.avatarFileId?.fullFilePathFromId(),
+                                  name: viewModel.room.name,
+                                  lastSeen: "\(viewModel.room.users.count) members")
+            // TODO: - will be changed to last seen, then move to localization
         }
         
         let vtest = UIBarButtonItem(customView: friendInfoView)
+        friendInfoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onChatDetails)))
         navigationItem.leftBarButtonItem = vtest
+    }
+    
+    @objc func onChatDetails() {
+        let publisher = CurrentValueSubject<Room, Never>(viewModel.room)
+        publisher.sink { [weak self] newRoom in
+            self?.viewModel.room = newRoom
+        }.store(in: &self.subscriptions)
+        
+        self.viewModel.getAppCoordinator()?.presentChatDetailsScreen(room: publisher)
     }
     
     @objc func videoCallActionHandler() {
@@ -411,17 +454,59 @@ extension CurrentChatViewController {
 extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstRight = UIContextualAction(style: .normal, title: "Details") { (action, view, completionHandler) in
-            if let messageEntity = self.frc?.object(at: indexPath),
-               let records = Message(messageEntity: messageEntity).records {
-                self.viewModel.presentMessageDetails(records: records)
-                completionHandler(true)
-            }
+        guard let message = viewModel.getMessage(for: indexPath) else { return nil }
+        guard !message.deleted else { return nil}
+        // TODO: - refactor this to seperate view
+        let detailsAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
+            self?.viewModel.presentMessageDetails(for: indexPath)
+            completionHandler(true)
         }
-        firstRight.backgroundColor = .systemBlue
-        return UISwipeActionsConfiguration(actions: [firstRight])
+        detailsAction.backgroundColor = .primaryBackground
+        detailsAction.image = UIImage(safeImage: .slideDetails)
+        
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
+            self?.viewModel.showDeleteConfirmDialog(message: message)
+            completionHandler(true)
+        }
+        deleteAction.backgroundColor = .primaryBackground
+        deleteAction.image = UIImage(safeImage: .slideDelete)
+        return UISwipeActionsConfiguration(actions: [detailsAction, deleteAction])
     }
     
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let message = viewModel.getMessage(for: indexPath) else { return nil }
+        guard !message.deleted else { return nil }
+        //  TODO: refacotr
+        let firstLeft = UIContextualAction(style: .normal, title: .getStringFor(.reply)) { [weak self] (action, view, completionHandler) in
+
+            let senderName = self?.viewModel.room.getDisplayNameFor(userId: message.fromUserId)
+            self?.viewModel.selectedMessageToReplyPublisher.send(message)
+            self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
+            completionHandler(true)
+        }
+        firstLeft.backgroundColor = .primaryBackground
+        firstLeft.image = UIImage(safeImage: .slideReply)
+        return UISwipeActionsConfiguration(actions: [firstLeft])
+    }
+    
+}
+
+// MARK: - More Actions Bottom Sheet
+
+private extension CurrentChatViewController {
+    func presentMoreActions() {
+        viewModel.presentMoreActions()?.sink(receiveValue: { [weak self] state in
+            self?.dismiss(animated: true)
+            switch state {
+            case .files:
+                self?.presentFilePicker()
+            case .library:
+                self?.presentLibraryPicker()
+            case .location, .contact, .close:
+                break
+            }
+        }).store(in: &subscriptions)
+    }
 }
 
 // MARK: - Photo Video picker
@@ -442,37 +527,7 @@ extension CurrentChatViewController: PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
-        print("RESULTS COUNT: ", results.count)
-        for result in results {
-            
-            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { url, error in
-                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-                    guard let url = url,
-                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                          url.copyFileFromURL(to: targetURL) == true
-                    else { return }
-                    let thumbnail = targetURL.imageThumbnail()
-                    let file = SelectedFile(fileType: .image, name: nil,
-                                            fileUrl: targetURL, thumbnail: thumbnail)
-                    self.viewModel.selectedFiles.value.append(file)
-                }
-            }
-            
-            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { url, error in
-                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-                    guard let url = url,
-                          let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                          url.copyFileFromURL(to: targetURL) == true
-                    else { return }
-                    let thumb = url.videoThumbnail()
-                    let file  = SelectedFile(fileType: .movie, name: "video",
-                                             fileUrl: targetURL, thumbnail: thumb)
-                    self.viewModel.selectedFiles.value.append(file)
-                }
-            }
-        }
+        viewModel.sendMultimedia(results)
     }
 }
 
@@ -488,20 +543,7 @@ extension CurrentChatViewController: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         controller.dismiss(animated: true)
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        
-        for url in urls {
-            guard let targetURL = documentsDirectory?.appendingPathComponent(url.lastPathComponent),
-                  url.copyFileFromURL(to: targetURL) == true,
-                  let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey, .nameKey]),
-                  let fileName = resourceValues.name,
-                  let type = resourceValues.contentType
-            else { return }
-            
-            let file = SelectedFile(fileType: type, name: fileName,
-                                    fileUrl: targetURL, thumbnail: type.thumbnail())
-            self.viewModel.selectedFiles.value.append(file)
-        }
+        viewModel.sendDocuments(urls: urls)
     }
     
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {

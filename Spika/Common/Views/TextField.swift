@@ -23,15 +23,19 @@ class TextField: UITextField {
     }
     
     private func setupButton() {
-        backgroundColor = .whiteAndDarkBackground2
+        backgroundColor = .secondaryBackground
         layer.borderWidth = 1
-        layer.borderColor = UIColor.textTertiaryAndDarkBackground2.cgColor
+        layer.borderColor = UIColor.borderColor.cgColor
         layer.cornerRadius = 10
         
-        textColor = .textPrimaryAndWhite
+        textColor = .textPrimary
         self.font = .customFont(name: .MontserratMedium, size: 14)
         attributedPlaceholder = NSAttributedString(string: textPlaceholder,
                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
+    }
+    
+    func updateText(text: String?) {
+        self.text = text
     }
     
     override open func textRect(forBounds bounds: CGRect) -> CGRect {

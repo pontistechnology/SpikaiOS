@@ -20,22 +20,25 @@ class EnterVerifyCodeViewController: BaseViewController {
     }
     
     func setupUI() {
-        enterVerifyCodeView.titleLabel.text = "We sent you 6 digit verification code on \(viewModel.phoneNumber)."
+        enterVerifyCodeView.titleLabel.text = .getStringFor(.weSentYou6DigitOn) + " \(viewModel.phoneNumber.getFullNumber())."
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        // TODO: - move timer from view
         enterVerifyCodeView.timer?.invalidate()
         enterVerifyCodeView.timer = nil
     }
     
     func setupBindings() {
         enterVerifyCodeView.nextButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            self.viewModel.verifyCode(code: self.enterVerifyCodeView.otpTextField.text!)
+            guard let self,
+                  let verifyCode = self.enterVerifyCodeView.otpTextField.text
+            else { return }
+            self.viewModel.verifyCode(code: verifyCode)
         }.store(in: &subscriptions)
         
         enterVerifyCodeView.resendCodeButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.viewModel.resendCode()
         }.store(in: &subscriptions)
         
@@ -46,7 +49,7 @@ class EnterVerifyCodeViewController: BaseViewController {
             }).store(in: &subscriptions)
         
         viewModel.resendSubject.sink { [weak self] resended in
-            guard let self = self else { return }
+            guard let self else { return }
             if resended {
                 self.enterVerifyCodeView.setupTimer()
             }

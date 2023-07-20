@@ -10,7 +10,7 @@ import UIKit
 
 class ChatSearchView: UIView, BaseView {
     
-    let testLabel = CustomLabel(text: "chat search")
+    let testLabel = CustomLabel(text: .getStringFor(.chatSearch))
     
     override init(frame: CGRect) {
         super.init(frame: frame)

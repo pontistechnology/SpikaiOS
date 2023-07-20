@@ -51,18 +51,19 @@ class SearchBar: UIView, BaseView {
     func styleSubviews() {
         backgroundColor = .clear
         
-        deleteImage.isHidden = true
+        deleteImage.hide()
         
-        searchTextField.textColor = .textPrimaryAndWhite
+        searchTextField.autocorrectionType = .no
+        searchTextField.textColor = .textPrimary
         searchTextField.font = .customFont(name: .MontserratMedium, size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
         
-        searchView.backgroundColor = .chatBackgroundAndDarkBackground2
+        searchView.backgroundColor = .chatBackground
         searchView.layer.cornerRadius = 10
         searchView.clipsToBounds = true
         
-        cancelButton.setTitle(Constants.Strings.cancel, for: .normal)
+        cancelButton.setTitle(.getStringFor(.cancel), for: .normal)
         cancelButton.setTitleColor(.primaryColor, for: .normal)
         cancelButton.titleLabel?.font = .customFont(name: .MontserratMedium, size: 14)
     }
@@ -95,7 +96,7 @@ class SearchBar: UIView, BaseView {
         }.store(in: &subscriptions)
         
         cancelButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.delegate?.searchBar(self, didPressCancel: true)
         }.store(in: &subscriptions)
         
@@ -107,7 +108,7 @@ class SearchBar: UIView, BaseView {
             if value.isEmpty {
                 self.clearTextField()
             } else {
-                self.deleteImage.isHidden = false
+                self.deleteImage.unhide()
                 delegate?.searchBar(self, valueDidChange: value)
             }
         } else {
@@ -118,7 +119,7 @@ class SearchBar: UIView, BaseView {
     
     func clearTextField() {
         self.searchTextField.text = ""
-        self.deleteImage.isHidden = true
+        self.deleteImage.hide()
         delegate?.searchBar(self, valueDidChange: "")
     }
 }

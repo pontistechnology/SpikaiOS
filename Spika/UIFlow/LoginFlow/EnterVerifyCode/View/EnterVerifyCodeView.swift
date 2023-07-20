@@ -11,7 +11,7 @@ import Combine
 class EnterVerifyCodeView: UIView, BaseView {
     
     let logoImageView = LogoImageView()
-    let titleLabel = CustomLabel(text: "We sent you 6 digit verification code.", fontName: .MontserratMedium, alignment: .center)
+    let titleLabel = CustomLabel(text: .getStringFor(.weSentYou6DigitCode), fontName: .MontserratMedium, alignment: .center)
     let otpTextField = OTPCodeTextField(otpLength: 6)
     let nextButton = MainButton()
     let timeLabel = CustomLabel(text: "02:00", fontName: .MontserratMedium)
@@ -34,7 +34,6 @@ class EnterVerifyCodeView: UIView, BaseView {
     deinit {
         timer?.invalidate()
         timer = nil
-        print("timer invalidation")
     }
     
     required init?(coder: NSCoder) {
@@ -53,10 +52,10 @@ class EnterVerifyCodeView: UIView, BaseView {
     func styleSubviews() {
         titleLabel.numberOfLines = 2
         
-        nextButton.setTitle("Next", for: .normal)
+        nextButton.setTitle(.getStringFor(.next), for: .normal)
         nextButton.setEnabled(false)
         
-        resendCodeButton.setTitle("Resend code", for: .normal)
+        resendCodeButton.setTitle(.getStringFor(.resendCode), for: .normal)
     }
     
     func positionSubviews() {
@@ -96,7 +95,7 @@ class EnterVerifyCodeView: UIView, BaseView {
         
         if timeCounter <= 0 {
             timer.invalidate()
-            PopUpManager.shared.presentAlert(errorMessage: "Time expired. You will be returned.") // TODO: change
+//            PopUpManager.shared.presentAlert(errorMessage: "Time expired. You will be returned.") // TODO: change and move?
         }
     }
 }

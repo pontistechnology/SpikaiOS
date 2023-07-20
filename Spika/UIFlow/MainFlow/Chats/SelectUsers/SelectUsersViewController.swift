@@ -39,22 +39,22 @@
 //        }.store(in: &subscriptions)
 //        
 //        selectUsersView.chatOptionLabel.tap().sink { [weak self] _ in
-//            guard let self = self else { return }
+//            guard let self else { return }
 //            self.selectUsersView.setGroupUserVisible(self.selectUsersView.groupUsersCollectionView.isHidden ? true : false)
 //        }.store(in: &subscriptions)
 //        
 //        selectUsersView.nextLabel.tap().sink { [weak self] _ in
-//            guard let self = self else { return }
+//            guard let self else { return }
 //            self.viewModel.presentNewGroupScreen()
 //        }.store(in: &subscriptions)
 //        
 //        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] _ in
-//            guard let self = self else { return }
+//            guard let self else { return }
 //            self.selectUsersView.contactsTableView.reloadData()
 //        }.store(in: &subscriptions)
 //        
 //        viewModel.selectedUsersSubject.receive(on: DispatchQueue.main).sink { [weak self] selectedContacts in
-//            guard let self = self else { return }
+//            guard let self else { return }
 //            self.selectUsersView.numberSelectedUsersLabel.text = "\(selectedContacts.count) / 100 selected"
 //            self.selectUsersView.groupUsersCollectionView.reloadData()
 //        }.store(in: &subscriptions)
@@ -120,7 +120,7 @@
 //    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier) as? ContactsTableViewCell
 //        cell?.configureCell(viewModel.contactsSubject.value[indexPath.section][indexPath.row])
-//        return cell ?? UITableViewCell()
+//        return cell ?? EmptyTableViewCell()
 //    }
 //    
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -185,7 +185,7 @@
 //    
 //    func setFetch() {
 //        DispatchQueue.main.async { [weak self] in
-//            guard let self = self else { return }
+//            guard let self else { return }
 //            let fetchRequest = UserEntity.fetchRequest()
 //            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(UserEntity.displayName), ascending: true)]
 //            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)

@@ -6,15 +6,25 @@
 //
 
 import UIKit
+import Swinject
+import Combine
+import CoreData
 
 class HomeViewController: UIPageViewController {
     
     var homeTabBar: HomeTabBar!
-    var viewModel: HomeViewModel!
+    let viewModel: HomeViewModel
+    let startTab: TabBarItem
     
-    override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
-        super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
-        title = ""
+    var tabViewControllers: [UIViewController]!
+
+    var subscriptions = Set<AnyCancellable>()
+    
+    init(viewModel:HomeViewModel, startTab: TabBarItem) {
+        self.startTab = startTab
+        self.viewModel = viewModel
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        viewModel.frc?.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -25,43 +35,63 @@ class HomeViewController: UIPageViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barStyle = .default
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        
         viewModel.updatePush()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageViewController()
-//        homeTabBar.handleTap(homeTabBar.tabs[2])
-       }
-    
-    func configurePageViewController() {
-        homeTabBar = HomeTabBar(tabBarItems: viewModel.getHomeTabBarItems())
-    
-        homeTabBar.delegate = self
+        setupBinding()
         
-        view.addSubview(homeTabBar)
-        homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
-        homeTabBar.constrainHeight(HomeTabBar.tabBarHeight)
-        if let vc = homeTabBar.getViewController(index: 0) {
-            self.setViewControllers([vc], direction: .forward, animated: true)
+        self.switchToController(tab: self.startTab)
+        
+        if case .chat(let roomId) = self.startTab,
+           let id = roomId {
+            self.viewModel.presentChat(roomId: id)
         }
     }
     
-    private func switchToController(index: Int) {
-        if let vc = homeTabBar.getViewController(index: index) {
-            if index < homeTabBar.currentViewControllerIndex {
-                setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
-            } else {
-                setViewControllers([vc], direction: .forward, animated: true, completion: nil)
-            }
+    func setupBinding() {
+        self.homeTabBar
+            .tabSelectedPublisher
+            .sink { [weak self] tab in
+                self?.switchToController(tab: tab)
+            }.store(in: &self.subscriptions)
+    }
+    
+    func configurePageViewController() {
+        self.tabViewControllers = TabBarItem.allTabs().map { $0.viewControllerForTab(assembler: Assembler.sharedAssembler,
+                                                                                     appCoordinator: self.viewModel.getAppCoordinator()!) }
+        homeTabBar = HomeTabBar(tabBarItems: TabBarItem.allTabs())
+        
+        view.addSubview(homeTabBar)
+        homeTabBar.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor,
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                          trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        homeTabBar.constrainHeight(HomeTabBar.tabBarHeight)
+    }
+    
+    private func switchToController(tab: TabBarItem) {
+        let newIndex = TabBarItem.indexForTab(tab: tab)
+        
+        var direction: NavigationDirection = .forward
+        if let current = self.viewControllers?.first {
+            let index = TabBarItem.indexOfViewController(viewController: current)
+            direction = newIndex > index ? .forward : .reverse
         }
+        
+        let viewController = self.tabViewControllers[newIndex]
+        
+        setViewControllers([viewController], direction: direction, animated: true, completion: nil)
+        self.homeTabBar.updateSelectedTab(selectedTab: tab)
     }
     
 }
 
-extension HomeViewController: HomeTabBarViewDelegate {
-    func tabSelected(_ tabBar: HomeTabBar, at index: Int) {
-        self.switchToController(index: index)
+extension HomeViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard let count = viewModel.frc?.sections?.first?.numberOfObjects else { return }
+        homeTabBar.updateUnreadChatsCount(count)
+        navigationItem.backButtonTitle = count > 0 ? String(count) : ""
     }
 }

@@ -22,7 +22,9 @@ public class MessageEntity: NSManagedObject {
         createdAt = message.createdAt
         createdDate = Date(timeIntervalSince1970: Double(message.createdAt) / 1000)
         
+        modifiedAt = message.modifiedAt
         fromUserId = message.fromUserId
+        dummyValue = 1 // change this when frc needs to see changes
         
         if let id = message.id {
             self.id = "\(id)"
@@ -44,18 +46,26 @@ public class MessageEntity: NSManagedObject {
             self.seenCount = seenCount
         }
         
+        isRemoved = message.deleted
+        
         roomId = message.roomId
 
-        if let type = message.type {
-            self.type = type.rawValue
-        }
+        self.type = message.type.rawValue
         
         if let bodyText = message.body?.text {
-            self.bodyText = bodyText
+            self.bodyText = bodyText.replacingOccurrences(of: "\0", with: "")
+            // current bug, when text is copied from bad pdf, null character can be included in string, and label will be truncated
         }
         
-        if let imagePath = message.body?.file?.path {
-            self.imagePath = imagePath
+        if let fileId = message.body?.file?.id {
+            self.bodyFileId = "\(fileId)"
         }
+        
+        if let thumbId = message.body?.thumb?.id {
+            self.bodyThumbId = "\(thumbId)"
+        }
+
+        self.replyId = "\(message.replyId ?? -1)"
+        
     }
 }

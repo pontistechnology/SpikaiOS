@@ -8,18 +8,22 @@
 import Foundation
 
 enum DateFormat: String {
-    case HHmm, ddMMyyyyHHmm, ddMM, allChatsTimeFormat
+    case HHmm, ddMMyyyyHHmm, ddMM, allChatsTimeFormat, messageDetailsTimeFormat, ddMMyyyy
     
     var format: String {
         switch self {
         case .HHmm:
             return "HH:mm"
         case .ddMMyyyyHHmm:
-            return "dd.MM.yyyy HH:mm"
+            return "dd.MM.yyyy. HH:mm"
         case .ddMM:
             return "dd.MM."
         case .allChatsTimeFormat:
             return "calculate"
+        case .messageDetailsTimeFormat:
+            return "dd.MM.yyyy. HH:mm"
+        case .ddMMyyyy:
+            return "dd.MM.yyyy."
         }
     }
 }
@@ -35,11 +39,17 @@ extension Int64 {
         case .allChatsTimeFormat:
             if self.isToday() {
                 return convertTimestamp(to: .HHmm)
-            } else {
+            } else if self.isThisYear() {
                 return convertTimestamp(to: .ddMM)
+            } else {
+                return convertTimestamp(to: .ddMMyyyy)
             }
+        case.messageDetailsTimeFormat:
+            return convertTimestamp(to: .messageDetailsTimeFormat)
         case .ddMM:
             return convertTimestamp(to: .ddMM)
+        case .ddMMyyyy:
+            return convertTimestamp(to: .ddMMyyyy)
         }
     }
     
@@ -55,7 +65,16 @@ extension Int64 {
         return Calendar.current.isDateInToday(Date(timeIntervalSince1970: Double(self)/1000))
     }
     
-//    func isThisYear() -> Bool {
-//        return true // todo
-//    }
+    func isThisYear() -> Bool {
+        return Calendar.current.isDate(Date(timeIntervalSince1970: Double(self)/1000), equalTo: Date(), toGranularity: .year)
+    }
+}
+
+// MARK: - File path
+
+extension Int64 {
+    func fullFilePathFromId() -> URL? {
+        let s = "api/upload/files/" + "\(self)"
+        return s.getFullUrl()
+    }
 }

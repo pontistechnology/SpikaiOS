@@ -18,11 +18,12 @@ public class UserEntity: NSManagedObject {
         }
         self.init(entity: entity, insertInto: context)
         self.id = user.id
-        self.createdAt = user.createdAt ?? 0 // TODO: check
-        self.avatarUrl = user.avatarUrl
+        self.createdAt = user.createdAt
+        self.avatarFileId = user.avatarFileId ?? 0
         self.emailAddress = user.emailAddress
         self.telephoneNumber = user.telephoneNumber
         self.displayName = user.displayName
+        self.modifiedAt = user.modifiedAt
         
         self.contactsName = user.contactsName ?? user.displayName
     }

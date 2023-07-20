@@ -1,0 +1,13 @@
+/* 
+  InfoPlist.strings
+  Spika
+
+  Created by Vedran Vugrin on 14.12.2022..
+  
+*/
+
+"NSCameraUsageDescription" = "Can we get permission to access your camera so you can update your profile photo and send photos to your contacts?";
+"NSContactsUsageDescription" = "Can we get permission to hash and upload your contacts to our server to discover who is in your network?";
+"NSPhotoLibraryAddUsageDescription" = "Can we get permission for adding to your photo library so you can store images and videos?";
+
+

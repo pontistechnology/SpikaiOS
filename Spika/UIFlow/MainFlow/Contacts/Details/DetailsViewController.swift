@@ -47,7 +47,6 @@ class DetailsViewController: BaseViewController {
         
         detailsView.contentView.videoCallButton.tap().sink { [weak self] _ in
             guard let url = URL(string: "https://conference2.spika.chat/conference/spika3web") else { return }
-//            guard let url = URL(string: "https://webrtc.github.io/samples/src/content/getusermedia/gum/") else { return }
 
             if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized,
                AVCaptureDevice.authorizationStatus(for: .audio) == .authorized {
@@ -60,15 +59,20 @@ class DetailsViewController: BaseViewController {
         }.store(in: &subscriptions)
         
         detailsView.contentView.messageButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            self.viewModel.presentCurrentChatScreen(user: self.viewModel.user)
+            guard let self else { return }
+            self.viewModel.presentCurrentChatScreen()
         }.store(in: &subscriptions)
         
         viewModel.userSubject.receive(on: DispatchQueue.main).sink { [weak self] user in
-            guard let self = self else { return }
+            guard let self else { return }
             self.detailsView.contentView.nameLabel.text = user.getDisplayName()
-            let url = URL(string: user.getAvatarUrl() ?? "")
+            let url = user.avatarFileId?.fullFilePathFromId()
             self.detailsView.contentView.profilePhoto.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
+        }.store(in: &subscriptions)
+        
+        self.detailsView.contentView.phoneNumberLabel.text = viewModel.getPhoneNumberText()
+        self.detailsView.contentView.phoneNumberLabel.tap().sink { [weak self] _ in
+            self?.phoneNumberLabelTapped()
         }.store(in: &subscriptions)
     }
     
@@ -76,5 +80,36 @@ class DetailsViewController: BaseViewController {
     deinit {
 //        print("DetailsViewController deinit")
     }
+}
+
+extension DetailsViewController {
+    func phoneNumberLabelTapped() {
+        viewModel
+            .getAppCoordinator()?
+            .showAlert(actions: [.regular(title: .getStringFor(.copy)),
+                                 .regular(title: .getStringFor(.addToContacts))
+            ], cancelText: .getStringFor(.cancel))
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.copyPhoneNumber()
+                case 1:
+                    self?.addToContacts()
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
+    }
     
+    func copyPhoneNumber() {
+        UIPasteboard.general.string = self.detailsView.contentView.phoneNumberLabel.text
+        viewModel.showOneSecAlert(type: .copy)
+    }
+    
+    func addToContacts() {
+        guard let phoneNumber = self.detailsView.contentView.phoneNumberLabel.text,
+              let name = self.detailsView.contentView.nameLabel.text
+        else { return }
+        viewModel.presentAddToContactsScreen(name: name, number: phoneNumber)
+    }
 }

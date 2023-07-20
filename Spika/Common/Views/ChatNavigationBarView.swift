@@ -51,9 +51,8 @@ class ChatNavigationBarView: UIView, BaseView {
         statusLabel.text = value
     }
     
-    func change(avatarUrl: String?, name: String?, lastSeen status: String) {
-        let url = URL(string: avatarUrl ?? "noUrl")
-        avatarImageView.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
+    func change(avatarUrl: URL?, name: String?, lastSeen status: String) {
+        avatarImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(safeImage: .userImage))
         nameLabel.text = name
         statusLabel.text = status
     }

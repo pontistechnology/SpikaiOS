@@ -33,18 +33,21 @@ class ContactsViewController: BaseViewController {
         contactsView.tableView.delegate   = self
         contactsView.searchBar.delegate = self
         
-//        viewModel.contactsSubject.receive(on: DispatchQueue.main).sink { [weak self] contacts in
-//            guard let self = self else { return }
-//            self.contactsView.tableView.reloadData()
-//        }.store(in: &subscriptions)
-        
-//        viewModel.getUsersAndUpdateUI()
-        viewModel.getContacts()
-        viewModel.getOnlineContacts(page: 1)
+        contactsView.refreshControl
+            .publisher(for: .valueChanged)
+            .sink { [weak self] _ in
+                self?.viewModel.refreshContacts()
+            }.store(in: &subscriptions)
+        contactsView.refreshControl
+            .publisher(for: .valueChanged)
+            .delay(for: .seconds(3), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.contactsView.refreshControl.endRefreshing()
+            }.store(in: &subscriptions)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 }
 
@@ -73,15 +76,18 @@ extension ContactsViewController: UITableViewDataSource {
         guard let sections = self.frc?.sections else { return 0 }
         return sections[section].numberOfObjects
     }
-    
+        
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
         guard let userEntity = frc?.object(at: indexPath) else {
-            return UITableViewCell()
+            return EmptyTableViewCell()
         }
         let user = User(entity: userEntity)
-        cell?.configureCell(user)
-        return cell ?? UITableViewCell()
+        cell?.configureCell(title: user.getDisplayName(),
+                            description: user.telephoneNumber,
+                            leftImage: user.avatarFileId?.fullFilePathFromId(),
+                            type: .normal)
+        return cell ?? EmptyTableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -120,7 +126,7 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
     
     func setFetch() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             let fetchRequest = UserEntity.fetchRequest()
             fetchRequest.sortDescriptors = [
                 NSSortDescriptor(key: "contactsName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:))),
@@ -137,7 +143,9 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        contactsView.tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.contactsView.tableView.reloadData()
+        }
     }
 }
 

@@ -11,25 +11,15 @@ import Foundation
 struct User: Codable {
     let id: Int64
     var displayName: String?
-    var avatarUrl: String?
+    var avatarFileId: Int64?
     var telephoneNumber: String?
     var telephoneNumberHashed: String?
     var emailAddress: String?
     var createdAt: Int64
+    var modifiedAt: Int64
     
     var contactsName: String?
         
-    init(entity: UserEntity) {
-        self.id = entity.id
-        self.displayName = entity.displayName
-        self.avatarUrl = entity.avatarUrl
-        self.telephoneNumber = entity.telephoneNumber
-        self.emailAddress = entity.emailAddress
-        self.createdAt = entity.createdAt
-        
-        self.contactsName = entity.contactsName
-    }
-    
     func getDisplayName() -> String {
         var displayNameResult: String
         
@@ -41,18 +31,17 @@ struct User: Codable {
         
         return displayNameResult
     }
-    
-    func getAvatarUrl() -> String? {
-        if let avatarUrl = avatarUrl, !avatarUrl.isEmpty {
-            if avatarUrl.starts(with: "http") {
-                return avatarUrl
-            } else if avatarUrl.starts(with: "/") {
-                return Constants.Networking.baseUrl + avatarUrl.dropFirst()
-            } else {
-                return Constants.Networking.baseUrl + avatarUrl
-            }
-        } else {
-            return nil
-        }
+}
+
+extension User {
+    init(entity: UserEntity) {
+        self.init(id: entity.id,
+                  displayName: entity.displayName,
+                  avatarFileId: entity.avatarFileId,
+                  telephoneNumber: entity.telephoneNumber,
+                  emailAddress: entity.emailAddress,
+                  createdAt: entity.createdAt,
+                  modifiedAt: entity.modifiedAt,
+                  contactsName: entity.contactsName)
     }
 }

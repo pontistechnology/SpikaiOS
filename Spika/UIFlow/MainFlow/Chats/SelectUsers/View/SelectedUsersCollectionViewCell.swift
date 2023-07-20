@@ -46,13 +46,13 @@ class SelectedUsersCollectionViewCell: UICollectionViewCell, BaseView {
     }
     
     func updateCell(user: User) {
-        let url = URL(string: user.getAvatarUrl() ?? "")
-        imageView.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage), completionHandler: { result in
+        let url = user.avatarFileId?.fullFilePathFromId()
+        imageView.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage), completionHandler: { [weak self] result in
             switch result {
             case .success:
-                self.firstLetterLabel.text = ""
+                self?.firstLetterLabel.text = ""
             case .failure:
-                self.firstLetterLabel.text = user.displayName?.prefix(1).uppercased()
+                self?.firstLetterLabel.text = user.displayName?.prefix(1).uppercased()
             }
         })
     }

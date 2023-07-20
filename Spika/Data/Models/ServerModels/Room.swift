@@ -11,42 +11,51 @@ struct Room: Codable {
     let id: Int64
     let type: RoomType
     let name: String?
-    let avatarUrl: String?
+    let avatarFileId: Int64?
     let createdAt: Int64
+    let modifiedAt: Int64
+    var muted: Bool
     let users: [RoomUser]
+    let deleted: Bool
+    let unreadCount: Int64
+    var pinned: Bool
 }
 
 extension Room {
-    init(roomEntity: RoomEntity) {
-//        print("INIT ROOM ENTITY: ", roomEntity.id, roomEntity.users?.count)
-        let roomUsers = roomEntity.users?.allObjects.compactMap{ RoomUser(roomUserEntity: $0 as! RoomUserEntity)} ?? []
-        
+    init(roomEntity: RoomEntity, users: [RoomUser]) {
         self.init(id: roomEntity.id,
                   type: RoomType(rawValue: roomEntity.type ?? "private") ?? .privateRoom,
                   name: roomEntity.name,
-                  avatarUrl: roomEntity.avatarUrl,
+                  avatarFileId: roomEntity.avatarFileId,
                   createdAt: roomEntity.createdAt,
-                  users: roomUsers
-                  )
+                  modifiedAt: roomEntity.modifiedAt,
+                  muted: roomEntity.muted,
+                  users: users,
+                  deleted: roomEntity.roomDeleted,
+                  unreadCount: roomEntity.unreadCount,
+                  pinned: roomEntity.pinned)
     }
+    
+    
+    func compareWith(string: String) -> Bool {
+        if let name,
+           name.range(of: string, options: .caseInsensitive) != nil {
+            return true
+        }
+        
+        for user in self.users {
+            if let userName = user.user.displayName,
+               userName.range(of: string, options: .caseInsensitive) != nil {
+                return true
+            }
+        }
+        
+        return false
+    }
+
 }
 
 extension Room {
-    // TODO: there is a same function in User model
-    func getAvatarUrl() -> String? {
-        if let avatarUrl = avatarUrl, !avatarUrl.isEmpty {
-            if avatarUrl.starts(with: "http") {
-                return avatarUrl
-            } else if avatarUrl.starts(with: "/") {
-                return Constants.Networking.baseUrl + avatarUrl.dropFirst()
-            } else {
-                return Constants.Networking.baseUrl + avatarUrl
-            }
-        } else {
-            return nil
-        }
-    }
-    
     func getFriendUserInPrivateRoom(myUserId: Int64) -> User? {
         if type == .privateRoom {
             return users.first(where: { $0.user.id != myUserId })?.user

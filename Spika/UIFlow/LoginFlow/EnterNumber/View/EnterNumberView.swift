@@ -10,9 +10,9 @@ import UIKit
 class EnterNumberView: UIView, BaseView {
     
     let logoImage = LogoImageView()
-    let titleLabel = CustomLabel(text: "Enter your phone number to start using Spika",
+    let titleLabel = CustomLabel(text: .getStringFor(.enterYourPhoneToUserSpika),
                                  fontName: .MontserratMedium, alignment: .center)
-    let enterNumberTextField = EnterNumberTextField(placeholder: "Eg. 98726123", title: "Phone number")
+    let enterNumberTextField = EnterNumberTextField(placeholder: .getStringFor(.eg98726), title: .getStringFor(.phoneNumber))
     let nextButton = MainButton()
     
     override init(frame: CGRect) {
@@ -32,9 +32,10 @@ class EnterNumberView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        titleLabel.numberOfLines = 2
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .justified
         
-        nextButton.setTitle("Next", for: .normal)
+        nextButton.setTitle(.getStringFor(.next), for: .normal)
         nextButton.setEnabled(false)
         
         enterNumberTextField.delegate = self
@@ -50,12 +51,19 @@ class EnterNumberView: UIView, BaseView {
         
         nextButton.anchor(top: enterNumberTextField.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 14, left: 30, bottom: 0, right: 30))
         nextButton.constrainHeight(50)
-        
-        
     }
     
     func setCountryCode(code: String) {
         enterNumberTextField.countryNumberLabel.text = code
+    }
+    
+    func setRestOfNumber(_ text: String) {
+        enterNumberTextField.setRestOfNumber(text)
+        nextButton.setEnabled(!text.isEmpty)
+    }
+    
+    func changeTitle() {
+        titleLabel.text = "Please confirm this phone number for re-login or reinstall the app to use a different phone number." // TODO: - check text for this
     }
     
     func getCountryCode(removePlus: Bool = false) -> String? {
@@ -66,11 +74,13 @@ class EnterNumberView: UIView, BaseView {
         return code
     }
     
-    func getFullNumber() -> String? {
-        if let countryCode = getCountryCode(), let number = enterNumberTextField.getNumber() {
-            return "\(countryCode)\(number)"
+    func getTelephoneNumber() -> TelephoneNumber? {
+        guard let countryCode = getCountryCode(),
+              let number = enterNumberTextField.getNumber()
+        else {
+            return nil
         }
-        return nil
+        return TelephoneNumber(countryCode: countryCode, restOfNumber: number)
     }
     
 }

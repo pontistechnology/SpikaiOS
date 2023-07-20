@@ -7,21 +7,30 @@
 
 import Foundation
 import UIKit
+import Combine
 
-enum MessageSender {
-    case me
-    case friend
-    case group
+protocol BaseMessageTableViewCellProtocol {
+    func updateCell(message: Message)
 }
 
 class BaseMessageTableViewCell: UITableViewCell {
     
-    let containerView = UIView()
     private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary, fontName: .MontserratRegular, alignment: .left)
     private let senderPhotoImageview = UIImageView(image: UIImage(safeImage: .userImage))
     private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
-    private let messageStateView = MessageStateView(state: .waiting)
-    private let senderNameBottomConstraint = NSLayoutConstraint()
+    private let messageStateView = MessageStateView()
+    let containerStackView = UIStackView()
+    private var replyView: MessageReplyView?
+    private let progressView = CircularProgressBar(spinnerWidth: 20)
+    private var reactionsView: MessageReactionsView?
+    
+    private var editedIconImageView = UIImageView(image: UIImage(safeImage: .editIcon).withTintColor(.textSecondary, renderingMode: .alwaysOriginal))
+    private var editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: .textSecondary)
+    
+    private var containerBottomConstraint: NSLayoutConstraint?
+    
+    let tapPublisher = PassthroughSubject<MessageCellTaps, Never>()
+    var subs = Set<AnyCancellable>()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,25 +44,19 @@ class BaseMessageTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+//        print("BASE MESSAGE TABLEVIEW CELL DEINIT")
+    }
 }
 
 extension BaseMessageTableViewCell {
-    static let myReuseIdentifiers = [TextMessageTableViewCell.myTextReuseIdentifier,
-                              ImageMessageTableViewCell.myImageReuseIdentifier,
-                              FileMessageTableViewCell.myFileReuseIdentifier]
-    static let friendReuseIdentifiers = [TextMessageTableViewCell.friendTextReuseIdentifier,
-                                  ImageMessageTableViewCell.friendImageReuseIdentifier,
-                                  FileMessageTableViewCell.friendFileReuseIdentifier]
-    static let groupReuseIdentifiers = [TextMessageTableViewCell.groupTextReuseIdentifier,
-                                 ImageMessageTableViewCell.groupImageReuseIdentifier,
-                                 FileMessageTableViewCell.groupFileReuseIdentifier]
-    
     func getMessageSenderType(reuseIdentifier: String) -> MessageSender? {
-        if BaseMessageTableViewCell.myReuseIdentifiers.contains(reuseIdentifier) {
+        if reuseIdentifier.starts(with: MessageSender.me.reuseIdentifierPrefix) {
             return .me
-        } else if BaseMessageTableViewCell.friendReuseIdentifiers.contains(reuseIdentifier) {
+        } else if reuseIdentifier.starts(with: MessageSender.friend.reuseIdentifierPrefix) {
             return .friend
-        } else if BaseMessageTableViewCell.groupReuseIdentifiers.contains(reuseIdentifier) {
+        } else if reuseIdentifier.starts(with: MessageSender.group.reuseIdentifierPrefix) {
             return .group
         }
         return nil
@@ -63,51 +66,58 @@ extension BaseMessageTableViewCell {
 // TODO: - MY VS OTHER
 extension BaseMessageTableViewCell: BaseView {
     func addSubviews() {
-        contentView.addSubview(containerView)
+        contentView.addSubview(containerStackView)
         contentView.addSubview(timeLabel)
         contentView.addSubview(messageStateView)
     }
     
     func styleSubviews() {
-        containerView.layer.cornerRadius = 10
-        containerView.layer.masksToBounds = true
+        containerStackView.layer.cornerRadius = 10
+        containerStackView.layer.masksToBounds = true
+        containerStackView.axis = .vertical
+        containerStackView.distribution = .fill
         senderPhotoImageview.layer.cornerRadius = 10
         senderPhotoImageview.clipsToBounds = true
-        senderPhotoImageview.isHidden = true
-        timeLabel.isHidden = true
+        senderPhotoImageview.hide()
+        timeLabel.hide()
+        backgroundColor = .primaryBackground
     }
     
     func positionSubviews() {
-        containerView.widthAnchor.constraint(lessThanOrEqualToConstant: 276).isActive = true
-        timeLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        containerStackView.widthAnchor.constraint(lessThanOrEqualToConstant: 276).isActive = true
+        timeLabel.centerYAnchor.constraint(equalTo: containerStackView.centerYAnchor).isActive = true
     }
     
     func setupContainer(sender: MessageSender) {
-        containerView.backgroundColor = sender == .me ?  UIColor(hexString: "C8EBFE") : .chatBackground // TODO: ask nika for color
+        containerStackView.backgroundColor = sender.backgroundColor
         messageStateView.isHidden = sender != .me
+        
+        containerBottomConstraint = containerStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2)
+        containerBottomConstraint?.priority = .defaultLow
+        containerBottomConstraint?.isActive = true
         
         switch sender {
         case .me:
-            containerView.anchor(top: contentView.topAnchor, bottom: contentView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 20))
+            containerStackView.anchor(top: contentView.topAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 20))
             
-            messageStateView.anchor(leading: containerView.trailingAnchor, bottom: containerView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 6))
+            messageStateView.anchor(leading: containerStackView.trailingAnchor, bottom: containerStackView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 6))
 
-            timeLabel.anchor(trailing: containerView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
+            timeLabel.anchor(trailing: containerStackView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
         case .friend:
-            containerView.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: contentView.bottomAnchor, padding: UIEdgeInsets(top: 2, left: 20, bottom: 2, right: 0))
+            containerStackView.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 2, left: 20, bottom: 0, right: 0))
     
-            timeLabel.anchor(leading: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
+            timeLabel.anchor(leading: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
         case .group:
             contentView.addSubview(senderNameLabel)
             contentView.addSubview(senderPhotoImageview)
             
-            senderNameLabel.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: containerView.topAnchor, padding: UIEdgeInsets(top: 2, left: 68, bottom: 4, right: 0))
+            senderNameLabel.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: containerStackView.topAnchor, padding: UIEdgeInsets(top: 2, left: 68, bottom: 4, right: 0))
 
-            containerView.anchor(leading: contentView.leadingAnchor, bottom: contentView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 60, bottom: 2, right: 0))
+            containerStackView.anchor(leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 0))
     
-            senderPhotoImageview.anchor(bottom: containerView.bottomAnchor, trailing: containerView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 14), size: CGSize(width: 20, height: 20))
+            senderPhotoImageview.anchor(bottom: containerStackView.bottomAnchor, trailing: containerStackView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 14), size: CGSize(width: 20, height: 20))
             
-            timeLabel.anchor(leading: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
+            timeLabel.anchor(leading: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
         }
     }
 }
@@ -116,10 +126,19 @@ extension BaseMessageTableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        timeLabel.isHidden = true
+        timeLabel.hide()
         senderNameLabel.text = ""
         senderPhotoImageview.image = nil
-//        senderPhotoImageview.isHidden = true
+        subs.removeAll()
+        replyView?.removeFromSuperview()
+        progressView.removeFromSuperview()
+        reactionsView?.removeFromSuperview()
+        editedIconImageView.removeFromSuperview()
+        editedLabel.removeFromSuperview()
+        self.replyView = nil
+        self.reactionsView = nil
+        containerBottomConstraint?.constant = -2
+        //        senderPhotoImageview.hide()
     }
     
     func updateCellState(to state: MessageState) {
@@ -131,11 +150,11 @@ extension BaseMessageTableViewCell {
     }
     
     func updateSender(name: String) {
-        senderNameLabel.text = name
+        senderNameLabel.text = name.isEmpty ? "(missing username)" : name
     }
     
     func updateSender(photoUrl: URL?) {
-        senderPhotoImageview.isHidden = false
+        senderPhotoImageview.unhide()
         senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(safeImage: .userImage))
     }
     
@@ -145,5 +164,85 @@ extension BaseMessageTableViewCell {
     
     func setTimeLabelVisible(_ value: Bool) {
         timeLabel.isHidden = !value
+    }
+    
+    func showReplyView(senderName: String, message: Message, sender: MessageSender?) {
+        if replyView == nil, let sender = sender {
+            
+            let containerColor: UIColor = sender == .me ? .chatBackground : .myChatBackground
+            
+            self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: containerColor)
+            
+            containerStackView.insertArrangedSubview(replyView!, at: 0)
+            
+            replyView?.tap().sink(receiveValue: { [weak self] _ in
+                self?.tapPublisher.send(.scrollToReply)
+            }).store(in: &subs)
+        }
+    }
+    
+    func showReactions(reactionRecords: [MessageRecord]) {
+        guard let reuseIdentifier = self.reuseIdentifier,
+              let senderType = getMessageSenderType(reuseIdentifier: reuseIdentifier)
+        else { return }
+        reactionsView = MessageReactionsView(emojis: reactionRecords.compactMap { $0.reaction })
+        contentView.addSubview(reactionsView!)
+        containerBottomConstraint?.constant = -17
+        
+        switch senderType {
+        case .me:
+            reactionsView?.anchor(bottom: containerStackView.bottomAnchor, trailing: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: -15, right: 1))
+        case .friend, .group:
+            reactionsView?.anchor(leading: containerStackView.leadingAnchor, bottom: containerStackView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 1, bottom: -15, right: 0))
+        }
+        reactionsView?.backgroundColor = senderType.backgroundColor
+        
+        reactionsView?.tap().sink { [weak self] _ in
+            self?.tapPublisher.send(.showReactions)
+        }.store(in: &subs)
+    }
+
+    func showProgressViewIfNecessary() {
+        if progressView.superview == nil {
+            containerStackView.addSubview(progressView)
+            progressView.fillSuperview()
+            containerStackView.bringSubviewToFront(progressView)
+        }
+    }
+    
+    func showUploadProgress(at percent: CGFloat) {
+        showProgressViewIfNecessary()
+        progressView.setProgress(to: percent)
+    }
+    
+    func hideUploadProgress() {
+        progressView.removeFromSuperview()
+    }
+    
+    func startSpinning() {
+        showProgressViewIfNecessary()
+        progressView.startSpinning()
+    }
+    
+    func showEditedIcon() {
+        guard let reuseIdentifier,
+              let sender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
+        else { return }
+        if editedIconImageView.superview == nil, editedLabel.superview == nil {
+            contentView.addSubview(editedIconImageView)
+            contentView.addSubview(editedLabel)
+            editedIconImageView.constrainWidth(12)
+            editedIconImageView.constrainHeight(12)
+            editedIconImageView.anchor(top: containerStackView.topAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            editedLabel.anchor(top: containerStackView.topAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            switch sender {
+            case .me:
+                editedIconImageView.anchor(trailing: containerStackView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 2))
+                editedLabel.anchor(trailing: editedIconImageView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))
+            case .friend, .group:
+                editedIconImageView.anchor(leading: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0))
+                editedLabel.anchor(leading: editedIconImageView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0))
+            }
+        }
     }
 }

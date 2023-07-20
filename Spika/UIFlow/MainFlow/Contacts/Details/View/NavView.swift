@@ -13,9 +13,10 @@ class NavView: UIView, BaseView {
     let arrowImageView = UIImageView()
     let text: String
     
-    init(text: String) {
+    init(text: String, isArrowHidden: Bool = false) {
         self.text = text
         super.init(frame: .zero)
+        arrowImageView.isHidden = isArrowHidden
         setupView()
     }
     
@@ -39,5 +40,7 @@ class NavView: UIView, BaseView {
         
         arrowImageView.anchor(trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
         arrowImageView.centerYToSuperview()
+        
+        self.constrainHeight(58)
     }
 }

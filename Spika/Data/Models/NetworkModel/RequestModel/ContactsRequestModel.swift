@@ -9,4 +9,5 @@ import Foundation
 
 struct ContactsRequestModel: Codable {
     let contacts: [String]
+    let isLastPage: Bool
 }

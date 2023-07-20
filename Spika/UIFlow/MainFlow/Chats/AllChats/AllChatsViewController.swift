@@ -12,108 +12,150 @@ class AllChatsViewController: BaseViewController {
     
     private let allChatsView = AllChatsView()
     var viewModel: AllChatsViewModel!
-    var frc: NSFetchedResultsController<RoomEntity>?
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        viewModel.refreshUnreadCounts()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(allChatsView)
         setupBindings()
+        viewModel.refreshUnreadCounts()
     }
     
     func setupBindings() {
-        allChatsView.allChatsTableView.delegate = self
-        allChatsView.allChatsTableView.dataSource = self
+        allChatsView.roomsTableView.delegate = self
+        allChatsView.roomsTableView.dataSource = self
+        allChatsView.searchedMessagesTableView.delegate = self
+        allChatsView.searchedMessagesTableView.dataSource = self
+        allChatsView.searchBar.delegate = self
         
-        allChatsView.pencilImageView.tap().sink { [weak self] _ in
+        allChatsView.newChatButton.tap().sink { [weak self] _ in
             self?.viewModel.presentSelectUserScreen()
         }.store(in: &subscriptions)
         
-        setRoomsFetch()
+        allChatsView.newChatButton
+            .tap()
+            .sink { [weak self] _ in
+                self?.viewModel.onCreateNewRoom()
+            }.store(in: &subscriptions)
+        
+        viewModel.setupBinding()
+        viewModel.setRoomsFetch()
+        
+        viewModel.rooms
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.allChatsView.roomsTableView.reloadData()
+            }.store(in: &subscriptions)
     }
 }
 
-// MARK: - NSFetchedResultsController
-
-extension AllChatsViewController: NSFetchedResultsControllerDelegate {
-    
-    func setRoomsFetch() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            let fetchRequest = RoomEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "type == '\(RoomType.groupRoom.rawValue)' OR messages.@count > 0")
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp),
-                                                             ascending: false),
-                                            NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
-            self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                  managedObjectContext: self.viewModel.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
-            self.frc?.delegate = self
-            do {
-                try self.frc?.performFetch()
-                self.allChatsView.allChatsTableView.reloadData()
-            } catch {
-                fatalError("Failed to fetch entities: \(error)")
-                // TODO: handle error and change main context to func
-            }
- 
-        }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        allChatsView.allChatsTableView.reloadData()
-    }
-}
+// MARK: - UITableview
 
 extension AllChatsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let roomEntity = frc?.object(at: indexPath) else { return }
-        let room = Room(roomEntity: roomEntity)
-        print("ROOM selected: ", room)
-        viewModel.presentCurrentChatScreen(room: room)
+        if tableView == allChatsView.roomsTableView {
+            viewModel.presentCurrentChatScreen(for: indexPath, scrollToMessage: false)
+        } else if tableView == allChatsView.searchedMessagesTableView {
+            viewModel.presentCurrentChatScreen(for: indexPath, scrollToMessage: true)
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        view.endEditing(true) // TODO: - check, maybe use tableview keyboard handling method
     }
 }
 
 extension AllChatsViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = self.frc?.sections else { return 0 }
-        return sections[section].numberOfObjects
+    func numberOfSections(in tableView: UITableView) -> Int {
+        tableView == allChatsView.searchedMessagesTableView
+        ? viewModel.getNumberOfSectionForMessages()
+        : 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
-        guard let entity = frc?.object(at: indexPath) else { return UITableViewCell()}
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView == allChatsView.searchedMessagesTableView
+        ? viewModel.getNumberOfRowsForMessages(section: section)
+        : viewModel.getNumberOfRowsForRooms()
+    }
     
-        let room = Room(roomEntity: entity)
-//        print("room at indexpath: ", indexPath, room)
-        
-        let badgeNumber = entity.numberOfUnreadMessages(myUserId: viewModel.getMyUserId())
-        if room.type == .privateRoom,
-           let friendUser = room.getFriendUserInPrivateRoom(myUserId: viewModel.getMyUserId())
-        {
-            cell?.configureCell(avatarUrl: friendUser.getAvatarUrl(),
-                                name: friendUser.getDisplayName(),
-                                description: entity.lastMessageText(),
-                                time: entity.lastMessageTime(),
-                                badgeNumber: badgeNumber)
-            
-        } else if room.type != .privateRoom {
-            
-            cell?.configureCell(avatarUrl: room.getAvatarUrl(),
-                                name: room.name ?? "noname",
-                                description: entity.lastMessageText(),
-                                time: entity.lastMessageTime(),
-                                badgeNumber: badgeNumber)
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        tableView == allChatsView.searchedMessagesTableView
+        ? viewModel.titleForSectionForMessages(section: section)
+        : nil
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == allChatsView.searchedMessagesTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsSearchedMessageCell.reuseIdentifier, for: indexPath) as? AllChatsSearchedMessageCell
+
+            let data = viewModel.dataForCellForMessages(at: indexPath)
+            cell?.configureCell(senderName: data.0, time: data.1, text: data.2)
+            return cell ?? EmptyTableViewCell()
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
+            guard let data = viewModel.dataForCellForRooms(at: indexPath) else { return EmptyTableViewCell() }
+            cell?.configureCell(avatarUrl: data.avatarUrl, name: data.name,
+                                description: data.description, time: data.time,
+                                badgeNumber: data.badgeNumber, muted: data.muted, pinned: data.pinned)
+            return cell ?? EmptyTableViewCell()
         }
-        
-        return cell ?? UITableViewCell()
     }
 }
 
-// MARK: UITableview swipe animations, ignore for now
+// MARK: - SearchBarDelegate
+
+extension AllChatsViewController: UISearchBarDelegate {
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.setShowsScope(true, animated: false)
+        return true
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let input = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        viewModel.search.send(input)
+        guard allChatsView.searchBar.selectedScopeButtonIndex == 1 else { return }
+        fetchMessages(input: input)
+    }
+
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        if searchBar.selectedScopeButtonIndex == 0 {
+            searchBar.setShowsScope(false, animated: false)
+        }
+        return true
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        showSelectedTableView(selectedIndex: selectedScope)
+        searchBar.setShowsScope(true, animated: false)
+        guard let inputText = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        if allChatsView.searchBar.selectedScopeButtonIndex == 0 && inputText.isEmpty {
+            searchBar.setShowsScope(false, animated: false)
+        }
+        if allChatsView.searchBar.selectedScopeButtonIndex == 1 {
+            fetchMessages(input: inputText)
+        }
+    }
+    
+    func showSelectedTableView(selectedIndex: Int) {
+        allChatsView.roomsTableView.isHidden = selectedIndex == 1
+        allChatsView.searchedMessagesTableView.isHidden = selectedIndex == 0
+    }
+    
+    func fetchMessages(input: String) {
+        viewModel.setMessagesFetch(searchTerm: input)
+        allChatsView.searchedMessagesTableView.reloadData()
+    }
+}
+
+// MARK: - UITableview swipe animations, ignore for now
+
 extension AllChatsViewController {
     
     private func printSwipe() {
@@ -121,14 +163,15 @@ extension AllChatsViewController {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstLeft = UIContextualAction(style: .normal, title: "First left") { (action, view, completionHandler) in
-                self.printSwipe()
+        guard tableView == allChatsView.roomsTableView else { return nil }
+        let firstLeft = UIContextualAction(style: .normal, title: "First left") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         firstLeft.backgroundColor = .systemBlue
         
-        let secondLeft = UIContextualAction(style: .normal, title: "Second left") { (action, view, completionHandler) in
-                self.printSwipe()
+        let secondLeft = UIContextualAction(style: .normal, title: "Second left") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         secondLeft.backgroundColor = .systemPink
@@ -140,14 +183,15 @@ extension AllChatsViewController {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let firstRightAction = UIContextualAction(style: .normal, title: "First Right") { (action, view, completionHandler) in
-                self.printSwipe()
+        guard tableView == allChatsView.roomsTableView else { return nil }
+        let firstRightAction = UIContextualAction(style: .normal, title: "First Right") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         firstRightAction.backgroundColor = .systemGreen
         
-        let secondRightAction = UIContextualAction(style: .destructive, title: "Second Right") { (action, view, completionHandler) in
-                self.printSwipe()
+        let secondRightAction = UIContextualAction(style: .destructive, title: "Second Right") { [weak self] (action, view, completionHandler) in
+                self?.printSwipe()
                 completionHandler(true)
             }
         secondRightAction.backgroundColor = .systemRed

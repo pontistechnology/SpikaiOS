@@ -8,8 +8,13 @@
 import Foundation
 import CryptoKit
 import UIKit
+import CoreTelephony
 
 extension String {
+    static func getStringFor(_ value: Constants.Strings) -> String {
+        return NSLocalizedString(value.rawValue, comment: value.rawValue)
+    }
+    
     func getSHA256() -> String {
         let data = Data(self.utf8)
         let dataHashed = SHA256.hash(data: data)
@@ -40,14 +45,13 @@ extension String {
             return ceil(boundingBox.width)
     }
     
-    // TODO: check
-    func getAvatarUrl() -> String? {
+    func getFullUrl() -> URL? {
         if self.starts(with: "http") {
-            return self
+            return URL(string: self)
         } else if self.starts(with: "/") {
-            return Constants.Networking.baseUrl + self.dropFirst()
+            return URL(string: Constants.Networking.baseUrl + self.dropFirst())
         } else {
-            return Constants.Networking.baseUrl + self
+            return URL(string: Constants.Networking.baseUrl + self)
         }
     }
     
@@ -60,4 +64,20 @@ extension String {
             character.isNumber
         }
     }
+    
+    // Get a user's default region code
+    ///
+    /// - returns: A computed value for the user's current region - based on the iPhone's carrier and if not available, the device region.
+    static func defaultRegionCode() -> String? {
+#if os(iOS) && !targetEnvironment(simulator) && !targetEnvironment(macCatalyst)
+        if let isoCountryCode = CTTelephonyNetworkInfo().serviceSubscriberCellularProviders?.values.first?.isoCountryCode {
+            return isoCountryCode.uppercased()
+        }
+#endif
+        if let countryCode = Locale.current.regionCode {
+            return countryCode.uppercased()
+        }
+        return nil
+    }
+    
 }

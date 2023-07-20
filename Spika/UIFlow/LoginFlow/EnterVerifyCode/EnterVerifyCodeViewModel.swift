@@ -11,11 +11,11 @@ import Combine
 class EnterVerifyCodeViewModel: BaseViewModel {
     
     let deviceId: String
-    let phoneNumber: String
+    let phoneNumber: TelephoneNumber
     
     let resendSubject = CurrentValueSubject<Bool, Never>(false)
     
-    init(repository: Repository, coordinator: Coordinator, deviceId: String, phoneNumber: String) {
+    init(repository: Repository, coordinator: Coordinator, deviceId: String, phoneNumber: TelephoneNumber) {
         self.deviceId = deviceId
         self.phoneNumber = phoneNumber
         super.init(repository: repository, coordinator: coordinator)
@@ -24,26 +24,26 @@ class EnterVerifyCodeViewModel: BaseViewModel {
     func verifyCode(code: String) {
         networkRequestState.send(.started())
         repository.verifyCode(code: code, deviceId: deviceId).sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let self else { return }
             self.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
-                PopUpManager.shared.presentAlert(errorMessage: "Could not auth user: \(error)")
+                self.showError("Could not auth user: \(error)")
             default: break
             }
         } receiveValue: { [weak self] authModel in
-            print(authModel)
             guard let user = authModel.data?.user,
-                  let device = authModel.data?.device
+                  let device = authModel.data?.device,
+                  let self
             else {
-                PopUpManager.shared.presentAlert(errorMessage: "No user or device response.")
+                self?.showError("No user or device response.")
                 return
             }
-            self?.repository.saveUserInfo(user: user, device: device)
-            if user.displayName != "" {
-                self?.presentHomeScreen()
+            self.repository.saveUserInfo(user: user, device: device, telephoneNumber: self.phoneNumber)
+            if user.displayName != "" && user.displayName != nil {
+                self.presentHomeScreen()
             } else {
-                self?.presentEnterUsernameScreen()
+                self.presentEnterUsernameScreen()
             }
         }.store(in: &subscriptions)
 
@@ -51,11 +51,11 @@ class EnterVerifyCodeViewModel: BaseViewModel {
     
     func resendCode() {
         networkRequestState.send(.started())
-        repository.authenticateUser(telephoneNumber: phoneNumber, deviceId: deviceId).sink { [weak self] completion in
+        repository.authenticateUser(telephoneNumber: phoneNumber.getFullNumber(), deviceId: deviceId).sink { [weak self] completion in
             self?.networkRequestState.send(.finished)
             switch completion {
             case let .failure(error):
-                PopUpManager.shared.presentAlert(errorMessage: "Could not auth user: \(error)")
+                self?.showError("Could not auth user: \(error)")
             default: break
             }
         } receiveValue: { [weak self] authResponse in

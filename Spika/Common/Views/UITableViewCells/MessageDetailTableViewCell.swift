@@ -11,9 +11,9 @@ import UIKit
 class MessageDetailTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "MessageDetailTableViewCell"
     
-    let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
-    let userNameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
-    let timeLabel  = CustomLabel(text: "", textSize: 12, textColor: .textSecondary, fontName: .MontserratRegular, alignment: .right)
+    private let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
+    private let userNameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
+    private let timeLabel  = CustomLabel(text: "", textSize: 12, textColor: .textSecondary, fontName: .MontserratRegular, alignment: .right)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,7 +31,7 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .white // TODO: change
+        backgroundColor = .secondaryBackground
         leftImageView.clipsToBounds = true
         leftImageView.layer.cornerRadius = 35/2
         userNameLabel.numberOfLines = 1
@@ -49,11 +49,8 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
         timeLabel.anchor(trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
     }
     
-    func configureCell(avatarUrl: String?, name: String, time: String) {
-        if let url = URL(string: avatarUrl ?? "") {
-            leftImageView.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
-        }
-        
+    func configureCell(avatarUrl: URL?, name: String, time: String) {
+        leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(safeImage: .userImage))
         userNameLabel.text = name
         timeLabel.text = time
     }

@@ -11,56 +11,30 @@ class EnterUsernameViewController: BaseViewController {
     
     private let enterUsernameView = EnterUsernameView()
     var viewModel: EnterUsernameViewModel!
-    private let imagePicker = UIImagePickerController()
-    let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    var fileData: Data?
+    var fileData: Data? // TODO: change to url, move to viewmodel, use phphotopicker
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(enterUsernameView)
         setupBindings()
-        setupImagePicker()
-        setupActionSheet()
-    }
-    
-    func setupActionSheet() {
-        actionSheet.addAction(UIAlertAction(title: "Take a photo", style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
-            self.imagePicker.sourceType = .camera
-            self.imagePicker.cameraCaptureMode = .photo
-            self.imagePicker.cameraDevice = .front
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Choose from gallery", style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
-            self.imagePicker.sourceType = .photoLibrary
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Remove photo", style: .destructive, handler: { [weak self] _ in
-            guard let self = self else { return }
-            self.fileData = nil
-            self.enterUsernameView.profilePictureView.deleteMainImage()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
     }
     
     func setupBindings() {
         sink(networkRequestState: viewModel.networkRequestState)
         
         enterUsernameView.profilePictureView.tap().sink { [weak self] _ in
-            guard let self = self else { return }
-            self.present(self.actionSheet, animated: true, completion: nil)
+            self?.showChangeImageActionSheet()
         }.store(in: &subscriptions)
         
         enterUsernameView.nextButton.tap().sink { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             if let username = self.enterUsernameView.usernameTextfield.text {
                 self.viewModel.updateUser(username: username, imageFileData: self.fileData)
             }
         }.store(in: &subscriptions)
         
         viewModel.uploadProgressPublisher.sink { [weak self] completion in
-            guard let self = self else { return }
+            guard let self else { return }
             
             switch completion {
             case .finished:
@@ -71,42 +45,41 @@ class EnterUsernameViewController: BaseViewController {
                 self.enterUsernameView.profilePictureView.hideUploadProgress()
             }
         } receiveValue: { [weak self] progress in
-            guard let self = self else { return }
+            guard let self else { return }
             self.enterUsernameView.profilePictureView.showUploadProgress(progress: progress)
         }.store(in: &subscriptions)
-
-    }
-}
-
-extension EnterUsernameViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func setupImagePicker() {
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            
-            let widhtInPixels  = pickedImage.size.width * UIScreen.main.scale
-            let heightInPixels = pickedImage.size.height * UIScreen.main.scale
-            
-            
-            if widhtInPixels < 512 || heightInPixels < 512 {
-                PopUpManager.shared.presentAlert(errorMessage: "Please use better quality.")
-            } else if abs(widhtInPixels - heightInPixels) > 20 {
-                PopUpManager.shared.presentAlert(errorMessage: "Please select a square")
-            } else {
-                guard let resizedImage = pickedImage.resizeImageToFitPixels(size: CGSize(width: 512, height: 512)) else { return }
-                enterUsernameView.profilePictureView.showImage(resizedImage)
-                fileData = resizedImage.jpegData(compressionQuality: 1)
-            }
-            dismiss(animated: true, completion: nil)
-        }
         
+        imagePickerPublisher.sink { [weak self] pickedImage in
+            let photoStatus = pickedImage.statusOfPhoto(for: .avatar)
+            switch photoStatus {
+            case .allOk:
+                guard let resizedImage = self?.viewModel.resizeImage(pickedImage) else { return }
+                self?.enterUsernameView.profilePictureView.showImage(resizedImage)
+                self?.fileData = resizedImage.jpegData(compressionQuality: 1)
+            default:
+                self?.viewModel.showError(photoStatus.description)
+            }
+        }.store(in: &subscriptions)
     }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+    func showChangeImageActionSheet() {
+        viewModel
+            .getAppCoordinator()?
+            .showAlert(actions: [.regular(title: .getStringFor(.takeAPhoto)),
+                                 .regular(title: .getStringFor(.chooseFromGallery)),
+                                 .destructive(title: .getStringFor(.removePhoto))])
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.showUIImagePicker(source: .camera)
+                case 1:
+                    self?.showUIImagePicker(source: .photoLibrary)
+                case 2:
+                    self?.fileData = nil
+                    self?.enterUsernameView.profilePictureView.deleteMainImage()
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
     }
 }

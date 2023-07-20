@@ -11,20 +11,39 @@ import AVFoundation
 import Firebase
 import FirebaseMessaging
 
- @main
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    let notificationHelper = NotificationHelpers()
         
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        FirebaseApp.configure()
+        configureFirebase()
         configureNotifications(app: application)
         customization()
-        test()
+//        test()
         return true
     }
     
+    func configureFirebase() {
+        FirebaseApp.configure()
+        
+    }
+    
+    func test() {
+            print("_____")
+            Constants.Strings.allCases.enumerated().forEach { index, element in
+                print("C ", index, String.getStringFor(element))
+                print(String.getStringFor(element) == element.rawValue)
+            }
+            print("_____")
+    }
+    
+    
     func customization() {
-        print("TOKEN: ", UserDefaults(suiteName: Constants.Strings.appGroupName)?.string(forKey: Constants.UserDefaults.accessToken))
+        if let token = UserDefaults(suiteName: Constants.Networking.appGroupName)?.string(forKey: Constants.Database.accessToken) as? String {
+            print("TOKEN: ", token)
+        }
         
         guard let font =  UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14) else { return }
         UIBarButtonItem.appearance().setTitleTextAttributes(
@@ -42,21 +61,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: Push notifications
 
 extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print("NOTIFICATION: ", userInfo)
-//        let m = userInfo["message"] as! String
-//        let jsonData = m.data(using: .utf8)
-//        let a = try! JSONDecoder().decode(Message.self, from: jsonData as! Data)
-//        print("a je :" , a)
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+       
+        guard let message = notificationHelper.decodeMessageFrom(userInfo: userInfo) else {
+            completionHandler()
+            return
+        }
+        
+        let scene = UIApplication.shared.connectedScenes.first
+        guard let sd : SceneDelegate = (scene?.delegate as? SceneDelegate) else {
+            completionHandler()
+            return
+        }
+        notificationHelper.removeNotifications(withRoomId: message.roomId)
+        DispatchQueue.main.async {
+            sd.appCoordinator?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: message.roomId))
+            completionHandler()
+        }
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         messaging.token { token, _ in
             guard let token = token else { return }
             print("New Push fcmToken: ", token)
-            let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
-            userDefaults.set(token, forKey: Constants.UserDefaults.pushToken)
+            let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)!
+            userDefaults.set(token, forKey: Constants.Database.pushToken)
         }
     }
     
@@ -68,31 +100,6 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
             print("APNs registred.")
         }
         app.registerForRemoteNotifications()
-    }
-}
-
-// MARK: CoreData, testing, TODO: delete later
-
-extension AppDelegate {
-    
-    func test() {
-//        let userDefaults = UserDefaults(suiteName: Constants.Strings.appGroupName)!
-//        userDefaults.set("fich0x3WTUwjlGF5", forKey: Constants.UserDefaults.accessToken)
-    }
-    
-    func allroomsprinter() {
-        let coreDataStack = CoreDataStack()
-
-        let fr = RoomEntity.fetchRequest()
-        fr.predicate = NSPredicate(format: "type == 'private' AND ANY users.userId == 12")
-        let aa = try! coreDataStack.mainMOC.fetch(fr)
-        print(aa.count)
-        for a in aa {
-            print("Count of users: ", a.users!.count)
-            for user in a.users! {
-                print("Begi user: ", (user as! RoomUserEntity).user!.displayName!)
-            }
-        }
     }
 }
 

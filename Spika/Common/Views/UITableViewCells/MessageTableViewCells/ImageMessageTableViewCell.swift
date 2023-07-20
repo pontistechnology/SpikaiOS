@@ -8,17 +8,11 @@
 import Foundation
 import UIKit
 
-class ImageMessageTableViewCell: BaseMessageTableViewCell {
+final class ImageMessageTableViewCell: BaseMessageTableViewCell {
     
-    static let myImageReuseIdentifier = "MyImageMessageTableViewCell"
-    static let friendImageReuseIdentifier = "FriendImageMessageTableViewCell"
-    static let groupImageReuseIdentifier = "GroupImageMessageTableViewCell"
-    
-    let photoImageView = UIImageView()
+    private let photoImageView = MessageImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        print("text cell init")
-
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupImageCell()
     }
@@ -32,23 +26,34 @@ class ImageMessageTableViewCell: BaseMessageTableViewCell {
     }
     
     func setupImageCell() {
-        containerView.addSubview(photoImageView)
-        
-        photoImageView.contentMode = .scaleAspectFill
-        photoImageView.layer.cornerRadius = 10
-        photoImageView.clipsToBounds = true
-        
-        photoImageView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-        
-        photoImageView.heightAnchor.constraint(equalToConstant: 256).isActive = true
-        photoImageView.widthAnchor.constraint(equalToConstant: 256).isActive  = true
+        containerStackView.addArrangedSubview(photoImageView)
     }
 }
 // MARK: Public Functions
 
-extension ImageMessageTableViewCell {
+extension ImageMessageTableViewCell: BaseMessageTableViewCellProtocol {
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        photoImageView.reset()
+    }
     
     func updateCell(message: Message) {
-        photoImageView.kf.setImage(with: URL(string: message.body?.file?.path?.getAvatarUrl() ?? "error"), placeholder: UIImage(systemName: "arrow.counterclockwise")?.withTintColor(.gray, renderingMode: .alwaysOriginal))
+        let imageRatio = ImageRatio(width: message.body?.file?.metaData?.width ?? 1,
+                                    height: message.body?.file?.metaData?.height ?? 1)
+        
+        // TODO: - use repository
+        if let localId = message.localId,
+           let localPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(localId.appending("thumb")).path,
+           FileManager.default.fileExists(atPath: localPath) {
+            photoImageView.setImage(path: localPath, as: imageRatio)
+        } else {
+            let path = message.body?.thumb?.id?.fullFilePathFromId()
+            photoImageView.setImage(url: path, as: imageRatio)            
+        }
+        
+        photoImageView.tap().sink { [weak self] _ in
+            self?.tapPublisher.send(.openImage)
+        }.store(in: &subs)
     }
 }

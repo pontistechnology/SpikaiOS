@@ -9,33 +9,16 @@ import Foundation
 
 extension Message {
     func getReuseIdentifier(myUserId: Int64, roomType: RoomType) -> String? {
-        switch type {
-        case .text:
-            if myUserId == fromUserId{
-                return TextMessageTableViewCell.myTextReuseIdentifier
-            } else if roomType == .privateRoom {
-                return TextMessageTableViewCell.friendTextReuseIdentifier
-            } else {
-                return TextMessageTableViewCell.groupTextReuseIdentifier
-            }
-        case .image:
-            if myUserId == fromUserId{
-                return ImageMessageTableViewCell.myImageReuseIdentifier
-            } else if roomType == .privateRoom {
-                return ImageMessageTableViewCell.friendImageReuseIdentifier
-            } else {
-                return ImageMessageTableViewCell.groupImageReuseIdentifier
-            }
-        case .file:
-            if myUserId == fromUserId{
-                return FileMessageTableViewCell.myFileReuseIdentifier
-            } else if roomType == .privateRoom {
-                return FileMessageTableViewCell.friendFileReuseIdentifier
-            } else {
-                return FileMessageTableViewCell.groupFileReuseIdentifier
-            }
-        case .unknown, .video, .audio, .none:
-            return nil
+        var identifier = ""
+        
+        if myUserId == fromUserId {
+            identifier = MessageSender.me.reuseIdentifierPrefix
+        } else if roomType == .privateRoom {
+            identifier = MessageSender.friend.reuseIdentifierPrefix
+        } else {
+            identifier = MessageSender.group.reuseIdentifierPrefix
         }
+        let type = deleted ? "Deleted" : type.rawValue.capitalized
+        return identifier + type + "MessageTableViewCell"
     }
 }

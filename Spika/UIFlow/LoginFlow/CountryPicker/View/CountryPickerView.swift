@@ -15,8 +15,8 @@ enum Section {
 class CountryPickerView: UIView, BaseView {
     
     let cancelButton = ActionButton()
-    let searchBar = SearchBar(placeholder: "Search")
-    let allCountriesLabel = CustomLabel(text: "ALL COUNTRIES", textSize: 9, textColor: .textTertiary, fontName: .MontserratRegular)
+    let searchBar = SearchBar(placeholder: .getStringFor(.search))
+    let allCountriesLabel = CustomLabel(text: .getStringFor(.allCountries), textSize: 9, textColor: .textTertiary, fontName: .MontserratRegular)
     let countriesTableView = UITableView()
     
     private let countries: [Country] = CountryHelper.shared.getCountries()
@@ -41,7 +41,7 @@ class CountryPickerView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitle(.getStringFor(.cancel), for: .normal)
         
         countriesTableView.backgroundColor = .clear
         countriesTableView.rowHeight = CountryTableViewCell.rowHeight

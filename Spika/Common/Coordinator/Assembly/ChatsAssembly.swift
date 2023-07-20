@@ -29,26 +29,15 @@ class ChatsAssembly: Assembly {
 //        }.inObjectScope(.transient)
     }
     
-    private func assembleCurrentChatViewController(_ container: Container) {
-        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, user: User) in
+    private func assembleCurrentChatViewController(_ container: Container) {        
+        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return CurrentChatViewModel(repository: repository, coordinator: coordinator, friendUser: user)
+            return CurrentChatViewModel(repository: repository, coordinator: coordinator, room: room, scrollToMessageId: messageId)
         }.inObjectScope(.transient)
 
-        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, user: User) in
+        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
             let controller = CurrentChatViewController()
-            controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, user)
-            return controller
-        }.inObjectScope(.transient)
-        
-        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, room: Room) in
-            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return CurrentChatViewModel(repository: repository, coordinator: coordinator, room: room)
-        }.inObjectScope(.transient)
-
-        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, room: Room) in
-            let controller = CurrentChatViewController()
-            controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, room)
+            controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, room, messageId)
             return controller
         }.inObjectScope(.transient)
     }

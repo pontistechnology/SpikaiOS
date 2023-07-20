@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import UIKit
 
 extension AppRepository {
     
@@ -14,7 +15,7 @@ extension AppRepository {
     
     func updatePushToken() -> AnyPublisher<UpdatePushResponseModel, Error> {
         guard let accessToken = getAccessToken(),
-              let token = userDefaults.string(forKey: Constants.UserDefaults.pushToken)
+              let token = userDefaults.string(forKey: Constants.Database.pushToken)
         else {return Fail<UpdatePushResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
@@ -27,5 +28,11 @@ extension AppRepository {
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
+    }
+    
+    // MARK: - Notifications
+    
+    func removeNotificationsWith(roomId: Int64) {
+        notificationHelpers.removeNotifications(withRoomId: roomId)
     }
 }

@@ -10,13 +10,14 @@ import UIKit
 
 class MessageDetailsView: UIView {
     
-    private let detailsLabel = CustomLabel(text: "Details", textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
+    private let detailsLabel = CustomLabel(text: .getStringFor(.details), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
     let recordsTableView = UITableView()
     
     init() {
         super.init(frame: .zero)
         setupView()
-        recordsTableView.register(MessageDetailTableViewCell.self, forCellReuseIdentifier: MessageDetailTableViewCell.reuseIdentifier)
+        recordsTableView.register(ContactsTableViewCell.self, forCellReuseIdentifier: ContactsTableViewCell.reuseIdentifier)
+        recordsTableView.register(TableViewHeaderWithIcon.self, forHeaderFooterViewReuseIdentifier: "header")
     }
     
     required init?(coder: NSCoder) {
@@ -31,8 +32,8 @@ extension MessageDetailsView: BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .white
-        recordsTableView.backgroundColor = .white
+        backgroundColor = .secondaryBackground
+        recordsTableView.backgroundColor = .secondaryBackground
     }
     
     func positionSubviews() {

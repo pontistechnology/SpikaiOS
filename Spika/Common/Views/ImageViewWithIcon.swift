@@ -12,7 +12,7 @@ class ImageViewWithIcon: UIView, BaseView {
     private let backgroundView = UIView()
     private let mainImageView = UIImageView()
     private let plainImageView = UIImageView()
-    private let cameraIcon = ImageButton(image: UIImage(safeImage: .camera), size: CGSize(width: 28, height: 28))
+    private let cameraIcon = ImageButton(image: UIImage(safeImage: .camera), size: CGSize(width: 28, height: 28)) // TODO: camera background
     private let uploadProgressView = CircularProgressBar(spinnerWidth: 24)
     
     private let image: UIImage
@@ -46,8 +46,8 @@ class ImageViewWithIcon: UIView, BaseView {
 
         mainImageView.image = image
         mainImageView.contentMode = .scaleAspectFill
-        mainImageView.isHidden = true
-        cameraIcon.isHidden = true
+        mainImageView.hide()
+        cameraIcon.hide()
     }
     
     func positionSubviews() {
@@ -64,17 +64,25 @@ class ImageViewWithIcon: UIView, BaseView {
     }
     
     func deleteMainImage() {
-        plainImageView.isHidden = false
+        plainImageView.unhide()
         mainImageView.isHidden  = true
-        cameraIcon.isHidden = true
+        cameraIcon.hide()
     }
     
     func showImage(_ image: UIImage) {
-        plainImageView.isHidden = true
+        plainImageView.hide()
         
         mainImageView.image = image
         mainImageView.isHidden  = false
-        cameraIcon.isHidden = false
+        cameraIcon.unhide()
+    }
+    
+    func showImage(_ url: URL, placeholder: UIImage?) {
+        plainImageView.hide()
+        
+        mainImageView.kf.setImage(with: url, placeholder: placeholder)
+        mainImageView.isHidden  = false
+        cameraIcon.unhide()
     }
     
     func showUploadProgress(progress: CGFloat) {
@@ -92,4 +100,9 @@ class ImageViewWithIcon: UIView, BaseView {
         uploadProgressView.removeFromSuperview()
         isUserInteractionEnabled = true
     }
+    
+    func updateCameraIsHidden(isHidden: Bool) {
+        self.cameraIcon.isHidden = isHidden
+    }
+    
 }

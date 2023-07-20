@@ -11,8 +11,8 @@ import UIKit
 class EnterUsernameView: UIView, BaseView {
     
     let profilePictureView = ImageViewWithIcon(image: UIImage(safeImage: .logo), size: CGSize(width: 100, height: 100))
-    private let usernameLabel = CustomLabel(text: "Username", textColor: .textTertiary, fontName: .MontserratMedium)
-    let usernameTextfield = TextField(textPlaceholder: "Enter username")
+    private let usernameLabel = CustomLabel(text: .getStringFor(.username), textColor: .textTertiary, fontName: .MontserratMedium)
+    let usernameTextfield = TextField(textPlaceholder: .getStringFor(.enterUsername))
     let nextButton = MainButton()
     
     override init(frame: CGRect) {
@@ -33,7 +33,7 @@ class EnterUsernameView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        nextButton.setTitle("Next", for: .normal)
+        nextButton.setTitle(.getStringFor(.next), for: .normal)
         nextButton.setEnabled(false)
         
         usernameTextfield.autocorrectionType = .no

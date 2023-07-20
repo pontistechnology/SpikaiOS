@@ -10,7 +10,7 @@ import UIKit
 
 class NotesView: UIView, BaseView {
     
-    let testLabel = CustomLabel(text: "notes")
+    let testLabel = CustomLabel(text: .getStringFor(.notes))
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -17,7 +17,7 @@ class SharedViewController: BaseViewController {
         super.viewDidLoad()
         setupView(sharedView)
         setupBindings()
-        navigationItem.title = "Shared Media, Docs and Links"
+        navigationItem.title = .getStringFor(.sharedMediaLinksDocs)
     }
     
     func setupBindings() {
@@ -77,9 +77,9 @@ extension SharedViewController: UITableViewDataSource {
         case 2:
             cell = tableView.dequeueReusableCell(withIdentifier: DocsTableViewCell.reuseIdentifier) as? DocsTableViewCell
         default:
-            return UITableViewCell()
+            return EmptyTableViewCell()
         }
-        return cell ?? UITableViewCell()
+        return cell ?? EmptyTableViewCell()
     }
 }
 

@@ -17,6 +17,13 @@ struct MessageRecord: Codable {
     let modifiedAt: Int64?
 }
 
+struct SomeMessageDetails: Codable {
+    let id: Int64
+    let totalUserCount: Int64
+    let deliveredCount: Int64
+    let seenCount: Int64
+}
+
 extension MessageRecord {
     init(messageRecordEntity: MessageRecordEntity) {
         self.init(id: messageRecordEntity.id,

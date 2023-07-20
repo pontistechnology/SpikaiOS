@@ -8,18 +8,20 @@
 import Foundation
 import UIKit
 
-class TextMessageTableViewCell: BaseMessageTableViewCell {
+final class TextMessageTableViewCell: BaseMessageTableViewCell {
     
-    static let myTextReuseIdentifier = "MyTextMessageTableViewCell"
-    static let friendTextReuseIdentifier = "FriendTextMessageTableViewCell"
-    static let groupTextReuseIdentifier = "GroupTextMessageTableViewCell"
-    
-    let messageTextView = CustomTextView(text: "", textSize: 14, textColor: .logoBlue, fontName: .MontserratMedium)
+    private let plainTextView = MessageTextView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        print("CELL INTI: ", style.rawValue, "reuse identifieer: ", reuseIdentifier)
         setupTextCell()
+    }
+    
+    init(text: String, sender: MessageSender) {
+        super.init(style: .default, reuseIdentifier: nil)
+        setupContainer(sender: sender)
+        setupTextCell()
+        plainTextView.setup(text: "This message is deleted.")
     }
     
     
@@ -32,24 +34,21 @@ class TextMessageTableViewCell: BaseMessageTableViewCell {
     }
     
     func setupTextCell() {
-        containerView.addSubview(messageTextView)
-        
-        messageTextView.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        containerStackView.addArrangedSubview(plainTextView)
     }
 }
 
 // MARK: Public Functions
 
-extension TextMessageTableViewCell {
+extension TextMessageTableViewCell: BaseMessageTableViewCellProtocol {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        messageTextView.text = ""
+        plainTextView.reset()
     }
     
     func updateCell(message: Message) {
-        
-        messageTextView.text = message.body?.text
+        plainTextView.setup(text: message.body?.text)
 //        """
 //        text: \(message.body?.text),
 //        id: \(message.id),
