@@ -46,6 +46,9 @@ extension IconAndLabelView: BaseView {
         case .audio:
             textLabel.text = "Audio message"
             iconImageView.image = .init(safeImage: .micIcon)
+        case .file:
+            textLabel.text = "File message"
+            iconImageView.image = .init(safeImage: .unknownFileThumbnail)
         default:
             textLabel.text = "Unknown message"
             iconImageView.image = .imageFor(mimeType: "unknown")

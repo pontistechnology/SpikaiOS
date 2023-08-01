@@ -345,8 +345,6 @@ extension DatabaseService {
                     _ = MessageRecordEntity(record: messageRecord, context: context)
                 }
                 
-                self?.updateMessagesDummyValue(ids: messageRecords.filter({ $0.type == .reaction}).map({ $0.messageId }))
-              
                 do {
                     try context.safeSave()
                     promise(.success(true))
@@ -354,6 +352,8 @@ extension DatabaseService {
                     NSLog("Core Data Error: saving message records: \(error.localizedDescription)")
                     promise(.failure(DatabaseError.savingError))
                 }
+                
+                self?.updateMessagesDummyValue(ids: messageRecords.filter({ $0.type == .reaction}).map({ $0.messageId }))
             }
         }
     }
