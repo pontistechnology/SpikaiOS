@@ -156,46 +156,46 @@ extension AllChatsViewController: UISearchBarDelegate {
 
 // MARK: - UITableview swipe animations, ignore for now
 
-extension AllChatsViewController {
-    
-    private func printSwipe() {
-        print("Swipe.")
-    }
-    
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard tableView == allChatsView.roomsTableView else { return nil }
-        let firstLeft = UIContextualAction(style: .normal, title: "First left") { [weak self] (action, view, completionHandler) in
-                self?.printSwipe()
-                completionHandler(true)
-            }
-        firstLeft.backgroundColor = .systemBlue
-        
-        let secondLeft = UIContextualAction(style: .normal, title: "Second left") { [weak self] (action, view, completionHandler) in
-                self?.printSwipe()
-                completionHandler(true)
-            }
-        secondLeft.backgroundColor = .systemPink
-        
-        let configuration = UISwipeActionsConfiguration(actions: [firstLeft, secondLeft])
-        configuration.performsFirstActionWithFullSwipe = false
-        return configuration
-        
-    }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard tableView == allChatsView.roomsTableView else { return nil }
-        let firstRightAction = UIContextualAction(style: .normal, title: "First Right") { [weak self] (action, view, completionHandler) in
-                self?.printSwipe()
-                completionHandler(true)
-            }
-        firstRightAction.backgroundColor = .systemGreen
-        
-        let secondRightAction = UIContextualAction(style: .destructive, title: "Second Right") { [weak self] (action, view, completionHandler) in
-                self?.printSwipe()
-                completionHandler(true)
-            }
-        secondRightAction.backgroundColor = .systemRed
-        
-        return UISwipeActionsConfiguration(actions: [secondRightAction, firstRightAction])
-    }
-}
+//extension AllChatsViewController {
+//    
+//    private func printSwipe() {
+//        print("Swipe.")
+//    }
+//    
+//    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        guard tableView == allChatsView.roomsTableView else { return nil }
+//        let firstLeft = UIContextualAction(style: .normal, title: "First left") { [weak self] (action, view, completionHandler) in
+//                self?.printSwipe()
+//                completionHandler(true)
+//            }
+//        firstLeft.backgroundColor = .systemBlue
+//        
+//        let secondLeft = UIContextualAction(style: .normal, title: "Second left") { [weak self] (action, view, completionHandler) in
+//                self?.printSwipe()
+//                completionHandler(true)
+//            }
+//        secondLeft.backgroundColor = .systemPink
+//        
+//        let configuration = UISwipeActionsConfiguration(actions: [firstLeft, secondLeft])
+//        configuration.performsFirstActionWithFullSwipe = false
+//        return configuration
+//        
+//    }
+//    
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        guard tableView == allChatsView.roomsTableView else { return nil }
+//        let firstRightAction = UIContextualAction(style: .normal, title: "First Right") { [weak self] (action, view, completionHandler) in
+//                self?.printSwipe()
+//                completionHandler(true)
+//            }
+//        firstRightAction.backgroundColor = .systemGreen
+//        
+//        let secondRightAction = UIContextualAction(style: .destructive, title: "Second Right") { [weak self] (action, view, completionHandler) in
+//                self?.printSwipe()
+//                completionHandler(true)
+//            }
+//        secondRightAction.backgroundColor = .systemRed
+//        
+//        return UISwipeActionsConfiguration(actions: [secondRightAction, firstRightAction])
+//    }
+//}
