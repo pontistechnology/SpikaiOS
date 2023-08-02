@@ -85,40 +85,37 @@ class CurrentChatView: UIView, BaseView {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            messageInputViewBottomConstraint.constant = -keyboardSize.height + 30
             var indexPath: IndexPath?
             if let lastCell = messagesTableView.visibleCells.last {
                 indexPath = messagesTableView.indexPath(for: lastCell)
             }
             DispatchQueue.main.async { [weak self] in
-                self?.layoutIfNeeded()
+//                self?.layoutIfNeeded()
                 guard let indexPath else { return }
                 self?.messagesTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             }
         }
     }
     
-    @objc func keyboardWillHide(notification: Notification) {
-        messageInputViewBottomConstraint.constant = 0
-        DispatchQueue.main.async { [weak self] in
-            self?.layoutIfNeeded()
-        }
-    }
-    
     deinit {
         NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
-        NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
     }
     
     func handleScrollToBottomButton(show: Bool, number: Int) {
         scrollToBottomStackView.isHidden = !show
         newMessagesLabel.isHidden = number == 0
         newMessagesLabel.text = "You have \(number) new message" + (number > 1 ? "s" : "") // todo: - localization
+    }
+    
+    func moveInputFromBottom(for n: CGFloat) {
+        messageInputViewBottomConstraint.constant = -(n > 30 ? n - 30 : 0)
+        DispatchQueue.main.async { [weak self] in
+            self?.layoutIfNeeded()
+        }
     }
 }
 

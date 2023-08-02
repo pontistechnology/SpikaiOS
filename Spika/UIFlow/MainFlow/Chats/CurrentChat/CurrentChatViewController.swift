@@ -100,6 +100,12 @@ extension CurrentChatViewController {
             self?.currentChatView.handleScrollToBottomButton(show: number > 0, number: number)
         }.store(in: &subscriptions)
         
+        currentChatView.messageInputView.inputTextAndControlsView.keyboardAccessoryView.publisher.sink { _ in
+            
+        } receiveValue: { [weak self] distance in
+            self?.currentChatView.moveInputFromBottom(for: distance)
+        }.store(in: &subscriptions)
+        
         Publishers
             .Zip(frcIsChangingPublisher, frcDidChangePublisher)
             .receive(on: DispatchQueue.main)
