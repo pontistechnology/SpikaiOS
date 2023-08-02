@@ -27,7 +27,6 @@ class CurrentChatViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(currentChatView)
-        setupNavigationItems()
         setupBindings()
         self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
@@ -35,6 +34,7 @@ class CurrentChatViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+        setupNavigationItems()
         viewModel.sendSeenStatus()
     }
     
