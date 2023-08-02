@@ -456,7 +456,7 @@ extension CurrentChatViewModel {
             .sink { _ in
             } receiveValue: { [weak self] response in
                 guard let records = response.data?.messageRecords else { return }
-                self?.repository.saveMessageRecords(records)
+                _ = self?.repository.saveMessageRecords(records)
             }.store(in: &subscriptions)
     }
 }

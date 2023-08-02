@@ -477,7 +477,7 @@ extension CurrentChatViewController {
         guard let message = viewModel.getMessage(for: indexPath) else { return nil }
         guard !message.deleted else { return nil }
         //  TODO: refacotr
-        let firstLeft = UIContextualAction(style: .normal, title: .getStringFor(.reply)) { [weak self] (action, view, completionHandler) in
+        let firstLeft = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
 
             let senderName = self?.viewModel.room.getDisplayNameFor(userId: message.fromUserId)
             self?.viewModel.selectedMessageToReplyPublisher.send(message)
