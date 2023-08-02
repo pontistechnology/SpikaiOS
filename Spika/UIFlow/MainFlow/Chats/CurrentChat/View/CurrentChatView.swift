@@ -90,7 +90,7 @@ class CurrentChatView: UIView, BaseView {
     
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            messageInputViewBottomConstraint.constant = -keyboardSize.height
+            messageInputViewBottomConstraint.constant = -keyboardSize.height + 30
             var indexPath: IndexPath?
             if let lastCell = messagesTableView.visibleCells.last {
                 indexPath = messagesTableView.indexPath(for: lastCell)
