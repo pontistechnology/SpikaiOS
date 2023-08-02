@@ -34,7 +34,7 @@ extension ExpandableTextView {
     }
     
     func styleSubviews() {
-        textContainerInset.left = 10
+        textContainerInset.left = 6
         textContainerInset.right = 36
         layer.cornerRadius = 10
         clipsToBounds = true
