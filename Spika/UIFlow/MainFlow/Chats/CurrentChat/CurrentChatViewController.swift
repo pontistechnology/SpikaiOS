@@ -27,7 +27,6 @@ class CurrentChatViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(currentChatView)
-        setupNavigationItems()
         setupBindings()
         self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
@@ -35,6 +34,7 @@ class CurrentChatViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+        setupNavigationItems()
         viewModel.sendSeenStatus()
     }
     
@@ -98,6 +98,12 @@ extension CurrentChatViewController {
         
         viewModel.numberOfUnreadMessages.sink { [weak self] number in
             self?.currentChatView.handleScrollToBottomButton(show: number > 0, number: number)
+        }.store(in: &subscriptions)
+        
+        currentChatView.messageInputView.inputTextAndControlsView.keyboardAccessoryView.publisher.sink { _ in
+            
+        } receiveValue: { [weak self] distance in
+            self?.currentChatView.moveInputFromBottom(for: distance)
         }.store(in: &subscriptions)
         
         Publishers
