@@ -88,6 +88,7 @@ extension CurrentChatViewController {
         }.store(in: &subscriptions)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        longPress.minimumPressDuration = 0.15
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
         currentChatView.scrollToBottomStackView.tap().sink { [weak self] _ in
