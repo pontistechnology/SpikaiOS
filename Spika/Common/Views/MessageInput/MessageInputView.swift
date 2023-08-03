@@ -35,7 +35,7 @@ class MessageInputView: UIStackView, BaseView {
     private var subscriptions = Set<AnyCancellable>()
 
     private let dividerLine = UIView()
-    private lazy var inputTextAndControlsView = InputTextAndControlsView(publisher: inputViewTapPublisher)
+    lazy var inputTextAndControlsView = InputTextAndControlsView(publisher: inputViewTapPublisher)
     var replyView: MessageReplyView?
         
     override init(frame: CGRect) {
