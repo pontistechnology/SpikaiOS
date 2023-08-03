@@ -44,9 +44,9 @@
 "Contacts" = "Contacts";
 "Settings" = "Settings";
 "Appereance" = "Appereance";
-"Dark mode" = "Dark mode";
-"Light mode" = "Light mode";
-"System mode" = "System mode";
+"Dark" = "Dark";
+"Light" = "Light";
+"System" = "System";
 "Delete my account" = "Delete my account";
 
 "Group" = "Group";

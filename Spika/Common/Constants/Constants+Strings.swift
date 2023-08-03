@@ -144,9 +144,9 @@ public extension Constants {
         // MARK: - Settings
         case privacy = "Privacy"
         case appereance = "Appereance"
-        case darkMode = "Force Dark mode"
-        case lightMode = "Force Light mode"
-        case systemMode = "Use System mode"
+        case dark = "Dark"
+        case light = "Light"
+        case system = "System"
         case blockedUsers = "Blocked users"
         case somethingWentWrongFetchingBlockedUsers = "Something went wrong fetching blocked users"
         case somethingWentWrongUnblockingUser = "Something went wrong unblocking the contact"
