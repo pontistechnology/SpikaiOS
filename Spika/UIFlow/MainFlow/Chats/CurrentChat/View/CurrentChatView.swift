@@ -94,7 +94,6 @@ class CurrentChatView: UIView, BaseView {
                 indexPath = messagesTableView.indexPath(for: lastCell)
             }
             DispatchQueue.main.async { [weak self] in
-//                self?.layoutIfNeeded()
                 guard let indexPath else { return }
                 self?.messagesTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             }
