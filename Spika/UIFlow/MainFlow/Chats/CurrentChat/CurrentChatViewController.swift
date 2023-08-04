@@ -88,6 +88,7 @@ extension CurrentChatViewController {
         }.store(in: &subscriptions)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        longPress.minimumPressDuration = 0.15
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
         currentChatView.scrollToBottomStackView.tap().sink { [weak self] _ in
@@ -469,14 +470,7 @@ extension CurrentChatViewController {
         }
         detailsAction.backgroundColor = .primaryBackground
         detailsAction.image = UIImage(safeImage: .slideDetails)
-        
-        let deleteAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
-            self?.viewModel.showDeleteConfirmDialog(message: message)
-            completionHandler(true)
-        }
-        deleteAction.backgroundColor = .primaryBackground
-        deleteAction.image = UIImage(safeImage: .slideDelete)
-        return UISwipeActionsConfiguration(actions: [detailsAction, deleteAction])
+        return UISwipeActionsConfiguration(actions: [detailsAction])
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

@@ -44,9 +44,9 @@
 "Contacts" = "Contacts";
 "Settings" = "Settings";
 "Appereance" = "Appereance";
-"Dark mode" = "Dark mode";
-"Light mode" = "Light mode";
-"System mode" = "System mode";
+"Dark" = "Dark";
+"Light" = "Light";
+"System" = "System";
 "Delete my account" = "Delete my account";
 
 "Group" = "Group";
@@ -65,7 +65,6 @@
 "Something went wrong muting the room" = "Something went wrong muting the room";
 "Something went wrong unmuting the room" = "Something went wrong unmuting the room";
 
-"Search for contact,message, file..." = "Search for contact,message, file...";
 "Media" = "Media";
 "Links" = "Links";
 "Docs" = "Docs";
