@@ -25,4 +25,22 @@ extension AppRepository {
         
         return networkService.performRequest(resources: resources)
     }
+    
+    func updateNote(note: Note) -> AnyPublisher<OneNoteResponseModel, Error> {
+        guard let accessToken = getAccessToken() else { return
+            Fail<OneNoteResponseModel, Error>(error: NetworkError.noAccessToken)
+                    .receive(on: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<OneNoteResponseModel, OneNoteRequestModel>(
+            path: Constants.Endpoints.oneNote.appending("/\(note.id)"),
+            requestType: .PUT,
+            bodyParameters: OneNoteRequestModel(title: note.title,
+                                                content: note.content),
+            httpHeaderFields: ["accesstoken" : accessToken]
+        )
+        
+        return networkService.performRequest(resources: resources)
+    }
 }

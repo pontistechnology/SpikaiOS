@@ -21,8 +21,8 @@ struct AllNotesData: Codable {
 
 struct Note: Codable {
     let id: Int64
-    let title: String
-    let content: String
+    var title: String
+    var content: String
     let roomId: Int64
     let createdAt: Int64
     let modifiedAt: Int64?

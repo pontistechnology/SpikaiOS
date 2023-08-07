@@ -10,8 +10,8 @@ import UIKit
 
 class OneNoteView: UIView {
     
-    private let titleTextView = UITextView()
-    private let contentTextView = UITextView()
+    let titleTextView = UITextView()
+    let contentTextView = UITextView()
     private var bottomConstraint: NSLayoutConstraint?
     let keyboardAccessoryView = KeyboardObserverAccessoryView()
     
@@ -65,5 +65,8 @@ extension OneNoteView: BaseView {
     func changeMode(isEditing: Bool) {
         titleTextView.isEditable = isEditing
         contentTextView.isEditable = isEditing
+        if isEditing {
+            contentTextView.becomeFirstResponder()
+        }
     }
 }

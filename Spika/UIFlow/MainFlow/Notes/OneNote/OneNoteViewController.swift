@@ -15,8 +15,8 @@ class OneNoteViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(mainView)
-        setupBindings()
         mainView.configureView(note: viewModel.note)
+        setupBindings()
     }
     
     func setupNavigationItems(toEditMode: Bool) {
@@ -38,9 +38,19 @@ class OneNoteViewController: BaseViewController {
         } receiveValue: { [weak self] distance in
             self?.mainView.moveInputFromBottom(for: distance)
         }.store(in: &subscriptions)
+        
+        sink(networkRequestState: viewModel.networkRequestState)
     }
     
     @objc func changeMode() {
+        let newTitle = mainView.titleTextView.text ?? viewModel.note.title
+        let newContent = mainView.contentTextView.text ?? viewModel.note.content
+        
+        if viewModel.note.content != newContent
+            || viewModel.note.title != newTitle
+        {
+            viewModel.updateNote(title: newTitle, content: newContent)
+        }
         viewModel.isEditingModePublisher.value.toggle()
     }
 }

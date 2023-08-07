@@ -17,8 +17,12 @@ class AllNotesViewController: BaseViewController {
         super.viewDidLoad()
         setupView(notesView)
         setupBindings()
-        viewModel.getAllNotes()
         navigationItem.title = .getStringFor(.notes)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getAllNotes()
     }
     
     func setupBindings() {

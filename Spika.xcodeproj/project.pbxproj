@@ -1065,6 +1065,18 @@
 		93BCDFE72A81599C00CEE826 /* OneNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFE62A81599C00CEE826 /* OneNoteView.swift */; };
 		93BCDFE82A81599C00CEE826 /* OneNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFE62A81599C00CEE826 /* OneNoteView.swift */; };
 		93BCDFE92A81599C00CEE826 /* OneNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFE62A81599C00CEE826 /* OneNoteView.swift */; };
+		93BCDFEB2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFEC2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFED2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFEF2A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF02A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF12A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF22A819AAE00CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFF32A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFF42A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFF52A819ABF00CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF62A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF72A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
 		93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3CF290C519900DEE9D1 /* WindowManager.swift */; };
 		93BED3D8290C746000DEE9D1 /* NotificationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */; };
 		93BF627528EB9B7900B48BBF /* EnumsShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* EnumsShared.swift */; };
@@ -1504,6 +1516,8 @@
 		93BCDFDD2A81598D00CEE826 /* OneNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneNoteViewController.swift; sourceTree = "<group>"; };
 		93BCDFE12A81599000CEE826 /* OneNoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneNoteViewModel.swift; sourceTree = "<group>"; };
 		93BCDFE62A81599C00CEE826 /* OneNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneNoteView.swift; sourceTree = "<group>"; };
+		93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneNoteResponseModel.swift; sourceTree = "<group>"; };
+		93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneNoteRequestModel.swift; sourceTree = "<group>"; };
 		93BED3CF290C519900DEE9D1 /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertViewController.swift; sourceTree = "<group>"; };
 		93BF627428EB9B7900B48BBF /* EnumsShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumsShared.swift; sourceTree = "<group>"; };
@@ -2629,6 +2643,7 @@
 				6C9C7241291E743A0089AB4C /* SettingsModel.swift */,
 				934FF16E29778A65002C76F7 /* SendReactionRequestModel.swift */,
 				6C056C7729700D6E00198EC1 /* BlockModel.swift */,
+				93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -2659,6 +2674,7 @@
 				931BDB9E29D255D80047C145 /* UnreadCountResponseModel.swift */,
 				934F821C2A5C800C006F787C /* DeleteAccountResponseModel.swift */,
 				93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */,
+				93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -3521,6 +3537,7 @@
 				6C753DD02A4C128800697AA6 /* CreateRoomRequestModel.swift in Sources */,
 				6C753DD12A4C128800697AA6 /* CreateRoomResponseModel.swift in Sources */,
 				6C753DD22A4C128800697AA6 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
+				93BCDFF22A819AAE00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6C753DD32A4C128800697AA6 /* CoreDatabase.xcdatamodeld in Sources */,
 				6C753DD42A4C128800697AA6 /* RoomEntity+CoreDataClass.swift in Sources */,
 				6C753DD52A4C128800697AA6 /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -3533,6 +3550,7 @@
 				6C753DDC2A4C128800697AA6 /* MessageResponse.swift in Sources */,
 				6C753DDD2A4C128800697AA6 /* VerifyFileResponseModel.swift in Sources */,
 				6C753DDE2A4C128800697AA6 /* VerifyCodeRequestModel.swift in Sources */,
+				93BCDFF52A819ABF00CEE826 /* OneNoteRequestModel.swift in Sources */,
 				6C753DDF2A4C128800697AA6 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3654,6 +3672,7 @@
 				6C78B7FA29AF5ADB004BF881 /* SearchBar.swift in Sources */,
 				6C78B7FB29AF5ADB004BF881 /* MessageTextView.swift in Sources */,
 				939549F52A4B8133006B6139 /* AllChatsSearchedMessageCell.swift in Sources */,
+				93BCDFEC2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6C78B7FD29AF5ADB004BF881 /* CoreDatabase.xcdatamodeld in Sources */,
 				6C78B7FE29AF5ADB004BF881 /* AuthResponseModel.swift in Sources */,
 				6C78B7FF29AF5ADB004BF881 /* MessageAudioView.swift in Sources */,
@@ -3758,6 +3777,7 @@
 				6C2F972829AF67B7001F170B /* ConstantsDev.swift in Sources */,
 				6C78B85B29AF5ADB004BF881 /* BaseSettingsView.swift in Sources */,
 				6C78B85C29AF5ADB004BF881 /* UserResponseModel.swift in Sources */,
+				93BCDFF02A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */,
 				6C78B85D29AF5ADB004BF881 /* CheckRoomResponseModel.swift in Sources */,
 				6C78B85E29AF5ADB004BF881 /* MessageActionsViewModel.swift in Sources */,
 				6C78B85F29AF5ADB004BF881 /* CountryUtils.swift in Sources */,
@@ -3925,6 +3945,7 @@
 				6C78B90629AF5D89004BF881 /* CreateRoomRequestModel.swift in Sources */,
 				6C78B90729AF5D89004BF881 /* CreateRoomResponseModel.swift in Sources */,
 				6C78B90829AF5D89004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
+				93BCDFF32A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6C78B90929AF5D89004BF881 /* CoreDatabase.xcdatamodeld in Sources */,
 				6C78B90A29AF5D89004BF881 /* RoomEntity+CoreDataClass.swift in Sources */,
 				6C78B90C29AF5D89004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -3937,6 +3958,7 @@
 				6C78B91229AF5D89004BF881 /* MessageResponse.swift in Sources */,
 				6C78B91529AF5D89004BF881 /* VerifyFileResponseModel.swift in Sources */,
 				6C78B91629AF5D89004BF881 /* VerifyCodeRequestModel.swift in Sources */,
+				93BCDFF62A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */,
 				6C78B91729AF5D89004BF881 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4058,6 +4080,7 @@
 				6CF648F32A459FE100E0DE0B /* RoomEntity+CoreDataProperties.swift in Sources */,
 				6CF648F42A459FE100E0DE0B /* SearchBar.swift in Sources */,
 				938B56992A52EEAC0036440E /* AllChatsSearchedMessageCell.swift in Sources */,
+				93BCDFED2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6CF648F52A459FE100E0DE0B /* MessageTextView.swift in Sources */,
 				6CF648F62A459FE100E0DE0B /* CoreDatabase.xcdatamodeld in Sources */,
 				6CF648F72A459FE100E0DE0B /* AuthResponseModel.swift in Sources */,
@@ -4162,6 +4185,7 @@
 				6CF649562A459FE100E0DE0B /* SeenResponseModel.swift in Sources */,
 				6CF649582A459FE100E0DE0B /* BaseSettingsView.swift in Sources */,
 				6CF649592A459FE100E0DE0B /* UserResponseModel.swift in Sources */,
+				93BCDFF12A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */,
 				6CF6495A2A459FE100E0DE0B /* CheckRoomResponseModel.swift in Sources */,
 				6CF6495B2A459FE100E0DE0B /* MessageActionsViewModel.swift in Sources */,
 				6CF6495C2A459FE100E0DE0B /* CountryUtils.swift in Sources */,
@@ -4329,6 +4353,7 @@
 				931B14F528211AC100A0CD35 /* CreateRoomRequestModel.swift in Sources */,
 				931B150628211AC600A0CD35 /* CreateRoomResponseModel.swift in Sources */,
 				934F036E282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
+				93BCDFF42A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */,
 				931B150E28211ACB00A0CD35 /* RoomEntity+CoreDataClass.swift in Sources */,
 				93711DFC28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -4341,6 +4366,7 @@
 				931B150028211AC600A0CD35 /* MessageResponse.swift in Sources */,
 				931B150928211AC600A0CD35 /* VerifyFileResponseModel.swift in Sources */,
 				931B14F228211AC100A0CD35 /* VerifyCodeRequestModel.swift in Sources */,
+				93BCDFF72A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */,
 				931B14E528211A5100A0CD35 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4462,6 +4488,7 @@
 				9362B48E28623A44009F617D /* RoomEntity+CoreDataProperties.swift in Sources */,
 				AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */,
 				939549F42A4B8133006B6139 /* AllChatsSearchedMessageCell.swift in Sources */,
+				93BCDFEB2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
 				939128EB2935734000A79FBA /* MessageTextView.swift in Sources */,
 				ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */,
 				AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */,
@@ -4566,6 +4593,7 @@
 				936A28F22926E98600E7333D /* ImageViewerViewModel.swift in Sources */,
 				93AE06EF290892B90009A50C /* SeenResponseModel.swift in Sources */,
 				6C175EB5297EC44C00804275 /* BaseSettingsView.swift in Sources */,
+				93BCDFEF2A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */,
 				930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */,
 				93227E9627D6D99D002E3DED /* CheckRoomResponseModel.swift in Sources */,
 				9352A5712977667900E0D90E /* MessageActionsViewModel.swift in Sources */,
