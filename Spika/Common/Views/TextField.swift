@@ -51,14 +51,3 @@ class TextField: UITextField {
     }
     
 }
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension TextField {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        layer.borderColor = UIColor.borderColor.cgColor
-        self.setNeedsDisplay()
-    }
-}
-

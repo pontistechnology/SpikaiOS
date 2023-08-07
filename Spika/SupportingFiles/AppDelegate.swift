@@ -54,8 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes(
             [   NSAttributedString.Key.font : font,
             ], for: .disabled)
-        
-        UINavigationBar.appearance().tintColor = .primaryColor
     }
 }
 

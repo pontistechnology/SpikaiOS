@@ -67,15 +67,3 @@ extension OTPCodeTextField {
         }.store(in: &subs)
     }
 }
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension OTPCodeTextField {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        layer.borderColor = UIColor.borderColor.cgColor
-        self.setNeedsDisplay()
-    }
-}
-
-
