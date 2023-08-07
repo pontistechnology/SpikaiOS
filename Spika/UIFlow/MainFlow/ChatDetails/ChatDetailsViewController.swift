@@ -242,6 +242,10 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.viewModel.showError(photoStatus.description)
             }
         }.store(in: &subscriptions)
+        
+        chatDetailView.contentView.notesOptionButton.tap().sink { [weak self] _ in
+            self?.viewModel.presentAllNotesScreen()
+        }.store(in: &subscriptions)
     }
     
     func onChangeImage() {

@@ -58,14 +58,16 @@ class ContactsAssembly: Assembly {
     }
     
     private func assembleNotesViewController(_ container: Container) {
-        container.register(NotesViewModel.self) { (resolver, coordinator: AppCoordinator) in
+        container.register(NotesViewModel.self) { (resolver, coordinator: AppCoordinator, roomId: Int64) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return NotesViewModel(repository: repository, coordinator: coordinator)
+            let viewModel = NotesViewModel(repository: repository, coordinator: coordinator)
+            viewModel.roomId = roomId
+            return viewModel
         }.inObjectScope(.transient)
 
-        container.register(NotesViewController.self) { (resolver, coordinator: AppCoordinator) in
+        container.register(NotesViewController.self) { (resolver, coordinator: AppCoordinator, roomId: Int64) in
             let controller = NotesViewController()
-            controller.viewModel = container.resolve(NotesViewModel.self, argument: coordinator)
+            controller.viewModel = container.resolve(NotesViewModel.self, arguments: coordinator, roomId)
             return controller
         }.inObjectScope(.transient)
     }

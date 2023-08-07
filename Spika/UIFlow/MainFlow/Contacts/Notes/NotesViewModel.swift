@@ -8,5 +8,7 @@
 import Foundation
 
 class NotesViewModel: BaseViewModel {
+    var roomId: Int64!
+    
     
 }
