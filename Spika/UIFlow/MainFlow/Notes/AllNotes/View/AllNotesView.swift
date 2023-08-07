@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class NotesView: UIView, BaseView {
+class AllNotesView: UIView, BaseView {
     
     let notesTableView = UITableView()
     

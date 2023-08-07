@@ -1,5 +1,5 @@
 //
-//  NotesViewController.swift
+//  AllNotesViewController.swift
 //  Spika
 //
 //  Created by Nikola Barbarić on 11.02.2022..
@@ -8,10 +8,10 @@
 import Foundation
 import UIKit
 
-class NotesViewController: BaseViewController {
+class AllNotesViewController: BaseViewController {
     
-    private let notesView = NotesView()
-    var viewModel: NotesViewModel!
+    private let notesView = AllNotesView()
+    var viewModel: AllNotesViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,14 +28,12 @@ class NotesViewController: BaseViewController {
         viewModel.notesPublisher.sink { _ in
             
         } receiveValue: { [weak self] notes in
-            print("ima notes: ", notes.count)
-            print("notes: ", notes)
             self?.notesView.notesTableView.reloadData()
         }.store(in: &subscriptions)
     }
 }
 
-extension NotesViewController: UITableViewDelegate, UITableViewDataSource {
+extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.reuseIdentifier, for: indexPath)
         (cell as? NoteTableViewCell)?.configureCell(title: viewModel.notesPublisher.value[indexPath.row].title)

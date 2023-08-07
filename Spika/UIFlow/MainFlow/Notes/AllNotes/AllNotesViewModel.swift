@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class NotesViewModel: BaseViewModel {
+class AllNotesViewModel: BaseViewModel {
     var roomId: Int64!
     let notesPublisher = CurrentValueSubject<[Note], Error>([])
     

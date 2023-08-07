@@ -115,7 +115,7 @@ class AppCoordinator: Coordinator {
     }
     
     func presentNotesScreen(roomId: Int64) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(NotesViewController.self, arguments: self, roomId)!
+        let viewController = Assembler.sharedAssembler.resolver.resolve(AllNotesViewController.self, arguments: self, roomId)!
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
