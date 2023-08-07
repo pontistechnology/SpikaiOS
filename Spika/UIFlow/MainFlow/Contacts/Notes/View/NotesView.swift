@@ -1,3 +1,4 @@
+
 //
 //  NotesView.swift
 //  Spika
@@ -10,11 +11,12 @@ import UIKit
 
 class NotesView: UIView, BaseView {
     
-    let testLabel = CustomLabel(text: .getStringFor(.notes))
+    let notesTableView = UITableView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        notesTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.reuseIdentifier)
     }
     
     required init?(coder: NSCoder) {
@@ -22,14 +24,14 @@ class NotesView: UIView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(testLabel)
+        addSubview(notesTableView)
     }
     
     func styleSubviews() {
-        
+        notesTableView.separatorStyle = .none
     }
     
     func positionSubviews() {
-        testLabel.centerInSuperview()
+        notesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
     }
 }

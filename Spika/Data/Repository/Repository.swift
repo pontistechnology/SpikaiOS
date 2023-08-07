@@ -68,6 +68,10 @@ protocol Repository {
     func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<MessageResponse, Error>
     func updateMessage(messageId: Int64, text: String) -> AnyPublisher<MessageResponse, Error>
     
+        // Notes
+    
+    func getAllNotes(roomId: Int64) -> AnyPublisher<AllNotesResponseModel, Error>
+    
         // Sync
     func syncRooms(page: Int, startingTimestamp: Int64)
     func syncUsers(page: Int, startingTimestamp: Int64)
