@@ -24,4 +24,26 @@ class AllNotesViewModel: BaseViewModel {
     func presentOneNoteScreen(noteState: NoteState) {
         getAppCoordinator()?.presentOneNoteScreen(noteState: noteState)
     }
+    
+    func askToDelete(note: Note) {
+        var actions: [AlertViewButton] = [.destructive(title: .getStringFor(.delete)), .regular(title: .getStringFor(.cancel))]
+        getAppCoordinator()?
+            .showAlert(title: "Are you sure?", message: "This note will be deleted.", style: .alert, actions: actions, cancelText: nil)
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.deleteNote(id: note.id)
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
+    }
+    
+    func deleteNote(id: Int64) {
+        repository.deleteNote(id: id).sink { c in
+            print(c)
+        } receiveValue: { [weak self] _ in
+            self?.getAllNotes()
+        }.store(in: &subscriptions)
+    }
 }

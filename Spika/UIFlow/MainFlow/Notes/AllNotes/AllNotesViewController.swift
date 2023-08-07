@@ -67,3 +67,15 @@ extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
         viewModel.presentOneNoteScreen(noteState: .viewing(note: viewModel.notesPublisher.value[indexPath.row]))
     }
 }
+
+extension AllNotesViewController {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let detailsAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (action, view, completionHandler) in
+            guard let note = self?.viewModel.notesPublisher.value[indexPath.row] else { return }
+            self?.viewModel.askToDelete(note: note)
+            completionHandler(true)
+        }
+        detailsAction.image = UIImage(safeImage: .slideDelete)
+        return UISwipeActionsConfiguration(actions: [detailsAction])
+    }
+}

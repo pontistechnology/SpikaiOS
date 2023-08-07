@@ -61,4 +61,19 @@ extension AppRepository {
         
         return networkService.performRequest(resources: resources)
     }
+    
+    func deleteNote(id: Int64) -> AnyPublisher<EmptyResponse, Error> {
+        guard let accessToken = getAccessToken() else { return
+            Fail<EmptyResponse, Error>(error: NetworkError.noAccessToken)
+                    .receive(on: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+        }
+        let resources = Resources<EmptyResponse, EmptyRequestBody>(
+            path: Constants.Endpoints.oneNote.appending("/\(id)"),
+            requestType: .DELETE,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken]
+        )
+        return networkService.performRequest(resources: resources)
+    }
 }
