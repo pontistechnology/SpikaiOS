@@ -16,6 +16,7 @@ class OneNoteViewController: BaseViewController {
         super.viewDidLoad()
         setupView(mainView)
         setupBindings()
+        mainView.configureView(note: viewModel.note)
     }
     
     func setupNavigationItems(toEditMode: Bool) {
@@ -29,6 +30,13 @@ class OneNoteViewController: BaseViewController {
     func setupBindings() {
         viewModel.isEditingModePublisher.sink { [weak self] isEditingMode in
             self?.setupNavigationItems(toEditMode: isEditingMode)
+            self?.mainView.changeMode(isEditing: isEditingMode)
+        }.store(in: &subscriptions)
+        
+        mainView.keyboardAccessoryView.publisher.sink { _ in
+            
+        } receiveValue: { [weak self] distance in
+            self?.mainView.moveInputFromBottom(for: distance)
         }.store(in: &subscriptions)
     }
     
