@@ -84,7 +84,7 @@ public extension Constants {
         case youBlockedTheContact = "You blocked the contact"
         case newContact = "New contact, do you wish to continue the conversation"
         case unblock = "Unblock"
-        case searchForContactsMessages = "Search for contact,message, file..."
+        case searchForContact = "Search for contact"
         
         // MARK: - SharedViewController
         case media = "Media"
@@ -94,7 +94,6 @@ public extension Constants {
         // MARK: - UserSelectionViewController
         case selected = "selected"
         case selectUsers = "Select users"
-        case searchForContact = "Search for contact"
         
         // MARK: - MessageDetailsViewController
         case readBy = "Read by"
@@ -144,9 +143,9 @@ public extension Constants {
         // MARK: - Settings
         case privacy = "Privacy"
         case appereance = "Appereance"
-        case darkMode = "Force Dark mode"
-        case lightMode = "Force Light mode"
-        case systemMode = "Use System mode"
+        case dark = "Dark"
+        case light = "Light"
+        case system = "System"
         case blockedUsers = "Blocked users"
         case somethingWentWrongFetchingBlockedUsers = "Something went wrong fetching blocked users"
         case somethingWentWrongUnblockingUser = "Something went wrong unblocking the contact"

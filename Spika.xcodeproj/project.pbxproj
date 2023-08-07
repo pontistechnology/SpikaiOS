@@ -1051,6 +1051,9 @@
 		93A76B2C27F6789500B6A03E /* NotificationAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A76B2B27F6789500B6A03E /* NotificationAlertView.swift */; };
 		93AE06EF290892B90009A50C /* SeenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AE06EE290892B90009A50C /* SeenResponseModel.swift */; };
 		93B4A9EE27DB3AB000DC52F6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */; };
+		93B7546E2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B7546D2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift */; };
+		93B7546F2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B7546D2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift */; };
+		93B754702A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B7546D2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift */; };
 		93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916E27CD578F000F94B0 /* Data+Extension.swift */; };
 		93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */; };
 		93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3CF290C519900DEE9D1 /* WindowManager.swift */; };
@@ -1471,6 +1474,7 @@
 		93A76B2B27F6789500B6A03E /* NotificationAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertView.swift; sourceTree = "<group>"; };
 		93AE06EE290892B90009A50C /* SeenResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeenResponseModel.swift; sourceTree = "<group>"; };
 		93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
+		93B7546D2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObserverAccessoryView.swift; sourceTree = "<group>"; };
 		93B8916E27CD578F000F94B0 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		93BED3CF290C519900DEE9D1 /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
@@ -2811,6 +2815,7 @@
 				93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */,
 				6C14B43D296EE67F00F30F63 /* RoundedImageView.swift */,
 				6C5A01C5298C096900BF4A01 /* TextAndImageView.swift */,
+				93B7546D2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3760,6 +3765,7 @@
 				6C78B8A029AF5ADB004BF881 /* TabBarItemView.swift in Sources */,
 				6C78B8A129AF5ADB004BF881 /* SettingsModel.swift in Sources */,
 				93EACD072A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */,
+				93B7546F2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */,
 				6C78B8A229AF5ADB004BF881 /* ParkBenchTimer.swift in Sources */,
 				6C78B8A329AF5ADB004BF881 /* MessageVideoView.swift in Sources */,
 				6C78B8A429AF5ADB004BF881 /* RoomUserEntity+CoreDataProperties.swift in Sources */,
@@ -4155,6 +4161,7 @@
 				6CF6499F2A459FE100E0DE0B /* TabBarItemView.swift in Sources */,
 				6CF649A02A459FE100E0DE0B /* SettingsModel.swift in Sources */,
 				6CF649A12A459FE100E0DE0B /* UpdateMessageRequest.swift in Sources */,
+				93B754702A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */,
 				6CF649A22A459FE100E0DE0B /* ParkBenchTimer.swift in Sources */,
 				6CF649A32A459FE100E0DE0B /* MessageVideoView.swift in Sources */,
 				6CF649A42A459FE100E0DE0B /* RoomUserEntity+CoreDataProperties.swift in Sources */,
@@ -4550,6 +4557,7 @@
 				6C65B552291BD1B8007C5B92 /* TabBarItemView.swift in Sources */,
 				6C9C7242291E743A0089AB4C /* SettingsModel.swift in Sources */,
 				93EACD062A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */,
+				93B7546E2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */,
 				6C4755F429096C6800BC1D9E /* ParkBenchTimer.swift in Sources */,
 				939128F3293578B600A79FBA /* MessageVideoView.swift in Sources */,
 				93BFA3722857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */,
@@ -4941,8 +4949,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 76;
-				APP_VERSION = 1.1.0;
+				APP_BUILD_VERSION = 82;
+				APP_VERSION = 1.2.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -5009,8 +5017,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 76;
-				APP_VERSION = 1.1.0;
+				APP_BUILD_VERSION = 82;
+				APP_VERSION = 1.2.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
