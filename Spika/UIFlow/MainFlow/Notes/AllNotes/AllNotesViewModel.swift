@@ -20,4 +20,8 @@ class AllNotesViewModel: BaseViewModel {
             self?.notesPublisher.send(notes)
         }.store(in: &subscriptions)
     }
+    
+    func presentOneNoteScreen(note: Note) {
+        getAppCoordinator()?.presentOneNoteScreen(note: note)
+    }
 }

@@ -40,10 +40,6 @@ extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.notesPublisher.value.count
     }
@@ -54,5 +50,6 @@ extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.presentOneNoteScreen(note: viewModel.notesPublisher.value[indexPath.row])
     }
 }

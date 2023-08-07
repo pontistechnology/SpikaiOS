@@ -119,6 +119,11 @@ class AppCoordinator: Coordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
+    func presentOneNoteScreen(note: Note) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(OneNoteViewController.self, arguments: self, note)!
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
     func presentChatSearchScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(ChatSearchViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)

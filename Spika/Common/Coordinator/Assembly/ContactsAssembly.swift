@@ -16,6 +16,7 @@ class ContactsAssembly: Assembly {
         assembleNotesViewController(container)
         assembleFavoritesViewController(container)
         assembleVideoCallViewController(container)
+        assembleOneNoteViewController(container)
     }
     
     private func assembleDetailsViewController(_ container: Container) {
@@ -68,6 +69,21 @@ class ContactsAssembly: Assembly {
         container.register(AllNotesViewController.self) { (resolver, coordinator: AppCoordinator, roomId: Int64) in
             let controller = AllNotesViewController()
             controller.viewModel = container.resolve(AllNotesViewModel.self, arguments: coordinator, roomId)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleOneNoteViewController(_ container: Container) {
+        container.register(OneNoteViewModel.self) { (resolver, coordinator: AppCoordinator, note: Note) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            let viewModel = OneNoteViewModel(repository: repository, coordinator: coordinator)
+            viewModel.note = note
+            return viewModel
+        }.inObjectScope(.transient)
+
+        container.register(OneNoteViewController.self) { (resolver, coordinator: AppCoordinator, note: Note) in
+            let controller = OneNoteViewController()
+            controller.viewModel = container.resolve(OneNoteViewModel.self, arguments: coordinator, note)
             return controller
         }.inObjectScope(.transient)
     }
