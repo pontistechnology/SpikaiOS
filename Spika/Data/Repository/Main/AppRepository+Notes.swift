@@ -26,7 +26,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func updateNote(note: Note) -> AnyPublisher<OneNoteResponseModel, Error> {
+    func updateNote(title: String, content: String, id: Int64) -> AnyPublisher<OneNoteResponseModel, Error> {
         guard let accessToken = getAccessToken() else { return
             Fail<OneNoteResponseModel, Error>(error: NetworkError.noAccessToken)
                     .receive(on: DispatchQueue.main)
@@ -34,10 +34,28 @@ extension AppRepository {
         }
         
         let resources = Resources<OneNoteResponseModel, OneNoteRequestModel>(
-            path: Constants.Endpoints.oneNote.appending("/\(note.id)"),
+            path: Constants.Endpoints.oneNote.appending("/\(id)"),
             requestType: .PUT,
-            bodyParameters: OneNoteRequestModel(title: note.title,
-                                                content: note.content),
+            bodyParameters: OneNoteRequestModel(title: title,
+                                                content: content),
+            httpHeaderFields: ["accesstoken" : accessToken]
+        )
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func createNote(title: String, content: String, roomId: Int64) -> AnyPublisher<OneNoteResponseModel, Error> {
+        guard let accessToken = getAccessToken() else { return
+            Fail<OneNoteResponseModel, Error>(error: NetworkError.noAccessToken)
+                    .receive(on: DispatchQueue.main)
+                    .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<OneNoteResponseModel, OneNoteRequestModel>(
+            path: Constants.Endpoints.allRoomNotes.appending("/\(roomId)"),
+            requestType: .POST,
+            bodyParameters: OneNoteRequestModel(title: title,
+                                                content: content),
             httpHeaderFields: ["accesstoken" : accessToken]
         )
         

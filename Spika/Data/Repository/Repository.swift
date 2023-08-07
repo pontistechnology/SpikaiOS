@@ -71,7 +71,8 @@ protocol Repository {
         // Notes
     
     func getAllNotes(roomId: Int64) -> AnyPublisher<AllNotesResponseModel, Error>
-    func updateNote(note: Note) -> AnyPublisher<OneNoteResponseModel, Error>
+    func updateNote(title: String, content: String, id: Int64) -> AnyPublisher<OneNoteResponseModel, Error>
+    func createNote(title: String, content: String, roomId: Int64) -> AnyPublisher<OneNoteResponseModel, Error>
     
         // Sync
     func syncRooms(page: Int, startingTimestamp: Int64)

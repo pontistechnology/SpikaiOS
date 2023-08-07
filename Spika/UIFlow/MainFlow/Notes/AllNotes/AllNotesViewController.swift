@@ -17,12 +17,22 @@ class AllNotesViewController: BaseViewController {
         super.viewDidLoad()
         setupView(notesView)
         setupBindings()
+        setupNavigationItems()
         navigationItem.title = .getStringFor(.notes)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.getAllNotes()
+    }
+    
+    func setupNavigationItems() {
+        let modeButton = UIBarButtonItem(image: .init(safeImage: .plus), style: .plain, target: self, action: #selector(createNewNote))
+        navigationItem.rightBarButtonItems = [modeButton]
+    }
+    
+    @objc func createNewNote() {
+        viewModel.presentOneNoteScreen(noteState: .creatingNew(roomId: viewModel.roomId))
     }
     
     func setupBindings() {
@@ -54,6 +64,6 @@ extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.presentOneNoteScreen(note: viewModel.notesPublisher.value[indexPath.row])
+        viewModel.presentOneNoteScreen(noteState: .viewing(note: viewModel.notesPublisher.value[indexPath.row]))
     }
 }

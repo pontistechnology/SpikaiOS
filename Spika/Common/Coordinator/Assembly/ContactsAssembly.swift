@@ -7,6 +7,7 @@
 
 import Foundation
 import Swinject
+import Combine
 
 class ContactsAssembly: Assembly {
     func assemble(container: Container) {
@@ -74,16 +75,16 @@ class ContactsAssembly: Assembly {
     }
     
     private func assembleOneNoteViewController(_ container: Container) {
-        container.register(OneNoteViewModel.self) { (resolver, coordinator: AppCoordinator, note: Note) in
+        container.register(OneNoteViewModel.self) { (resolver, coordinator: AppCoordinator, noteState: NoteState) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             let viewModel = OneNoteViewModel(repository: repository, coordinator: coordinator)
-            viewModel.note = note
+            viewModel.noteStatePublisher = CurrentValueSubject<NoteState, Never>(noteState)
             return viewModel
         }.inObjectScope(.transient)
 
-        container.register(OneNoteViewController.self) { (resolver, coordinator: AppCoordinator, note: Note) in
+        container.register(OneNoteViewController.self) { (resolver, coordinator: AppCoordinator, noteState: NoteState) in
             let controller = OneNoteViewController()
-            controller.viewModel = container.resolve(OneNoteViewModel.self, arguments: coordinator, note)
+            controller.viewModel = container.resolve(OneNoteViewModel.self, arguments: coordinator, noteState)
             return controller
         }.inObjectScope(.transient)
     }

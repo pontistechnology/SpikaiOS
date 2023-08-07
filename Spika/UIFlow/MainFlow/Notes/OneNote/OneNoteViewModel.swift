@@ -9,19 +9,26 @@ import Foundation
 import Combine
 
 class OneNoteViewModel: BaseViewModel {
-    var note: Note!
+    var noteStatePublisher: CurrentValueSubject<NoteState, Never>!
     
-    let isEditingModePublisher = CurrentValueSubject<Bool, Never>(false)
-    
-    func updateNote(title: String, content: String) {
-        note.title = title
-        note.content = content
+    func editNote(title: String, content: String, id: Int64) {
         networkRequestState.send(.started())
-        repository.updateNote(note: note).sink { [weak self] _ in
+        repository.updateNote(title: title, content: content, id: id).sink { [weak self] _ in
             self?.networkRequestState.send(.finished)
         } receiveValue: { [weak self] response in
             guard let note = response.data?.note else { return }
-            self?.note = note
+            self?.noteStatePublisher.send(.viewing(note: note))
         }.store(in: &subscriptions)
+    }
+    
+    func createNote(title: String, content: String, roomId: Int64) {
+        networkRequestState.send(.started())
+        repository.createNote(title: title, content: content, roomId: roomId).sink { [weak self] _ in
+            self?.networkRequestState.send(.finished)
+        } receiveValue: { [weak self] response in
+            guard let note = response.data?.note else { return }
+            self?.noteStatePublisher.send(.viewing(note: note))
+        }.store(in: &subscriptions)
+
     }
 }

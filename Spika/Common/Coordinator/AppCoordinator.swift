@@ -119,8 +119,8 @@ class AppCoordinator: Coordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func presentOneNoteScreen(note: Note) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(OneNoteViewController.self, arguments: self, note)!
+    func presentOneNoteScreen(noteState: NoteState) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(OneNoteViewController.self, arguments: self, noteState)!
         self.navigationController.pushViewController(viewController, animated: true)
     }
     

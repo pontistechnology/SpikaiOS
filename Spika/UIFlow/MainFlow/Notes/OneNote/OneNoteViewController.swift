@@ -15,22 +15,22 @@ class OneNoteViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(mainView)
-        mainView.configureView(note: viewModel.note)
+        mainView.configureView(note: viewModel.noteStatePublisher.value.note)
         setupBindings()
     }
     
-    func setupNavigationItems(toEditMode: Bool) {
-        let modeButton = UIBarButtonItem(title: toEditMode ? .getStringFor(.save) : .getStringFor(.edit),
+    func setupNavigationItems() {
+        let modeButton = UIBarButtonItem(title: viewModel.noteStatePublisher.value.buttonTitle,
                                          style: .plain,
                                          target: self,
-                                         action: #selector(changeMode))
+                                         action: #selector(barButtonTap))
         navigationItem.rightBarButtonItems = [modeButton]
     }
     
     func setupBindings() {
-        viewModel.isEditingModePublisher.sink { [weak self] isEditingMode in
-            self?.setupNavigationItems(toEditMode: isEditingMode)
-            self?.mainView.changeMode(isEditing: isEditingMode)
+        viewModel.noteStatePublisher.sink { [weak self] state in
+            self?.mainView.changeMode(isEditing: state.isEditable)
+            self?.setupNavigationItems()
         }.store(in: &subscriptions)
         
         mainView.keyboardAccessoryView.publisher.sink { _ in
@@ -42,15 +42,25 @@ class OneNoteViewController: BaseViewController {
         sink(networkRequestState: viewModel.networkRequestState)
     }
     
-    @objc func changeMode() {
-        let newTitle = mainView.titleTextView.text ?? viewModel.note.title
-        let newContent = mainView.contentTextView.text ?? viewModel.note.content
-        
-        if viewModel.note.content != newContent
-            || viewModel.note.title != newTitle
-        {
-            viewModel.updateNote(title: newTitle, content: newContent)
+    @objc func barButtonTap() {
+        switch viewModel.noteStatePublisher.value {
+        case .creatingNew(roomId: let roomId):
+            guard let title = mainView.titleTextView.text,
+                  let content = mainView.contentTextView.text,
+                  !title.isEmpty, !content.isEmpty
+            else { return }
+            viewModel.createNote(title: title, content: content, roomId: roomId)
+        case .viewing(note: let note):
+            viewModel.noteStatePublisher.send(.editing(note: note))
+        case .editing(note: let note):
+            guard let newTitle = mainView.titleTextView.text,
+                  let newContent = mainView.contentTextView.text,
+                  newTitle != note.title || newContent != note.content
+            else {
+                viewModel.noteStatePublisher.send(.viewing(note: note))
+                return
+            }
+            viewModel.editNote(title: newTitle, content: newContent, id: note.id)
         }
-        viewModel.isEditingModePublisher.value.toggle()
     }
 }

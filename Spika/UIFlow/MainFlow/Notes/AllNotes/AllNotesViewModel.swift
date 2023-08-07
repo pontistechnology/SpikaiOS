@@ -21,7 +21,7 @@ class AllNotesViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
     
-    func presentOneNoteScreen(note: Note) {
-        getAppCoordinator()?.presentOneNoteScreen(note: note)
+    func presentOneNoteScreen(noteState: NoteState) {
+        getAppCoordinator()?.presentOneNoteScreen(noteState: noteState)
     }
 }

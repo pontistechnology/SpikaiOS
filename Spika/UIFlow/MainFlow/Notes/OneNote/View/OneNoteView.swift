@@ -10,8 +10,8 @@ import UIKit
 
 class OneNoteView: UIView {
     
-    let titleTextView = UITextView()
-    let contentTextView = UITextView()
+    let titleTextView = UITextViewWithPlaceholder(placeholder: "Enter title", font: .customFont(name: .MontserratSemiBold, size: 18))
+    let contentTextView = UITextViewWithPlaceholder(placeholder: "Enter description", font: .customFont(name: .MontserratSemiBold, size: 14))
     private var bottomConstraint: NSLayoutConstraint?
     let keyboardAccessoryView = KeyboardObserverAccessoryView()
     
@@ -33,8 +33,6 @@ extension OneNoteView: BaseView {
     
     func styleSubviews() {
         titleTextView.isScrollEnabled = false
-        titleTextView.font = .customFont(name: .MontserratSemiBold, size: 18)
-        contentTextView.font = .customFont(name: .MontserratMedium, size: 14)
         contentTextView.keyboardDismissMode = .interactive
         contentTextView.inputAccessoryView = keyboardAccessoryView
         contentTextView.dataDetectorTypes = [.link, .phoneNumber]
@@ -57,9 +55,9 @@ extension OneNoteView: BaseView {
         }
     }
     
-    func configureView(note: Note) {
-        titleTextView.text = note.title
-        contentTextView.text = note.content
+    func configureView(note: Note?) {
+        titleTextView.setText(note?.title)
+        contentTextView.setText(note?.content)
     }
     
     func changeMode(isEditing: Bool) {
