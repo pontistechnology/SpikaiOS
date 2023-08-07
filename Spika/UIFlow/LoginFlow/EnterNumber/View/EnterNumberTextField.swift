@@ -108,14 +108,5 @@ class EnterNumberTextField: UIView, BaseView {
     func setRestOfNumber(_ string: String) {
         textField.text = string
     }
-}
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension EnterNumberTextField {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        numberView.layer.borderColor = UIColor.borderColor.cgColor
-        self.setNeedsDisplay()
-    }
+    
 }

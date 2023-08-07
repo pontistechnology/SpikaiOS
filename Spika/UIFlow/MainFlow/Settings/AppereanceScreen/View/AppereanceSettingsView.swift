@@ -10,9 +10,9 @@ import UIKit
 
 class AppereanceSettingsView: BaseSettingsView {
     
-    let darkModeSwitch = CheckmarkView(text: .getStringFor(.dark))
-    let lightModeSwitch = CheckmarkView(text: .getStringFor(.light))
-    let systemModeSwitch = CheckmarkView(text: .getStringFor(.system))
+    let darkModeSwitch = CheckmarkView(text: .getStringFor(.darkMode))
+    let lightModeSwitch = CheckmarkView(text: .getStringFor(.lightMode))
+    let systemModeSwitch = CheckmarkView(text: .getStringFor(.systemMode))
     
     override func styleSubviews() {
         super.styleSubviews()

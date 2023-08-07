@@ -19,8 +19,6 @@ class InputTextAndControlsView: UIStackView {
     private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .textPrimary)
     private let messageTextView = ExpandableTextView()
     
-    let keyboardAccessoryView = KeyboardObserverAccessoryView()
-    
     private var subscriptions = Set<AnyCancellable>()
     let publisher: PassthroughSubject<MessageInputViewButtonAction, Never>
     
@@ -109,8 +107,6 @@ extension InputTextAndControlsView {
     }
     
     func setupBindings() {
-        messageTextView.inputAccessoryView = keyboardAccessoryView
-        
         messageTextView.textViewIsEmptyPublisher.sink { [weak self] isEmpty in
             self?.publisher.send(.inputIsEmpty(isEmpty))
             self?.saveButton.isEnabled = !isEmpty

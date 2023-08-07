@@ -42,16 +42,3 @@ extension DeletedMessageTableViewCell: BaseMessageTableViewCellProtocol {
         containerStackView.layer.borderWidth = 1
     }
 }
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension DeletedMessageTableViewCell {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        layer.borderColor = UIColor.textTertiary.cgColor
-        self.setNeedsDisplay()
-    }
-}
-
-
-

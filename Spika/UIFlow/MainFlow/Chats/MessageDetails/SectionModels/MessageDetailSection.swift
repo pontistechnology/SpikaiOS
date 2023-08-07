@@ -73,9 +73,7 @@ class MessageDetailsSection {
         if type == .senderActions {
             user = self.user
             time = message.createdAt.convert(to: .messageDetailsTimeFormat)
-            editedTime = message.createdAt != message.modifiedAt
-            ? message.modifiedAt.convert(to: .messageDetailsTimeFormat)
-            : nil
+            editedTime = message.modifiedAt.convert(to: .messageDetailsTimeFormat)
         } else {
             user = sentContacts[indexPath.row]
         }

@@ -43,7 +43,7 @@ extension ExpandableTextView {
         customFont(name: .MontserratMedium)
         backgroundColor = .secondaryBackground
     }
-  
+    
     func positionSubviews() {
         placeholderLabel.anchor(leading: leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
         placeholderLabel.centerYToSuperview()
@@ -100,16 +100,5 @@ extension ExpandableTextView: UITextViewDelegate {
                 self?.superview?.layoutIfNeeded()
             }
         }
-    }
-}
-
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension ExpandableTextView {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        layer.borderColor = UIColor.borderColor.cgColor
-        self.setNeedsDisplay()
     }
 }

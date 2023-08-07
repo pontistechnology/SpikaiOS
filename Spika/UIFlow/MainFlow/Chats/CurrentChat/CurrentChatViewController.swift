@@ -27,6 +27,7 @@ class CurrentChatViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(currentChatView)
+        setupNavigationItems()
         setupBindings()
         self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
@@ -34,7 +35,6 @@ class CurrentChatViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
-        setupNavigationItems()
         viewModel.sendSeenStatus()
     }
     
@@ -88,7 +88,6 @@ extension CurrentChatViewController {
         }.store(in: &subscriptions)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-        longPress.minimumPressDuration = 0.15
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
         currentChatView.scrollToBottomStackView.tap().sink { [weak self] _ in
@@ -99,12 +98,6 @@ extension CurrentChatViewController {
         
         viewModel.numberOfUnreadMessages.sink { [weak self] number in
             self?.currentChatView.handleScrollToBottomButton(show: number > 0, number: number)
-        }.store(in: &subscriptions)
-        
-        currentChatView.messageInputView.inputTextAndControlsView.keyboardAccessoryView.publisher.sink { _ in
-            
-        } receiveValue: { [weak self] distance in
-            self?.currentChatView.moveInputFromBottom(for: distance)
         }.store(in: &subscriptions)
         
         Publishers
@@ -470,7 +463,14 @@ extension CurrentChatViewController {
         }
         detailsAction.backgroundColor = .primaryBackground
         detailsAction.image = UIImage(safeImage: .slideDetails)
-        return UISwipeActionsConfiguration(actions: [detailsAction])
+        
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
+            self?.viewModel.showDeleteConfirmDialog(message: message)
+            completionHandler(true)
+        }
+        deleteAction.backgroundColor = .primaryBackground
+        deleteAction.image = UIImage(safeImage: .slideDelete)
+        return UISwipeActionsConfiguration(actions: [detailsAction, deleteAction])
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
