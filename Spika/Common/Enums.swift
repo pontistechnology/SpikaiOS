@@ -152,6 +152,7 @@ enum MessageCellTaps {
 
 enum MessageAction {
     case reaction(emoji: String)
+    case showCustomReactions
     case reply
     case forward
     case copy
@@ -162,7 +163,7 @@ enum MessageAction {
     
     var textForLabel: String {
         switch self {
-        case .reaction(_):
+        case .reaction, .showCustomReactions:
             return ""
         case .reply:
             return .getStringFor(.reply)
@@ -183,7 +184,7 @@ enum MessageAction {
     
     var assetNameForIcon: AssetName {
         switch self {
-        case .reaction(_):
+        case .reaction, .showCustomReactions:
             return .unknownFileThumbnail
         case .reply:
             return .replyMessage

@@ -88,6 +88,7 @@ enum AssetName: String {
     case editIcon = "editIcon"
     case checkmark = "checkmark"
     case done = "done"
+    case addCustomReaction = "addCustomReaction"
 }
 
 extension UIImage {    
