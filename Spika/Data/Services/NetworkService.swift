@@ -50,7 +50,6 @@ class NetworkService {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-//        print("REQUEST URL: ", url)
         var request = URLRequest(url: url)
 
         if let bodyParameters = resources.bodyParameters {

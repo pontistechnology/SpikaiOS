@@ -28,23 +28,23 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     private func setupBindings() {
-        self.chatDetailView.contentView.chatMembersView.ownId = self.viewModel.getMyUserId()
+        chatDetailView.contentView.chatMembersView.ownId = viewModel.getMyUserId()
         
         let isAdmin = self.viewModel.room.map { [weak self] room in
             guard let self, room.type == .groupRoom else { return false }
             return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
         }
         
-        if self.viewModel.room.value.type == .privateRoom {
-            self.chatDetailView.contentView.blockButton.unhide()
-            self.chatDetailView.contentView.leaveButton.hide()
+        if viewModel.room.value.type == .privateRoom {
+            chatDetailView.contentView.blockButton.unhide()
+            chatDetailView.contentView.leaveButton.hide()
         } else {
-            self.chatDetailView.contentView.blockButton.hide()
-            self.chatDetailView.contentView.leaveButton.unhide()
+            chatDetailView.contentView.blockButton.hide()
+            chatDetailView.contentView.leaveButton.unhide()
         }
         
         // View Model Binding
-        self.viewModel.room
+        viewModel.room
             .compactMap{ [weak self] room in
                 if room.type == .groupRoom {
                     return room.avatarFileId?.fullFilePathFromId()
@@ -60,7 +60,7 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.chatDetailView.contentView.chatImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
             }.store(in: &self.viewModel.subscriptions)
 
-        self.viewModel.room
+        viewModel.room
             .map { [weak self] room in
                 if room.type == .privateRoom {
                     guard let ownId = self?.viewModel.getMyUserId(),
@@ -77,10 +77,10 @@ final class ChatDetailsViewController: BaseViewController {
             }
             .store(in: &self.viewModel.subscriptions)
 
-        if self.viewModel.room.value.type == .privateRoom {
+        if viewModel.room.value.type == .privateRoom {
             chatDetailView.contentView.chatMembersView.removeFromSuperview()
         } else {
-            self.viewModel.room
+            viewModel.room
                 .map { $0.users }
                 .sink { [weak self] users in
                     self?.chatDetailView.contentView.chatMembersView.updateWithMembers(users: users)
@@ -88,14 +88,14 @@ final class ChatDetailsViewController: BaseViewController {
                 .store(in: &self.viewModel.subscriptions)
         }
         
-        self.viewModel.room
+        viewModel.room
             .map { $0.muted }
             .sink { [weak self] isMuted in
                 self?.chatDetailView.contentView.muteSwitchView.stateSwitch.isOn = isMuted
             }
             .store(in: &self.viewModel.subscriptions)
         
-        self.viewModel.room
+        viewModel.room
             .map { $0.pinned }
             .sink { [weak self] isMuted in
                 self?.chatDetailView.contentView.pinChatSwitchView.stateSwitch.isOn = isMuted
@@ -115,7 +115,7 @@ final class ChatDetailsViewController: BaseViewController {
             })
             .store(in: &self.viewModel.subscriptions)
         
-        self.viewModel
+        viewModel
             .uploadProgressPublisher
             .sink { [weak self] completion in
                 self?.chatDetailView.contentView.chatImage.hideUploadProgress()
@@ -124,7 +124,7 @@ final class ChatDetailsViewController: BaseViewController {
                 self.chatDetailView.contentView.chatImage.showUploadProgress(progress: progress)
             }.store(in: &subscriptions)
         
-        self.viewModel
+        viewModel
             .isBlocked
             .map { isBlocked in
                 return isBlocked ? String.getStringFor(.unblock) : .getStringFor(.block)
@@ -133,7 +133,7 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.chatDetailView.contentView.blockButton.setTitle(string, for: .normal)
             }.store(in: &subscriptions)
         
-        self.viewModel
+        viewModel
             .room
             .map { $0.users.map{ $0.userId } }
             .filter { [weak self] userIds in
@@ -144,7 +144,7 @@ final class ChatDetailsViewController: BaseViewController {
             }.store(in: &subscriptions)
         
         // UI Binding
-        self.chatDetailView.contentView.chatName
+        chatDetailView.contentView.chatName
             .tap()
             .withLatestFrom(isAdmin)
             .filter { $0.1 }
@@ -152,18 +152,18 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.onChangeChatName()
             }.store(in: &self.subscriptions)
         
-        self.chatDetailView.contentView.phoneNumberLabel.text = viewModel.getPhoneNumberText()
-        self.chatDetailView.contentView.phoneNumberLabel.tap().sink { [weak self] _ in
+        chatDetailView.contentView.phoneNumberLabel.text = viewModel.getPhoneNumberText()
+        chatDetailView.contentView.phoneNumberLabel.tap().sink { [weak self] _ in
             self?.phoneNumberLabelTapped()
         }.store(in: &subscriptions)
         
-        self.chatDetailView.contentView.chatNameChanged
+        chatDetailView.contentView.chatNameChanged
             .sink { [weak self] newName in
                 self?.chatDetailView.contentView.chatNameTextField.hide()
                 self?.viewModel.onChangeChatName(newName: newName)
             }.store(in: &self.subscriptions)
         
-        self.chatDetailView.contentView
+        chatDetailView.contentView
             .chatMembersView
             .onRemoveUser
             .sink { [weak self] indexPath in
@@ -171,7 +171,7 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.viewModel.removeUser(user: user)
             }.store(in: &self.chatDetailView.contentView.chatMembersView.subscriptions)
         
-        self.chatDetailView.contentView
+        chatDetailView.contentView
             .muteSwitchView
             .stateSwitch
             .publisher(for: .touchUpInside)
@@ -182,7 +182,7 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.viewModel.muteUnmute(mute: value)
             }.store(in: &self.subscriptions)
         
-        self.chatDetailView.contentView
+        chatDetailView.contentView
             .pinChatSwitchView
             .stateSwitch
             .publisher(for: .touchUpInside)
@@ -193,7 +193,7 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.viewModel.pinUnpin(pin: value)
             }.store(in: &self.subscriptions)
         
-        self.chatDetailView.contentView
+        chatDetailView.contentView
             .chatMembersView
             .addContactButton
             .publisher(for: .touchUpInside)
@@ -201,7 +201,7 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.viewModel.onAddNewUser()
             }.store(in: &self.subscriptions)
         
-        self.chatDetailView.contentView
+        chatDetailView.contentView
             .chatImage
             .tap()
             .withLatestFrom(isAdmin)
@@ -210,21 +210,21 @@ final class ChatDetailsViewController: BaseViewController {
                 self?.onChangeImage()
             }.store(in: &self.subscriptions)
         
-        self.chatDetailView.contentView
+        chatDetailView.contentView
             .deleteButton
             .tap()
             .sink { [weak self] _ in
                 self?.viewModel.deleteRoom()
             }.store(in: &self.subscriptions)
         
-        self.chatDetailView.contentView
+        chatDetailView.contentView
             .leaveButton
             .tap()
             .sink { [weak self] _ in
                 self?.onLeaveRoom()
             }.store(in: &self.subscriptions)
         
-        self.chatDetailView.contentView
+        chatDetailView.contentView
             .blockButton
             .tap()
             .sink { [weak self] _ in
@@ -241,6 +241,10 @@ final class ChatDetailsViewController: BaseViewController {
             default:
                 self?.viewModel.showError(photoStatus.description)
             }
+        }.store(in: &subscriptions)
+        
+        chatDetailView.contentView.notesOptionButton.tap().sink { [weak self] _ in
+            self?.viewModel.presentAllNotesScreen()
         }.store(in: &subscriptions)
     }
     
@@ -282,8 +286,8 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     func onChangeChatName() {
-        self.chatDetailView.contentView.chatNameTextField.unhide()
-        self.chatDetailView.contentView.chatNameTextField.becomeFirstResponder()
+        chatDetailView.contentView.chatNameTextField.unhide()
+        chatDetailView.contentView.chatNameTextField.becomeFirstResponder()
     }
     
     func phoneNumberLabelTapped() {
@@ -305,13 +309,13 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     func copyPhoneNumber() {
-        UIPasteboard.general.string = self.chatDetailView.contentView.phoneNumberLabel.text
+        UIPasteboard.general.string = chatDetailView.contentView.phoneNumberLabel.text
         viewModel.showOneSecAlert(type: .copy)
     }
     
     func addToContacts() {
-        guard let phoneNumber = self.chatDetailView.contentView.phoneNumberLabel.text,
-              let name = self.chatDetailView.contentView.chatName.text
+        guard let phoneNumber = chatDetailView.contentView.phoneNumberLabel.text,
+              let name = chatDetailView.contentView.chatName.text
         else { return }
         viewModel.presentAddToContactsScreen(name: name, number: phoneNumber)
     }

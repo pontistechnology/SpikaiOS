@@ -197,7 +197,7 @@
 		6C78B7D029AF5ADB004BF881 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86D27B677BC0099BA9E /* FavoritesViewController.swift */; };
 		6C78B7D129AF5ADB004BF881 /* EnterNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD262729955200736318 /* EnterNumberView.swift */; };
 		6C78B7D229AF5ADB004BF881 /* ContextMenuActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF16C2977774F002C76F7 /* ContextMenuActionView.swift */; };
-		6C78B7D329AF5ADB004BF881 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86927B671B30099BA9E /* NotesView.swift */; };
+		6C78B7D329AF5ADB004BF881 /* AllNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86927B671B30099BA9E /* AllNotesView.swift */; };
 		6C78B7D429AF5ADB004BF881 /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7D29262657009D3E2B /* CustomStackView.swift */; };
 		6C78B7D529AF5ADB004BF881 /* LogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFCF42729828100736318 /* LogoImageView.swift */; };
 		6C78B7D629AF5ADB004BF881 /* UserSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497E02924FB3700594A55 /* UserSelectionViewModel.swift */; };
@@ -287,7 +287,7 @@
 		6C78B82D29AF5ADB004BF881 /* NewGroupChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D052D27D59D83002E5CE5 /* NewGroupChatView.swift */; };
 		6C78B82E29AF5ADB004BF881 /* CurrentChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FD27C4688C00432CFA /* CurrentChatViewModel.swift */; };
 		6C78B82F29AF5ADB004BF881 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
-		6C78B83029AF5ADB004BF881 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* NotesViewController.swift */; };
+		6C78B83029AF5ADB004BF881 /* AllNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* AllNotesViewController.swift */; };
 		6C78B83229AF5ADB004BF881 /* CountryPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD38272AB31300736318 /* CountryPickerViewModel.swift */; };
 		6C78B83329AF5ADB004BF881 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
 		6C78B83429AF5ADB004BF881 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D0270DD57D009D50CB /* Coordinator.swift */; };
@@ -355,7 +355,7 @@
 		6C78B87729AF5ADB004BF881 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937055DF2914C21E0052EC77 /* Enums.swift */; };
 		6C78B87829AF5ADB004BF881 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9347CCE228644E1300018AEB /* Date+Extensions.swift */; };
 		6C78B87929AF5ADB004BF881 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192582721D42700D5BE48 /* ContactsViewModel.swift */; };
-		6C78B87B29AF5ADB004BF881 /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87227B677F10099BA9E /* NotesViewModel.swift */; };
+		6C78B87B29AF5ADB004BF881 /* AllNotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87227B677F10099BA9E /* AllNotesViewModel.swift */; };
 		6C78B87C29AF5ADB004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93711DFA28E475A30074A50B /* MessageEntity+CoreDataProperties.swift */; };
 		6C78B87D29AF5ADB004BF881 /* IconAndLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */; };
 		6C78B87F29AF5ADB004BF881 /* DeliveredRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15142821291400A0CD35 /* DeliveredRequestModel.swift */; };
@@ -574,7 +574,7 @@
 		6CF648CA2A459FE100E0DE0B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86D27B677BC0099BA9E /* FavoritesViewController.swift */; };
 		6CF648CB2A459FE100E0DE0B /* EnterNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD262729955200736318 /* EnterNumberView.swift */; };
 		6CF648CC2A459FE100E0DE0B /* ContextMenuActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934FF16C2977774F002C76F7 /* ContextMenuActionView.swift */; };
-		6CF648CD2A459FE100E0DE0B /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86927B671B30099BA9E /* NotesView.swift */; };
+		6CF648CD2A459FE100E0DE0B /* AllNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86927B671B30099BA9E /* AllNotesView.swift */; };
 		6CF648CE2A459FE100E0DE0B /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7D29262657009D3E2B /* CustomStackView.swift */; };
 		6CF648CF2A459FE100E0DE0B /* LogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFCF42729828100736318 /* LogoImageView.swift */; };
 		6CF648D02A459FE100E0DE0B /* UserSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2497E02924FB3700594A55 /* UserSelectionViewModel.swift */; };
@@ -669,7 +669,7 @@
 		6CF649292A459FE100E0DE0B /* CurrentChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E4F6FD27C4688C00432CFA /* CurrentChatViewModel.swift */; };
 		6CF6492A2A459FE100E0DE0B /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
 		6CF6492B2A459FE100E0DE0B /* MessageDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383879429D596E40057714A /* MessageDetailsViewModel.swift */; };
-		6CF6492C2A459FE100E0DE0B /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* NotesViewController.swift */; };
+		6CF6492C2A459FE100E0DE0B /* AllNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* AllNotesViewController.swift */; };
 		6CF6492D2A459FE100E0DE0B /* CountryPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD38272AB31300736318 /* CountryPickerViewModel.swift */; };
 		6CF6492E2A459FE100E0DE0B /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
 		6CF6492F2A459FE100E0DE0B /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D0270DD57D009D50CB /* Coordinator.swift */; };
@@ -742,7 +742,7 @@
 		6CF649732A459FE100E0DE0B /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937055DF2914C21E0052EC77 /* Enums.swift */; };
 		6CF649742A459FE100E0DE0B /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9347CCE228644E1300018AEB /* Date+Extensions.swift */; };
 		6CF649752A459FE100E0DE0B /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192582721D42700D5BE48 /* ContactsViewModel.swift */; };
-		6CF649762A459FE100E0DE0B /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87227B677F10099BA9E /* NotesViewModel.swift */; };
+		6CF649762A459FE100E0DE0B /* AllNotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87227B677F10099BA9E /* AllNotesViewModel.swift */; };
 		6CF649772A459FE100E0DE0B /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93711DFA28E475A30074A50B /* MessageEntity+CoreDataProperties.swift */; };
 		6CF649782A459FE100E0DE0B /* IconAndLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */; };
 		6CF649792A459FE100E0DE0B /* DeliveredRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15142821291400A0CD35 /* DeliveredRequestModel.swift */; };
@@ -909,13 +909,13 @@
 		933BE86227B65C9C0099BA9E /* SharedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86127B65C9C0099BA9E /* SharedView.swift */; };
 		933BE86427B667980099BA9E /* ContactsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86327B667980099BA9E /* ContactsAssembly.swift */; };
 		933BE86627B671270099BA9E /* ChatSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86527B671270099BA9E /* ChatSearchView.swift */; };
-		933BE86A27B671B30099BA9E /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86927B671B30099BA9E /* NotesView.swift */; };
+		933BE86A27B671B30099BA9E /* AllNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86927B671B30099BA9E /* AllNotesView.swift */; };
 		933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86B27B677920099BA9E /* FavoritesView.swift */; };
 		933BE86E27B677BC0099BA9E /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86D27B677BC0099BA9E /* FavoritesViewController.swift */; };
 		933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87027B677DF0099BA9E /* FavoritesViewModel.swift */; };
-		933BE87327B677F10099BA9E /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87227B677F10099BA9E /* NotesViewModel.swift */; };
+		933BE87327B677F10099BA9E /* AllNotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87227B677F10099BA9E /* AllNotesViewModel.swift */; };
 		933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */; };
-		933BE87727B6796B0099BA9E /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* NotesViewController.swift */; };
+		933BE87727B6796B0099BA9E /* AllNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* AllNotesViewController.swift */; };
 		933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87827B67A280099BA9E /* ChatSearchViewController.swift */; };
 		933E209F29D8AB030013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
 		933E20A129D8AB030013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
@@ -1056,6 +1056,30 @@
 		93B754702A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B7546D2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift */; };
 		93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916E27CD578F000F94B0 /* Data+Extension.swift */; };
 		93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */; };
+		93BCDFDE2A81598D00CEE826 /* OneNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFDD2A81598D00CEE826 /* OneNoteViewController.swift */; };
+		93BCDFDF2A81598D00CEE826 /* OneNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFDD2A81598D00CEE826 /* OneNoteViewController.swift */; };
+		93BCDFE02A81598D00CEE826 /* OneNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFDD2A81598D00CEE826 /* OneNoteViewController.swift */; };
+		93BCDFE22A81599000CEE826 /* OneNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFE12A81599000CEE826 /* OneNoteViewModel.swift */; };
+		93BCDFE32A81599000CEE826 /* OneNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFE12A81599000CEE826 /* OneNoteViewModel.swift */; };
+		93BCDFE42A81599000CEE826 /* OneNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFE12A81599000CEE826 /* OneNoteViewModel.swift */; };
+		93BCDFE72A81599C00CEE826 /* OneNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFE62A81599C00CEE826 /* OneNoteView.swift */; };
+		93BCDFE82A81599C00CEE826 /* OneNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFE62A81599C00CEE826 /* OneNoteView.swift */; };
+		93BCDFE92A81599C00CEE826 /* OneNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFE62A81599C00CEE826 /* OneNoteView.swift */; };
+		93BCDFEB2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFEC2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFED2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFEF2A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF02A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF12A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF22A819AAE00CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFF32A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFF42A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */; };
+		93BCDFF52A819ABF00CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF62A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF72A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */; };
+		93BCDFF92A81A17200CEE826 /* UITextViewWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFF82A81A17200CEE826 /* UITextViewWithPlaceholder.swift */; };
+		93BCDFFA2A81A17200CEE826 /* UITextViewWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFF82A81A17200CEE826 /* UITextViewWithPlaceholder.swift */; };
+		93BCDFFB2A81A17200CEE826 /* UITextViewWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFF82A81A17200CEE826 /* UITextViewWithPlaceholder.swift */; };
 		93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3CF290C519900DEE9D1 /* WindowManager.swift */; };
 		93BED3D8290C746000DEE9D1 /* NotificationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */; };
 		93BF627528EB9B7900B48BBF /* EnumsShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* EnumsShared.swift */; };
@@ -1068,6 +1092,21 @@
 		93C714A12815F888008BBA33 /* Int64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int64+Extensions.swift */; };
 		93C77B6E2922F76100F676C5 /* ExpandableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C77B6D2922F76100F676C5 /* ExpandableTextView.swift */; };
 		93C77B702923396200F676C5 /* AudioMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C77B6F2923396200F676C5 /* AudioMessageTableViewCell.swift */; };
+		93C8A4572A8111B4005E23DD /* AllNotesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */; };
+		93C8A4582A8111B4005E23DD /* AllNotesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */; };
+		93C8A4592A8111B4005E23DD /* AllNotesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */; };
+		93C8A45B2A81126E005E23DD /* AppRepository+Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A45A2A81126E005E23DD /* AppRepository+Notes.swift */; };
+		93C8A45C2A81126E005E23DD /* AppRepository+Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A45A2A81126E005E23DD /* AppRepository+Notes.swift */; };
+		93C8A45D2A81126E005E23DD /* AppRepository+Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A45A2A81126E005E23DD /* AppRepository+Notes.swift */; };
+		93C8A45E2A811442005E23DD /* AppRepository+Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A45A2A81126E005E23DD /* AppRepository+Notes.swift */; };
+		93C8A45F2A811443005E23DD /* AppRepository+Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A45A2A81126E005E23DD /* AppRepository+Notes.swift */; };
+		93C8A4602A811444005E23DD /* AppRepository+Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A45A2A81126E005E23DD /* AppRepository+Notes.swift */; };
+		93C8A4612A81147E005E23DD /* AllNotesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */; };
+		93C8A4622A81147F005E23DD /* AllNotesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */; };
+		93C8A4632A81147F005E23DD /* AllNotesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */; };
+		93C8A4652A8116E8005E23DD /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4642A8116E8005E23DD /* NoteTableViewCell.swift */; };
+		93C8A4662A8116E8005E23DD /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4642A8116E8005E23DD /* NoteTableViewCell.swift */; };
+		93C8A4672A8116E8005E23DD /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4642A8116E8005E23DD /* NoteTableViewCell.swift */; };
 		93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
 		93CF473D2963240200213DBE /* AppRepository+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF473C2963240200213DBE /* AppRepository+File.swift */; };
 		93CF47402963286B00213DBE /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DB270DD6DC009D50CB /* AppRepository.swift */; };
@@ -1380,13 +1419,13 @@
 		933BE86127B65C9C0099BA9E /* SharedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedView.swift; sourceTree = "<group>"; };
 		933BE86327B667980099BA9E /* ContactsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsAssembly.swift; sourceTree = "<group>"; };
 		933BE86527B671270099BA9E /* ChatSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchView.swift; sourceTree = "<group>"; };
-		933BE86927B671B30099BA9E /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
+		933BE86927B671B30099BA9E /* AllNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesView.swift; sourceTree = "<group>"; };
 		933BE86B27B677920099BA9E /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		933BE86D27B677BC0099BA9E /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		933BE87027B677DF0099BA9E /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
-		933BE87227B677F10099BA9E /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
+		933BE87227B677F10099BA9E /* AllNotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesViewModel.swift; sourceTree = "<group>"; };
 		933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewModel.swift; sourceTree = "<group>"; };
-		933BE87627B6796A0099BA9E /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
+		933BE87627B6796A0099BA9E /* AllNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesViewController.swift; sourceTree = "<group>"; };
 		933BE87827B67A280099BA9E /* ChatSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewController.swift; sourceTree = "<group>"; };
 		933E209E29D8AB030013E798 /* TelephoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneNumber.swift; sourceTree = "<group>"; };
 		934087B727EBAD7100209571 /* AppRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Tests.swift"; sourceTree = "<group>"; };
@@ -1477,6 +1516,12 @@
 		93B7546D2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObserverAccessoryView.swift; sourceTree = "<group>"; };
 		93B8916E27CD578F000F94B0 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
+		93BCDFDD2A81598D00CEE826 /* OneNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneNoteViewController.swift; sourceTree = "<group>"; };
+		93BCDFE12A81599000CEE826 /* OneNoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneNoteViewModel.swift; sourceTree = "<group>"; };
+		93BCDFE62A81599C00CEE826 /* OneNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneNoteView.swift; sourceTree = "<group>"; };
+		93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneNoteResponseModel.swift; sourceTree = "<group>"; };
+		93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneNoteRequestModel.swift; sourceTree = "<group>"; };
+		93BCDFF82A81A17200CEE826 /* UITextViewWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewWithPlaceholder.swift; sourceTree = "<group>"; };
 		93BED3CF290C519900DEE9D1 /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		93BED3D7290C746000DEE9D1 /* NotificationAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertViewController.swift; sourceTree = "<group>"; };
 		93BF627428EB9B7900B48BBF /* EnumsShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumsShared.swift; sourceTree = "<group>"; };
@@ -1487,6 +1532,9 @@
 		93C714A02815F888008BBA33 /* Int64+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int64+Extensions.swift"; sourceTree = "<group>"; };
 		93C77B6D2922F76100F676C5 /* ExpandableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTextView.swift; sourceTree = "<group>"; };
 		93C77B6F2923396200F676C5 /* AudioMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageTableViewCell.swift; sourceTree = "<group>"; };
+		93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesResponseModel.swift; sourceTree = "<group>"; };
+		93C8A45A2A81126E005E23DD /* AppRepository+Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Notes.swift"; sourceTree = "<group>"; };
+		93C8A4642A8116E8005E23DD /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		93CF473C2963240200213DBE /* AppRepository+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+File.swift"; sourceTree = "<group>"; };
 		93CFFA4E293587EB001EBACF /* MessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyView.swift; sourceTree = "<group>"; };
@@ -1937,14 +1985,14 @@
 			path = ChatSearch;
 			sourceTree = "<group>";
 		};
-		933BE85A27B65A4E0099BA9E /* Notes */ = {
+		933BE85A27B65A4E0099BA9E /* AllNotes */ = {
 			isa = PBXGroup;
 			children = (
 				933BE86827B671A70099BA9E /* View */,
-				933BE87227B677F10099BA9E /* NotesViewModel.swift */,
-				933BE87627B6796A0099BA9E /* NotesViewController.swift */,
+				933BE87227B677F10099BA9E /* AllNotesViewModel.swift */,
+				933BE87627B6796A0099BA9E /* AllNotesViewController.swift */,
 			);
-			path = Notes;
+			path = AllNotes;
 			sourceTree = "<group>";
 		};
 		933BE85B27B65A580099BA9E /* Favorites */ = {
@@ -1980,7 +2028,7 @@
 		933BE86827B671A70099BA9E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				933BE86927B671B30099BA9E /* NotesView.swift */,
+				933BE86927B671B30099BA9E /* AllNotesView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2171,6 +2219,24 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		93BCDFDC2A81598400CEE826 /* OneNote */ = {
+			isa = PBXGroup;
+			children = (
+				93BCDFDD2A81598D00CEE826 /* OneNoteViewController.swift */,
+				93BCDFE12A81599000CEE826 /* OneNoteViewModel.swift */,
+				93BCDFE52A81599500CEE826 /* View */,
+			);
+			path = OneNote;
+			sourceTree = "<group>";
+		};
+		93BCDFE52A81599500CEE826 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				93BCDFE62A81599C00CEE826 /* OneNoteView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		93BED3CE290C513100DEE9D1 /* WindowManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -2190,6 +2256,15 @@
 			path = NotificationAlert;
 			sourceTree = "<group>";
 		};
+		93C8A4682A814EB7005E23DD /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				93BCDFDC2A81598400CEE826 /* OneNote */,
+				933BE85A27B65A4E0099BA9E /* AllNotes */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
 		93D86DBE27BAB47700F275B0 /* UITableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2199,6 +2274,7 @@
 				93D86DBF27BAB49D00F275B0 /* DocsTableViewCell.swift */,
 				93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */,
 				93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */,
+				93C8A4642A8116E8005E23DD /* NoteTableViewCell.swift */,
 			);
 			path = UITableViewCells;
 			sourceTree = "<group>";
@@ -2325,7 +2401,6 @@
 				ADD503FA27101B09009D50CB /* Details */,
 				933BE85B27B65A580099BA9E /* Favorites */,
 				933BE85727B6595F0099BA9E /* Main */,
-				933BE85A27B65A4E0099BA9E /* Notes */,
 				933BE85827B6596E0099BA9E /* Shared */,
 			);
 			path = Contacts;
@@ -2462,6 +2537,7 @@
 				6CF1C864297819CF00754A24 /* AppRepository+BlockedUsers.swift */,
 				6CBD43A7298282EE00A1059E /* AppRepository+Blocked_Notification.swift */,
 				93A14D7F2A5FF7D800A557CB /* AppRepository+Shared.swift */,
+				93C8A45A2A81126E005E23DD /* AppRepository+Notes.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -2480,6 +2556,7 @@
 		AD9BFD1E2729927300736318 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
+				93C8A4682A814EB7005E23DD /* Notes */,
 				6C5A4752291D346900D3E270 /* ChatDetails */,
 				93DE585527BC7A9800C45EB4 /* Common */,
 				ADD503E9270DE278009D50CB /* Home */,
@@ -2570,6 +2647,7 @@
 				6C9C7241291E743A0089AB4C /* SettingsModel.swift */,
 				934FF16E29778A65002C76F7 /* SendReactionRequestModel.swift */,
 				6C056C7729700D6E00198EC1 /* BlockModel.swift */,
+				93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -2599,6 +2677,8 @@
 				6C056C74297008AC00198EC1 /* BlockedUsersResponseModel.swift */,
 				931BDB9E29D255D80047C145 /* UnreadCountResponseModel.swift */,
 				934F821C2A5C800C006F787C /* DeleteAccountResponseModel.swift */,
+				93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */,
+				93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -2810,6 +2890,7 @@
 				93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */,
 				938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */,
 				932462D928FCBF0400E8C1B9 /* CustomTextView.swift */,
+				93BCDFF82A81A17200CEE826 /* UITextViewWithPlaceholder.swift */,
 				6C2638942907DB4400E7E79E /* CustomTableViewHeader.swift */,
 				6C9C5C7D29262657009D3E2B /* CustomStackView.swift */,
 				93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */,
@@ -3390,6 +3471,7 @@
 			files = (
 				6C753D8D2A4C128800697AA6 /* NotificationsHelpers.swift in Sources */,
 				6C753D8E2A4C128800697AA6 /* RoomUserEntity+CoreDataClass.swift in Sources */,
+				93C8A4632A81147F005E23DD /* AllNotesResponseModel.swift in Sources */,
 				6C753D8F2A4C128800697AA6 /* AppRepository+Blocked_Notification.swift in Sources */,
 				6C753D902A4C128800697AA6 /* NotificationService.swift in Sources */,
 				6C753D912A4C128800697AA6 /* UserEntity+CoreDataClass.swift in Sources */,
@@ -3421,6 +3503,7 @@
 				6C753DA92A4C128800697AA6 /* Repository.swift in Sources */,
 				6C753DAA2A4C128800697AA6 /* PhoneNumberParserNotification.swift in Sources */,
 				6C753DAB2A4C128800697AA6 /* AppRepository+User.swift in Sources */,
+				93C8A4602A811444005E23DD /* AppRepository+Notes.swift in Sources */,
 				6C753DAC2A4C128800697AA6 /* ServerSettingsModel.swift in Sources */,
 				6C753DAD2A4C128800697AA6 /* ContactEntity+CoreDataClass.swift in Sources */,
 				6C753DAE2A4C128800697AA6 /* VerifyFileRequestModel.swift in Sources */,
@@ -3459,6 +3542,7 @@
 				6C753DD02A4C128800697AA6 /* CreateRoomRequestModel.swift in Sources */,
 				6C753DD12A4C128800697AA6 /* CreateRoomResponseModel.swift in Sources */,
 				6C753DD22A4C128800697AA6 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
+				93BCDFF22A819AAE00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6C753DD32A4C128800697AA6 /* CoreDatabase.xcdatamodeld in Sources */,
 				6C753DD42A4C128800697AA6 /* RoomEntity+CoreDataClass.swift in Sources */,
 				6C753DD52A4C128800697AA6 /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -3471,6 +3555,7 @@
 				6C753DDC2A4C128800697AA6 /* MessageResponse.swift in Sources */,
 				6C753DDD2A4C128800697AA6 /* VerifyFileResponseModel.swift in Sources */,
 				6C753DDE2A4C128800697AA6 /* VerifyCodeRequestModel.swift in Sources */,
+				93BCDFF52A819ABF00CEE826 /* OneNoteRequestModel.swift in Sources */,
 				6C753DDF2A4C128800697AA6 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3482,6 +3567,7 @@
 				6C78B79229AF5ADB004BF881 /* CustomButton.swift in Sources */,
 				6C78B79329AF5ADB004BF881 /* AppRepository+Rooms.swift in Sources */,
 				6C78B79429AF5ADB004BF881 /* VideoMessageTableViewCell.swift in Sources */,
+				93BCDFFA2A81A17200CEE826 /* UITextViewWithPlaceholder.swift in Sources */,
 				6C78B79529AF5ADB004BF881 /* FileMessageTableViewCell.swift in Sources */,
 				6C78B79629AF5ADB004BF881 /* DetailsView.swift in Sources */,
 				6C78B79729AF5ADB004BF881 /* Publisher+Extensions.swift in Sources */,
@@ -3492,6 +3578,7 @@
 				6C78B79B29AF5ADB004BF881 /* MessageEntity+CoreDataClass.swift in Sources */,
 				6C78B79C29AF5ADB004BF881 /* TextMessageTableViewCell.swift in Sources */,
 				6C78B79D29AF5ADB004BF881 /* FavoritesViewModel.swift in Sources */,
+				93C8A45C2A81126E005E23DD /* AppRepository+Notes.swift in Sources */,
 				6C78B79E29AF5ADB004BF881 /* MediaCollectionView.swift in Sources */,
 				6C78B7A029AF5ADB004BF881 /* UploadChunkRequestModel.swift in Sources */,
 				6C78B7A129AF5ADB004BF881 /* VideoCallViewModel.swift in Sources */,
@@ -3548,7 +3635,7 @@
 				6C78B7D029AF5ADB004BF881 /* FavoritesViewController.swift in Sources */,
 				6C78B7D129AF5ADB004BF881 /* EnterNumberView.swift in Sources */,
 				6C78B7D229AF5ADB004BF881 /* ContextMenuActionView.swift in Sources */,
-				6C78B7D329AF5ADB004BF881 /* NotesView.swift in Sources */,
+				6C78B7D329AF5ADB004BF881 /* AllNotesView.swift in Sources */,
 				6C78B7D429AF5ADB004BF881 /* CustomStackView.swift in Sources */,
 				6C78B7D529AF5ADB004BF881 /* LogoImageView.swift in Sources */,
 				6C78B7D629AF5ADB004BF881 /* UserSelectionViewModel.swift in Sources */,
@@ -3570,6 +3657,7 @@
 				6C78B7E729AF5ADB004BF881 /* HomeTabBar.swift in Sources */,
 				6C78B7E829AF5ADB004BF881 /* SyncMessagesResponseModel.swift in Sources */,
 				6C78B7E929AF5ADB004BF881 /* String+Extension.swift in Sources */,
+				93C8A4582A8111B4005E23DD /* AllNotesResponseModel.swift in Sources */,
 				6C78B7EA29AF5ADB004BF881 /* CurrentChatViewController.swift in Sources */,
 				6C78B7EB29AF5ADB004BF881 /* TextField.swift in Sources */,
 				6C78B7EC29AF5ADB004BF881 /* SelectUsersViewModel.swift in Sources */,
@@ -3590,6 +3678,7 @@
 				6C78B7FA29AF5ADB004BF881 /* SearchBar.swift in Sources */,
 				6C78B7FB29AF5ADB004BF881 /* MessageTextView.swift in Sources */,
 				939549F52A4B8133006B6139 /* AllChatsSearchedMessageCell.swift in Sources */,
+				93BCDFEC2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6C78B7FD29AF5ADB004BF881 /* CoreDatabase.xcdatamodeld in Sources */,
 				6C78B7FE29AF5ADB004BF881 /* AuthResponseModel.swift in Sources */,
 				6C78B7FF29AF5ADB004BF881 /* MessageAudioView.swift in Sources */,
@@ -3599,6 +3688,7 @@
 				6C78B80329AF5ADB004BF881 /* ContactsTableView.swift in Sources */,
 				6C78B80429AF5ADB004BF881 /* SettingsViewController.swift in Sources */,
 				6C78B80529AF5ADB004BF881 /* ExpandableTextView.swift in Sources */,
+				93BCDFE22A81599000CEE826 /* OneNoteViewModel.swift in Sources */,
 				6C78B80629AF5ADB004BF881 /* AppereanceSettingsViewModel.swift in Sources */,
 				6C78B80729AF5ADB004BF881 /* UserSelectionView.swift in Sources */,
 				6C9B40872A28B075003FA11B /* ServerSettingsModel.swift in Sources */,
@@ -3646,7 +3736,7 @@
 				6C78B82E29AF5ADB004BF881 /* CurrentChatViewModel.swift in Sources */,
 				6C78B82F29AF5ADB004BF881 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				9383879729D596E40057714A /* MessageDetailsViewModel.swift in Sources */,
-				6C78B83029AF5ADB004BF881 /* NotesViewController.swift in Sources */,
+				6C78B83029AF5ADB004BF881 /* AllNotesViewController.swift in Sources */,
 				6C78B83229AF5ADB004BF881 /* CountryPickerViewModel.swift in Sources */,
 				6C78B83329AF5ADB004BF881 /* DetailsViewModel.swift in Sources */,
 				6C78B83429AF5ADB004BF881 /* Coordinator.swift in Sources */,
@@ -3686,12 +3776,14 @@
 				6C78B85529AF5ADB004BF881 /* LoginAssembly.swift in Sources */,
 				6C78B85629AF5ADB004BF881 /* ImageViewWithIcon.swift in Sources */,
 				6C78B85729AF5ADB004BF881 /* UpdatePushRequestModel.swift in Sources */,
+				93BCDFDF2A81598D00CEE826 /* OneNoteViewController.swift in Sources */,
 				6C78B85829AF5ADB004BF881 /* ChatSearchViewController.swift in Sources */,
 				6C78B85929AF5ADB004BF881 /* ImageViewerViewModel.swift in Sources */,
 				6C78B85A29AF5ADB004BF881 /* SeenResponseModel.swift in Sources */,
 				6C2F972829AF67B7001F170B /* ConstantsDev.swift in Sources */,
 				6C78B85B29AF5ADB004BF881 /* BaseSettingsView.swift in Sources */,
 				6C78B85C29AF5ADB004BF881 /* UserResponseModel.swift in Sources */,
+				93BCDFF02A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */,
 				6C78B85D29AF5ADB004BF881 /* CheckRoomResponseModel.swift in Sources */,
 				6C78B85E29AF5ADB004BF881 /* MessageActionsViewModel.swift in Sources */,
 				6C78B85F29AF5ADB004BF881 /* CountryUtils.swift in Sources */,
@@ -3720,7 +3812,7 @@
 				6C78B87729AF5ADB004BF881 /* Enums.swift in Sources */,
 				6C78B87829AF5ADB004BF881 /* Date+Extensions.swift in Sources */,
 				6C78B87929AF5ADB004BF881 /* ContactsViewModel.swift in Sources */,
-				6C78B87B29AF5ADB004BF881 /* NotesViewModel.swift in Sources */,
+				6C78B87B29AF5ADB004BF881 /* AllNotesViewModel.swift in Sources */,
 				6C78B87C29AF5ADB004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6C78B87D29AF5ADB004BF881 /* IconAndLabelView.swift in Sources */,
 				6C78B87F29AF5ADB004BF881 /* DeliveredRequestModel.swift in Sources */,
@@ -3762,6 +3854,7 @@
 				6C78B89E29AF5ADB004BF881 /* CoreDataStack.swift in Sources */,
 				6C78B89F29AF5ADB004BF881 /* DeliveredResponseModel.swift in Sources */,
 				934F6DE429E694670010FED9 /* AppRepository+Device.swift in Sources */,
+				93C8A4662A8116E8005E23DD /* NoteTableViewCell.swift in Sources */,
 				6C78B8A029AF5ADB004BF881 /* TabBarItemView.swift in Sources */,
 				6C78B8A129AF5ADB004BF881 /* SettingsModel.swift in Sources */,
 				93EACD072A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */,
@@ -3777,6 +3870,7 @@
 				6C78B8AB29AF5ADB004BF881 /* SSE.swift in Sources */,
 				93A14D7C2A5FDCC300A557CB /* TermsAndConditionView.swift in Sources */,
 				6C78B8AC29AF5ADB004BF881 /* ReactionsViewModel.swift in Sources */,
+				93BCDFE82A81599C00CEE826 /* OneNoteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3786,6 +3880,7 @@
 			files = (
 				934F6DF229E698360010FED9 /* NotificationsHelpers.swift in Sources */,
 				6C78B8CA29AF5D89004BF881 /* RoomUserEntity+CoreDataClass.swift in Sources */,
+				93C8A4622A81147F005E23DD /* AllNotesResponseModel.swift in Sources */,
 				6C78B8CB29AF5D89004BF881 /* AppRepository+Blocked_Notification.swift in Sources */,
 				6C78B8CC29AF5D89004BF881 /* NotificationService.swift in Sources */,
 				6C78B8CD29AF5D89004BF881 /* UserEntity+CoreDataClass.swift in Sources */,
@@ -3817,6 +3912,7 @@
 				6CF916BD2A1B719F002AD09B /* PhoneNumberParserNotification.swift in Sources */,
 				6C78B8E229AF5D89004BF881 /* AppRepository+User.swift in Sources */,
 				6C9B40892A28B232003FA11B /* ServerSettingsModel.swift in Sources */,
+				93C8A45F2A811443005E23DD /* AppRepository+Notes.swift in Sources */,
 				6C78B8E329AF5D89004BF881 /* ContactEntity+CoreDataClass.swift in Sources */,
 				6C78B8E429AF5D89004BF881 /* VerifyFileRequestModel.swift in Sources */,
 				6C78B8E529AF5D89004BF881 /* Room.swift in Sources */,
@@ -3855,6 +3951,7 @@
 				6C78B90629AF5D89004BF881 /* CreateRoomRequestModel.swift in Sources */,
 				6C78B90729AF5D89004BF881 /* CreateRoomResponseModel.swift in Sources */,
 				6C78B90829AF5D89004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
+				93BCDFF32A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6C78B90929AF5D89004BF881 /* CoreDatabase.xcdatamodeld in Sources */,
 				6C78B90A29AF5D89004BF881 /* RoomEntity+CoreDataClass.swift in Sources */,
 				6C78B90C29AF5D89004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -3867,6 +3964,7 @@
 				6C78B91229AF5D89004BF881 /* MessageResponse.swift in Sources */,
 				6C78B91529AF5D89004BF881 /* VerifyFileResponseModel.swift in Sources */,
 				6C78B91629AF5D89004BF881 /* VerifyCodeRequestModel.swift in Sources */,
+				93BCDFF62A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */,
 				6C78B91729AF5D89004BF881 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3878,6 +3976,7 @@
 				6CF6488E2A459FE100E0DE0B /* CustomButton.swift in Sources */,
 				6CF6488F2A459FE100E0DE0B /* AppRepository+Rooms.swift in Sources */,
 				6CF648902A459FE100E0DE0B /* VideoMessageTableViewCell.swift in Sources */,
+				93BCDFFB2A81A17200CEE826 /* UITextViewWithPlaceholder.swift in Sources */,
 				6CF648912A459FE100E0DE0B /* FileMessageTableViewCell.swift in Sources */,
 				6CF648922A459FE100E0DE0B /* DetailsView.swift in Sources */,
 				6CF648932A459FE100E0DE0B /* Publisher+Extensions.swift in Sources */,
@@ -3888,6 +3987,7 @@
 				6CF648982A459FE100E0DE0B /* MessageEntity+CoreDataClass.swift in Sources */,
 				6CF648992A459FE100E0DE0B /* TextMessageTableViewCell.swift in Sources */,
 				6CF6489A2A459FE100E0DE0B /* FavoritesViewModel.swift in Sources */,
+				93C8A45D2A81126E005E23DD /* AppRepository+Notes.swift in Sources */,
 				6CF6489B2A459FE100E0DE0B /* MediaCollectionView.swift in Sources */,
 				6CF6489C2A459FE100E0DE0B /* UploadChunkRequestModel.swift in Sources */,
 				6CF6489D2A459FE100E0DE0B /* VideoCallViewModel.swift in Sources */,
@@ -3944,7 +4044,7 @@
 				6CF648CA2A459FE100E0DE0B /* FavoritesViewController.swift in Sources */,
 				6CF648CB2A459FE100E0DE0B /* EnterNumberView.swift in Sources */,
 				6CF648CC2A459FE100E0DE0B /* ContextMenuActionView.swift in Sources */,
-				6CF648CD2A459FE100E0DE0B /* NotesView.swift in Sources */,
+				6CF648CD2A459FE100E0DE0B /* AllNotesView.swift in Sources */,
 				6CF648CE2A459FE100E0DE0B /* CustomStackView.swift in Sources */,
 				6CF648CF2A459FE100E0DE0B /* LogoImageView.swift in Sources */,
 				6CF648D02A459FE100E0DE0B /* UserSelectionViewModel.swift in Sources */,
@@ -3966,6 +4066,7 @@
 				6CF648E02A459FE100E0DE0B /* HomeTabBar.swift in Sources */,
 				6CF648E12A459FE100E0DE0B /* SyncMessagesResponseModel.swift in Sources */,
 				6CF648E22A459FE100E0DE0B /* String+Extension.swift in Sources */,
+				93C8A4592A8111B4005E23DD /* AllNotesResponseModel.swift in Sources */,
 				6CF648E32A459FE100E0DE0B /* CurrentChatViewController.swift in Sources */,
 				6CF648E42A459FE100E0DE0B /* TextField.swift in Sources */,
 				6CF648E52A459FE100E0DE0B /* SelectUsersViewModel.swift in Sources */,
@@ -3986,6 +4087,7 @@
 				6CF648F32A459FE100E0DE0B /* RoomEntity+CoreDataProperties.swift in Sources */,
 				6CF648F42A459FE100E0DE0B /* SearchBar.swift in Sources */,
 				938B56992A52EEAC0036440E /* AllChatsSearchedMessageCell.swift in Sources */,
+				93BCDFED2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6CF648F52A459FE100E0DE0B /* MessageTextView.swift in Sources */,
 				6CF648F62A459FE100E0DE0B /* CoreDatabase.xcdatamodeld in Sources */,
 				6CF648F72A459FE100E0DE0B /* AuthResponseModel.swift in Sources */,
@@ -3995,6 +4097,7 @@
 				6CF648FB2A459FE100E0DE0B /* EmptyResponse.swift in Sources */,
 				6CF648FC2A459FE100E0DE0B /* ContactsTableView.swift in Sources */,
 				6CF648FD2A459FE100E0DE0B /* SettingsViewController.swift in Sources */,
+				93BCDFE32A81599000CEE826 /* OneNoteViewModel.swift in Sources */,
 				6CF648FE2A459FE100E0DE0B /* ExpandableTextView.swift in Sources */,
 				6CF648FF2A459FE100E0DE0B /* AppereanceSettingsViewModel.swift in Sources */,
 				6CF649002A459FE100E0DE0B /* UserSelectionView.swift in Sources */,
@@ -4043,7 +4146,7 @@
 				6CF649292A459FE100E0DE0B /* CurrentChatViewModel.swift in Sources */,
 				6CF6492A2A459FE100E0DE0B /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				6CF6492B2A459FE100E0DE0B /* MessageDetailsViewModel.swift in Sources */,
-				6CF6492C2A459FE100E0DE0B /* NotesViewController.swift in Sources */,
+				6CF6492C2A459FE100E0DE0B /* AllNotesViewController.swift in Sources */,
 				6CF6492D2A459FE100E0DE0B /* CountryPickerViewModel.swift in Sources */,
 				6CF6492E2A459FE100E0DE0B /* DetailsViewModel.swift in Sources */,
 				6CF6492F2A459FE100E0DE0B /* Coordinator.swift in Sources */,
@@ -4082,12 +4185,14 @@
 				6CF649502A459FE100E0DE0B /* OldAlertView.swift in Sources */,
 				6CF649512A459FE100E0DE0B /* LoginAssembly.swift in Sources */,
 				6CF649522A459FE100E0DE0B /* ImageViewWithIcon.swift in Sources */,
+				93BCDFE02A81598D00CEE826 /* OneNoteViewController.swift in Sources */,
 				6CF649532A459FE100E0DE0B /* UpdatePushRequestModel.swift in Sources */,
 				6CF649542A459FE100E0DE0B /* ChatSearchViewController.swift in Sources */,
 				6CF649552A459FE100E0DE0B /* ImageViewerViewModel.swift in Sources */,
 				6CF649562A459FE100E0DE0B /* SeenResponseModel.swift in Sources */,
 				6CF649582A459FE100E0DE0B /* BaseSettingsView.swift in Sources */,
 				6CF649592A459FE100E0DE0B /* UserResponseModel.swift in Sources */,
+				93BCDFF12A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */,
 				6CF6495A2A459FE100E0DE0B /* CheckRoomResponseModel.swift in Sources */,
 				6CF6495B2A459FE100E0DE0B /* MessageActionsViewModel.swift in Sources */,
 				6CF6495C2A459FE100E0DE0B /* CountryUtils.swift in Sources */,
@@ -4116,7 +4221,7 @@
 				6CF649732A459FE100E0DE0B /* Enums.swift in Sources */,
 				6CF649742A459FE100E0DE0B /* Date+Extensions.swift in Sources */,
 				6CF649752A459FE100E0DE0B /* ContactsViewModel.swift in Sources */,
-				6CF649762A459FE100E0DE0B /* NotesViewModel.swift in Sources */,
+				6CF649762A459FE100E0DE0B /* AllNotesViewModel.swift in Sources */,
 				6CF649772A459FE100E0DE0B /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6CF649782A459FE100E0DE0B /* IconAndLabelView.swift in Sources */,
 				6CF649792A459FE100E0DE0B /* DeliveredRequestModel.swift in Sources */,
@@ -4158,6 +4263,7 @@
 				6CF6499C2A459FE100E0DE0B /* CoreDataStack.swift in Sources */,
 				6CF6499D2A459FE100E0DE0B /* DeliveredResponseModel.swift in Sources */,
 				6CF6499E2A459FE100E0DE0B /* AppRepository+Device.swift in Sources */,
+				93C8A4672A8116E8005E23DD /* NoteTableViewCell.swift in Sources */,
 				6CF6499F2A459FE100E0DE0B /* TabBarItemView.swift in Sources */,
 				6CF649A02A459FE100E0DE0B /* SettingsModel.swift in Sources */,
 				6CF649A12A459FE100E0DE0B /* UpdateMessageRequest.swift in Sources */,
@@ -4173,6 +4279,7 @@
 				6CF649AA2A459FE100E0DE0B /* SSE.swift in Sources */,
 				93A14D7D2A5FDCC300A557CB /* TermsAndConditionView.swift in Sources */,
 				6CF649AB2A459FE100E0DE0B /* ReactionsViewModel.swift in Sources */,
+				93BCDFE92A81599C00CEE826 /* OneNoteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4182,6 +4289,7 @@
 			files = (
 				934F6DF029E698360010FED9 /* NotificationsHelpers.swift in Sources */,
 				931B150F28211ACB00A0CD35 /* RoomUserEntity+CoreDataClass.swift in Sources */,
+				93C8A4612A81147E005E23DD /* AllNotesResponseModel.swift in Sources */,
 				6CBD43A9298282F100A1059E /* AppRepository+Blocked_Notification.swift in Sources */,
 				9319416B2819CB510067566C /* NotificationService.swift in Sources */,
 				931B151028211ACB00A0CD35 /* UserEntity+CoreDataClass.swift in Sources */,
@@ -4213,6 +4321,7 @@
 				6CF916BC2A1B719E002AD09B /* PhoneNumberParserNotification.swift in Sources */,
 				93179C3D28B709B6006F928B /* AppRepository+User.swift in Sources */,
 				6C9B40882A28B232003FA11B /* ServerSettingsModel.swift in Sources */,
+				93C8A45E2A811442005E23DD /* AppRepository+Notes.swift in Sources */,
 				931B150D28211ACB00A0CD35 /* ContactEntity+CoreDataClass.swift in Sources */,
 				931B14F628211AC100A0CD35 /* VerifyFileRequestModel.swift in Sources */,
 				939AAE3D28F62F6600DD5142 /* Room.swift in Sources */,
@@ -4251,6 +4360,7 @@
 				931B14F528211AC100A0CD35 /* CreateRoomRequestModel.swift in Sources */,
 				931B150628211AC600A0CD35 /* CreateRoomResponseModel.swift in Sources */,
 				934F036E282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
+				93BCDFF42A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */,
 				931B150E28211ACB00A0CD35 /* RoomEntity+CoreDataClass.swift in Sources */,
 				93711DFC28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -4263,6 +4373,7 @@
 				931B150028211AC600A0CD35 /* MessageResponse.swift in Sources */,
 				931B150928211AC600A0CD35 /* VerifyFileResponseModel.swift in Sources */,
 				931B14F228211AC100A0CD35 /* VerifyCodeRequestModel.swift in Sources */,
+				93BCDFF72A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */,
 				931B14E528211A5100A0CD35 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4274,6 +4385,7 @@
 				6CBBEC67298AB1F5004281D3 /* CustomButton.swift in Sources */,
 				938D053427D5BF65002E5CE5 /* AppRepository+Rooms.swift in Sources */,
 				9371A1F129241D33005129CC /* VideoMessageTableViewCell.swift in Sources */,
+				93BCDFF92A81A17200CEE826 /* UITextViewWithPlaceholder.swift in Sources */,
 				9364873528B8E5D00069D538 /* FileMessageTableViewCell.swift in Sources */,
 				9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */,
 				6C0AA21E2966D55D00E87304 /* Publisher+Extensions.swift in Sources */,
@@ -4284,6 +4396,7 @@
 				AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */,
 				937F48E827D3D66A005E19FB /* TextMessageTableViewCell.swift in Sources */,
 				933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */,
+				93C8A45B2A81126E005E23DD /* AppRepository+Notes.swift in Sources */,
 				93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */,
 				930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */,
 				93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */,
@@ -4341,7 +4454,7 @@
 				933BE86E27B677BC0099BA9E /* FavoritesViewController.swift in Sources */,
 				AD9BFD272729955200736318 /* EnterNumberView.swift in Sources */,
 				934FF16D2977774F002C76F7 /* ContextMenuActionView.swift in Sources */,
-				933BE86A27B671B30099BA9E /* NotesView.swift in Sources */,
+				933BE86A27B671B30099BA9E /* AllNotesView.swift in Sources */,
 				6C9C5C7E29262657009D3E2B /* CustomStackView.swift in Sources */,
 				AD9BFCF52729828100736318 /* LogoImageView.swift in Sources */,
 				6C2497E12924FB3700594A55 /* UserSelectionViewModel.swift in Sources */,
@@ -4362,6 +4475,7 @@
 				93980E09280A10F30015351F /* UserEntity+CoreDataProperties.swift in Sources */,
 				AD8192572721C2CE00D5BE48 /* HomeTabBar.swift in Sources */,
 				939B30462850DDE700FFA537 /* SyncMessagesResponseModel.swift in Sources */,
+				93C8A4572A8111B4005E23DD /* AllNotesResponseModel.swift in Sources */,
 				AD9A68162739024B00BDC439 /* String+Extension.swift in Sources */,
 				93E4F6FC27C4687100432CFA /* CurrentChatViewController.swift in Sources */,
 				AD9E38FF2726B2AA00DC5D43 /* TextField.swift in Sources */,
@@ -4382,6 +4496,7 @@
 				9362B48E28623A44009F617D /* RoomEntity+CoreDataProperties.swift in Sources */,
 				AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */,
 				939549F42A4B8133006B6139 /* AllChatsSearchedMessageCell.swift in Sources */,
+				93BCDFEB2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
 				939128EB2935734000A79FBA /* MessageTextView.swift in Sources */,
 				ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */,
 				AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */,
@@ -4391,6 +4506,7 @@
 				6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */,
 				930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */,
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
+				93BCDFE42A81599000CEE826 /* OneNoteViewModel.swift in Sources */,
 				93C77B6E2922F76100F676C5 /* ExpandableTextView.swift in Sources */,
 				93D993092992AB7F0038565F /* AppereanceSettingsViewModel.swift in Sources */,
 				6C9B40862A28B075003FA11B /* ServerSettingsModel.swift in Sources */,
@@ -4440,7 +4556,7 @@
 				93E4F6FE27C4688C00432CFA /* CurrentChatViewModel.swift in Sources */,
 				9383879529D596E40057714A /* MessageDetailsViewModel.swift in Sources */,
 				93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */,
-				933BE87727B6796B0099BA9E /* NotesViewController.swift in Sources */,
+				933BE87727B6796B0099BA9E /* AllNotesViewController.swift in Sources */,
 				AD9BFD39272AB31300736318 /* CountryPickerViewModel.swift in Sources */,
 				ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */,
 				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
@@ -4478,12 +4594,14 @@
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
 				9367456127C71D3700F43CCD /* OldAlertView.swift in Sources */,
 				AD9BFD29272995CA00736318 /* LoginAssembly.swift in Sources */,
+				93BCDFDE2A81598D00CEE826 /* OneNoteViewController.swift in Sources */,
 				93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */,
 				934F2EE128172EEA0086C343 /* UpdatePushRequestModel.swift in Sources */,
 				933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */,
 				936A28F22926E98600E7333D /* ImageViewerViewModel.swift in Sources */,
 				93AE06EF290892B90009A50C /* SeenResponseModel.swift in Sources */,
 				6C175EB5297EC44C00804275 /* BaseSettingsView.swift in Sources */,
+				93BCDFEF2A8197EE00CEE826 /* OneNoteRequestModel.swift in Sources */,
 				930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */,
 				93227E9627D6D99D002E3DED /* CheckRoomResponseModel.swift in Sources */,
 				9352A5712977667900E0D90E /* MessageActionsViewModel.swift in Sources */,
@@ -4513,7 +4631,7 @@
 				937055E02914C21E0052EC77 /* Enums.swift in Sources */,
 				9347CCE328644E1300018AEB /* Date+Extensions.swift in Sources */,
 				AD8192592721D42700D5BE48 /* ContactsViewModel.swift in Sources */,
-				933BE87327B677F10099BA9E /* NotesViewModel.swift in Sources */,
+				933BE87327B677F10099BA9E /* AllNotesViewModel.swift in Sources */,
 				93711DFB28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
 				93CFFA5129358CCB001EBACF /* IconAndLabelView.swift in Sources */,
 				931B15152821291400A0CD35 /* DeliveredRequestModel.swift in Sources */,
@@ -4554,6 +4672,7 @@
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
 				9355BEDA28056D1A00B9EC85 /* CoreDataStack.swift in Sources */,
 				931B15182821295600A0CD35 /* DeliveredResponseModel.swift in Sources */,
+				93C8A4652A8116E8005E23DD /* NoteTableViewCell.swift in Sources */,
 				6C65B552291BD1B8007C5B92 /* TabBarItemView.swift in Sources */,
 				6C9C7242291E743A0089AB4C /* SettingsModel.swift in Sources */,
 				93EACD062A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */,
@@ -4569,6 +4688,7 @@
 				9352641927F88937001434A3 /* SSE.swift in Sources */,
 				93A14D7B2A5FDCC300A557CB /* TermsAndConditionView.swift in Sources */,
 				936D90EA296E263D004C79BE /* ReactionsViewModel.swift in Sources */,
+				93BCDFE72A81599C00CEE826 /* OneNoteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4949,7 +5069,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 82;
+				APP_BUILD_VERSION = 83;
 				APP_VERSION = 1.2.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -5017,7 +5137,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 82;
+				APP_BUILD_VERSION = 83;
 				APP_VERSION = 1.2.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;

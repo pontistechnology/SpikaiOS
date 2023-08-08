@@ -7,6 +7,7 @@
 
 import Foundation
 import Swinject
+import Combine
 
 class ContactsAssembly: Assembly {
     func assemble(container: Container) {
@@ -16,6 +17,7 @@ class ContactsAssembly: Assembly {
         assembleNotesViewController(container)
         assembleFavoritesViewController(container)
         assembleVideoCallViewController(container)
+        assembleOneNoteViewController(container)
     }
     
     private func assembleDetailsViewController(_ container: Container) {
@@ -58,14 +60,31 @@ class ContactsAssembly: Assembly {
     }
     
     private func assembleNotesViewController(_ container: Container) {
-        container.register(NotesViewModel.self) { (resolver, coordinator: AppCoordinator) in
+        container.register(AllNotesViewModel.self) { (resolver, coordinator: AppCoordinator, roomId: Int64) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return NotesViewModel(repository: repository, coordinator: coordinator)
+            let viewModel = AllNotesViewModel(repository: repository, coordinator: coordinator)
+            viewModel.roomId = roomId
+            return viewModel
         }.inObjectScope(.transient)
 
-        container.register(NotesViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let controller = NotesViewController()
-            controller.viewModel = container.resolve(NotesViewModel.self, argument: coordinator)
+        container.register(AllNotesViewController.self) { (resolver, coordinator: AppCoordinator, roomId: Int64) in
+            let controller = AllNotesViewController()
+            controller.viewModel = container.resolve(AllNotesViewModel.self, arguments: coordinator, roomId)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleOneNoteViewController(_ container: Container) {
+        container.register(OneNoteViewModel.self) { (resolver, coordinator: AppCoordinator, noteState: NoteState) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            let viewModel = OneNoteViewModel(repository: repository, coordinator: coordinator)
+            viewModel.noteStatePublisher = CurrentValueSubject<NoteState, Never>(noteState)
+            return viewModel
+        }.inObjectScope(.transient)
+
+        container.register(OneNoteViewController.self) { (resolver, coordinator: AppCoordinator, noteState: NoteState) in
+            let controller = OneNoteViewController()
+            controller.viewModel = container.resolve(OneNoteViewModel.self, arguments: coordinator, noteState)
             return controller
         }.inObjectScope(.transient)
     }

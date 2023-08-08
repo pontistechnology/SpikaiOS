@@ -132,7 +132,8 @@ extension DetailsViewModel {
     }
     
     func presentNotesScreen() {
-        getAppCoordinator()?.presentNotesScreen()
+        guard let roomId = room?.id else { return }
+        getAppCoordinator()?.presentNotesScreen(roomId: roomId)
     }
     
     func presentCallHistoryScreen() {

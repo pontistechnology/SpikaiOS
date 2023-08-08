@@ -340,6 +340,8 @@ class ChatDetailsViewModel: BaseViewModel {
     }
 }
 
+// MARK: - Contacts
+
 extension ChatDetailsViewModel {
     func getPhoneNumberText() -> String {
         if room.value.type == .privateRoom {
@@ -360,5 +362,13 @@ extension ChatDetailsViewModel {
 extension ChatDetailsViewModel: CNContactViewControllerDelegate {
     func contactViewController(_ viewController: CNContactViewController, didCompleteWith contact: CNContact?) {
         getAppCoordinator()?.popTopViewController()
+    }
+}
+
+// MARK: - Notes
+
+extension ChatDetailsViewModel {
+    func presentAllNotesScreen() {
+        getAppCoordinator()?.presentNotesScreen(roomId: room.value.id)
     }
 }

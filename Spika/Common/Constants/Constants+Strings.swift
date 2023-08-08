@@ -91,6 +91,9 @@ public extension Constants {
         case links = "Links"
         case docs = "Docs"
         
+        // MARK: - OneNoteViewController
+        case save = "Save"
+        
         // MARK: - UserSelectionViewController
         case selected = "selected"
         case selectUsers = "Select users"

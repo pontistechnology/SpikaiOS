@@ -33,5 +33,7 @@ public extension Constants {
         static let messageRecords = "api/messenger/message-records"
         static let blocks = "api/messenger/blocks"
         static let getUnreadCount = "api/messenger/rooms/unread-count"
+        static let allRoomNotes = "api/messenger/notes/roomId"
+        static let oneNote = "api/messenger/notes"
     }
 }
