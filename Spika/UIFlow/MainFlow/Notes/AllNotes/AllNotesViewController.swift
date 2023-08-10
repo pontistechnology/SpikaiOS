@@ -53,9 +53,9 @@ extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
         let note = viewModel.notesPublisher.value[indexPath.row]
         let timeText: String
         if let edited = note.modifiedAt, note.createdAt != edited {
-            timeText = "Edited: " + "\(edited)"
+            timeText = "Edited: " + "\(edited.convert(to: .notesTimeFormat))"
         } else {
-            timeText = "Created: " + "\(note.createdAt)"
+            timeText = "Created: " + "\(note.createdAt.convert(to: .notesTimeFormat))"
         }
         
         (cell as? NoteTableViewCell)?.configureCell(title: note.title, timeText: timeText)

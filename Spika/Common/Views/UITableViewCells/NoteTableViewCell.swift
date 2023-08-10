@@ -34,10 +34,9 @@ extension NoteTableViewCell {
     }
     
     func positionSubviews() {
-        titleLabel.anchor(leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
-        titleLabel.centerYToSuperview(offset: -10)
+        titleLabel.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 14, left: 20, bottom: 0, right: 52))
         
-        timeLabel.anchor(top: titleLabel.bottomAnchor, leading: titleLabel.leadingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        timeLabel.anchor(top: titleLabel.bottomAnchor, leading: titleLabel.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
     }
     
     func configureCell(title: String, timeText: String) {
