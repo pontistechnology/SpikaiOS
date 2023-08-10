@@ -50,7 +50,15 @@ class AllNotesViewController: BaseViewController {
 extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.reuseIdentifier, for: indexPath)
-        (cell as? NoteTableViewCell)?.configureCell(title: viewModel.notesPublisher.value[indexPath.row].title)
+        let note = viewModel.notesPublisher.value[indexPath.row]
+        let timeText: String
+        if let edited = note.modifiedAt, note.createdAt != edited {
+            timeText = "Edited: " + "\(edited)"
+        } else {
+            timeText = "Created: " + "\(note.createdAt)"
+        }
+        
+        (cell as? NoteTableViewCell)?.configureCell(title: note.title, timeText: timeText)
         return cell
     }
     
