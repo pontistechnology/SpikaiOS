@@ -111,6 +111,9 @@ extension CurrentChatViewModel {
                     self.showDeleteConfirmDialog(message: message)
                 case .edit:
                     self.selectedMessageToEditPublisher.send(message)
+                case .showCustomReactions:
+                    print("")
+                    
                 default:
                     break
                 }

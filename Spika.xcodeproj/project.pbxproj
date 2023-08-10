@@ -1118,6 +1118,15 @@
 		93D0CFA72A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */; };
 		93D0CFA82A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */; };
 		93D4034D29245B5400DC77D3 /* AppRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */; };
+		93D6BFEF2A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFEE2A8262320092DDF5 /* CustomReactionsViewController.swift */; };
+		93D6BFF02A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFEE2A8262320092DDF5 /* CustomReactionsViewController.swift */; };
+		93D6BFF12A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFEE2A8262320092DDF5 /* CustomReactionsViewController.swift */; };
+		93D6BFF32A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF22A8262350092DDF5 /* CustomReactionsViewModel.swift */; };
+		93D6BFF42A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF22A8262350092DDF5 /* CustomReactionsViewModel.swift */; };
+		93D6BFF52A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF22A8262350092DDF5 /* CustomReactionsViewModel.swift */; };
+		93D6BFF72A82623C0092DDF5 /* CustomReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF62A82623C0092DDF5 /* CustomReactionsView.swift */; };
+		93D6BFF82A82623C0092DDF5 /* CustomReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF62A82623C0092DDF5 /* CustomReactionsView.swift */; };
+		93D6BFF92A82623C0092DDF5 /* CustomReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF62A82623C0092DDF5 /* CustomReactionsView.swift */; };
 		93D7F0882A320ABF0098FDF9 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */; };
 		93D7F0892A320ABF0098FDF9 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */; };
 		93D7F08B2A320B8F0098FDF9 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */; };
@@ -1540,6 +1549,9 @@
 		93CFFA4E293587EB001EBACF /* MessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyView.swift; sourceTree = "<group>"; };
 		93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconAndLabelView.swift; sourceTree = "<group>"; };
 		93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Extensions.swift"; sourceTree = "<group>"; };
+		93D6BFEE2A8262320092DDF5 /* CustomReactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomReactionsViewController.swift; sourceTree = "<group>"; };
+		93D6BFF22A8262350092DDF5 /* CustomReactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomReactionsViewModel.swift; sourceTree = "<group>"; };
+		93D6BFF62A82623C0092DDF5 /* CustomReactionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomReactionsView.swift; sourceTree = "<group>"; };
 		93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionView.swift; sourceTree = "<group>"; };
@@ -2265,6 +2277,24 @@
 			path = Notes;
 			sourceTree = "<group>";
 		};
+		93D6BFE92A8262020092DDF5 /* CustomReactione */ = {
+			isa = PBXGroup;
+			children = (
+				93D6BFFA2A8262400092DDF5 /* View */,
+				93D6BFEE2A8262320092DDF5 /* CustomReactionsViewController.swift */,
+				93D6BFF22A8262350092DDF5 /* CustomReactionsViewModel.swift */,
+			);
+			path = CustomReactione;
+			sourceTree = "<group>";
+		};
+		93D6BFFA2A8262400092DDF5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				93D6BFF62A82623C0092DDF5 /* CustomReactionsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		93D86DBE27BAB47700F275B0 /* UITableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2419,6 +2449,7 @@
 		AD819243272173A300D5BE48 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				93D6BFE92A8262020092DDF5 /* CustomReactione */,
 				9352A56B2977667900E0D90E /* MessageActions */,
 				936D90E5296E2604004C79BE /* Reactions */,
 				931F8ABE295493A200856C09 /* MoreActions */,
@@ -3580,6 +3611,7 @@
 				6C78B79D29AF5ADB004BF881 /* FavoritesViewModel.swift in Sources */,
 				93C8A45C2A81126E005E23DD /* AppRepository+Notes.swift in Sources */,
 				6C78B79E29AF5ADB004BF881 /* MediaCollectionView.swift in Sources */,
+				93D6BFF02A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */,
 				6C78B7A029AF5ADB004BF881 /* UploadChunkRequestModel.swift in Sources */,
 				6C78B7A129AF5ADB004BF881 /* VideoCallViewModel.swift in Sources */,
 				6C78B7A229AF5ADB004BF881 /* AVURLAsset+Extensions.swift in Sources */,
@@ -3745,6 +3777,7 @@
 				6C78B83729AF5ADB004BF881 /* EnterUsernameView.swift in Sources */,
 				6C78B83829AF5ADB004BF881 /* Int64+Extensions.swift in Sources */,
 				6C78B83A29AF5ADB004BF881 /* UIFont+Extensions.swift in Sources */,
+				93D6BFF82A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				6C78B83C29AF5ADB004BF881 /* NewGroupChatViewController.swift in Sources */,
 				6C78B83D29AF5ADB004BF881 /* ChatSearchViewModel.swift in Sources */,
 				6C78B83F29AF5ADB004BF881 /* Message+Extensions.swift in Sources */,
@@ -3853,6 +3886,7 @@
 				6C78B89C29AF5ADB004BF881 /* AppRepository+User.swift in Sources */,
 				6C78B89E29AF5ADB004BF881 /* CoreDataStack.swift in Sources */,
 				6C78B89F29AF5ADB004BF881 /* DeliveredResponseModel.swift in Sources */,
+				93D6BFF32A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */,
 				934F6DE429E694670010FED9 /* AppRepository+Device.swift in Sources */,
 				93C8A4662A8116E8005E23DD /* NoteTableViewCell.swift in Sources */,
 				6C78B8A029AF5ADB004BF881 /* TabBarItemView.swift in Sources */,
@@ -3989,6 +4023,7 @@
 				6CF6489A2A459FE100E0DE0B /* FavoritesViewModel.swift in Sources */,
 				93C8A45D2A81126E005E23DD /* AppRepository+Notes.swift in Sources */,
 				6CF6489B2A459FE100E0DE0B /* MediaCollectionView.swift in Sources */,
+				93D6BFF12A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */,
 				6CF6489C2A459FE100E0DE0B /* UploadChunkRequestModel.swift in Sources */,
 				6CF6489D2A459FE100E0DE0B /* VideoCallViewModel.swift in Sources */,
 				6CF6489E2A459FE100E0DE0B /* AVURLAsset+Extensions.swift in Sources */,
@@ -4154,6 +4189,7 @@
 				6CF649312A459FE100E0DE0B /* EnterUsernameViewController.swift in Sources */,
 				6CF649322A459FE100E0DE0B /* EnterUsernameView.swift in Sources */,
 				6CF649332A459FE100E0DE0B /* Int64+Extensions.swift in Sources */,
+				93D6BFF92A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				6CF649342A459FE100E0DE0B /* UIFont+Extensions.swift in Sources */,
 				6CF649352A459FE100E0DE0B /* NewGroupChatViewController.swift in Sources */,
 				6CF649362A459FE100E0DE0B /* ChatSearchViewModel.swift in Sources */,
@@ -4262,6 +4298,7 @@
 				6CF6499B2A459FE100E0DE0B /* AppRepository+User.swift in Sources */,
 				6CF6499C2A459FE100E0DE0B /* CoreDataStack.swift in Sources */,
 				6CF6499D2A459FE100E0DE0B /* DeliveredResponseModel.swift in Sources */,
+				93D6BFF42A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */,
 				6CF6499E2A459FE100E0DE0B /* AppRepository+Device.swift in Sources */,
 				93C8A4672A8116E8005E23DD /* NoteTableViewCell.swift in Sources */,
 				6CF6499F2A459FE100E0DE0B /* TabBarItemView.swift in Sources */,
@@ -4398,6 +4435,7 @@
 				933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */,
 				93C8A45B2A81126E005E23DD /* AppRepository+Notes.swift in Sources */,
 				93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */,
+				93D6BFEF2A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */,
 				930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */,
 				93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */,
 				937FBE6928B5309E00C3A888 /* AVURLAsset+Extensions.swift in Sources */,
@@ -4563,6 +4601,7 @@
 				93D9930B2992AB7F0038565F /* AppereanceSettingsViewController.swift in Sources */,
 				93708E14279F871400F81095 /* EnterUsernameViewController.swift in Sources */,
 				93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */,
+				93D6BFF72A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				93C714A12815F888008BBA33 /* Int64+Extensions.swift in Sources */,
 				932462D828FCB9B100E8C1B9 /* UIFont+Extensions.swift in Sources */,
 				938D053027D59DC1002E5CE5 /* NewGroupChatViewController.swift in Sources */,
@@ -4671,6 +4710,7 @@
 				6CD1915A29A35E2300A8041A /* ChatBlockingView.swift in Sources */,
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
 				9355BEDA28056D1A00B9EC85 /* CoreDataStack.swift in Sources */,
+				93D6BFF52A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */,
 				931B15182821295600A0CD35 /* DeliveredResponseModel.swift in Sources */,
 				93C8A4652A8116E8005E23DD /* NoteTableViewCell.swift in Sources */,
 				6C65B552291BD1B8007C5B92 /* TabBarItemView.swift in Sources */,
