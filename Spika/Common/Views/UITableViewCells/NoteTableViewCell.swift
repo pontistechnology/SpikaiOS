@@ -12,7 +12,7 @@ class NoteTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "NoteTableViewCell"
     
     private let titleLabel = CustomLabel(text: "(no name)", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
-    private let timeLabel = CustomLabel(text: "time", textSize: 9, textColor: .textTertiary, fontName: .MontserratMedium)
+    private let timeLabel = CustomLabel(text: "time", textSize: 12, textColor: .textTertiary, fontName: .MontserratMedium)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
