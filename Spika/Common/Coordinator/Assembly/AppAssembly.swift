@@ -30,6 +30,7 @@ final class AppAssembly: Assembly {
         assembleUserSelectionViewController(container)
         assembleMessageActionsViewController(container)
         assembleMessageDetailsViewController(container)
+        assembleCustomReactionsViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {

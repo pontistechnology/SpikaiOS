@@ -87,6 +87,14 @@ extension CurrentChatViewModel {
         getAppCoordinator()?.presentReactionsSheet(users: users, records: records)
     }
     
+    func showCustomReactionPicker(message: Message) {
+        getAppCoordinator()?.presentCustomReactionPicker()
+            .sink(receiveValue: { [weak self] emoji in
+                guard let id = message.id else { return }
+                self?.sendReaction(reaction: emoji, messageId: id)
+            }).store(in: &subscriptions)
+    }
+    
     // TODO: add indexpath
     func showMessageActions(_ message: Message) {
         guard !message.deleted else { return }
@@ -112,8 +120,7 @@ extension CurrentChatViewModel {
                 case .edit:
                     self.selectedMessageToEditPublisher.send(message)
                 case .showCustomReactions:
-                    print("")
-                    
+                    self.showCustomReactionPicker(message: message)
                 default:
                     break
                 }

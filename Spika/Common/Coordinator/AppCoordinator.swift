@@ -272,6 +272,12 @@ class AppCoordinator: Coordinator {
         let viewController = Assembler.sharedAssembler.resolver.resolve(BlockedUsersViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)
     }
+    
+    func presentCustomReactionPicker() -> PassthroughSubject<String, Never> {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(CustomReactionsViewController.self, argument: self)!
+        navigationController.present(viewController, animated: true)
+        return viewController.selectedEmojiPublisher
+    }
 }
 
 // MARK: - Window manager
