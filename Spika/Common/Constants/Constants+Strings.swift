@@ -120,6 +120,9 @@ public extension Constants {
         case unknown = "Unknown"
         case today = "Today"
         
+        // MARK: - CustomReactionsViewController
+        case searchForReaction = "Search for reaction"
+        
         case youAreNoLongerMember = "You are no longer a member of this group"
         
         // MARK: - SelectUsersViewController
@@ -160,6 +163,17 @@ public extension Constants {
         case selectedImageIsTooBig = "Selected image is too big"
         case unsupportedFormat = "Unsupported format"
         case allOk = "All ok."
-
+        
+        // MARK: - Emoji Sections
+        
+        case recent = "Recent"
+        case smileysAndPeople = "Smileys and people"
+        case animalsAndNature = "Animals and nature"
+        case foodAndDrink = "Food and drink"
+        case activity = "Activity"
+        case travelAndPlaces = "Travel and places"
+        case objects = "Objects"
+        case symbols = "Symbols"
+        case flags = "Flags"
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 class CustomReactionsViewController: BaseViewController {
-    private let mainView = CustomReactionsView()
+    private lazy var mainView = CustomReactionsView(emojiSections: viewModel.sections)
     var viewModel: CustomReactionsViewModel!
     
     let selectedEmojiPublisher = PassthroughSubject<String, Never>()
@@ -24,13 +24,30 @@ class CustomReactionsViewController: BaseViewController {
     func setupBindings() {
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+        
+        mainView.categoriesView.selectedSection.sink { [weak self] index in
+            self?.mainView.scrollToSection(index)
+            self?.mainView.categoriesView.selectCategory(at: index)
+        }.store(in: &subscriptions)
     }
 }
 
 extension CustomReactionsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        CGSize(width: 0, height: 30)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionViewHeader.reuseIdentifier, for: indexPath)
+        (headerView as? CollectionViewHeader)?.configureView(title: viewModel.sections[indexPath.section].title)
+        return headerView
+    }
+    
+    
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        6
+        viewModel.sections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -64,3 +81,17 @@ extension CustomReactionsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension CustomReactionsViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let index = mainView.collectionView.indexPathsForVisibleItems.first?.section
+        else { return }
+        mainView.categoriesView.selectCategory(at: index)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard let index = mainView.collectionView.indexPathsForVisibleItems.first?.section
+        else { return }
+        mainView.categoriesView.selectCategory(at: index)
+    }
+}

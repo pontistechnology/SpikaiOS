@@ -89,6 +89,17 @@ enum AssetName: String {
     case checkmark = "checkmark"
     case done = "done"
     case addCustomReaction = "addCustomReaction"
+    
+    // emoji sections
+    case emojiSectionBall = "emojiSectionBall"
+    case emojiSectionBurger = "emojiSectionBurger"
+    case emojiSectionCar = "emojiSectionCar"
+    case emojiSectionClock = "emojiSectionClock"
+    case emojiSectionFlag = "emojiSectionFlag"
+    case emojiSectionHeart = "emojiSectionHeart"
+    case emojiSectionLightbulb = "emojiSectionLightbulb"
+    case emojiSectionPaw = "emojiSectionPaw"
+    case emojiSectionSmiley = "emojiSectionSmiley"
 }
 
 extension UIImage {    

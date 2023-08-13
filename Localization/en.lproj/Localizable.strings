@@ -72,6 +72,7 @@
 "selected" = "selected";
 "Select users" = "Select users";
 "Search for contact" = "Search for contact";
+"Search for reaction" = "Search for reaction";
 
 "Read by" = "Read by";
 "Delivered to" = "Delivered to";
@@ -115,5 +116,15 @@
 "Selected image is too big" = "Selected image is too big";
 "Unsupported format" = "Unsupported format";
 "All ok." = "All ok.";
+
+"Recent" = "Recent";
+"Smileys and people" = "Smileys and people";
+"Animals and nature" = "Animals and nature";
+"Food and drink" = "Food and drink";
+"Activity" = "Activity";
+"Travel and places" = "Travel and places";
+"Objects" = "Objects";
+"Symbols" = "Symbols";
+"Flags" = "Flags";
 
 

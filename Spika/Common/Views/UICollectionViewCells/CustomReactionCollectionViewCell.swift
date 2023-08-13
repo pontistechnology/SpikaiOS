@@ -30,7 +30,7 @@ extension CustomReactionCollectionViewCell: BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .red
+        
     }
     
     func positionSubviews() {
