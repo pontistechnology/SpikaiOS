@@ -111,7 +111,7 @@ class CurrentChatView: UIView, BaseView {
     }
     
     func moveInputFromBottom(for n: CGFloat) {
-        messageInputViewBottomConstraint.constant = -(n > 30 ? n - 30 : 0)
+        messageInputViewBottomConstraint.constant = -(n < 0 ? 0 : n)
         DispatchQueue.main.async { [weak self] in
             self?.layoutIfNeeded()
         }

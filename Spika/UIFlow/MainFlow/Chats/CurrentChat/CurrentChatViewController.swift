@@ -104,7 +104,8 @@ extension CurrentChatViewController {
         currentChatView.messageInputView.inputTextAndControlsView.keyboardAccessoryView.publisher.sink { _ in
             
         } receiveValue: { [weak self] distance in
-            self?.currentChatView.moveInputFromBottom(for: distance)
+            guard let bottomSafeHeight = self?.view.safeAreaInsets.bottom else { return }
+            self?.currentChatView.moveInputFromBottom(for: distance - bottomSafeHeight)
         }.store(in: &subscriptions)
         
         Publishers
