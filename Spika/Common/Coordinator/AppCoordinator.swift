@@ -12,8 +12,10 @@ import AVKit
 import AVFoundation
 import Contacts
 import ContactsUI
+import SwiftUI
 
 class AppCoordinator: Coordinator {
+    @ObservedObject var dataController = DataController()
     
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
@@ -92,7 +94,8 @@ class AppCoordinator: Coordinator {
     // MARK: MAIN FLOW
     func presentHomeScreen(startSyncAndSSE: Bool,
                            startTab: TabBarItem = .chat(withChatId: nil)) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startTab)!
+        let viewController = UIHostingController(rootView: CurrentChatSwiftUIView().environment(\.managedObjectContext, dataController.container.viewContext))
+//        Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startTab)!
         if startSyncAndSSE {
             syncAndStartSSE()            
         }
