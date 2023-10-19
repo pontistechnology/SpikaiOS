@@ -8,6 +8,13 @@
 import Foundation
 
 class CustomReactionsViewModel: BaseViewModel {
-    let sections = EmojiSection.allCases
-    let emojiArray: [String] = ["😀", "😎", "🥳", "🌟", "🚀", "🎉", "🌈", "🍕", "🎈", "🦄", "🐶", "🐱", "🐼", "🐙", "🐬", "🌺", "🍔", "🍦", "🍓", "🍩", "🍭", "🍀", "🌍", "🎨", "⚽️", "🎸", "🚴‍♀️", "🏖️", "🎳", "🎮", "📚", "✈️", "🏠", "🎡", "🎤", "🍂", "🌨️", "🌊", "🌋", "🌴", "🍁", "🌙", "⛵️", "🎃", "🍁", "🎄", "🎅", "🍁", "❄️", "🍁"]
+    var allEmojis: [[Emoji]] = []
+    
+    func getEmojis() {
+        allEmojis = repository.getEmojis()
+    }
+    
+    func addToRecentEmojis(emoji: Emoji) {
+        repository.addToRecentEmojis(emoji: emoji)
+    }
 }

@@ -42,6 +42,7 @@ extension CustomReactionsView: BaseView {
     func styleSubviews() {
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = .getStringFor(.searchForReaction)
+        collectionView.backgroundColor = .secondaryBackground
     }
     
     func positionSubviews() {
@@ -55,6 +56,7 @@ extension CustomReactionsView: BaseView {
 extension CustomReactionsView {
     func scrollToSection(_ section: Int) {
         collectionView.layoutIfNeeded()
+        guard section < collectionView.numberOfSections else { return }
         let indexPath = IndexPath(row: 0, section: section)
         if let attributes =  collectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.elementKindSectionHeader, at: indexPath) {
             let topOfHeader = CGPoint(x: 0, y: attributes.frame.origin.y - collectionView.contentInset.top)

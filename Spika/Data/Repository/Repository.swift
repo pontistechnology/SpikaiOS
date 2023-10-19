@@ -159,6 +159,10 @@ protocol Repository {
     func getAccessToken() -> String?
     func getMyDeviceId() -> String?
     
+        // Reactions
+    func getEmojis() -> [[Emoji]]
+    func addToRecentEmojis(emoji: Emoji)
+    
     // MARK: - FILES
     func saveDataToFile(_ data: Data, name: String) -> URL?
     func copyFile(from fromURL: URL, name: String) -> URL?

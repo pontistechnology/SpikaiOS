@@ -39,20 +39,16 @@ extension IconAndLabelView: BaseView {
             iconImageView.image = nil
         case .image:
             textLabel.text = "Photo message"
-            iconImageView.image = .init(safeImage: .photoIcon)
         case .video:
             textLabel.text = "Video message"
-            iconImageView.image = .init(safeImage: .videoIcon)
         case .audio:
             textLabel.text = "Audio message"
-            iconImageView.image = .init(safeImage: .micIcon)
         case .file:
             textLabel.text = "File message"
-            iconImageView.image = .init(safeImage: .unknownFileThumbnail)
         default:
             textLabel.text = "Unknown message"
-            iconImageView.image = .imageFor(mimeType: "unknown")
         }
+        iconImageView.image = messageType.icon
     }
     
     func positionSubviews() {

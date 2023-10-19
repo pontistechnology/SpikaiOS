@@ -10,8 +10,9 @@ import UIKit
 import Combine
 
 class CustomReactionsViewController: BaseViewController {
-    private lazy var mainView = CustomReactionsView(emojiSections: viewModel.sections)
+    private lazy var mainView = CustomReactionsView(emojiSections: EmojiSection.allCases)
     var viewModel: CustomReactionsViewModel!
+    var actions: [UIAction]?
     
     let selectedEmojiPublisher = PassthroughSubject<String, Never>()
 
@@ -19,6 +20,9 @@ class CustomReactionsViewController: BaseViewController {
         super.viewDidLoad()
         setupView(mainView)
         setupBindings()
+        viewModel.getEmojis()
+        mainView.collectionView.reloadData()
+        view.backgroundColor = .secondaryBackground
     }
     
     func setupBindings() {
@@ -29,6 +33,10 @@ class CustomReactionsViewController: BaseViewController {
             self?.mainView.scrollToSection(index)
             self?.mainView.categoriesView.selectCategory(at: index)
         }.store(in: &subscriptions)
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        longPress.minimumPressDuration = 0.15
+        mainView.collectionView.addGestureRecognizer(longPress)
     }
 }
 
@@ -40,28 +48,32 @@ extension CustomReactionsViewController: UICollectionViewDataSource, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let headerView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionViewHeader.reuseIdentifier, for: indexPath)
-        (headerView as? CollectionViewHeader)?.configureView(title: viewModel.sections[indexPath.section].title)
+        let title = indexPath.section < EmojiSection.allCases.count
+        ? EmojiSection.allCases[indexPath.section].title
+        : "wrong"
+        (headerView as? CollectionViewHeader)?.configureView(title: title)
         return headerView
     }
     
-    
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        viewModel.sections.count
+        viewModel.allEmojis.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.emojiArray.count
+        return viewModel.allEmojis[section].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomReactionCollectionViewCell.reuseIdentifier, for: indexPath)
-        (cell as? CustomReactionCollectionViewCell)?.configureCell(emoji: viewModel.emojiArray[indexPath.row])
+        let emoji = viewModel.allEmojis[indexPath.section][indexPath.row]
+        (cell as? CustomReactionCollectionViewCell)?.configureCell(emoji: "\(emoji.display)")
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedEmojiPublisher.send(viewModel.emojiArray[indexPath.row])
+        let selectedEmoji = viewModel.allEmojis[indexPath.section][indexPath.row]
+        viewModel.addToRecentEmojis(emoji: selectedEmoji)
+        selectedEmojiPublisher.send(selectedEmoji.display)
         dismiss(animated: true)
     }
 }
@@ -93,5 +105,47 @@ extension CustomReactionsViewController: UIScrollViewDelegate {
         guard let index = mainView.collectionView.indexPathsForVisibleItems.first?.section
         else { return }
         mainView.categoriesView.selectCategory(at: index)
+    }
+}
+
+extension CustomReactionsViewController: UIEditMenuInteractionDelegate {
+    func setupVariations(emoji: Emoji) -> Bool {
+        guard let variations = emoji.variationsToShow else {
+            self.actions = nil
+            return false }
+        var options: [UIAction] = []
+        
+        variations.forEach { v in
+            let o = UIAction(title: v) { [weak self] _ in
+                self?.selectedEmojiPublisher.send(v)
+                self?.dismiss(animated: true)
+            }
+            options.append(o)
+        }
+        self.actions = options
+        
+        return true
+    }
+    
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        let collectionView = mainView.collectionView
+        guard sender.state == .began,
+              let indexPath = collectionView.indexPathForItem(at: sender.location(in: collectionView)),
+              let cell = collectionView.cellForItem(at: indexPath)
+        else { return }
+        let emoji = viewModel.allEmojis[indexPath.section][indexPath.row]
+        guard setupVariations(emoji: emoji) else { return }
+        if #available(iOS 16.0, *) {
+            let a = UIEditMenuInteraction(delegate: self)
+            mainView.collectionView.addInteraction(a)
+            a.presentEditMenu(with: UIEditMenuConfiguration(identifier: nil, sourcePoint: sender.location(in: collectionView)))
+        }
+    }
+    
+    @available(iOS 16.0, *)
+    func editMenuInteraction(_ interaction: UIEditMenuInteraction, menuFor configuration: UIEditMenuConfiguration, suggestedActions: [UIMenuElement]) -> UIMenu? {
+        guard let actions else { return nil }
+        let customMenu = UIMenu(title: "", options: .displayInline, children: actions)
+        return UIMenu(children: customMenu.children)
     }
 }

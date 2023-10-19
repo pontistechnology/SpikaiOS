@@ -168,6 +168,7 @@ public extension Constants {
         
         case recent = "Recent"
         case smileysAndPeople = "Smileys and people"
+        case peopleAndBody = "People and body"
         case animalsAndNature = "Animals and nature"
         case foodAndDrink = "Food and drink"
         case activity = "Activity"

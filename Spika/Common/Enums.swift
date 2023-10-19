@@ -209,8 +209,8 @@ enum EmojiSection: CaseIterable {
     case smileysAndPeople
     case animalsAndNature
     case foodAndDrink
-    case activity
     case travelAndPlaces
+    case activity
     case objects
     case symbols
     case flags
@@ -261,3 +261,4 @@ enum EmojiSection: CaseIterable {
         }
     }
 }
+

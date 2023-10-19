@@ -199,4 +199,38 @@ extension AppRepository {
             self?.removeNotificationsWith(roomId: roomId)
         }.store(in: &subs)
     }
+    
+    func getEmojis() -> [[Emoji]] {
+        let path = Bundle.main.path(forResource: "faces", ofType: "json")
+        guard let jsonPath = path, let jsonData = try? Data(contentsOf: URL(fileURLWithPath: jsonPath)) else {
+            return []
+        }
+        var allEmojis: [[Emoji]] = []
+        do {
+            let decodedEmojis = try JSONDecoder().decode([[Emoji]].self, from: jsonData)
+            allEmojis.append(getRecentEmojis())
+            allEmojis = allEmojis + decodedEmojis
+        } catch {
+            print("error decoding emoji json: ",  error)
+        }
+        return allEmojis
+    }
+    
+    func addToRecentEmojis(emoji: Emoji) {
+        var recentEmojis = getRecentEmojis()
+        recentEmojis.removeAll { $0.display == emoji.display }
+        var newList = [emoji] + recentEmojis
+        if newList.count > 14 {
+            newList = Array(newList.prefix(14))
+        }
+        guard let encoded = try? JSONEncoder().encode(newList) else { return }
+        userDefaults.set(encoded, forKey: Constants.Database.recentEmojis)
+    }
+    
+    func getRecentEmojis() -> [Emoji] {
+        guard let data = userDefaults.object(forKey: Constants.Database.recentEmojis) as? Data,
+              let emojis = try? JSONDecoder().decode([Emoji].self, from: data)
+        else { return []}
+        return emojis
+    }
 }

@@ -263,8 +263,6 @@ extension CurrentChatViewController {
         case .camera, .microphone:
             print(state, " in ccVC")
             showUIImagePicker(source: .camera, allowsEdit: false)
-        case .emoji:
-            print("emoji in ccvc")
         case .scrollToReply:
             guard let selectedMessageId = viewModel.selectedMessageToReplyPublisher.value?.id,
                   let indexPath = viewModel.getIndexPathFor(messageId: selectedMessageId)

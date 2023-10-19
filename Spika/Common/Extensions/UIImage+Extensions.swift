@@ -71,6 +71,7 @@ enum AssetName: String {
     // reply view icons
     case contactIcon = "contactIcon"
     case gifIcon = "gifIcon"
+    case docIcon = "docIcon"
     case micIcon = "micIcon"
     case photoIcon = "photoIcon"
     case videoIcon = "videoIcon"
