@@ -46,4 +46,8 @@ extension CustomTextView {
         textContainer.lineFragmentPadding = 0
         dataDetectorTypes = [.link, .phoneNumber]
     }
+    
+    func changeFontSize(to newSize: CGFloat) {
+        font = .customFont(name: fontName, size: newSize)
+    }
 }

@@ -97,9 +97,13 @@ extension Character {
 extension String {
     var isSingleEmoji: Bool {
         return count == 1 && containsEmoji
-      }
-    
-      var containsEmoji: Bool {
+    }
+
+    var containsEmoji: Bool {
         return contains { $0.isEmoji }
-      }
+    }
+    
+    var areOnlyEmojis: Bool {
+        return !contains { !$0.isEmoji}
+    }
 }
