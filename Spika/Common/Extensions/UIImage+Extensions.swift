@@ -71,6 +71,7 @@ enum AssetName: String {
     // reply view icons
     case contactIcon = "contactIcon"
     case gifIcon = "gifIcon"
+    case docIcon = "docIcon"
     case micIcon = "micIcon"
     case photoIcon = "photoIcon"
     case videoIcon = "videoIcon"
@@ -88,6 +89,18 @@ enum AssetName: String {
     case editIcon = "editIcon"
     case checkmark = "checkmark"
     case done = "done"
+    case addCustomReaction = "addCustomReaction"
+    
+    // emoji sections
+    case emojiSectionBall = "emojiSectionBall"
+    case emojiSectionBurger = "emojiSectionBurger"
+    case emojiSectionCar = "emojiSectionCar"
+    case emojiSectionClock = "emojiSectionClock"
+    case emojiSectionFlag = "emojiSectionFlag"
+    case emojiSectionHeart = "emojiSectionHeart"
+    case emojiSectionLightbulb = "emojiSectionLightbulb"
+    case emojiSectionPaw = "emojiSectionPaw"
+    case emojiSectionSmiley = "emojiSectionSmiley"
 }
 
 extension UIImage {    

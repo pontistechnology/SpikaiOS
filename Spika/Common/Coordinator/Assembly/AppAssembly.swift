@@ -11,25 +11,26 @@ import Swinject
 final class AppAssembly: Assembly {
     
     func assemble(container: Container) {
-        self.assembleCoreDataStack(container)
-        self.assemblePublishers(container)
-        self.assembleMainRepository(container)
-        self.assembleSSE(container)
-        self.assembleWindowManager(container)
-        self.assembleHomeViewController(container)
-        self.assembleContactsViewController(container)
-        self.assembleCallHistoryViewController(container)
-        self.assembleAllChatsViewController(container)
-        self.assembleChatDetailsViewController(container)
-        self.assembleSettingsViewController(container)
-        self.assemblePrivacySettingsViewController(container)
-        self.assembleAppereanceSettingsViewController(container)
-        self.assembleBlockedUsersSettingsViewController(container)
-        self.assembleImageViewerViewController(container)
-        self.assemblePdfViewerViewController(container)
-        self.assembleUserSelectionViewController(container)
-        self.assembleMessageActionsViewController(container)
-        self.assembleMessageDetailsViewController(container)
+        assembleCoreDataStack(container)
+        assemblePublishers(container)
+        assembleMainRepository(container)
+        assembleSSE(container)
+        assembleWindowManager(container)
+        assembleHomeViewController(container)
+        assembleContactsViewController(container)
+        assembleCallHistoryViewController(container)
+        assembleAllChatsViewController(container)
+        assembleChatDetailsViewController(container)
+        assembleSettingsViewController(container)
+        assemblePrivacySettingsViewController(container)
+        assembleAppereanceSettingsViewController(container)
+        assembleBlockedUsersSettingsViewController(container)
+        assembleImageViewerViewController(container)
+        assemblePdfViewerViewController(container)
+        assembleUserSelectionViewController(container)
+        assembleMessageActionsViewController(container)
+        assembleMessageDetailsViewController(container)
+        assembleCustomReactionsViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
@@ -276,6 +277,18 @@ final class AppAssembly: Assembly {
             let controller = MessageDetailsViewController()
             controller.viewModel = viewModel
             return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleCustomReactionsViewController(_ container: Container) {
+        container.register(CustomReactionsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            let viewModel = CustomReactionsViewModel(repository: repository, coordinator: coordinator)
+            return viewModel
+        }.inObjectScope(.transient)
+        
+        container.register(CustomReactionsViewController.self) { (resolver, coordinator: AppCoordinator) in
+            return CustomReactionsViewController(viewModel: container.resolve(CustomReactionsViewModel.self, argument: coordinator)!)
         }.inObjectScope(.transient)
     }
 }

@@ -13,7 +13,7 @@ class InputTextAndControlsView: UIStackView {
     private let sendButton = CustomButton(assetName: .send)
     private let cameraButton = CustomButton(assetName: .camera)
     private let microphoneButton = CustomButton(assetName: .microphone)
-    private let emojiButton = CustomButton(assetName: .smile)
+//    private let emojiButton = CustomButton(assetName: .smile)
     private let closeEditModeButton = CustomButton(assetName: .close)
     private let saveButton = CustomButton(text: "Save", textSize: 16, textColor: .primaryColor, fontName: .MontserratBold)
     private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .textPrimary)
@@ -43,7 +43,7 @@ extension InputTextAndControlsView: BaseView {
         addArrangedSubview(plusButton)
         addArrangedSubview(closeEditModeButton)
         addArrangedSubview(messageTextView)
-        addArrangedSubview(emojiButton)
+//        addArrangedSubview(emojiButton)
         addArrangedSubview(microphoneButton)
         addArrangedSubview(cameraButton)
         addArrangedSubview(saveButton)
@@ -60,17 +60,17 @@ extension InputTextAndControlsView: BaseView {
     }
     
     func positionSubviews() {
-        alignment = .bottom
+        alignment = .center
         spacing = 10
-        directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 11, bottom: 12, trailing: 11)
+        directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 10, bottom: 12, trailing: 10)
         isLayoutMarginsRelativeArrangement = true
         
-        [plusButton, closeEditModeButton, microphoneButton, cameraButton, sendButton, emojiButton].forEach {
-            $0.constrainWidth(34)
-            $0.constrainHeight(34)
+        [plusButton, closeEditModeButton, microphoneButton, cameraButton, sendButton].forEach {
+            $0.constrainWidth(48)
+            $0.heightAnchor.constraint(equalTo: messageTextView.heightAnchor).isActive = true
         }
         
-        setCustomSpacing(-40, after: messageTextView)
+        setCustomSpacing(0, after: messageTextView)
         setCustomSpacing(0, after: microphoneButton)
         
         editingModeLabel.centerXToSuperview()
@@ -126,9 +126,9 @@ extension InputTextAndControlsView {
             self?.publisher.send(.cancelEditing)
         }.store(in: &subscriptions)
 
-        emojiButton.tap().sink { [weak self] _ in
-            self?.publisher.send(.emoji)
-        }.store(in: &subscriptions)
+//        emojiButton.tap().sink { [weak self] _ in
+//            self?.publisher.send(.emoji)
+//        }.store(in: &subscriptions)
         
         saveButton.tap().sink { [weak self] _ in
             guard let self else { return }

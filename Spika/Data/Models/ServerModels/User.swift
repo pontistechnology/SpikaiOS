@@ -29,7 +29,7 @@ struct User: Codable {
             displayNameResult = displayName ?? "noname"
         }
         
-        return displayNameResult
+        return displayNameResult.trimmingCharacters(in: .whitespaces)
     }
 }
 

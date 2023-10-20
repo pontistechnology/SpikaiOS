@@ -87,6 +87,14 @@ extension CurrentChatViewModel {
         getAppCoordinator()?.presentReactionsSheet(users: users, records: records)
     }
     
+    func showCustomReactionPicker(message: Message) {
+        getAppCoordinator()?.presentCustomReactionPicker()
+            .sink(receiveValue: { [weak self] emoji in
+                guard let id = message.id else { return }
+                self?.sendReaction(reaction: emoji, messageId: id)
+            }).store(in: &subscriptions)
+    }
+    
     // TODO: add indexpath
     func showMessageActions(_ message: Message) {
         guard !message.deleted else { return }
@@ -111,6 +119,8 @@ extension CurrentChatViewModel {
                     self.showDeleteConfirmDialog(message: message)
                 case .edit:
                     self.selectedMessageToEditPublisher.send(message)
+                case .showCustomReactions:
+                    self.showCustomReactionPicker(message: message)
                 default:
                     break
                 }
@@ -305,8 +315,9 @@ extension CurrentChatViewModel {
                 } receiveValue: { [weak self] filea, percent in
                     guard let filea = filea else { return }
                     guard let self else { return }
+                    let fileName = file.mimeType == "image/*" ? file.name?.appending(".jpg") : nil
                     self.repository
-                        .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData, specificFileName: nil)
+                        .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData, specificFileName: fileName)
                         .sink { _ in
                             
                         } receiveValue: { [weak self] fileb, percent in

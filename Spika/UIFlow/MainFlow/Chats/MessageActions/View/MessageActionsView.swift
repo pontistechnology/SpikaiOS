@@ -11,6 +11,7 @@ import UIKit
 class MessageActionsView: UIView {
     let reactionsStackview = CustomStackView(axis: .horizontal, distribution: .fillEqually, alignment: .center)
     let actionsStackview = CustomStackView(axis: .vertical, distribution: .fillEqually)
+    let plusImageView = UIImageView(image: .init(safeImage: .addCustomReaction))
     private let actions: [MessageAction]
     private let reactionsEmojis: [String]
     
@@ -35,6 +36,8 @@ extension MessageActionsView: BaseView {
             let emojiLabel = CustomLabel(text: emoji, textSize: 32, fontName: .MontserratSemiBold, alignment: .center)
             reactionsStackview.addArrangedSubview(emojiLabel)
         }
+        
+        reactionsStackview.addArrangedSubview(plusImageView)
 
         actions.forEach { action in
             let contextMenuAction = ContextMenuActionView(messageAction: action)
@@ -44,10 +47,11 @@ extension MessageActionsView: BaseView {
     
     func styleSubviews() {
         backgroundColor = .secondaryBackground
+        plusImageView.contentMode = .scaleAspectFit
     }
     
     func positionSubviews() {
-        reactionsStackview.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        reactionsStackview.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24))
         reactionsStackview.constrainHeight(80)
         
         actionsStackview.anchor(top: reactionsStackview.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))

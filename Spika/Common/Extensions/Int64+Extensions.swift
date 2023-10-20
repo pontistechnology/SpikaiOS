@@ -8,7 +8,7 @@
 import Foundation
 
 enum DateFormat: String {
-    case HHmm, ddMMyyyyHHmm, ddMM, allChatsTimeFormat, messageDetailsTimeFormat, ddMMyyyy
+    case HHmm, ddMMyyyyHHmm, ddMM, allChatsTimeFormat, messageDetailsTimeFormat, ddMMyyyy, notesTimeFormat
     
     var format: String {
         switch self {
@@ -18,7 +18,7 @@ enum DateFormat: String {
             return "dd.MM.yyyy. HH:mm"
         case .ddMM:
             return "dd.MM."
-        case .allChatsTimeFormat:
+        case .allChatsTimeFormat, .notesTimeFormat:
             return "calculate"
         case .messageDetailsTimeFormat:
             return "dd.MM.yyyy. HH:mm"
@@ -50,6 +50,12 @@ extension Int64 {
             return convertTimestamp(to: .ddMM)
         case .ddMMyyyy:
             return convertTimestamp(to: .ddMMyyyy)
+        case .notesTimeFormat:
+            if self.isToday() {
+                return convertTimestamp(to: .HHmm)
+            } else {
+                return convertTimestamp(to: .ddMMyyyy)
+            }
         }
     }
     

@@ -152,6 +152,7 @@ enum MessageCellTaps {
 
 enum MessageAction {
     case reaction(emoji: String)
+    case showCustomReactions
     case reply
     case forward
     case copy
@@ -162,7 +163,7 @@ enum MessageAction {
     
     var textForLabel: String {
         switch self {
-        case .reaction(_):
+        case .reaction, .showCustomReactions:
             return ""
         case .reply:
             return .getStringFor(.reply)
@@ -183,7 +184,7 @@ enum MessageAction {
     
     var assetNameForIcon: AssetName {
         switch self {
-        case .reaction(_):
+        case .reaction, .showCustomReactions:
             return .unknownFileThumbnail
         case .reply:
             return .replyMessage
@@ -202,3 +203,62 @@ enum MessageAction {
         }
     }
 }
+
+enum EmojiSection: CaseIterable {
+    case recent
+    case smileysAndPeople
+    case animalsAndNature
+    case foodAndDrink
+    case travelAndPlaces
+    case activity
+    case objects
+    case symbols
+    case flags
+    
+    var title: String {
+        switch self {
+        case .recent:
+            return .getStringFor(.recent)
+        case .smileysAndPeople:
+            return .getStringFor(.smileysAndPeople)
+        case .animalsAndNature:
+            return .getStringFor(.animalsAndNature)
+        case .foodAndDrink:
+            return .getStringFor(.foodAndDrink)
+        case .activity:
+            return .getStringFor(.activity)
+        case .travelAndPlaces:
+            return .getStringFor(.travelAndPlaces)
+        case .objects:
+            return .getStringFor(.objects)
+        case .symbols:
+            return .getStringFor(.symbols)
+        case .flags:
+            return .getStringFor(.flags)
+        }
+    }
+    
+    var icon: UIImage {
+        switch self {
+        case .recent:
+            return UIImage(safeImage: .emojiSectionClock)
+        case .smileysAndPeople:
+            return UIImage(safeImage: .emojiSectionSmiley)
+        case .animalsAndNature:
+            return UIImage(safeImage: .emojiSectionPaw)
+        case .foodAndDrink:
+            return UIImage(safeImage: .emojiSectionBurger)
+        case .activity:
+            return UIImage(safeImage: .emojiSectionBall)
+        case .travelAndPlaces:
+            return UIImage(safeImage: .emojiSectionCar)
+        case .objects:
+            return UIImage(safeImage: .emojiSectionLightbulb)
+        case .symbols:
+            return UIImage(safeImage: .emojiSectionHeart)
+        case .flags:
+            return UIImage(safeImage: .emojiSectionFlag)
+        }
+    }
+}
+

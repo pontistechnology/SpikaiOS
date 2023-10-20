@@ -830,6 +830,9 @@
 		930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BD27A9FCE30064BED1 /* UserResponseModel.swift */; };
 		930290C227AC96040064BED1 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C127AC96040064BED1 /* ContactsTableViewCell.swift */; };
 		930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C327ACA2E90064BED1 /* ContactsTableView.swift */; };
+		9304842A2A9CC9E6000DA341 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
+		9304842B2A9CC9E6000DA341 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
+		9304842C2A9CC9E7000DA341 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
 		930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
 		930EE59D27A938B800143B48 /* UploadChunkResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */; };
 		93179C3D28B709B6006F928B /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
@@ -1006,6 +1009,11 @@
 		938D053427D5BF65002E5CE5 /* AppRepository+Rooms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */; };
 		938D053627D5BFF8002E5CE5 /* CreateRoomRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */; };
 		938D053827D5C05F002E5CE5 /* CreateRoomResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053727D5C05F002E5CE5 /* CreateRoomResponseModel.swift */; };
+		939054942AE29B4A00049987 /* Constants+MagicNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939054932AE29B4A00049987 /* Constants+MagicNumbers.swift */; };
+		939054952AE29B4A00049987 /* Constants+MagicNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939054932AE29B4A00049987 /* Constants+MagicNumbers.swift */; };
+		939054962AE29B4A00049987 /* Constants+MagicNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939054932AE29B4A00049987 /* Constants+MagicNumbers.swift */; };
+		939054972AE29B4A00049987 /* Constants+MagicNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939054932AE29B4A00049987 /* Constants+MagicNumbers.swift */; };
+		939054982AE29B4A00049987 /* Constants+MagicNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939054932AE29B4A00049987 /* Constants+MagicNumbers.swift */; };
 		939128EB2935734000A79FBA /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939128EA2935734000A79FBA /* MessageTextView.swift */; };
 		939128ED293575EF00A79FBA /* MessageImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939128EC293575EF00A79FBA /* MessageImageView.swift */; };
 		939128EF2935780200A79FBA /* MessageFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939128EE2935780200A79FBA /* MessageFileView.swift */; };
@@ -1118,6 +1126,15 @@
 		93D0CFA72A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */; };
 		93D0CFA82A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */; };
 		93D4034D29245B5400DC77D3 /* AppRepository+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939B303F2850DC1F00FFA537 /* AppRepository+Sync.swift */; };
+		93D6BFEF2A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFEE2A8262320092DDF5 /* CustomReactionsViewController.swift */; };
+		93D6BFF02A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFEE2A8262320092DDF5 /* CustomReactionsViewController.swift */; };
+		93D6BFF12A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFEE2A8262320092DDF5 /* CustomReactionsViewController.swift */; };
+		93D6BFF32A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF22A8262350092DDF5 /* CustomReactionsViewModel.swift */; };
+		93D6BFF42A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF22A8262350092DDF5 /* CustomReactionsViewModel.swift */; };
+		93D6BFF52A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF22A8262350092DDF5 /* CustomReactionsViewModel.swift */; };
+		93D6BFF72A82623C0092DDF5 /* CustomReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF62A82623C0092DDF5 /* CustomReactionsView.swift */; };
+		93D6BFF82A82623C0092DDF5 /* CustomReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF62A82623C0092DDF5 /* CustomReactionsView.swift */; };
+		93D6BFF92A82623C0092DDF5 /* CustomReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D6BFF62A82623C0092DDF5 /* CustomReactionsView.swift */; };
 		93D7F0882A320ABF0098FDF9 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */; };
 		93D7F0892A320ABF0098FDF9 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */; };
 		93D7F08B2A320B8F0098FDF9 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */; };
@@ -1153,10 +1170,22 @@
 		93EACD072A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
 		93EACD082A0E47AB003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
 		93EACD092A0E47AC003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
+		93EDEF4E2A8912ED009C0F23 /* faces.json in Resources */ = {isa = PBXBuildFile; fileRef = 93EDEF4D2A8912ED009C0F23 /* faces.json */; };
+		93EDEF4F2A8912ED009C0F23 /* faces.json in Resources */ = {isa = PBXBuildFile; fileRef = 93EDEF4D2A8912ED009C0F23 /* faces.json */; };
+		93EDEF502A8912ED009C0F23 /* faces.json in Resources */ = {isa = PBXBuildFile; fileRef = 93EDEF4D2A8912ED009C0F23 /* faces.json */; };
 		93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */; };
 		93F4A89E282DE9C400CEA637 /* MessageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */; };
 		93F4A8A0282DF1B500CEA637 /* MessageDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */; };
 		93FC0DA427FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */; };
+		93FD38322A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD38312A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift */; };
+		93FD38332A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD38312A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift */; };
+		93FD38342A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD38312A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift */; };
+		93FD38372A881EA000FE9C3B /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD38362A881EA000FE9C3B /* CollectionViewHeader.swift */; };
+		93FD38382A881EA000FE9C3B /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD38362A881EA000FE9C3B /* CollectionViewHeader.swift */; };
+		93FD38392A881EA000FE9C3B /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD38362A881EA000FE9C3B /* CollectionViewHeader.swift */; };
+		93FD383B2A882BAD00FE9C3B /* EmojiCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD383A2A882BAD00FE9C3B /* EmojiCategoriesView.swift */; };
+		93FD383C2A882BAD00FE9C3B /* EmojiCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD383A2A882BAD00FE9C3B /* EmojiCategoriesView.swift */; };
+		93FD383D2A882BAD00FE9C3B /* EmojiCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD383A2A882BAD00FE9C3B /* EmojiCategoriesView.swift */; };
 		93FFFE5F296DD50C0058DDB2 /* MessageReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFFE5E296DD50C0058DDB2 /* MessageReactionsView.swift */; };
 		AD81923D271E8AF400D5BE48 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */; };
 		AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
@@ -1485,6 +1514,7 @@
 		938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Rooms.swift"; sourceTree = "<group>"; };
 		938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomRequestModel.swift; sourceTree = "<group>"; };
 		938D053727D5C05F002E5CE5 /* CreateRoomResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomResponseModel.swift; sourceTree = "<group>"; };
+		939054932AE29B4A00049987 /* Constants+MagicNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+MagicNumbers.swift"; sourceTree = "<group>"; };
 		939128EA2935734000A79FBA /* MessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
 		939128EC293575EF00A79FBA /* MessageImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageImageView.swift; sourceTree = "<group>"; };
 		939128EE2935780200A79FBA /* MessageFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFileView.swift; sourceTree = "<group>"; };
@@ -1540,6 +1570,9 @@
 		93CFFA4E293587EB001EBACF /* MessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyView.swift; sourceTree = "<group>"; };
 		93CFFA5029358CCB001EBACF /* IconAndLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconAndLabelView.swift; sourceTree = "<group>"; };
 		93D0CFA42A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Extensions.swift"; sourceTree = "<group>"; };
+		93D6BFEE2A8262320092DDF5 /* CustomReactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomReactionsViewController.swift; sourceTree = "<group>"; };
+		93D6BFF22A8262350092DDF5 /* CustomReactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomReactionsViewModel.swift; sourceTree = "<group>"; };
+		93D6BFF62A82623C0092DDF5 /* CustomReactionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomReactionsView.swift; sourceTree = "<group>"; };
 		93D7F0872A320ABF0098FDF9 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		93D86DB527BA9E5E00F275B0 /* MediaCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionView.swift; sourceTree = "<group>"; };
@@ -1568,10 +1601,14 @@
 		93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAsset+Extensions.swift"; sourceTree = "<group>"; };
 		93E753132A4A8C50000D51D6 /* PdfViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerViewController.swift; sourceTree = "<group>"; };
 		93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMessageRequest.swift; sourceTree = "<group>"; };
+		93EDEF4D2A8912ED009C0F23 /* faces.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = faces.json; sourceTree = "<group>"; };
 		93F4A89B282DE9B900CEA637 /* MessageDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewController.swift; sourceTree = "<group>"; };
 		93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsView.swift; sourceTree = "<group>"; };
 		93F4A89F282DF1B500CEA637 /* MessageDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailTableViewCell.swift; sourceTree = "<group>"; };
 		93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		93FD38312A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomReactionCollectionViewCell.swift; sourceTree = "<group>"; };
+		93FD38362A881EA000FE9C3B /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
+		93FD383A2A882BAD00FE9C3B /* EmojiCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCategoriesView.swift; sourceTree = "<group>"; };
 		93FFFE5E296DD50C0058DDB2 /* MessageReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReactionsView.swift; sourceTree = "<group>"; };
 		AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Messages.swift"; sourceTree = "<group>"; };
 		AD819245272173F500D5BE48 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
@@ -1727,6 +1764,7 @@
 				6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */,
 				6C153BED2948693B00D400A7 /* Constants+Database.swift */,
 				6C153BEF2948696A00D400A7 /* Constants+Strings.swift */,
+				939054932AE29B4A00049987 /* Constants+MagicNumbers.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -2265,6 +2303,26 @@
 			path = Notes;
 			sourceTree = "<group>";
 		};
+		93D6BFE92A8262020092DDF5 /* CustomReactione */ = {
+			isa = PBXGroup;
+			children = (
+				93D6BFFA2A8262400092DDF5 /* View */,
+				93D6BFEE2A8262320092DDF5 /* CustomReactionsViewController.swift */,
+				93D6BFF22A8262350092DDF5 /* CustomReactionsViewModel.swift */,
+			);
+			path = CustomReactione;
+			sourceTree = "<group>";
+		};
+		93D6BFFA2A8262400092DDF5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				93EDEF4D2A8912ED009C0F23 /* faces.json */,
+				93D6BFF62A82623C0092DDF5 /* CustomReactionsView.swift */,
+				93FD383A2A882BAD00FE9C3B /* EmojiCategoriesView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		93D86DBE27BAB47700F275B0 /* UITableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2394,6 +2452,15 @@
 			path = MessageDetails;
 			sourceTree = "<group>";
 		};
+		93FD38352A881E7000FE9C3B /* UICollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				93FD38312A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift */,
+				93FD38362A881EA000FE9C3B /* CollectionViewHeader.swift */,
+			);
+			path = UICollectionViewCells;
+			sourceTree = "<group>";
+		};
 		AD8192412721738500D5BE48 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
@@ -2419,6 +2486,7 @@
 		AD819243272173A300D5BE48 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				93D6BFE92A8262020092DDF5 /* CustomReactione */,
 				9352A56B2977667900E0D90E /* MessageActions */,
 				936D90E5296E2604004C79BE /* Reactions */,
 				931F8ABE295493A200856C09 /* MoreActions */,
@@ -2869,6 +2937,7 @@
 		ADD503E6270DD849009D50CB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				93FD38352A881E7000FE9C3B /* UICollectionViewCells */,
 				935E1398289A5E21009DECAE /* MessageInput */,
 				93D86DBE27BAB47700F275B0 /* UITableViewCells */,
 				930290C327ACA2E90064BED1 /* ContactsTableView.swift */,
@@ -3137,9 +3206,9 @@
 				ADD503AA270DC3C7009D50CB /* Sources */,
 				ADD503AB270DC3C7009D50CB /* Frameworks */,
 				ADD503AC270DC3C7009D50CB /* Resources */,
-				EAA6A3A127CCF88C00B7E01F /* ShellScript */,
 				931941702819CB510067566C /* Embed App Extensions */,
 				41EC19FB562B4882A9B17E35 /* [CP] Embed Pods Frameworks */,
+				EAA6A3A127CCF88C00B7E01F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3208,6 +3277,7 @@
 				6C78B8B129AF5ADB004BF881 /* Montserrat-Light.ttf in Resources */,
 				6C78B8B229AF5ADB004BF881 /* Montserrat-Regular.ttf in Resources */,
 				6C78B8B329AF5ADB004BF881 /* Localizable.strings in Resources */,
+				93EDEF4F2A8912ED009C0F23 /* faces.json in Resources */,
 				6C78B92029AF6468004BF881 /* GoogleService-Info.plist in Resources */,
 				6C78B8B429AF5ADB004BF881 /* InfoPlist.strings in Resources */,
 				9300D9DB2A4C58DC00B7B695 /* Assets.xcassets in Resources */,
@@ -3238,6 +3308,7 @@
 				6C34D9322A45BFB10009A449 /* GoogleService-Info.plist in Resources */,
 				6CF649B02A459FE100E0DE0B /* Montserrat-Light.ttf in Resources */,
 				6CF649B12A459FE100E0DE0B /* Montserrat-Regular.ttf in Resources */,
+				93EDEF502A8912ED009C0F23 /* faces.json in Resources */,
 				6CF649B22A459FE100E0DE0B /* Localizable.strings in Resources */,
 				9300D9D42A4C57E800B7B695 /* Shared Assets.xcassets in Resources */,
 				6CF649B42A459FE100E0DE0B /* InfoPlist.strings in Resources */,
@@ -3268,6 +3339,7 @@
 				EAA6A39F27CCF30C00B7E01F /* GoogleService-Info.plist in Resources */,
 				AD8192842722D5AF00D5BE48 /* Montserrat-Light.ttf in Resources */,
 				AD81927E2722D5AF00D5BE48 /* Montserrat-Regular.ttf in Resources */,
+				93EDEF4E2A8912ED009C0F23 /* faces.json in Resources */,
 				6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */,
 				9300D9D22A4C57E600B7B695 /* Shared Assets.xcassets in Resources */,
 				6C8FF1C32949D27000955592 /* InfoPlist.strings in Resources */,
@@ -3540,10 +3612,11 @@
 				6C753DCE2A4C128800697AA6 /* SeenResponseModel.swift in Sources */,
 				6C753DCF2A4C128800697AA6 /* TelephoneNumber.swift in Sources */,
 				6C753DD02A4C128800697AA6 /* CreateRoomRequestModel.swift in Sources */,
-				6C753DD12A4C128800697AA6 /* CreateRoomResponseModel.swift in Sources */,
 				6C753DD22A4C128800697AA6 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
+				6C753DD12A4C128800697AA6 /* CreateRoomResponseModel.swift in Sources */,
 				93BCDFF22A819AAE00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6C753DD32A4C128800697AA6 /* CoreDatabase.xcdatamodeld in Sources */,
+				9304842C2A9CC9E7000DA341 /* UIImage+Extensions.swift in Sources */,
 				6C753DD42A4C128800697AA6 /* RoomEntity+CoreDataClass.swift in Sources */,
 				6C753DD52A4C128800697AA6 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6C753DD62A4C128800697AA6 /* BlockModel.swift in Sources */,
@@ -3580,6 +3653,7 @@
 				6C78B79D29AF5ADB004BF881 /* FavoritesViewModel.swift in Sources */,
 				93C8A45C2A81126E005E23DD /* AppRepository+Notes.swift in Sources */,
 				6C78B79E29AF5ADB004BF881 /* MediaCollectionView.swift in Sources */,
+				93D6BFF02A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */,
 				6C78B7A029AF5ADB004BF881 /* UploadChunkRequestModel.swift in Sources */,
 				6C78B7A129AF5ADB004BF881 /* VideoCallViewModel.swift in Sources */,
 				6C78B7A229AF5ADB004BF881 /* AVURLAsset+Extensions.swift in Sources */,
@@ -3600,6 +3674,7 @@
 				6C78B7B029AF5ADB004BF881 /* AppRepository+BlockedUsers.swift in Sources */,
 				6C78B7B129AF5ADB004BF881 /* UserSelectionViewController.swift in Sources */,
 				6C78B7B229AF5ADB004BF881 /* ActionButton.swift in Sources */,
+				93FD38382A881EA000FE9C3B /* CollectionViewHeader.swift in Sources */,
 				93A14D742A5FDCBC00A557CB /* TermsAndConditionViewController.swift in Sources */,
 				938B56A02A5381960036440E /* RoundedLabel.swift in Sources */,
 				934F821E2A5C800C006F787C /* DeleteAccountResponseModel.swift in Sources */,
@@ -3679,6 +3754,7 @@
 				6C78B7FB29AF5ADB004BF881 /* MessageTextView.swift in Sources */,
 				939549F52A4B8133006B6139 /* AllChatsSearchedMessageCell.swift in Sources */,
 				93BCDFEC2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
+				93FD383C2A882BAD00FE9C3B /* EmojiCategoriesView.swift in Sources */,
 				6C78B7FD29AF5ADB004BF881 /* CoreDatabase.xcdatamodeld in Sources */,
 				6C78B7FE29AF5ADB004BF881 /* AuthResponseModel.swift in Sources */,
 				6C78B7FF29AF5ADB004BF881 /* MessageAudioView.swift in Sources */,
@@ -3737,6 +3813,7 @@
 				6C78B82F29AF5ADB004BF881 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				9383879729D596E40057714A /* MessageDetailsViewModel.swift in Sources */,
 				6C78B83029AF5ADB004BF881 /* AllNotesViewController.swift in Sources */,
+				93FD38332A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift in Sources */,
 				6C78B83229AF5ADB004BF881 /* CountryPickerViewModel.swift in Sources */,
 				6C78B83329AF5ADB004BF881 /* DetailsViewModel.swift in Sources */,
 				6C78B83429AF5ADB004BF881 /* Coordinator.swift in Sources */,
@@ -3745,6 +3822,7 @@
 				6C78B83729AF5ADB004BF881 /* EnterUsernameView.swift in Sources */,
 				6C78B83829AF5ADB004BF881 /* Int64+Extensions.swift in Sources */,
 				6C78B83A29AF5ADB004BF881 /* UIFont+Extensions.swift in Sources */,
+				93D6BFF82A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				6C78B83C29AF5ADB004BF881 /* NewGroupChatViewController.swift in Sources */,
 				6C78B83D29AF5ADB004BF881 /* ChatSearchViewModel.swift in Sources */,
 				6C78B83F29AF5ADB004BF881 /* Message+Extensions.swift in Sources */,
@@ -3825,6 +3903,7 @@
 				6C78B88629AF5ADB004BF881 /* PopUpViewController.swift in Sources */,
 				6C78B88729AF5ADB004BF881 /* CustomTableViewHeader.swift in Sources */,
 				6C78B88829AF5ADB004BF881 /* Repository.swift in Sources */,
+				939054962AE29B4A00049987 /* Constants+MagicNumbers.swift in Sources */,
 				93A14D782A5FDCC000A557CB /* TermsAndConditionViewModel.swift in Sources */,
 				6C78B88929AF5ADB004BF881 /* CountryPickerView.swift in Sources */,
 				6C78B88A29AF5ADB004BF881 /* PrivacySettingsViewController.swift in Sources */,
@@ -3853,6 +3932,7 @@
 				6C78B89C29AF5ADB004BF881 /* AppRepository+User.swift in Sources */,
 				6C78B89E29AF5ADB004BF881 /* CoreDataStack.swift in Sources */,
 				6C78B89F29AF5ADB004BF881 /* DeliveredResponseModel.swift in Sources */,
+				93D6BFF32A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */,
 				934F6DE429E694670010FED9 /* AppRepository+Device.swift in Sources */,
 				93C8A4662A8116E8005E23DD /* NoteTableViewCell.swift in Sources */,
 				6C78B8A029AF5ADB004BF881 /* TabBarItemView.swift in Sources */,
@@ -3918,6 +3998,7 @@
 				6C78B8E529AF5D89004BF881 /* Room.swift in Sources */,
 				6C78B8E629AF5D89004BF881 /* AuthResponseModel.swift in Sources */,
 				6C78B8E729AF5D89004BF881 /* MessageRecord.swift in Sources */,
+				939054972AE29B4A00049987 /* Constants+MagicNumbers.swift in Sources */,
 				6C78B8E829AF5D89004BF881 /* UserRequestModel.swift in Sources */,
 				6C78B8E929AF5D89004BF881 /* FetchedContact.swift in Sources */,
 				6C2F972929AF67BD001F170B /* ConstantsDev.swift in Sources */,
@@ -3953,6 +4034,7 @@
 				6C78B90829AF5D89004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				93BCDFF32A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6C78B90929AF5D89004BF881 /* CoreDatabase.xcdatamodeld in Sources */,
+				9304842B2A9CC9E6000DA341 /* UIImage+Extensions.swift in Sources */,
 				6C78B90A29AF5D89004BF881 /* RoomEntity+CoreDataClass.swift in Sources */,
 				6C78B90C29AF5D89004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6C78B90D29AF5D89004BF881 /* BlockModel.swift in Sources */,
@@ -3989,6 +4071,7 @@
 				6CF6489A2A459FE100E0DE0B /* FavoritesViewModel.swift in Sources */,
 				93C8A45D2A81126E005E23DD /* AppRepository+Notes.swift in Sources */,
 				6CF6489B2A459FE100E0DE0B /* MediaCollectionView.swift in Sources */,
+				93D6BFF12A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */,
 				6CF6489C2A459FE100E0DE0B /* UploadChunkRequestModel.swift in Sources */,
 				6CF6489D2A459FE100E0DE0B /* VideoCallViewModel.swift in Sources */,
 				6CF6489E2A459FE100E0DE0B /* AVURLAsset+Extensions.swift in Sources */,
@@ -4009,6 +4092,7 @@
 				6CF648AC2A459FE100E0DE0B /* Room.swift in Sources */,
 				9300D9CE2A4C540900B7B695 /* PdfViewerViewController.swift in Sources */,
 				6CF648AD2A459FE100E0DE0B /* AppRepository+BlockedUsers.swift in Sources */,
+				93FD38392A881EA000FE9C3B /* CollectionViewHeader.swift in Sources */,
 				93A14D752A5FDCBC00A557CB /* TermsAndConditionViewController.swift in Sources */,
 				938B56A12A5381960036440E /* RoundedLabel.swift in Sources */,
 				934F821F2A5C800C006F787C /* DeleteAccountResponseModel.swift in Sources */,
@@ -4088,6 +4172,7 @@
 				6CF648F42A459FE100E0DE0B /* SearchBar.swift in Sources */,
 				938B56992A52EEAC0036440E /* AllChatsSearchedMessageCell.swift in Sources */,
 				93BCDFED2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
+				93FD383D2A882BAD00FE9C3B /* EmojiCategoriesView.swift in Sources */,
 				6CF648F52A459FE100E0DE0B /* MessageTextView.swift in Sources */,
 				6CF648F62A459FE100E0DE0B /* CoreDatabase.xcdatamodeld in Sources */,
 				6CF648F72A459FE100E0DE0B /* AuthResponseModel.swift in Sources */,
@@ -4146,6 +4231,7 @@
 				6CF649292A459FE100E0DE0B /* CurrentChatViewModel.swift in Sources */,
 				6CF6492A2A459FE100E0DE0B /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				6CF6492B2A459FE100E0DE0B /* MessageDetailsViewModel.swift in Sources */,
+				93FD38342A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift in Sources */,
 				6CF6492C2A459FE100E0DE0B /* AllNotesViewController.swift in Sources */,
 				6CF6492D2A459FE100E0DE0B /* CountryPickerViewModel.swift in Sources */,
 				6CF6492E2A459FE100E0DE0B /* DetailsViewModel.swift in Sources */,
@@ -4154,6 +4240,7 @@
 				6CF649312A459FE100E0DE0B /* EnterUsernameViewController.swift in Sources */,
 				6CF649322A459FE100E0DE0B /* EnterUsernameView.swift in Sources */,
 				6CF649332A459FE100E0DE0B /* Int64+Extensions.swift in Sources */,
+				93D6BFF92A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				6CF649342A459FE100E0DE0B /* UIFont+Extensions.swift in Sources */,
 				6CF649352A459FE100E0DE0B /* NewGroupChatViewController.swift in Sources */,
 				6CF649362A459FE100E0DE0B /* ChatSearchViewModel.swift in Sources */,
@@ -4234,6 +4321,7 @@
 				6CF649802A459FE100E0DE0B /* PopUpViewController.swift in Sources */,
 				6CF649812A459FE100E0DE0B /* CustomTableViewHeader.swift in Sources */,
 				6CF649822A459FE100E0DE0B /* Repository.swift in Sources */,
+				939054982AE29B4A00049987 /* Constants+MagicNumbers.swift in Sources */,
 				93A14D792A5FDCC000A557CB /* TermsAndConditionViewModel.swift in Sources */,
 				6CF649832A459FE100E0DE0B /* CountryPickerView.swift in Sources */,
 				6CF649842A459FE100E0DE0B /* PrivacySettingsViewController.swift in Sources */,
@@ -4262,6 +4350,7 @@
 				6CF6499B2A459FE100E0DE0B /* AppRepository+User.swift in Sources */,
 				6CF6499C2A459FE100E0DE0B /* CoreDataStack.swift in Sources */,
 				6CF6499D2A459FE100E0DE0B /* DeliveredResponseModel.swift in Sources */,
+				93D6BFF42A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */,
 				6CF6499E2A459FE100E0DE0B /* AppRepository+Device.swift in Sources */,
 				93C8A4672A8116E8005E23DD /* NoteTableViewCell.swift in Sources */,
 				6CF6499F2A459FE100E0DE0B /* TabBarItemView.swift in Sources */,
@@ -4327,6 +4416,7 @@
 				939AAE3D28F62F6600DD5142 /* Room.swift in Sources */,
 				931B150428211AC600A0CD35 /* AuthResponseModel.swift in Sources */,
 				939AAE4328F6308100DD5142 /* MessageRecord.swift in Sources */,
+				939054952AE29B4A00049987 /* Constants+MagicNumbers.swift in Sources */,
 				931B14F328211AC100A0CD35 /* UserRequestModel.swift in Sources */,
 				EA9B662228227CB70009228C /* FetchedContact.swift in Sources */,
 				931B14DD2821182D00A0CD35 /* DatabaseService.swift in Sources */,
@@ -4362,6 +4452,7 @@
 				934F036E282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				93BCDFF42A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */,
+				9304842A2A9CC9E6000DA341 /* UIImage+Extensions.swift in Sources */,
 				931B150E28211ACB00A0CD35 /* RoomEntity+CoreDataClass.swift in Sources */,
 				93711DFC28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6C056C7929700D9E00198EC1 /* BlockModel.swift in Sources */,
@@ -4398,6 +4489,7 @@
 				933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */,
 				93C8A45B2A81126E005E23DD /* AppRepository+Notes.swift in Sources */,
 				93D86DB627BA9E5E00F275B0 /* MediaCollectionView.swift in Sources */,
+				93D6BFEF2A8262320092DDF5 /* CustomReactionsViewController.swift in Sources */,
 				930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */,
 				93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */,
 				937FBE6928B5309E00C3A888 /* AVURLAsset+Extensions.swift in Sources */,
@@ -4418,6 +4510,7 @@
 				6CBD43A52982801D00A1059E /* AppRepository+BlockedUsers.swift in Sources */,
 				6C2497DF2924FB3000594A55 /* UserSelectionViewController.swift in Sources */,
 				AD9A68182739084A00BDC439 /* ActionButton.swift in Sources */,
+				93FD38372A881EA000FE9C3B /* CollectionViewHeader.swift in Sources */,
 				93A14D732A5FDCBC00A557CB /* TermsAndConditionViewController.swift in Sources */,
 				938B569F2A5381960036440E /* RoundedLabel.swift in Sources */,
 				934F821D2A5C800C006F787C /* DeleteAccountResponseModel.swift in Sources */,
@@ -4497,6 +4590,7 @@
 				AD9E38FD2725B2D900DC5D43 /* SearchBar.swift in Sources */,
 				939549F42A4B8133006B6139 /* AllChatsSearchedMessageCell.swift in Sources */,
 				93BCDFEB2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
+				93FD383B2A882BAD00FE9C3B /* EmojiCategoriesView.swift in Sources */,
 				939128EB2935734000A79FBA /* MessageTextView.swift in Sources */,
 				ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */,
 				AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */,
@@ -4555,6 +4649,7 @@
 				938D052E27D59D83002E5CE5 /* NewGroupChatView.swift in Sources */,
 				93E4F6FE27C4688C00432CFA /* CurrentChatViewModel.swift in Sources */,
 				9383879529D596E40057714A /* MessageDetailsViewModel.swift in Sources */,
+				93FD38322A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift in Sources */,
 				93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				933BE87727B6796B0099BA9E /* AllNotesViewController.swift in Sources */,
 				AD9BFD39272AB31300736318 /* CountryPickerViewModel.swift in Sources */,
@@ -4563,6 +4658,7 @@
 				93D9930B2992AB7F0038565F /* AppereanceSettingsViewController.swift in Sources */,
 				93708E14279F871400F81095 /* EnterUsernameViewController.swift in Sources */,
 				93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */,
+				93D6BFF72A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				93C714A12815F888008BBA33 /* Int64+Extensions.swift in Sources */,
 				932462D828FCB9B100E8C1B9 /* UIFont+Extensions.swift in Sources */,
 				938D053027D59DC1002E5CE5 /* NewGroupChatViewController.swift in Sources */,
@@ -4643,6 +4739,7 @@
 				93D86DBC27BAA17E00F275B0 /* LinksTableView.swift in Sources */,
 				937055D729148A270052EC77 /* PopUpViewController.swift in Sources */,
 				6C2638952907DB4400E7E79E /* CustomTableViewHeader.swift in Sources */,
+				939054942AE29B4A00049987 /* Constants+MagicNumbers.swift in Sources */,
 				93A14D772A5FDCC000A557CB /* TermsAndConditionViewModel.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
 				AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */,
@@ -4671,6 +4768,7 @@
 				6CD1915A29A35E2300A8041A /* ChatBlockingView.swift in Sources */,
 				ADD5041A27174B82009D50CB /* AppRepository+User.swift in Sources */,
 				9355BEDA28056D1A00B9EC85 /* CoreDataStack.swift in Sources */,
+				93D6BFF52A8262350092DDF5 /* CustomReactionsViewModel.swift in Sources */,
 				931B15182821295600A0CD35 /* DeliveredResponseModel.swift in Sources */,
 				93C8A4652A8116E8005E23DD /* NoteTableViewCell.swift in Sources */,
 				6C65B552291BD1B8007C5B92 /* TabBarItemView.swift in Sources */,
@@ -5069,7 +5167,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 83;
+				APP_BUILD_VERSION = 91;
 				APP_VERSION = 1.2.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -5137,7 +5235,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 83;
+				APP_BUILD_VERSION = 91;
 				APP_VERSION = 1.2.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;

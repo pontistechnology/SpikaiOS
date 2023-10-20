@@ -32,7 +32,7 @@ enum MessageRecordType: String, Codable {
 // TODO: - move structs
 struct SelectedFile {
     let fileType: MessageType
-    let name: String?
+    var name: String?
     let fileUrl: URL
     let thumbUrl: URL?
     let thumbMetadata: MetaData?
@@ -78,3 +78,35 @@ enum WarningOrResult<Success> {
     case warning(String)
     case result(Success)
 }
+
+struct Emoji: Codable {
+    let hexCodes: [Int]
+    let desc: String
+    let variations: [[Int]]
+    
+    var display: String {
+        return combineScalars(hexCodes: hexCodes)
+    }
+    
+    var variationsToShow: [String]? {
+        guard !variations.isEmpty else { return nil }
+        var aa: [String] = []
+        variations.forEach { variation in
+            aa.append(combineScalars(hexCodes: variation))
+        }
+        return aa
+    }
+    
+    func combineScalars(hexCodes: [Int]) -> String {
+        var myString = ""
+        for hexCode in hexCodes {
+            guard let scalar = UnicodeScalar(hexCode) else { return "" }
+            myString = myString + String(scalar)
+        }
+        return myString
+    }
+}
+
+
+
+

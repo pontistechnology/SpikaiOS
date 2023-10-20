@@ -13,7 +13,7 @@ enum MessageInputViewButtonAction {
     case send(message: String)
     case camera
     case microphone
-    case emoji
+//    case emoji
     case scrollToReply
     case plus
     case save(input: String)

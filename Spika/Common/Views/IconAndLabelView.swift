@@ -38,21 +38,17 @@ extension IconAndLabelView: BaseView {
             textLabel.numberOfLines = 3
             iconImageView.image = nil
         case .image:
-            textLabel.text = "Photo message"
-            iconImageView.image = .init(safeImage: .photoIcon)
+            textLabel.text = .getStringFor(.photoMessage)
         case .video:
-            textLabel.text = "Video message"
-            iconImageView.image = .init(safeImage: .videoIcon)
+            textLabel.text = .getStringFor(.videoMessage)
         case .audio:
-            textLabel.text = "Audio message"
-            iconImageView.image = .init(safeImage: .micIcon)
+            textLabel.text = .getStringFor(.audioMessage)
         case .file:
-            textLabel.text = "File message"
-            iconImageView.image = .init(safeImage: .unknownFileThumbnail)
+            textLabel.text = .getStringFor(.fileMessage)
         default:
-            textLabel.text = "Unknown message"
-            iconImageView.image = .imageFor(mimeType: "unknown")
+            textLabel.text = .getStringFor(.unknownMessage)
         }
+        iconImageView.image = messageType.icon
     }
     
     func positionSubviews() {

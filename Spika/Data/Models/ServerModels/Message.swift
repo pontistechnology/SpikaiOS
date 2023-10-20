@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Message: Codable {
     let createdAt: Int64
@@ -82,15 +83,15 @@ extension Message {
         case .text:
             return body?.text ?? " "
         case .image:
-            return "[Photo message]"
+            return "Photo"
         case .video:
-            return "[Video message]"
+            return "Video"
         case .file:
-            return "[File message]"
+            return "File"
         case .audio:
-            return "[Audio message]"
+            return "Audio"
         case .unknown:
-            return "[Unknown message]"
+            return "Unknown"
         }
     }
 }
@@ -112,6 +113,23 @@ enum MessageType: String, Codable {
     
     public init(from decoder: Decoder) throws {
         self = try MessageType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
+    }
+    
+    var icon: UIImage? {
+        switch self {
+        case .text:
+            return nil
+        case .image:
+            return UIImage(safeImage: .photoIcon)
+        case .video:
+            return UIImage(safeImage: .videoIcon)
+        case .file:
+            return UIImage(safeImage: .docIcon)
+        case .audio:
+            return UIImage(safeImage: .micIcon)
+        case .unknown:
+            return UIImage(safeImage: .unknownFileThumbnail)
+        }
     }
 }
 
