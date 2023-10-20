@@ -288,10 +288,7 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.transient)
         
         container.register(CustomReactionsViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let viewModel = container.resolve(CustomReactionsViewModel.self, argument: coordinator)!
-            let controller = CustomReactionsViewController()
-            controller.viewModel = viewModel
-            return controller
+            return CustomReactionsViewController(viewModel: container.resolve(CustomReactionsViewModel.self, argument: coordinator)!)
         }.inObjectScope(.transient)
     }
 }

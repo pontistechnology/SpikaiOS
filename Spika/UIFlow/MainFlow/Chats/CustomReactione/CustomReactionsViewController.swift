@@ -11,11 +11,20 @@ import Combine
 
 class CustomReactionsViewController: BaseViewController {
     private lazy var mainView = CustomReactionsView(emojiSections: EmojiSection.allCases)
-    var viewModel: CustomReactionsViewModel!
+    var viewModel: CustomReactionsViewModel
     var actions: [UIAction]?
     
     let selectedEmojiPublisher = PassthroughSubject<String, Never>()
-
+    
+    init(viewModel: CustomReactionsViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(mainView)
