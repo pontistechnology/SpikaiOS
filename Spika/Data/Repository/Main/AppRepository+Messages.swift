@@ -220,8 +220,8 @@ extension AppRepository {
         var recentEmojis = getRecentEmojis()
         recentEmojis.removeAll { $0.display == emoji.display }
         var newList = [emoji] + recentEmojis
-        if newList.count > 14 {
-            newList = Array(newList.prefix(14))
+        if newList.count > Constants.MagicNumbers.maxNumberOfRecentEmojis {
+            newList = Array(newList.prefix(Constants.MagicNumbers.maxNumberOfRecentEmojis))
         }
         guard let encoded = try? JSONEncoder().encode(newList) else { return }
         userDefaults.set(encoded, forKey: Constants.Database.recentEmojis)

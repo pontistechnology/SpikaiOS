@@ -27,7 +27,7 @@ class CustomReactionsView: UIView {
     }
     
     var calculatedSpacing: CGFloat {
-        let numberOfCellsInOneRow: CGFloat = 7 // change this only
+        let numberOfCellsInOneRow = CGFloat(Constants.MagicNumbers.numberOfCustomEmojisInOneRow)
         return (collectionView.frame.width - numberOfCellsInOneRow * CustomReactionCollectionViewCell.widthOrHeight) / (numberOfCellsInOneRow - 1)
     }
 }
