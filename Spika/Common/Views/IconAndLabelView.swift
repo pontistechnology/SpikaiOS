@@ -38,15 +38,15 @@ extension IconAndLabelView: BaseView {
             textLabel.numberOfLines = 3
             iconImageView.image = nil
         case .image:
-            textLabel.text = "Photo message"
+            textLabel.text = .getStringFor(.photoMessage)
         case .video:
-            textLabel.text = "Video message"
+            textLabel.text = .getStringFor(.videoMessage)
         case .audio:
-            textLabel.text = "Audio message"
+            textLabel.text = .getStringFor(.audioMessage)
         case .file:
-            textLabel.text = "File message"
+            textLabel.text = .getStringFor(.fileMessage)
         default:
-            textLabel.text = "Unknown message"
+            textLabel.text = .getStringFor(.unknownMessage)
         }
         iconImageView.image = messageType.icon
     }

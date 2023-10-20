@@ -126,5 +126,13 @@
 "Objects" = "Objects";
 "Symbols" = "Symbols";
 "Flags" = "Flags";
+"Unknown section" = "Unknown section";
 
-
+"Me" = "Me";
+"(No messages)" = "(No messages)";
+"You: " = "You: ";
+"Photo message" = "Photo message";
+"Video message" = "Video message";
+"Audio message" = "Audio message";
+"File message" = "File message";
+"Unknown message" = "Unknown message";

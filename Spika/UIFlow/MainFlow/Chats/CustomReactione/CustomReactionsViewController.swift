@@ -59,7 +59,7 @@ extension CustomReactionsViewController: UICollectionViewDataSource, UICollectio
         let headerView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionViewHeader.reuseIdentifier, for: indexPath)
         let title = indexPath.section < EmojiSection.allCases.count
         ? EmojiSection.allCases[indexPath.section].title
-        : "wrong"
+        : .getStringFor(.unknownSection)
         (headerView as? CollectionViewHeader)?.configureView(title: title)
         return headerView
     }
@@ -124,23 +124,21 @@ extension CustomReactionsViewController: UIEditMenuInteractionDelegate {
             return false }
         var options: [UIAction] = []
         
-        variations.forEach { v in
-            let o = UIAction(title: v) { [weak self] _ in
-                self?.selectedEmojiPublisher.send(v)
+        variations.forEach { variation in
+            let option = UIAction(title: variation) { [weak self] _ in
+                self?.selectedEmojiPublisher.send(variation)
                 self?.dismiss(animated: true)
             }
-            options.append(o)
+            options.append(option)
         }
         self.actions = options
-        
         return true
     }
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         let collectionView = mainView.collectionView
         guard sender.state == .began,
-              let indexPath = collectionView.indexPathForItem(at: sender.location(in: collectionView)),
-              let cell = collectionView.cellForItem(at: indexPath)
+              let indexPath = collectionView.indexPathForItem(at: sender.location(in: collectionView))
         else { return }
         let emoji = viewModel.allEmojis[indexPath.section][indexPath.row]
         guard setupVariations(emoji: emoji) else { return }
