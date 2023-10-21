@@ -106,7 +106,3 @@ struct Emoji: Codable {
         return myString
     }
 }
-
-
-
-

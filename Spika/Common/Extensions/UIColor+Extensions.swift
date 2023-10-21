@@ -7,47 +7,32 @@
 
 import UIKit
 
-public extension UIColor {
-    static func safeColor(named name: String) -> UIColor {
-        return UIColor(named: name) ?? .clear
-    }
+extension ColorResource {
+    var uiColor: UIColor { UIColor(resource: self) }
 }
 
 extension UIColor {
+    private static func spikaColors() -> SpikaTheme.SpikaColors {
+        let savedString = UserDefaults(suiteName: Constants.Networking.appGroupName)?.string(forKey: Constants.Database.selectedTheme) ?? "none"
+        let selectedTheme: SpikaTheme = SpikaTheme(rawValue: savedString) ?? .nika
+        return selectedTheme.colors()
+    }
     
-    /* Common Individual colors
-        - These are the colors that are defined in the Design as color styles
-        - Sort it like in Assets folder
-    */
+    // MARK: - this is shortcut for use throughout the whole app
+    static let appBlueLight = spikaColors().appBlueLight.uiColor
+    static let appGreen = spikaColors().appGreen.uiColor
+    static let appRed = spikaColors().appRed.uiColor
+    static let appOrange = spikaColors().appOrange.uiColor
+    static let primaryBackground = spikaColors().primaryBackground.uiColor
+    static let borderColor = spikaColors().borderColor.uiColor
+    static let chatBackground = spikaColors().chatBackground.uiColor
+    static let secondaryBackground = spikaColors().secondaryBackground.uiColor
+    static let myChatBackground = spikaColors().myChatBackground.uiColor
+    static let primaryColor = spikaColors().primaryColor.uiColor
+    static let textPrimary = spikaColors().textPrimary.uiColor
+    static let textSecondary = spikaColors().textSecondary.uiColor
+    static let textTertiary = spikaColors().textTertiary.uiColor
     
-    static let appBlueLight = safeColor(named: "appBlueLight")
-    static let appGreen = safeColor(named: "appGreen")
-    static let appRed = safeColor(named: "appRed")
-    static let appOrange = safeColor(named: "appOrange")
-    static let primaryBackground = safeColor(named: "primaryBackground")
-    static let borderColor = safeColor(named: "borderColor")
-    static let chatBackground = safeColor(named: "chatBackground")
-    static let secondaryBackground = safeColor(named: "secondaryBackground")
-    static let myChatBackground = safeColor(named: "myChatBackground")
-    static let primaryColor = safeColor(named: "primaryColor")
-    static let textPrimary = safeColor(named: "textPrimary")
-    static let textSecondary = safeColor(named: "textSecondary")
-    static let textTertiary = safeColor(named: "textTertiary")
-    
-    /* Common Combinations of colors
-        - These colors are combinations of individual colors
-        - They are used for light and dark mode
-        - There are two colors in a color name, the first one is for lightMode and the second one for darkMode
-    */
-    
-//    static let textPrimaryAndWhite = safeColor(named: "textPrimary+white")
-//    static let textTertiaryAndDarkBackground2 = safeColor(named: "textTertiary+darkBackground2")
-//    static let chatBackgroundAndDarkBackground2 = safeColor(named: "chatBackground+darkBackground2")
-//    static let whiteAndDarkBackground = safeColor(named: "white+darkBackground")
-//    static let whiteAndDarkBackground2 = safeColor(named: "white+darkBackground2")
-    
-    // Uncommon colors
-    
-    static let errorRedLight = safeColor(named: "errorRedLight")
-    
+    // FIXME: change this
+    static let errorRedLight = UIColor(named: "errorRedLight")
 }

@@ -364,7 +364,9 @@ extension AppCoordinator {
 
 extension AppCoordinator {
     func changeAppereance(to mode: UIUserInterfaceStyle) {
-        userDefaults.set(mode.rawValue, forKey: Constants.Database.selectedAppereanceMode)
-        getWindowManager().changeAppereance(to: mode)
+        windowScene.windows.first?.subviews.forEach({ view in
+            view.removeFromSuperview()
+            windowScene.windows.first?.addSubview(view)
+        })
     }
 }

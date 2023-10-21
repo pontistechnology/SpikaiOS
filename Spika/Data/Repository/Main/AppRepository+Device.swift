@@ -35,4 +35,10 @@ extension AppRepository {
     func removeNotificationsWith(roomId: Int64) {
         notificationHelpers.removeNotifications(withRoomId: roomId)
     }
+    
+    // MARK: - Themes
+    
+    func saveSelectedTheme(_ theme: String) {
+        userDefaults.set(theme, forKey: Constants.Database.selectedTheme)
+    }
 }

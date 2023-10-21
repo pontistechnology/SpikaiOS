@@ -153,7 +153,6 @@ protocol Repository {
     func saveUserInfo(user: User, device: Device?, telephoneNumber: TelephoneNumber?)
     func getMyUserId() -> Int64
     func getMyTelephoneNumber() -> TelephoneNumber?
-    func getCurrentAppereance() -> Int
 
         // Device
     func getAccessToken() -> String?
@@ -162,6 +161,10 @@ protocol Repository {
         // Reactions
     func getEmojis() -> [[Emoji]]
     func addToRecentEmojis(emoji: Emoji)
+    
+        // Theme
+    func saveSelectedTheme(_ theme: String)
+    func getSelectedTheme() -> String
     
     // MARK: - FILES
     func saveDataToFile(_ data: Data, name: String) -> URL?

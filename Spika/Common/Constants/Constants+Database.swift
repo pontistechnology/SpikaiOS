@@ -23,7 +23,7 @@ public extension Constants {
         static let deviceId = "deviceId"
         static let accessToken = "accessToken"
         static let recentEmojis = "recentEmojis"
-        static let selectedAppereanceMode = "selectedAppereanceMode"
+        static let selectedTheme = "selectedTheme"
         static let displayName = "displayName"
         static let pushToken = "pushToken"
         static let roomsSyncTimestamp = "roomsSyncTimestamp"

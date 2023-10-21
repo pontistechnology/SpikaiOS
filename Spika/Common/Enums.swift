@@ -262,3 +262,71 @@ enum EmojiSection: CaseIterable {
     }
 }
 
+
+enum SpikaTheme: String, CaseIterable {
+    struct SpikaColors {
+        let appBlueLight: ColorResource
+        let appGreen: ColorResource
+        let appRed: ColorResource
+        let appOrange: ColorResource
+        let primaryBackground: ColorResource
+        let borderColor: ColorResource
+        let chatBackground: ColorResource
+        let secondaryBackground: ColorResource
+        let myChatBackground: ColorResource
+        let primaryColor: ColorResource
+        let textPrimary: ColorResource
+        let textSecondary: ColorResource
+        let textTertiary: ColorResource
+    }
+    case nika, neon, lightMarine
+    
+    func colors() -> SpikaColors {
+        switch self {
+        case .nika:
+            SpikaColors(appBlueLight: .appBlueLight,
+                        appGreen: .appGreen,
+                        appRed: .appRed,
+                        appOrange: .appOrange,
+                        primaryBackground: .primaryBackground,
+                        borderColor: .border,
+                        chatBackground: .chatBackground,
+                        secondaryBackground: .secondaryBackground,
+                        myChatBackground: .myChatBackground,
+                        primaryColor: .primary,
+                        textPrimary: .textPrimary,
+                        textSecondary: .textSecondary,
+                        textTertiary: .textSecondary)
+        case .neon, .lightMarine:
+            SpikaColors(appBlueLight: .appRed,
+                        appGreen: .appRed,
+                        appRed: .appRed,
+                        appOrange: .appRed,
+                        primaryBackground: .appRed,
+                        borderColor: .appRed,
+                        chatBackground: .appRed,
+                        secondaryBackground: .appRed,
+                        myChatBackground: .appRed,
+                        primaryColor: .appRed,
+                        textPrimary: .textPrimary,
+                        textSecondary: .textPrimary,
+                        textTertiary: .textPrimary)
+        }
+    }
+    
+    // TODO: - localize
+    var title: String {
+        switch self {
+        case .nika:
+            return "Nika"
+        case .neon:
+            return "Neon"
+        case .lightMarine:
+            return "Light Marine"
+        }
+    }
+}
+
+
+
+

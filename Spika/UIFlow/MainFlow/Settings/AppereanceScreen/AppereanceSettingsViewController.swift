@@ -18,25 +18,21 @@ class AppereanceSettingsViewController: BaseViewController {
         setupBindings()
         self.title = .getStringFor(.appereance)
         
-        mainView.changeCurrentLabel(to: viewModel.repository.getCurrentAppereance())
+        let s = viewModel.repository.getSelectedTheme()
+        guard let index = SpikaTheme.allCases.firstIndex(where: { s == $0.rawValue
+        }) else { return }
+        mainView.changeCurrentLabel(to: index)
     }
 }
 
 private extension AppereanceSettingsViewController {
     func setupBindings() {
-        mainView.systemModeSwitch.tap().sink { [weak self] _ in
-            self?.viewModel.changeAppereanceMode(to: .unspecified)
-            self?.mainView.changeCurrentLabel(to: 0)
-        }.store(in: &subscriptions)
-
-        mainView.lightModeSwitch.tap().sink { [weak self] _ in
-            self?.viewModel.changeAppereanceMode(to: .light)
-            self?.mainView.changeCurrentLabel(to: 1)
-        }.store(in: &subscriptions)
-
-        mainView.darkModeSwitch.tap().sink { [weak self] _ in
-            self?.viewModel.changeAppereanceMode(to: .dark)
-            self?.mainView.changeCurrentLabel(to: 2)
-        }.store(in: &subscriptions)
+        mainView.mainStackView.arrangedSubviews.enumerated().forEach { index, view in
+            view.tap().sink { [weak self] _ in
+                guard let self else { return }
+                mainView.changeCurrentLabel(to: index)
+                viewModel.changeAppereanceMode(to: viewModel.getThemeFor(index: index))
+            }.store(in: &subscriptions)
+        }
     }
 }
