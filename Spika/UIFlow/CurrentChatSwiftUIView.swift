@@ -26,7 +26,7 @@ struct CurrentChatSwiftUIView: View {
     var body: some View {
         ScrollViewReader { proxy in
             List(messages, id: \.id) { message in
-                Text(message.bodyText ?? "jozararao")
+                MessageView(message: Message(messageEntity: message, fileData: nil, thumbData: nil, records: nil))
                     .id(message.id)
                     .onTapGesture {
                         guard let id = messages.first?.id else { return }

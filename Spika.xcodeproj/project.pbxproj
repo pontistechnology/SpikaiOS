@@ -1010,6 +1010,9 @@
 		938D053427D5BF65002E5CE5 /* AppRepository+Rooms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */; };
 		938D053627D5BFF8002E5CE5 /* CreateRoomRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */; };
 		938D053827D5C05F002E5CE5 /* CreateRoomResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053727D5C05F002E5CE5 /* CreateRoomResponseModel.swift */; };
+		9390549B2AE3F31400049987 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9390549A2AE3F31400049987 /* MessageView.swift */; };
+		9390549C2AE3F31400049987 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9390549A2AE3F31400049987 /* MessageView.swift */; };
+		9390549D2AE3F31400049987 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9390549A2AE3F31400049987 /* MessageView.swift */; };
 		939128EB2935734000A79FBA /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939128EA2935734000A79FBA /* MessageTextView.swift */; };
 		939128ED293575EF00A79FBA /* MessageImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939128EC293575EF00A79FBA /* MessageImageView.swift */; };
 		939128EF2935780200A79FBA /* MessageFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939128EE2935780200A79FBA /* MessageFileView.swift */; };
@@ -1511,6 +1514,7 @@
 		938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Rooms.swift"; sourceTree = "<group>"; };
 		938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomRequestModel.swift; sourceTree = "<group>"; };
 		938D053727D5C05F002E5CE5 /* CreateRoomResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomResponseModel.swift; sourceTree = "<group>"; };
+		9390549A2AE3F31400049987 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		939128EA2935734000A79FBA /* MessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
 		939128EC293575EF00A79FBA /* MessageImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageImageView.swift; sourceTree = "<group>"; };
 		939128EE2935780200A79FBA /* MessageFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFileView.swift; sourceTree = "<group>"; };
@@ -2837,6 +2841,7 @@
 				AD9BFD1F2729929600736318 /* LoginFlow */,
 				AD9BFD1E2729927300736318 /* MainFlow */,
 				9372AACF2AE1F30B000E3209 /* CurrentChatSwiftUIView.swift */,
+				9390549A2AE3F31400049987 /* MessageView.swift */,
 			);
 			path = UIFlow;
 			sourceTree = "<group>";
@@ -3759,6 +3764,7 @@
 				6C78B80229AF5ADB004BF881 /* EmptyResponse.swift in Sources */,
 				6C78B80329AF5ADB004BF881 /* ContactsTableView.swift in Sources */,
 				6C78B80429AF5ADB004BF881 /* SettingsViewController.swift in Sources */,
+				9390549C2AE3F31400049987 /* MessageView.swift in Sources */,
 				6C78B80529AF5ADB004BF881 /* ExpandableTextView.swift in Sources */,
 				93BCDFE22A81599000CEE826 /* OneNoteViewModel.swift in Sources */,
 				6C78B80629AF5ADB004BF881 /* AppereanceSettingsViewModel.swift in Sources */,
@@ -4175,6 +4181,7 @@
 				6CF648FA2A459FE100E0DE0B /* ReactionsViewController.swift in Sources */,
 				6CF648FB2A459FE100E0DE0B /* EmptyResponse.swift in Sources */,
 				6CF648FC2A459FE100E0DE0B /* ContactsTableView.swift in Sources */,
+				9390549D2AE3F31400049987 /* MessageView.swift in Sources */,
 				6CF648FD2A459FE100E0DE0B /* SettingsViewController.swift in Sources */,
 				93BCDFE32A81599000CEE826 /* OneNoteViewModel.swift in Sources */,
 				6CF648FE2A459FE100E0DE0B /* ExpandableTextView.swift in Sources */,
@@ -4729,6 +4736,7 @@
 				93E4F6F627C30E8700432CFA /* SelectedUsersCollectionViewCell.swift in Sources */,
 				938B477D27E29C9F004B36FD /* ChatNavigationBarView.swift in Sources */,
 				AD9BFD49272B105800736318 /* EnterVerifyCodeViewController.swift in Sources */,
+				9390549B2AE3F31400049987 /* MessageView.swift in Sources */,
 				93D86DBC27BAA17E00F275B0 /* LinksTableView.swift in Sources */,
 				937055D729148A270052EC77 /* PopUpViewController.swift in Sources */,
 				6C2638952907DB4400E7E79E /* CustomTableViewHeader.swift in Sources */,
