@@ -265,7 +265,7 @@ class AppCoordinator: Coordinator {
     
     func presentAppereanceSettingsScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(AppereanceSettingsViewController.self, argument: self)!
-        self.navigationController.pushViewController(viewController, animated: true)
+        self.navigationController.setViewControllers([viewController], animated: true)
     }
     
     func presentBlockedUsersSettingsScreen() {
@@ -359,14 +359,5 @@ extension AppCoordinator {
         DispatchQueue.main.async { [weak self] in
             self?.navigationController.dismiss(animated: true)
         }
-    }
-}
-
-extension AppCoordinator {
-    func changeAppereance(to mode: UIUserInterfaceStyle) {
-        windowScene.windows.first?.subviews.forEach({ view in
-            view.removeFromSuperview()
-            windowScene.windows.first?.addSubview(view)
-        })
     }
 }

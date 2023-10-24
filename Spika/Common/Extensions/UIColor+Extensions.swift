@@ -19,19 +19,19 @@ extension UIColor {
     }
     
     // MARK: - this is shortcut for use throughout the whole app
-    static let appBlueLight = spikaColors().appBlueLight.uiColor
-    static let appGreen = spikaColors().appGreen.uiColor
-    static let appRed = spikaColors().appRed.uiColor
-    static let appOrange = spikaColors().appOrange.uiColor
-    static let primaryBackground = spikaColors().primaryBackground.uiColor
-    static let borderColor = spikaColors().borderColor.uiColor
-    static let chatBackground = spikaColors().chatBackground.uiColor
-    static let secondaryBackground = spikaColors().secondaryBackground.uiColor
-    static let myChatBackground = spikaColors().myChatBackground.uiColor
-    static let primaryColor = spikaColors().primaryColor.uiColor
-    static let textPrimary = spikaColors().textPrimary.uiColor
-    static let textSecondary = spikaColors().textSecondary.uiColor
-    static let textTertiary = spikaColors().textTertiary.uiColor
+    static var appBlueLight: UIColor { spikaColors().appBlueLight.uiColor}
+    static var appGreen: UIColor { spikaColors().appGreen.uiColor}
+    static var appRed: UIColor { spikaColors().appRed.uiColor}
+    static var appOrange: UIColor { spikaColors().appOrange.uiColor}
+    static var primaryBackground: UIColor { spikaColors().primaryBackground.uiColor}
+    static var borderColor: UIColor { spikaColors().borderColor.uiColor}
+    static var chatBackground: UIColor { spikaColors().chatBackground.uiColor}
+    static var secondaryBackground: UIColor { spikaColors().secondaryBackground.uiColor}
+    static var myChatBackground: UIColor { spikaColors().myChatBackground.uiColor}
+    static var primaryColor: UIColor { spikaColors().primaryColor.uiColor}
+    static var textPrimary: UIColor { spikaColors().textPrimary.uiColor}
+    static var textSecondary: UIColor { spikaColors().textSecondary.uiColor}
+    static var textTertiary: UIColor { spikaColors().textTertiary.uiColor}
     
     // FIXME: change this
     static let errorRedLight = UIColor(named: "errorRedLight")

@@ -17,6 +17,5 @@ class AppereanceSettingsViewModel: BaseSettingsViewModel {
     
     func changeAppereanceMode(to theme: SpikaTheme) {
         repository.saveSelectedTheme(theme.rawValue)
-        getAppCoordinator()?.changeAppereance(to: .dark)
     }
 }

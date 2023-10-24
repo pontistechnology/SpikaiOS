@@ -297,7 +297,7 @@ enum SpikaTheme: String, CaseIterable {
                         textPrimary: .textPrimary,
                         textSecondary: .textSecondary,
                         textTertiary: .textSecondary)
-        case .neon, .lightMarine:
+        case .neon:
             SpikaColors(appBlueLight: .appRed,
                         appGreen: .appRed,
                         appRed: .appRed,
@@ -308,6 +308,20 @@ enum SpikaTheme: String, CaseIterable {
                         secondaryBackground: .appRed,
                         myChatBackground: .appRed,
                         primaryColor: .appRed,
+                        textPrimary: .textPrimary,
+                        textSecondary: .textPrimary,
+                        textTertiary: .textPrimary)
+        case .lightMarine:
+            SpikaColors(appBlueLight: .appGreen,
+                        appGreen: .appGreen,
+                        appRed: .appGreen,
+                        appOrange: .appGreen,
+                        primaryBackground: .appGreen,
+                        borderColor: .appGreen,
+                        chatBackground: .appGreen,
+                        secondaryBackground: .appGreen,
+                        myChatBackground: .appGreen,
+                        primaryColor: .appGreen,
                         textPrimary: .textPrimary,
                         textSecondary: .textPrimary,
                         textTertiary: .textPrimary)

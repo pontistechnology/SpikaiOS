@@ -10,6 +10,8 @@ import UIKit
 
 class AppereanceSettingsView: BaseSettingsView {
     
+    let apply = CustomLabel(text: "Apply")
+    
     override func styleSubviews() {
         super.styleSubviews()
     }
@@ -21,6 +23,7 @@ class AppereanceSettingsView: BaseSettingsView {
             mainStackView.addArrangedSubview(view)
             view.constrainHeight(50)
         }
+        mainStackView.addArrangedSubview(apply)
     }
 }
 

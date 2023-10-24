@@ -34,5 +34,9 @@ private extension AppereanceSettingsViewController {
                 viewModel.changeAppereanceMode(to: viewModel.getThemeFor(index: index))
             }.store(in: &subscriptions)
         }
+        
+        mainView.apply.tap().sink { [weak self] _ in
+            self?.viewModel.getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true)
+        }.store(in: &subscriptions)
     }
 }
