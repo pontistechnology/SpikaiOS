@@ -264,79 +264,73 @@ enum EmojiSection: CaseIterable {
 
 
 enum SpikaTheme: String, CaseIterable {
-    struct SpikaColors {
-        let appBlueLight: ColorResource
-        let appGreen: ColorResource
-        let appRed: ColorResource
-        let appOrange: ColorResource
-        let primaryBackground: ColorResource
-        let borderColor: ColorResource
-        let chatBackground: ColorResource
-        let secondaryBackground: ColorResource
-        let myChatBackground: ColorResource
-        let primaryColor: ColorResource
-        let textPrimary: ColorResource
-        let textSecondary: ColorResource
-        let textTertiary: ColorResource
-    }
-    case nika, neon, lightMarine
+    case nika, darkMarine, neon
     
-    func colors() -> SpikaColors {
-        switch self {
-        case .nika:
-            SpikaColors(appBlueLight: .appBlueLight,
-                        appGreen: .appGreen,
-                        appRed: .appRed,
-                        appOrange: .appOrange,
-                        primaryBackground: .primaryBackground,
-                        borderColor: .border,
-                        chatBackground: .chatBackground,
-                        secondaryBackground: .secondaryBackground,
-                        myChatBackground: .myChatBackground,
-                        primaryColor: .primary,
-                        textPrimary: .textPrimary,
-                        textSecondary: .textSecondary,
-                        textTertiary: .textSecondary)
-        case .neon:
-            SpikaColors(appBlueLight: .appRed,
-                        appGreen: .appRed,
-                        appRed: .appRed,
-                        appOrange: .appRed,
-                        primaryBackground: .appRed,
-                        borderColor: .appRed,
-                        chatBackground: .appRed,
-                        secondaryBackground: .appRed,
-                        myChatBackground: .appRed,
-                        primaryColor: .appRed,
-                        textPrimary: .textPrimary,
-                        textSecondary: .textPrimary,
-                        textTertiary: .textPrimary)
-        case .lightMarine:
-            SpikaColors(appBlueLight: .appGreen,
-                        appGreen: .appGreen,
-                        appRed: .appGreen,
-                        appOrange: .appGreen,
-                        primaryBackground: .appGreen,
-                        borderColor: .appGreen,
-                        chatBackground: .appGreen,
-                        secondaryBackground: .appGreen,
-                        myChatBackground: .appGreen,
-                        primaryColor: .appGreen,
-                        textPrimary: .textPrimary,
-                        textSecondary: .textPrimary,
-                        textTertiary: .textPrimary)
-        }
-    }
-    
-    // TODO: - localize
+    // TODO: - localize?
     var title: String {
         switch self {
         case .nika:
             return "Nika"
         case .neon:
             return "Neon"
-        case .lightMarine:
-            return "Light Marine"
+        case .darkMarine:
+            return "Dark Marine"
+        }
+    }
+    
+    struct SpikaColors {
+        let _backgroundGradientColors: [ColorResource] // gradient in order
+        let _primaryColor: ColorResource
+        let _secondaryColor: ColorResource
+        let _tertiaryColor: ColorResource
+        let _textPrimary: ColorResource
+        let _textSecondary: ColorResource
+        let _additionalColor: ColorResource
+        let _secondAdditionalColor: ColorResource
+        let _thirdAdditionalColor: ColorResource
+        let _fourthAdditionalColor: ColorResource
+        let _warningColor: ColorResource
+    }
+    
+    
+    func colors() -> SpikaColors {
+        return switch self {
+        case .nika:
+            SpikaColors(_backgroundGradientColors: [.appRed],
+                        _primaryColor: .appRed,
+                        _secondaryColor: .appRed,
+                        _tertiaryColor: .appRed,
+                        _textPrimary: .appRed,
+                        _textSecondary: .appRed,
+                        _additionalColor: .appRed,
+                        _secondAdditionalColor: .appRed,
+                        _thirdAdditionalColor: .appRed,
+                        _fourthAdditionalColor: .appRed,
+                        _warningColor: .appRed)
+        case .darkMarine:
+            SpikaColors(_backgroundGradientColors: [.DarkMarine.BackgroundGradient.gradient1],
+                        _primaryColor: .DarkMarine.primary,
+                        _secondaryColor: .DarkMarine.secondary,
+                        _tertiaryColor: .DarkMarine.tertiary,
+                        _textPrimary: .DarkMarine.textPrimary,
+                        _textSecondary: .DarkMarine.textSecondary,
+                        _additionalColor: .DarkMarine.additional1,
+                        _secondAdditionalColor: .DarkMarine.additional2,
+                        _thirdAdditionalColor: .DarkMarine.additional3,
+                        _fourthAdditionalColor: .DarkMarine.additional4,
+                        _warningColor: .DarkMarine.warning)
+        case .neon:
+            SpikaColors(_backgroundGradientColors: [.NeonTodo.BackgroundGradient.gradient1],
+                        _primaryColor: .NeonTodo.primary,
+                        _secondaryColor: .NeonTodo.secondary,
+                        _tertiaryColor: .NeonTodo.tertiary,
+                        _textPrimary: .NeonTodo.textPrimary,
+                        _textSecondary: .NeonTodo.textSecondary,
+                        _additionalColor: .NeonTodo.additional1,
+                        _secondAdditionalColor: .NeonTodo.additional2,
+                        _thirdAdditionalColor: .NeonTodo.additional3,
+                        _fourthAdditionalColor: .NeonTodo.additional4,
+                        _warningColor: .NeonTodo.warning)
         }
     }
 }
