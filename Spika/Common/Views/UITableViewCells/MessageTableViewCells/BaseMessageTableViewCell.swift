@@ -72,8 +72,6 @@ extension BaseMessageTableViewCell: BaseView {
     }
     
     func styleSubviews() {
-        containerStackView.layer.cornerRadius = 10
-        containerStackView.layer.masksToBounds = true
         containerStackView.axis = .vertical
         containerStackView.distribution = .fill
         senderPhotoImageview.layer.cornerRadius = 10
@@ -81,6 +79,21 @@ extension BaseMessageTableViewCell: BaseView {
         senderPhotoImageview.hide()
         timeLabel.hide()
         backgroundColor = .primaryBackground
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // round corners needs to be called after viewDidAppear
+        // TODO: - move to function
+        guard let reuseIdentifier,
+              let sender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
+        else { return }
+        switch sender {
+        case .me:
+            containerStackView.roundCorners(corners: .bottomLeft, radius: 16)
+        case .friend, .group:
+            containerStackView.roundCorners(corners: .bottomRight, radius: 16)
+        }
     }
     
     func positionSubviews() {
