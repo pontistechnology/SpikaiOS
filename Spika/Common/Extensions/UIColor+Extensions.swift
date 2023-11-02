@@ -11,6 +11,10 @@ extension ColorResource {
     var uiColor: UIColor { UIColor(resource: self) }
 }
 
+extension [ColorResource] {
+    var uiColors: [UIColor] { self.map { UIColor(resource: $0)} }
+}
+
 extension UIColor {
     private static func spikaColors() -> SpikaTheme.SpikaColors {
         let savedString = UserDefaults(suiteName: Constants.Networking.appGroupName)?.string(forKey: Constants.Database.selectedTheme) ?? "none"
@@ -19,20 +23,40 @@ extension UIColor {
     }
     
     // MARK: - this is shortcut for use throughout the whole app
-    static var appBlueLight: UIColor { spikaColors().appBlueLight.uiColor}
-    static var appGreen: UIColor { spikaColors().appGreen.uiColor}
-    static var appRed: UIColor { spikaColors().appRed.uiColor}
-    static var appOrange: UIColor { spikaColors().appOrange.uiColor}
-    static var primaryBackground: UIColor { spikaColors().primaryBackground.uiColor}
-    static var borderColor: UIColor { spikaColors().borderColor.uiColor}
-    static var chatBackground: UIColor { spikaColors().chatBackground.uiColor}
-    static var secondaryBackground: UIColor { spikaColors().secondaryBackground.uiColor}
-    static var myChatBackground: UIColor { spikaColors().myChatBackground.uiColor}
-    static var primaryColor: UIColor { spikaColors().primaryColor.uiColor}
-    static var textPrimary: UIColor { spikaColors().textPrimary.uiColor}
-    static var textSecondary: UIColor { spikaColors().textSecondary.uiColor}
-    static var textTertiary: UIColor { spikaColors().textTertiary.uiColor}
+    static var _backgroundGradientColors: [UIColor] {
+        spikaColors()._backgroundGradientColors.uiColors
+    }
+    static var _primaryColor: UIColor {
+        spikaColors()._primaryColor.uiColor
+    }
+    static var _secondaryColor: UIColor {
+        spikaColors()._secondaryColor.uiColor
+    }
+    static var _tertiaryColor: UIColor {
+        spikaColors()._tertiaryColor.uiColor
+    }
+    static var _textPrimary: UIColor {
+        spikaColors()._textPrimary.uiColor
+    }
+    static var _textSecondary: UIColor {
+        spikaColors()._textSecondary.uiColor
+    }
+    static var _additionalColor: UIColor {
+        spikaColors()._additionalColor.uiColor
+    }
+    static var _secondAdditionalColor: UIColor {
+        spikaColors()._secondAdditionalColor.uiColor
+    }
+    static var _thirdAdditionalColor: UIColor {
+        spikaColors()._thirdAdditionalColor.uiColor
+    }
+    static var _fourthAdditionalColor: UIColor {
+        spikaColors()._fourthAdditionalColor.uiColor
+    }
+    static var _warningColor: UIColor {
+        spikaColors()._warningColor.uiColor
+    }
     
     // FIXME: change this
-    static let errorRedLight = UIColor(named: "errorRedLight")
+//    static let errorRedLight = UIColor(named: "errorRedLight")
 }
