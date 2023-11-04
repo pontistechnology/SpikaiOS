@@ -64,7 +64,7 @@ class EnterNumberTextField: UIView, BaseView {
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])
         
-        numberView.backgroundColor = ._secondaryColor
+        numberView.backgroundColor = .secondaryColor
         numberView.layer.cornerRadius = 30
     }
     

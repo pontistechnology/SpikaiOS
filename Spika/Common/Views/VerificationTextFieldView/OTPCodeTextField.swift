@@ -33,7 +33,7 @@ extension OTPCodeTextField: BaseView {
     func styleSubviews() {
         keyboardType = .numberPad
         textContentType = .oneTimeCode
-        backgroundColor = ._secondaryColor
+        backgroundColor = .secondaryColor
         textAlignment = .center
         autocapitalizationType = .none
         layer.borderColor = UIColor.clear.cgColor

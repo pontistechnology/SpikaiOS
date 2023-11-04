@@ -92,7 +92,7 @@ enum MessageSender {
         case .me:
             return .primaryColor
         case .friend, .group:
-            return ._secondaryColor
+            return .secondaryColor
         }
     }
 }

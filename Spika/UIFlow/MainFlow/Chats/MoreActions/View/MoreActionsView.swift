@@ -53,7 +53,7 @@ extension MoreActionsView: BaseView {
     
     func styleSubviews() {
         transparentView.backgroundColor = .clear
-        containerView.backgroundColor = ._secondaryColor // TODO: - check
+        containerView.backgroundColor = .secondaryColor // TODO: - check
         containerView.layer.cornerRadius = 10
         containerView.clipsToBounds = true
         filesImageView.contentMode = .scaleAspectFit

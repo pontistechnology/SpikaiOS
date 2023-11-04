@@ -46,7 +46,7 @@ extension MessageActionsView: BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = ._secondaryColor
+//        backgroundColor = ._secondaryColor // TODO: - check
         plusImageView.contentMode = .scaleAspectFit
     }
     

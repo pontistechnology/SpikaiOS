@@ -13,7 +13,6 @@ final class TableViewHeaderWithIcon: UITableViewHeaderFooterView, BaseView {
     let icon = UIImageView()
     let title = CustomLabel(text: "Header", textColor: .checkWithDesign)
     
-    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         addSubviews()

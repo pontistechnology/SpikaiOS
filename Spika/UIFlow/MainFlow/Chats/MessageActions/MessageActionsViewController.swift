@@ -27,7 +27,7 @@ class MessageActionsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(mainView)
-        view.backgroundColor = ._secondaryColor
+        view.backgroundColor = .secondaryColor // TODO: - check
         setupBindings()
     }
     

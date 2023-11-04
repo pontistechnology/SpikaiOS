@@ -97,7 +97,7 @@ extension MessageInputView {
         hideReplyView()
         if replyView == nil {
             self.replyView = MessageReplyView(senderName: senderName, message: message,
-                                              backgroundColor: ._secondaryColor, showCloseButton: true)
+                                              backgroundColor: .secondaryColor, showCloseButton: true)
             replyBindings()
             guard let replyView = replyView else { return }
             insertArrangedSubview(replyView, at: 0)

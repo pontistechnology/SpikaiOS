@@ -29,7 +29,7 @@ extension UIColor {
     static var primaryColor: UIColor {
         spikaColors()._primaryColor.uiColor
     }
-    static var _secondaryColor: UIColor {
+    static var secondaryColor: UIColor {
         spikaColors()._secondaryColor.uiColor
     }
     static var _tertiaryColor: UIColor {

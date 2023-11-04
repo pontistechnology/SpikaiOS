@@ -40,10 +40,14 @@ class AllChatsView: UIView, BaseView {
         roomsTableView.rowHeight = 70
         roomsTableView.backgroundColor = .clear
         
-        searchBar.placeholder = .getStringFor(.search)
         searchBar.scopeButtonTitles = ["Chats", "Messages"]
         searchBar.showsScopeBar = false
         searchBar.searchBarStyle = .minimal
+        searchBar.searchTextField.textColor = ._textSecondary
+        // TODO: - check dark mode color
+        searchBar.searchTextField.leftView?.tintColor = ._textSecondary
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: .getStringFor(.search), attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])
+        searchBar.barTintColor = ._backgroundGradientColors.first // TODO: - check
         
         searchedMessagesTableView.isHidden = true
     }

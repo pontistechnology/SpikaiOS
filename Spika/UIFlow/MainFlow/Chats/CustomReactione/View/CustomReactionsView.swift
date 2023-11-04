@@ -42,7 +42,7 @@ extension CustomReactionsView: BaseView {
     func styleSubviews() {
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = .getStringFor(.searchForReaction)
-        collectionView.backgroundColor = ._secondaryColor
+        collectionView.backgroundColor = .secondaryColor // TODO: - check
     }
     
     func positionSubviews() {
