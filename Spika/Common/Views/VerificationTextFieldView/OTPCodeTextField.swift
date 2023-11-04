@@ -41,7 +41,7 @@ extension OTPCodeTextField: BaseView {
         layer.masksToBounds = false
         layer.cornerRadius = 10
         font = .customFont(name: .MontserratMedium, size: 26)
-        textColor = ._textPrimary
+        textColor = .textPrimary
     }
     
     func positionSubviews() {}

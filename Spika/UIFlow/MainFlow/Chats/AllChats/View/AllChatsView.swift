@@ -9,7 +9,7 @@ import UIKit
 
 class AllChatsView: UIView, BaseView {
     
-    private let chatLabel = CustomLabel(text: .getStringFor(.chat), textSize: 28, textColor: ._textPrimary)
+    private let chatLabel = CustomLabel(text: .getStringFor(.chat), textSize: 28, textColor: .textPrimary)
     let newChatButton = UIButton()
     let searchBar = UISearchBar()
     let roomsTableView = UITableView()

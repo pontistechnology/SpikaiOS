@@ -26,7 +26,7 @@ class TabBarItemView: UIView, BaseView {
     } ()
     
     lazy var counterLabel: CustomLabel = {
-        let label = CustomLabel(text: "", textSize: 10, textColor: ._textPrimary, fontName: .MontserratSemiBold, alignment: .center)
+        let label = CustomLabel(text: "", textSize: 10, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .center)
         label.backgroundColor = .checkWithDesign
         label.layer.cornerRadius = 10
         label.clipsToBounds = true

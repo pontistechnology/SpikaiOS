@@ -10,8 +10,8 @@ import UIKit
 class MessageFileView: UIView {
     
     private let iconImageView = UIImageView()
-    private let nameLabel = CustomLabel(text: "-", textSize: 14, textColor: ._textPrimary, fontName: .MontserratSemiBold, alignment: .left)
-    private let sizeLabel = CustomLabel(text: "", textSize: 12, textColor: ._textPrimary, fontName: .MontserratRegular)
+    private let nameLabel = CustomLabel(text: "-", textSize: 14, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .left)
+    private let sizeLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular)
     
     init() {
         super.init(frame: .zero)

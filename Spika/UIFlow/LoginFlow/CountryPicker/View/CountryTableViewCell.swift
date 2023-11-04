@@ -10,7 +10,7 @@ import UIKit
 class CountryTableViewCell: UITableViewCell, BaseView {
     
     let countryImage = UIImageView()
-    let countryNameLabel = CustomLabel(text: "", textColor: ._textPrimary)
+    let countryNameLabel = CustomLabel(text: "", textColor: .textPrimary)
     let countryCodeLabel = CustomLabel(text: "", textSize: 12, textColor: ._textSecondary, fontName: .MontserratRegular, alignment: .right)
     
     static let cellIdentifier = "CountryTableViewCell"

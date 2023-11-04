@@ -82,7 +82,7 @@ extension UserSelectionViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return CustomTableViewHeader(text: self.viewModel.frc?.sections?[section].name ?? "-",
                                      textSize: 18,
-                                     textColor: ._textPrimary,
+                                     textColor: .textPrimary,
                                      fontName: .MontserratSemiBold,
                                      alignment: .left,
                                      labelMargins: UIEdgeInsets(top: 8, left: 18, bottom: 8, right: 14))

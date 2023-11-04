@@ -14,8 +14,8 @@ class NotificationAlertView: UIView {
     private let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterialDark))
     
     init(info: MessageNotificationInfo){
-        senderNameLabel = CustomLabel(text: info.title, textSize: 14, textColor: ._textPrimary, fontName: .MontserratSemiBold)
-        descriptionLabel = CustomLabel(text: info.messageText, textSize: 11, textColor: ._textPrimary)
+        senderNameLabel = CustomLabel(text: info.title, textSize: 14, textColor: .textPrimary, fontName: .MontserratSemiBold)
+        descriptionLabel = CustomLabel(text: info.messageText, textSize: 11, textColor: .textPrimary)
         
         avatarImageView = UIImageView()
         avatarImageView.kf.setImage(with: info.photoUrl, placeholder: UIImage(safeImage: .userImage))

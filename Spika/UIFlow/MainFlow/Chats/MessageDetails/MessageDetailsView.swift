@@ -10,7 +10,7 @@ import UIKit
 
 class MessageDetailsView: UIView {
     
-    private let detailsLabel = CustomLabel(text: .getStringFor(.details), textSize: 16, textColor: ._textPrimary, fontName: .MontserratSemiBold)
+    private let detailsLabel = CustomLabel(text: .getStringFor(.details), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
     let recordsTableView = UITableView()
     
     init() {

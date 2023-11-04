@@ -14,7 +14,7 @@ protocol EnterNumberTextFieldDelegate: AnyObject {
 
 class EnterNumberTextField: UIView, BaseView {
     
-    let titleLabel = CustomLabel(text: "", textColor: ._textPrimary,
+    let titleLabel = CustomLabel(text: "", textColor: .textPrimary,
                                  fontName: .MontserratMedium)
     private var textField = UITextField()
     let numberView = UIView()
@@ -59,7 +59,7 @@ class EnterNumberTextField: UIView, BaseView {
         
         textField.keyboardType = .phonePad
         textField.placeholder = placeholder
-        textField.textColor = ._textPrimary
+        textField.textColor = .textPrimary
         textField.font = .customFont(name: .MontserratMedium)
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])

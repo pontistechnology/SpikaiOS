@@ -17,7 +17,7 @@ class RoundedLabel: UILabel {
         layer.masksToBounds = true
         backgroundColor = .checkWithDesign
         textAlignment = .center
-        textColor = ._textPrimary
+        textColor = .textPrimary
         self.text = text
     }
     

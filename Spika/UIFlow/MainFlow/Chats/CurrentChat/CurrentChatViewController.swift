@@ -410,7 +410,7 @@ extension CurrentChatViewController: UITableViewDataSource {
         guard let nameOfSection = viewModel.getNameForSection(section: section) else {
             return nil
         }
-        return CustomLabel(text: nameOfSection, textSize: 11, textColor: ._textPrimary, fontName: .MontserratMedium, alignment: .center)
+        return CustomLabel(text: nameOfSection, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
     }
 }
 

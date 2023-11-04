@@ -23,8 +23,8 @@ class UserSelectionView: UIView, BaseView {
     
     let cancelLabel = CustomLabel(text: .getStringFor(.cancel), textSize: 18, textColor: ._warningColor, fontName: .MontserratSemiBold)
     let doneLabel = CustomLabel(text: .getStringFor(.done), textSize: 18, textColor: .checkWithDesign, fontName: .MontserratSemiBold)
-    let titleLabel = CustomLabel(text: .getStringFor(.selectUsers), textSize: 28, textColor: ._textPrimary)
-    let numberSelectedUsersLabel = CustomLabel(text: "0/100 " + .getStringFor(.selected), textSize: 11, textColor: ._textPrimary)
+    let titleLabel = CustomLabel(text: .getStringFor(.selectUsers), textSize: 28, textColor: .textPrimary)
+    let numberSelectedUsersLabel = CustomLabel(text: "0/100 " + .getStringFor(.selected), textSize: 11, textColor: .textPrimary)
     let searchBar = SearchBar(placeholder: .getStringFor(.searchForContact), shouldShowCancel: false)
     let contactsTableView = ContactsTableView()
     

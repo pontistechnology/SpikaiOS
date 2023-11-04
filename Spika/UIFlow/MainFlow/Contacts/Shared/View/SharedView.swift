@@ -37,7 +37,7 @@ class SharedView: UIView, BaseView {
     func styleSubviews() {
         segmentedControl.selectedSegmentTintColor = .checkWithDesign // TODO: - change check
         segmentedControl.tintColor = .checkWithDesign
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor._textPrimary], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textPrimary], for: .normal)
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.checkWithDesign], for: .selected)
         
         mediaCollectionView.isHidden = segmentedControl.selectedSegmentIndex != 0

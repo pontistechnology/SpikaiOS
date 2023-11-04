@@ -10,17 +10,17 @@ import UIKit
 class AllChatsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "AllChatsTableViewCell"
     
-    let nameLabel = CustomLabel(text: "", textSize: 14, textColor: ._textPrimary, fontName: .MontserratSemiBold)
+    let nameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratSemiBold)
     private let descriptionStackView = UIStackView()
-    let descriptionNameLabel = CustomLabel(text: " ", textSize: 14, textColor: ._textPrimary)
+    let descriptionNameLabel = CustomLabel(text: " ", textSize: 14, textColor: .textPrimary)
     let descriptionIcon = UIImageView()
-    let descriptionTextLabel = CustomLabel(text: "boto", textSize: 14, textColor: ._textPrimary, alignment: .left)
+    let descriptionTextLabel = CustomLabel(text: "boto", textSize: 14, textColor: .textPrimary, alignment: .left)
     let helperView = UIView()
     let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
-    let timeLabel = CustomLabel(text: "", textSize: 12, textColor: ._textPrimary)
+    let timeLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary)
     
     let messagesStackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .fill, spacing: 8)
-    let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: ._textPrimary, fontName: .MontserratSemiBold, alignment: .center)
+    let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .center)
     let pinnedIcon = UIImageView(image: UIImage(safeImage: .pinnedChatIcon))
     let mutedIcon = UIImageView(image: UIImage(safeImage: .mutedIcon))
     

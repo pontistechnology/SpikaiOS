@@ -54,7 +54,7 @@ class SearchBar: UIView, BaseView {
         deleteImage.hide()
         
         searchTextField.autocorrectionType = .no
-        searchTextField.textColor = ._textPrimary
+        searchTextField.textColor = .textPrimary
         searchTextField.font = .customFont(name: .MontserratMedium, size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])

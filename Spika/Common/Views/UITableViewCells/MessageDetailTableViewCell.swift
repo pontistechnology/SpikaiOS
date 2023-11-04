@@ -12,7 +12,7 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "MessageDetailTableViewCell"
     
     private let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
-    private let userNameLabel = CustomLabel(text: "", textSize: 14, textColor: ._textPrimary, fontName: .MontserratMedium)
+    private let userNameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
     private let timeLabel  = CustomLabel(text: "", textSize: 12, textColor: ._textSecondary, fontName: .MontserratRegular, alignment: .right)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

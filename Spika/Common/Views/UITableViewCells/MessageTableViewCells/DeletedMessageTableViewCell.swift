@@ -36,7 +36,7 @@ extension DeletedMessageTableViewCell: BaseMessageTableViewCellProtocol {
     }
     
     func updateCell(message: Message) {
-        plainTextView.setup(text: "This message is deleted", color: ._textPrimary)
+        plainTextView.setup(text: "This message is deleted", color: .textPrimary)
         containerStackView.backgroundColor = ._additionalColor
         containerStackView.layer.borderColor = UIColor.primaryColor.cgColor
         containerStackView.layer.borderWidth = 1

@@ -10,7 +10,7 @@ import UIKit
 
 final class EmptyTableViewCell: UITableViewCell {
     
-    let messageTextView = CustomTextView(text: "Empty Cell - report this", textSize: 14, textColor: ._textPrimary, fontName: .MontserratMedium)
+    let messageTextView = CustomTextView(text: "Empty Cell - report this", textSize: 14, textColor: ._warningColor, fontName: .MontserratMedium)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -26,7 +26,7 @@ class TextField: UITextField {
         backgroundColor = .secondaryColor
         layer.cornerRadius = 10
         
-        textColor = ._textPrimary
+        textColor = .textPrimary
         self.font = .customFont(name: .MontserratMedium, size: 14)
         attributedPlaceholder = NSAttributedString(string: textPlaceholder,
                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])

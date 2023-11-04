@@ -31,7 +31,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         button.imageView?.contentMode = .center
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setContentHuggingPriority(.required, for: .horizontal)
-        button.setTitleColor(._textPrimary, for: .normal)
+        button.setTitleColor(.textPrimary, for: .normal)
         button.publisher(for: .touchUpInside)
             .map { [unowned self] _ in self }
             .subscribe(self.onRightClickAction)
@@ -41,8 +41,8 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     
     private let rightView = ContactsCellRightView()
     private let verticalStackView = CustomStackView(axis: .vertical, spacing: 12)
-    private let nameLabel = CustomLabel(text: "", textSize: 14, textColor: ._textPrimary, fontName: .MontserratMedium)
-    private let descriptionLabel = CustomLabel(text: " ", textSize: 12, textColor: ._textPrimary, fontName: .MontserratRegular)
+    private let nameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
+    private let descriptionLabel = CustomLabel(text: " ", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular)
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -101,7 +101,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
             self.rightButton.unhide()
             self.rightButton.setTitle(text, for: .normal)
             self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratLight.rawValue, size: 14)
-            self.rightButton.setTitleColor(._textPrimary, for: .normal)
+            self.rightButton.setTitleColor(.textPrimary, for: .normal)
         case .remove:
             self.rightButton.unhide()
             self.rightButton.setImage(UIImage(safeImage: .close), for: .normal)
