@@ -12,7 +12,7 @@ class ErrorMessageView: UIView {
     private let errorImageView = UIImageView(image: UIImage(safeImage: .error))
     
     init(message: String) {
-        errorLabel = CustomLabel(text: message, textSize: 13, textColor: .appRed, fontName: .MontserratMedium, alignment: .natural)
+        errorLabel = CustomLabel(text: message, textSize: 13, textColor: ._warningColor, fontName: .MontserratMedium, alignment: .natural)
         super.init(frame: .zero)
         setupView()
     }
@@ -29,7 +29,7 @@ extension ErrorMessageView: BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .errorRedLight
+        backgroundColor = ._secondWarningColor
         layer.cornerRadius = 10
         layer.masksToBounds = true
         errorLabel.numberOfLines = 0

@@ -10,7 +10,7 @@ import Combine
 
 class ExpandableTextView: UITextView, BaseView {
     
-    private let placeholderLabel = CustomLabel(text: "Type here...", textSize: 14, textColor: .textTertiary, fontName: .MontserratMedium)
+    private let placeholderLabel = CustomLabel(text: "Type here...", textSize: 14, textColor: ._textSecondary, fontName: .MontserratMedium)
     private var messageTextViewHeightConstraint = NSLayoutConstraint()
     private var wasMessageTextViewEmpty = true
     
@@ -38,10 +38,8 @@ extension ExpandableTextView {
         textContainerInset.right = 36
         layer.cornerRadius = 10
         clipsToBounds = true
-        layer.borderColor = UIColor.borderColor.cgColor
-        layer.borderWidth = 1
         customFont(name: .MontserratMedium)
-        backgroundColor = .secondaryBackground
+        backgroundColor = ._additionalColor
     }
   
     func positionSubviews() {
@@ -100,16 +98,5 @@ extension ExpandableTextView: UITextViewDelegate {
                 self?.superview?.layoutIfNeeded()
             }
         }
-    }
-}
-
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension ExpandableTextView {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        layer.borderColor = UIColor.borderColor.cgColor
-        self.setNeedsDisplay()
     }
 }

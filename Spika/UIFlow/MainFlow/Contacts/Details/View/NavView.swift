@@ -9,7 +9,7 @@ import UIKit
 
 class NavView: UIView, BaseView {
     
-    let label = CustomLabel(text: "text")
+    let label = CustomLabel(text: "text", textColor: .checkWithDesign)
     let arrowImageView = UIImageView()
     let text: String
     

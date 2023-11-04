@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 
 class UITextViewWithPlaceholder: UITextView {
-    private let placeholderLabel = CustomLabel(text: "")
+    private let placeholderLabel = CustomLabel(text: "", textColor: .checkWithDesign)
     
     init(placeholder: String, font: UIFont) {
         super.init(frame: .zero, textContainer: nil)
         addSubview(placeholderLabel)
         placeholderLabel.text = placeholder
         placeholderLabel.font = font
-        placeholderLabel.textColor = .textTertiary
+        placeholderLabel.textColor = ._textSecondary
         self.font = font
         placeholderLabel.anchor(top: topAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 10, left: 6, bottom: 0, right: 0))
         delegate = self

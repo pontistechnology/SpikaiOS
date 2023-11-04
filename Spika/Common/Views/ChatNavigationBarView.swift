@@ -11,8 +11,8 @@ import UIKit
 class ChatNavigationBarView: UIView, BaseView {
     
     private let avatarImageView = UIImageView()
-    private let nameLabel = CustomLabel(text: " ", textSize: 14, textColor: .textPrimary, fontName: .MontserratSemiBold)
-    private let statusLabel = CustomLabel(text: " ", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular)
+    private let nameLabel = CustomLabel(text: " ", textSize: 14, textColor: ._textPrimary, fontName: .MontserratSemiBold)
+    private let statusLabel = CustomLabel(text: " ", textSize: 12, textColor: ._textPrimary, fontName: .MontserratRegular)
     
     init() {
         super.init(frame: .zero)

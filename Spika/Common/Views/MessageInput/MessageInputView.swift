@@ -55,7 +55,7 @@ class MessageInputView: UIStackView, BaseView {
     
     func styleSubviews() {
         axis = .vertical
-        dividerLine.backgroundColor = .textTertiary
+        dividerLine.backgroundColor = ._textSecondary
     }
     
     func positionSubviews() {
@@ -97,7 +97,7 @@ extension MessageInputView {
         hideReplyView()
         if replyView == nil {
             self.replyView = MessageReplyView(senderName: senderName, message: message,
-                                              backgroundColor: .chatBackground, showCloseButton: true)
+                                              backgroundColor: ._secondaryColor, showCloseButton: true)
             replyBindings()
             guard let replyView = replyView else { return }
             insertArrangedSubview(replyView, at: 0)

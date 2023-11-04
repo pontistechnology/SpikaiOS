@@ -19,7 +19,7 @@ class MessageDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(messageDetailsView)
-        view.backgroundColor = .secondaryBackground
+        view.backgroundColor = ._secondaryColor
         setupBindings()
     }
 }
@@ -48,7 +48,7 @@ extension MessageDetailsViewController: UITableViewDataSource, UITableViewDelega
         else {
             return EmptyTableViewCell()
         }
-        cell.backgroundColor = .secondaryBackground // TODO: - move to cell
+        cell.backgroundColor = ._secondaryColor // TODO: - move to cell
         if indexPath.section == 0 && data.editedTime != nil {
             cell.configureCell(title: data.name,
                                description: data.telephoneNumber,

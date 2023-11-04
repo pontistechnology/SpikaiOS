@@ -20,7 +20,7 @@ class ContactsTableView: UITableView {
     }
     
     func setupTV() {
-        backgroundColor = UIColor.primaryBackground
+//        backgroundColor = UIColor._primaryColor // TODO: - check color, clear
         separatorStyle = .none
         register(ContactsTableViewCell.self, forCellReuseIdentifier: ContactsTableViewCell.reuseIdentifier)
         rowHeight = 64

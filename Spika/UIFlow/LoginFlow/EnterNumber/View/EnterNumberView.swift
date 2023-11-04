@@ -11,7 +11,7 @@ class EnterNumberView: UIView, BaseView {
     
     let logoImage = LogoImageView()
     let titleLabel = CustomLabel(text: .getStringFor(.enterYourPhoneToUserSpika),
-                                 fontName: .MontserratMedium, alignment: .center)
+                                 textColor: ._textPrimary, fontName: .MontserratMedium, alignment: .center)
     let enterNumberTextField = EnterNumberTextField(placeholder: .getStringFor(.eg98726), title: .getStringFor(.phoneNumber))
     let nextButton = MainButton()
     

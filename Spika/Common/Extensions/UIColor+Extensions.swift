@@ -18,7 +18,7 @@ extension [ColorResource] {
 extension UIColor {
     private static func spikaColors() -> SpikaTheme.SpikaColors {
         let savedString = UserDefaults(suiteName: Constants.Networking.appGroupName)?.string(forKey: Constants.Database.selectedTheme) ?? "none"
-        let selectedTheme: SpikaTheme = SpikaTheme(rawValue: savedString) ?? .nika
+        let selectedTheme: SpikaTheme = SpikaTheme(rawValue: savedString) ?? .darkMarine
         return selectedTheme.colors()
     }
     
@@ -26,7 +26,7 @@ extension UIColor {
     static var _backgroundGradientColors: [UIColor] {
         spikaColors()._backgroundGradientColors.uiColors
     }
-    static var _primaryColor: UIColor {
+    static var primaryColor: UIColor {
         spikaColors()._primaryColor.uiColor
     }
     static var _secondaryColor: UIColor {
@@ -55,6 +55,13 @@ extension UIColor {
     }
     static var _warningColor: UIColor {
         spikaColors()._warningColor.uiColor
+    }
+    static var _secondWarningColor: UIColor {
+        spikaColors()._secondWarningColor.uiColor
+    }
+    
+    static var checkWithDesign: UIColor {
+        .green
     }
     
     // FIXME: change this

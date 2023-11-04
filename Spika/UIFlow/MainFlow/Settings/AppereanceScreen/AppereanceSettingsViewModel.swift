@@ -11,7 +11,7 @@ import UIKit
 class AppereanceSettingsViewModel: BaseSettingsViewModel {
     func getThemeFor(index: Int) -> SpikaTheme {
         let cases = SpikaTheme.allCases
-        guard index < cases.count else { return .nika }
+        guard index < cases.count else { return .darkMarine }
         return cases[index]
     }
     

@@ -20,7 +20,7 @@ class MoreActionsView: UIView {
     
     let transparentView = UIView()
     
-    private let moreActionsLabel = CustomLabel(text: "More actions", textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
+    private let moreActionsLabel = CustomLabel(text: "More actions", textSize: 16, textColor: ._textPrimary, fontName: .MontserratSemiBold)
     private let optionsStackView = CustomStackView(axis: .horizontal, distribution: .fillEqually, spacing: 12)
     let filesImageView = UIImageView(image: UIImage(safeImage: .files))
     let libraryImageView = UIImageView(image: UIImage(safeImage: .library))
@@ -53,7 +53,7 @@ extension MoreActionsView: BaseView {
     
     func styleSubviews() {
         transparentView.backgroundColor = .clear
-        containerView.backgroundColor = .secondaryBackground
+        containerView.backgroundColor = ._secondaryColor // TODO: - check
         containerView.layer.cornerRadius = 10
         containerView.clipsToBounds = true
         filesImageView.contentMode = .scaleAspectFit

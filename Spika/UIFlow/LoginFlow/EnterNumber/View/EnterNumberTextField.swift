@@ -14,7 +14,7 @@ protocol EnterNumberTextFieldDelegate: AnyObject {
 
 class EnterNumberTextField: UIView, BaseView {
     
-    let titleLabel = CustomLabel(text: "", textColor: .textTertiary,
+    let titleLabel = CustomLabel(text: "", textColor: ._textPrimary,
                                  fontName: .MontserratMedium)
     private var textField = UITextField()
     let numberView = UIView()
@@ -55,19 +55,17 @@ class EnterNumberTextField: UIView, BaseView {
             
         countryNumberLabel.text = countryNumber
         
-        lineBreakView.backgroundColor = .textTertiary
+        lineBreakView.backgroundColor = ._textSecondary
         
         textField.keyboardType = .phonePad
         textField.placeholder = placeholder
-        textField.textColor = .textPrimary
+        textField.textColor = ._textPrimary
         textField.font = .customFont(name: .MontserratMedium)
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])
         
-        numberView.backgroundColor = .secondaryBackground
-        numberView.layer.borderWidth = 1
-        numberView.layer.borderColor = UIColor.borderColor.cgColor
-        numberView.layer.cornerRadius = 10
+        numberView.backgroundColor = ._secondaryColor
+        numberView.layer.cornerRadius = 30
     }
     
     func positionSubviews() {
@@ -107,15 +105,5 @@ class EnterNumberTextField: UIView, BaseView {
     
     func setRestOfNumber(_ string: String) {
         textField.text = string
-    }
-}
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension EnterNumberTextField {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        numberView.layer.borderColor = UIColor.borderColor.cgColor
-        self.setNeedsDisplay()
     }
 }

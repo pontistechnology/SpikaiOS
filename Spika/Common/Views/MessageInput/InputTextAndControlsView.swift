@@ -15,8 +15,8 @@ class InputTextAndControlsView: UIStackView {
     private let microphoneButton = CustomButton(assetName: .microphone)
 //    private let emojiButton = CustomButton(assetName: .smile)
     private let closeEditModeButton = CustomButton(assetName: .close)
-    private let saveButton = CustomButton(text: "Save", textSize: 16, textColor: .primaryColor, fontName: .MontserratBold)
-    private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .textPrimary)
+    private let saveButton = CustomButton(text: "Save", textSize: 16, textColor: .checkWithDesign, fontName: .MontserratBold)
+    private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .checkWithDesign)
     private let messageTextView = ExpandableTextView()
     
     let keyboardAccessoryView = KeyboardObserverAccessoryView()

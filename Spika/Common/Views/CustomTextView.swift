@@ -16,7 +16,7 @@ class CustomTextView: UITextView {
     private var fontName: CustomFontName
     private var alignment: NSTextAlignment
     
-    init(text: String, textSize: CGFloat = 14, textColor: UIColor = .textPrimary, fontName: CustomFontName = .MontserratRegular, alignment: NSTextAlignment = .natural) {
+    init(text: String, textSize: CGFloat = 14, textColor: UIColor = ._textPrimary, fontName: CustomFontName = .MontserratRegular, alignment: NSTextAlignment = .natural) {
         self.title = text
         self.titleSize = textSize
         self.titleColor = textColor
@@ -38,9 +38,9 @@ extension CustomTextView {
         backgroundColor = .clear
         font = .customFont(name: fontName, size: titleSize)
         textColor = titleColor
-        linkTextAttributes = [.foregroundColor : UIColor.textPrimary,
+        linkTextAttributes = [.foregroundColor : UIColor._textPrimary,
                               .underlineStyle  : NSUnderlineStyle.single.rawValue,
-                              .underlineColor : UIColor.textPrimary]
+                              .underlineColor : UIColor._textPrimary]
         isEditable = false
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0

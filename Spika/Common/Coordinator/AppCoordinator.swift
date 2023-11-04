@@ -124,11 +124,6 @@ class AppCoordinator: Coordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func presentChatSearchScreen() {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(ChatSearchViewController.self, argument: self)!
-        self.navigationController.pushViewController(viewController, animated: true)
-    }
-    
     func presentCallHistoryScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(CallHistoryViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)

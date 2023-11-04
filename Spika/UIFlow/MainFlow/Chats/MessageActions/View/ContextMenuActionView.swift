@@ -11,7 +11,7 @@ import UIKit
 class ContextMenuActionView: UIView {
     private let action: MessageAction
     private let imageView = UIImageView()
-    private let label = CustomLabel(text: "", textSize: 16, textColor: .textPrimary, fontName: .MontserratMedium)
+    private let label = CustomLabel(text: "", textSize: 16, textColor: ._textPrimary, fontName: .MontserratMedium)
     
     init(messageAction: MessageAction) {
         self.action = messageAction

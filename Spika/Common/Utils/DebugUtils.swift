@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class DebugUtils {
     static func printRequestAndResponse(request: URLRequest, data: Data?) {
@@ -17,4 +18,19 @@ class DebugUtils {
         print("RESPONSE: ", responseString)
         print("\n\n ____________END____________________")
     }
+}
+
+struct PreviewContainer<T: UIView>: UIViewRepresentable {
+    let view: T
+    init(_ viewBuilder: @escaping () -> T) {
+
+        view = viewBuilder()
+    }
+    
+    // MARK: - UIViewRepresentable
+    func makeUIView(context: Context) -> T {
+        return view
+    }
+
+    func updateUIView(_ view: T, context: Context) {}
 }

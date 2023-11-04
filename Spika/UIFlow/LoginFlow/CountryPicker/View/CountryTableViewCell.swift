@@ -10,8 +10,8 @@ import UIKit
 class CountryTableViewCell: UITableViewCell, BaseView {
     
     let countryImage = UIImageView()
-    let countryNameLabel = CustomLabel(text: "")
-    let countryCodeLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary, fontName: .MontserratRegular, alignment: .right)
+    let countryNameLabel = CustomLabel(text: "", textColor: ._textPrimary)
+    let countryCodeLabel = CustomLabel(text: "", textSize: 12, textColor: ._textSecondary, fontName: .MontserratRegular, alignment: .right)
     
     static let cellIdentifier = "CountryTableViewCell"
     static let rowHeight: CGFloat = 50.0
@@ -24,7 +24,7 @@ class CountryTableViewCell: UITableViewCell, BaseView {
     
     func styleSubviews() {
         selectionStyle = .none
-        backgroundColor = .primaryBackground
+        backgroundColor = ._secondaryColor
     }
     
     func positionSubviews() {

@@ -54,17 +54,17 @@ class SearchBar: UIView, BaseView {
         deleteImage.hide()
         
         searchTextField.autocorrectionType = .no
-        searchTextField.textColor = .textPrimary
+        searchTextField.textColor = ._textPrimary
         searchTextField.font = .customFont(name: .MontserratMedium, size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
+                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])
         
-        searchView.backgroundColor = .chatBackground
+        searchView.backgroundColor = ._thirdAdditionalColor
         searchView.layer.cornerRadius = 10
         searchView.clipsToBounds = true
         
         cancelButton.setTitle(.getStringFor(.cancel), for: .normal)
-        cancelButton.setTitleColor(.primaryColor, for: .normal)
+        cancelButton.setTitleColor(._thirdAdditionalColor, for: .normal)
         cancelButton.titleLabel?.font = .customFont(name: .MontserratMedium, size: 14)
     }
     

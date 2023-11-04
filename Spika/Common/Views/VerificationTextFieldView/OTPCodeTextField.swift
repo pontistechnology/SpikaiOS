@@ -33,15 +33,15 @@ extension OTPCodeTextField: BaseView {
     func styleSubviews() {
         keyboardType = .numberPad
         textContentType = .oneTimeCode
-        backgroundColor = .secondaryBackground
+        backgroundColor = ._secondaryColor
         textAlignment = .center
         autocapitalizationType = .none
-        layer.borderColor = UIColor.borderColor.cgColor
+        layer.borderColor = UIColor.clear.cgColor
         layer.borderWidth = 1
         layer.masksToBounds = false
         layer.cornerRadius = 10
         font = .customFont(name: .MontserratMedium, size: 26)
-        textColor = .textPrimary
+        textColor = ._textPrimary
     }
     
     func positionSubviews() {}
@@ -62,20 +62,8 @@ extension OTPCodeTextField {
             inputText = String(inputText.prefix(self.otpLength))
             self.text = inputText
             let entryGood = inputText.count == self.otpLength
-            self.layer.borderColor = entryGood ? UIColor.borderColor.cgColor : UIColor.appRed.cgColor
+            self.layer.borderColor = entryGood ? UIColor.clear.cgColor : UIColor._warningColor.cgColor
             self.isEntryGood.send(entryGood)
         }.store(in: &subs)
     }
 }
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension OTPCodeTextField {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        layer.borderColor = UIColor.borderColor.cgColor
-        self.setNeedsDisplay()
-    }
-}
-
-

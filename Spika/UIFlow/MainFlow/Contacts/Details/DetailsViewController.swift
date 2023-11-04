@@ -29,10 +29,6 @@ class DetailsViewController: BaseViewController {
             self?.viewModel.presentSharedScreen()
         }.store(in: &subscriptions)
         
-        detailsView.contentView.chatSearchOptionButton.tap().sink { [weak self] _ in
-            self?.viewModel.presentChatSearchScreen()
-        }.store(in: &subscriptions)
-        
         detailsView.contentView.favoriteMessagesOptionButton.tap().sink { [weak self] _ in
             self?.viewModel.presentFavoritesScreen()
         }.store(in: &subscriptions)

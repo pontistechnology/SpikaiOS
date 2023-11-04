@@ -10,7 +10,7 @@ import UIKit
 
 class AppereanceSettingsView: BaseSettingsView {
     
-    let apply = CustomLabel(text: "Apply")
+    let apply = CustomLabel(text: "Apply", textColor: .checkWithDesign)
     
     override func styleSubviews() {
         super.styleSubviews()

@@ -172,7 +172,6 @@
 		6C78B7B329AF5ADB004BF881 /* CallHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192602721D52200D5BE48 /* CallHistoryView.swift */; };
 		6C78B7B429AF5ADB004BF881 /* SelectedFileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93583D9728A3DE9F00CC5642 /* SelectedFileImageView.swift */; };
 		6C78B7B529AF5ADB004BF881 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81926C2721E2E400D5BE48 /* UIControl+Combine.swift */; };
-		6C78B7B629AF5ADB004BF881 /* ChatSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86527B671270099BA9E /* ChatSearchView.swift */; };
 		6C78B7B729AF5ADB004BF881 /* AllChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192682721D5BD00D5BE48 /* AllChatsViewModel.swift */; };
 		6C78B7B929AF5ADB004BF881 /* BlockedUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175ECB297ED94400804275 /* BlockedUsersView.swift */; };
 		6C78B7BA29AF5ADB004BF881 /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
@@ -259,7 +258,6 @@
 		6C78B81029AF5ADB004BF881 /* BlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C7729700D6E00198EC1 /* BlockModel.swift */; };
 		6C78B81129AF5ADB004BF881 /* VideoCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */; };
 		6C78B81229AF5ADB004BF881 /* PrivacySettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EBE297ECCD600804275 /* PrivacySettingsViewModel.swift */; };
-		6C78B81329AF5ADB004BF881 /* OldAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367455D27C71D1300F43CCD /* OldAlertViewController.swift */; };
 		6C78B81429AF5ADB004BF881 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFCF227296D5500736318 /* ErrorView.swift */; };
 		6C78B81529AF5ADB004BF881 /* MessageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */; };
 		6C78B81629AF5ADB004BF881 /* EnterUsernameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E15279F872500F81095 /* EnterUsernameViewModel.swift */; };
@@ -297,7 +295,6 @@
 		6C78B83829AF5ADB004BF881 /* Int64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int64+Extensions.swift */; };
 		6C78B83A29AF5ADB004BF881 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932462D728FCB9B100E8C1B9 /* UIFont+Extensions.swift */; };
 		6C78B83C29AF5ADB004BF881 /* NewGroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D052F27D59DC1002E5CE5 /* NewGroupChatViewController.swift */; };
-		6C78B83D29AF5ADB004BF881 /* ChatSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */; };
 		6C78B83F29AF5ADB004BF881 /* Message+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C07A9B290139B5003DFD61 /* Message+Extensions.swift */; };
 		6C78B84029AF5ADB004BF881 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503CD270DD31D009D50CB /* UIView+Extensions.swift */; };
 		6C78B84129AF5ADB004BF881 /* DebugUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EB2926C4C900E7333D /* DebugUtils.swift */; };
@@ -319,11 +316,9 @@
 		6C78B85129AF5ADB004BF881 /* ChatDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C76903A291D451A007F13D2 /* ChatDetailsView.swift */; };
 		6C78B85229AF5ADB004BF881 /* MessageActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9352A56C2977667900E0D90E /* MessageActionsViewController.swift */; };
 		6C78B85329AF5ADB004BF881 /* Assembler+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D6270DD65C009D50CB /* Assembler+Extensions.swift */; };
-		6C78B85429AF5ADB004BF881 /* OldAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367456027C71D3700F43CCD /* OldAlertView.swift */; };
 		6C78B85529AF5ADB004BF881 /* LoginAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD28272995CA00736318 /* LoginAssembly.swift */; };
 		6C78B85629AF5ADB004BF881 /* ImageViewWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */; };
 		6C78B85729AF5ADB004BF881 /* UpdatePushRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */; };
-		6C78B85829AF5ADB004BF881 /* ChatSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87827B67A280099BA9E /* ChatSearchViewController.swift */; };
 		6C78B85929AF5ADB004BF881 /* ImageViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28F12926E98600E7333D /* ImageViewerViewModel.swift */; };
 		6C78B85A29AF5ADB004BF881 /* SeenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AE06EE290892B90009A50C /* SeenResponseModel.swift */; };
 		6C78B85B29AF5ADB004BF881 /* BaseSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EB4297EC44C00804275 /* BaseSettingsView.swift */; };
@@ -383,7 +378,6 @@
 		6C78B89529AF5ADB004BF881 /* EnterNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD232729952B00736318 /* EnterNumberViewModel.swift */; };
 		6C78B89629AF5ADB004BF881 /* ContactsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */; };
 		6C78B89729AF5ADB004BF881 /* ChatMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */; };
-		6C78B89829AF5ADB004BF881 /* PopUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367455B27C71D0100F43CCD /* PopUpManager.swift */; };
 		6C78B89929AF5ADB004BF881 /* FetchedContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC81D772810422F0004D835 /* FetchedContact.swift */; };
 		6C78B89A29AF5ADB004BF881 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81925B2721D45100D5BE48 /* ContactsView.swift */; };
 		6C78B89B29AF5ADB004BF881 /* ChatBlockingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD1915929A35E2300A8041A /* ChatBlockingView.swift */; };
@@ -548,7 +542,6 @@
 		6CF648B02A459FE100E0DE0B /* CallHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192602721D52200D5BE48 /* CallHistoryView.swift */; };
 		6CF648B12A459FE100E0DE0B /* SelectedFileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93583D9728A3DE9F00CC5642 /* SelectedFileImageView.swift */; };
 		6CF648B22A459FE100E0DE0B /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81926C2721E2E400D5BE48 /* UIControl+Combine.swift */; };
-		6CF648B32A459FE100E0DE0B /* ChatSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86527B671270099BA9E /* ChatSearchView.swift */; };
 		6CF648B42A459FE100E0DE0B /* AllChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192682721D5BD00D5BE48 /* AllChatsViewModel.swift */; };
 		6CF648B52A459FE100E0DE0B /* BlockedUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175ECB297ED94400804275 /* BlockedUsersView.swift */; };
 		6CF648B62A459FE100E0DE0B /* SSENewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93017B1627F8D1EC00A0582D /* SSENewMessage.swift */; };
@@ -638,7 +631,6 @@
 		6CF6490A2A459FE100E0DE0B /* BlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C056C7729700D6E00198EC1 /* BlockModel.swift */; };
 		6CF6490B2A459FE100E0DE0B /* VideoCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */; };
 		6CF6490C2A459FE100E0DE0B /* PrivacySettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EBE297ECCD600804275 /* PrivacySettingsViewModel.swift */; };
-		6CF6490D2A459FE100E0DE0B /* OldAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367455D27C71D1300F43CCD /* OldAlertViewController.swift */; };
 		6CF6490E2A459FE100E0DE0B /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFCF227296D5500736318 /* ErrorView.swift */; };
 		6CF6490F2A459FE100E0DE0B /* MessageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */; };
 		6CF649102A459FE100E0DE0B /* EnterUsernameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E15279F872500F81095 /* EnterUsernameViewModel.swift */; };
@@ -679,7 +671,6 @@
 		6CF649332A459FE100E0DE0B /* Int64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int64+Extensions.swift */; };
 		6CF649342A459FE100E0DE0B /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932462D728FCB9B100E8C1B9 /* UIFont+Extensions.swift */; };
 		6CF649352A459FE100E0DE0B /* NewGroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D052F27D59DC1002E5CE5 /* NewGroupChatViewController.swift */; };
-		6CF649362A459FE100E0DE0B /* ChatSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */; };
 		6CF649372A459FE100E0DE0B /* Message+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C07A9B290139B5003DFD61 /* Message+Extensions.swift */; };
 		6CF649382A459FE100E0DE0B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503CD270DD31D009D50CB /* UIView+Extensions.swift */; };
 		6CF649392A459FE100E0DE0B /* DebugUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EB2926C4C900E7333D /* DebugUtils.swift */; };
@@ -705,11 +696,9 @@
 		6CF6494D2A459FE100E0DE0B /* MessageActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9352A56C2977667900E0D90E /* MessageActionsViewController.swift */; };
 		6CF6494E2A459FE100E0DE0B /* Assembler+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D6270DD65C009D50CB /* Assembler+Extensions.swift */; };
 		6CF6494F2A459FE100E0DE0B /* TableViewHeaderWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAB792A0933AB0087382E /* TableViewHeaderWithIcon.swift */; };
-		6CF649502A459FE100E0DE0B /* OldAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367456027C71D3700F43CCD /* OldAlertView.swift */; };
 		6CF649512A459FE100E0DE0B /* LoginAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD28272995CA00736318 /* LoginAssembly.swift */; };
 		6CF649522A459FE100E0DE0B /* ImageViewWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2A8F127A323F20099D60D /* ImageViewWithIcon.swift */; };
 		6CF649532A459FE100E0DE0B /* UpdatePushRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */; };
-		6CF649542A459FE100E0DE0B /* ChatSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87827B67A280099BA9E /* ChatSearchViewController.swift */; };
 		6CF649552A459FE100E0DE0B /* ImageViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28F12926E98600E7333D /* ImageViewerViewModel.swift */; };
 		6CF649562A459FE100E0DE0B /* SeenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AE06EE290892B90009A50C /* SeenResponseModel.swift */; };
 		6CF649582A459FE100E0DE0B /* BaseSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C175EB4297EC44C00804275 /* BaseSettingsView.swift */; };
@@ -774,7 +763,6 @@
 		6CF649932A459FE100E0DE0B /* EnterNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD232729952B00736318 /* EnterNumberViewModel.swift */; };
 		6CF649942A459FE100E0DE0B /* ContactsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */; };
 		6CF649952A459FE100E0DE0B /* ChatMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6AD21C291E41DD0026CDAC /* ChatMembersView.swift */; };
-		6CF649962A459FE100E0DE0B /* PopUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367455B27C71D0100F43CCD /* PopUpManager.swift */; };
 		6CF649972A459FE100E0DE0B /* FetchedContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC81D772810422F0004D835 /* FetchedContact.swift */; };
 		6CF649982A459FE100E0DE0B /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81925B2721D45100D5BE48 /* ContactsView.swift */; };
 		6CF649992A459FE100E0DE0B /* NotificationsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F6DEE29E698360010FED9 /* NotificationsHelpers.swift */; };
@@ -911,15 +899,12 @@
 		933BE85F27B65C6F0099BA9E /* SharedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE85E27B65C6F0099BA9E /* SharedViewModel.swift */; };
 		933BE86227B65C9C0099BA9E /* SharedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86127B65C9C0099BA9E /* SharedView.swift */; };
 		933BE86427B667980099BA9E /* ContactsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86327B667980099BA9E /* ContactsAssembly.swift */; };
-		933BE86627B671270099BA9E /* ChatSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86527B671270099BA9E /* ChatSearchView.swift */; };
 		933BE86A27B671B30099BA9E /* AllNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86927B671B30099BA9E /* AllNotesView.swift */; };
 		933BE86C27B677920099BA9E /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86B27B677920099BA9E /* FavoritesView.swift */; };
 		933BE86E27B677BC0099BA9E /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE86D27B677BC0099BA9E /* FavoritesViewController.swift */; };
 		933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87027B677DF0099BA9E /* FavoritesViewModel.swift */; };
 		933BE87327B677F10099BA9E /* AllNotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87227B677F10099BA9E /* AllNotesViewModel.swift */; };
-		933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */; };
 		933BE87727B6796B0099BA9E /* AllNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* AllNotesViewController.swift */; };
-		933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87827B67A280099BA9E /* ChatSearchViewController.swift */; };
 		933E209F29D8AB030013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
 		933E20A129D8AB030013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
 		933E20A329D8B0BE0013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
@@ -966,9 +951,6 @@
 		9362B48F28623A44009F617D /* RoomEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9362B48D28623A44009F617D /* RoomEntity+CoreDataProperties.swift */; };
 		9364873528B8E5D00069D538 /* FileMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9364873428B8E5D00069D538 /* FileMessageTableViewCell.swift */; };
 		9365A79127E184FA0038CA7F /* GetAllRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */; };
-		9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367455B27C71D0100F43CCD /* PopUpManager.swift */; };
-		9367455E27C71D1300F43CCD /* OldAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367455D27C71D1300F43CCD /* OldAlertViewController.swift */; };
-		9367456127C71D3700F43CCD /* OldAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9367456027C71D3700F43CCD /* OldAlertView.swift */; };
 		936A28EC2926C4C900E7333D /* DebugUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EB2926C4C900E7333D /* DebugUtils.swift */; };
 		936A28ED2926C8C100E7333D /* DebugUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EB2926C4C900E7333D /* DebugUtils.swift */; };
 		936A28F02926E96100E7333D /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EF2926E96100E7333D /* ImageViewerViewController.swift */; };
@@ -1447,15 +1429,12 @@
 		933BE85E27B65C6F0099BA9E /* SharedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViewModel.swift; sourceTree = "<group>"; };
 		933BE86127B65C9C0099BA9E /* SharedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedView.swift; sourceTree = "<group>"; };
 		933BE86327B667980099BA9E /* ContactsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsAssembly.swift; sourceTree = "<group>"; };
-		933BE86527B671270099BA9E /* ChatSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchView.swift; sourceTree = "<group>"; };
 		933BE86927B671B30099BA9E /* AllNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesView.swift; sourceTree = "<group>"; };
 		933BE86B27B677920099BA9E /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		933BE86D27B677BC0099BA9E /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		933BE87027B677DF0099BA9E /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		933BE87227B677F10099BA9E /* AllNotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesViewModel.swift; sourceTree = "<group>"; };
-		933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewModel.swift; sourceTree = "<group>"; };
 		933BE87627B6796A0099BA9E /* AllNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesViewController.swift; sourceTree = "<group>"; };
-		933BE87827B67A280099BA9E /* ChatSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchViewController.swift; sourceTree = "<group>"; };
 		933E209E29D8AB030013E798 /* TelephoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneNumber.swift; sourceTree = "<group>"; };
 		934087B727EBAD7100209571 /* AppRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Tests.swift"; sourceTree = "<group>"; };
 		9347CCE228644E1300018AEB /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -1480,9 +1459,6 @@
 		9362B48D28623A44009F617D /* RoomEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		9364873428B8E5D00069D538 /* FileMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMessageTableViewCell.swift; sourceTree = "<group>"; };
 		9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllRoomsResponseModel.swift; sourceTree = "<group>"; };
-		9367455B27C71D0100F43CCD /* PopUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpManager.swift; sourceTree = "<group>"; };
-		9367455D27C71D1300F43CCD /* OldAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldAlertViewController.swift; sourceTree = "<group>"; };
-		9367456027C71D3700F43CCD /* OldAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldAlertView.swift; sourceTree = "<group>"; };
 		936A28EB2926C4C900E7333D /* DebugUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugUtils.swift; sourceTree = "<group>"; };
 		936A28EF2926E96100E7333D /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
 		936A28F12926E98600E7333D /* ImageViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewModel.swift; sourceTree = "<group>"; };
@@ -2013,16 +1989,6 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		933BE85927B65A070099BA9E /* ChatSearch */ = {
-			isa = PBXGroup;
-			children = (
-				933BE86727B6712A0099BA9E /* View */,
-				933BE87427B6780F0099BA9E /* ChatSearchViewModel.swift */,
-				933BE87827B67A280099BA9E /* ChatSearchViewController.swift */,
-			);
-			path = ChatSearch;
-			sourceTree = "<group>";
-		};
 		933BE85A27B65A4E0099BA9E /* AllNotes */ = {
 			isa = PBXGroup;
 			children = (
@@ -2051,14 +2017,6 @@
 				93D86DB727BAA15900F275B0 /* DocsTableView.swift */,
 				93D86DBB27BAA17E00F275B0 /* LinksTableView.swift */,
 				93D86DC327BAEEA000F275B0 /* MediaCollectionViewCell.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		933BE86727B6712A0099BA9E /* View */ = {
-			isa = PBXGroup;
-			children = (
-				933BE86527B671270099BA9E /* ChatSearchView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2115,24 +2073,6 @@
 				938CC7C8293BB9F600606DA8 /* InputTextAndControlsView.swift */,
 			);
 			path = MessageInput;
-			sourceTree = "<group>";
-		};
-		9367455A27C71CE500F43CCD /* PopUpManager */ = {
-			isa = PBXGroup;
-			children = (
-				9367455F27C71D2500F43CCD /* View */,
-				9367455B27C71D0100F43CCD /* PopUpManager.swift */,
-				9367455D27C71D1300F43CCD /* OldAlertViewController.swift */,
-			);
-			path = PopUpManager;
-			sourceTree = "<group>";
-		};
-		9367455F27C71D2500F43CCD /* View */ = {
-			isa = PBXGroup;
-			children = (
-				9367456027C71D3700F43CCD /* OldAlertView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		936A28EE2926E95200E7333D /* ImageViewer */ = {
@@ -2464,7 +2404,6 @@
 		AD8192412721738500D5BE48 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				933BE85927B65A070099BA9E /* ChatSearch */,
 				ADD503FA27101B09009D50CB /* Details */,
 				933BE85B27B65A580099BA9E /* Favorites */,
 				933BE85727B6595F0099BA9E /* Main */,
@@ -2849,7 +2788,6 @@
 			isa = PBXGroup;
 			children = (
 				93BED3CE290C513100DEE9D1 /* WindowManager */,
-				9367455A27C71CE500F43CCD /* PopUpManager */,
 				ADD503E6270DD849009D50CB /* Views */,
 				ADD503DD270DD723009D50CB /* Base */,
 				ADD503CF270DD54D009D50CB /* Coordinator */,
@@ -3681,7 +3619,6 @@
 				6C78B7B329AF5ADB004BF881 /* CallHistoryView.swift in Sources */,
 				6C78B7B429AF5ADB004BF881 /* SelectedFileImageView.swift in Sources */,
 				6C78B7B529AF5ADB004BF881 /* UIControl+Combine.swift in Sources */,
-				6C78B7B629AF5ADB004BF881 /* ChatSearchView.swift in Sources */,
 				6C78B7B729AF5ADB004BF881 /* AllChatsViewModel.swift in Sources */,
 				6C78B7B929AF5ADB004BF881 /* BlockedUsersView.swift in Sources */,
 				6C78B7BA29AF5ADB004BF881 /* SSENewMessage.swift in Sources */,
@@ -3779,7 +3716,6 @@
 				6C78B81029AF5ADB004BF881 /* BlockModel.swift in Sources */,
 				6C78B81129AF5ADB004BF881 /* VideoCallView.swift in Sources */,
 				6C78B81229AF5ADB004BF881 /* PrivacySettingsViewModel.swift in Sources */,
-				6C78B81329AF5ADB004BF881 /* OldAlertViewController.swift in Sources */,
 				6C78B81429AF5ADB004BF881 /* ErrorView.swift in Sources */,
 				6C78B81529AF5ADB004BF881 /* MessageDetailsView.swift in Sources */,
 				6C78B81629AF5ADB004BF881 /* EnterUsernameViewModel.swift in Sources */,
@@ -3824,7 +3760,6 @@
 				6C78B83A29AF5ADB004BF881 /* UIFont+Extensions.swift in Sources */,
 				93D6BFF82A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				6C78B83C29AF5ADB004BF881 /* NewGroupChatViewController.swift in Sources */,
-				6C78B83D29AF5ADB004BF881 /* ChatSearchViewModel.swift in Sources */,
 				6C78B83F29AF5ADB004BF881 /* Message+Extensions.swift in Sources */,
 				6C78B84029AF5ADB004BF881 /* UIView+Extensions.swift in Sources */,
 				6C78B84129AF5ADB004BF881 /* DebugUtils.swift in Sources */,
@@ -3850,12 +3785,10 @@
 				6C78B85229AF5ADB004BF881 /* MessageActionsViewController.swift in Sources */,
 				6C78B85329AF5ADB004BF881 /* Assembler+Extensions.swift in Sources */,
 				6CBEAB7B2A0933AB0087382E /* TableViewHeaderWithIcon.swift in Sources */,
-				6C78B85429AF5ADB004BF881 /* OldAlertView.swift in Sources */,
 				6C78B85529AF5ADB004BF881 /* LoginAssembly.swift in Sources */,
 				6C78B85629AF5ADB004BF881 /* ImageViewWithIcon.swift in Sources */,
 				6C78B85729AF5ADB004BF881 /* UpdatePushRequestModel.swift in Sources */,
 				93BCDFDF2A81598D00CEE826 /* OneNoteViewController.swift in Sources */,
-				6C78B85829AF5ADB004BF881 /* ChatSearchViewController.swift in Sources */,
 				6C78B85929AF5ADB004BF881 /* ImageViewerViewModel.swift in Sources */,
 				6C78B85A29AF5ADB004BF881 /* SeenResponseModel.swift in Sources */,
 				6C2F972829AF67B7001F170B /* ConstantsDev.swift in Sources */,
@@ -3924,7 +3857,6 @@
 				6C78B89529AF5ADB004BF881 /* EnterNumberViewModel.swift in Sources */,
 				6C78B89629AF5ADB004BF881 /* ContactsRequestModel.swift in Sources */,
 				6C78B89729AF5ADB004BF881 /* ChatMembersView.swift in Sources */,
-				6C78B89829AF5ADB004BF881 /* PopUpManager.swift in Sources */,
 				6C78B89929AF5ADB004BF881 /* FetchedContact.swift in Sources */,
 				6C78B89A29AF5ADB004BF881 /* ContactsView.swift in Sources */,
 				934F6DF129E698360010FED9 /* NotificationsHelpers.swift in Sources */,
@@ -4101,7 +4033,6 @@
 				6CF648B02A459FE100E0DE0B /* CallHistoryView.swift in Sources */,
 				6CF648B12A459FE100E0DE0B /* SelectedFileImageView.swift in Sources */,
 				6CF648B22A459FE100E0DE0B /* UIControl+Combine.swift in Sources */,
-				6CF648B32A459FE100E0DE0B /* ChatSearchView.swift in Sources */,
 				6CF648B42A459FE100E0DE0B /* AllChatsViewModel.swift in Sources */,
 				6CF648B52A459FE100E0DE0B /* BlockedUsersView.swift in Sources */,
 				6CF648B62A459FE100E0DE0B /* SSENewMessage.swift in Sources */,
@@ -4198,7 +4129,6 @@
 				6CF6490A2A459FE100E0DE0B /* BlockModel.swift in Sources */,
 				6CF6490B2A459FE100E0DE0B /* VideoCallView.swift in Sources */,
 				6CF6490C2A459FE100E0DE0B /* PrivacySettingsViewModel.swift in Sources */,
-				6CF6490D2A459FE100E0DE0B /* OldAlertViewController.swift in Sources */,
 				6CF6490E2A459FE100E0DE0B /* ErrorView.swift in Sources */,
 				6CF6490F2A459FE100E0DE0B /* MessageDetailsView.swift in Sources */,
 				6CF649102A459FE100E0DE0B /* EnterUsernameViewModel.swift in Sources */,
@@ -4243,7 +4173,6 @@
 				93D6BFF92A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				6CF649342A459FE100E0DE0B /* UIFont+Extensions.swift in Sources */,
 				6CF649352A459FE100E0DE0B /* NewGroupChatViewController.swift in Sources */,
-				6CF649362A459FE100E0DE0B /* ChatSearchViewModel.swift in Sources */,
 				6CF649372A459FE100E0DE0B /* Message+Extensions.swift in Sources */,
 				6CF649382A459FE100E0DE0B /* UIView+Extensions.swift in Sources */,
 				6CF649392A459FE100E0DE0B /* DebugUtils.swift in Sources */,
@@ -4269,12 +4198,10 @@
 				6CF6494D2A459FE100E0DE0B /* MessageActionsViewController.swift in Sources */,
 				6CF6494E2A459FE100E0DE0B /* Assembler+Extensions.swift in Sources */,
 				6CF6494F2A459FE100E0DE0B /* TableViewHeaderWithIcon.swift in Sources */,
-				6CF649502A459FE100E0DE0B /* OldAlertView.swift in Sources */,
 				6CF649512A459FE100E0DE0B /* LoginAssembly.swift in Sources */,
 				6CF649522A459FE100E0DE0B /* ImageViewWithIcon.swift in Sources */,
 				93BCDFE02A81598D00CEE826 /* OneNoteViewController.swift in Sources */,
 				6CF649532A459FE100E0DE0B /* UpdatePushRequestModel.swift in Sources */,
-				6CF649542A459FE100E0DE0B /* ChatSearchViewController.swift in Sources */,
 				6CF649552A459FE100E0DE0B /* ImageViewerViewModel.swift in Sources */,
 				6CF649562A459FE100E0DE0B /* SeenResponseModel.swift in Sources */,
 				6CF649582A459FE100E0DE0B /* BaseSettingsView.swift in Sources */,
@@ -4342,7 +4269,6 @@
 				6CF649932A459FE100E0DE0B /* EnterNumberViewModel.swift in Sources */,
 				6CF649942A459FE100E0DE0B /* ContactsRequestModel.swift in Sources */,
 				6CF649952A459FE100E0DE0B /* ChatMembersView.swift in Sources */,
-				6CF649962A459FE100E0DE0B /* PopUpManager.swift in Sources */,
 				6CF649972A459FE100E0DE0B /* FetchedContact.swift in Sources */,
 				6CF649982A459FE100E0DE0B /* ContactsView.swift in Sources */,
 				6CF649992A459FE100E0DE0B /* NotificationsHelpers.swift in Sources */,
@@ -4517,7 +4443,6 @@
 				AD8192612721D52200D5BE48 /* CallHistoryView.swift in Sources */,
 				93583D9828A3DE9F00CC5642 /* SelectedFileImageView.swift in Sources */,
 				AD81926D2721E2E400D5BE48 /* UIControl+Combine.swift in Sources */,
-				933BE86627B671270099BA9E /* ChatSearchView.swift in Sources */,
 				AD8192692721D5BD00D5BE48 /* AllChatsViewModel.swift in Sources */,
 				934F2EDF28172D150086C343 /* AppRepository+Device.swift in Sources */,
 				6C175ECC297ED94400804275 /* BlockedUsersView.swift in Sources */,
@@ -4616,7 +4541,6 @@
 				6C056C7829700D6E00198EC1 /* BlockModel.swift in Sources */,
 				93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */,
 				6C175EBF297ECCD600804275 /* PrivacySettingsViewModel.swift in Sources */,
-				9367455E27C71D1300F43CCD /* OldAlertViewController.swift in Sources */,
 				AD9BFCF327296D5500736318 /* ErrorView.swift in Sources */,
 				93F4A89E282DE9C400CEA637 /* MessageDetailsView.swift in Sources */,
 				93708E16279F872500F81095 /* EnterUsernameViewModel.swift in Sources */,
@@ -4662,7 +4586,6 @@
 				93C714A12815F888008BBA33 /* Int64+Extensions.swift in Sources */,
 				932462D828FCB9B100E8C1B9 /* UIFont+Extensions.swift in Sources */,
 				938D053027D59DC1002E5CE5 /* NewGroupChatViewController.swift in Sources */,
-				933BE87527B6780F0099BA9E /* ChatSearchViewModel.swift in Sources */,
 				93C07A9C290139B5003DFD61 /* Message+Extensions.swift in Sources */,
 				ADD503CE270DD31D009D50CB /* UIView+Extensions.swift in Sources */,
 				6C0D480A29EEC66D00D8ACD4 /* ChatUsersView.swift in Sources */,
@@ -4688,12 +4611,10 @@
 				6CBEAB7A2A0933AB0087382E /* TableViewHeaderWithIcon.swift in Sources */,
 				9352A5702977667900E0D90E /* MessageActionsViewController.swift in Sources */,
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
-				9367456127C71D3700F43CCD /* OldAlertView.swift in Sources */,
 				AD9BFD29272995CA00736318 /* LoginAssembly.swift in Sources */,
 				93BCDFDE2A81598D00CEE826 /* OneNoteViewController.swift in Sources */,
 				93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */,
 				934F2EE128172EEA0086C343 /* UpdatePushRequestModel.swift in Sources */,
-				933BE87927B67A280099BA9E /* ChatSearchViewController.swift in Sources */,
 				936A28F22926E98600E7333D /* ImageViewerViewModel.swift in Sources */,
 				93AE06EF290892B90009A50C /* SeenResponseModel.swift in Sources */,
 				6C175EB5297EC44C00804275 /* BaseSettingsView.swift in Sources */,
@@ -4761,7 +4682,6 @@
 				AD9BFD242729952B00736318 /* EnterNumberViewModel.swift in Sources */,
 				EA9D14DD27BD0F8E0070BE2B /* ContactsRequestModel.swift in Sources */,
 				6C6AD21D291E41DD0026CDAC /* ChatMembersView.swift in Sources */,
-				9367455C27C71D0100F43CCD /* PopUpManager.swift in Sources */,
 				EAC81D782810422F0004D835 /* FetchedContact.swift in Sources */,
 				934F6DEF29E698360010FED9 /* NotificationsHelpers.swift in Sources */,
 				AD81925C2721D45100D5BE48 /* ContactsView.swift in Sources */,

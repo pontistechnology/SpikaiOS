@@ -62,12 +62,13 @@ class HomeTabBar: UIView, BaseView {
     }
     
     func styleSubviews() {
-        tabContainer.backgroundColor = .primaryBackground
+//        tabContainer.backgroundColor = .primaryBackground
+        //TODO: .clear maybe when gradiend is in background?
         tabStackView.axis = .horizontal
         tabStackView.alignment = .fill
         tabStackView.distribution = .fillEqually
         tabStackView.spacing = 0
-        topBorderView.backgroundColor = .textTertiary
+        topBorderView.backgroundColor = ._textSecondary
     }
     
     func positionSubviews() {

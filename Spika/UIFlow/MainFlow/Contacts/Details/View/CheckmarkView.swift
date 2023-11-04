@@ -10,7 +10,7 @@ import UIKit
 final class CheckmarkView: UIButton, BaseView {
     
     let stackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .center, spacing: 10)
-    let label = CustomLabel(text: "text")
+    let label = CustomLabel(text: "text", textColor: .checkWithDesign)
     let checkmark = UIImageView(image: UIImage(safeImage: .checkmark))
     let text: String
     

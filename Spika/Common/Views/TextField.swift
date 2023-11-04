@@ -23,15 +23,13 @@ class TextField: UITextField {
     }
     
     private func setupButton() {
-        backgroundColor = .secondaryBackground
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.borderColor.cgColor
+        backgroundColor = ._secondaryColor
         layer.cornerRadius = 10
         
-        textColor = .textPrimary
+        textColor = ._textPrimary
         self.font = .customFont(name: .MontserratMedium, size: 14)
         attributedPlaceholder = NSAttributedString(string: textPlaceholder,
-                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
+                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])
     }
     
     func updateText(text: String?) {
@@ -50,15 +48,5 @@ class TextField: UITextField {
         return bounds.inset(by: inset)
     }
     
-}
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension TextField {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        layer.borderColor = UIColor.borderColor.cgColor
-        self.setNeedsDisplay()
-    }
 }
 

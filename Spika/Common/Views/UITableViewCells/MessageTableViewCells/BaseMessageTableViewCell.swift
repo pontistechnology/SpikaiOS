@@ -15,17 +15,17 @@ protocol BaseMessageTableViewCellProtocol {
 
 class BaseMessageTableViewCell: UITableViewCell {
     
-    private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textTertiary, fontName: .MontserratRegular, alignment: .left)
+    private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: ._textPrimary, fontName: .MontserratRegular, alignment: .left)
     private let senderPhotoImageview = UIImageView(image: UIImage(safeImage: .userImage))
-    private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textTertiary, fontName: .MontserratMedium)
+    private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: ._textPrimary, fontName: .MontserratMedium)
     private let messageStateView = MessageStateView()
     let containerStackView = UIStackView()
     private var replyView: MessageReplyView?
     private let progressView = CircularProgressBar(spinnerWidth: 20)
     private var reactionsView: MessageReactionsView?
     
-    private var editedIconImageView = UIImageView(image: UIImage(safeImage: .editIcon).withTintColor(.textSecondary, renderingMode: .alwaysOriginal))
-    private var editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: .textSecondary)
+    private var editedIconImageView = UIImageView(image: UIImage(safeImage: .editIcon).withTintColor(._textSecondary, renderingMode: .alwaysOriginal))
+    private var editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: ._textSecondary)
     
     private var containerBottomConstraint: NSLayoutConstraint?
     
@@ -78,7 +78,8 @@ extension BaseMessageTableViewCell: BaseView {
         senderPhotoImageview.clipsToBounds = true
         senderPhotoImageview.hide()
         timeLabel.hide()
-        backgroundColor = .primaryBackground
+//        backgroundColor = ._primaryColor
+        // TODO: - clear maybe
     }
     
     override func layoutSubviews() {
@@ -181,10 +182,7 @@ extension BaseMessageTableViewCell {
     
     func showReplyView(senderName: String, message: Message, sender: MessageSender?) {
         if replyView == nil, let sender = sender {
-            
-            let containerColor: UIColor = sender == .me ? .chatBackground : .myChatBackground
-            
-            self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: containerColor)
+            self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: sender.backgroundColor)
             
             containerStackView.insertArrangedSubview(replyView!, at: 0)
             

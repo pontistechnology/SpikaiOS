@@ -123,10 +123,6 @@ extension DetailsViewModel {
         getAppCoordinator()?.presentSharedScreen()
     }
     
-    func presentChatSearchScreen() {
-        getAppCoordinator()?.presentChatSearchScreen()
-    }
-    
     func presentFavoritesScreen() {
         getAppCoordinator()?.presentFavoritesScreen()
     }

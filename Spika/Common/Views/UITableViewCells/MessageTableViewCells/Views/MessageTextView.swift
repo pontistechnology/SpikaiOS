@@ -8,7 +8,7 @@
 import UIKit
 
 class MessageTextView: UIView {
-    let textView = CustomTextView(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
+    let textView = CustomTextView(text: "", textSize: 14, textColor: ._textPrimary, fontName: .MontserratMedium)
     
     init() {
         super.init(frame: .zero)
@@ -35,7 +35,7 @@ extension MessageTextView: BaseView {
 }
 
 extension MessageTextView {
-    func setup(text: String?, color: UIColor = .textPrimary) {
+    func setup(text: String?, color: UIColor = ._textPrimary) {
         textView.text = text
         textView.textColor = color
         if let areOnlyEmojis = text?.areOnlyEmojis, areOnlyEmojis {

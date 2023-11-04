@@ -13,7 +13,6 @@ class ContactsAssembly: Assembly {
     func assemble(container: Container) {
         assembleDetailsViewController(container)
         assembleSharedViewController(container)
-        assembleChatSearchViewController(container)
         assembleNotesViewController(container)
         assembleFavoritesViewController(container)
         assembleVideoCallViewController(container)
@@ -85,19 +84,6 @@ class ContactsAssembly: Assembly {
         container.register(OneNoteViewController.self) { (resolver, coordinator: AppCoordinator, noteState: NoteState) in
             let controller = OneNoteViewController()
             controller.viewModel = container.resolve(OneNoteViewModel.self, arguments: coordinator, noteState)
-            return controller
-        }.inObjectScope(.transient)
-    }
-    
-    private func assembleChatSearchViewController(_ container: Container) {
-        container.register(ChatSearchViewModel.self) { (resolver, coordinator: AppCoordinator) in
-            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return ChatSearchViewModel(repository: repository, coordinator: coordinator)
-        }.inObjectScope(.transient)
-
-        container.register(ChatSearchViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let controller = ChatSearchViewController()
-            controller.viewModel = container.resolve(ChatSearchViewModel.self, argument: coordinator)
             return controller
         }.inObjectScope(.transient)
     }

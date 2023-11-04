@@ -36,22 +36,11 @@ extension DeletedMessageTableViewCell: BaseMessageTableViewCellProtocol {
     }
     
     func updateCell(message: Message) {
-        plainTextView.setup(text: "This message is deleted", color: .textTertiary)
-        containerStackView.backgroundColor = .clear
-        containerStackView.layer.borderColor = UIColor.textTertiary.cgColor
+        plainTextView.setup(text: "This message is deleted", color: ._textPrimary)
+        containerStackView.backgroundColor = ._additionalColor
+        containerStackView.layer.borderColor = UIColor.primaryColor.cgColor
         containerStackView.layer.borderWidth = 1
     }
 }
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension DeletedMessageTableViewCell {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        layer.borderColor = UIColor.textTertiary.cgColor
-        self.setNeedsDisplay()
-    }
-}
-
 
 

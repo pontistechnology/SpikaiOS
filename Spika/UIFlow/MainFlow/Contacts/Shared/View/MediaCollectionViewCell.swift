@@ -11,7 +11,7 @@ class MediaCollectionViewCell: UICollectionViewCell, BaseView {
     
     static let reuseIdentifier: String = "MediaCollectionViewCell"
 
-    let testLabel = CustomLabel(text: "collection")
+    let testLabel = CustomLabel(text: "collection", textColor: .checkWithDesign)
     let imageView = UIImageView()
 
     

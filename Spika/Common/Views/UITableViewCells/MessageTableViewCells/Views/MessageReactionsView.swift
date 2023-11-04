@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 class MessageReactionsView: UIView {
-    private var emojiLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratMedium)
-    private var countLabel = CustomLabel(text: "", textSize: 8, textColor: .textPrimary, fontName: .MontserratMedium)
+    private var emojiLabel = CustomLabel(text: "", textSize: 12, textColor: ._textPrimary, fontName: .MontserratMedium)
+    private var countLabel = CustomLabel(text: "", textSize: 8, textColor: ._textPrimary, fontName: .MontserratMedium)
     
     init(emojis: [String]) {
         super.init(frame: .zero)
@@ -32,8 +32,8 @@ extension MessageReactionsView: BaseView {
     func styleSubviews() {
         backgroundColor = .blue
         layer.cornerRadius = 8
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.primaryBackground.cgColor
+//        layer.borderWidth = 1
+//        layer.borderColor = UIColor.primaryBackground.cgColor
     }
     
     func positionSubviews() {
@@ -56,14 +56,15 @@ extension MessageReactionsView {
         }
     }
 }
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension MessageReactionsView {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        layer.borderColor = UIColor.primaryBackground.cgColor
-        self.setNeedsDisplay()
-    }
-}
+// TODO: - delete
+//
+//// MARK: - Changing dark/light mode for cgColors
+//
+//extension MessageReactionsView {
+//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//        super.traitCollectionDidChange(previousTraitCollection)
+//        layer.borderColor = UIColor.primaryBackground.cgColor
+//        self.setNeedsDisplay()
+//    }
+//}
 

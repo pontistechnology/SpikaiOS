@@ -14,7 +14,7 @@ final class CustomTableViewHeader: UIView, BaseView {
     
     init(text: String,
          textSize: CGFloat = 14,
-         textColor: UIColor = .textPrimary,
+         textColor: UIColor = ._textPrimary,
          fontName: CustomFontName = .MontserratRegular,
          alignment: NSTextAlignment = .natural,
          labelMargins: UIEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)) {
@@ -29,7 +29,7 @@ final class CustomTableViewHeader: UIView, BaseView {
     }
     
     func styleSubviews() {
-        self.backgroundColor = UIColor.primaryBackground
+//        self.backgroundColor = ._primaryColor // TODO: - check clear
     }
     
     func positionSubviews() {

@@ -51,16 +51,7 @@ enum PopUpType {
 enum AlertViewButton {
     case regular(title: String)
     case destructive(title: String)
-    
-    var color: UIColor {
-        switch self {
-        case .regular:
-            return .primaryColor
-        case .destructive:
-            return .appRed
-        }
-    }
-    
+        
     var title: String {
         switch self {
         case .regular(let title):
@@ -99,9 +90,9 @@ enum MessageSender {
     var backgroundColor: UIColor {
         switch self {
         case .me:
-            return .myChatBackground
+            return .primaryColor
         case .friend, .group:
-            return .chatBackground
+            return ._secondaryColor
         }
     }
 }
@@ -264,13 +255,11 @@ enum EmojiSection: CaseIterable {
 
 
 enum SpikaTheme: String, CaseIterable {
-    case nika, darkMarine, neon
+    case darkMarine, neon
     
     // TODO: - localize?
     var title: String {
         switch self {
-        case .nika:
-            return "Nika"
         case .neon:
             return "Neon"
         case .darkMarine:
@@ -290,23 +279,12 @@ enum SpikaTheme: String, CaseIterable {
         let _thirdAdditionalColor: ColorResource
         let _fourthAdditionalColor: ColorResource
         let _warningColor: ColorResource
+        let _secondWarningColor: ColorResource
     }
     
     
     func colors() -> SpikaColors {
         return switch self {
-        case .nika:
-            SpikaColors(_backgroundGradientColors: [.appRed],
-                        _primaryColor: .appRed,
-                        _secondaryColor: .appRed,
-                        _tertiaryColor: .appRed,
-                        _textPrimary: .appRed,
-                        _textSecondary: .appRed,
-                        _additionalColor: .appRed,
-                        _secondAdditionalColor: .appRed,
-                        _thirdAdditionalColor: .appRed,
-                        _fourthAdditionalColor: .appRed,
-                        _warningColor: .appRed)
         case .darkMarine:
             SpikaColors(_backgroundGradientColors: [.DarkMarine.BackgroundGradient.gradient1],
                         _primaryColor: .DarkMarine.primary,
@@ -318,7 +296,8 @@ enum SpikaTheme: String, CaseIterable {
                         _secondAdditionalColor: .DarkMarine.additional2,
                         _thirdAdditionalColor: .DarkMarine.additional3,
                         _fourthAdditionalColor: .DarkMarine.additional4,
-                        _warningColor: .DarkMarine.warning)
+                        _warningColor: .DarkMarine.warning1,
+                        _secondWarningColor: .DarkMarine.warning2)
         case .neon:
             SpikaColors(_backgroundGradientColors: [.NeonTodo.BackgroundGradient.gradient1],
                         _primaryColor: .NeonTodo.primary,
@@ -330,7 +309,8 @@ enum SpikaTheme: String, CaseIterable {
                         _secondAdditionalColor: .NeonTodo.additional2,
                         _thirdAdditionalColor: .NeonTodo.additional3,
                         _fourthAdditionalColor: .NeonTodo.additional4,
-                        _warningColor: .NeonTodo.warning)
+                        _warningColor: .NeonTodo.warning1,
+                        _secondWarningColor: .NeonTodo.warning2)
         }
     }
 }

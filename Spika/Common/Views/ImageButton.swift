@@ -32,7 +32,6 @@ class ImageButton: UIView, BaseView {
     }
     
     func styleSubviews() {
-        backgroundView.backgroundColor = .appBlueLight
         backgroundView.layer.cornerRadius = size.height / 2
         backgroundView.clipsToBounds = true
         

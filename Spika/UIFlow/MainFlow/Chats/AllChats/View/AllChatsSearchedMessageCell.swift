@@ -10,9 +10,9 @@ import UIKit
 class AllChatsSearchedMessageCell: UITableViewCell {
     static let reuseIdentifier: String = "AllChatsSearchedMessageCell"
     
-    private let timeLabel = CustomLabel(text: "-", textSize: 14, fontName: .MontserratSemiBold)
-    private let senderNameLabel = CustomLabel(text: "-", textSize: 14, fontName: .MontserratSemiBold)
-    private let messageTextLabel = CustomLabel(text: "-", textSize: 14, fontName: .MontserratRegular)
+    private let timeLabel = CustomLabel(text: "-", textSize: 14, textColor: ._textPrimary, fontName: .MontserratSemiBold)
+    private let senderNameLabel = CustomLabel(text: "-", textSize: 14, textColor: ._textPrimary, fontName: .MontserratSemiBold)
+    private let messageTextLabel = CustomLabel(text: "-", textSize: 14, textColor: ._textPrimary, fontName: .MontserratRegular)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

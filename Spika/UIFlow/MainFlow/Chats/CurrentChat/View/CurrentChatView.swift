@@ -11,8 +11,8 @@ class CurrentChatView: UIView, BaseView {
     
     let messagesTableView = UITableView(frame: .zero, style: .grouped)
     let messageInputView = MessageInputView()
-    private let newMessagesLabel = CustomLabel(text: "You have new messages.", textSize: 16, textColor: .textPrimary, fontName: .MontserratMedium)
-    private let downArrowImageView = UIImageView(image: UIImage(safeImage: .downArrow))
+    private let newMessagesLabel = CustomLabel(text: "You have new messages.", textSize: 16, textColor: ._textPrimary, fontName: .MontserratMedium)
+    private let downArrowImageView = UIImageView(image: UIImage(safeImage: .downArrow).withTintColor(._textPrimary))
     let scrollToBottomStackView = UIStackView()
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
@@ -43,14 +43,14 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.backgroundColor = .clear
         messagesTableView.showsHorizontalScrollIndicator = false
         
-        scrollToBottomStackView.backgroundColor = .chatBackground
+        scrollToBottomStackView.backgroundColor = ._thirdAdditionalColor
         scrollToBottomStackView.layer.cornerRadius = 10
         scrollToBottomStackView.layer.shadowOpacity = 0.25
         scrollToBottomStackView.layer.shadowRadius = 4
         scrollToBottomStackView.layer.shadowOffset = CGSize(width: 0, height: 4)
         downArrowImageView.contentMode = .scaleAspectFit
         
-        backgroundColor = .primaryBackground
+//        backgroundColor = ._primaryColor // TODO: - check
     }
     
     func positionSubviews() {        
@@ -117,5 +117,3 @@ class CurrentChatView: UIView, BaseView {
         }
     }
 }
-
-

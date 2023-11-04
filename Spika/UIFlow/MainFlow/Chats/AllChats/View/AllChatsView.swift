@@ -9,7 +9,7 @@ import UIKit
 
 class AllChatsView: UIView, BaseView {
     
-    private let chatLabel = CustomLabel(text: .getStringFor(.chat), textSize: 28, textColor: .textPrimary)
+    private let chatLabel = CustomLabel(text: .getStringFor(.chat), textSize: 28, textColor: ._textPrimary)
     let newChatButton = UIButton()
     let searchBar = UISearchBar()
     let roomsTableView = UITableView()
@@ -38,6 +38,7 @@ class AllChatsView: UIView, BaseView {
         newChatButton.setImage(UIImage(safeImage: .plus), for: .normal)
         roomsTableView.separatorStyle = .none
         roomsTableView.rowHeight = 70
+        roomsTableView.backgroundColor = .clear
         
         searchBar.placeholder = .getStringFor(.search)
         searchBar.scopeButtonTitles = ["Chats", "Messages"]

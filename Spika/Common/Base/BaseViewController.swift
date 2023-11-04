@@ -39,7 +39,7 @@ class BaseViewController: UIViewController {
     }
     
     func setupView(_ view: UIView) {
-        self.view.backgroundColor = .primaryBackground
+        self.view.backgroundColor = ._backgroundGradientColors.first // TODO: change with gradient
         self.view.addSubview(view)
         view.fillSuperviewSafeAreaLayoutGuide()
         hideKeyboardWhenTappedAround()

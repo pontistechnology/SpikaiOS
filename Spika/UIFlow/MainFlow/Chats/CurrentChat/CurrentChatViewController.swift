@@ -410,7 +410,7 @@ extension CurrentChatViewController: UITableViewDataSource {
         guard let nameOfSection = viewModel.getNameForSection(section: section) else {
             return nil
         }
-        return CustomLabel(text: nameOfSection, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
+        return CustomLabel(text: nameOfSection, textSize: 11, textColor: ._textPrimary, fontName: .MontserratMedium, alignment: .center)
     }
 }
 
@@ -467,7 +467,7 @@ extension CurrentChatViewController {
             self?.viewModel.presentMessageDetails(for: indexPath)
             completionHandler(true)
         }
-        detailsAction.backgroundColor = .primaryBackground
+//        detailsAction.backgroundColor = ._primaryColor // TODO: -check
         detailsAction.image = UIImage(safeImage: .slideDetails)
         return UISwipeActionsConfiguration(actions: [detailsAction])
     }
@@ -483,7 +483,7 @@ extension CurrentChatViewController {
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
             completionHandler(true)
         }
-        firstLeft.backgroundColor = .primaryBackground
+//        firstLeft.backgroundColor = ._primaryColor // TODO: - check
         firstLeft.image = UIImage(safeImage: .slideReply)
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }

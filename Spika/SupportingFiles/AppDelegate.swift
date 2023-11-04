@@ -48,14 +48,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let font =  UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14) else { return }
         UIBarButtonItem.appearance().setTitleTextAttributes(
             [   NSAttributedString.Key.font : font,
-                NSAttributedString.Key.foregroundColor : UIColor.primaryColor
+                NSAttributedString.Key.foregroundColor : UIColor._textPrimary
             ], for: .normal)
         
         UIBarButtonItem.appearance().setTitleTextAttributes(
             [   NSAttributedString.Key.font : font,
             ], for: .disabled)
         
-        UINavigationBar.appearance().tintColor = .primaryColor
+        UINavigationBar.appearance().tintColor = ._textPrimary
     }
 }
 

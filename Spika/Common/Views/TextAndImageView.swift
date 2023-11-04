@@ -9,7 +9,7 @@ import UIKit
 
 final class TextAndImageView: CustomStackView {
     
-    let label = CustomLabel(text: "", textSize: 14, fontName: .MontserratLight, alignment: .right)
+    let label = CustomLabel(text: "", textSize: 14, textColor: .checkWithDesign, fontName: .MontserratLight, alignment: .right)
     let imageView = UIImageView()
     
     init() {

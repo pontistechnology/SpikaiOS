@@ -100,7 +100,7 @@ class NewGroupChatViewController: BaseViewController {
     }
     
     override func setupView(_ view: UIView) {
-        self.view.backgroundColor = .primaryBackground
+        self.view.backgroundColor = .checkWithDesign
         self.view.addSubview(self.scrollView)
         self.scrollView.constraint()
         

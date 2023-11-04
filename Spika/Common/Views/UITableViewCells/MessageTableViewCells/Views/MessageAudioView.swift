@@ -9,7 +9,7 @@ import UIKit
 
 class MessageAudioView: UIView {
     let playButton = UIImageView(image: UIImage(safeImage: .play))
-    private let durationLabel = CustomLabel(text: "02:23", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular)
+    private let durationLabel = CustomLabel(text: "02:23", textSize: 12, textColor: ._textPrimary, fontName: .MontserratRegular)
     let slider = UISlider()
     
     init() {
@@ -30,8 +30,8 @@ extension MessageAudioView: BaseView {
     }
     
     func styleSubviews() {
-        slider.thumbTintColor = .textPrimary
-        slider.minimumTrackTintColor = .textPrimary
+        slider.thumbTintColor = ._textPrimary
+        slider.minimumTrackTintColor = ._textPrimary
         slider.setThumbImage(UIImage(safeImage: .thumb), for: .normal)
         slider.setThumbImage(UIImage(safeImage: .thumb), for: .highlighted)
         slider.minimumValue = 0

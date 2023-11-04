@@ -12,8 +12,8 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "MessageDetailTableViewCell"
     
     private let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
-    private let userNameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
-    private let timeLabel  = CustomLabel(text: "", textSize: 12, textColor: .textSecondary, fontName: .MontserratRegular, alignment: .right)
+    private let userNameLabel = CustomLabel(text: "", textSize: 14, textColor: ._textPrimary, fontName: .MontserratMedium)
+    private let timeLabel  = CustomLabel(text: "", textSize: 12, textColor: ._textSecondary, fontName: .MontserratRegular, alignment: .right)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,7 +31,7 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .secondaryBackground
+        backgroundColor = ._secondaryColor
         leftImageView.clipsToBounds = true
         leftImageView.layer.cornerRadius = 35/2
         userNameLabel.numberOfLines = 1

@@ -11,8 +11,8 @@ import UIKit
 class LinksTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "LinksTableViewCell"
     
-    let titleLabel = CustomLabel(text: "this is default text for cell", textSize: 11)
-    let linkLabel  = CustomLabel(text: "www.defaultfsajofiajsoidfjoiasjodifjiosajdoifjsoaidjfoisafoijasidfjolink.com", textSize: 9, textColor: .textTertiary)
+    let titleLabel = CustomLabel(text: "this is default text for cell", textSize: 11, textColor: .checkWithDesign)
+    let linkLabel  = CustomLabel(text: "www.defaultfsajofiajsoidfjoiasjodifjiosajdoifjsoaidjfoisafoijasidfjolink.com", textSize: 9, textColor: ._textSecondary)
     let leftImageView = UIImageView(image: UIImage(safeImage: .docs))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -33,7 +33,7 @@ class LinksTableViewCell: UITableViewCell, BaseView {
     func styleSubviews() {
         leftImageView.clipsToBounds = true
         leftImageView.layer.cornerRadius = 6
-        leftImageView.backgroundColor = .appBlueLight
+        leftImageView.backgroundColor = .checkWithDesign // TODO: - check
         linkLabel.numberOfLines = 2
         titleLabel.numberOfLines = 1
     }

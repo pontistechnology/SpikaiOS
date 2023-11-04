@@ -11,7 +11,7 @@ final class TableViewHeaderWithIcon: UITableViewHeaderFooterView, BaseView {
     
     let stackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .center, spacing: 10)
     let icon = UIImageView()
-    let title = CustomLabel(text: "Header")
+    let title = CustomLabel(text: "Header", textColor: .checkWithDesign)
     
     
     override init(reuseIdentifier: String?) {

@@ -10,8 +10,8 @@ import UIKit
 class ContentView: UIView, BaseView {
     
     let profilePhoto = UIImageView()
-    let nameLabel = CustomLabel(text: .getStringFor(.nameAndSurname), fontName: .MontserratSemiBold)
-    let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
+    let nameLabel = CustomLabel(text: .getStringFor(.nameAndSurname), textColor: .checkWithDesign, fontName: .MontserratSemiBold)
+    let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: UIColor._textPrimary, fontName: .MontserratSemiBold)
     let messageButton = ImageButton(image: UIImage(safeImage: .chatBubble))
     let phoneCallButton = ImageButton(image: UIImage(safeImage: .phoneCall))
     let videoCallButton = ImageButton(image: UIImage(safeImage: .videoCall))
@@ -25,8 +25,8 @@ class ContentView: UIView, BaseView {
     let favoriteMessagesOptionButton = NavView(text: .getStringFor(.favoriteMessages))
     let pinChatSwitchView = SwitchView(text: .getStringFor(.pinchat))
     let muteSwitchView = SwitchView(text: .getStringFor(.mute))
-    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: .appRed)
-    let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .appRed)
+    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: ._warningColor)
+    let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: ._warningColor)
     
 
     override init(frame: CGRect) {

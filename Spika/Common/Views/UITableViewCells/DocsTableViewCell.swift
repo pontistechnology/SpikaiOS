@@ -11,7 +11,7 @@ import UIKit
 class DocsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "DocsTableViewCell"
     
-    let docNameLabel = CustomLabel(text: "this is default text for cell")
+    let docNameLabel = CustomLabel(text: "this is default text for cell", textColor: .checkWithDesign)
     let leftImageView = UIImageView(image: UIImage(safeImage: .docs))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -31,7 +31,7 @@ class DocsTableViewCell: UITableViewCell, BaseView {
     func styleSubviews() {
         leftImageView.clipsToBounds = true
         leftImageView.layer.cornerRadius = 6
-        leftImageView.backgroundColor = .appBlueLight
+        leftImageView.backgroundColor = .checkWithDesign
         docNameLabel.numberOfLines = 2
     }
     

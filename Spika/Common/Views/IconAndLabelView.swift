@@ -9,7 +9,7 @@ import UIKit
 
 final class IconAndLabelView: UIView {
     private let iconImageView = UIImageView()
-    private let textLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium)
+    private let textLabel = CustomLabel(text: "", textSize: 11, textColor: ._textPrimary, fontName: .MontserratMedium)
     private let messageType: MessageType
     private let text: String?
     

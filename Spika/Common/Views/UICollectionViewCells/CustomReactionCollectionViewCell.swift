@@ -12,7 +12,7 @@ class CustomReactionCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "CustomReactionCollectionViewCell"
     static let widthOrHeight: Double = 32.0
     
-    private let emojiLabel = CustomLabel(text: "", textSize: 26)
+    private let emojiLabel = CustomLabel(text: "", textSize: 26, textColor: .checkWithDesign)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
