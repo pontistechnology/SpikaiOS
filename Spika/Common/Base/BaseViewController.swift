@@ -11,6 +11,7 @@ import Combine
 class BaseViewController: UIViewController {
     
     var subscriptions = Set<AnyCancellable>()
+    private let imageView = UIImageView(image: UIImage(resource: .testBackground))
     private let circularProgressBar = CircularProgressBar(spinnerWidth: 24)
     let imagePickerPublisher = PassthroughSubject<UIImage, Never>()
     
@@ -36,10 +37,11 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(imageView)
+        imageView.fillSuperview()
     }
     
     func setupView(_ view: UIView) {
-        self.view.backgroundColor = ._backgroundGradientColors.first // TODO: change with gradient
         self.view.addSubview(view)
         view.fillSuperviewSafeAreaLayoutGuide()
         hideKeyboardWhenTappedAround()

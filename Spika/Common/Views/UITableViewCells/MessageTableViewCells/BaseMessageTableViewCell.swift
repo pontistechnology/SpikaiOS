@@ -78,7 +78,7 @@ extension BaseMessageTableViewCell: BaseView {
         senderPhotoImageview.clipsToBounds = true
         senderPhotoImageview.hide()
         timeLabel.hide()
-//        backgroundColor = ._primaryColor
+        backgroundColor = .clear
         // TODO: - clear maybe
     }
     
