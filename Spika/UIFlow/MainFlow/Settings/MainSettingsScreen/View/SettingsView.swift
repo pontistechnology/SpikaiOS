@@ -14,7 +14,7 @@ class SettingsView: BaseSettingsView {
     
     let userImage = ImageViewWithIcon(image:  UIImage(safeImage: .userImage),size: CGSize(width: 120, height: 120))
     
-    let userName = CustomButton(text: "", textSize: 18, textColor: .checkWithDesign, fontName: .MontserratSemiBold)
+    let userName = CustomButton(text: "", textSize: 18, textColor: .textPrimary, fontName: .MontserratSemiBold)
     let userNameTextField = TextField()
     
     let userPhoneNumber = CustomLabel(text: .getStringFor(.group), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
