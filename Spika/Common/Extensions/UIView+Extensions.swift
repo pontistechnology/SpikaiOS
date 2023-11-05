@@ -233,6 +233,13 @@ extension UIView {
 
 extension UIView {
     func setGradientBackground(colors: [UIColor]) {
+        // letter S
+        let imageView = UIImageView(image: UIImage(resource: .testBackground).withTintColor(.checkWithDesign))
+        self.insertSubview(imageView, at: 0)
+        imageView.contentMode = .scaleAspectFill
+        imageView.fillSuperview()
+        
+        // gradient background
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = colors.map({ $0.cgColor })
         gradientLayer.frame = self.frame

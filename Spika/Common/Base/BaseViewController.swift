@@ -11,13 +11,10 @@ import Combine
 class BaseViewController: UIViewController {
     
     var subscriptions = Set<AnyCancellable>()
-    private let imageView = UIImageView(image: UIImage(resource: .testBackground))
     private let circularProgressBar = CircularProgressBar(spinnerWidth: 24)
     let imagePickerPublisher = PassthroughSubject<UIImage, Never>()
-    private let showBackgroundImage: Bool
     
-    init(showBackgroundImage: Bool = false) {
-        self.showBackgroundImage = showBackgroundImage
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,9 +36,6 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if showBackgroundImage {
-            view.setGradientBackground(colors: UIColor._backgroundGradientColors)
-        }
     }
     
     func setupView(_ view: UIView) {

@@ -26,6 +26,7 @@ class CurrentChatViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
         setupView(currentChatView)
         setupBindings()
         self.navigationItem.backButtonTitle = self.viewModel.room.name
