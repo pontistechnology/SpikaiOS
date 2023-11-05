@@ -286,7 +286,8 @@ enum SpikaTheme: String, CaseIterable {
     func colors() -> SpikaColors {
         return switch self {
         case .darkMarine:
-            SpikaColors(_backgroundGradientColors: [.DarkMarine.BackgroundGradient.gradient1],
+            SpikaColors(_backgroundGradientColors: [.DarkMarine.BackgroundGradient.gradient1,
+                                                    .DarkMarine.BackgroundGradient.gradient2],
                         _primaryColor: .DarkMarine.primary,
                         _secondaryColor: .DarkMarine.secondary,
                         _tertiaryColor: .DarkMarine.tertiary,
@@ -299,7 +300,10 @@ enum SpikaTheme: String, CaseIterable {
                         _warningColor: .DarkMarine.warning1,
                         _secondWarningColor: .DarkMarine.warning2)
         case .neon:
-            SpikaColors(_backgroundGradientColors: [.Neon.BackgroundGradient.gradient1],
+            SpikaColors(_backgroundGradientColors: [.Neon.BackgroundGradient.gradient1,
+                                                    .Neon.BackgroundGradient.gradient2,
+                                                    .Neon.BackgroundGradient.gradient3,
+                                                    .Neon.BackgroundGradient.gradient4],
                         _primaryColor: .Neon.primary,
                         _secondaryColor: .Neon.secondary,
                         _tertiaryColor: .Neon.tertiary,

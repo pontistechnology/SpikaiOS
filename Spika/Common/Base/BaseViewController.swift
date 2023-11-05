@@ -40,9 +40,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if showBackgroundImage {
-            view.addSubview(imageView)
-            imageView.contentMode = .scaleAspectFill
-            imageView.fillSuperview()
+            view.setGradientBackground(colors: UIColor._backgroundGradientColors)
         }
     }
     

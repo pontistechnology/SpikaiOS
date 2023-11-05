@@ -12,7 +12,7 @@ import CoreData
 
 class HomeViewController: UIPageViewController {
     
-    private let imageView = UIImageView(image: UIImage(resource: .testBackground))
+    private let imageView = UIImageView(image: UIImage(resource: .testBackground).withTintColor(.checkWithDesign))
     var homeTabBar: HomeTabBar!
     let viewModel: HomeViewModel
     let startTab: TabBarItem
@@ -44,6 +44,7 @@ class HomeViewController: UIPageViewController {
         view.insertSubview(imageView, at: 0)
         imageView.contentMode = .scaleAspectFill
         imageView.fillSuperview()
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
         configurePageViewController()
         setupBinding()
         
