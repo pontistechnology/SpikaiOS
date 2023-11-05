@@ -25,17 +25,22 @@ class UserSelectionViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.addSubviews()
-        self.positionSubviews()
-        self.setupBindings()
+        addSubviews()
+        styleSubviews()
+        positionSubviews()
+        setupBindings()
     }
     
     private func addSubviews() {
-        self.view.addSubview(self.userSelectionView)
+        view.addSubview(userSelectionView)
+    }
+    
+    private func styleSubviews() {
+        view.backgroundColor = .secondaryColor
     }
     
     private func positionSubviews() {
-        self.userSelectionView.fillSuperview()
+        userSelectionView.fillSuperview()
     }
     
     private func setupBindings() {
@@ -43,14 +48,14 @@ class UserSelectionViewController: BaseViewController {
         userSelectionView.contactsTableView.delegate = self
         userSelectionView.contactsTableView.dataSource = self
         
-        self.userSelectionView
+        userSelectionView
             .doneLabel
             .tap()
             .sink { [weak self] _ in
                 self?.dismiss(animated: true, completion: {  [weak self] in
                     self?.onNext()
                 })
-            }.store(in: &self.subscriptions)
+            }.store(in: &subscriptions)
         
         userSelectionView.cancelLabel.tap().sink { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
@@ -69,7 +74,7 @@ class UserSelectionViewController: BaseViewController {
     }
     
     private func onNext() {
-        self.viewModel.onDone()
+        viewModel.onDone()
     }
     
 }
@@ -80,7 +85,7 @@ extension UserSelectionViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return CustomTableViewHeader(text: self.viewModel.frc?.sections?[section].name ?? "-",
+        return CustomTableViewHeader(text: viewModel.frc?.sections?[section].name ?? "-",
                                      textSize: 18,
                                      textColor: .textPrimary,
                                      fontName: .MontserratSemiBold,
@@ -89,38 +94,38 @@ extension UserSelectionViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.viewModel.selectUser(at: indexPath)
-        self.userSelectionView.contactsTableView.reloadRows(at: [indexPath], with: .none)
+        viewModel.selectUser(at: indexPath)
+        userSelectionView.contactsTableView.reloadRows(at: [indexPath], with: .none)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 }
 
 extension UserSelectionViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        self.viewModel.frc?.sections?.count ?? 0
+        viewModel.frc?.sections?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = self.viewModel.frc?.sections else { return 0 }
+        guard let sections = viewModel.frc?.sections else { return 0 }
         return sections[section].numberOfObjects
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell,
-              let userEntity = self.viewModel.frc?.object(at: indexPath) else {
+              let userEntity = viewModel.frc?.object(at: indexPath) else {
             return EmptyTableViewCell()
         }
         let user = User(entity: userEntity)
         
         cell.selectionStyle = .none
         // User Preselected - selection disabled
-        cell.backgroundColor = self.viewModel.userSelectionDisabled(user: user) ? .checkWithDesign : .checkWithDesign
-        cell.isUserInteractionEnabled = !self.viewModel.userSelectionDisabled(user: user)
+        cell.backgroundColor = viewModel.userSelectionDisabled(user: user) ? .checkWithDesign : .checkWithDesign
+        cell.isUserInteractionEnabled = !viewModel.userSelectionDisabled(user: user)
         // User was selected
-        cell.accessoryType = self.viewModel.userSelected(user: user) ? .checkmark : .none
+        cell.accessoryType = viewModel.userSelected(user: user) ? .checkmark : .none
         
         cell.configureCell(title: user.getDisplayName(),
                             description: user.telephoneNumber,
@@ -134,12 +139,12 @@ extension UserSelectionViewController: UITableViewDataSource {
 extension UserSelectionViewController: SearchBarDelegate {
     func searchBar(_ searchBar: SearchBar, valueDidChange value: String?) {
         if let value = value {
-            self.viewModel.setFetch(withSearch: value)
+            viewModel.setFetch(withSearch: value)
         }
     }
     
     func searchBar(_ searchBar: SearchBar, didPressCancel value: Bool) {
-        self.viewModel.setFetch(withSearch: nil)
-        self.view.endEditing(true)
+        viewModel.setFetch(withSearch: nil)
+        view.endEditing(true)
     }
 }

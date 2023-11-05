@@ -9,7 +9,7 @@ import UIKit
 
 class SwitchView: UIView, BaseView {
     
-    let label = CustomLabel(text: "text", textColor: .checkWithDesign)
+    let label = CustomLabel(text: "text", textColor: .textPrimary)
     let stateSwitch = UISwitch()
     let text: String
     

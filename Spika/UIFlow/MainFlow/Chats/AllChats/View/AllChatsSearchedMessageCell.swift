@@ -34,6 +34,7 @@ extension AllChatsSearchedMessageCell: BaseView {
     func styleSubviews() {
         messageTextLabel.numberOfLines = 4
         timeLabel.textAlignment = .right
+        backgroundColor = .clear
     }
     
     func positionSubviews() {

@@ -48,8 +48,8 @@ class AllChatsView: UIView, BaseView {
         searchBar.searchTextField.leftView?.tintColor = ._textSecondary
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: .getStringFor(.search), attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])
         searchBar.barTintColor = ._backgroundGradientColors.first // TODO: - check
-        
         searchedMessagesTableView.isHidden = true
+        searchedMessagesTableView.backgroundColor = .clear
     }
     
     func positionSubviews() {

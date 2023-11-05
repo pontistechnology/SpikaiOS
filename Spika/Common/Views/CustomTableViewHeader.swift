@@ -29,7 +29,7 @@ final class CustomTableViewHeader: UIView, BaseView {
     }
     
     func styleSubviews() {
-//        self.backgroundColor = .clear // TODO: - check clear
+        self.backgroundColor = ._additionalColor // TODO: - check clear
     }
     
     func positionSubviews() {

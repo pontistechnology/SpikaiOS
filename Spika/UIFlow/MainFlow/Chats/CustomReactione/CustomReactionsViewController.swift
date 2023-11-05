@@ -31,7 +31,7 @@ class CustomReactionsViewController: BaseViewController {
         setupBindings()
         viewModel.getEmojis()
         mainView.collectionView.reloadData()
-//        view.backgroundColor = ._secondaryColor // TODO: - check
+        view.backgroundColor = .secondaryColor // TODO: - check
     }
     
     func setupBindings() {
