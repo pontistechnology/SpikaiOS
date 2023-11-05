@@ -299,18 +299,18 @@ enum SpikaTheme: String, CaseIterable {
                         _warningColor: .DarkMarine.warning1,
                         _secondWarningColor: .DarkMarine.warning2)
         case .neon:
-            SpikaColors(_backgroundGradientColors: [.NeonTodo.BackgroundGradient.gradient1],
-                        _primaryColor: .NeonTodo.primary,
-                        _secondaryColor: .NeonTodo.secondary,
-                        _tertiaryColor: .NeonTodo.tertiary,
-                        _textPrimary: .NeonTodo.textPrimary,
-                        _textSecondary: .NeonTodo.textSecondary,
-                        _additionalColor: .NeonTodo.additional1,
-                        _secondAdditionalColor: .NeonTodo.additional2,
-                        _thirdAdditionalColor: .NeonTodo.additional3,
-                        _fourthAdditionalColor: .NeonTodo.additional4,
-                        _warningColor: .NeonTodo.warning1,
-                        _secondWarningColor: .NeonTodo.warning2)
+            SpikaColors(_backgroundGradientColors: [.Neon.BackgroundGradient.gradient1],
+                        _primaryColor: .Neon.primary,
+                        _secondaryColor: .Neon.secondary,
+                        _tertiaryColor: .Neon.tertiary,
+                        _textPrimary: .Neon.textPrimary,
+                        _textSecondary: .Neon.textSecondary,
+                        _additionalColor: .Neon.additional1,
+                        _secondAdditionalColor: .Neon.additional2,
+                        _thirdAdditionalColor: .Neon.additional3,
+                        _fourthAdditionalColor: .Neon.additional4,
+                        _warningColor: .Neon.warning1,
+                        _secondWarningColor: .Neon.warning2)
         }
     }
 }
