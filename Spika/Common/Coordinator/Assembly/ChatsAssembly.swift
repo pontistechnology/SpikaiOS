@@ -36,7 +36,7 @@ class ChatsAssembly: Assembly {
         }.inObjectScope(.transient)
 
         container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
-            let controller = CurrentChatViewController()
+            let controller = CurrentChatViewController(showBackgroundImage: true)
             controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, room, messageId)
             return controller
         }.inObjectScope(.transient)

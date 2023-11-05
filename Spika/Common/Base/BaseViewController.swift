@@ -14,8 +14,10 @@ class BaseViewController: UIViewController {
     private let imageView = UIImageView(image: UIImage(resource: .testBackground))
     private let circularProgressBar = CircularProgressBar(spinnerWidth: 24)
     let imagePickerPublisher = PassthroughSubject<UIImage, Never>()
+    private let showBackgroundImage: Bool
     
-    init() {
+    init(showBackgroundImage: Bool = false) {
+        self.showBackgroundImage = showBackgroundImage
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -37,8 +39,11 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(imageView)
-        imageView.fillSuperview()
+        if showBackgroundImage {
+            view.addSubview(imageView)
+            imageView.contentMode = .scaleAspectFill
+            imageView.fillSuperview()
+        }
     }
     
     func setupView(_ view: UIView) {
