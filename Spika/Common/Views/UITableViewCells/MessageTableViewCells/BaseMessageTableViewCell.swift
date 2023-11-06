@@ -85,15 +85,14 @@ extension BaseMessageTableViewCell: BaseView {
     override func layoutSubviews() {
         super.layoutSubviews()
         // round corners needs to be called after viewDidAppear
-        // TODO: - move to function
         guard let reuseIdentifier,
               let sender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
         else { return }
         switch sender {
         case .me:
-            containerStackView.roundCorners(corners: .bottomLeft, radius: 16)
+            containerStackView.roundCorners(corners: [.bottomLeft, .topLeft, .topRight], radius: 16)
         case .friend, .group:
-            containerStackView.roundCorners(corners: .bottomRight, radius: 16)
+            containerStackView.roundCorners(corners: [.topLeft, .topRight, .bottomRight], radius: 16)
         }
     }
     
