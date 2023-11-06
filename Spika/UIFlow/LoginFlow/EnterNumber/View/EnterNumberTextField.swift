@@ -55,14 +55,14 @@ class EnterNumberTextField: UIView, BaseView {
             
         countryNumberLabel.text = countryNumber
         
-        lineBreakView.backgroundColor = ._textSecondary
+        lineBreakView.backgroundColor = .textSecondary
         
         textField.keyboardType = .phonePad
         textField.placeholder = placeholder
         textField.textColor = .textPrimary
         textField.font = .customFont(name: .MontserratMedium)
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
         
         numberView.backgroundColor = .secondaryColor
         numberView.layer.cornerRadius = 30

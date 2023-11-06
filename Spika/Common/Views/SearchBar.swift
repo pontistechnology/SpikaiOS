@@ -57,7 +57,7 @@ class SearchBar: UIView, BaseView {
         searchTextField.textColor = .textPrimary
         searchTextField.font = .customFont(name: .MontserratMedium, size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])
+                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
         
         searchView.backgroundColor = ._thirdAdditionalColor
         searchView.layer.cornerRadius = 10

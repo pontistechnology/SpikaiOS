@@ -24,8 +24,8 @@ class BaseMessageTableViewCell: UITableViewCell {
     private let progressView = CircularProgressBar(spinnerWidth: 20)
     private var reactionsView: MessageReactionsView?
     
-    private var editedIconImageView = UIImageView(image: UIImage(safeImage: .editIcon).withTintColor(._textSecondary, renderingMode: .alwaysOriginal))
-    private var editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: ._textSecondary)
+    private var editedIconImageView = UIImageView(image: UIImage(safeImage: .editIcon).withTintColor(.textSecondary, renderingMode: .alwaysOriginal))
+    private var editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: .textSecondary)
     
     private var containerBottomConstraint: NSLayoutConstraint?
     

@@ -30,7 +30,7 @@ class EmojiCategoriesView: UIStackView {
 extension EmojiCategoriesView: BaseView {
     
     func selectCategory(at index: Int) {
-        arrangedSubviews.forEach { $0.tintColor = ._textSecondary }
+        arrangedSubviews.forEach { $0.tintColor = .textSecondary }
         guard index < arrangedSubviews.count else { return }
         arrangedSubviews[index].tintColor = .checkWithDesign
     }
@@ -51,7 +51,7 @@ extension EmojiCategoriesView: BaseView {
     func styleSubviews() {
         axis = .horizontal
         distribution = .equalSpacing
-        topBorderLine.backgroundColor = ._textSecondary
+        topBorderLine.backgroundColor = .checkWithDesign
     }
     
     func positionSubviews() {

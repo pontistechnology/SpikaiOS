@@ -29,7 +29,7 @@ class TextField: UITextField {
         textColor = .textPrimary
         self.font = .customFont(name: .MontserratMedium, size: 14)
         attributedPlaceholder = NSAttributedString(string: textPlaceholder,
-                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])
+                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
     }
     
     func updateText(text: String?) {

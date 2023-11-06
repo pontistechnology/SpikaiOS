@@ -13,7 +13,7 @@ class CustomButton: UIButton {
          assetName: AssetName? = nil,
          textSize: CGFloat = 14,
          textColor: UIColor = .textPrimary,
-         disabledTextColor: UIColor = ._textSecondary,
+         disabledTextColor: UIColor = .textSecondary,
          fontName: CustomFontName = .MontserratRegular,
          alignment: UIControl.ContentHorizontalAlignment = .center) {
         super.init(frame: CGRectZero)

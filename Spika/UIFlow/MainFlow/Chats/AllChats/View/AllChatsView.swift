@@ -43,10 +43,10 @@ class AllChatsView: UIView, BaseView {
         searchBar.scopeButtonTitles = ["Chats", "Messages"]
         searchBar.showsScopeBar = false
         searchBar.searchBarStyle = .minimal
-        searchBar.searchTextField.textColor = ._textSecondary
+        searchBar.searchTextField.textColor = .textSecondary
         // TODO: - check dark mode color
-        searchBar.searchTextField.leftView?.tintColor = ._textSecondary
-        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: .getStringFor(.search), attributes: [NSAttributedString.Key.foregroundColor: UIColor._textSecondary])
+        searchBar.searchTextField.leftView?.tintColor = .textSecondary
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: .getStringFor(.search), attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
         searchBar.barTintColor = ._backgroundGradientColors.first // TODO: - check
         searchedMessagesTableView.isHidden = true
         searchedMessagesTableView.backgroundColor = .clear
