@@ -44,10 +44,10 @@ extension UIColor {
     static var additionalColor: UIColor {
         spikaColors()._additionalColor.uiColor
     }
-    static var _secondAdditionalColor: UIColor {
+    static var secondAdditionalColor: UIColor {
         spikaColors()._secondAdditionalColor.uiColor
     }
-    static var _thirdAdditionalColor: UIColor {
+    static var thirdAdditionalColor: UIColor {
         spikaColors()._thirdAdditionalColor.uiColor
     }
     static var _fourthAdditionalColor: UIColor {

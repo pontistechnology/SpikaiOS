@@ -39,7 +39,7 @@ extension ExpandableTextView {
         layer.cornerRadius = 10
         clipsToBounds = true
         customFont(name: .MontserratMedium)
-        backgroundColor = ._thirdAdditionalColor
+        backgroundColor = .thirdAdditionalColor
     }
   
     func positionSubviews() {

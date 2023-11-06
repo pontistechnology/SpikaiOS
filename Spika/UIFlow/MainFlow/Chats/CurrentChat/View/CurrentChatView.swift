@@ -43,7 +43,7 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.backgroundColor = .clear
         messagesTableView.showsHorizontalScrollIndicator = false
         
-        scrollToBottomStackView.backgroundColor = ._thirdAdditionalColor
+        scrollToBottomStackView.backgroundColor = .thirdAdditionalColor
         scrollToBottomStackView.layer.cornerRadius = 10
         scrollToBottomStackView.layer.shadowOpacity = 0.25
         scrollToBottomStackView.layer.shadowRadius = 4
