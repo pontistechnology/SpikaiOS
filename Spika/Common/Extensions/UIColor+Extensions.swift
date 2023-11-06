@@ -41,7 +41,7 @@ extension UIColor {
     static var textSecondary: UIColor {
         spikaColors()._textSecondary.uiColor
     }
-    static var _additionalColor: UIColor {
+    static var additionalColor: UIColor {
         spikaColors()._additionalColor.uiColor
     }
     static var _secondAdditionalColor: UIColor {
