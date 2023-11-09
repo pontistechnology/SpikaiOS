@@ -12,7 +12,6 @@ class HomeTabBar: UIView, BaseView {
     
     private let tabContainer = UIView()
     let tabStackView = UIStackView()
-    private let topBorderView  = UIView()
     
     let tabBarItems: [TabBarItem]
     let tabs: [TabBarItemView]
@@ -58,17 +57,13 @@ class HomeTabBar: UIView, BaseView {
     func addSubviews() {
         addSubview(tabContainer)
         addSubview(tabStackView)
-        addSubview(topBorderView)
     }
     
     func styleSubviews() {
-//        tabContainer.backgroundColor = .primaryBackground
-        //TODO: .clear maybe when gradiend is in background?
         tabStackView.axis = .horizontal
         tabStackView.alignment = .fill
         tabStackView.distribution = .fillEqually
         tabStackView.spacing = 0
-        topBorderView.backgroundColor = .checkWithDesign
     }
     
     func positionSubviews() {
@@ -78,9 +73,6 @@ class HomeTabBar: UIView, BaseView {
         tabStackView.anchor(leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 15))
         tabStackView.constrainHeight(HomeTabBar.tabBarHeight - 15)
         tabStackView.centerY(inView: tabContainer)
-        
-        topBorderView.anchor(leading: tabContainer.leadingAnchor, bottom: tabContainer.topAnchor, trailing: tabContainer.trailingAnchor)
-        topBorderView.constrainHeight(0.5)
     }
     
 }
