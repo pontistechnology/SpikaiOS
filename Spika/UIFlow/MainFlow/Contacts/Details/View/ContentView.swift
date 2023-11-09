@@ -25,8 +25,8 @@ class ContentView: UIView, BaseView {
     let favoriteMessagesOptionButton = NavView(text: .getStringFor(.favoriteMessages))
     let pinChatSwitchView = SwitchView(text: .getStringFor(.pinchat))
     let muteSwitchView = SwitchView(text: .getStringFor(.mute))
-    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: ._warningColor)
-    let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: ._warningColor)
+    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: .warningColor)
+    let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .warningColor)
     
 
     override init(frame: CGRect) {

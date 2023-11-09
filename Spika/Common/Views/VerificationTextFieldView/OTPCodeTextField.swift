@@ -62,7 +62,7 @@ extension OTPCodeTextField {
             inputText = String(inputText.prefix(self.otpLength))
             self.text = inputText
             let entryGood = inputText.count == self.otpLength
-            self.layer.borderColor = entryGood ? UIColor.clear.cgColor : UIColor._warningColor.cgColor
+            self.layer.borderColor = entryGood ? UIColor.clear.cgColor : UIColor.warningColor.cgColor
             self.isEntryGood.send(entryGood)
         }.store(in: &subs)
     }

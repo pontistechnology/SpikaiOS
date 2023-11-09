@@ -41,7 +41,7 @@ extension WindowManager {
                                             y: 60,
                                             width: width,
                                             height: width)
-            self.indicatorWindow?.backgroundColor = ._warningColor
+            self.indicatorWindow?.backgroundColor = .warningColor
             self.indicatorWindow?.unhide()
             self.indicatorWindow?.layer.cornerRadius = width / 2
             self.indicatorWindow?.clipsToBounds = true

@@ -38,7 +38,7 @@ class SettingsView: BaseSettingsView {
         userNameTextField.delegate = self
         userNameTextField.hide()
         
-        deleteMyAccountButton.label.textColor = ._warningColor
+        deleteMyAccountButton.label.textColor = .warningColor
     }
     
     override func addSubviews() {

@@ -28,9 +28,9 @@ class ChatContentView: UIView, BaseView {
     
     let chatMembersView = ChatMembersView(canAddNewMore: true)
     
-    let blockButton = CustomButton(text: .getStringFor(.block), textSize: 14, textColor: ._warningColor, alignment: .left)
-    let deleteButton = CustomButton(text: .getStringFor(.delete), textSize: 14, textColor: ._warningColor, alignment: .left)
-    let leaveButton = CustomButton(text: .getStringFor(.exitGroup), textSize: 14, textColor: ._warningColor, alignment: .left)
+    let blockButton = CustomButton(text: .getStringFor(.block), textSize: 14, textColor: .warningColor, alignment: .left)
+    let deleteButton = CustomButton(text: .getStringFor(.delete), textSize: 14, textColor: .warningColor, alignment: .left)
+    let leaveButton = CustomButton(text: .getStringFor(.exitGroup), textSize: 14, textColor: .warningColor, alignment: .left)
     
     let chatNameChanged = PassthroughSubject<String,Never>()
     

@@ -50,13 +50,13 @@ extension UIColor {
     static var thirdAdditionalColor: UIColor {
         spikaColors()._thirdAdditionalColor.uiColor
     }
-    static var _fourthAdditionalColor: UIColor {
+    static var fourthAdditionalColor: UIColor {
         spikaColors()._fourthAdditionalColor.uiColor
     }
-    static var _warningColor: UIColor {
+    static var warningColor: UIColor {
         spikaColors()._warningColor.uiColor
     }
-    static var _secondWarningColor: UIColor {
+    static var secondWarningColor: UIColor {
         spikaColors()._secondWarningColor.uiColor
     }
     
