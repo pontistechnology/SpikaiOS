@@ -33,8 +33,7 @@ class MessageInputView: UIStackView, BaseView {
     let inputViewTapPublisher = PassthroughSubject<MessageInputViewButtonAction, Never>()
     let currentStatePublisher = CurrentValueSubject<MessageInputViewState, Never>(.empty)
     private var subscriptions = Set<AnyCancellable>()
-
-    private let dividerLine = UIView()
+    
     lazy var inputTextAndControlsView = InputTextAndControlsView(publisher: inputViewTapPublisher)
     var replyView: MessageReplyView?
         
@@ -49,18 +48,14 @@ class MessageInputView: UIStackView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(dividerLine)
         addArrangedSubview(inputTextAndControlsView)
     }
     
     func styleSubviews() {
         axis = .vertical
-        dividerLine.backgroundColor = .checkWithDesign
     }
     
     func positionSubviews() {
-        dividerLine.constrainHeight(0.5)
-        dividerLine.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
     }
     
     func setupBindings() {
