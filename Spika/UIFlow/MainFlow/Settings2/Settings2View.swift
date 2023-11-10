@@ -13,21 +13,20 @@ struct Settings2View: View {
 
     var body: some View {
         ScrollView {
-            if let url = viewModel.user?.avatarFileId?.fullFilePathFromId() {
-                AsyncImage(url: url) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                    } else {
-                        Image(.userDefaultProfilePicture)
-                            .resizable()
-                            .clipped()
-                    }
+            let url = viewModel.user?.avatarFileId?.fullFilePathFromId()
+            AsyncImage(url: url) { phase in
+                if let image = phase.image {
+                    image
+                        .resizable()
+                } else {
+                    Image(.userDefaultProfilePicture)
+                        .resizable()
+                        .clipped()
                 }
-                .frame(maxWidth: .infinity)
-                .frame(height: 400)
-                .modifier(RoundedCorners(corners: .bottomLeft, radius: 80))
             }
+            .frame(maxWidth: .infinity)
+            .frame(height: 400)
+            .modifier(RoundedCorners(corners: .bottomLeft, radius: 80))
             
             Button(action: {}, label: {
                 Text(viewModel.user?.getDisplayName() ?? "")

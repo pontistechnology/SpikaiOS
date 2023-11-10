@@ -29,7 +29,7 @@ struct PrimaryButton: View {
                 Image(imageResource)
                     .padding(.leading, 16)
                     .padding(.trailing, 12)
-                    .foregroundStyle(Color(uiColor: .tertiaryColor))
+                    .foregroundStyle(Color(uiColor: .textPrimary))
                 Text(text)
                     .foregroundStyle(Color(uiColor: .textPrimary))
                     .font(Font(UIFont.customFont(name: .MontserratSemiBold, size: 14)))

@@ -20,14 +20,14 @@ class TabBarItemView: UIView, BaseView {
     
     lazy var highlightsView: UIView = {
         let highlightsView = UIView()
-//        highlightsView.layer.cornerRadius = 23
-//        highlightsView.layer.masksToBounds = true
+        highlightsView.layer.cornerRadius = 10
+        highlightsView.layer.masksToBounds = true
         return highlightsView
     } ()
     
     lazy var counterLabel: CustomLabel = {
         let label = CustomLabel(text: "", textSize: 10, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .center)
-        label.backgroundColor = .checkWithDesign // TODO: - marko
+        label.backgroundColor = .primaryColor
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
         label.hide()
@@ -63,7 +63,7 @@ class TabBarItemView: UIView, BaseView {
                            initialSpringVelocity: 0.5,
                            options: options,
                            animations: { [weak self] in
-                self?.highlightsView.backgroundColor = .clear
+                self?.highlightsView.backgroundColor = isSelected ? .fourthAdditionalColor : .clear
                 self?.button.setImage(isSelected ? self?.tab.imageSelected : self?.tab.imageNormal, for: .normal)
                 (self?.superview as? UIStackView)?.layoutIfNeeded()
             }, completion: nil)            
