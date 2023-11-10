@@ -12,7 +12,7 @@ class SettingsView: BaseSettingsView {
     
     let userInfoStackView = CustomStackView(axis: .vertical, distribution: .equalSpacing, alignment: .center, spacing: 15)
     
-    let userImage = ImageViewWithIcon(image:  UIImage(safeImage: .userImage),size: CGSize(width: 120, height: 120))
+    let userImage = ImageViewWithIcon(image:  UIImage(safeImage: .userImage))
     
     let userName = CustomButton(text: "", textSize: 18, textColor: .textPrimary, fontName: .MontserratSemiBold)
     let userNameTextField = TextField()
@@ -54,7 +54,6 @@ class SettingsView: BaseSettingsView {
         mainStackView.addArrangedSubview(deleteMyAccountButton)
         
         mainStackView.addArrangedSubview(appVersion)
-//        mainStackView.addArrangedSubview(accessToken)
         
         self.contentView.addSubview(self.userNameTextField)
     }
@@ -70,6 +69,8 @@ class SettingsView: BaseSettingsView {
         userNameTextField.constraintLeading(to: self.mainStackView, constant: 22)
         userNameTextField.constraintTrailing(to: self.mainStackView, constant: -22)
         userNameTextField.constrainHeight(50)
+        userImage.constrainHeight(400)
+        userImage.constrainWidth(400)
     }
     
 }

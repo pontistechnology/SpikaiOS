@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 import Swinject
+import SwiftUI
 
 enum TabBarItem: Equatable {
     case chat(withChatId: Int64?)
@@ -67,7 +68,9 @@ enum TabBarItem: Equatable {
         case .contacts:
             return assembler.resolver.resolve(ContactsViewController.self, argument: appCoordinator)!
         case .settings:
-            return assembler.resolver.resolve(SettingsViewController.self, argument: appCoordinator)!
+//            return assembler.resolver.resolve(SettingsViewController.self, argument: appCoordinator)!
+            return assembler.resolver.resolve(Settings2ViewController.self, argument: appCoordinator)!
+            
         }
     }
     

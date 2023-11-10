@@ -16,7 +16,9 @@ class SettingsViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView(settingsView)
+//        setupView(settingsView)
+        view.addSubview(settingsView)
+        settingsView.fillSuperview()
         setupBinding()
         settingsView.appVersion.text = "Build number: " + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown")
 //        settingsView.accessToken.text = "Only for development: " +  (viewModel.repository.getAccessToken() ?? "")

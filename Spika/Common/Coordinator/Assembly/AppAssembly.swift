@@ -7,6 +7,14 @@
 
 import Combine
 import Swinject
+import SwiftUI
+
+class Settings2ViewController: UIHostingController<Settings2View> {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .clear
+    }
+}
 
 final class AppAssembly: Assembly {
     
@@ -31,6 +39,7 @@ final class AppAssembly: Assembly {
         assembleMessageActionsViewController(container)
         assembleMessageDetailsViewController(container)
         assembleCustomReactionsViewController(container)
+        assembleSettings2ViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
@@ -186,6 +195,18 @@ final class AppAssembly: Assembly {
         container.register(SettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
             let controller = SettingsViewController()
             controller.viewModel = container.resolve(SettingsViewModel.self, argument: coordinator)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleSettings2ViewController(_ container: Container) {
+        container.register(Settings2ViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return Settings2ViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+        
+        container.register(Settings2ViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = Settings2ViewController(rootView: Settings2View(viewModel: container.resolve(Settings2ViewModel.self, argument: coordinator)!))
             return controller
         }.inObjectScope(.transient)
     }
