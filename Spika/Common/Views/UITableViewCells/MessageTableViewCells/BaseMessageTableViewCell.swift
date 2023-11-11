@@ -79,21 +79,6 @@ extension BaseMessageTableViewCell: BaseView {
         senderPhotoImageview.hide()
         timeLabel.hide()
         backgroundColor = .clear
-        // TODO: - clear maybe
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        // round corners needs to be called after viewDidAppear
-        guard let reuseIdentifier,
-              let sender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
-        else { return }
-        switch sender {
-        case .me:
-            containerStackView.roundCorners(corners: [.bottomLeft, .topLeft, .topRight], radius: 16)
-        case .friend, .group:
-            containerStackView.roundCorners(corners: [.topLeft, .topRight, .bottomRight], radius: 16)
-        }
     }
     
     func positionSubviews() {
@@ -108,6 +93,8 @@ extension BaseMessageTableViewCell: BaseView {
         containerBottomConstraint = containerStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2)
         containerBottomConstraint?.priority = .defaultLow
         containerBottomConstraint?.isActive = true
+        containerStackView.layer.cornerRadius = 16
+        containerStackView.clipsToBounds = true
         
         switch sender {
         case .me:
@@ -116,10 +103,12 @@ extension BaseMessageTableViewCell: BaseView {
             messageStateView.anchor(leading: containerStackView.trailingAnchor, bottom: containerStackView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 6))
 
             timeLabel.anchor(trailing: containerStackView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
+            containerStackView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner]
         case .friend:
             containerStackView.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 2, left: 20, bottom: 0, right: 0))
     
             timeLabel.anchor(leading: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
+            containerStackView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         case .group:
             contentView.addSubview(senderNameLabel)
             contentView.addSubview(senderPhotoImageview)
@@ -131,6 +120,7 @@ extension BaseMessageTableViewCell: BaseView {
             senderPhotoImageview.anchor(bottom: containerStackView.bottomAnchor, trailing: containerStackView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 14), size: CGSize(width: 20, height: 20))
             
             timeLabel.anchor(leading: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
+            containerStackView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         }
     }
 }
