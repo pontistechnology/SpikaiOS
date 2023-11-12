@@ -40,18 +40,18 @@ struct Settings2View: View {
             
             Group {
                 // appereance
-                PrimaryButton(imageResource: .rDeditPen, text: .getStringFor(.appereance), corners: .topCorners) {
+                PrimaryButton(imageResource: .rDeditPen, text: .getStringFor(.appereance), corners: .topCorners, usage: .withRightArrow) {
                     viewModel.onAppereanceClick()
                 }
 
                 // privacy
-                PrimaryButton(imageResource: .rDprivacyEye, text: .getStringFor(.privacy)) {
+                PrimaryButton(imageResource: .rDprivacyEye, text: .getStringFor(.privacy), usage: .withRightArrow) {
                     viewModel.onPrivacyClick()
                 }
                 
                 // delete
                 PrimaryButton(imageResource: .rDdeleteBin,
-                              text: .getStringFor(.delete),
+                              text: .getStringFor(.deleteMyAccount),
                               corners: .bottomCorners,
                               backgroundColor: .warningColor) {
                     
