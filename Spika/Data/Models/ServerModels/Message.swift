@@ -120,15 +120,15 @@ enum MessageType: String, Codable {
         case .text:
             return nil
         case .image:
-            return UIImage(safeImage: .photoIcon)
+            return UIImage(resource: .photoIcon)
         case .video:
-            return UIImage(safeImage: .videoIcon)
+            return UIImage(resource: .videoIcon)
         case .file:
-            return UIImage(safeImage: .docIcon)
+            return UIImage(resource: .docIcon)
         case .audio:
-            return UIImage(safeImage: .micIcon)
+            return UIImage(resource: .micIcon)
         case .unknown:
-            return UIImage(safeImage: .unknownFileThumbnail)
+            return UIImage(resource: .unknownFileThumbnail)
         }
     }
 }

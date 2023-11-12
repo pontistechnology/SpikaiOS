@@ -9,7 +9,7 @@ import UIKit
 
 class ErrorMessageView: UIView {
     private let errorLabel: CustomLabel
-    private let errorImageView = UIImageView(image: UIImage(safeImage: .error))
+    private let errorImageView = UIImageView(image: UIImage(resource: .error))
     
     init(message: String) {
         errorLabel = CustomLabel(text: message, textSize: 13, textColor: .warningColor, fontName: .MontserratMedium, alignment: .natural)

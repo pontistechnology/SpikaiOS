@@ -11,7 +11,7 @@ import UIKit
 class MessageDetailTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "MessageDetailTableViewCell"
     
-    private let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
+    private let leftImageView = UIImageView(image: UIImage(resource: .user))
     private let userNameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
     private let timeLabel  = CustomLabel(text: "", textSize: 12, textColor: .textSecondary, fontName: .MontserratRegular, alignment: .right)
     
@@ -50,7 +50,7 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
     }
     
     func configureCell(avatarUrl: URL?, name: String, time: String) {
-        leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(safeImage: .userImage))
+        leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(resource: .user))
         userNameLabel.text = name
         timeLabel.text = time
     }
@@ -59,6 +59,6 @@ class MessageDetailTableViewCell: UITableViewCell, BaseView {
         super.prepareForReuse()
         userNameLabel.text = ""
         timeLabel.text = ""
-        leftImageView.image = UIImage(safeImage: .userImage)
+        leftImageView.image = UIImage(resource: .user)
     }
 }

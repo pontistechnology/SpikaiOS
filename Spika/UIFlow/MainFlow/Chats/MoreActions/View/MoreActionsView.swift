@@ -22,11 +22,11 @@ class MoreActionsView: UIView {
     
     private let moreActionsLabel = CustomLabel(text: "More actions", textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
     private let optionsStackView = CustomStackView(axis: .horizontal, distribution: .fillEqually, spacing: 12)
-    let filesImageView = UIImageView(image: UIImage(safeImage: .files))
-    let libraryImageView = UIImageView(image: UIImage(safeImage: .library))
-    let locationImageView = UIImageView(image: UIImage(safeImage: .location))
-    let contactImageView = UIImageView(image: UIImage(safeImage: .contact))
-    let closeImageView = UIImageView(image: UIImage(safeImage: .closeActionsSheet))
+    let filesImageView = UIImageView(image: UIImage(resource: .files))
+    let libraryImageView = UIImageView(image: UIImage(resource: .library))
+    let locationImageView = UIImageView(image: UIImage(resource: .location))
+    let contactImageView = UIImageView(image: UIImage(resource: .contact))
+    let closeImageView = UIImageView(image: UIImage(resource: .closeActionsSheet))
     
     init() {
         super.init(frame: .zero)

@@ -27,7 +27,7 @@ class AllNotesViewController: BaseViewController {
     }
     
     func setupNavigationItems() {
-        let modeButton = UIBarButtonItem(image: .init(safeImage: .plus), style: .plain, target: self, action: #selector(createNewNote))
+        let modeButton = UIBarButtonItem(image: .init(resource: .plus), style: .plain, target: self, action: #selector(createNewNote))
         navigationItem.rightBarButtonItems = [modeButton]
     }
     
@@ -83,7 +83,7 @@ extension AllNotesViewController {
             self?.viewModel.askToDelete(note: note)
             completionHandler(true)
         }
-        detailsAction.image = UIImage(safeImage: .slideDelete)
+        detailsAction.image = UIImage(resource: .slideDelete)
         return UISwipeActionsConfiguration(actions: [detailsAction])
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 class CustomButton: UIButton {
     
     init(text: String? = nil,
-         assetName: AssetName? = nil,
+         assetName: ImageResource? = nil,
          textSize: CGFloat = 14,
          textColor: UIColor = .textPrimary,
          disabledTextColor: UIColor = .textSecondary,
@@ -23,7 +23,7 @@ class CustomButton: UIButton {
         self.titleLabel?.font = .customFont(name: fontName, size: textSize)
         self.contentHorizontalAlignment = alignment
         if let assetName {
-            self.setImage(.init(safeImage: assetName), for: .normal)
+            self.setImage(.init(resource: assetName), for: .normal)
         }
     }
     

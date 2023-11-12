@@ -8,121 +8,16 @@
 import Foundation
 import UIKit
 
-enum AssetName: String {
-    case videoCall = "videoCall"
-    case logo = "logo"
-    case userImage = "userImage"
-    case chatBubble = "chatBubble"
-    case phoneCall = "phoneCall"
-    case testImage = "matejVida"
-    case rightArrow = "rightArrow"
-    case downArrow = "downArrow"
-    case deleteCell = "deleteCell"
-    case error = "error"
-    case sent = "sent"
-    case plus = "plus"
-    case send = "send"
-    case smile = "smile"
-    case close = "close"
-    case camera = "camera"
-    case microphone = "microphone"
-    case files = "files"
-    case library = "library"
-    case location = "location"
-    case contact = "contact"
-    case closeActionsSheet = "closeActionsSheet"
-    case house = "house"
-    case docs = "docs"
-    case search = "search"
-    case delete = "delete"
-    case play = "play"
-    case delivered = "delivered"
-    case seen = "seen"
-    case fail = "fail"
-    case waiting = "waiting"
-    case cameraImage = "camera_image"
-    case mutedIcon = "mutedIcon"
-    case pinnedChatIcon = "pinnedChatIcon"
-    case senderAction = "SenderAction"
-    
-    // File icons Ken
-    case pdfThumbnail = "pdfThumbnail"
-    case unknownFileThumbnail = "unknownFileThumbnail"
-    case playVideo = "playVideo"
-    
-    // File icons design
-    case pdfFile = "pdfFile"
-    case wordFile = "wordFile"
-    case zipFile = "zipFile"
-    
-    // Tabs
-    case callHistoryTab = "callHistoryTab"
-    case chatsTab = "chatsTab"
-    case contactsTab = "contactsTab"
-    case settingsTab = "settingsTab"
-    
-    case callHistoryTabFull = "callHistoryTabFull"
-    case chatsTabFull = "chatsTabFull"
-    case contactsTabFull = "contactsTabFull"
-    case settingsTabFull = "settingsTabFull"
-    
-    case thumb = "thumb"
-    
-    // reply view icons
-    case contactIcon = "contactIcon"
-    case gifIcon = "gifIcon"
-    case docIcon = "docIcon"
-    case micIcon = "micIcon"
-    case photoIcon = "photoIcon"
-    case videoIcon = "videoIcon"
-    
-    // message actions icons
-    case replyMessage = "replyMessage"
-    case forwardMessage = "forwardMessage"
-    case deleteMessage = "deleteMessage"
-    case copyMessage = "copyMessage"
-    case favoriteMessage = "favoriteMessage"
-    case detailsMessage = "detailsMessage"
-    case slideReply = "slideReply"
-    case slideDelete = "slideDelete"
-    case slideDetails = "slideDetails"
-    case editIcon = "editIcon"
-    case checkmark = "checkmark"
-    case done = "done"
-    case addCustomReaction = "addCustomReaction"
-    
-    // emoji sections
-    case emojiSectionBall = "emojiSectionBall"
-    case emojiSectionBurger = "emojiSectionBurger"
-    case emojiSectionCar = "emojiSectionCar"
-    case emojiSectionClock = "emojiSectionClock"
-    case emojiSectionFlag = "emojiSectionFlag"
-    case emojiSectionHeart = "emojiSectionHeart"
-    case emojiSectionLightbulb = "emojiSectionLightbulb"
-    case emojiSectionPaw = "emojiSectionPaw"
-    case emojiSectionSmiley = "emojiSectionSmiley"
-}
-
-extension UIImage {    
-    static var missingImage: UIImage {
-        return UIImage(systemName: "externaldrive.badge.xmark")!
-    }
-    
-    convenience init(safeImage: AssetName) {
-        self.init(named: safeImage.rawValue)!
-    }
-}
-
 extension UIImage {
     static func imageFor(mimeType: String) -> UIImage {
         if mimeType.contains("application/pdf") {
-            return UIImage(safeImage: .pdfFile)
+            return UIImage(resource: .pdfFile)
         } else if mimeType.contains("application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-            return UIImage(safeImage: .wordFile)
+            return UIImage(resource: .wordFile)
         } else if mimeType.contains("application/zip") {
-            return UIImage(safeImage: .zipFile)
+            return UIImage(resource: .zipFile)
         } else {
-            return UIImage(safeImage: .unknownFileThumbnail)
+            return UIImage(resource: .unknownFileThumbnail)
         }
     }
 }

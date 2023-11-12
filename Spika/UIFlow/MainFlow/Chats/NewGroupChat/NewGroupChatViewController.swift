@@ -91,7 +91,7 @@ class NewGroupChatViewController: BaseViewController {
                     self?.showUIImagePicker(source: .photoLibrary)
                 case 2:
                     self?.viewModel.fileData = nil
-                    self?.newGroupChatView.avatarPictureView.setImage(UIImage(safeImage: .cameraImage), for: .normal)
+                    self?.newGroupChatView.avatarPictureView.setImage(UIImage(resource: .camer), for: .normal)
                     break
                 default:
                     break

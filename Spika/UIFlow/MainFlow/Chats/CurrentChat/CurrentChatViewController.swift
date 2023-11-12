@@ -419,8 +419,8 @@ extension CurrentChatViewController: UITableViewDataSource {
 
 extension CurrentChatViewController {
     func setupNavigationItems() {
-        let videoCallButton = UIBarButtonItem(image: UIImage(safeImage: .videoCall), style: .plain, target: self, action: #selector(videoCallActionHandler))
-        let audioCallButton = UIBarButtonItem(image: UIImage(safeImage: .phoneCall), style: .plain, target: self, action: #selector(phoneCallActionHandler))
+        let videoCallButton = UIBarButtonItem(image: UIImage(resource: .videoCall), style: .plain, target: self, action: #selector(videoCallActionHandler))
+        let audioCallButton = UIBarButtonItem(image: UIImage(resource: .phoneCall), style: .plain, target: self, action: #selector(phoneCallActionHandler))
         
         navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
@@ -469,7 +469,7 @@ extension CurrentChatViewController {
             completionHandler(true)
         }
 //        detailsAction.backgroundColor = ._primaryColor // TODO: -check
-        detailsAction.image = UIImage(safeImage: .slideDetails)
+        detailsAction.image = UIImage(resource: .slideDetails)
         return UISwipeActionsConfiguration(actions: [detailsAction])
     }
     
@@ -485,7 +485,7 @@ extension CurrentChatViewController {
             completionHandler(true)
         }
 //        firstLeft.backgroundColor = ._primaryColor // TODO: - check
-        firstLeft.image = UIImage(safeImage: .slideReply)
+        firstLeft.image = UIImage(resource: .slideReply)
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }
     

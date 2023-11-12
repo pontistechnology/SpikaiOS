@@ -12,7 +12,7 @@ class MessageVideoView: UIView {
     private var imageWidthConstraint: NSLayoutConstraint?
     private var imageHeightConstraint: NSLayoutConstraint?
     
-    private let playVideoIconImageView = UIImageView(image: UIImage(safeImage: .playVideo))
+    private let playVideoIconImageView = UIImageView(image: UIImage(resource: .playVideo))
     private let durationLabel = CustomLabel(text: "", textColor: .textPrimary) // TODO: - check add shadow
     
     init() {

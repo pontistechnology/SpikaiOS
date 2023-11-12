@@ -16,9 +16,9 @@ protocol SearchBarDelegate: AnyObject {
 class SearchBar: UIView, BaseView {
     
     let searchView = UIView()
-    let searchImage = UIImageView(image: UIImage(safeImage: .search))
+    let searchImage = UIImageView(image: UIImage(resource: .search))
     let searchTextField = UITextField()
-    let deleteImage = UIImageView(image: UIImage(safeImage: .delete))
+    let deleteImage = UIImageView(image: UIImage(resource: .delete))
     let cancelButton = UIButton()
     
     weak var delegate: SearchBarDelegate?

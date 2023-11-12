@@ -804,9 +804,6 @@
 		930290BE27A9FCE30064BED1 /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BD27A9FCE30064BED1 /* UserResponseModel.swift */; };
 		930290C227AC96040064BED1 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C127AC96040064BED1 /* ContactsTableViewCell.swift */; };
 		930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290C327ACA2E90064BED1 /* ContactsTableView.swift */; };
-		9304842A2A9CC9E6000DA341 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
-		9304842B2A9CC9E6000DA341 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
-		9304842C2A9CC9E7000DA341 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
 		930EE59B27A937ED00143B48 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
 		930EE59D27A938B800143B48 /* UploadChunkResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */; };
 		93179C3D28B709B6006F928B /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
@@ -1102,6 +1099,9 @@
 		93CB3E2E2B0042720082D4F2 /* AppereanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CB3E2D2B0042720082D4F2 /* AppereanceSettingsViewController.swift */; };
 		93CB3E2F2B0042720082D4F2 /* AppereanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CB3E2D2B0042720082D4F2 /* AppereanceSettingsViewController.swift */; };
 		93CB3E302B0042720082D4F2 /* AppereanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CB3E2D2B0042720082D4F2 /* AppereanceSettingsViewController.swift */; };
+		93CB3E312B005E180082D4F2 /* Shared Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Shared Assets.xcassets */; };
+		93CB3E322B005E180082D4F2 /* Shared Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Shared Assets.xcassets */; };
+		93CB3E332B005E190082D4F2 /* Shared Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Shared Assets.xcassets */; };
 		93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
 		93CF473D2963240200213DBE /* AppRepository+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF473C2963240200213DBE /* AppRepository+File.swift */; };
 		93CF47402963286B00213DBE /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DB270DD6DC009D50CB /* AppRepository.swift */; };
@@ -3219,6 +3219,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93CB3E332B005E190082D4F2 /* Shared Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3250,6 +3251,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93CB3E322B005E180082D4F2 /* Shared Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3281,6 +3283,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93CB3E312B005E180082D4F2 /* Shared Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3568,7 +3571,6 @@
 				6C753DD12A4C128800697AA6 /* CreateRoomResponseModel.swift in Sources */,
 				93BCDFF22A819AAE00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6C753DD32A4C128800697AA6 /* CoreDatabase.xcdatamodeld in Sources */,
-				9304842C2A9CC9E7000DA341 /* UIImage+Extensions.swift in Sources */,
 				6C753DD42A4C128800697AA6 /* RoomEntity+CoreDataClass.swift in Sources */,
 				6C753DD52A4C128800697AA6 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6C753DD62A4C128800697AA6 /* BlockModel.swift in Sources */,
@@ -3979,7 +3981,6 @@
 				6C78B90829AF5D89004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				93BCDFF32A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				6C78B90929AF5D89004BF881 /* CoreDatabase.xcdatamodeld in Sources */,
-				9304842B2A9CC9E6000DA341 /* UIImage+Extensions.swift in Sources */,
 				6C78B90A29AF5D89004BF881 /* RoomEntity+CoreDataClass.swift in Sources */,
 				6C78B90C29AF5D89004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6C78B90D29AF5D89004BF881 /* BlockModel.swift in Sources */,
@@ -4390,7 +4391,6 @@
 				934F036E282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				93BCDFF42A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */,
 				9324B253281BDF1000E7D76D /* CoreDatabase.xcdatamodeld in Sources */,
-				9304842A2A9CC9E6000DA341 /* UIImage+Extensions.swift in Sources */,
 				931B150E28211ACB00A0CD35 /* RoomEntity+CoreDataClass.swift in Sources */,
 				93711DFC28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
 				6C056C7929700D9E00198EC1 /* BlockModel.swift in Sources */,

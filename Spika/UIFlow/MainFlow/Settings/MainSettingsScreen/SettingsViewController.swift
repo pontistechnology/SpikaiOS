@@ -42,7 +42,7 @@ class SettingsViewController: BaseViewController {
             .compactMap { $0?.avatarFileId?.fullFilePathFromId() }
             .sink { _ in
             } receiveValue: { [weak self] url in
-                self?.settingsView.userImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
+                self?.settingsView.userImage.showImage(url, placeholder: UIImage(resource: .user))
             }.store(in: &self.subscriptions)
         
         self.viewModel

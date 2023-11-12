@@ -15,7 +15,7 @@ enum ContactsTableViewCellType {
     case text(text: String?)
     case remove
     case emoji(emoji: String, size: CGFloat)
-    case doubleEntry(firstText: String?, firstImage: AssetName?, secondText: String?, secondImage: AssetName?)
+    case doubleEntry(firstText: String?, firstImage: ImageResource?, secondText: String?, secondImage: ImageResource?)
 }
 
 class ContactsTableViewCell: UITableViewCell, BaseView {
@@ -25,7 +25,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     var subscriptions = Set<AnyCancellable>()
     
     private let horizontalStackView = CustomStackView(axis: .horizontal, spacing: 12)
-    private let leftImageView = RoundedImageView(image: UIImage(safeImage: .userImage))
+    private let leftImageView = RoundedImageView(image: UIImage(resource: .user))
     private lazy var rightButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .center
@@ -87,7 +87,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
                        type: ContactsTableViewCellType) {
         self.nameLabel.text = title
         self.descriptionLabel.text = description
-        leftImageView.kf.setImage(with: leftImage, placeholder: UIImage(safeImage: .userImage))
+        leftImageView.kf.setImage(with: leftImage, placeholder: UIImage(resource: .user))
         
         self.rightButton.hide()
         self.rightButton.setImage(nil, for: .normal)
@@ -104,7 +104,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
             self.rightButton.setTitleColor(.textPrimary, for: .normal)
         case .remove:
             self.rightButton.unhide()
-            self.rightButton.setImage(UIImage(safeImage: .close), for: .normal)
+            self.rightButton.setImage(UIImage(resource: .close), for: .normal)
         case .emoji(let emoji, let size):
             self.rightButton.unhide()
             self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)
@@ -114,18 +114,18 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
             
             self.rightView.firstRow.label.text = firstText
             if let image = firstImage {
-                self.rightView.firstRow.imageView.image = UIImage(safeImage: image)
+                self.rightView.firstRow.imageView.image = UIImage(resource: image)
             }
             
             self.rightView.secondRow.label.text = secondText
             if let image = secondImage {
-                self.rightView.secondRow.imageView.image = UIImage(safeImage: image)
+                self.rightView.secondRow.imageView.image = UIImage(resource: image)
             }
         }
     }
     
     override func prepareForReuse() {
-        self.leftImageView.image = UIImage(safeImage: .userImage)
+        self.leftImageView.image = UIImage(resource: .user)
         self.nameLabel.text = ""
         self.descriptionLabel.text = ""
     }

@@ -16,13 +16,13 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     let descriptionIcon = UIImageView()
     let descriptionTextLabel = CustomLabel(text: "boto", textSize: 14, textColor: .textPrimary, alignment: .left)
     let helperView = UIView()
-    let leftImageView = UIImageView(image: UIImage(safeImage: .userImage))
+    let leftImageView = UIImageView(image: UIImage(resource: .user))
     let timeLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary)
     
     let messagesStackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .fill, spacing: 8)
     let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .center)
-    let pinnedIcon = UIImageView(image: UIImage(safeImage: .pinnedChatIcon))
-    let mutedIcon = UIImageView(image: UIImage(safeImage: .mutedIcon))
+    let pinnedIcon = UIImageView(image: UIImage(resource: .pinnedChatIcon))
+    let mutedIcon = UIImageView(image: UIImage(resource: .mutedIcon))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -99,7 +99,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     }
     
     func configureCell(avatarUrl: URL?, name: String, description: (String?, MessageType, String?), time: String, badgeNumber: Int64, muted: Bool, pinned: Bool) {
-        leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(safeImage: .userImage))
+        leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(resource: .user))
 
         nameLabel.text = name
         descriptionNameLabel.text = description.0
@@ -117,7 +117,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     }
     
     override func prepareForReuse() {
-        leftImageView.image = UIImage(safeImage: .userImage)
+        leftImageView.image = UIImage(resource: .user)
         nameLabel.text = nil
         descriptionNameLabel.text = nil
         descriptionTextLabel.text = nil

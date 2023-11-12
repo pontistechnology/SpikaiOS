@@ -63,7 +63,7 @@ class DetailsViewController: BaseViewController {
             guard let self else { return }
             self.detailsView.contentView.nameLabel.text = user.getDisplayName()
             let url = user.avatarFileId?.fullFilePathFromId()
-            self.detailsView.contentView.profilePhoto.kf.setImage(with: url, placeholder: UIImage(safeImage: .userImage))
+            self.detailsView.contentView.profilePhoto.kf.setImage(with: url, placeholder: UIImage(resource: .user))
         }.store(in: &subscriptions)
         
         self.detailsView.contentView.phoneNumberLabel.text = viewModel.getPhoneNumberText()

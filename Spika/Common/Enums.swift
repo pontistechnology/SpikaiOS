@@ -173,7 +173,7 @@ enum MessageAction {
         }
     }
     
-    var assetNameForIcon: AssetName {
+    var assetNameForIcon: ImageResource {
         switch self {
         case .reaction, .showCustomReactions:
             return .unknownFileThumbnail
@@ -232,23 +232,23 @@ enum EmojiSection: CaseIterable {
     var icon: UIImage {
         switch self {
         case .recent:
-            return UIImage(safeImage: .emojiSectionClock)
+            return UIImage(resource: .emojiSectionClock)
         case .smileysAndPeople:
-            return UIImage(safeImage: .emojiSectionSmiley)
+            return UIImage(resource: .emojiSectionSmiley)
         case .animalsAndNature:
-            return UIImage(safeImage: .emojiSectionPaw)
+            return UIImage(resource: .emojiSectionPaw)
         case .foodAndDrink:
-            return UIImage(safeImage: .emojiSectionBurger)
+            return UIImage(resource: .emojiSectionBurger)
         case .activity:
-            return UIImage(safeImage: .emojiSectionBall)
+            return UIImage(resource: .emojiSectionBall)
         case .travelAndPlaces:
-            return UIImage(safeImage: .emojiSectionCar)
+            return UIImage(resource: .emojiSectionCar)
         case .objects:
-            return UIImage(safeImage: .emojiSectionLightbulb)
+            return UIImage(resource: .emojiSectionLightbulb)
         case .symbols:
-            return UIImage(safeImage: .emojiSectionHeart)
+            return UIImage(resource: .emojiSectionHeart)
         case .flags:
-            return UIImage(safeImage: .emojiSectionFlag)
+            return UIImage(resource: .emojiSectionFlag)
         }
     }
 }

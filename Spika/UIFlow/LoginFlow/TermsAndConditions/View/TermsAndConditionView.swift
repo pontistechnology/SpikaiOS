@@ -10,7 +10,7 @@ import UIKit
 
 class TermsAndConditionView: UIView {
     
-    private let logo = UIImageView(image: UIImage(safeImage: .logo))
+    private let logo = UIImageView(image: UIImage(resource: .logo))
     private let welcomeLabel = CustomLabel(text: .getStringFor(.welcomeToSpika), textSize: 24, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .center)
     private let tapLabel = CustomLabel(text: .getStringFor(.tapAgreeAndContinueToAcceptThe), textSize: 16, textColor: .textPrimary, alignment: .center)
     let termsAndConditionsLabel = CustomLabel(text: .getStringFor(.termsAndConditions), textSize: 16, textColor: .primaryColor, alignment: .center)

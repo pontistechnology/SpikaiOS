@@ -31,7 +31,7 @@ class NavView: UIView, BaseView {
     
     func styleSubviews() {
         label.text = text
-        arrowImageView.image = UIImage(safeImage: .rightArrow)
+        arrowImageView.image = UIImage(resource: .rDrightArrow)
     }
     
     func positionSubviews() {

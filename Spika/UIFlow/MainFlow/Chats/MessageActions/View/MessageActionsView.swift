@@ -11,7 +11,7 @@ import UIKit
 class MessageActionsView: UIView {
     let reactionsStackview = CustomStackView(axis: .horizontal, distribution: .fillEqually, alignment: .center)
     let actionsStackview = CustomStackView(axis: .vertical, distribution: .fillEqually)
-    let plusImageView = UIImageView(image: .init(safeImage: .addCustomReaction))
+    let plusImageView = UIImageView(image: .init(resource: .addCustomReaction))
     private let actions: [MessageAction]
     private let reactionsEmojis: [String]
     

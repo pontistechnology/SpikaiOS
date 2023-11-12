@@ -58,7 +58,7 @@ final class ChatDetailsViewController: BaseViewController {
                 }
             }
             .sink { [weak self] url in
-                self?.chatDetailView.contentView.chatImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
+                self?.chatDetailView.contentView.chatImage.showImage(url, placeholder: UIImage(resource: .user))
             }.store(in: &self.viewModel.subscriptions)
 
         viewModel.room

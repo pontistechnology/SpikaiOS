@@ -16,7 +16,7 @@ protocol BaseMessageTableViewCellProtocol {
 class BaseMessageTableViewCell: UITableViewCell {
     
     private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular, alignment: .left)
-    private let senderPhotoImageview = UIImageView(image: UIImage(safeImage: .userImage))
+    private let senderPhotoImageview = UIImageView(image: UIImage(resource: .user))
     private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium)
     private let messageStateView = MessageStateView()
     let containerStackView = UIStackView()
@@ -24,7 +24,7 @@ class BaseMessageTableViewCell: UITableViewCell {
     private let progressView = CircularProgressBar(spinnerWidth: 20)
     private var reactionsView: MessageReactionsView?
     
-    private var editedIconImageView = UIImageView(image: UIImage(safeImage: .editIcon).withTintColor(.textSecondary, renderingMode: .alwaysOriginal))
+    private var editedIconImageView = UIImageView(image: UIImage(resource: .editIcon).withTintColor(.textSecondary, renderingMode: .alwaysOriginal))
     private var editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: .textSecondary)
     
     private var containerBottomConstraint: NSLayoutConstraint?
@@ -158,7 +158,7 @@ extension BaseMessageTableViewCell {
     
     func updateSender(photoUrl: URL?) {
         senderPhotoImageview.unhide()
-        senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(safeImage: .userImage))
+        senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(resource: .user))
     }
     
     func tapHandler() {

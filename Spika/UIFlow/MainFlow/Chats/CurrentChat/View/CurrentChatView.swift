@@ -12,7 +12,7 @@ class CurrentChatView: UIView, BaseView {
     let messagesTableView = UITableView(frame: .zero, style: .grouped)
     let messageInputView = MessageInputView()
     private let newMessagesLabel = CustomLabel(text: "You have new messages.", textSize: 16, textColor: .textPrimary, fontName: .MontserratMedium)
-    private let downArrowImageView = UIImageView(image: UIImage(safeImage: .downArrow).withTintColor(.textPrimary))
+    private let downArrowImageView = UIImageView(image: UIImage(resource: .downArrow).withTintColor(.textPrimary))
     let scrollToBottomStackView = UIStackView()
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()

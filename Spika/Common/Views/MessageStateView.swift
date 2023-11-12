@@ -35,15 +35,15 @@ class MessageStateView: UIImageView, BaseView {
     func changeState(to value: MessageState) {
         switch value {
         case .sent:
-            image = UIImage(safeImage: .sent)
+            image = UIImage(resource: .sent)
         case .delivered:
-            image = UIImage(safeImage: .delivered)
+            image = UIImage(resource: .delivered)
         case .seen:
-            image = UIImage(safeImage: .seen)
+            image = UIImage(resource: .seen)
         case .fail:
-            image = UIImage(safeImage: .fail)
+            image = UIImage(resource: .fail)
         case .waiting:
-            image = UIImage(safeImage: .waiting)
+            image = UIImage(resource: .waiting)
         }
     }
 }

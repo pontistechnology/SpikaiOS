@@ -13,7 +13,7 @@ class NewGroupChatView: UIView, BaseView {
     let newGroupLabel = CustomLabel(text: .getStringFor(.newGroup), textSize: 28, textColor: .textPrimary, fontName: .MontserratSemiBold)
     var avatarPictureView: UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(safeImage: .cameraImage), for: .normal)
+        btn.setImage(UIImage(resource: .camer), for: .normal)
         btn.layer.cornerRadius = 60
         btn.layer.masksToBounds = true
         return btn

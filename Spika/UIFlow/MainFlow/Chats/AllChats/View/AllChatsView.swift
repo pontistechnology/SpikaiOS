@@ -35,7 +35,7 @@ class AllChatsView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        newChatButton.setImage(UIImage(safeImage: .plus), for: .normal)
+        newChatButton.setImage(UIImage(resource: .plus), for: .normal)
         roomsTableView.separatorStyle = .none
         roomsTableView.rowHeight = 70
         roomsTableView.backgroundColor = .clear

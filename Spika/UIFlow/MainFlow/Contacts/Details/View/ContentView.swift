@@ -12,9 +12,9 @@ class ContentView: UIView, BaseView {
     let profilePhoto = UIImageView()
     let nameLabel = CustomLabel(text: .getStringFor(.nameAndSurname), textColor: .textPrimary, fontName: .MontserratSemiBold)
     let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: .textPrimary, fontName: .MontserratSemiBold)
-    let messageButton = ImageButton(image: UIImage(safeImage: .chatBubble))
-    let phoneCallButton = ImageButton(image: UIImage(safeImage: .phoneCall))
-    let videoCallButton = ImageButton(image: UIImage(safeImage: .videoCall))
+    let messageButton = ImageButton(image: UIImage(resource: .rDchatBubble))
+    let phoneCallButton = ImageButton(image: UIImage(resource: .phoneCall))
+    let videoCallButton = ImageButton(image: UIImage(resource: .videoCall))
     let optionButtonsStackView = UIStackView()
     let switchStackView = UIStackView()
     let labelsStackView = UIStackView()
@@ -63,7 +63,7 @@ class ContentView: UIView, BaseView {
     
     func styleSubviews() {
         
-        profilePhoto.image = UIImage(safeImage: .testImage)
+        profilePhoto.image = UIImage(resource: .user)
         profilePhoto.layer.cornerRadius = 50
         profilePhoto.contentMode = .scaleAspectFill
         profilePhoto.clipsToBounds = true

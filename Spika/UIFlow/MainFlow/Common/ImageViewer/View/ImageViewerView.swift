@@ -83,7 +83,7 @@ extension ImageViewerView: BaseView {
     
     func setImage(link: URL?, thumbLink: URL?) {
         imageView.kf.indicatorType = .activity
-        imageView.kf.setImage(with: thumbLink, placeholder: UIImage(safeImage: .unknownFileThumbnail)) { [weak self] _ in
+        imageView.kf.setImage(with: thumbLink, placeholder: UIImage(resource: .unknownFileThumbnail)) { [weak self] _ in
             self?.imageView.kf.setImage(with: link)
         }
     }

@@ -55,7 +55,7 @@ class ChatMembersView: UIView, BaseView {
     lazy var addContactButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(safeImage: .plus), for: .normal)
+        button.setImage(UIImage(resource: .plus), for: .normal)
         return button
     } ()
     
