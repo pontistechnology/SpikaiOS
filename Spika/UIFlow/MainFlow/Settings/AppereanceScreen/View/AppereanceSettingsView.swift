@@ -1,37 +1,36 @@
 //
-//  AppereanceSettingsView.swift
+//  AppereanceSettings2View.swift
 //  Spika
 //
-//  Created by Nikola Barbarić on 07.02.2023..
+//  Created by Nikola Barbarić on 12.11.2023..
 //
 
-import Foundation
-import UIKit
+import SwiftUI
 
-class AppereanceSettingsView: BaseSettingsView {
+struct AppereanceSettingsView: View {
+    @StateObject var viewModel: AppereanceSettingsViewModel
     
-    let apply = CustomLabel(text: "Apply", textColor: .checkWithDesign)
-    
-    override func styleSubviews() {
-        super.styleSubviews()
-    }
-    
-    override func addSubviews() {
-        super.addSubviews()
-        SpikaTheme.allCases.forEach { theme in
-            let view = CheckmarkView(text: theme.title)
-            mainStackView.addArrangedSubview(view)
-            view.constrainHeight(50)
+    var body: some View {
+        VStack {
+            ForEach(SpikaTheme.allCases, id: \.rawValue) { theme in
+                let isSelected = viewModel.savedThemeRawValue() == theme.rawValue
+                PrimaryButton(text: theme.title, corners: theme.corners,
+                              usage: isSelected ? .withCheckmark : .onlyTitle) {
+                    viewModel.changeAppereanceMode(to: theme)
+                    viewModel.returnToHomeScreen()
+                }.padding(.horizontal, 16)
+            }
+            Button(action: {
+                viewModel.returnToHomeScreen()
+            }, label: {
+                Text(verbatim: .getStringFor(.cancel))
+                    .foregroundStyle(Color(UIColor.textSecondary))
+            })
         }
-        mainStackView.addArrangedSubview(apply)
-    }
-}
-
-extension AppereanceSettingsView {
-    func changeCurrentLabel(to value: Int) {
-        guard value < mainStackView.arrangedSubviews.count else { return }
-        mainStackView.arrangedSubviews.forEach { ($0 as? CheckmarkView)?.updateIsSelected(isSelected: false)
-        }
-        (mainStackView.arrangedSubviews[value] as? CheckmarkView)?.updateIsSelected(isSelected: true)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.linearGradient(colors: UIColor._backgroundGradientColors.map({ Color(uiColor: $0)
+        }), startPoint: UnitPoint(x: 0.2, y: 0.1), 
+                                    endPoint: UnitPoint(x: 1.2, y: 1.3)))
+        // TODO: - move gradient somewhere to be reusable
     }
 }

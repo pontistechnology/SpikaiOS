@@ -8,32 +8,51 @@
 import SwiftUI
 
 struct PrimaryButton: View {
-    private let imageResource: ImageResource
+    enum Usage {
+        case withCheckmark
+        case onlyTitle
+    }
+    
+    private let imageResource: ImageResource?
     private let text: String
     private var corners: UIRectCorner?
     private let backgroundColor: UIColor
     private let action: () -> ()
+    private let usage: Usage
     
-    init(imageResource: ImageResource, text: String, corners: UIRectCorner? = nil, backgroundColor: UIColor = .primaryColor, action: @escaping ()->()) {
+    init(imageResource: ImageResource? = nil, text: String, corners: UIRectCorner? = nil, backgroundColor: UIColor = .primaryColor, usage: Usage = .onlyTitle, action: @escaping ()->()) {
         self.imageResource = imageResource
         self.text = text
         self.corners = corners
         self.backgroundColor = backgroundColor
         self.action = action
+        self.usage = usage
     }
     
     var body: some View {
         Button(action: action,
                label: {
             HStack(spacing: 0) {
-                Image(imageResource)
-                    .padding(.leading, 16)
-                    .padding(.trailing, 12)
-                    .foregroundStyle(Color(uiColor: .textPrimary))
+                if let imageResource {
+                    Image(imageResource)
+                        .padding(.leading, 16)
+                        .foregroundStyle(Color(uiColor: .textPrimary))
+                }
                 Text(text)
+                    .padding(.leading, 12)
                     .foregroundStyle(Color(uiColor: .textPrimary))
                     .font(Font(UIFont.customFont(name: .MontserratSemiBold, size: 14)))
                 Spacer()
+                
+                if usage == .withCheckmark {
+                    Image(.rDcheckmark)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .padding(.trailing, 16)
+                        .foregroundStyle(Color(uiColor: UIColor.textPrimary))
+                    // TODO: -
+                }
             }
             .frame(maxWidth: .infinity)
             .frame(height: 56)
@@ -44,7 +63,7 @@ struct PrimaryButton: View {
 }
 
 #Preview {
-    PrimaryButton(imageResource: .privacyEye, text: "Privacy", corners: .bottomCorners) {
+    PrimaryButton(imageResource: .rDprivacyEye, text: "Privacy", corners: .bottomCorners, usage: .withCheckmark) {
         
     }
 }

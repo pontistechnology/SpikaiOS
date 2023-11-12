@@ -255,6 +255,7 @@ enum EmojiSection: CaseIterable {
 
 
 enum SpikaTheme: String, CaseIterable {
+    
     case darkMarine, neon
     
     // TODO: - localize?
@@ -266,6 +267,12 @@ enum SpikaTheme: String, CaseIterable {
             return "Dark Marine"
         }
     }
+    
+    // first one should be rounded on top corners, last one on bottom, middle ones without rounding
+    var corners: UIRectCorner? {
+        self == SpikaTheme.allCases.first ? .topCorners : (self == SpikaTheme.allCases.last ? UIRectCorner.bottomCorners : nil)
+    }
+        
     
     struct SpikaColors {
         let _backgroundGradientColors: [ColorResource] // gradient in order

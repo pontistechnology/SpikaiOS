@@ -8,14 +8,16 @@
 import Foundation
 import UIKit
 
-class AppereanceSettingsViewModel: BaseSettingsViewModel {
-    func getThemeFor(index: Int) -> SpikaTheme {
-        let cases = SpikaTheme.allCases
-        guard index < cases.count else { return .darkMarine }
-        return cases[index]
-    }
-    
+class AppereanceSettingsViewModel: BaseSettingsViewModel, ObservableObject {
     func changeAppereanceMode(to theme: SpikaTheme) {
         repository.saveSelectedTheme(theme.rawValue)
+    }
+    
+    func returnToHomeScreen() {
+        getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true)
+    }
+    
+    func savedThemeRawValue() -> String {
+        repository.getSelectedTheme()
     }
 }

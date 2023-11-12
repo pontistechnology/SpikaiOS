@@ -6,6 +6,15 @@
 //
 
 import UIKit
+import SwiftUI
+
+// TODO: - change 2
+class Settings2ViewController: UIHostingController<Settings2View> {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .clear
+    }
+}
 
 class SettingsViewController: BaseViewController {
     

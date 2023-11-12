@@ -32,16 +32,16 @@ enum TabBarItem: Equatable {
     var imageNormal: UIImage {
         switch self {
         case .chat:
-            return UIImage(resource: .chatBubble)
+            return UIImage(resource: .rDchatBubble)
                 .withTintColor(.primaryColor, renderingMode: .alwaysOriginal)
         case .phoneCalls:
-            return UIImage(resource: .callsCellphone)
+            return UIImage(resource: .rDcallsCellphone)
                 .withTintColor(.primaryColor, renderingMode: .alwaysOriginal)
         case .contacts:
-            return UIImage(resource: .personContact)
+            return UIImage(resource: .rDpersonContact)
                 .withTintColor(.primaryColor, renderingMode: .alwaysOriginal)
         case .settings:
-            return UIImage(resource: .settingsGear)
+            return UIImage(resource: .rDsettingsGear)
                 .withTintColor(.primaryColor, renderingMode: .alwaysOriginal)
         }
     }
@@ -49,16 +49,16 @@ enum TabBarItem: Equatable {
     var imageSelected: UIImage {
         switch self {
         case .chat:
-            return UIImage(resource: .chatBubble)
+            return UIImage(resource: .rDchatBubble)
                 .withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
         case .phoneCalls:
-            return UIImage(resource: .callsCellphone)
+            return UIImage(resource: .rDcallsCellphone)
                 .withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
         case .contacts:
-            return UIImage(resource: .personContact)
+            return UIImage(resource: .rDpersonContact)
                 .withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
         case .settings:
-            return UIImage(resource: .settingsGear)
+            return UIImage(resource: .rDsettingsGear)
                 .withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
         }
     }

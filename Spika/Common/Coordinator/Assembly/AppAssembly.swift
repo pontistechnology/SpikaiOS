@@ -9,13 +9,6 @@ import Combine
 import Swinject
 import SwiftUI
 
-class Settings2ViewController: UIHostingController<Settings2View> {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .clear
-    }
-}
-
 final class AppAssembly: Assembly {
     
     func assemble(container: Container) {
@@ -231,8 +224,7 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.transient)
         
         container.register(AppereanceSettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let controller = AppereanceSettingsViewController()
-            controller.viewModel = container.resolve(AppereanceSettingsViewModel.self, argument: coordinator)
+            let controller = AppereanceSettingsViewController(rootView: AppereanceSettingsView(viewModel: container.resolve(AppereanceSettingsViewModel.self, argument: coordinator)!))
             return controller
         }.inObjectScope(.transient)
     }

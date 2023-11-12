@@ -30,25 +30,27 @@ struct Settings2View: View {
             
             Button(action: {}, label: {
                 Text(viewModel.user?.getDisplayName() ?? "")
+                    .foregroundStyle(Color(UIColor.textPrimary))
             })
             
             Button(action: {}, label: {
                 Text(viewModel.user?.telephoneNumber ?? "")
+                    .foregroundStyle(Color(UIColor.textPrimary))
             })
             
             Group {
                 // appereance
-                PrimaryButton(imageResource: .editPen, text: .getStringFor(.appereance), corners: .topCorners) {
+                PrimaryButton(imageResource: .rDeditPen, text: .getStringFor(.appereance), corners: .topCorners) {
                     viewModel.onAppereanceClick()
                 }
 
                 // privacy
-                PrimaryButton(imageResource: .privacyEye, text: .getStringFor(.privacy)) {
+                PrimaryButton(imageResource: .rDprivacyEye, text: .getStringFor(.privacy)) {
                     viewModel.onPrivacyClick()
                 }
                 
                 // delete
-                PrimaryButton(imageResource: .deleteBin,
+                PrimaryButton(imageResource: .rDdeleteBin,
                               text: .getStringFor(.delete),
                               corners: .bottomCorners,
                               backgroundColor: .warningColor) {

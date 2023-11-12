@@ -203,7 +203,6 @@
 		6C78B7D729AF5ADB004BF881 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E2270DD7C7009D50CB /* BaseViewController.swift */; };
 		6C78B7D829AF5ADB004BF881 /* UTType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325720928B8F0140078D489 /* UTType+Extensions.swift */; };
 		6C78B7D929AF5ADB004BF881 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819245272173F500D5BE48 /* ContactsViewController.swift */; };
-		6C78B7DA29AF5ADB004BF881 /* AppereanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D993072992AB7F0038565F /* AppereanceSettingsView.swift */; };
 		6C78B7DB29AF5ADB004BF881 /* UpdatePushResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */; };
 		6C78B7DC29AF5ADB004BF881 /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */; };
 		6C78B7DE29AF5ADB004BF881 /* AudioMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C77B6F2923396200F676C5 /* AudioMessageTableViewCell.swift */; };
@@ -285,7 +284,6 @@
 		6C78B83229AF5ADB004BF881 /* CountryPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD38272AB31300736318 /* CountryPickerViewModel.swift */; };
 		6C78B83329AF5ADB004BF881 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
 		6C78B83429AF5ADB004BF881 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D0270DD57D009D50CB /* Coordinator.swift */; };
-		6C78B83529AF5ADB004BF881 /* AppereanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D993082992AB7F0038565F /* AppereanceSettingsViewController.swift */; };
 		6C78B83629AF5ADB004BF881 /* EnterUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E13279F871300F81095 /* EnterUsernameViewController.swift */; };
 		6C78B83729AF5ADB004BF881 /* EnterUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E18279F873D00F81095 /* EnterUsernameView.swift */; };
 		6C78B83829AF5ADB004BF881 /* Int64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int64+Extensions.swift */; };
@@ -569,7 +567,6 @@
 		6CF648D12A459FE100E0DE0B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E2270DD7C7009D50CB /* BaseViewController.swift */; };
 		6CF648D22A459FE100E0DE0B /* UTType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325720928B8F0140078D489 /* UTType+Extensions.swift */; };
 		6CF648D32A459FE100E0DE0B /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD819245272173F500D5BE48 /* ContactsViewController.swift */; };
-		6CF648D42A459FE100E0DE0B /* AppereanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D993072992AB7F0038565F /* AppereanceSettingsView.swift */; };
 		6CF648D52A459FE100E0DE0B /* UpdatePushResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EDC28172BD10086C343 /* UpdatePushResponseModel.swift */; };
 		6CF648D62A459FE100E0DE0B /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9C5C7B29262610009D3E2B /* UIView+NSLayoutConstraint.swift */; };
 		6CF648D82A459FE100E0DE0B /* AudioMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C77B6F2923396200F676C5 /* AudioMessageTableViewCell.swift */; };
@@ -656,7 +653,6 @@
 		6CF6492D2A459FE100E0DE0B /* CountryPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD38272AB31300736318 /* CountryPickerViewModel.swift */; };
 		6CF6492E2A459FE100E0DE0B /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503FD27101B44009D50CB /* DetailsViewModel.swift */; };
 		6CF6492F2A459FE100E0DE0B /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D0270DD57D009D50CB /* Coordinator.swift */; };
-		6CF649302A459FE100E0DE0B /* AppereanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D993082992AB7F0038565F /* AppereanceSettingsViewController.swift */; };
 		6CF649312A459FE100E0DE0B /* EnterUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E13279F871300F81095 /* EnterUsernameViewController.swift */; };
 		6CF649322A459FE100E0DE0B /* EnterUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93708E18279F873D00F81095 /* EnterUsernameView.swift */; };
 		6CF649332A459FE100E0DE0B /* Int64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int64+Extensions.swift */; };
@@ -1100,6 +1096,12 @@
 		93C8A4652A8116E8005E23DD /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4642A8116E8005E23DD /* NoteTableViewCell.swift */; };
 		93C8A4662A8116E8005E23DD /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4642A8116E8005E23DD /* NoteTableViewCell.swift */; };
 		93C8A4672A8116E8005E23DD /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C8A4642A8116E8005E23DD /* NoteTableViewCell.swift */; };
+		93CB3E2A2B0042600082D4F2 /* AppereanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CB3E292B0042600082D4F2 /* AppereanceSettingsView.swift */; };
+		93CB3E2B2B0042600082D4F2 /* AppereanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CB3E292B0042600082D4F2 /* AppereanceSettingsView.swift */; };
+		93CB3E2C2B0042600082D4F2 /* AppereanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CB3E292B0042600082D4F2 /* AppereanceSettingsView.swift */; };
+		93CB3E2E2B0042720082D4F2 /* AppereanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CB3E2D2B0042720082D4F2 /* AppereanceSettingsViewController.swift */; };
+		93CB3E2F2B0042720082D4F2 /* AppereanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CB3E2D2B0042720082D4F2 /* AppereanceSettingsViewController.swift */; };
+		93CB3E302B0042720082D4F2 /* AppereanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CB3E2D2B0042720082D4F2 /* AppereanceSettingsViewController.swift */; };
 		93CEF8FF27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
 		93CF473D2963240200213DBE /* AppRepository+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CF473C2963240200213DBE /* AppRepository+File.swift */; };
 		93CF47402963286B00213DBE /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DB270DD6DC009D50CB /* AppRepository.swift */; };
@@ -1131,8 +1133,6 @@
 		93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */; };
 		93D86DC427BAEEA000F275B0 /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D86DC327BAEEA000F275B0 /* MediaCollectionViewCell.swift */; };
 		93D993092992AB7F0038565F /* AppereanceSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D993052992AB7F0038565F /* AppereanceSettingsViewModel.swift */; };
-		93D9930A2992AB7F0038565F /* AppereanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D993072992AB7F0038565F /* AppereanceSettingsView.swift */; };
-		93D9930B2992AB7F0038565F /* AppereanceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D993082992AB7F0038565F /* AppereanceSettingsViewController.swift */; };
 		93DE585827BC7B6600C45EB4 /* VideoCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */; };
 		93DE585A27BC7B7100C45EB4 /* VideoCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */; };
 		93DE585D27BC7B8000C45EB4 /* VideoCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */; };
@@ -1544,6 +1544,8 @@
 		93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesResponseModel.swift; sourceTree = "<group>"; };
 		93C8A45A2A81126E005E23DD /* AppRepository+Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Notes.swift"; sourceTree = "<group>"; };
 		93C8A4642A8116E8005E23DD /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
+		93CB3E292B0042600082D4F2 /* AppereanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppereanceSettingsView.swift; sourceTree = "<group>"; };
+		93CB3E2D2B0042720082D4F2 /* AppereanceSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppereanceSettingsViewController.swift; sourceTree = "<group>"; };
 		93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomUserEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		93CF473C2963240200213DBE /* AppRepository+File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+File.swift"; sourceTree = "<group>"; };
 		93CFFA4E293587EB001EBACF /* MessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyView.swift; sourceTree = "<group>"; };
@@ -1561,8 +1563,6 @@
 		93D86DC127BAD1D800F275B0 /* LinksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksTableViewCell.swift; sourceTree = "<group>"; };
 		93D86DC327BAEEA000F275B0 /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		93D993052992AB7F0038565F /* AppereanceSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppereanceSettingsViewModel.swift; sourceTree = "<group>"; };
-		93D993072992AB7F0038565F /* AppereanceSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppereanceSettingsView.swift; sourceTree = "<group>"; };
-		93D993082992AB7F0038565F /* AppereanceSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppereanceSettingsViewController.swift; sourceTree = "<group>"; };
 		93DE585727BC7B6600C45EB4 /* VideoCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewController.swift; sourceTree = "<group>"; };
 		93DE585927BC7B7100C45EB4 /* VideoCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewModel.swift; sourceTree = "<group>"; };
 		93DE585C27BC7B8000C45EB4 /* VideoCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallView.swift; sourceTree = "<group>"; };
@@ -2312,7 +2312,7 @@
 		93D993042992AB7F0038565F /* AppereanceScreen */ = {
 			isa = PBXGroup;
 			children = (
-				93D993082992AB7F0038565F /* AppereanceSettingsViewController.swift */,
+				93CB3E2D2B0042720082D4F2 /* AppereanceSettingsViewController.swift */,
 				93D993052992AB7F0038565F /* AppereanceSettingsViewModel.swift */,
 				93D993062992AB7F0038565F /* View */,
 			);
@@ -2322,7 +2322,7 @@
 		93D993062992AB7F0038565F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				93D993072992AB7F0038565F /* AppereanceSettingsView.swift */,
+				93CB3E292B0042600082D4F2 /* AppereanceSettingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3668,9 +3668,9 @@
 				6C78B7D729AF5ADB004BF881 /* BaseViewController.swift in Sources */,
 				6C78B7D829AF5ADB004BF881 /* UTType+Extensions.swift in Sources */,
 				6C78B7D929AF5ADB004BF881 /* ContactsViewController.swift in Sources */,
-				6C78B7DA29AF5ADB004BF881 /* AppereanceSettingsView.swift in Sources */,
 				6C78B7DB29AF5ADB004BF881 /* UpdatePushResponseModel.swift in Sources */,
 				6C78B7DC29AF5ADB004BF881 /* UIView+NSLayoutConstraint.swift in Sources */,
+				93CB3E2B2B0042600082D4F2 /* AppereanceSettingsView.swift in Sources */,
 				6C78B7DE29AF5ADB004BF881 /* AudioMessageTableViewCell.swift in Sources */,
 				6C78B7DF29AF5ADB004BF881 /* MessageDetailTableViewCell.swift in Sources */,
 				6C78B7E029AF5ADB004BF881 /* AudioPlayer.swift in Sources */,
@@ -3763,7 +3763,6 @@
 				6C78B83229AF5ADB004BF881 /* CountryPickerViewModel.swift in Sources */,
 				6C78B83329AF5ADB004BF881 /* DetailsViewModel.swift in Sources */,
 				6C78B83429AF5ADB004BF881 /* Coordinator.swift in Sources */,
-				6C78B83529AF5ADB004BF881 /* AppereanceSettingsViewController.swift in Sources */,
 				6C78B83629AF5ADB004BF881 /* EnterUsernameViewController.swift in Sources */,
 				6C78B83729AF5ADB004BF881 /* EnterUsernameView.swift in Sources */,
 				6C78B83829AF5ADB004BF881 /* Int64+Extensions.swift in Sources */,
@@ -3884,6 +3883,7 @@
 				6C78B8A129AF5ADB004BF881 /* SettingsModel.swift in Sources */,
 				93EACD072A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */,
 				93B7546F2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */,
+				93CB3E2F2B0042720082D4F2 /* AppereanceSettingsViewController.swift in Sources */,
 				6C78B8A229AF5ADB004BF881 /* ParkBenchTimer.swift in Sources */,
 				6C78B8A329AF5ADB004BF881 /* MessageVideoView.swift in Sources */,
 				6C78B8A429AF5ADB004BF881 /* RoomUserEntity+CoreDataProperties.swift in Sources */,
@@ -4079,9 +4079,9 @@
 				6CF648D12A459FE100E0DE0B /* BaseViewController.swift in Sources */,
 				6CF648D22A459FE100E0DE0B /* UTType+Extensions.swift in Sources */,
 				6CF648D32A459FE100E0DE0B /* ContactsViewController.swift in Sources */,
-				6CF648D42A459FE100E0DE0B /* AppereanceSettingsView.swift in Sources */,
 				6CF648D52A459FE100E0DE0B /* UpdatePushResponseModel.swift in Sources */,
 				6CF648D62A459FE100E0DE0B /* UIView+NSLayoutConstraint.swift in Sources */,
+				93CB3E2C2B0042600082D4F2 /* AppereanceSettingsView.swift in Sources */,
 				6CF648D82A459FE100E0DE0B /* AudioMessageTableViewCell.swift in Sources */,
 				6CF648D92A459FE100E0DE0B /* MessageDetailTableViewCell.swift in Sources */,
 				6CF648DA2A459FE100E0DE0B /* AudioPlayer.swift in Sources */,
@@ -4175,7 +4175,6 @@
 				6CF6492D2A459FE100E0DE0B /* CountryPickerViewModel.swift in Sources */,
 				6CF6492E2A459FE100E0DE0B /* DetailsViewModel.swift in Sources */,
 				6CF6492F2A459FE100E0DE0B /* Coordinator.swift in Sources */,
-				6CF649302A459FE100E0DE0B /* AppereanceSettingsViewController.swift in Sources */,
 				6CF649312A459FE100E0DE0B /* EnterUsernameViewController.swift in Sources */,
 				6CF649322A459FE100E0DE0B /* EnterUsernameView.swift in Sources */,
 				6CF649332A459FE100E0DE0B /* Int64+Extensions.swift in Sources */,
@@ -4295,6 +4294,7 @@
 				6CF649A02A459FE100E0DE0B /* SettingsModel.swift in Sources */,
 				6CF649A12A459FE100E0DE0B /* UpdateMessageRequest.swift in Sources */,
 				93B754702A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */,
+				93CB3E302B0042720082D4F2 /* AppereanceSettingsViewController.swift in Sources */,
 				6CF649A22A459FE100E0DE0B /* ParkBenchTimer.swift in Sources */,
 				6CF649A32A459FE100E0DE0B /* MessageVideoView.swift in Sources */,
 				6CF649A42A459FE100E0DE0B /* RoomUserEntity+CoreDataProperties.swift in Sources */,
@@ -4491,7 +4491,6 @@
 				ADD503E3270DD7C7009D50CB /* BaseViewController.swift in Sources */,
 				9325720A28B8F0140078D489 /* UTType+Extensions.swift in Sources */,
 				AD819246272173F500D5BE48 /* ContactsViewController.swift in Sources */,
-				93D9930A2992AB7F0038565F /* AppereanceSettingsView.swift in Sources */,
 				934F2EDD28172BD10086C343 /* UpdatePushResponseModel.swift in Sources */,
 				6C9C5C7C29262610009D3E2B /* UIView+NSLayoutConstraint.swift in Sources */,
 				93C77B702923396200F676C5 /* AudioMessageTableViewCell.swift in Sources */,
@@ -4589,7 +4588,6 @@
 				AD9BFD39272AB31300736318 /* CountryPickerViewModel.swift in Sources */,
 				ADD503FE27101B44009D50CB /* DetailsViewModel.swift in Sources */,
 				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
-				93D9930B2992AB7F0038565F /* AppereanceSettingsViewController.swift in Sources */,
 				93708E14279F871400F81095 /* EnterUsernameViewController.swift in Sources */,
 				93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */,
 				93D6BFF72A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
@@ -4621,6 +4619,7 @@
 				6CBEAB7A2A0933AB0087382E /* TableViewHeaderWithIcon.swift in Sources */,
 				9352A5702977667900E0D90E /* MessageActionsViewController.swift in Sources */,
 				ADD503D7270DD65C009D50CB /* Assembler+Extensions.swift in Sources */,
+				93CB3E2E2B0042720082D4F2 /* AppereanceSettingsViewController.swift in Sources */,
 				AD9BFD29272995CA00736318 /* LoginAssembly.swift in Sources */,
 				93BCDFDE2A81598D00CEE826 /* OneNoteViewController.swift in Sources */,
 				93C2A8F227A323F20099D60D /* ImageViewWithIcon.swift in Sources */,
@@ -4662,6 +4661,7 @@
 				AD8192592721D42700D5BE48 /* ContactsViewModel.swift in Sources */,
 				933BE87327B677F10099BA9E /* AllNotesViewModel.swift in Sources */,
 				93711DFB28E475A30074A50B /* MessageEntity+CoreDataProperties.swift in Sources */,
+				93CB3E2A2B0042600082D4F2 /* AppereanceSettingsView.swift in Sources */,
 				93CFFA5129358CCB001EBACF /* IconAndLabelView.swift in Sources */,
 				931B15152821291400A0CD35 /* DeliveredRequestModel.swift in Sources */,
 				939B30442850DD2200FFA537 /* SyncRoomsResponseModel.swift in Sources */,

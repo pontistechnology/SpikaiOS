@@ -186,5 +186,7 @@ public extension Constants {
         case audioMessage = "Audio message"
         case fileMessage = "File message"
         case unknownMessage = "Unknown message"
+        
+        case apply = "apply"
     }
 }
