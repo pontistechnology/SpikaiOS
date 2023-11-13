@@ -23,6 +23,7 @@ class NewGroupChatViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .secondaryColor
         setupView(newGroupChatView)
         setupBindings()
     }
@@ -100,7 +101,6 @@ class NewGroupChatViewController: BaseViewController {
     }
     
     override func setupView(_ view: UIView) {
-        self.view.backgroundColor = .checkWithDesign
         self.view.addSubview(self.scrollView)
         self.scrollView.constraint()
         
@@ -115,10 +115,8 @@ class NewGroupChatViewController: BaseViewController {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        if let length = textField.text?.count, length > 3 {
-            navigationItem.rightBarButtonItem?.isEnabled = true
-        } else {
-            navigationItem.rightBarButtonItem?.isEnabled = false
+        if let length = textField.text?.count {
+            navigationItem.rightBarButtonItem?.isEnabled = length > 0
         }
     }
     

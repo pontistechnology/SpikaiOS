@@ -50,7 +50,7 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
         }
     }
     
-    func pinUnpin(pin: Bool) {
+    private func pinUnpin(pin: Bool) {
         repository
             .pinUnpinRoom(roomId: room.id, pin: pin)
             .receive(on: DispatchQueue.main)
@@ -67,7 +67,7 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
             }.store(in: &subscriptions)
     }
     
-    func muteUnmute(mute: Bool) {
+    private func muteUnmute(mute: Bool) {
         repository
             .muteUnmuteRoom(roomId: room.id, mute: mute)
             .receive(on: DispatchQueue.main)

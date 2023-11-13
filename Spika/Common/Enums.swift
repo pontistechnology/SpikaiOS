@@ -265,15 +265,15 @@ enum EmojiSection: CaseIterable {
 
 enum SpikaTheme: String, CaseIterable {
     
-    case darkMarine, neon
+    case darkMarine, neon, lightMarine, lightGreen
     
     // TODO: - localize?
     var title: String {
-        switch self {
-        case .neon:
-            return "Neon"
-        case .darkMarine:
-            return "Dark Marine"
+        return switch self {
+        case .neon: "Neon"
+        case .darkMarine: "Dark Marine"
+        case .lightMarine: "Light Marine"
+        case .lightGreen: "Light Green"
         }
     }
     
@@ -331,6 +331,34 @@ enum SpikaTheme: String, CaseIterable {
                         _fourthAdditionalColor: .Neon.additional4,
                         _warningColor: .Neon.warning1,
                         _secondWarningColor: .Neon.warning2)
+        case .lightMarine:
+            SpikaColors(_backgroundGradientColors: [.LightMarine.BackgroundGradient.gradient1,
+                                                    .LightMarine.BackgroundGradient.gradient2],
+                        _primaryColor: .LightMarine.primary,
+                        _secondaryColor: .LightMarine.secondary,
+                        _tertiaryColor: .LightMarine.tertiary,
+                        _textPrimary: .LightMarine.textPrimary,
+                        _textSecondary: .LightMarine.textSecondary,
+                        _additionalColor: .LightMarine.additional1,
+                        _secondAdditionalColor: .LightMarine.additional2,
+                        _thirdAdditionalColor: .LightMarine.additional3,
+                        _fourthAdditionalColor: .LightMarine.additional4,
+                        _warningColor: .LightMarine.warning1,
+                        _secondWarningColor: .LightMarine.warning2)
+        case .lightGreen:
+            SpikaColors(_backgroundGradientColors: [.LightGreen.BackgroundGradient.gradient1,
+                                                    .LightGreen.BackgroundGradient.gradient2],
+                        _primaryColor: .LightGreen.primary,
+                        _secondaryColor: .LightGreen.secondary,
+                        _tertiaryColor: .LightGreen.tertiary,
+                        _textPrimary: .LightGreen.textPrimary,
+                        _textSecondary: .LightGreen.textSecondary,
+                        _additionalColor: .LightGreen.additional1,
+                        _secondAdditionalColor: .LightGreen.additional2,
+                        _thirdAdditionalColor: .LightGreen.additional3,
+                        _fourthAdditionalColor: .LightGreen.additional4,
+                        _warningColor: .LightGreen.warning1,
+                        _secondWarningColor: .LightGreen.warning2)
         }
     }
 }

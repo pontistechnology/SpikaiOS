@@ -234,7 +234,7 @@ extension UIView {
 extension UIView {
     func setGradientBackground(colors: [UIColor]) {
         // letter S
-        let imageView = UIImageView(image: UIImage(resource: .testBackground).withTintColor(.checkWithDesign))
+        let imageView = UIImageView(image: UIImage(resource: .testBackground))
         self.insertSubview(imageView, at: 0)
         imageView.contentMode = .scaleAspectFill
         imageView.fillSuperview()

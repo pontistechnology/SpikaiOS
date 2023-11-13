@@ -48,7 +48,7 @@ extension MessageDetailsViewController: UITableViewDataSource, UITableViewDelega
         else {
             return EmptyTableViewCell()
         }
-        cell.backgroundColor = .checkWithDesign // TODO: - move to cell
+
         if indexPath.section == 0 && data.editedTime != nil {
             cell.configureCell(title: data.name,
                                description: data.telephoneNumber,

@@ -122,10 +122,11 @@ extension UserSelectionViewController: UITableViewDataSource {
         
         cell.selectionStyle = .none
         // User Preselected - selection disabled
-        cell.backgroundColor = viewModel.userSelectionDisabled(user: user) ? .checkWithDesign : .checkWithDesign
+        
         cell.isUserInteractionEnabled = !viewModel.userSelectionDisabled(user: user)
         // User was selected
         cell.accessoryType = viewModel.userSelected(user: user) ? .checkmark : .none
+        cell.tintColor = .tertiaryColor
         
         cell.configureCell(title: user.getDisplayName(),
                             description: user.telephoneNumber,

@@ -19,7 +19,7 @@ enum ContactsTableViewCellType {
 }
 
 class ContactsTableViewCell: UITableViewCell, BaseView {
-    static let reuseIdentifier: String = "ContactsTableViewCell"
+    static let reuseIdentifier = "ContactsTableViewCell"
     
     let onRightClickAction = PassthroughSubject<UITableViewCell,Never>()
     var subscriptions = Set<AnyCancellable>()
@@ -34,7 +34,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         button.setTitleColor(.textPrimary, for: .normal)
         button.publisher(for: .touchUpInside)
             .map { [unowned self] _ in self }
-            .subscribe(self.onRightClickAction)
+            .subscribe(onRightClickAction)
             .store(in: &subscriptions)
         return button
     } ()
@@ -47,7 +47,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = .none
+        selectionStyle = .none
         setupView()
     }
     
@@ -56,14 +56,14 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     }
     
     func addSubviews() {
-        self.contentView.addSubview(horizontalStackView)
-        self.horizontalStackView.addArrangedSubview(self.leftImageView)
-        self.horizontalStackView.addArrangedSubview(self.verticalStackView)
-        self.verticalStackView.addArrangedSubview(self.nameLabel)
-        self.verticalStackView.addArrangedSubview(self.descriptionLabel)
+        contentView.addSubview(horizontalStackView)
+        horizontalStackView.addArrangedSubview(leftImageView)
+        horizontalStackView.addArrangedSubview(verticalStackView)
+        verticalStackView.addArrangedSubview(nameLabel)
+        verticalStackView.addArrangedSubview(descriptionLabel)
         
-        self.horizontalStackView.addArrangedSubview(self.rightButton)
-        self.horizontalStackView.addArrangedSubview(self.rightView)
+        horizontalStackView.addArrangedSubview(rightButton)
+        horizontalStackView.addArrangedSubview(rightView)
     }
     
     func styleSubviews() {
@@ -77,56 +77,56 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     }
     
     func positionSubviews() {
-        self.horizontalStackView.constraint(with: UIEdgeInsets(top: 12, left: 20, bottom: -12, right: -20))
-        self.leftImageView.widthAnchor.constraint(equalTo: self.leftImageView.heightAnchor).isActive = true
+        horizontalStackView.constraint(with: UIEdgeInsets(top: 12, left: 20, bottom: -12, right: -20))
+        leftImageView.widthAnchor.constraint(equalTo: leftImageView.heightAnchor).isActive = true
     }
     
     func configureCell(title: String?,
                        description: String?,
                        leftImage: URL?,
                        type: ContactsTableViewCellType) {
-        self.nameLabel.text = title
-        self.descriptionLabel.text = description
+        nameLabel.text = title
+        descriptionLabel.text = description
         leftImageView.kf.setImage(with: leftImage, placeholder: UIImage(resource: .user))
         
-        self.rightButton.hide()
-        self.rightButton.setImage(nil, for: .normal)
-        self.rightButton.setTitle(nil, for: .normal)
-        self.rightView.hide()
+        rightButton.hide()
+        rightButton.setImage(nil, for: .normal)
+        rightButton.setTitle(nil, for: .normal)
+        rightView.hide()
         
         switch type {
         case .normal:
             break
         case .text(let text):
-            self.rightButton.unhide()
-            self.rightButton.setTitle(text, for: .normal)
-            self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratLight.rawValue, size: 14)
-            self.rightButton.setTitleColor(.textPrimary, for: .normal)
+            rightButton.unhide()
+            rightButton.setTitle(text, for: .normal)
+            rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratLight.rawValue, size: 14)
+            rightButton.setTitleColor(.textPrimary, for: .normal)
         case .remove:
-            self.rightButton.unhide()
-            self.rightButton.setImage(UIImage(resource: .rDclose).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal), for: .normal)
+            rightButton.unhide()
+            rightButton.setImage(UIImage(resource: .rDclose).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal), for: .normal)
         case .emoji(let emoji, let size):
-            self.rightButton.unhide()
-            self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)
-            self.rightButton.setTitle(emoji, for: .normal)
+            rightButton.unhide()
+            rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)
+            rightButton.setTitle(emoji, for: .normal)
         case .doubleEntry(let firstText,let firstImage,let secondText,let secondImage):
-            self.rightView.unhide()
+            rightView.unhide()
             
-            self.rightView.firstRow.label.text = firstText
+            rightView.firstRow.label.text = firstText
             if let image = firstImage {
-                self.rightView.firstRow.imageView.image = UIImage(resource: image)
+                rightView.firstRow.imageView.image = UIImage(resource: image)
             }
             
-            self.rightView.secondRow.label.text = secondText
+            rightView.secondRow.label.text = secondText
             if let image = secondImage {
-                self.rightView.secondRow.imageView.image = UIImage(resource: image)
+                rightView.secondRow.imageView.image = UIImage(resource: image)
             }
         }
     }
     
     override func prepareForReuse() {
-        self.leftImageView.image = UIImage(resource: .user)
-        self.nameLabel.text = ""
-        self.descriptionLabel.text = ""
+        leftImageView.image = UIImage(resource: .user)
+        nameLabel.text = ""
+        descriptionLabel.text = ""
     }
 }

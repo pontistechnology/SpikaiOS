@@ -11,7 +11,7 @@ import UIKit
 class ContactsTableView: UITableView {
     
     override init(frame: CGRect, style: UITableView.Style) {
-        super.init(frame: frame, style: style)
+        super.init(frame: frame, style: .grouped)
         setupTV()
     }
     
