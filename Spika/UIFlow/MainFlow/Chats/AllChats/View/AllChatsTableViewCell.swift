@@ -21,8 +21,8 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     
     let messagesStackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .fill, spacing: 8)
     let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .center)
-    let pinnedIcon = UIImageView(image: UIImage(resource: .pinnedChatIcon))
-    let mutedIcon = UIImageView(image: UIImage(resource: .mutedIcon))
+    let pinnedIcon = UIImageView(image: UIImage(resource: .rDpin).withTintColor(.textPrimary, renderingMode: .alwaysOriginal))
+    let mutedIcon = UIImageView(image: UIImage(resource: .rDmute).withTintColor(.textPrimary, renderingMode: .alwaysOriginal))
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,6 +35,8 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     
     func addSubviews() {
         contentView.addSubview(leftImageView)
+        contentView.addSubview(mutedIcon)
+        contentView.addSubview(pinnedIcon)
         contentView.addSubview(nameLabel)
         contentView.addSubview(descriptionStackView)
         contentView.addSubview(timeLabel)
@@ -45,8 +47,6 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         descriptionStackView.addArrangedSubview(helperView)
         
         contentView.addSubview(messagesStackView)
-        messagesStackView.addArrangedSubview(pinnedIcon)
-        messagesStackView.addArrangedSubview(mutedIcon)
         messagesStackView.addArrangedSubview(messagesNumberLabel)
     }
     
@@ -54,6 +54,9 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         descriptionStackView.axis = .horizontal
         descriptionStackView.distribution = .fill
         descriptionIcon.contentMode = .scaleAspectFit
+        
+        pinnedIcon.backgroundColor = .additionalColor
+        mutedIcon.backgroundColor = .additionalColor
         
         
         leftImageView.clipsToBounds = true
@@ -69,16 +72,23 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.hide()
         backgroundColor = .clear
         
-        pinnedIcon.translatesAutoresizingMaskIntoConstraints = false
-        pinnedIcon.contentMode = .center
+        mutedIcon.layer.cornerRadius = 6
+        pinnedIcon.layer.cornerRadius = 6
         
-        mutedIcon.translatesAutoresizingMaskIntoConstraints = false
-        mutedIcon.contentMode = .center
+        
+//        pinnedIcon.translatesAutoresizingMaskIntoConstraints = false
+//        pinnedIcon.contentMode = .center
+//        
+//        mutedIcon.translatesAutoresizingMaskIntoConstraints = false
+//        mutedIcon.contentMode = .center
     }
     
     func positionSubviews() {
         leftImageView.centerYToSuperview()
         leftImageView.anchor(leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0), size: CGSize(width: 54, height: 54))
+        
+        mutedIcon.anchor(top: leftImageView.topAnchor, trailing: leftImageView.trailingAnchor)
+        pinnedIcon.anchor(leading: leftImageView.leadingAnchor, bottom: leftImageView.bottomAnchor)
         
         nameLabel.anchor(top: contentView.topAnchor, leading: leftImageView.trailingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 14, left: 12, bottom: 0, right: 100))
         
@@ -95,7 +105,6 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesStackView.anchor(top: timeLabel.bottomAnchor, trailing: timeLabel.trailingAnchor, padding: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0))
         messagesStackView.constrainHeight(20)
         messagesNumberLabel.constrainWidth(20)
-//        mutedIcon.constrainWidth(20)
     }
     
     func configureCell(avatarUrl: URL?, name: String, description: (String?, MessageType, String?), time: String, badgeNumber: Int64, muted: Bool, pinned: Bool) {
@@ -110,8 +119,8 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.text = "\(badgeNumber)"
         messagesNumberLabel.isHidden = badgeNumber == 0
         
-        mutedIcon.isHidden = !muted
-        pinnedIcon.isHidden = !pinned
+//        mutedIcon.isHidden = !muted
+//        pinnedIcon.isHidden = !pinned
         
         
     }
