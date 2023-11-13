@@ -95,6 +95,15 @@ enum MessageSender {
             return .secondaryColor
         }
     }
+    
+    var replyBackgroundColor: UIColor {
+        switch self {
+        case .me:
+            return .secondaryColor
+        case .friend, .group:
+            return .primaryColor
+        }
+    }
 }
 
 enum ScrollToBottomType {

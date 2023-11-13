@@ -171,7 +171,7 @@ extension BaseMessageTableViewCell {
     
     func showReplyView(senderName: String, message: Message, sender: MessageSender?) {
         if replyView == nil, let sender = sender {
-            self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: sender.backgroundColor)
+            self.replyView = MessageReplyView(senderName: senderName, message: message, backgroundColor: sender.replyBackgroundColor)
             
             containerStackView.insertArrangedSubview(replyView!, at: 0)
             
