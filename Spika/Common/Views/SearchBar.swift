@@ -59,12 +59,12 @@ class SearchBar: UIView, BaseView {
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
         
-        searchView.backgroundColor = .checkWithDesign
+        searchView.backgroundColor = .thirdAdditionalColor
         searchView.layer.cornerRadius = 10
         searchView.clipsToBounds = true
         
         cancelButton.setTitle(.getStringFor(.cancel), for: .normal)
-        cancelButton.setTitleColor(.checkWithDesign, for: .normal)
+        cancelButton.setTitleColor(.primaryColor, for: .normal)
         cancelButton.titleLabel?.font = .customFont(name: .MontserratMedium, size: 14)
     }
     
