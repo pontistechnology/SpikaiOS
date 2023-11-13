@@ -28,9 +28,6 @@ struct AppereanceSettingsView: View {
             })
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.linearGradient(colors: UIColor._backgroundGradientColors.map({ Color(uiColor: $0)
-        }), startPoint: UnitPoint(x: 0.2, y: 0.1), 
-                                    endPoint: UnitPoint(x: 1.2, y: 1.3)))
-        // TODO: - move gradient somewhere to be reusable
+        .modifier(SpikaBackgroundGradient())
     }
 }

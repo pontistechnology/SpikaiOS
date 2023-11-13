@@ -56,7 +56,7 @@
 "Notes" = "Notes";
 "Favorites" = "Favorites";
 "Pin chat" = "Pin chat";
-"Mute" = "Mute";
+"Mute chat" = "Mute chat";
 "Block" = "Block";
 "Report" = "Report";
 "Are you sure you want to delete group?" = "Are you sure you want to delete group?";
@@ -64,6 +64,7 @@
 "Something went wrong trying to add new users" = "Something went wrong trying to add new users";
 "Something went wrong muting the room" = "Something went wrong muting the room";
 "Something went wrong unmuting the room" = "Something went wrong unmuting the room";
+"Something went wrong pining the room" = "Something went wrong pining the room";
 
 "Media" = "Media";
 "Links" = "Links";
@@ -138,3 +139,4 @@
 "Unknown message" = "Unknown message";
 
 "apply" = "apply";
+"Private contact" = "Private contact";

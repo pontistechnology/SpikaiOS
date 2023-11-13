@@ -67,7 +67,7 @@ public extension Constants {
         case notes = "Notes"
         case favorites = "Favorites"
         case pinchat = "Pin chat"
-        case mute = "Mute"
+        case mute = "Mute chat"
         case block = "Block"
         case report = "Report"
         case admin = "Admin"
@@ -76,6 +76,7 @@ public extension Constants {
         case somethingWentWrongDeletingTheRoom = "Something went wrong deleting the room"
         case somethingWentWrongAddingUsers = "Something went wrong trying to add new users"
         case somethingWentWrongMutingRoom = "Something went wrong muting the room"
+        case somethingWentWrongPiningRoom = "Something went wrong pining the room"
         case somethingWentWrongUnmutingRoom = "Something went wrong unmuting the room"
         
 
@@ -188,5 +189,7 @@ public extension Constants {
         case unknownMessage = "Unknown message"
         
         case apply = "apply"
+        
+        case privateContact = "Private contact"
     }
 }

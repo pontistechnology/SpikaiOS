@@ -147,13 +147,13 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleChatDetailsViewController(_ container: Container) {
-        container.register(ChatDetailsViewModel.self) { (resolver, coordinator: AppCoordinator, room: CurrentValueSubject<Room,Never>) in
+        container.register(ChatDetails2ViewModel.self) { (resolver, coordinator: AppCoordinator, room: CurrentValueSubject<Room,Never>) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return ChatDetailsViewModel(repository: repository, coordinator: coordinator, room: room)
+            return ChatDetails2ViewModel(repository: repository, coordinator: coordinator, roomPublisher: room)
         }.inObjectScope(.transient)
         
-        container.register(ChatDetailsViewController.self) { (resolver, coordinator: AppCoordinator, room: CurrentValueSubject<Room,Never>) in
-            let controller = ChatDetailsViewController(viewModel: resolver.resolve(ChatDetailsViewModel.self, arguments: coordinator, room)!)
+        container.register(ChatDetails2ViewController.self) { (resolver, coordinator: AppCoordinator, room:  CurrentValueSubject<Room,Never>) in
+            let controller = ChatDetails2ViewController(rootView: ChatDetails2View(viewModel: resolver.resolve(ChatDetails2ViewModel.self, arguments: coordinator, room)!))
             return controller
         }.inObjectScope(.transient)
     }

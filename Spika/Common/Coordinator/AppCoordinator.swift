@@ -12,6 +12,7 @@ import AVKit
 import AVFoundation
 import Contacts
 import ContactsUI
+import SwiftUI
 
 class AppCoordinator: Coordinator {
     
@@ -151,8 +152,7 @@ class AppCoordinator: Coordinator {
     }
     
     func presentChatDetailsScreen(room: CurrentValueSubject<Room,Never>) {
-        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetailsViewController.self, arguments: self, room)!
-        
+        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetails2ViewController.self, arguments: self, room)!
         navigationController.pushViewController(roomDetailsViewController, animated: true)
     }
     

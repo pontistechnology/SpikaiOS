@@ -57,14 +57,21 @@ extension Room {
 
 extension Room {
     func getFriendUserInPrivateRoom(myUserId: Int64) -> User? {
-        if type == .privateRoom {
-            return users.first(where: { $0.user.id != myUserId })?.user
-        } else {
-            return nil
-        }
+        return type == .privateRoom 
+        ? users.first(where: { $0.user.id != myUserId })?.user
+        : nil
     }
     
     func getDisplayNameFor(userId: Int64) -> String {
         return users.first(where: { $0.userId == userId})?.user.getDisplayName() ?? "no name"
+    }
+    
+    func roomName(myUserId: Int64) -> String {
+        return switch self.type {
+        case .privateRoom:
+            getFriendUserInPrivateRoom(myUserId: myUserId)?.getDisplayName() ?? "no name"
+        case .groupRoom:
+            name ?? "no name"
+        }
     }
 }

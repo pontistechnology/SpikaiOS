@@ -942,6 +942,23 @@
 		936D90E8296E2632004C79BE /* ReactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936D90E7296E2632004C79BE /* ReactionsViewController.swift */; };
 		936D90EA296E263D004C79BE /* ReactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936D90E9296E263D004C79BE /* ReactionsViewModel.swift */; };
 		936D90EC296E2881004C79BE /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936D90EB296E2881004C79BE /* ReactionsView.swift */; };
+		936E21112B01D95E00333B43 /* ChatDetails2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21102B01D95E00333B43 /* ChatDetails2ViewController.swift */; };
+		936E21122B01D95E00333B43 /* ChatDetails2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21102B01D95E00333B43 /* ChatDetails2ViewController.swift */; };
+		936E21132B01D95E00333B43 /* ChatDetails2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21102B01D95E00333B43 /* ChatDetails2ViewController.swift */; };
+		936E21152B01D97800333B43 /* ChatDetails2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21142B01D97800333B43 /* ChatDetails2View.swift */; };
+		936E21162B01D97800333B43 /* ChatDetails2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21142B01D97800333B43 /* ChatDetails2View.swift */; };
+		936E21172B01D97800333B43 /* ChatDetails2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21142B01D97800333B43 /* ChatDetails2View.swift */; };
+		936E21192B01D9FB00333B43 /* ChatDetails2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21182B01D9FB00333B43 /* ChatDetails2ViewModel.swift */; };
+		936E211A2B01D9FB00333B43 /* ChatDetails2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21182B01D9FB00333B43 /* ChatDetails2ViewModel.swift */; };
+		936E211B2B01D9FB00333B43 /* ChatDetails2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21182B01D9FB00333B43 /* ChatDetails2ViewModel.swift */; };
+		936E211C2B01F8F100333B43 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9376A8C62AFE7BA90035687F /* PrimaryButton.swift */; };
+		936E211D2B01F8F200333B43 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9376A8C62AFE7BA90035687F /* PrimaryButton.swift */; };
+		936E211F2B01FAA600333B43 /* ChatRoundedAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E211E2B01FAA600333B43 /* ChatRoundedAvatar.swift */; };
+		936E21202B01FAA600333B43 /* ChatRoundedAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E211E2B01FAA600333B43 /* ChatRoundedAvatar.swift */; };
+		936E21212B01FAA600333B43 /* ChatRoundedAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E211E2B01FAA600333B43 /* ChatRoundedAvatar.swift */; };
+		936E21232B01FAD700333B43 /* SpikaBackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21222B01FAD700333B43 /* SpikaBackgroundGradient.swift */; };
+		936E21242B01FAD700333B43 /* SpikaBackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21222B01FAD700333B43 /* SpikaBackgroundGradient.swift */; };
+		936E21252B01FAD700333B43 /* SpikaBackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E21222B01FAD700333B43 /* SpikaBackgroundGradient.swift */; };
 		937055D729148A270052EC77 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937055D629148A270052EC77 /* PopUpViewController.swift */; };
 		937055D929148BE00052EC77 /* ErrorMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937055D829148BE00052EC77 /* ErrorMessageView.swift */; };
 		937055DB291497610052EC77 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937055DA291497610052EC77 /* AlertView.swift */; };
@@ -1464,6 +1481,11 @@
 		936D90E7296E2632004C79BE /* ReactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsViewController.swift; sourceTree = "<group>"; };
 		936D90E9296E263D004C79BE /* ReactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsViewModel.swift; sourceTree = "<group>"; };
 		936D90EB296E2881004C79BE /* ReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
+		936E21102B01D95E00333B43 /* ChatDetails2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetails2ViewController.swift; sourceTree = "<group>"; };
+		936E21142B01D97800333B43 /* ChatDetails2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetails2View.swift; sourceTree = "<group>"; };
+		936E21182B01D9FB00333B43 /* ChatDetails2ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetails2ViewModel.swift; sourceTree = "<group>"; };
+		936E211E2B01FAA600333B43 /* ChatRoundedAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoundedAvatar.swift; sourceTree = "<group>"; };
+		936E21222B01FAD700333B43 /* SpikaBackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpikaBackgroundGradient.swift; sourceTree = "<group>"; };
 		937055D629148A270052EC77 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		937055D829148BE00052EC77 /* ErrorMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessageView.swift; sourceTree = "<group>"; };
 		937055DA291497610052EC77 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -2109,6 +2131,16 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		936E210F2B01D94300333B43 /* ChatDetails2 */ = {
+			isa = PBXGroup;
+			children = (
+				936E21102B01D95E00333B43 /* ChatDetails2ViewController.swift */,
+				936E21142B01D97800333B43 /* ChatDetails2View.swift */,
+				936E21182B01D9FB00333B43 /* ChatDetails2ViewModel.swift */,
+			);
+			path = ChatDetails2;
+			sourceTree = "<group>";
+		};
 		937055D329147EA40052EC77 /* PopUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -2158,6 +2190,7 @@
 			isa = PBXGroup;
 			children = (
 				9376A8C62AFE7BA90035687F /* PrimaryButton.swift */,
+				936E211E2B01FAA600333B43 /* ChatRoundedAvatar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2166,6 +2199,7 @@
 			isa = PBXGroup;
 			children = (
 				9376A8D12AFE96EF0035687F /* RoundedCorners.swift */,
+				936E21222B01FAD700333B43 /* SpikaBackgroundGradient.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -2574,6 +2608,7 @@
 		AD9BFD1E2729927300736318 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
+				936E210F2B01D94300333B43 /* ChatDetails2 */,
 				9398B6EA2AFD93DB0010B277 /* Settings2 */,
 				93C8A4682A814EB7005E23DD /* Notes */,
 				6C5A4752291D346900D3E270 /* ChatDetails */,
@@ -3627,6 +3662,7 @@
 				6C78B7AF29AF5ADB004BF881 /* Room.swift in Sources */,
 				6C78B7B029AF5ADB004BF881 /* AppRepository+BlockedUsers.swift in Sources */,
 				6C78B7B129AF5ADB004BF881 /* UserSelectionViewController.swift in Sources */,
+				936E211A2B01D9FB00333B43 /* ChatDetails2ViewModel.swift in Sources */,
 				6C78B7B229AF5ADB004BF881 /* ActionButton.swift in Sources */,
 				93FD38382A881EA000FE9C3B /* CollectionViewHeader.swift in Sources */,
 				93A14D742A5FDCBC00A557CB /* TermsAndConditionViewController.swift in Sources */,
@@ -3640,6 +3676,7 @@
 				6C78B7BA29AF5ADB004BF881 /* SSENewMessage.swift in Sources */,
 				6C78B7BB29AF5ADB004BF881 /* SharedView.swift in Sources */,
 				6C78B7BC29AF5ADB004BF881 /* SwitchView.swift in Sources */,
+				936E21162B01D97800333B43 /* ChatDetails2View.swift in Sources */,
 				6C78B7BE29AF5ADB004BF881 /* AlertView.swift in Sources */,
 				6C78B7BF29AF5ADB004BF881 /* AppRepository+Tests.swift in Sources */,
 				6C78B7C129AF5ADB004BF881 /* NotificationAlertViewController.swift in Sources */,
@@ -3678,6 +3715,7 @@
 				6C78B7E029AF5ADB004BF881 /* AudioPlayer.swift in Sources */,
 				6C78B7E129AF5ADB004BF881 /* RequestState.swift in Sources */,
 				6C78B7E229AF5ADB004BF881 /* UITableView+Extensions.swift in Sources */,
+				936E21242B01FAD700333B43 /* SpikaBackgroundGradient.swift in Sources */,
 				6C78B7E329AF5ADB004BF881 /* LinksTableViewCell.swift in Sources */,
 				6C78B7E429AF5ADB004BF881 /* VideoCallViewController.swift in Sources */,
 				6C78B7E529AF5ADB004BF881 /* UserEntity+CoreDataProperties.swift in Sources */,
@@ -3739,6 +3777,7 @@
 				6C78B81B29AF5ADB004BF881 /* MessageResponse.swift in Sources */,
 				6C78B81C29AF5ADB004BF881 /* SettingsView.swift in Sources */,
 				6C78B81D29AF5ADB004BF881 /* RoundedImageView.swift in Sources */,
+				936E211C2B01F8F100333B43 /* PrimaryButton.swift in Sources */,
 				6CF916B82A1B6FCC002AD09B /* PhoneNumberParserApp.swift in Sources */,
 				93A14D812A5FF7D800A557CB /* AppRepository+Shared.swift in Sources */,
 				6C78B81F29AF5ADB004BF881 /* AllChatsView.swift in Sources */,
@@ -3768,6 +3807,7 @@
 				6C78B83629AF5ADB004BF881 /* EnterUsernameViewController.swift in Sources */,
 				6C78B83729AF5ADB004BF881 /* EnterUsernameView.swift in Sources */,
 				6C78B83829AF5ADB004BF881 /* Int64+Extensions.swift in Sources */,
+				936E21202B01FAA600333B43 /* ChatRoundedAvatar.swift in Sources */,
 				6C78B83A29AF5ADB004BF881 /* UIFont+Extensions.swift in Sources */,
 				93D6BFF82A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				6C78B83C29AF5ADB004BF881 /* NewGroupChatViewController.swift in Sources */,
@@ -3867,6 +3907,7 @@
 				6C1777862A1CE2B700273FEE /* AppRepository+DeviceContacts.swift in Sources */,
 				6C78B89329AF5ADB004BF881 /* AppRepository.swift in Sources */,
 				6C78B89429AF5ADB004BF881 /* Constants+Database.swift in Sources */,
+				936E21122B01D95E00333B43 /* ChatDetails2ViewController.swift in Sources */,
 				6C78B89529AF5ADB004BF881 /* EnterNumberViewModel.swift in Sources */,
 				6C78B89629AF5ADB004BF881 /* ContactsRequestModel.swift in Sources */,
 				6C78B89729AF5ADB004BF881 /* ChatMembersView.swift in Sources */,
@@ -4037,6 +4078,7 @@
 				6CF648AB2A459FE100E0DE0B /* MessageActionsView.swift in Sources */,
 				6CF648AC2A459FE100E0DE0B /* Room.swift in Sources */,
 				9300D9CE2A4C540900B7B695 /* PdfViewerViewController.swift in Sources */,
+				936E211B2B01D9FB00333B43 /* ChatDetails2ViewModel.swift in Sources */,
 				6CF648AD2A459FE100E0DE0B /* AppRepository+BlockedUsers.swift in Sources */,
 				93FD38392A881EA000FE9C3B /* CollectionViewHeader.swift in Sources */,
 				93A14D752A5FDCBC00A557CB /* TermsAndConditionViewController.swift in Sources */,
@@ -4050,6 +4092,7 @@
 				6CF648B42A459FE100E0DE0B /* AllChatsViewModel.swift in Sources */,
 				6CF648B52A459FE100E0DE0B /* BlockedUsersView.swift in Sources */,
 				6CF648B62A459FE100E0DE0B /* SSENewMessage.swift in Sources */,
+				936E21172B01D97800333B43 /* ChatDetails2View.swift in Sources */,
 				6CF648B72A459FE100E0DE0B /* SharedView.swift in Sources */,
 				6CF648B82A459FE100E0DE0B /* SwitchView.swift in Sources */,
 				6CF648B92A459FE100E0DE0B /* AlertView.swift in Sources */,
@@ -4088,6 +4131,7 @@
 				6CF648DA2A459FE100E0DE0B /* AudioPlayer.swift in Sources */,
 				6CF648DB2A459FE100E0DE0B /* RequestState.swift in Sources */,
 				6CF648DC2A459FE100E0DE0B /* UITableView+Extensions.swift in Sources */,
+				936E21252B01FAD700333B43 /* SpikaBackgroundGradient.swift in Sources */,
 				6CF648DD2A459FE100E0DE0B /* LinksTableViewCell.swift in Sources */,
 				6CF648DE2A459FE100E0DE0B /* VideoCallViewController.swift in Sources */,
 				6CF648DF2A459FE100E0DE0B /* UserEntity+CoreDataProperties.swift in Sources */,
@@ -4149,6 +4193,7 @@
 				6CF649142A459FE100E0DE0B /* SharedViewModel.swift in Sources */,
 				6CF649152A459FE100E0DE0B /* MessageResponse.swift in Sources */,
 				6CF649162A459FE100E0DE0B /* SettingsView.swift in Sources */,
+				936E211D2B01F8F200333B43 /* PrimaryButton.swift in Sources */,
 				6CF649172A459FE100E0DE0B /* RoundedImageView.swift in Sources */,
 				93A14D822A5FF7D800A557CB /* AppRepository+Shared.swift in Sources */,
 				6C34D92E2A45B5A60009A449 /* ConstantsMessenger.swift in Sources */,
@@ -4178,6 +4223,7 @@
 				6CF6492F2A459FE100E0DE0B /* Coordinator.swift in Sources */,
 				6CF649312A459FE100E0DE0B /* EnterUsernameViewController.swift in Sources */,
 				6CF649322A459FE100E0DE0B /* EnterUsernameView.swift in Sources */,
+				936E21212B01FAA600333B43 /* ChatRoundedAvatar.swift in Sources */,
 				6CF649332A459FE100E0DE0B /* Int64+Extensions.swift in Sources */,
 				93D6BFF92A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				6CF649342A459FE100E0DE0B /* UIFont+Extensions.swift in Sources */,
@@ -4277,6 +4323,7 @@
 				6CF649902A459FE100E0DE0B /* AppRepository+DeviceContacts.swift in Sources */,
 				6CF649912A459FE100E0DE0B /* AppRepository.swift in Sources */,
 				6CF649922A459FE100E0DE0B /* Constants+Database.swift in Sources */,
+				936E21132B01D95E00333B43 /* ChatDetails2ViewController.swift in Sources */,
 				6CF649932A459FE100E0DE0B /* EnterNumberViewModel.swift in Sources */,
 				6CF649942A459FE100E0DE0B /* ContactsRequestModel.swift in Sources */,
 				6CF649952A459FE100E0DE0B /* ChatMembersView.swift in Sources */,
@@ -4500,6 +4547,7 @@
 				93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */,
 				93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */,
 				93DE585827BC7B6600C45EB4 /* VideoCallViewController.swift in Sources */,
+				936E21232B01FAD700333B43 /* SpikaBackgroundGradient.swift in Sources */,
 				93980E09280A10F30015351F /* UserEntity+CoreDataProperties.swift in Sources */,
 				AD8192572721C2CE00D5BE48 /* HomeTabBar.swift in Sources */,
 				939B30462850DDE700FFA537 /* SyncMessagesResponseModel.swift in Sources */,
@@ -4525,6 +4573,7 @@
 				939549F42A4B8133006B6139 /* AllChatsSearchedMessageCell.swift in Sources */,
 				93BCDFEB2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
 				93FD383B2A882BAD00FE9C3B /* EmojiCategoriesView.swift in Sources */,
+				936E21152B01D97800333B43 /* ChatDetails2View.swift in Sources */,
 				939128EB2935734000A79FBA /* MessageTextView.swift in Sources */,
 				ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */,
 				AD9BFD42272ADAD500736318 /* AuthResponseModel.swift in Sources */,
@@ -4590,6 +4639,7 @@
 				ADD503D1270DD57D009D50CB /* Coordinator.swift in Sources */,
 				93708E14279F871400F81095 /* EnterUsernameViewController.swift in Sources */,
 				93708E19279F873D00F81095 /* EnterUsernameView.swift in Sources */,
+				936E211F2B01FAA600333B43 /* ChatRoundedAvatar.swift in Sources */,
 				93D6BFF72A82623C0092DDF5 /* CustomReactionsView.swift in Sources */,
 				93C714A12815F888008BBA33 /* Int64+Extensions.swift in Sources */,
 				932462D828FCB9B100E8C1B9 /* UIFont+Extensions.swift in Sources */,
@@ -4633,6 +4683,7 @@
 				9352A5712977667900E0D90E /* MessageActionsViewModel.swift in Sources */,
 				AD9BFD3C272AC93400736318 /* CountryUtils.swift in Sources */,
 				6C769036291D36B5007F13D2 /* ChatDetailsViewController.swift in Sources */,
+				936E21112B01D95E00333B43 /* ChatDetails2ViewController.swift in Sources */,
 				9398B6EC2AFD94210010B277 /* Settings2View.swift in Sources */,
 				9376A8CC2AFE94B10035687F /* UIRectCorner+Extensions.swift in Sources */,
 				AD8192712722D3E900D5BE48 /* MainButton.swift in Sources */,
@@ -4668,6 +4719,7 @@
 				9396AB7327FED6FF00696757 /* VerifyFileRequestModel.swift in Sources */,
 				938B477D27E29C9F004B36FD /* ChatNavigationBarView.swift in Sources */,
 				AD9BFD49272B105800736318 /* EnterVerifyCodeViewController.swift in Sources */,
+				936E21192B01D9FB00333B43 /* ChatDetails2ViewModel.swift in Sources */,
 				93D86DBC27BAA17E00F275B0 /* LinksTableView.swift in Sources */,
 				937055D729148A270052EC77 /* PopUpViewController.swift in Sources */,
 				6C2638952907DB4400E7E79E /* CustomTableViewHeader.swift in Sources */,

@@ -443,9 +443,9 @@ extension CurrentChatViewController {
         let publisher = CurrentValueSubject<Room, Never>(viewModel.room)
         publisher.sink { [weak self] newRoom in
             self?.viewModel.room = newRoom
-        }.store(in: &self.subscriptions)
+        }.store(in: &subscriptions)
         
-        self.viewModel.getAppCoordinator()?.presentChatDetailsScreen(room: publisher)
+        viewModel.getAppCoordinator()?.presentChatDetailsScreen(room: publisher)
     }
     
     @objc func videoCallActionHandler() {

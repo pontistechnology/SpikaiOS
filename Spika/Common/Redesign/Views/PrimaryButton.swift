@@ -12,12 +12,14 @@ struct PrimaryButton: View {
         case withCheckmark
         case withRightArrow
         case onlyTitle
+        case withToggle(Binding<Bool>)
         
         var imageResource: ImageResource? {
             return switch self {
             case .withCheckmark: .rDcheckmark
             case .withRightArrow: .rDrightArrow
             case .onlyTitle: nil
+            case .withToggle: nil
             }
         }
     }
@@ -62,6 +64,12 @@ struct PrimaryButton: View {
                         .foregroundStyle(Color(uiColor: UIColor.textPrimary))
                     // TODO: -
                 }
+                
+                if case .withToggle(let isOn) = usage {
+                    Toggle("", isOn: isOn)
+                        .padding(.trailing, 16)
+                }
+
             }
             .frame(maxWidth: .infinity)
             .frame(height: 56)
