@@ -10,7 +10,8 @@ import UIKit
 class CustomButton: UIButton {
     
     init(text: String? = nil,
-         assetName: ImageResource? = nil,
+         imageResource: ImageResource? = nil,
+         imageResourceTintColor: UIColor? = nil,
          textSize: CGFloat = 14,
          textColor: UIColor = .textPrimary,
          disabledTextColor: UIColor = .textSecondary,
@@ -22,8 +23,12 @@ class CustomButton: UIButton {
         self.setTitleColor(disabledTextColor, for: .disabled)
         self.titleLabel?.font = .customFont(name: fontName, size: textSize)
         self.contentHorizontalAlignment = alignment
-        if let assetName {
-            self.setImage(.init(resource: assetName), for: .normal)
+        if let imageResource {
+            if let imageResourceTintColor {
+                self.setImage(.init(resource: imageResource).withTintColor(imageResourceTintColor, renderingMode: .alwaysOriginal), for: .normal)
+            } else {
+                self.setImage(.init(resource: imageResource), for: .normal)
+            }
         }
     }
     

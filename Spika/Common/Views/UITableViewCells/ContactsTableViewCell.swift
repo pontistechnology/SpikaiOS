@@ -104,7 +104,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
             self.rightButton.setTitleColor(.textPrimary, for: .normal)
         case .remove:
             self.rightButton.unhide()
-            self.rightButton.setImage(UIImage(resource: .close), for: .normal)
+            self.rightButton.setImage(UIImage(resource: .rDclose).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal), for: .normal)
         case .emoji(let emoji, let size):
             self.rightButton.unhide()
             self.rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)

@@ -9,13 +9,13 @@ import UIKit
 import Combine
 
 class InputTextAndControlsView: UIStackView {
-    private let plusButton = CustomButton(assetName: .plus)
-    private let sendButton = CustomButton(assetName: .send)
-    private let cameraButton = CustomButton(assetName: .camera)
-    private let microphoneButton = CustomButton(assetName: .microphone)
-//    private let emojiButton = CustomButton(assetName: .smile)
-    private let closeEditModeButton = CustomButton(assetName: .close)
-    private let saveButton = CustomButton(text: "Save", textSize: 16, textColor: .checkWithDesign, fontName: .MontserratBold)
+    private let plusButton = CustomButton(imageResource: .plus, imageResourceTintColor: .tertiaryColor)
+    private let sendButton = CustomButton(imageResource: .send, imageResourceTintColor: .tertiaryColor)
+    private let cameraButton = CustomButton(imageResource: .rDcamera, imageResourceTintColor: .tertiaryColor)
+    private let microphoneButton = CustomButton(imageResource: .microphone, imageResourceTintColor: .tertiaryColor)
+//    private let emojiButton = CustomButton(imageResource: .smile)
+    private let closeEditModeButton = CustomButton(imageResource: .rDclose, imageResourceTintColor: .tertiaryColor)
+    private let saveButton = CustomButton(text: "Save", imageResourceTintColor: .tertiaryColor, textSize: 16, textColor: .checkWithDesign, fontName: .MontserratBold)
     private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .checkWithDesign)
     private let messageTextView = ExpandableTextView()
     
