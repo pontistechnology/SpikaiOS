@@ -33,5 +33,25 @@ class Settings2ViewModel: BaseViewModel, ObservableObject {
         getAppCoordinator()?.presentPrivacySettingsScreen()
     }
     
+    func askForDeleteConformation() {
+        // TODO: - change to loc. strings when design is ready
+        getAppCoordinator()?.showAlert(title: "Delete Account?", message: "You will be logged out and ALL your data will be deleted.", style: .alert, actions: [.destructive(title: "Delete")])
+            .sink(receiveValue: { [weak self] choice in
+                self?.deleteMyAccount()
+            }).store(in: &subscriptions)
+    }
     
+    func deleteMyAccount() {
+        networkRequestState.send(.started())
+        repository.deleteMyAccount().sink { [weak self] _ in
+            self?.networkRequestState.send(.finished)
+        } receiveValue: { [weak self] response in
+            guard let isDeleted = response.data?.deleted, isDeleted
+            else { return }
+            self?.repository.deleteAllFiles()
+            self?.repository.deleteUserDefaults()
+            self?.repository.deleteLocalDatabase()
+            self?.getAppCoordinator()?.start()
+        }.store(in: &subscriptions)
+    }
 }

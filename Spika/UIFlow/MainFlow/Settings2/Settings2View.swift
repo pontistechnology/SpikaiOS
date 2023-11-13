@@ -54,7 +54,7 @@ struct Settings2View: View {
                               text: .getStringFor(.deleteMyAccount),
                               corners: .bottomCorners,
                               backgroundColor: .warningColor) {
-                    
+                    viewModel.askForDeleteConformation()
                 }
             }.padding(.horizontal, 16)
             

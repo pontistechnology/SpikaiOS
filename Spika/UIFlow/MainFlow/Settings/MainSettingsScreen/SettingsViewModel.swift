@@ -78,7 +78,6 @@ class SettingsViewModel: BaseSettingsViewModel {
         repository.deleteMyAccount().sink { [weak self] _ in
             self?.networkRequestState.send(.finished)
         } receiveValue: { [weak self] response in
-            print("stjepan kaze: ", response)
             guard let isDeleted = response.data?.deleted, isDeleted
             else { return }
             self?.repository.deleteAllFiles()
