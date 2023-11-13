@@ -74,13 +74,6 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         
         mutedIcon.layer.cornerRadius = 6
         pinnedIcon.layer.cornerRadius = 6
-        
-        
-//        pinnedIcon.translatesAutoresizingMaskIntoConstraints = false
-//        pinnedIcon.contentMode = .center
-//        
-//        mutedIcon.translatesAutoresizingMaskIntoConstraints = false
-//        mutedIcon.contentMode = .center
     }
     
     func positionSubviews() {
@@ -119,10 +112,8 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.text = "\(badgeNumber)"
         messagesNumberLabel.isHidden = badgeNumber == 0
         
-//        mutedIcon.isHidden = !muted
-//        pinnedIcon.isHidden = !pinned
-        
-        
+        mutedIcon.isHidden = !muted
+        pinnedIcon.isHidden = !pinned
     }
     
     override func prepareForReuse() {
