@@ -6,13 +6,22 @@
 //
 
 import Foundation
+import UIKit
 
 class Settings2ViewModel: BaseViewModel, ObservableObject {
     @Published var user: User?
+    @Published var selectedImage: UIImage?
+    @Published var showImagePicker = false
+    
+    var selectedSource: UIImagePickerController.SourceType = .photoLibrary
     
     override init(repository: Repository, coordinator: Coordinator) {
         super.init(repository: repository, coordinator: coordinator)
         loadLocalUser()
+    }
+    
+    var url: URL? {
+        selectedImage == nil ? user?.avatarFileId?.fullFilePathFromId() : nil
     }
     
     private func loadLocalUser() {
@@ -53,5 +62,32 @@ class Settings2ViewModel: BaseViewModel, ObservableObject {
             self?.repository.deleteLocalDatabase()
             self?.getAppCoordinator()?.start()
         }.store(in: &subscriptions)
+    }
+}
+
+extension Settings2ViewModel {
+    func showChangeImageActionSheet() {
+        getAppCoordinator()?
+            .showAlert(actions: [.regular(title: .getStringFor(.takeAPhoto)),
+                                 .regular(title: .getStringFor(.chooseFromGallery)),
+                                 .destructive(title: .getStringFor(.removePhoto))])
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+//                    self?.showUIImagePicker(source: .camera)
+                    self?.selectedSource = .camera
+                    self?.showImagePicker = true
+                case 1:
+                    self?.selectedSource = .photoLibrary
+                    self?.showImagePicker = true
+//                    self?.showUIImagePicker(source: .photoLibrary)
+                case 2:
+                    print("delete")
+//                    self?.viewModel.onChangeUserAvatar(imageFileData: nil)
+//                    self?.settingsView.userImage.deleteMainImage()
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
     }
 }

@@ -13,7 +13,12 @@ struct ChatDetails2View: View {
     var body: some View {        
         VStack {
             ChatRoundedAvatar(url: viewModel.profilePictureUrl,
-                              isGroupRoom: viewModel.room.type == .groupRoom)
+                              isGroupRoom: viewModel.room.type == .groupRoom, imageForUpload: .constant(.checkmark))
+            // TODO: - fix
+            
+            .onTapGesture {
+                // TODO: - add change image
+            }
             
             Text(viewModel.roomName)
                 .foregroundStyle(Color(.textPrimary))

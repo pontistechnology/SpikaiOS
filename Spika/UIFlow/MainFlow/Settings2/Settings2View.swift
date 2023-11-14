@@ -13,8 +13,12 @@ struct Settings2View: View {
 
     var body: some View {
         ScrollView {
-            let url = viewModel.user?.avatarFileId?.fullFilePathFromId()
-            ChatRoundedAvatar(url: url)
+            ChatRoundedAvatar(url: viewModel.url,
+                              imageForUpload: $viewModel.selectedImage)
+            .modifier(UploadProgressModifier(isShowing: viewModel.selectedImage != nil))
+                .onTapGesture {
+                    viewModel.showChangeImageActionSheet()
+                }
             
             Button(action: {}, label: {
                 Text(viewModel.user?.getDisplayName() ?? "")
@@ -51,6 +55,10 @@ struct Settings2View: View {
             
         }
         .ignoresSafeArea()
+        .sheet(isPresented: $viewModel.showImagePicker) {
+            ImagePicker(sourceType: viewModel.selectedSource,
+                        selectedImage: $viewModel.selectedImage)
+        }
     }
 }
 

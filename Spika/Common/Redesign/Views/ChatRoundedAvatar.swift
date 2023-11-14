@@ -10,6 +10,7 @@ import SwiftUI
 struct ChatRoundedAvatar: View {
     let url: URL?
     var isGroupRoom = false
+    @Binding var imageForUpload: UIImage?
     
     var body: some View {
         AsyncImage(url: url) { phase in
@@ -17,9 +18,14 @@ struct ChatRoundedAvatar: View {
                 image
                     .resizable()
             } else {
-                Image(isGroupRoom ? .rDDefaultGroup : .rDdefaultUser)
-                    .resizable()
-                    .clipped()
+                if let imageForUpload {
+                    Image(uiImage: imageForUpload)
+                        .resizable()
+                } else {
+                    Image(isGroupRoom ? .rDDefaultGroup : .rDdefaultUser)
+                        .resizable()
+                        .clipped()
+                }
             }
         }
         .frame(maxWidth: .infinity)
