@@ -11,7 +11,7 @@ class ImageViewerViewModel: BaseViewModel {
     var message: Message!
     
     func getLocalURL() -> URL? {
-        guard message.fromUserId == getMyUserId(),
+        guard message.fromUserId == myUserId,
               let localId = message.localId,
               let url = repository.getFile(name: localId)
         else { return nil }

@@ -23,7 +23,7 @@ class CurrentChatViewModel: BaseViewModel {
     var room: Room
     
     var friendUser: User? {
-        room.getFriendUserInPrivateRoom(myUserId: getMyUserId())
+        room.getFriendUserInPrivateRoom(myUserId: myUserId)
     }
     
     let uploadProgressPublisher = PassthroughSubject<String, Never>()
@@ -98,8 +98,15 @@ extension CurrentChatViewModel {
     // TODO: add indexpath
     func showMessageActions(_ message: Message) {
         guard !message.deleted else { return }
+        let actions: [MessageAction] =
+        if message.fromUserId == myUserId && message.type == .text {
+            [.reply, .forward, .copy, .edit, .details, .favorite, .delete]
+        } else {
+            [.reply, .forward, .copy, .details, .favorite, .delete]
+        }
+        
         getAppCoordinator()?
-            .presentMessageActionsSheet(isMyMessage: message.fromUserId == getMyUserId())
+            .presentMessageActionsSheet(actions: actions)
             .sink(receiveValue: { [weak self] action in
                 guard let self else { return }
                 self.getAppCoordinator()?.dismissViewController()
@@ -140,7 +147,7 @@ extension CurrentChatViewModel {
     func showDeleteConfirmDialog(message: Message) {
         guard let id = message.id else { return }
         var actions: [AlertViewButton] = [.destructive(title: .getStringFor(.deleteForMe))]
-        if message.fromUserId == getMyUserId() {
+        if message.fromUserId == myUserId {
             actions.append(.destructive(title: .getStringFor(.deleteForEveryone)))
         }
         getAppCoordinator()?
@@ -171,7 +178,7 @@ extension CurrentChatViewModel {
     func trySendMessage(text: String) {
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: getMyUserId(),
+                              fromUserId: myUserId,
                               roomId: room.id,
                               type: .text,
                               body: MessageBody(text: text, file: nil, thumb: nil),
@@ -247,7 +254,7 @@ extension CurrentChatViewModel {
 extension CurrentChatViewModel {
     func saveTempVideoMessage(uuid: String, width: CGFloat, height: CGFloat) {
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: getMyUserId(), roomId: room.id, type: .video,
+                              fromUserId: myUserId, roomId: room.id, type: .video,
                               body: MessageBody(text: nil, file: nil,
                                                 thumb: FileData(id: nil, fileName: nil,
                                                                 mimeType: nil, size: nil,
@@ -351,7 +358,7 @@ extension CurrentChatViewModel {
         let uuid = file.localId
         
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: getMyUserId(),
+                              fromUserId: myUserId,
                               roomId: room.id,
                               type: file.fileType,
                               body: MessageBody(text: nil,

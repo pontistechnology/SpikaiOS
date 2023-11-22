@@ -47,6 +47,7 @@ struct PrimaryButton: View {
                 if let leftImageResource {
                     Image(leftImageResource)
                         .padding(.leading, 16)
+                        .frame(width: 24, height: 24)
                         .foregroundStyle(Color(uiColor: .textPrimary))
                 }
                 Text(text)

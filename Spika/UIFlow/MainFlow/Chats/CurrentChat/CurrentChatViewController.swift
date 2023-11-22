@@ -66,7 +66,7 @@ extension CurrentChatViewController {
             self?.handleInput(state)
         }.store(in: &subscriptions)
         
-        viewModel.selectedMessageToReplyPublisher.sink { [weak self] selectedMessage in
+        viewModel.selectedMessageToReplyPublisher.receive(on: DispatchQueue.main).sink { [weak self] selectedMessage in
             guard let selectedMessage
             else {
                 self?.currentChatView.messageInputView.hideReplyView()
@@ -119,7 +119,7 @@ extension CurrentChatViewController {
                 switch frcChange {
                 case .insert(indexPath: let indexPath):
                     guard let message = self.viewModel.getMessage(for: indexPath) else { return }
-                    let isMyMessage = message.fromUserId == self.viewModel.getMyUserId()
+                    let isMyMessage = message.fromUserId == self.viewModel.myUserId
                     self.handleScroll(isMyMessage: isMyMessage)
                     if self.viewModel.room.type == .groupRoom && !isMyMessage {
                         if self.viewModel.isPreviousCellSameSender(for: indexPath) {
@@ -343,7 +343,7 @@ extension CurrentChatViewController: UITableViewDataSource {
         else { return EmptyTableViewCell()}
         let roomType = viewModel.room.type
 
-        let myUserId = viewModel.getMyUserId()
+        let myUserId = viewModel.myUserId
         
         guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
               let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell,
@@ -419,10 +419,10 @@ extension CurrentChatViewController: UITableViewDataSource {
 
 extension CurrentChatViewController {
     func setupNavigationItems() {
-        let videoCallButton = UIBarButtonItem(image: UIImage(resource: .videoCall), style: .plain, target: self, action: #selector(videoCallActionHandler))
-        let audioCallButton = UIBarButtonItem(image: UIImage(resource: .phoneCall), style: .plain, target: self, action: #selector(phoneCallActionHandler))
-        
-        navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
+//        let videoCallButton = UIBarButtonItem(image: UIImage(resource: .videoCall), style: .plain, target: self, action: #selector(videoCallActionHandler))
+//        let audioCallButton = UIBarButtonItem(image: UIImage(resource: .phoneCall), style: .plain, target: self, action: #selector(phoneCallActionHandler))
+//        
+//        navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room.type == .privateRoom {
@@ -445,7 +445,12 @@ extension CurrentChatViewController {
             self?.viewModel.room = newRoom
         }.store(in: &subscriptions)
         
-        viewModel.getAppCoordinator()?.presentChatDetailsScreen(room: publisher)
+        if viewModel.room.type == .privateRoom,
+            let friendUser = viewModel.friendUser {
+            viewModel.getAppCoordinator()?.presentChatDetailsScreen(detailsMode: .contact(friendUser))
+        } else {
+            viewModel.getAppCoordinator()?.presentChatDetailsScreen(detailsMode: .roomDetails(publisher))            
+        }
     }
     
     @objc func videoCallActionHandler() {

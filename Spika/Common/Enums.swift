@@ -277,9 +277,9 @@ enum SpikaTheme: String, CaseIterable {
         }
     }
     
-    // first one should be rounded on top corners, last one on bottom, middle ones without rounding
+    // first one should be rounded on top corners, others without rounding
     var corners: UIRectCorner? {
-        self == SpikaTheme.allCases.first ? .topCorners : (self == SpikaTheme.allCases.last ? UIRectCorner.bottomCorners : nil)
+        self == SpikaTheme.allCases.first ? .topCorners : nil
     }
         
     

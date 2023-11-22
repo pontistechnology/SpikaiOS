@@ -15,11 +15,6 @@ enum RoomType: String, Codable, Comparable {
         if lhs == rhs { return false }
         return lhs == .groupRoom
     }
-    
-    var description: String {
-        self == .privateRoom ? .getStringFor(.privateContact) : .getStringFor(.group)
-    }
-
 }
 
 enum MessageRecordType: String, Codable {

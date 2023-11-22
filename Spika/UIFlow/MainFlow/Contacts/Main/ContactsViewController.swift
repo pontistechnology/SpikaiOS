@@ -91,7 +91,6 @@ extension ContactsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("t: ", indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
         guard let userEntity = frc?.object(at: indexPath) else { return }
         let user = User(entity: userEntity)

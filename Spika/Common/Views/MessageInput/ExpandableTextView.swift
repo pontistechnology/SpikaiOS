@@ -40,6 +40,7 @@ extension ExpandableTextView {
         clipsToBounds = true
         customFont(name: .MontserratMedium)
         backgroundColor = .thirdAdditionalColor
+        textColor = .textPrimary
     }
   
     func positionSubviews() {

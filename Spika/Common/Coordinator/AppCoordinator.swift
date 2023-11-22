@@ -100,11 +100,6 @@ class AppCoordinator: Coordinator {
         self.navigationController.setViewControllers([viewController], animated: false)
     }
     
-    func presentDetailsScreen(user: User) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(DetailsViewController.self, arguments: self, user)!
-        self.navigationController.pushViewController(viewController, animated: true)
-    }
-    
     func presentSharedScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(SharedViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)
@@ -151,8 +146,8 @@ class AppCoordinator: Coordinator {
         navigationController.present(navC, animated: true, completion: nil)
     }
     
-    func presentChatDetailsScreen(room: CurrentValueSubject<Room,Never>) {
-        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetails2ViewController.self, arguments: self, room)!
+    func presentChatDetailsScreen(detailsMode: ChatDetailsMode) {
+        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetails2ViewController.self, arguments: self, detailsMode)!
         navigationController.pushViewController(roomDetailsViewController, animated: true)
     }
     
@@ -211,8 +206,8 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewControllerToPresent, animated: true)
     }
     
-    func presentMessageActionsSheet(isMyMessage: Bool) -> PassthroughSubject<MessageAction, Never> {
-        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageActionsViewController.self, arguments: self, isMyMessage)!
+    func presentMessageActionsSheet(actions: [MessageAction]) -> PassthroughSubject<MessageAction, Never> {
+        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageActionsViewController.self, arguments: self, actions)!
         if let sheet = viewControllerToPresent.sheetPresentationController {
             sheet.detents = [.medium()] // can be changed to custom height when iOS 16
             sheet.prefersGrabberVisible = false

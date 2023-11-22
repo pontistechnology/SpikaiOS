@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ChatRoundedAvatar: View {
     let url: URL?
@@ -13,23 +14,19 @@ struct ChatRoundedAvatar: View {
     @Binding var imageForUpload: UIImage?
     
     var body: some View {
-        AsyncImage(url: url) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-            } else {
+        KFImage(url)
+            .placeholder { _ in
                 if let imageForUpload {
                     Image(uiImage: imageForUpload)
                         .resizable()
                 } else {
                     Image(isGroupRoom ? .rDDefaultGroup : .rDdefaultUser)
                         .resizable()
-                        .clipped()
                 }
             }
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: 400)
-        .modifier(RoundedCorners(corners: .bottomLeft, radius: 80))
+            .resizable()
+            .frame(maxWidth: .infinity)
+            .frame(height: 400)
+            .modifier(RoundedCorners(corners: .bottomLeft, radius: 80))
     }
 }

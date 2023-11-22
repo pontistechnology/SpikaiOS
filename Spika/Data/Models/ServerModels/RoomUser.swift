@@ -15,6 +15,10 @@ struct RoomUser: Codable {
     let roomId: Int64
 }
 
+extension RoomUser: Identifiable {
+    var id: Int64 { userId}
+}
+
 extension RoomUser {
     init(roomUserEntity: RoomUserEntity, user: User) {
         self.init(userId: roomUserEntity.userId,

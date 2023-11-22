@@ -147,13 +147,13 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleChatDetailsViewController(_ container: Container) {
-        container.register(ChatDetails2ViewModel.self) { (resolver, coordinator: AppCoordinator, room: CurrentValueSubject<Room,Never>) in
+        container.register(ChatDetails2ViewModel.self) { (resolver, coordinator: AppCoordinator, detailsMode: ChatDetailsMode) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return ChatDetails2ViewModel(repository: repository, coordinator: coordinator, roomPublisher: room)
+            return ChatDetails2ViewModel(repository: repository, coordinator: coordinator, detailsMode: detailsMode)
         }.inObjectScope(.transient)
         
-        container.register(ChatDetails2ViewController.self) { (resolver, coordinator: AppCoordinator, room:  CurrentValueSubject<Room,Never>) in
-            let controller = ChatDetails2ViewController(rootView: ChatDetails2View(viewModel: resolver.resolve(ChatDetails2ViewModel.self, arguments: coordinator, room)!))
+        container.register(ChatDetails2ViewController.self) { (resolver, coordinator: AppCoordinator, detailsMode: ChatDetailsMode) in
+            let controller = ChatDetails2ViewController(rootView: ChatDetails2View(viewModel: resolver.resolve(ChatDetails2ViewModel.self, arguments: coordinator, detailsMode)!))
             return controller
         }.inObjectScope(.transient)
     }
@@ -265,14 +265,14 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleMessageActionsViewController(_ container: Container) {
-        container.register(MessageActionsViewModel.self) { (resolver, coordinator: AppCoordinator, isMyMessage: Bool) in
+        container.register(MessageActionsViewModel.self) { (resolver, coordinator: AppCoordinator, actions: [MessageAction]) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            let viewModel = MessageActionsViewModel(repository: repository, coordinator: coordinator, isMyMessage: isMyMessage)
+            let viewModel = MessageActionsViewModel(repository: repository, coordinator: coordinator, actions: actions)
             return viewModel
         }.inObjectScope(.transient)
         
-        container.register(MessageActionsViewController.self) { (resolver, coordinator: AppCoordinator, isMyMessage: Bool) in
-            let viewModel = container.resolve(MessageActionsViewModel.self, arguments: coordinator, isMyMessage)!
+        container.register(MessageActionsViewController.self) { (resolver, coordinator: AppCoordinator, actions: [MessageAction]) in
+            let viewModel = container.resolve(MessageActionsViewModel.self, arguments: coordinator, actions)!
             let controller = MessageActionsViewController(viewModel: viewModel)
             return controller
         }.inObjectScope(.transient)

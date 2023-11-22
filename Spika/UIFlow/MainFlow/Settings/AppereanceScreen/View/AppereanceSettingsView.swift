@@ -18,15 +18,13 @@ struct AppereanceSettingsView: View {
                               usage: isSelected ? .withCheckmark : .onlyTitle) {
                     viewModel.changeAppereanceMode(to: theme)
                     viewModel.returnToHomeScreen()
-                }.padding(.horizontal, 16)
+                }
             }
-            Button(action: {
+            PrimaryButton(text: .getStringFor(.cancel), corners: .bottomCorners, backgroundColor: .secondaryColor) {
                 viewModel.returnToHomeScreen()
-            }, label: {
-                Text(verbatim: .getStringFor(.cancel))
-                    .foregroundStyle(Color(UIColor.textSecondary))
-            })
+            }
         }
+        .padding(.horizontal, 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .modifier(SpikaBackgroundGradient())
     }

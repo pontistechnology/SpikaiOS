@@ -937,6 +937,9 @@
 		936A28F02926E96100E7333D /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EF2926E96100E7333D /* ImageViewerViewController.swift */; };
 		936A28F22926E98600E7333D /* ImageViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28F12926E98600E7333D /* ImageViewerViewModel.swift */; };
 		936A28F52926E99B00E7333D /* ImageViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28F42926E99B00E7333D /* ImageViewerView.swift */; };
+		936D5AE82B0B11ED0048B125 /* EditableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936D5AE72B0B11ED0048B125 /* EditableText.swift */; };
+		936D5AE92B0B11ED0048B125 /* EditableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936D5AE72B0B11ED0048B125 /* EditableText.swift */; };
+		936D5AEA2B0B11ED0048B125 /* EditableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936D5AE72B0B11ED0048B125 /* EditableText.swift */; };
 		936D90E8296E2632004C79BE /* ReactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936D90E7296E2632004C79BE /* ReactionsViewController.swift */; };
 		936D90EA296E263D004C79BE /* ReactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936D90E9296E263D004C79BE /* ReactionsViewModel.swift */; };
 		936D90EC296E2881004C79BE /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936D90EB296E2881004C79BE /* ReactionsView.swift */; };
@@ -1481,6 +1484,7 @@
 		936A28EF2926E96100E7333D /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
 		936A28F12926E98600E7333D /* ImageViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewModel.swift; sourceTree = "<group>"; };
 		936A28F42926E99B00E7333D /* ImageViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerView.swift; sourceTree = "<group>"; };
+		936D5AE72B0B11ED0048B125 /* EditableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableText.swift; sourceTree = "<group>"; };
 		936D90E7296E2632004C79BE /* ReactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsViewController.swift; sourceTree = "<group>"; };
 		936D90E9296E263D004C79BE /* ReactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsViewModel.swift; sourceTree = "<group>"; };
 		936D90EB296E2881004C79BE /* ReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
@@ -2196,6 +2200,7 @@
 			children = (
 				9376A8C62AFE7BA90035687F /* PrimaryButton.swift */,
 				936E211E2B01FAA600333B43 /* ChatRoundedAvatar.swift */,
+				936D5AE72B0B11ED0048B125 /* EditableText.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3754,6 +3759,7 @@
 				6C78B7F929AF5ADB004BF881 /* RoomEntity+CoreDataProperties.swift in Sources */,
 				6C78B7FA29AF5ADB004BF881 /* SearchBar.swift in Sources */,
 				6C78B7FB29AF5ADB004BF881 /* MessageTextView.swift in Sources */,
+				936D5AE92B0B11ED0048B125 /* EditableText.swift in Sources */,
 				939549F52A4B8133006B6139 /* AllChatsSearchedMessageCell.swift in Sources */,
 				93BCDFEC2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
 				93FD383C2A882BAD00FE9C3B /* EmojiCategoriesView.swift in Sources */,
@@ -4171,6 +4177,7 @@
 				6CF648F22A459FE100E0DE0B /* TextAndImageView.swift in Sources */,
 				6CF648F32A459FE100E0DE0B /* RoomEntity+CoreDataProperties.swift in Sources */,
 				6CF648F42A459FE100E0DE0B /* SearchBar.swift in Sources */,
+				936D5AEA2B0B11ED0048B125 /* EditableText.swift in Sources */,
 				938B56992A52EEAC0036440E /* AllChatsSearchedMessageCell.swift in Sources */,
 				93BCDFED2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
 				93FD383D2A882BAD00FE9C3B /* EmojiCategoriesView.swift in Sources */,
@@ -4588,6 +4595,7 @@
 				939549F42A4B8133006B6139 /* AllChatsSearchedMessageCell.swift in Sources */,
 				93BCDFEB2A81964700CEE826 /* OneNoteResponseModel.swift in Sources */,
 				93FD383B2A882BAD00FE9C3B /* EmojiCategoriesView.swift in Sources */,
+				936D5AE82B0B11ED0048B125 /* EditableText.swift in Sources */,
 				936E21152B01D97800333B43 /* ChatDetails2View.swift in Sources */,
 				939128EB2935734000A79FBA /* MessageTextView.swift in Sources */,
 				ADD503BC270DC3C7009D50CB /* CoreDatabase.xcdatamodeld in Sources */,
@@ -5167,7 +5175,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 94;
+				APP_BUILD_VERSION = 96;
 				APP_VERSION = 1.2.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -5235,7 +5243,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 94;
+				APP_BUILD_VERSION = 96;
 				APP_VERSION = 1.2.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;

@@ -10,9 +10,9 @@ import Combine
 
 class InputTextAndControlsView: UIStackView {
     private let plusButton = CustomButton(imageResource: .plus, imageResourceTintColor: .tertiaryColor)
-    private let sendButton = CustomButton(imageResource: .send, imageResourceTintColor: .tertiaryColor)
+    private let sendButton = CustomButton(imageResource: .rDsend, imageResourceTintColor: .tertiaryColor)
     private let cameraButton = CustomButton(imageResource: .rDcamera, imageResourceTintColor: .tertiaryColor)
-    private let microphoneButton = CustomButton(imageResource: .microphone, imageResourceTintColor: .tertiaryColor)
+//    private let microphoneButton = CustomButton(imageResource: .microphone, imageResourceTintColor: .tertiaryColor)
 //    private let emojiButton = CustomButton(imageResource: .smile)
     private let closeEditModeButton = CustomButton(imageResource: .rDclose, imageResourceTintColor: .tertiaryColor)
     private let saveButton = CustomButton(text: "Save", imageResourceTintColor: .tertiaryColor, textSize: 16, textColor: .tertiaryColor, fontName: .MontserratBold)
@@ -44,7 +44,7 @@ extension InputTextAndControlsView: BaseView {
         addArrangedSubview(closeEditModeButton)
         addArrangedSubview(messageTextView)
 //        addArrangedSubview(emojiButton)
-        addArrangedSubview(microphoneButton)
+//        addArrangedSubview(microphoneButton)
         addArrangedSubview(cameraButton)
         addArrangedSubview(saveButton)
         addArrangedSubview(sendButton)
@@ -65,13 +65,12 @@ extension InputTextAndControlsView: BaseView {
         directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 10, bottom: 12, trailing: 10)
         isLayoutMarginsRelativeArrangement = true
         
-        [plusButton, closeEditModeButton, microphoneButton, cameraButton, sendButton].forEach {
+        [plusButton, closeEditModeButton, cameraButton, sendButton].forEach {
             $0.constrainWidth(48)
             $0.heightAnchor.constraint(equalTo: messageTextView.heightAnchor).isActive = true
         }
         
-        setCustomSpacing(0, after: messageTextView)
-        setCustomSpacing(0, after: microphoneButton)
+//        setCustomSpacing(0, after: messageTextView)
         
         editingModeLabel.centerXToSuperview()
         editingModeLabel.anchor(top: messageTextView.bottomAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 0))
@@ -85,8 +84,6 @@ extension InputTextAndControlsView {
         DispatchQueue.main.async { [weak self] in
             UIView.animate(withDuration: 0.3) { [weak self] in
                 .empty == state ? self?.cameraButton.unhide() : self?.cameraButton.hide()
-                
-                (.empty == state) ? self?.microphoneButton.unhide() : self?.microphoneButton.hide()
                 
                 (.writing == state) ? self?.sendButton.unhide() : self?.sendButton.hide()
                 
@@ -146,10 +143,10 @@ extension InputTextAndControlsView {
             self.messageTextView.clearTextField()
         }.store(in: &subscriptions)
 
-        microphoneButton.tap().sink { [weak self] _ in
-            guard let self else { return }
-            self.publisher.send(.microphone)
-        }.store(in: &subscriptions)
+//        microphoneButton.tap().sink { [weak self] _ in
+//            guard let self else { return }
+//            self.publisher.send(.microphone)
+//        }.store(in: &subscriptions)
 
         cameraButton.tap().sink { [weak self] _ in
             guard let self else { return }

@@ -59,7 +59,7 @@ extension AllChatsViewModel {
               let room = allRooms.value.first(where: { $0.id == roomId }),
               let title = .groupRoom == room.type
                 ? room.name
-                : room.getFriendUserInPrivateRoom(myUserId: getMyUserId())?.getDisplayName()
+                : room.getFriendUserInPrivateRoom(myUserId: myUserId)?.getDisplayName()
         else { return "(unknown)" }
         return title
     }
@@ -83,7 +83,7 @@ extension AllChatsViewModel {
         let badgeNumber = lastMessage != nil ? room.unreadCount : 0
         
         if room.type == .privateRoom,
-           let friendUser = room.getFriendUserInPrivateRoom(myUserId: getMyUserId()) {
+           let friendUser = room.getFriendUserInPrivateRoom(myUserId: myUserId) {
             
             return (avatarUrl: friendUser.avatarFileId?.fullFilePathFromId(),
                                 name: friendUser.getDisplayName(),
@@ -108,7 +108,7 @@ extension AllChatsViewModel {
     func dataForCellForMessages(at indexPath: IndexPath) -> (String, String, String) {
         guard let messageEntity = messagesFRC?.object(at: indexPath) else { return ("-", "-", "-")}
         let room = allRooms.value.first { $0.id == messageEntity.roomId }
-        let userName = messageEntity.fromUserId == getMyUserId() ? .getStringFor(.me) : room?.getDisplayNameFor(userId: messageEntity.fromUserId)
+        let userName = messageEntity.fromUserId == myUserId ? .getStringFor(.me) : room?.getDisplayNameFor(userId: messageEntity.fromUserId)
         
         return (userName ?? "-",
                 messageEntity.createdAt.convert(to: .ddMMyyyyHHmm),
@@ -120,9 +120,9 @@ extension AllChatsViewModel {
         guard let message = message else { return (.getStringFor(.noMessages), .text, nil)}
         let senderName: String
         if room.type == .privateRoom {
-            senderName = message.fromUserId == getMyUserId() ? .getStringFor(.youWithDots) : ""
+            senderName = message.fromUserId == myUserId ? .getStringFor(.youWithDots) : ""
         } else {
-            senderName = message.fromUserId == getMyUserId() ? .getStringFor(.youWithDots) : ((room.users.first(where: { $0.userId == message.fromUserId })?.user.getDisplayName() ?? "_")
+            senderName = message.fromUserId == myUserId ? .getStringFor(.youWithDots) : ((room.users.first(where: { $0.userId == message.fromUserId })?.user.getDisplayName() ?? "_")
                     + ": ")
         }
         return (senderName, message.type, message.pushNotificationText)

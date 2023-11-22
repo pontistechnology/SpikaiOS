@@ -135,6 +135,7 @@ public extension Constants {
         case exitGroup = "Exit group"
         case nameAndSurname = "Name and Surname"
         case favoriteMessages = "Favorite messages"
+        case deleteChat = "Delete chat"
         
         // MARK: - Reactions
         case reactions = "Reactions"

@@ -8,5 +8,7 @@
 import SwiftUI
 
 class ChatDetails2ViewController: UIHostingController<ChatDetails2View> {
-    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 }

@@ -29,11 +29,11 @@ final class ChatDetailsViewController: BaseViewController {
     }
     
     private func setupBindings() {
-        chatDetailView.contentView.chatMembersView.ownId = viewModel.getMyUserId()
+        chatDetailView.contentView.chatMembersView.ownId = viewModel.myUserId
         
         let isAdmin = self.viewModel.room.map { [weak self] room in
             guard let self, room.type == .groupRoom else { return false }
-            return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
+            return room.users.filter { $0.userId == self.viewModel.myUserId }.first?.isAdmin ?? false
         }
         
         if viewModel.room.value.type == .privateRoom {
@@ -50,7 +50,7 @@ final class ChatDetailsViewController: BaseViewController {
                 if room.type == .groupRoom {
                     return room.avatarFileId?.fullFilePathFromId()
                 } else {
-                    guard let ownId = self?.viewModel.getMyUserId(),
+                    guard let ownId = self?.viewModel.myUserId,
                           let contact = self?.viewModel.room.value.users.first(where: { roomUser in
                         roomUser.userId != ownId
                     }) else { return nil }
@@ -64,7 +64,7 @@ final class ChatDetailsViewController: BaseViewController {
         viewModel.room
             .map { [weak self] room in
                 if room.type == .privateRoom {
-                    guard let ownId = self?.viewModel.getMyUserId(),
+                    guard let ownId = self?.viewModel.myUserId,
                           let contact = self?.viewModel.room.value.users.first(where: { roomUser in
                         roomUser.userId != ownId
                           }) else { return nil as String? }
@@ -138,7 +138,7 @@ final class ChatDetailsViewController: BaseViewController {
             .room
             .map { $0.users.map{ $0.userId } }
             .filter { [weak self] userIds in
-                guard let ownId = self?.viewModel.getMyUserId() else { return false }
+                guard let ownId = self?.viewModel.myUserId else { return false }
                 return !userIds.contains(ownId)
             }.sink { [weak self] string in
                 self?.viewModel.getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: nil))

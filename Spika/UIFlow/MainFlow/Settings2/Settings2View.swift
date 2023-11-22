@@ -16,21 +16,21 @@ struct Settings2View: View {
             ChatRoundedAvatar(url: viewModel.url,
                               imageForUpload: $viewModel.selectedImage)
             .modifier(UploadProgressModifier(isShowing: viewModel.selectedImage != nil))
-                .onTapGesture {
-                    viewModel.showChangeImageActionSheet()
-                }
-            
-            Button(action: {}, label: {
-                Text(viewModel.user?.getDisplayName() ?? "")
-                    .foregroundStyle(Color(UIColor.textPrimary))
-            })
-            
-            Button(action: {}, label: {
-                Text(viewModel.user?.telephoneNumber ?? "")
-                    .foregroundStyle(Color(UIColor.textPrimary))
-            })
+            .allowsHitTesting(viewModel.selectedImage == nil)
+            .onTapGesture {
+                viewModel.showChangeImageActionSheet()
+            }
             
             Group {
+                EditableText(placeholder: .getStringFor(.enterUsername),
+                             isEditingMode: $viewModel.isEditingUsername,
+                             string: $viewModel.username)
+                
+                Button(action: {}, label: {
+                    Text(viewModel.user?.telephoneNumber ?? "")
+                        .foregroundStyle(Color(UIColor.textPrimary))
+                })
+                
                 // appereance
                 PrimaryButton(imageResource: .rDeditPen, text: .getStringFor(.appereance), corners: .topCorners, usage: .withRightArrow) {
                     viewModel.onAppereanceClick()
@@ -61,5 +61,3 @@ struct Settings2View: View {
         }
     }
 }
-
-

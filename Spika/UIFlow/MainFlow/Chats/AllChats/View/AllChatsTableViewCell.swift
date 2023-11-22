@@ -51,6 +51,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     }
     
     func styleSubviews() {
+        selectedBackgroundView = UIView(backgroundColor: .secondaryColor)
         descriptionStackView.axis = .horizontal
         descriptionStackView.distribution = .fill
         descriptionIcon.contentMode = .scaleAspectFit

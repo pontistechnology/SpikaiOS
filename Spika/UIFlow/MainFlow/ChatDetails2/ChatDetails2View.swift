@@ -10,69 +10,152 @@ import SwiftUI
 struct ChatDetails2View: View {
     @StateObject var viewModel: ChatDetails2ViewModel
     
-    var body: some View {        
-        VStack {
+    var body: some View {
+        ScrollView {
             ChatRoundedAvatar(url: viewModel.profilePictureUrl,
-                              isGroupRoom: viewModel.room.type == .groupRoom, imageForUpload: .constant(.checkmark))
-            // TODO: - fix
-            
+                              isGroupRoom: viewModel.detailsMode.isGroup, imageForUpload: .constant(nil))
             .onTapGesture {
                 // TODO: - add change image
             }
             
-            Text(viewModel.roomName)
-                .foregroundStyle(Color(.textPrimary))
-            
-            if let secondLine = viewModel.bellowNameText {
-                Text(secondLine)
-                    .foregroundStyle(Color(.textPrimary))
+            VStack {
+                
+                nameTelephoneAndDescription()
+                
+                if viewModel.detailsMode.isPrivate {
+                    chatAndContactIcons()
+                }
+                
+                menuButtons()
+                
+                if viewModel.detailsMode.isPrivate {
+                    Button(action: {
+                        
+                    }, label: {
+                        HStack {
+                            Image(.rDblock)
+                            Text(verbatim: .getStringFor(.block))
+                        }.foregroundStyle(Color(.warningColor))
+                    })
+                } else if let room = viewModel.room {
+                    memberCountAndPlus()
+                        .padding(.vertical, 12)
+                    ForEach(room.users) { roomUser in
+                        memberRowView(user: roomUser.user,
+                                      isAdmin: roomUser.isAdmin ?? false,
+                                      isMyUser: roomUser.userId == viewModel.myUserId,
+                                      showRemove: viewModel.isMyUserAdmin)
+                    }
+                }
+                
+                Spacer()
             }
-            
-            Text(viewModel.room.type.description)
-                .foregroundStyle(Color(.textPrimary))
-            
-            HStack(spacing: 32) {
-                Button {
-                    
-                } label: {
-                    Image(.rDphone)
-                }
-                
-                Button {
-                    viewModel.presentAddToContactsScreen()
-                } label: {
-                    Image(.rDaddToContacts)
-                }
-            }.foregroundStyle(Color(.tertiaryColor))
-            
-            PrimaryButton(imageResource: .rDnotes, text: .getStringFor(.notes), corners: .topCorners, usage: .withRightArrow) {
-            }.padding(.horizontal, 16)
-            
-            PrimaryButton(imageResource: .rDpin, 
-                          text: .getStringFor(.pinchat),
-                          usage: .withToggle(viewModel.isRoomPinned)) {
-                
-            }.padding(.horizontal, 16)
-            
-            PrimaryButton(imageResource: .rDmute, 
-                          text: .getStringFor(.mute),
-                          corners: .bottomCorners,
-                          usage: .withToggle(viewModel.isRoomMuted)) {
-                
-            }.padding(.horizontal, 16)
-            
-            Button(action: {
-                
-            }, label: {
-                HStack {
-                    Image(.rDblock)
-                    Text(verbatim: .getStringFor(.block))
-                }.foregroundStyle(Color(.warningColor))
-            })
-            
-            Spacer()
+            .padding(.horizontal, 16)
+            .padding(.bottom, 40)
         }
         .ignoresSafeArea()
         .modifier(SpikaBackgroundGradient())
+    }
+}
+
+extension ChatDetails2View {
+    private func chatAndContactIcons() -> some View {
+        HStack(spacing: 32) {
+            Button {
+                viewModel.showChatScreen()
+            } label: {
+                Image(.rDchatBubble)
+            }
+            Button {
+                viewModel.showPhoneNumberOptions()
+            } label: {
+                Image(.rDaddToContacts)
+            }
+        }.foregroundStyle(Color(.tertiaryColor))
+    }
+    
+    private func nameTelephoneAndDescription() -> some View {
+        return Group {
+            Text(viewModel.roomName)
+            
+            if let secondLine = viewModel.bellowNameText {
+                Text(secondLine)
+            }
+            
+            Text(viewModel.detailsMode.description)
+        }
+        .foregroundStyle(Color(.textPrimary))
+    }
+    
+    private func menuButtons() -> some View {
+        Group {
+            PrimaryButton(imageResource: .rDnotes, text: .getStringFor(.notes), corners: .topCorners, usage: .withRightArrow) {
+                viewModel.presentAllNotesScreen()
+            }
+            
+            PrimaryButton(imageResource: .rDpin,
+                          text: .getStringFor(.pinchat),
+                          usage: .withToggle(viewModel.isRoomPinned)) {
+                viewModel.isRoomPinned.wrappedValue.toggle()
+            }
+            
+            PrimaryButton(imageResource: .rDmute,
+                          text: .getStringFor(.mute),
+                          usage: .withToggle(viewModel.isRoomMuted)) {
+                viewModel.isRoomMuted.wrappedValue.toggle()
+            }
+            
+            if viewModel.detailsMode.isGroup {
+                PrimaryButton(imageResource: .rDxInCircle, text: .getStringFor(.exitGroup), backgroundColor: .warningColor, usage: .onlyTitle) {
+                    
+                }
+            }
+            
+            PrimaryButton(imageResource: .rDdeleteBin, text: .getStringFor(.deleteChat), corners: .bottomCorners, backgroundColor: .warningColor, usage: .onlyTitle) {
+                
+            }
+        }
+    }
+    
+    private func memberRowView(user: User, 
+                               isAdmin: Bool = false,
+                               isMyUser: Bool = false,
+                               showRemove: Bool = false) -> some View {
+        return HStack(spacing: 16) {
+            AsyncImage(url: user.avatarFileId?.fullFilePathFromId()) {
+                phase in
+                if let image = phase.image {
+                    image
+                        .resizable()
+                } else {
+                    Image(.rDdefaultUser)
+                        .resizable()
+                }
+            }
+            .frame(width: 42, height: 42)
+            .clipShape(Circle())
+            
+            VStack(alignment: .leading) {
+                Text(isMyUser ? .getStringFor(.you) : user.getDisplayName())
+                Text(user.telephoneNumber ?? "")
+            }
+            Spacer()
+            if isAdmin {
+                Text(verbatim: .getStringFor(.admin))
+            }
+            if showRemove {
+                Image(.rDclose)
+            }
+        }.foregroundStyle(Color(.textPrimary))
+    }
+    
+    private func memberCountAndPlus() -> some View {
+        return HStack {
+            Text("\(viewModel.room?.users.count ?? 0)" + " " +  .getStringFor(.members))
+            Spacer()
+            if true { // TODO: - check if i am admin
+                Image(.rDplus)
+            }
+        }.foregroundStyle(Color(.textPrimary))
     }
 }
