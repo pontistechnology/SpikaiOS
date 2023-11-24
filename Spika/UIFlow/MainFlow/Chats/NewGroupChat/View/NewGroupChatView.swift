@@ -18,7 +18,7 @@ class NewGroupChatView: UIView, BaseView {
         btn.layer.masksToBounds = true
         return btn
     } ()
-    let groupNameTextfield = TextField(textPlaceholder: .getStringFor(.groupName))
+    let groupNameTextfield = CustomTextField(textPlaceholder: .getStringFor(.groupName))
     let chatMembersView = ChatUsersView(canAddNewMore: false)
     
     

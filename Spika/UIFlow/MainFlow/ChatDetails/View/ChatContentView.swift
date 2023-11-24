@@ -10,11 +10,11 @@ import Combine
 
 class ChatContentView: UIView, BaseView {
     
-    let chatImage = ImageViewWithIcon(image:  UIImage(resource: .user),size: CGSize(width: 120, height: 120))
+    let chatImage = ImageViewWithIcon(image:  UIImage(resource: .rDdefaultUser),size: CGSize(width: 120, height: 120))
     
     let chatName = CustomLabel(text: .getStringFor(.group), textColor: .textPrimary, fontName: .MontserratSemiBold)
     let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: .textPrimary, fontName: .MontserratSemiBold)
-    let chatNameTextField = TextField()
+    let chatNameTextField = CustomTextField()
     
     let sharedMediaOptionButton = NavView(text: .getStringFor(.sharedMediaLinksDocs))
     let chatSearchOptionButton = NavView(text: .getStringFor(.chatSearch))

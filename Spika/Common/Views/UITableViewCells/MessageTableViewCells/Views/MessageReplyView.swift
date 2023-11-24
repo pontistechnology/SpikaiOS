@@ -47,7 +47,7 @@ extension MessageReplyView: BaseView {
         thumbnailImageView.clipsToBounds = true
         containerView.layer.cornerRadius = 10
         containerView.clipsToBounds = true
-        closeButton.setImage(UIImage(resource: .rDclose).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal), for: .normal)
+        closeButton.setImage(UIImage(resource: .rDx).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal), for: .normal)
     }
     
     func positionSubviews() {

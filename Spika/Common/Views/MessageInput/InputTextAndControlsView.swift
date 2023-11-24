@@ -14,7 +14,7 @@ class InputTextAndControlsView: UIStackView {
     private let cameraButton = CustomButton(imageResource: .rDcamera, imageResourceTintColor: .tertiaryColor)
 //    private let microphoneButton = CustomButton(imageResource: .microphone, imageResourceTintColor: .tertiaryColor)
 //    private let emojiButton = CustomButton(imageResource: .smile)
-    private let closeEditModeButton = CustomButton(imageResource: .rDclose, imageResourceTintColor: .tertiaryColor)
+    private let closeEditModeButton = CustomButton(imageResource: .rDx, imageResourceTintColor: .tertiaryColor)
     private let saveButton = CustomButton(text: "Save", imageResourceTintColor: .tertiaryColor, textSize: 16, textColor: .tertiaryColor, fontName: .MontserratBold)
     private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .tertiaryColor)
     private let messageTextView = ExpandableTextView()

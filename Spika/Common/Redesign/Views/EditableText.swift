@@ -15,7 +15,7 @@ struct EditableText: View {
     var body: some View {
         if isEditingMode {
             HStack {
-                SwiftUI.TextField("", text: $string, 
+                TextField("", text: $string, 
                                   prompt: Text(placeholder)
                     .foregroundColor(Color(.textSecondary)))
                 .frame(height: 50)

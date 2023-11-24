@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TextField: UITextField {
+class CustomTextField: UITextField {
     
     open var inset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     private let textPlaceholder: String

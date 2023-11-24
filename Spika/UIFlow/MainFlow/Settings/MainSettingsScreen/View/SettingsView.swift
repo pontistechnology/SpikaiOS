@@ -12,10 +12,10 @@ class SettingsView: BaseSettingsView {
     
     let userInfoStackView = CustomStackView(axis: .vertical, distribution: .equalSpacing, alignment: .center, spacing: 15)
     
-    let userImage = ImageViewWithIcon(image:  UIImage(resource: .user))
+    let userImage = ImageViewWithIcon(image:  UIImage(resource: .rDdefaultUser))
     
     let userName = CustomButton(text: "", textSize: 18, textColor: .textPrimary, fontName: .MontserratSemiBold)
-    let userNameTextField = TextField()
+    let userNameTextField = CustomTextField()
     
     let userPhoneNumber = CustomLabel(text: .getStringFor(.group), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
     

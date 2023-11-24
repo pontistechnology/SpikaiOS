@@ -52,7 +52,7 @@ protocol Repository {
     func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>
     
         // Room
-    func createOnlineRoom(name: String, avatarId: Int64?, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error>
+    func createOnlineRoom(name: String, avatarId: Int64?, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel, Error>
     func createOnlineRoom(userId: Int64) -> AnyPublisher<CreateRoomResponseModel, Error>
     func checkOnlineRoom(forUserId userId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func checkOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>

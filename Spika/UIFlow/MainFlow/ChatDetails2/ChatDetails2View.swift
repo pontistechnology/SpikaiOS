@@ -38,7 +38,7 @@ struct ChatDetails2View: View {
                         }.foregroundStyle(Color(.warningColor))
                     })
                 } else if let room = viewModel.room {
-                    memberCountAndPlus()
+                    memberCountAndPlus(isAdmin: viewModel.isMyUserAdmin)
                         .padding(.vertical, 12)
                     ForEach(room.users) { roomUser in
                         memberRowView(user: roomUser.user,
@@ -55,6 +55,10 @@ struct ChatDetails2View: View {
         }
         .ignoresSafeArea()
         .modifier(SpikaBackgroundGradient())
+        .sheet(isPresented: $viewModel.showAddMembersScreen, content: {
+            SelectUsersView(selectedUsers: $viewModel.selectedMembers)
+                .environment(\.managedObjectContext, viewModel.repository.getMainContext())
+        })
     }
 }
 
@@ -144,17 +148,22 @@ extension ChatDetails2View {
                 Text(verbatim: .getStringFor(.admin))
             }
             if showRemove {
-                Image(.rDclose)
+                Image(.rDx)
             }
         }.foregroundStyle(Color(.textPrimary))
     }
     
-    private func memberCountAndPlus() -> some View {
+    private func memberCountAndPlus(isAdmin: Bool) -> some View {
         return HStack {
             Text("\(viewModel.room?.users.count ?? 0)" + " " +  .getStringFor(.members))
             Spacer()
-            if true { // TODO: - check if i am admin
-                Image(.rDplus)
+            if isAdmin {
+                Button {
+                    viewModel.showAddMembersScreen = true
+                } label: {
+                    Image(.rDplus)
+                }
+
             }
         }.foregroundStyle(Color(.textPrimary))
     }

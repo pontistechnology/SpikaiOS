@@ -51,24 +51,24 @@ class NewGroupChatViewModel: BaseViewModel {
     }
     
     func finalizeRoomCreation(name: String, avatarId: Int64?) {
-        repository.createOnlineRoom(name: name,
-                                    avatarId: avatarId,
-                                    users: selectedUsers.value).sink { [weak self] completion in
-            guard let _ = self else { return }
-            switch completion {
-            case let .failure(error):
-                print(error)
-                break
-            case .finished:
-                break
-            }
-        } receiveValue: { [weak self] response in
-            if let room = response.data?.room {
-                print("There is online room.")
-                self?.networkRequestState.send(.finished)
-                self?.saveLocalRoom(room: room)
-            }
-        }.store(in: &subscriptions)
+//        repository.createOnlineRoom(name: name,
+//                                    avatarId: avatarId,
+//                                    users: selectedUsers.value).sink { [weak self] completion in
+//            guard let _ = self else { return }
+//            switch completion {
+//            case let .failure(error):
+//                print(error)
+//                break
+//            case .finished:
+//                break
+//            }
+//        } receiveValue: { [weak self] response in
+//            if let room = response.data?.room {
+//                print("There is online room.")
+//                self?.networkRequestState.send(.finished)
+//                self?.saveLocalRoom(room: room)
+//            }
+//        }.store(in: &subscriptions)
     }
     
     func saveLocalRoom(room: Room) {

@@ -126,7 +126,7 @@ class AppCoordinator: Coordinator {
     }
     
     func popTopViewController(animated: Bool = true) {
-        self.navigationController.popViewController(animated: animated)
+        navigationController.popViewController(animated: animated)
     }
     
     func presentVideoCallScreen(url: URL) {
@@ -134,10 +134,18 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewController, animated: true, completion: nil)
     }
     
-    func presentSelectUserScreen() {
-//        let viewController = Assembler.sharedAssembler.resolver.resolve(SelectUsersViewController.self, argument: self)!
-//        let navC = UINavigationController(rootViewController: viewController)
-//        navigationController.present(navC, animated: true, completion: nil)
+    func presentStartNewPrivateChatScreen() {
+        
+    }
+    
+    func presentCreateNewGroup2ChatScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroup2ChatViewController.self, argument: self)!
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func getSelectUserView() -> SelectUsersView {
+        let view = Assembler.sharedAssembler.resolver.resolve(SelectUsersView.self, argument: self)!
+        return view
     }
     
     func presentUserSelection(preselectedUsers: [User], usersSelectedPublisher: PassthroughSubject<[User],Never>) {

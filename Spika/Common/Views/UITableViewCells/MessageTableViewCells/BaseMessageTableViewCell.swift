@@ -16,7 +16,7 @@ protocol BaseMessageTableViewCellProtocol {
 class BaseMessageTableViewCell: UITableViewCell {
     
     private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular, alignment: .left)
-    private let senderPhotoImageview = UIImageView(image: UIImage(resource: .user))
+    private let senderPhotoImageview = UIImageView(image: UIImage(resource: .rDdefaultUser))
     private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium)
     private let messageStateView = MessageStateView()
     let containerStackView = UIStackView()
@@ -158,7 +158,7 @@ extension BaseMessageTableViewCell {
     
     func updateSender(photoUrl: URL?) {
         senderPhotoImageview.unhide()
-        senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(resource: .user))
+        senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(resource: .rDdefaultUser))
     }
     
     func tapHandler() {

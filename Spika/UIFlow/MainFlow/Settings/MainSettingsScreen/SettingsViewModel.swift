@@ -20,7 +20,7 @@ class SettingsViewModel: BaseSettingsViewModel {
         guard let imageFileData = imageFileData,
               let fileUrl = repository.saveDataToFile(imageFileData, name: "newAvatar")
         else {
-            self.updateInfo(username: self.user.value?.getDisplayName() ?? "", avatarFileId: 0)
+            updateInfo(username: user.value?.getDisplayName() ?? "", avatarFileId: 0)
             return
         }
         

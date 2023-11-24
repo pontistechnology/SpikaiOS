@@ -33,14 +33,8 @@ class AllChatsViewController: BaseViewController {
         allChatsView.searchBar.delegate = self
         
         allChatsView.newChatButton.tap().sink { [weak self] _ in
-            self?.viewModel.presentSelectUserScreen()
+            self?.viewModel.presentStartNewPrivateChatScreen()
         }.store(in: &subscriptions)
-        
-        allChatsView.newChatButton
-            .tap()
-            .sink { [weak self] _ in
-                self?.viewModel.onCreateNewRoom()
-            }.store(in: &subscriptions)
         
         viewModel.setupBinding()
         viewModel.setRoomsFetch()

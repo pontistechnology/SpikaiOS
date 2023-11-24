@@ -12,7 +12,7 @@ import Combine
 class ReactionsView: UIView {
     let tableView = UITableView()
     private let label = CustomLabel(text: .getStringFor(.reactions), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
-    let closeImageView = UIImageView(image: UIImage(resource: .rDclose).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal))
+    let closeImageView = UIImageView(image: UIImage(resource: .rDx).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal))
     private let stackView = UIStackView()
     
     let stackviewTapPublisher = CurrentValueSubject<Int, Never>(0)

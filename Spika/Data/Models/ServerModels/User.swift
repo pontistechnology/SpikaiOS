@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - User
-struct User: Codable {
+struct User: Codable, Hashable, Identifiable {
     let id: Int64
     var displayName: String?
     var avatarFileId: Int64?

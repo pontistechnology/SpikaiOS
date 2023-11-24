@@ -44,6 +44,14 @@ enum ChatDetailsMode {
 class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
     @Published var room: Room?
     let detailsMode: ChatDetailsMode
+    @Published var showAddMembersScreen = false {
+        didSet {
+            if oldValue && showAddMembersScreen == false && !selectedMembers.isEmpty {
+                print("now")
+            }
+        }
+    }
+    @Published var selectedMembers: [User]
     
     var isMyUserAdmin: Bool {
         room?.users.first(where: { $0.userId == myUserId })?.isAdmin ?? false
@@ -53,6 +61,7 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
          detailsMode: ChatDetailsMode) {
         self.detailsMode = detailsMode
         self.room = detailsMode.room
+        selectedMembers = detailsMode.room?.users.map({ $0.user }) ?? []
         super.init(repository: repository, coordinator: coordinator)
         checkLocalPrivateRoom()
     }
@@ -239,6 +248,14 @@ extension ChatDetails2ViewModel: CNContactViewControllerDelegate {
     func showChatScreen() {
         guard let room else { return }
         getAppCoordinator()?.presentCurrentChatScreen(room: room)
+    }
+    
+    func presentAddMembersScreen() {
+        showAddMembersScreen = true
+    }
+    
+    func getAddMembersScreen() -> some View {
+        return getAppCoordinator()!.getSelectUserView()
     }
 }
 

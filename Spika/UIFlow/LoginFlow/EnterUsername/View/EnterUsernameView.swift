@@ -12,7 +12,7 @@ class EnterUsernameView: UIView, BaseView {
     
     let profilePictureView = ImageViewWithIcon(image: UIImage(resource: .logo), size: CGSize(width: 100, height: 100))
     private let usernameLabel = CustomLabel(text: .getStringFor(.username), textColor: .textPrimary, fontName: .MontserratMedium)
-    let usernameTextfield = TextField(textPlaceholder: .getStringFor(.enterUsername))
+    let usernameTextfield = CustomTextField(textPlaceholder: .getStringFor(.enterUsername))
     let nextButton = MainButton()
     
     override init(frame: CGRect) {

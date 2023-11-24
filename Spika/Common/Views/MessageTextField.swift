@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MessageTextField: TextField {
+class MessageTextField: CustomTextField {
     override var inset: UIEdgeInsets {
         get {
             return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 38)

@@ -32,7 +32,6 @@ final class AppAssembly: Assembly {
         assembleMessageActionsViewController(container)
         assembleMessageDetailsViewController(container)
         assembleCustomReactionsViewController(container)
-        assembleSettings2ViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
@@ -180,19 +179,6 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleSettingsViewController(_ container: Container) {
-        container.register(SettingsViewModel.self) { (resolver, coordinator: AppCoordinator) in
-            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return SettingsViewModel(repository: repository, coordinator: coordinator)
-        }.inObjectScope(.transient)
-        
-        container.register(SettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let controller = SettingsViewController()
-            controller.viewModel = container.resolve(SettingsViewModel.self, argument: coordinator)
-            return controller
-        }.inObjectScope(.transient)
-    }
-    
-    private func assembleSettings2ViewController(_ container: Container) {
         container.register(Settings2ViewModel.self) { (resolver, coordinator: AppCoordinator) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return Settings2ViewModel(repository: repository, coordinator: coordinator)

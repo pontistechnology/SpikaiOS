@@ -63,7 +63,7 @@ class ContentView: UIView, BaseView {
     
     func styleSubviews() {
         
-        profilePhoto.image = UIImage(resource: .user)
+        profilePhoto.image = UIImage(resource: .rDdefaultUser)
         profilePhoto.layer.cornerRadius = 50
         profilePhoto.contentMode = .scaleAspectFill
         profilePhoto.clipsToBounds = true

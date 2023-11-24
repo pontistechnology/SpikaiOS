@@ -8,10 +8,6 @@
 import UIKit
 import Combine
 
-enum Section {
-    case main
-}
-
 class CountryPickerView: UIView, BaseView {
     
     let cancelButton = ActionButton()

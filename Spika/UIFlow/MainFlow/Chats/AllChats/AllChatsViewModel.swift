@@ -23,8 +23,9 @@ class AllChatsViewModel: BaseViewModel {
 // MARK: - Navigation
 
 extension AllChatsViewModel {
-    func presentSelectUserScreen() {
-        getAppCoordinator()?.presentSelectUserScreen()
+    func presentStartNewPrivateChatScreen() {
+        // TODO: - change to ggrouup private
+        getAppCoordinator()?.presentCreateNewGroup2ChatScreen()
     }
     
     func presentCurrentChatScreen(for indexPath: IndexPath, scrollToMessage: Bool) {
@@ -39,10 +40,6 @@ extension AllChatsViewModel {
             guard let room = getRoom(for: indexPath) else { return }
             getAppCoordinator()?.presentCurrentChatScreen(room: room)
         }
-    }
-    
-    func onCreateNewRoom() {
-        getAppCoordinator()?.presentNewGroupChatScreen(selectedMembers: [])
     }
 }
 

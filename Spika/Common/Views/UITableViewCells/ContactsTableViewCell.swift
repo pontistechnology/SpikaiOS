@@ -25,7 +25,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     var subscriptions = Set<AnyCancellable>()
     
     private let horizontalStackView = CustomStackView(axis: .horizontal, spacing: 12)
-    private let leftImageView = RoundedImageView(image: UIImage(resource: .user))
+    private let leftImageView = RoundedImageView(image: UIImage(resource: .rDdefaultUser))
     private lazy var rightButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .center
@@ -87,7 +87,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
                        type: ContactsTableViewCellType) {
         nameLabel.text = title
         descriptionLabel.text = description
-        leftImageView.kf.setImage(with: leftImage, placeholder: UIImage(resource: .user))
+        leftImageView.kf.setImage(with: leftImage, placeholder: UIImage(resource: .rDdefaultUser))
         
         rightButton.hide()
         rightButton.setImage(nil, for: .normal)
@@ -104,7 +104,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
             rightButton.setTitleColor(.textPrimary, for: .normal)
         case .remove:
             rightButton.unhide()
-            rightButton.setImage(UIImage(resource: .rDclose).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal), for: .normal)
+            rightButton.setImage(UIImage(resource: .rDx).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal), for: .normal)
         case .emoji(let emoji, let size):
             rightButton.unhide()
             rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)
@@ -125,7 +125,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     }
     
     override func prepareForReuse() {
-        leftImageView.image = UIImage(resource: .user)
+        leftImageView.image = UIImage(resource: .rDdefaultUser)
         nameLabel.text = ""
         descriptionLabel.text = ""
     }

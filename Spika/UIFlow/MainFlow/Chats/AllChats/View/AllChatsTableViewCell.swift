@@ -16,7 +16,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     let descriptionIcon = UIImageView()
     let descriptionTextLabel = CustomLabel(text: "boto", textSize: 14, textColor: .textPrimary, alignment: .left)
     let helperView = UIView()
-    let leftImageView = UIImageView(image: UIImage(resource: .user))
+    let leftImageView = UIImageView(image: UIImage(resource: .rDdefaultUser))
     let timeLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary)
     
     let messagesStackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .fill, spacing: 8)
@@ -102,7 +102,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     }
     
     func configureCell(avatarUrl: URL?, name: String, description: (String?, MessageType, String?), time: String, badgeNumber: Int64, muted: Bool, pinned: Bool) {
-        leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(resource: .user))
+        leftImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(resource: .rDdefaultUser))
 
         nameLabel.text = name
         descriptionNameLabel.text = description.0
@@ -118,7 +118,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     }
     
     override func prepareForReuse() {
-        leftImageView.image = UIImage(resource: .user)
+        leftImageView.image = UIImage(resource: .rDdefaultUser)
         nameLabel.text = nil
         descriptionNameLabel.text = nil
         descriptionTextLabel.text = nil
