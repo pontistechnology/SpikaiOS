@@ -72,7 +72,7 @@ extension AppRepository {
         let resources = Resources<DeliveredResponseModel, DeliveredRequestModel>(
             path: Constants.Endpoints.deliveredStatus,
             requestType: .POST,
-            bodyParameters: DeliveredRequestModel(messagesIds: messageIds),
+            bodyParameters: DeliveredRequestModel(messageIds: messageIds),
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
