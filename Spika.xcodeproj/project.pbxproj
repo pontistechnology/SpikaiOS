@@ -816,6 +816,9 @@
 		931B09572B15452300DD0FBB /* CurrentChatViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B09562B15452300DD0FBB /* CurrentChatViewModel2.swift */; };
 		931B09582B15452300DD0FBB /* CurrentChatViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B09562B15452300DD0FBB /* CurrentChatViewModel2.swift */; };
 		931B09592B15452300DD0FBB /* CurrentChatViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B09562B15452300DD0FBB /* CurrentChatViewModel2.swift */; };
+		931B095F2B15947000DD0FBB /* PreviewFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B095E2B15947000DD0FBB /* PreviewFile.swift */; };
+		931B09602B15947000DD0FBB /* PreviewFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B095E2B15947000DD0FBB /* PreviewFile.swift */; };
+		931B09612B15947000DD0FBB /* PreviewFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B095E2B15947000DD0FBB /* PreviewFile.swift */; };
 		931B14D6281FD91100A0CD35 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
 		931B14D8281FD91100A0CD35 /* AppRepository+Rooms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */; };
 		931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
@@ -1455,6 +1458,7 @@
 		931B094A2B1544EE00DD0FBB /* CurrentChatViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatViewController2.swift; sourceTree = "<group>"; };
 		931B09522B15451900DD0FBB /* CurrentChatView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatView2.swift; sourceTree = "<group>"; };
 		931B09562B15452300DD0FBB /* CurrentChatViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatViewModel2.swift; sourceTree = "<group>"; };
+		931B095E2B15947000DD0FBB /* PreviewFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewFile.swift; sourceTree = "<group>"; };
 		931B15142821291400A0CD35 /* DeliveredRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveredRequestModel.swift; sourceTree = "<group>"; };
 		931B15172821295600A0CD35 /* DeliveredResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveredResponseModel.swift; sourceTree = "<group>"; };
 		931BDB9E29D255D80047C145 /* UnreadCountResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadCountResponseModel.swift; sourceTree = "<group>"; };
@@ -2390,6 +2394,7 @@
 			isa = PBXGroup;
 			children = (
 				93D34DCD2B02F7500098057C /* ImagePicker.swift */,
+				931B095E2B15947000DD0FBB /* PreviewFile.swift */,
 			);
 			path = "UIKit+SwiftUI";
 			sourceTree = "<group>";
@@ -3882,6 +3887,7 @@
 				93E753152A4A8C50000D51D6 /* PdfViewerViewController.swift in Sources */,
 				6C78B82429AF5ADB004BF881 /* MessageDetailsViewController.swift in Sources */,
 				6C78B82529AF5ADB004BF881 /* Constants+Strings.swift in Sources */,
+				931B09602B15947000DD0FBB /* PreviewFile.swift in Sources */,
 				6C78B82629AF5ADB004BF881 /* OTPCodeTextField.swift in Sources */,
 				6C78B82729AF5ADB004BF881 /* WindowManager.swift in Sources */,
 				6C78B82829AF5ADB004BF881 /* AuthRequestModel.swift in Sources */,
@@ -4309,6 +4315,7 @@
 				6CF6491C2A459FE100E0DE0B /* SendReactionRequestModel.swift in Sources */,
 				6CF6491D2A459FE100E0DE0B /* AppRepository+Messages.swift in Sources */,
 				6CF6491E2A459FE100E0DE0B /* MessageDetailsViewController.swift in Sources */,
+				931B09612B15947000DD0FBB /* PreviewFile.swift in Sources */,
 				6CF6491F2A459FE100E0DE0B /* Constants+Strings.swift in Sources */,
 				6CF649202A459FE100E0DE0B /* OTPCodeTextField.swift in Sources */,
 				6CF649212A459FE100E0DE0B /* WindowManager.swift in Sources */,
@@ -4736,6 +4743,7 @@
 				AD819240271E8E9100D5BE48 /* AppRepository+Messages.swift in Sources */,
 				93F4A89C282DE9B900CEA637 /* MessageDetailsViewController.swift in Sources */,
 				9376A8C72AFE7BA90035687F /* PrimaryButton.swift in Sources */,
+				931B095F2B15947000DD0FBB /* PreviewFile.swift in Sources */,
 				6C153BF02948696A00D400A7 /* Constants+Strings.swift in Sources */,
 				6C326A6728FECAAE00E00A59 /* OTPCodeTextField.swift in Sources */,
 				93BED3D0290C519900DEE9D1 /* WindowManager.swift in Sources */,

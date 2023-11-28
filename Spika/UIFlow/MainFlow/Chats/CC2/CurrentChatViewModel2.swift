@@ -10,6 +10,7 @@ import Foundation
 class CurrentChatViewModel2: BaseViewModel, ObservableObject {
     @Published var room: Room
     @Published var scrollToMessageId: Int64?
+    @Published var inputText = ""
     
     static let sortD = [
         NSSortDescriptor(key: "createdDate", ascending: true),

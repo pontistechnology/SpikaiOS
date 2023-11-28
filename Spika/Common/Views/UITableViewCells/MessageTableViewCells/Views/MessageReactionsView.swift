@@ -56,15 +56,4 @@ extension MessageReactionsView {
         }
     }
 }
-// TODO: - delete
-//
-//// MARK: - Changing dark/light mode for cgColors
-//
-//extension MessageReactionsView {
-//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-//        super.traitCollectionDidChange(previousTraitCollection)
-//        layer.borderColor = UIColor.primaryBackground.cgColor
-//        self.setNeedsDisplay()
-//    }
-//}
 
