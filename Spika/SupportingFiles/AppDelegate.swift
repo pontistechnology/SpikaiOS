@@ -31,12 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func test() {
-            print("_____")
-            Constants.Strings.allCases.enumerated().forEach { index, element in
-                print("C ", index, String.getStringFor(element))
-                print(String.getStringFor(element) == element.rawValue)
-            }
-            print("_____")
+        print("_____")
+        Constants.Strings.allCases.enumerated().forEach { index, element in
+            print("C ", index, String.getStringFor(element))
+            print(String.getStringFor(element) == element.rawValue)
+        }
+        print("_____")
     }
     
     

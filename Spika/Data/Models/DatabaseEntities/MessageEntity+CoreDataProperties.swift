@@ -55,3 +55,7 @@ extension MessageEntity {
         return dateFormatter.string(from: createdDate)
     }
 }
+
+extension MessageEntity: Identifiable {
+    
+}

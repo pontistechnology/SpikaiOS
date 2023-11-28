@@ -807,6 +807,15 @@
 		93179C3D28B709B6006F928B /* AppRepository+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5041927174B82009D50CB /* AppRepository+User.swift */; };
 		9319416B2819CB510067566C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9319416A2819CB510067566C /* NotificationService.swift */; };
 		9319416F2819CB510067566C /* SpikaNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 931941682819CB510067566C /* SpikaNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		931B094B2B1544EE00DD0FBB /* CurrentChatViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B094A2B1544EE00DD0FBB /* CurrentChatViewController2.swift */; };
+		931B094C2B1544EE00DD0FBB /* CurrentChatViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B094A2B1544EE00DD0FBB /* CurrentChatViewController2.swift */; };
+		931B094D2B1544EE00DD0FBB /* CurrentChatViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B094A2B1544EE00DD0FBB /* CurrentChatViewController2.swift */; };
+		931B09532B15451900DD0FBB /* CurrentChatView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B09522B15451900DD0FBB /* CurrentChatView2.swift */; };
+		931B09542B15451900DD0FBB /* CurrentChatView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B09522B15451900DD0FBB /* CurrentChatView2.swift */; };
+		931B09552B15451900DD0FBB /* CurrentChatView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B09522B15451900DD0FBB /* CurrentChatView2.swift */; };
+		931B09572B15452300DD0FBB /* CurrentChatViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B09562B15452300DD0FBB /* CurrentChatViewModel2.swift */; };
+		931B09582B15452300DD0FBB /* CurrentChatViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B09562B15452300DD0FBB /* CurrentChatViewModel2.swift */; };
+		931B09592B15452300DD0FBB /* CurrentChatViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B09562B15452300DD0FBB /* CurrentChatViewModel2.swift */; };
 		931B14D6281FD91100A0CD35 /* AppRepository+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934087B727EBAD7100209571 /* AppRepository+Tests.swift */; };
 		931B14D8281FD91100A0CD35 /* AppRepository+Rooms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053327D5BF65002E5CE5 /* AppRepository+Rooms.swift */; };
 		931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
@@ -1443,6 +1452,9 @@
 		931941682819CB510067566C /* SpikaNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpikaNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9319416A2819CB510067566C /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		9319416C2819CB510067566C /* NotificationInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = NotificationInfo.plist; sourceTree = "<group>"; };
+		931B094A2B1544EE00DD0FBB /* CurrentChatViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatViewController2.swift; sourceTree = "<group>"; };
+		931B09522B15451900DD0FBB /* CurrentChatView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatView2.swift; sourceTree = "<group>"; };
+		931B09562B15452300DD0FBB /* CurrentChatViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentChatViewModel2.swift; sourceTree = "<group>"; };
 		931B15142821291400A0CD35 /* DeliveredRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveredRequestModel.swift; sourceTree = "<group>"; };
 		931B15172821295600A0CD35 /* DeliveredResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveredResponseModel.swift; sourceTree = "<group>"; };
 		931BDB9E29D255D80047C145 /* UnreadCountResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadCountResponseModel.swift; sourceTree = "<group>"; };
@@ -1986,6 +1998,16 @@
 				9319416C2819CB510067566C /* NotificationInfo.plist */,
 			);
 			path = SpikaNotificationService;
+			sourceTree = "<group>";
+		};
+		931B09492B1544DD00DD0FBB /* CC2 */ = {
+			isa = PBXGroup;
+			children = (
+				931B094A2B1544EE00DD0FBB /* CurrentChatViewController2.swift */,
+				931B09522B15451900DD0FBB /* CurrentChatView2.swift */,
+				931B09562B15452300DD0FBB /* CurrentChatViewModel2.swift */,
+			);
+			path = CC2;
 			sourceTree = "<group>";
 		};
 		931E23AA27D316F30065FFFC /* MessageTableViewCells */ = {
@@ -2534,6 +2556,7 @@
 		AD819243272173A300D5BE48 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				931B09492B1544DD00DD0FBB /* CC2 */,
 				934D43B22B0FB066006A88D7 /* NewGroupChat2 */,
 				93D6BFE92A8262020092DDF5 /* CustomReactione */,
 				9352A56B2977667900E0D90E /* MessageActions */,
@@ -3820,6 +3843,7 @@
 				6C78B80129AF5ADB004BF881 /* ReactionsViewController.swift in Sources */,
 				6C78B80229AF5ADB004BF881 /* EmptyResponse.swift in Sources */,
 				6C78B80329AF5ADB004BF881 /* ContactsTableView.swift in Sources */,
+				931B094C2B1544EE00DD0FBB /* CurrentChatViewController2.swift in Sources */,
 				6C78B80429AF5ADB004BF881 /* SettingsViewController.swift in Sources */,
 				6C78B80529AF5ADB004BF881 /* ExpandableTextView.swift in Sources */,
 				93BCDFE22A81599000CEE826 /* OneNoteViewModel.swift in Sources */,
@@ -3844,6 +3868,7 @@
 				6C78B81929AF5ADB004BF881 /* CreateRoomRequestModel.swift in Sources */,
 				6C78B81A29AF5ADB004BF881 /* SharedViewModel.swift in Sources */,
 				6C78B81B29AF5ADB004BF881 /* MessageResponse.swift in Sources */,
+				931B09542B15451900DD0FBB /* CurrentChatView2.swift in Sources */,
 				6C78B81C29AF5ADB004BF881 /* SettingsView.swift in Sources */,
 				6C78B81D29AF5ADB004BF881 /* RoundedImageView.swift in Sources */,
 				936E211C2B01F8F100333B43 /* PrimaryButton.swift in Sources */,
@@ -3927,6 +3952,7 @@
 				6C78B86329AF5ADB004BF881 /* PrivacySettingsView.swift in Sources */,
 				6C78B86429AF5ADB004BF881 /* HomeViewController.swift in Sources */,
 				6C78B86529AF5ADB004BF881 /* SegmentedControl.swift in Sources */,
+				931B09582B15452300DD0FBB /* CurrentChatViewModel2.swift in Sources */,
 				6C78B86629AF5ADB004BF881 /* EnterVerifyCodeView.swift in Sources */,
 				6C78B86729AF5ADB004BF881 /* CurrentChatView.swift in Sources */,
 				6C78B86829AF5ADB004BF881 /* SharedViewController.swift in Sources */,
@@ -4244,6 +4270,7 @@
 				6CF648F92A459FE100E0DE0B /* ImageViewerView.swift in Sources */,
 				6CF648FA2A459FE100E0DE0B /* ReactionsViewController.swift in Sources */,
 				6CF648FB2A459FE100E0DE0B /* EmptyResponse.swift in Sources */,
+				931B094D2B1544EE00DD0FBB /* CurrentChatViewController2.swift in Sources */,
 				6CF648FC2A459FE100E0DE0B /* ContactsTableView.swift in Sources */,
 				6CF648FD2A459FE100E0DE0B /* SettingsViewController.swift in Sources */,
 				93BCDFE32A81599000CEE826 /* OneNoteViewModel.swift in Sources */,
@@ -4268,6 +4295,7 @@
 				6CF649122A459FE100E0DE0B /* CallHistoryViewController.swift in Sources */,
 				6CF649132A459FE100E0DE0B /* CreateRoomRequestModel.swift in Sources */,
 				6CF649142A459FE100E0DE0B /* SharedViewModel.swift in Sources */,
+				931B09552B15451900DD0FBB /* CurrentChatView2.swift in Sources */,
 				6CF649152A459FE100E0DE0B /* MessageResponse.swift in Sources */,
 				6CF649162A459FE100E0DE0B /* SettingsView.swift in Sources */,
 				936E211D2B01F8F200333B43 /* PrimaryButton.swift in Sources */,
@@ -4351,6 +4379,7 @@
 				6CF6495F2A459FE100E0DE0B /* PrivacySettingsView.swift in Sources */,
 				6CF649602A459FE100E0DE0B /* HomeViewController.swift in Sources */,
 				6CF649612A459FE100E0DE0B /* SegmentedControl.swift in Sources */,
+				931B09592B15452300DD0FBB /* CurrentChatViewModel2.swift in Sources */,
 				6CF649622A459FE100E0DE0B /* EnterVerifyCodeView.swift in Sources */,
 				6CF649632A459FE100E0DE0B /* CurrentChatView.swift in Sources */,
 				6CF649642A459FE100E0DE0B /* SharedViewController.swift in Sources */,
@@ -4668,6 +4697,7 @@
 				6CD30FF32922865D0017918B /* EmptyResponse.swift in Sources */,
 				930290C427ACA2E90064BED1 /* ContactsTableView.swift in Sources */,
 				AD81924C2721745700D5BE48 /* SettingsViewController.swift in Sources */,
+				931B094B2B1544EE00DD0FBB /* CurrentChatViewController2.swift in Sources */,
 				93BCDFE42A81599000CEE826 /* OneNoteViewModel.swift in Sources */,
 				93C77B6E2922F76100F676C5 /* ExpandableTextView.swift in Sources */,
 				93D993092992AB7F0038565F /* AppereanceSettingsViewModel.swift in Sources */,
@@ -4692,6 +4722,7 @@
 				938D053627D5BFF8002E5CE5 /* CreateRoomRequestModel.swift in Sources */,
 				933BE85F27B65C6F0099BA9E /* SharedViewModel.swift in Sources */,
 				93227E9A27D6EE47002E3DED /* MessageResponse.swift in Sources */,
+				931B09532B15451900DD0FBB /* CurrentChatView2.swift in Sources */,
 				AD8192652721D57000D5BE48 /* SettingsView.swift in Sources */,
 				6CF916B72A1B6FCC002AD09B /* PhoneNumberParserApp.swift in Sources */,
 				93A14D802A5FF7D800A557CB /* AppRepository+Shared.swift in Sources */,
@@ -4775,6 +4806,7 @@
 				9376A8CC2AFE94B10035687F /* UIRectCorner+Extensions.swift in Sources */,
 				AD8192712722D3E900D5BE48 /* MainButton.swift in Sources */,
 				6C175EC1297ECD0700804275 /* PrivacySettingsView.swift in Sources */,
+				931B09572B15452300DD0FBB /* CurrentChatViewModel2.swift in Sources */,
 				ADD503EB270DE28E009D50CB /* HomeViewController.swift in Sources */,
 				AD81926F2722D0A400D5BE48 /* SegmentedControl.swift in Sources */,
 				AD9BFD4E272B10AF00736318 /* EnterVerifyCodeView.swift in Sources */,

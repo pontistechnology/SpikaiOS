@@ -7,6 +7,7 @@
 
 import Foundation
 import Swinject
+import SwiftUI
 
 class ChatsAssembly: Assembly {
     func assemble(container: Container) {
@@ -15,14 +16,15 @@ class ChatsAssembly: Assembly {
     }
     
     private func assembleCurrentChatViewController(_ container: Container) {        
-        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
+        container.register(CurrentChatViewModel2.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return CurrentChatViewModel(repository: repository, coordinator: coordinator, room: room, scrollToMessageId: messageId)
+            return CurrentChatViewModel2(repository: repository, coordinator: coordinator, room: room, scrollToMessageId: messageId)
         }.inObjectScope(.transient)
 
-        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
-            let controller = CurrentChatViewController()
-            controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, room, messageId)
+        container.register(CurrentChatViewController2.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
+            let vM = container.resolve(CurrentChatViewModel2.self, arguments: coordinator, room, messageId)!
+            let controller = CurrentChatViewController2(rootView: AnyView(CurrentChatView2(viewModel: vM)
+                .environment(\.managedObjectContext, vM.repository.getMainContext())))
             return controller
         }.inObjectScope(.transient)
     }
