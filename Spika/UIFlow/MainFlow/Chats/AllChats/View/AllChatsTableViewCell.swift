@@ -106,7 +106,9 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
 
         nameLabel.text = name
         descriptionNameLabel.text = description.0
-        descriptionIcon.image = description.1.icon
+        if let icon = description.1.icon {
+            descriptionIcon.image = UIImage(resource: icon)
+        }
         descriptionIcon.isHidden = description.1 == .text
         descriptionTextLabel.text = description.2
         timeLabel.text = time

@@ -32,6 +32,37 @@ struct CurrentChatView2: View {
         return UIFont.customFont(name: .MontserratRegular).lineHeight
     }
     
+    @ViewBuilder func replyView(el: MessageEntity) -> some View {
+        let message = Message(messageEntity: el, fileData: nil, thumbData: nil, records: nil)
+        let isGroupRoom = viewModel.room.type == .groupRoom
+        HStack {
+            VStack(alignment: .leading, spacing: 0) {
+                if isGroupRoom {
+                    Text(viewModel.room.getDisplayNameFor(userId: message.fromUserId))
+                }
+                HStack {
+                    if let icon = message.type.icon {
+                        Image(icon)
+                    }
+                    Text(message.pushNotificationText).lineLimit(3)
+                }
+            }.padding(.vertical, 10)
+                .padding(.horizontal, 16)
+            
+            if message.type != .text, let id = Int64(el.bodyThumbId ?? "a") {
+                KFImage(id.fullFilePathFromId())
+                    .placeholder({ _ in
+                        Image(.rDdefaultUser)
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                    })
+                    .resizable()
+                    .frame(width: 40, height: 40)
+            }
+        }
+        
+    }
+    
     func messageInput() -> some View {
         HStack {
             Image(.rDplus)
@@ -91,6 +122,7 @@ struct CurrentChatView2: View {
     }
     
     @ViewBuilder func messageRow(_ el: MessageEntity,
+                                 replyEl: MessageEntity?,
                                  isPreviousFromSameSender: Bool,
                                  isNextFromSameSender: Bool) -> some View {
         let message = Message(messageEntity: el, fileData: nil, thumbData: nil, records: nil)
@@ -104,16 +136,25 @@ struct CurrentChatView2: View {
             if isMyMessage {
                 Spacer()
             }
-            if isGroupRoom {
+            if isGroupRoom && !isMyMessage {
                 circleUserImage(id: message.fromUserId, hide: isNextFromSameSender)
             }
             VStack(alignment: .leading, spacing: 0) {
-                if isGroupRoom && !isPreviousFromSameSender {
+                if isGroupRoom && !isPreviousFromSameSender && !isMyMessage {
                     Text(viewModel.room.getDisplayNameFor(userId: message.fromUserId))
                 }
                 switch message.type {
                 case .text:
                     VStack(alignment: isMyMessage ? .trailing : .leading, spacing: 4) {
+                        
+                        if let replyEl {
+                            replyView(el: replyEl)
+                                .background(isMyMessage ? Color(.secondaryColor) : Color(.primaryColor))
+                                .modifier(RoundedCorners(corners: .allButBottomLeft, radius: 15))
+                                .padding(.horizontal, 12)
+                                .padding(.top, 12)
+                        }
+                        
                         Text(message.body?.text ?? "")
                             .padding(.top, 10)
                             .padding(.horizontal, 16)
@@ -121,11 +162,11 @@ struct CurrentChatView2: View {
                         reactionsAndStuffStack(message)
                             .padding(.bottom, 10)
                     }
-                    .background(Color(.primaryColor))
+                    .background(isMyMessage ? Color(.primaryColor) : Color(.secondaryColor))
                     .modifier(RoundedCorners(corners: isMyMessage ? .allButBottomRight : .allButBottomLeft, radius: 15))
 
                 case .image:
-                    if let bodyFileId = el.bodyFileId, let id = Int64(bodyFileId) {
+                    if let bodyThumbId = el.bodyThumbId, let id = Int64(bodyThumbId) {
                         ImageView2(fileId: id)
                             .modifier(RoundedCorners(corners: isMyMessage ? .allButBottomRight : .allButBottomLeft, radius: 15))
                     }
@@ -138,17 +179,18 @@ struct CurrentChatView2: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             MessagesFetcher(id: viewModel.room.id) { results in
                 ScrollViewReader { proxy in
                     List {
                         ForEach(results) { section in
                             Section {
                                 ForEach(section) {
-                                    messageRow($0,
+                                    messageRow($0, 
+                                               replyEl: results.messageBy(id: $0.replyId),
                                                isPreviousFromSameSender: section.isPreviousElementSameSender(el: $0),
                                                isNextFromSameSender: section.isNextElementSameSender(el: $0))
-                                        .id($0.id)
+//                                        .id($0.id)
                                         .listRowSeparator(.hidden)
                                 }
                             } header: {
@@ -162,6 +204,7 @@ struct CurrentChatView2: View {
                     .listStyle(.grouped)
                     .onAppear {
                         proxy.scrollTo(results.last?.last?.id, anchor: .top)
+                        Self._printChanges()
                     }
                 }
             }
@@ -169,6 +212,14 @@ struct CurrentChatView2: View {
             
             messageInput()
         }
+    }
+}
+
+extension SectionedFetchResults<String, MessageEntity> {
+    func messageBy(id: String?) -> MessageEntity? {
+        self.first { s in
+            s.contains { $0.id == id }
+        }?.first(where: { $0.id == id })
     }
 }
 
@@ -186,7 +237,6 @@ extension SectionedFetchResults<String, MessageEntity>.Element {
         let indexOfNext = index(after: indexOfCurrent)
         return self[indexOfNext].fromUserId == self[indexOfCurrent].fromUserId
     }
-    
 }
 
 struct ReactionsView2: View {

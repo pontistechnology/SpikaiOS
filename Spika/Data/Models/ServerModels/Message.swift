@@ -115,20 +115,20 @@ enum MessageType: String, Codable {
         self = try MessageType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
     }
     
-    var icon: UIImage? {
+    var icon: ImageResource? {
         switch self {
         case .text:
             return nil
         case .image:
-            return UIImage(resource: .photoIcon)
+            return .photoIcon
         case .video:
-            return UIImage(resource: .videoIcon)
+            return .videoIcon
         case .file:
-            return UIImage(resource: .docIcon)
+            return .docIcon
         case .audio:
-            return UIImage(resource: .micIcon)
+            return .micIcon
         case .unknown:
-            return UIImage(resource: .unknownFileThumbnail)
+            return .unknownFileThumbnail
         }
     }
 }

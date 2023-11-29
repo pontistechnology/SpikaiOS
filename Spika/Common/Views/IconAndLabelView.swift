@@ -48,7 +48,9 @@ extension IconAndLabelView: BaseView {
         default:
             textLabel.text = .getStringFor(.unknownMessage)
         }
-        iconImageView.image = messageType.icon
+        if let icon = messageType.icon {
+            iconImageView.image = UIImage(resource: icon)
+        }
     }
     
     func positionSubviews() {
