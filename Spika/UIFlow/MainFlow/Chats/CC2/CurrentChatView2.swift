@@ -29,7 +29,7 @@ struct CurrentChatView2: View {
     @StateObject var viewModel: CurrentChatViewModel2
     
     @ViewBuilder func reactionsAndStuffStack(_ message: Message) -> some View {
-        HStack {
+        HStack(alignment: .bottom) {
             if let id = message.id {
                 ReactionsView2(messageId: id)
             }
@@ -39,47 +39,80 @@ struct CurrentChatView2: View {
             }
             
             if message.fromUserId == viewModel.myUserId {
-                Spacer()
                 Image(.rDcheckmark)
                     .resizable()
                     .frame(width: 17, height: 13)
             }
         }
         .padding(.horizontal, 16)
+        .background(Color.green)
     }
     
-    @ViewBuilder func messageRow(_ el: MessageEntity) -> some View {
+    @ViewBuilder func circleUserImage(id: Int64, hide: Bool) -> some View {
+        if hide {
+            Spacer()
+                .frame(width: 24, height: 24)
+        } else {
+            KFImage(viewModel.room.users.first(where: { $0.id == id })?.user.avatarFileId?.fullFilePathFromId())
+                .placeholder { _ in
+                    Image(.rDdefaultUser)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .clipShape(Circle())
+                }
+                .resizable()
+                .frame(width: 24, height: 24)
+                .clipShape(Circle())
+        }
+    }
+    
+    @ViewBuilder func messageRow(_ el: MessageEntity,
+                                 isPreviousFromSameSender: Bool,
+                                 isNextFromSameSender: Bool) -> some View {
         let message = Message(messageEntity: el, fileData: nil, thumbData: nil, records: nil)
         let isMyMessage = message.fromUserId == viewModel.myUserId
-        HStack {
+        let isGroupRoom = viewModel.room.type == .groupRoom
+        
+//        guard !message.deleted else {
+//            return Text("Deleted message")
+//        }
+        HStack(alignment: .bottom, spacing: 0) {
             if isMyMessage {
                 Spacer()
             }
-            switch message.type {
-            case .text:
-                VStack(alignment: isMyMessage ? .trailing : .leading, spacing: 4) {
-                    Text(message.body?.text ?? "")
-                        .padding(.top, 10)
-                        .padding(.horizontal, 16)
-                    
-                    reactionsAndStuffStack(message)
-                        .padding(.bottom, 10)
-                }
-                .background(Color(.primaryColor))
-                .modifier(RoundedCorners(corners: isMyMessage ? .allButBottomRight : .allButBottomLeft, radius: 15))
-                .frame(maxWidth: 328, alignment: isMyMessage ? .trailing : .leading)
-                
-            case .image:
-                if let bodyFileId = el.bodyFileId, let id = Int64(bodyFileId) {
-                    ImageView2(fileId: id)
-                        .modifier(RoundedCorners(corners: isMyMessage ? .allButBottomRight : .allButBottomLeft, radius: 15))
-                }
-            default:
-                Text("Unknown cell type")
+            if isGroupRoom {
+                circleUserImage(id: message.fromUserId, hide: isNextFromSameSender)
             }
+            VStack(alignment: .leading, spacing: 0) {
+                if isGroupRoom && !isPreviousFromSameSender {
+                    Text(viewModel.room.getDisplayNameFor(userId: message.fromUserId))
+                }
+                switch message.type {
+                case .text:
+                    VStack(alignment: isMyMessage ? .trailing : .leading, spacing: 4) {
+                        Text(message.body?.text ?? "")
+                            .padding(.top, 10)
+                            .padding(.horizontal, 16)
+                        
+                        reactionsAndStuffStack(message)
+                            .padding(.bottom, 10)
+                    }
+                    .background(Color(.primaryColor))
+                    .modifier(RoundedCorners(corners: isMyMessage ? .allButBottomRight : .allButBottomLeft, radius: 15))
+
+                case .image:
+                    if let bodyFileId = el.bodyFileId, let id = Int64(bodyFileId) {
+                        ImageView2(fileId: id)
+                            .modifier(RoundedCorners(corners: isMyMessage ? .allButBottomRight : .allButBottomLeft, radius: 15))
+                    }
+                default:
+                    Text("Unknown cell type")
+            }
+    }
+            .frame(maxWidth: 328, alignment: isMyMessage ? .trailing : .leading)
         }.padding(.horizontal, 12).padding(.vertical, 6)
     }
-        
+    
     var body: some View {
         VStack {
             MessagesFetcher(id: viewModel.room.id) { results in
@@ -88,7 +121,10 @@ struct CurrentChatView2: View {
                         ForEach(results) { section in
                             Section {
                                 ForEach(section) {
-                                    messageRow($0).id($0.id)
+                                    messageRow($0,
+                                               isPreviousFromSameSender: section.isPreviousElementSameSender(el: $0),
+                                               isNextFromSameSender: section.isNextElementSameSender(el: $0))
+                                        .id($0.id)
                                         .listRowSeparator(.hidden)
                                 }
                             } header: {
@@ -111,6 +147,23 @@ struct CurrentChatView2: View {
                 .background(.green)
         }
     }
+}
+
+extension SectionedFetchResults<String, MessageEntity>.Element {
+    func isPreviousElementSameSender(el: SectionedFetchResults<String, MessageEntity>.Section.Element) -> Bool {
+        guard let indexOfCurrent = firstIndex(of: el), indexOfCurrent>startIndex else { return false }
+        let indexOfPrevious = index(before: indexOfCurrent)
+        return self[indexOfPrevious].fromUserId == self[indexOfCurrent].fromUserId
+    }
+
+    func isNextElementSameSender(el: SectionedFetchResults<String, MessageEntity>.Section.Element) -> Bool {
+        guard let indexOfCurrent = firstIndex(of: el),
+                indexOfCurrent<endIndex-1 // endIndex is same as count for array
+        else { return false }
+        let indexOfNext = index(after: indexOfCurrent)
+        return self[indexOfNext].fromUserId == self[indexOfCurrent].fromUserId
+    }
+    
 }
 
 struct ReactionsView2: View {
