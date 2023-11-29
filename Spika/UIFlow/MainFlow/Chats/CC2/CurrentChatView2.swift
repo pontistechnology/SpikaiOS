@@ -28,6 +28,31 @@ struct CurrentChatView2: View {
     
     @StateObject var viewModel: CurrentChatViewModel2
     
+    var lineHeight: CGFloat {
+        return UIFont.customFont(name: .MontserratRegular).lineHeight
+    }
+    
+    func messageInput() -> some View {
+        HStack {
+            Image(.rDplus)
+                .resizable()
+                .frame(width: 24, height: 24)
+            
+            if #available(iOS 16.0, *) {
+                TextField("message...", text: $viewModel.inputText, axis: .vertical)
+                    .lineLimit(1...5)
+                    .padding()
+                    .background(Color(.thirdAdditionalColor))
+            } else {
+                
+            }
+            
+            Image(.rDsend)
+                .resizable()
+                .frame(width: 24, height: 24)
+        }
+    }
+    
     @ViewBuilder func reactionsAndStuffStack(_ message: Message) -> some View {
         HStack(alignment: .bottom) {
             if let id = message.id {
@@ -45,7 +70,6 @@ struct CurrentChatView2: View {
             }
         }
         .padding(.horizontal, 16)
-        .background(Color.green)
     }
     
     @ViewBuilder func circleUserImage(id: Int64, hide: Bool) -> some View {
@@ -143,8 +167,7 @@ struct CurrentChatView2: View {
             }
             .background(.blue)
             
-            TextField("", text: $viewModel.inputText, prompt: Text("message"))
-                .background(.green)
+            messageInput()
         }
     }
 }
