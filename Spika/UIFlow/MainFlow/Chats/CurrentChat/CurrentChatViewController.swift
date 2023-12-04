@@ -345,10 +345,10 @@ extension CurrentChatViewController: UITableViewDataSource {
 
         let myUserId = viewModel.myUserId
         
-        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
-              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2,
-              let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
+        guard let identifier = message.getReuseIdentifier2(),
+              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2
         else { return EmptyTableViewCell() }
+        cell.setupContainer(sender: viewModel.getSenderTypeFor(message: message))
         
         if let user = viewModel.getUser(for: message.fromUserId),
             viewModel.room.type == .groupRoom {
@@ -374,7 +374,7 @@ extension CurrentChatViewController: UITableViewDataSource {
             let senderName = viewModel.room.getDisplayNameFor(userId: repliedMessage.fromUserId)
             cell.showReplyView(senderName: senderName,
                                message: repliedMessage,
-                               sender: senderType)
+                               sender: .friend)
         }
         
         if let reactionsRecords = message.records {

@@ -70,7 +70,7 @@ class MessageReplyView2: UIStackView {
         closeButton.constrainHeight(24)
         
         thumbnailImageView.constrainWidth(40)
-        thumbnailImageView.constrainHeight(40)
+//        thumbnailImageView.constrainHeight(40)
         thumbnailImageView.contentMode = .scaleAspectFill
         thumbnailImageView.clipsToBounds = true
         thumbnailImageView.isHidden = message.type == .text

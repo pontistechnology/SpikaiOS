@@ -14,15 +14,15 @@ final class TextMessageTableViewCell: BaseMessageTableViewCell2 {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        guard let reuseIdentifier, let messageSender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
-        else { return }
-        setupTextCell(messageSender)
+//        guard let reuseIdentifier, let messageSender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
+//        else { return }
+        setupTextCell()
     }
     
     init(text: String, sender: MessageSender) {
         super.init(style: .default, reuseIdentifier: nil)
         setupContainer(sender: sender)
-        setupTextCell(sender) // TODO: - check
+        setupTextCell() // TODO: - check
         plainTextView.setup(text: "This message is deleted.")
     }
     
@@ -35,7 +35,7 @@ final class TextMessageTableViewCell: BaseMessageTableViewCell2 {
 //        print("textcell deinit")
     }
     
-    func setupTextCell(_ sender: MessageSender) {
+    func setupTextCell() {
         containerStackView.addArrangedSubview(plainTextView)
 //        if sender == .me {
 //            hSTack.addArrangedSubview(plainTextView)

@@ -55,7 +55,7 @@ class BaseMessageTableViewCell2: UITableViewCell {
     private var reactionsEditedStateView: ReactionsEditedCheckmarkStackview?
     private var replyView: MessageReplyView2?
 //    private let progressView = CircularProgressBar(spinnerWidth: 20)
-    private var reactionsView: MessageReactionsView?
+    
     
     let tapPublisher = PassthroughSubject<MessageCellTaps, Never>()
     var subs = Set<AnyCancellable>()
@@ -63,10 +63,6 @@ class BaseMessageTableViewCell2: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
-        guard let reuseIdentifier = reuseIdentifier,
-              let sender = getMessageSenderType(reuseIdentifier: reuseIdentifier)
-        else { return }
-        setupContainer(sender: sender)
     }
     
     required init?(coder: NSCoder) {
@@ -75,19 +71,6 @@ class BaseMessageTableViewCell2: UITableViewCell {
     
     deinit {
 //        print("BASE MESSAGE TABLEVIEW CELL DEINIT")
-    }
-}
-
-extension BaseMessageTableViewCell2 {
-    func getMessageSenderType(reuseIdentifier: String) -> MessageSender? {
-        if reuseIdentifier.starts(with: MessageSender.me.reuseIdentifierPrefix) {
-            return .me
-        } else if reuseIdentifier.starts(with: MessageSender.friend.reuseIdentifierPrefix) {
-            return .friend
-        } else if reuseIdentifier.starts(with: MessageSender.group.reuseIdentifierPrefix) {
-            return .group
-        }
-        return nil
     }
 }
 
@@ -134,12 +117,12 @@ extension BaseMessageTableViewCell2: BaseView {
     func positionSubviews() {
         hSTack.fillSuperview(padding: UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8))
         containerStackView.widthAnchor.constraint(lessThanOrEqualToConstant: 276).isActive = true
+        senderPhotoImageview.constrainWidth(20)
+        senderPhotoImageview.constrainHeight(20)
     }
     
     func setupContainer(sender: MessageSender) {
         containerStackView.backgroundColor = sender.backgroundColor
-        senderPhotoImageview.constrainWidth(20)
-        senderPhotoImageview.constrainHeight(20)
         
 //        messageStateView.isHidden = sender != .me
         timeLabel.textAlignment = sender == .me ? .right : .left
@@ -165,14 +148,14 @@ extension BaseMessageTableViewCell2 {
 //        timeLabel.hide()
 //        senderNameLabel.text = ""
         senderPhotoImageview.image = nil
+        reactionsEditedStateView?.removeFromSuperview()
+        reactionsEditedStateView = nil
 //        subs.removeAll()
 //        replyView?.removeFromSuperview()
 //        progressView.removeFromSuperview()
-        reactionsView?.removeFromSuperview()
 //        editedIconImageView.removeFromSuperview()
 //        editedLabel.removeFromSuperview()
 //        self.replyView = nil
-        self.reactionsView = nil
 //        containerBottomConstraint?.constant = -2
 //                senderPhotoImageview.hide()
     }
@@ -215,10 +198,7 @@ extension BaseMessageTableViewCell2 {
     }
     
     func showReactions(reactionRecords: [MessageRecord], forText: Bool) {
-        guard let reuseIdentifier = self.reuseIdentifier,
-              let senderType = getMessageSenderType(reuseIdentifier: reuseIdentifier)
-        else { return }
-        reactionsEditedStateView = ReactionsEditedCheckmarkStackview(emojis: reactionRecords.compactMap { $0.reaction }, sender: senderType)
+        reactionsEditedStateView = ReactionsEditedCheckmarkStackview(emojis: reactionRecords.compactMap { $0.reaction }, sender: .friend)
         if forText && reactionsEditedStateView?.superview == nil {
             containerStackView.addArrangedSubview(reactionsEditedStateView!)
         }

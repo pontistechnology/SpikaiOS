@@ -79,9 +79,7 @@ class CurrentChatView: UIView, BaseView {
                      DeletedMessageTableViewCell.self]
         
         cells.forEach { cell in
-            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.me.reuseIdentifierPrefix + String(describing: cell))
-            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.friend.reuseIdentifierPrefix + String(describing: cell))
-            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.group.reuseIdentifierPrefix + String(describing: cell))
+            messagesTableView.register(cell, forCellReuseIdentifier:  String(describing: cell))
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)

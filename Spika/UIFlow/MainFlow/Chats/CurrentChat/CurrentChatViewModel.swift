@@ -42,6 +42,14 @@ class CurrentChatViewModel: BaseViewModel {
         self.room = room
         super.init(repository: repository, coordinator: coordinator)
     }
+    
+    func getSenderTypeFor(message: Message) -> MessageSender {
+        if message.fromUserId == myUserId {
+            return .me
+        } else {
+            return room.type == .groupRoom ? .group : .friend
+        }
+    }
 }
 
 // MARK: - Navigation
