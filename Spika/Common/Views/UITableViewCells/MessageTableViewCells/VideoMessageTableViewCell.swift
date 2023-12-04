@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class VideoMessageTableViewCell: BaseMessageTableViewCell {
+final class VideoMessageTableViewCell: BaseMessageTableViewCell2 {
     
     private let videoView = MessageVideoView()
     
@@ -21,7 +21,7 @@ final class VideoMessageTableViewCell: BaseMessageTableViewCell {
     }
     
     func setupVideoCell() {
-        containerStackView.addArrangedSubview(videoView)
+        hSTack.addArrangedSubview(videoView)
     }
 }
 

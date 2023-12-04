@@ -38,7 +38,6 @@ extension MessageImageView: BaseView {
         imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 246)
         imageWidthConstraint?.isActive = true
         imageHeightConstraint?.isActive = true
-        // TODO: constraint priority warning bug
     }
 }
 

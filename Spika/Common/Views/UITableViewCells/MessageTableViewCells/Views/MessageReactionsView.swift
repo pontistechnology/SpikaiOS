@@ -30,10 +30,8 @@ extension MessageReactionsView: BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .blue
+        backgroundColor = .additionalColor
         layer.cornerRadius = 8
-//        layer.borderWidth = 1
-//        layer.borderColor = UIColor.primaryBackground.cgColor
     }
     
     func positionSubviews() {
@@ -56,15 +54,3 @@ extension MessageReactionsView {
         }
     }
 }
-// TODO: - delete
-//
-//// MARK: - Changing dark/light mode for cgColors
-//
-//extension MessageReactionsView {
-//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-//        super.traitCollectionDidChange(previousTraitCollection)
-//        layer.borderColor = UIColor.primaryBackground.cgColor
-//        self.setNeedsDisplay()
-//    }
-//}
-

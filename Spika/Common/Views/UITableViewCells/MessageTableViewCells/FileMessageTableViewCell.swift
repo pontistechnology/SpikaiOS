@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FileMessageTableViewCell: BaseMessageTableViewCell {
+final class FileMessageTableViewCell: BaseMessageTableViewCell2 {
     
     private let fileView = MessageFileView()
     
@@ -21,7 +21,7 @@ final class FileMessageTableViewCell: BaseMessageTableViewCell {
     }
     
     func setupFileCell() {
-        containerStackView.addArrangedSubview(fileView)
+        hSTack.addArrangedSubview(fileView)
     }
 }
 

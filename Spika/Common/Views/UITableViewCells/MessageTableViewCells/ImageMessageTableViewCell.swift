@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class ImageMessageTableViewCell: BaseMessageTableViewCell {
+final class ImageMessageTableViewCell: BaseMessageTableViewCell2 {
     
     private let photoImageView = MessageImageView()
     

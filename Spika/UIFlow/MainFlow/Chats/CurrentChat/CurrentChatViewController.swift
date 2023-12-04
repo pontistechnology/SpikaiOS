@@ -141,10 +141,10 @@ extension CurrentChatViewController {
                       let indexPath = self?.viewModel.getIndexPathFor(localId: uuid),
                       let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
                 else { return }
-                (cell as? BaseMessageTableViewCell)?.showUploadProgress(at: percentUploaded)
+                (cell as? BaseMessageTableViewCell2)?.showUploadProgress(at: percentUploaded)
                     
                 if percentUploaded == 1.0 {
-                    (cell as? BaseMessageTableViewCell)?.hideUploadProgress()
+                    (cell as? BaseMessageTableViewCell2)?.hideUploadProgress()
                 }
         }.store(in: &subscriptions)
         
@@ -320,8 +320,8 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell else { return }
-        (tableView.visibleCells as? [BaseMessageTableViewCell])?.forEach{ $0.setTimeLabelVisible(false)}
+        guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell2 else { return }
+        (tableView.visibleCells as? [BaseMessageTableViewCell2])?.forEach{ $0.setTimeLabelVisible(false)}
         cell.tapHandler()
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -346,7 +346,7 @@ extension CurrentChatViewController: UITableViewDataSource {
         let myUserId = viewModel.myUserId
         
         guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
-              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell,
+              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2,
               let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
         else { return EmptyTableViewCell() }
         
@@ -378,11 +378,11 @@ extension CurrentChatViewController: UITableViewDataSource {
         }
         
         if let reactionsRecords = message.records {
-            cell.showReactions(reactionRecords: reactionsRecords)
+            cell.showReactions(reactionRecords: reactionsRecords, forText: message.type == .text)
         }
         
         if message.modifiedAt != message.createdAt {
-            cell.showEditedIcon()
+//            cell.showEditedIcon() todo
         }
         
         (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)

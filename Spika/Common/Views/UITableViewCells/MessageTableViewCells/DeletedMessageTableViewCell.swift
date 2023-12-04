@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class DeletedMessageTableViewCell: BaseMessageTableViewCell {
+final class DeletedMessageTableViewCell: BaseMessageTableViewCell2 {
     
     private let plainTextView = MessageTextView()
     
@@ -22,7 +22,7 @@ final class DeletedMessageTableViewCell: BaseMessageTableViewCell {
     }
     
     func setupTextCell() {
-        containerStackView.addArrangedSubview(plainTextView)
+        hSTack.addArrangedSubview(plainTextView)
     }
 }
 
@@ -37,9 +37,9 @@ extension DeletedMessageTableViewCell: BaseMessageTableViewCellProtocol {
     
     func updateCell(message: Message) {
         plainTextView.setup(text: "This message is deleted", color: .textPrimary)
-        containerStackView.backgroundColor = .additionalColor
-        containerStackView.layer.borderColor = UIColor.primaryColor.cgColor
-        containerStackView.layer.borderWidth = 1
+        hSTack.backgroundColor = .additionalColor
+        hSTack.layer.borderColor = UIColor.primaryColor.cgColor
+        hSTack.layer.borderWidth = 1
     }
 }
 
