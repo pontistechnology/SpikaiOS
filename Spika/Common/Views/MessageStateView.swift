@@ -35,15 +35,18 @@ class MessageStateView: UIImageView, BaseView {
     func changeState(to value: MessageState) {
         switch value {
         case .sent:
-            image = UIImage(resource: .sent)
+            image = UIImage(resource: .rDtick).withTintColor(.textSecondary, renderingMode: .alwaysOriginal)
         case .delivered:
-            image = UIImage(resource: .delivered)
+            image = UIImage(resource: .rDtwoTicks)
+                .withTintColor(.textSecondary, renderingMode: .alwaysOriginal)
         case .seen:
-            image = UIImage(resource: .seen)
+            image = UIImage(resource: .rDtwoTicks)
+                .withTintColor(.textTertiary, renderingMode: .alwaysOriginal)
         case .fail:
-            image = UIImage(resource: .fail)
+            image = UIImage(resource: .rDAlertTriangle)
         case .waiting:
-            image = UIImage(resource: .waiting)
+            image = UIImage(resource: .rDclock)
+                .withTintColor(.textSecondary, renderingMode: .alwaysOriginal)
         }
     }
 }

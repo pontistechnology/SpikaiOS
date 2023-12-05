@@ -35,7 +35,7 @@ class MessageInputView: UIStackView, BaseView {
     private var subscriptions = Set<AnyCancellable>()
     
     lazy var inputTextAndControlsView = InputTextAndControlsView(publisher: inputViewTapPublisher)
-    var replyView: MessageReplyView?
+    var replyView: MessageReplyView2?
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,6 +54,9 @@ class MessageInputView: UIStackView, BaseView {
     func styleSubviews() {
         axis = .vertical
         backgroundColor = .clear
+        directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 14, trailing: 16)
+        spacing = 14
+        isLayoutMarginsRelativeArrangement = true
     }
     
     func positionSubviews() {
@@ -92,8 +95,8 @@ extension MessageInputView {
     func showReplyView(senderName: String, message: Message) {
         hideReplyView()
         if replyView == nil {
-            self.replyView = MessageReplyView(senderName: senderName, message: message,
-                                              backgroundColor: .secondaryColor, showCloseButton: true)
+            self.replyView = MessageReplyView2(senderName: senderName, message: message,
+                                              isInMyMessage: true, showCloseButton: true)
             replyBindings()
             guard let replyView = replyView else { return }
             backgroundColor = .secondAdditionalColor
@@ -112,7 +115,7 @@ extension MessageInputView {
             self?.inputViewTapPublisher.send(.hideReply)
         }).store(in: &subscriptions)
         
-        replyView?.containerView.tap().sink(receiveValue: { [weak self] _ in
+        replyView?.outSideView.tap().sink(receiveValue: { [weak self] _ in
             self?.inputViewTapPublisher.send(.scrollToReply)
         }).store(in: &subscriptions)
     }

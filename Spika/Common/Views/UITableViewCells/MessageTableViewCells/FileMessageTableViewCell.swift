@@ -21,7 +21,7 @@ final class FileMessageTableViewCell: BaseMessageTableViewCell2 {
     }
     
     func setupFileCell() {
-        hSTack.addArrangedSubview(fileView)
+        containerStackView.addArrangedSubview(fileView)
     }
 }
 

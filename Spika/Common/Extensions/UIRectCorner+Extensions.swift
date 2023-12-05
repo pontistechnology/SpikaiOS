@@ -6,7 +6,13 @@
 //
 
 import UIKit
+
 extension UIRectCorner {
     static let topCorners: UIRectCorner = [.topLeft, .topRight]
     static let bottomCorners: UIRectCorner =  [.bottomLeft, .bottomRight]
+}
+
+extension CACornerMask {
+    static let allButBottomRight: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner]
+    static let allButBottomLeft: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
 }

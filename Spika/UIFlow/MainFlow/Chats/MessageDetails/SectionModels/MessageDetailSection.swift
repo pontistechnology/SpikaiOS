@@ -29,11 +29,13 @@ enum MessageDetailsSectionType {
         case .senderActions:
             return UIImage(resource: .senderAction)
         case .readBy:
-            return UIImage(resource: .seen)
+            return UIImage(resource: .rDtwoTicks).withTintColor(.textTertiary, renderingMode: .alwaysOriginal)
         case .deliveredTo:
-            return UIImage(resource: .delivered)
+            return UIImage(resource: .rDtwoTicks)
+                .withTintColor(.textSecondary, renderingMode: .alwaysOriginal)
         case .sentTo :
-            return UIImage(resource: .sent)
+            return UIImage(resource: .rDtick)
+                .withTintColor(.textSecondary, renderingMode: .alwaysOriginal)
         }
     }
 }

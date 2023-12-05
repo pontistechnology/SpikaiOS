@@ -290,6 +290,7 @@ enum SpikaTheme: String, CaseIterable {
         let _tertiaryColor: ColorResource
         let _textPrimary: ColorResource
         let _textSecondary: ColorResource
+        let _textTertiary: ColorResource
         let _additionalColor: ColorResource
         let _secondAdditionalColor: ColorResource
         let _thirdAdditionalColor: ColorResource
@@ -308,7 +309,7 @@ enum SpikaTheme: String, CaseIterable {
                         _secondaryColor: .DarkMarine.secondary,
                         _tertiaryColor: .DarkMarine.tertiary,
                         _textPrimary: .DarkMarine.textPrimary,
-                        _textSecondary: .DarkMarine.textSecondary,
+                        _textSecondary: .DarkMarine.textSecondary, _textTertiary: .DarkMarine.textTertiary,
                         _additionalColor: .DarkMarine.additional1,
                         _secondAdditionalColor: .DarkMarine.additional2,
                         _thirdAdditionalColor: .DarkMarine.additional3,
@@ -324,7 +325,7 @@ enum SpikaTheme: String, CaseIterable {
                         _secondaryColor: .Neon.secondary,
                         _tertiaryColor: .Neon.tertiary,
                         _textPrimary: .Neon.textPrimary,
-                        _textSecondary: .Neon.textSecondary,
+                        _textSecondary: .Neon.textSecondary, _textTertiary: .Neon.textTertiary,
                         _additionalColor: .Neon.additional1,
                         _secondAdditionalColor: .Neon.additional2,
                         _thirdAdditionalColor: .Neon.additional3,
@@ -338,7 +339,7 @@ enum SpikaTheme: String, CaseIterable {
                         _secondaryColor: .LightMarine.secondary,
                         _tertiaryColor: .LightMarine.tertiary,
                         _textPrimary: .LightMarine.textPrimary,
-                        _textSecondary: .LightMarine.textSecondary,
+                        _textSecondary: .LightMarine.textSecondary, _textTertiary: .LightMarine.textTertiary,
                         _additionalColor: .LightMarine.additional1,
                         _secondAdditionalColor: .LightMarine.additional2,
                         _thirdAdditionalColor: .LightMarine.additional3,
@@ -352,7 +353,7 @@ enum SpikaTheme: String, CaseIterable {
                         _secondaryColor: .LightGreen.secondary,
                         _tertiaryColor: .LightGreen.tertiary,
                         _textPrimary: .LightGreen.textPrimary,
-                        _textSecondary: .LightGreen.textSecondary,
+                        _textSecondary: .LightGreen.textSecondary, _textTertiary: .LightGreen.textTertiary,
                         _additionalColor: .LightGreen.additional1,
                         _secondAdditionalColor: .LightGreen.additional2,
                         _thirdAdditionalColor: .LightGreen.additional3,

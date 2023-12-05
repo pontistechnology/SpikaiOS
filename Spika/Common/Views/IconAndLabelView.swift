@@ -9,7 +9,7 @@ import UIKit
 
 class IconAndLabelView2: UIStackView {
     private let iconImageView = UIImageView()
-    private let textLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium)
+    private let textLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratMedium)
     
     init(messageType: MessageType, text: String?) {
         super.init(frame: .zero)

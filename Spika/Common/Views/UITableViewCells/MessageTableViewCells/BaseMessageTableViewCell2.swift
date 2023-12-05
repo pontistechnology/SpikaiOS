@@ -13,16 +13,16 @@ import Combine
 
 class ReactionsEditedCheckmarkStackview: UIStackView {
     private let emptyView = UIView()
-    private let editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: .textSecondary)
+    let editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: .textSecondary)
     let messageStateView = MessageStateView()
-    private let reactionsView: MessageReactionsView
-    init(emojis: [String], sender: MessageSender) {
+    let reactionsView: MessageReactionsView
+    init(emojis: [String], isMyMessage: Bool) {
         self.reactionsView = MessageReactionsView(emojis: emojis)
         super.init(frame: .zero)
         self.axis = .horizontal
         self.distribution = .fill
         self.alignment = .bottom
-        if sender == .me {
+        if isMyMessage {
             addArrangedSubview(emptyView)
             addArrangedSubview(reactionsView)
             addArrangedSubview(editedLabel)
@@ -34,6 +34,10 @@ class ReactionsEditedCheckmarkStackview: UIStackView {
         }
         isLayoutMarginsRelativeArrangement = true
         directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 4, trailing: 10)
+        
+        editedLabel.hide()
+        reactionsView.hide()
+        messageStateView.hide()
     }
     
     required init(coder: NSCoder) {
@@ -54,7 +58,7 @@ class BaseMessageTableViewCell2: UITableViewCell {
     let rightEmptyView = UIStackView()
     private var reactionsEditedStateView: ReactionsEditedCheckmarkStackview?
     private var replyView: MessageReplyView2?
-//    private let progressView = CircularProgressBar(spinnerWidth: 20)
+    private let progressView = CircularProgressBar(spinnerWidth: 20)
     
     
     let tapPublisher = PassthroughSubject<MessageCellTaps, Never>()
@@ -101,6 +105,7 @@ extension BaseMessageTableViewCell2: BaseView {
         hSTack.axis = .horizontal
         hSTack.distribution = .fill
         hSTack.alignment = .bottom
+        hSTack.spacing = 4
         leftEmptyView.backgroundColor = .orange
         rightEmptyView.backgroundColor = .systemPink
         leftEmptyView.axis = .vertical
@@ -108,10 +113,11 @@ extension BaseMessageTableViewCell2: BaseView {
         
         senderPhotoImageview.layer.cornerRadius = 10
         senderPhotoImageview.clipsToBounds = true
-//        senderPhotoImageview.hide()
-//        timeLabel.hide()
-        backgroundColor = .clear
         senderPhotoImageview.contentMode = .scaleAspectFill
+        senderPhotoImageview.hide()
+        timeLabel.hide()
+        backgroundColor = .clear
+        hSTack.isLayoutMarginsRelativeArrangement = true
     }
     
     func positionSubviews() {
@@ -123,19 +129,18 @@ extension BaseMessageTableViewCell2: BaseView {
     
     func setupContainer(sender: MessageSender) {
         containerStackView.backgroundColor = sender.backgroundColor
-        
-//        messageStateView.isHidden = sender != .me
         timeLabel.textAlignment = sender == .me ? .right : .left
         switch sender {
         case .me:
             rightEmptyView.hide()
-            containerStackView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner]
+            containerStackView.layer.maskedCorners = .allButBottomRight
         case .friend:
             leftEmptyView.hide()
-            containerStackView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+            containerStackView.layer.maskedCorners = .allButBottomLeft
         case .group:
             leftEmptyView.hide()
-            containerStackView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+            containerStackView.layer.maskedCorners = .allButBottomLeft
+            hSTack.directionalLayoutMargins = .init(top: 0, leading: 20, bottom: 0, trailing: 0)
         }
         
     }
@@ -145,40 +150,37 @@ extension BaseMessageTableViewCell2 {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        timeLabel.hide()
-//        senderNameLabel.text = ""
+        timeLabel.hide()
+        senderNameLabel.text = ""
         senderPhotoImageview.image = nil
         reactionsEditedStateView?.removeFromSuperview()
         reactionsEditedStateView = nil
-//        subs.removeAll()
-//        replyView?.removeFromSuperview()
-//        progressView.removeFromSuperview()
-//        editedIconImageView.removeFromSuperview()
-//        editedLabel.removeFromSuperview()
-//        self.replyView = nil
-//        containerBottomConstraint?.constant = -2
-//                senderPhotoImageview.hide()
-    }
-    
-    func updateCellState(to state: MessageState) {
-        reactionsEditedStateView?.messageStateView.changeState(to: state)
+        subs.removeAll()
+        replyView?.removeFromSuperview()
+        self.replyView = nil
+//        senderPhotoImageview.hide()
+        leftEmptyView.unhide()
+        rightEmptyView.unhide()
+        hSTack.directionalLayoutMargins = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
     }
     
     func updateTime(to timestamp: Int64) {
         timeLabel.text = timestamp.convert(to: .HHmm)
     }
     
-    func updateSender(name: String) {
+    func updateSender(name: String, isMyMessage: Bool) {
+        isMyMessage ? senderNameLabel.hide() : senderNameLabel.unhide()
         senderNameLabel.text = name.isEmpty ? "(missing username)" : name
     }
     
-    func updateSender(photoUrl: URL?) {
-        senderPhotoImageview.unhide()
+    func updateSender(photoUrl: URL?, isMyMessage: Bool) {
+        isMyMessage ? senderPhotoImageview.hide() : senderPhotoImageview.unhide()
         senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(resource: .rDdefaultUser))
+        hSTack.directionalLayoutMargins = .init(top: 0, leading: 0, bottom: 0, trailing: 0) // TODO: - this is bug, isnt reusing properly
     }
     
     func tapHandler() {
-        timeLabel.isHidden.toggle()
+        timeLabel.unhide()
     }
     
     func setTimeLabelVisible(_ value: Bool) {
@@ -187,7 +189,10 @@ extension BaseMessageTableViewCell2 {
     
     func showReplyView(senderName: String, message: Message, sender: MessageSender?) {
         if replyView == nil, let sender = sender {
-            self.replyView = MessageReplyView2(senderName: senderName, message: message, backgroundColor: sender.replyBackgroundColor, showCloseButton: false)
+            self.replyView = MessageReplyView2(senderName: senderName, 
+                                               message: message,
+                                               isInMyMessage: sender == .me,
+                                               showCloseButton: false)
             
             containerStackView.insertArrangedSubview(replyView!, at: 0)
             
@@ -197,46 +202,61 @@ extension BaseMessageTableViewCell2 {
         }
     }
     
-    func showReactions(reactionRecords: [MessageRecord], forText: Bool) {
-        reactionsEditedStateView = ReactionsEditedCheckmarkStackview(emojis: reactionRecords.compactMap { $0.reaction }, sender: .friend)
-        if forText && reactionsEditedStateView?.superview == nil {
-            containerStackView.addArrangedSubview(reactionsEditedStateView!)
+    func showReactionEditedAndCheckMark(reactionRecords: [MessageRecord], 
+                                        isEdited: Bool,
+                                        messageState: MessageState,
+                                        isForTextCell: Bool,
+                                        isMyMessage: Bool) {
+        reactionsEditedStateView = ReactionsEditedCheckmarkStackview(emojis: reactionRecords.compactMap { $0.reaction }, isMyMessage: isMyMessage)
+        if reactionsEditedStateView?.superview == nil {
+            if isForTextCell {
+                containerStackView.addArrangedSubview(reactionsEditedStateView!)
+            } else {
+                containerStackView.addSubview(reactionsEditedStateView!)
+                reactionsEditedStateView?.anchor(bottom: containerStackView.bottomAnchor, trailing: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            }
         }
-//        contentView.addSubview(reactionsView!)
-//        containerBottomConstraint?.constant = -17
         
-//        switch senderType {
-//        case .me:
-////            reactionsView?.anchor(bottom: containerStackView.bottomAnchor, trailing: containerStackView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: -15, right: 1))
-//        case .friend, .group:
-//            reactionsView?.anchor(leading: containerStackView.leadingAnchor, bottom: containerStackView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 1, bottom: -15, right: 0))
-//        }
-//        reactionsView?.backgroundColor = senderType.backgroundColor
-//        
-//        reactionsView?.tap().sink { [weak self] _ in
-//            self?.tapPublisher.send(.showReactions)
-//        }.store(in: &subs)
+        if !reactionRecords.isEmpty {
+            reactionsEditedStateView?.reactionsView.unhide()
+        }
+        
+        if isEdited {
+            reactionsEditedStateView?.editedLabel.unhide()
+        }
+        if isMyMessage {
+            reactionsEditedStateView?.messageStateView.changeState(to: messageState)
+            reactionsEditedStateView?.messageStateView.unhide()
+        }
+        
+        reactionsEditedStateView?.tap().sink { [weak self] _ in
+            self?.tapPublisher.send(.showReactions)
+        }.store(in: &subs)
+    }
+    
+    func showEdited() {
+        reactionsEditedStateView?.editedLabel.unhide()
     }
 
     func showProgressViewIfNecessary() {
-//        if progressView.superview == nil {
-//            containerStackView.addSubview(progressView)
-//            progressView.fillSuperview()
-//            containerStackView.bringSubviewToFront(progressView)
-//        }
+        if progressView.superview == nil {
+            containerStackView.addSubview(progressView)
+            progressView.fillSuperview()
+            containerStackView.bringSubviewToFront(progressView)
+        }
     }
     
     func showUploadProgress(at percent: CGFloat) {
         showProgressViewIfNecessary()
-//        progressView.setProgress(to: percent)
+        progressView.setProgress(to: percent)
     }
     
     func hideUploadProgress() {
-//        progressView.removeFromSuperview()
+        progressView.removeFromSuperview()
     }
     
     func startSpinning() {
         showProgressViewIfNecessary()
-//        progressView.startSpinning()
+        progressView.startSpinning()
     }
 }

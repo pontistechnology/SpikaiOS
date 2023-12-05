@@ -21,7 +21,7 @@ final class VideoMessageTableViewCell: BaseMessageTableViewCell2 {
     }
     
     func setupVideoCell() {
-        hSTack.addArrangedSubview(videoView)
+        containerStackView.addArrangedSubview(videoView)
     }
 }
 

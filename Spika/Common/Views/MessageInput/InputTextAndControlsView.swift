@@ -62,8 +62,6 @@ extension InputTextAndControlsView: BaseView {
     func positionSubviews() {
         alignment = .center
         spacing = 10
-        directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 10, bottom: 12, trailing: 10)
-        isLayoutMarginsRelativeArrangement = true
         
         [plusButton, closeEditModeButton, cameraButton, sendButton].forEach {
             $0.constrainWidth(48)

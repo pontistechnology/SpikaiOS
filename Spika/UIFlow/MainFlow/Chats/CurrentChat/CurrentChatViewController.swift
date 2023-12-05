@@ -27,7 +27,8 @@ class CurrentChatViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.setGradientBackground(colors: UIColor._backgroundGradientColors)
-        setupView(currentChatView)
+        view.addSubview(currentChatView)
+        currentChatView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: .zero)
         setupBindings()
         self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
@@ -105,8 +106,7 @@ extension CurrentChatViewController {
         currentChatView.messageInputView.inputTextAndControlsView.keyboardAccessoryView.publisher.sink { _ in
             
         } receiveValue: { [weak self] distance in
-            guard let bottomSafeHeight = self?.view.safeAreaInsets.bottom else { return }
-            self?.currentChatView.moveInputFromBottom(for: distance - bottomSafeHeight)
+            self?.currentChatView.moveInputFromBottom(for: distance)
         }.store(in: &subscriptions)
         
         Publishers
@@ -322,7 +322,9 @@ extension CurrentChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell2 else { return }
         (tableView.visibleCells as? [BaseMessageTableViewCell2])?.forEach{ $0.setTimeLabelVisible(false)}
+        tableView.beginUpdates()
         cell.tapHandler()
+        tableView.endUpdates()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -341,9 +343,8 @@ extension CurrentChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let message = viewModel.getMessage(for: indexPath)
         else { return EmptyTableViewCell()}
-        let roomType = viewModel.room.type
-
         let myUserId = viewModel.myUserId
+        let isMyMessage = message.fromUserId == myUserId
         
         guard let identifier = message.getReuseIdentifier2(),
               let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2
@@ -353,10 +354,12 @@ extension CurrentChatViewController: UITableViewDataSource {
         if let user = viewModel.getUser(for: message.fromUserId),
             viewModel.room.type == .groupRoom {
             if !viewModel.isPreviousCellSameSender(for: indexPath) {
-                cell.updateSender(name: user.getDisplayName())
+                cell.updateSender(name: user.getDisplayName(),
+                                  isMyMessage: isMyMessage)
             }
             if !viewModel.isNextCellSameSender(for: indexPath) {
-                cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
+                cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId(),
+                                  isMyMessage: isMyMessage)
             }
         }
         
@@ -374,16 +377,10 @@ extension CurrentChatViewController: UITableViewDataSource {
             let senderName = viewModel.room.getDisplayNameFor(userId: repliedMessage.fromUserId)
             cell.showReplyView(senderName: senderName,
                                message: repliedMessage,
-                               sender: .friend)
+                               sender: isMyMessage ? .me : .friend)
         }
         
-        if let reactionsRecords = message.records {
-            cell.showReactions(reactionRecords: reactionsRecords, forText: message.type == .text)
-        }
-        
-        if message.modifiedAt != message.createdAt {
-//            cell.showEditedIcon() todo
-        }
+        cell.showReactionEditedAndCheckMark(reactionRecords: message.records ?? [], isEdited: message.modifiedAt != message.createdAt, messageState: message.getMessageState(myUserId: myUserId), isForTextCell: message.type == .text, isMyMessage: message.fromUserId == myUserId)
         
         (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
         
@@ -399,9 +396,6 @@ extension CurrentChatViewController: UITableViewDataSource {
             self?.handleCellTap(state, message: message)
         }).store(in: &cell.subs)
         
-        if message.fromUserId == myUserId {
-            cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
-        }
         cell.updateTime(to: message.createdAt)
         
         return cell
