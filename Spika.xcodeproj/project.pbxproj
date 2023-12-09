@@ -1045,6 +1045,9 @@
 		9398B6F02AFD9DBC0010B277 /* Settings2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398B6EF2AFD9DBC0010B277 /* Settings2ViewModel.swift */; };
 		9398B6F12AFD9DBC0010B277 /* Settings2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398B6EF2AFD9DBC0010B277 /* Settings2ViewModel.swift */; };
 		9398B6F22AFD9DBC0010B277 /* Settings2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398B6EF2AFD9DBC0010B277 /* Settings2ViewModel.swift */; };
+		939937502B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399374F2B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift */; };
+		939937512B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399374F2B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift */; };
+		939937522B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9399374F2B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift */; };
 		939AAE3C28F62F6600DD5142 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE3B28F62F6600DD5142 /* Room.swift */; };
 		939AAE3D28F62F6600DD5142 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE3B28F62F6600DD5142 /* Room.swift */; };
 		939AAE3F28F62FFF00DD5142 /* RoomUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE3E28F62FFF00DD5142 /* RoomUser.swift */; };
@@ -1564,6 +1567,7 @@
 		93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9398B6EB2AFD94210010B277 /* Settings2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings2View.swift; sourceTree = "<group>"; };
 		9398B6EF2AFD9DBC0010B277 /* Settings2ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings2ViewModel.swift; sourceTree = "<group>"; };
+		9399374F2B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsEditedCheckmarkStackview.swift; sourceTree = "<group>"; };
 		939AAE3B28F62F6600DD5142 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		939AAE3E28F62FFF00DD5142 /* RoomUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomUser.swift; sourceTree = "<group>"; };
 		939AAE4128F6308100DD5142 /* MessageRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRecord.swift; sourceTree = "<group>"; };
@@ -2004,6 +2008,7 @@
 				9371A1F029241D33005129CC /* VideoMessageTableViewCell.swift */,
 				9335E3F4297F4CD0005CDBA0 /* DeletedMessageTableViewCell.swift */,
 				9302806A2B17FD5C0033E663 /* BaseMessageTableViewCell2.swift */,
+				9399374F2B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift */,
 			);
 			path = MessageTableViewCells;
 			sourceTree = "<group>";
@@ -3848,6 +3853,7 @@
 				6C78B81729AF5ADB004BF881 /* BaseSettingsViewModel.swift in Sources */,
 				6C78B81829AF5ADB004BF881 /* CallHistoryViewController.swift in Sources */,
 				6C78B81929AF5ADB004BF881 /* CreateRoomRequestModel.swift in Sources */,
+				939937512B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift in Sources */,
 				6C78B81A29AF5ADB004BF881 /* SharedViewModel.swift in Sources */,
 				6C78B81B29AF5ADB004BF881 /* MessageResponse.swift in Sources */,
 				6C78B81C29AF5ADB004BF881 /* SettingsView.swift in Sources */,
@@ -4273,6 +4279,7 @@
 				6CF649102A459FE100E0DE0B /* EnterUsernameViewModel.swift in Sources */,
 				6CF649112A459FE100E0DE0B /* BaseSettingsViewModel.swift in Sources */,
 				6CF649122A459FE100E0DE0B /* CallHistoryViewController.swift in Sources */,
+				939937522B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift in Sources */,
 				6CF649132A459FE100E0DE0B /* CreateRoomRequestModel.swift in Sources */,
 				6CF649142A459FE100E0DE0B /* SharedViewModel.swift in Sources */,
 				6CF649152A459FE100E0DE0B /* MessageResponse.swift in Sources */,
@@ -4698,6 +4705,7 @@
 				6C175EB7297EC61C00804275 /* BaseSettingsViewModel.swift in Sources */,
 				AD8192482721741600D5BE48 /* CallHistoryViewController.swift in Sources */,
 				938D053627D5BFF8002E5CE5 /* CreateRoomRequestModel.swift in Sources */,
+				939937502B249545003E2254 /* ReactionsEditedCheckmarkStackview.swift in Sources */,
 				933BE85F27B65C6F0099BA9E /* SharedViewModel.swift in Sources */,
 				93227E9A27D6EE47002E3DED /* MessageResponse.swift in Sources */,
 				AD8192652721D57000D5BE48 /* SettingsView.swift in Sources */,
@@ -5247,7 +5255,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 99;
+				APP_BUILD_VERSION = 100;
 				APP_VERSION = 1.2.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -5315,7 +5323,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_BUILD_VERSION = 99;
+				APP_BUILD_VERSION = 100;
 				APP_VERSION = 1.2.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;

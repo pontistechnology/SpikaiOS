@@ -9,46 +9,10 @@ import Foundation
 import UIKit
 import Combine
 
-
-
-class ReactionsEditedCheckmarkStackview: UIStackView {
-    private let emptyView = UIView()
-    let editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: .textSecondary)
-    let messageStateView = MessageStateView()
-    let reactionsView: MessageReactionsView
-    init(emojis: [String], isMyMessage: Bool) {
-        self.reactionsView = MessageReactionsView(emojis: emojis)
-        super.init(frame: .zero)
-        self.axis = .horizontal
-        self.distribution = .fill
-        self.alignment = .bottom
-        if isMyMessage {
-            addArrangedSubview(emptyView)
-            addArrangedSubview(reactionsView)
-            addArrangedSubview(editedLabel)
-            addArrangedSubview(messageStateView)
-        } else {
-            addArrangedSubview(editedLabel)
-            addArrangedSubview(reactionsView)
-            addArrangedSubview(emptyView)
-        }
-        isLayoutMarginsRelativeArrangement = true
-        directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 4, trailing: 10)
-        
-        editedLabel.hide()
-        reactionsView.hide()
-        messageStateView.hide()
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 class BaseMessageTableViewCell2: UITableViewCell {
     
     private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular, alignment: .left)
-    private let senderPhotoImageview = UIImageView(image: UIImage(resource: .rDdefaultUser))
+    private let senderPhotoImageview = UIImageView()
     private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium)
     
     let hSTack = UIStackView()
@@ -100,24 +64,18 @@ extension BaseMessageTableViewCell2: BaseView {
         
         vStack.axis = .vertical
         vStack.distribution = .fill
-
+        vStack.alignment = .leading
         
         hSTack.axis = .horizontal
         hSTack.distribution = .fill
         hSTack.alignment = .bottom
         hSTack.spacing = 4
-        leftEmptyView.backgroundColor = .orange
-        rightEmptyView.backgroundColor = .systemPink
-        leftEmptyView.axis = .vertical
-        rightEmptyView.axis = .vertical
         
         senderPhotoImageview.layer.cornerRadius = 10
         senderPhotoImageview.clipsToBounds = true
         senderPhotoImageview.contentMode = .scaleAspectFill
-        senderPhotoImageview.hide()
         timeLabel.hide()
         backgroundColor = .clear
-        hSTack.isLayoutMarginsRelativeArrangement = true
     }
     
     func positionSubviews() {
@@ -136,33 +94,17 @@ extension BaseMessageTableViewCell2: BaseView {
             containerStackView.layer.maskedCorners = .allButBottomRight
         case .friend:
             leftEmptyView.hide()
+            senderPhotoImageview.hide()
             containerStackView.layer.maskedCorners = .allButBottomLeft
         case .group:
             leftEmptyView.hide()
             containerStackView.layer.maskedCorners = .allButBottomLeft
-            hSTack.directionalLayoutMargins = .init(top: 0, leading: 20, bottom: 0, trailing: 0)
         }
         
     }
 }
 
 extension BaseMessageTableViewCell2 {
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        timeLabel.hide()
-        senderNameLabel.text = ""
-        senderPhotoImageview.image = nil
-        reactionsEditedStateView?.removeFromSuperview()
-        reactionsEditedStateView = nil
-        subs.removeAll()
-        replyView?.removeFromSuperview()
-        self.replyView = nil
-//        senderPhotoImageview.hide()
-        leftEmptyView.unhide()
-        rightEmptyView.unhide()
-        hSTack.directionalLayoutMargins = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
-    }
     
     func updateTime(to timestamp: Int64) {
         timeLabel.text = timestamp.convert(to: .HHmm)
@@ -174,9 +116,8 @@ extension BaseMessageTableViewCell2 {
     }
     
     func updateSender(photoUrl: URL?, isMyMessage: Bool) {
-        isMyMessage ? senderPhotoImageview.hide() : senderPhotoImageview.unhide()
+        guard !isMyMessage else { return }
         senderPhotoImageview.kf.setImage(with: photoUrl, placeholder: UIImage(resource: .rDdefaultUser))
-        hSTack.directionalLayoutMargins = .init(top: 0, leading: 0, bottom: 0, trailing: 0) // TODO: - this is bug, isnt reusing properly
     }
     
     func tapHandler() {
@@ -258,5 +199,21 @@ extension BaseMessageTableViewCell2 {
     func startSpinning() {
         showProgressViewIfNecessary()
         progressView.startSpinning()
+    }
+}
+
+extension BaseMessageTableViewCell2 {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        timeLabel.hide()
+        senderNameLabel.text = ""
+        senderPhotoImageview.image = nil
+        reactionsEditedStateView?.removeFromSuperview()
+        reactionsEditedStateView = nil
+        subs.removeAll()
+        replyView?.removeFromSuperview()
+        self.replyView = nil
+        leftEmptyView.unhide()
+        rightEmptyView.unhide()
     }
 }
