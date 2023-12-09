@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         guard let font =  UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14) else { return }
+        // this is for our custom back button
         UIBarButtonItem.appearance().setTitleTextAttributes(
             [   NSAttributedString.Key.font : font,
                 NSAttributedString.Key.foregroundColor : UIColor.textPrimary
@@ -53,9 +54,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIBarButtonItem.appearance().setTitleTextAttributes(
             [   NSAttributedString.Key.font : font,
-            ], for: .disabled)
+                NSAttributedString.Key.foregroundColor : UIColor.textPrimary
+            ], for: .focused)
         
-//        UINavigationBar.appearance().tintColor = .textPrimary
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+            [   NSAttributedString.Key.font : font,
+                NSAttributedString.Key.foregroundColor : UIColor.textPrimary
+            ], for: .highlighted)
+        
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+            [   NSAttributedString.Key.font : font,
+                NSAttributedString.Key.foregroundColor : UIColor.textPrimary
+            ], for: .selected)
+        
+        UIBarButtonItem.appearance().setTitlePositionAdjustment(.init(horizontal: 0, vertical: -15), for: .compact)
+        
+        let backImage = UIImage(resource: .rdBackButton).withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
+        UINavigationBar.appearance().backIndicatorImage = backImage
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
     }
 }
 
