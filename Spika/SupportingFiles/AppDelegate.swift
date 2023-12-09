@@ -67,9 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NSAttributedString.Key.foregroundColor : UIColor.textPrimary
             ], for: .selected)
         
-        UIBarButtonItem.appearance().setTitlePositionAdjustment(.init(horizontal: 0, vertical: -15), for: .compact)
-        
+       
         let backImage = UIImage(resource: .rdBackButton).withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
+            .withBaselineOffset(fromBottom: 7) // without this back button title and image are not aligned
         UINavigationBar.appearance().backIndicatorImage = backImage
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
     }
