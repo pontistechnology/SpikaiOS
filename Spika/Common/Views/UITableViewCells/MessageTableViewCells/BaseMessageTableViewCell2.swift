@@ -17,9 +17,7 @@ class BaseMessageTableViewCell2: UITableViewCell {
     
     let hSTack = UIStackView()
     let vStack = UIStackView()
-    let leftEmptyView = UIStackView()
     let containerStackView = UIStackView()
-    let rightEmptyView = UIStackView()
     private var reactionsEditedStateView: ReactionsEditedCheckmarkStackview?
     private var replyView: MessageReplyView2?
     private let progressView = CircularProgressBar(spinnerWidth: 20)
@@ -46,14 +44,11 @@ class BaseMessageTableViewCell2: UITableViewCell {
 extension BaseMessageTableViewCell2: BaseView {
     func addSubviews() {
         contentView.addSubview(hSTack)
-        
-        hSTack.addArrangedSubview(leftEmptyView)
         hSTack.addArrangedSubview(senderPhotoImageview)
         hSTack.addArrangedSubview(vStack)
         vStack.addArrangedSubview(senderNameLabel)
         vStack.addArrangedSubview(containerStackView)
         vStack.addArrangedSubview(timeLabel)
-        hSTack.addArrangedSubview(rightEmptyView)
     }
     
     func styleSubviews() {
@@ -64,7 +59,6 @@ extension BaseMessageTableViewCell2: BaseView {
         
         vStack.axis = .vertical
         vStack.distribution = .fill
-        vStack.alignment = .leading
         vStack.spacing = 2
         
         hSTack.axis = .horizontal
@@ -93,14 +87,14 @@ extension BaseMessageTableViewCell2: BaseView {
         timeLabel.textAlignment = sender == .me ? .right : .left
         switch sender {
         case .me:
-            rightEmptyView.hide()
+            vStack.alignment = .trailing
             containerStackView.layer.maskedCorners = .allButBottomRight
         case .friend:
-            leftEmptyView.hide()
             senderPhotoImageview.hide()
+            vStack.alignment = .leading
             containerStackView.layer.maskedCorners = .allButBottomLeft
         case .group:
-            leftEmptyView.hide()
+            vStack.alignment = .leading
             containerStackView.layer.maskedCorners = .allButBottomLeft
         }
         
@@ -217,8 +211,6 @@ extension BaseMessageTableViewCell2 {
         subs.removeAll()
         replyView?.removeFromSuperview()
         replyView = nil
-        leftEmptyView.unhide()
-        rightEmptyView.unhide()
         hSTack.directionalLayoutMargins = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
     }
 }
