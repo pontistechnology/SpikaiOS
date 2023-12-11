@@ -65,11 +65,13 @@ extension BaseMessageTableViewCell2: BaseView {
         vStack.axis = .vertical
         vStack.distribution = .fill
         vStack.alignment = .leading
+        vStack.spacing = 2
         
         hSTack.axis = .horizontal
         hSTack.distribution = .fill
         hSTack.alignment = .bottom
         hSTack.spacing = 4
+        hSTack.isLayoutMarginsRelativeArrangement = true
         
         senderPhotoImageview.layer.cornerRadius = 10
         senderPhotoImageview.clipsToBounds = true
@@ -79,7 +81,8 @@ extension BaseMessageTableViewCell2: BaseView {
     }
     
     func positionSubviews() {
-        hSTack.fillSuperview(padding: UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8))
+        hSTack.fillSuperview()
+        hSTack.directionalLayoutMargins = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
         containerStackView.widthAnchor.constraint(lessThanOrEqualToConstant: 276).isActive = true
         senderPhotoImageview.constrainWidth(20)
         senderPhotoImageview.constrainHeight(20)
@@ -113,6 +116,7 @@ extension BaseMessageTableViewCell2 {
     func updateSender(name: String, isMyMessage: Bool) {
         isMyMessage ? senderNameLabel.hide() : senderNameLabel.unhide()
         senderNameLabel.text = name.isEmpty ? "(missing username)" : name
+        hSTack.directionalLayoutMargins = .init(top: 12, leading: 8, bottom: 4, trailing: 8) // this is first message from different user, added space on top
     }
     
     func updateSender(photoUrl: URL?, isMyMessage: Bool) {
@@ -212,8 +216,9 @@ extension BaseMessageTableViewCell2 {
         reactionsEditedStateView = nil
         subs.removeAll()
         replyView?.removeFromSuperview()
-        self.replyView = nil
+        replyView = nil
         leftEmptyView.unhide()
         rightEmptyView.unhide()
+        hSTack.directionalLayoutMargins = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
     }
 }

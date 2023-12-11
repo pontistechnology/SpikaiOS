@@ -19,6 +19,7 @@ class ReactionsEditedCheckmarkStackview: UIStackView {
         self.axis = .horizontal
         self.distribution = .fill
         self.alignment = .bottom
+        spacing = 4
         if isMyMessage {
             addArrangedSubview(emptyView)
             addArrangedSubview(reactionsView)
