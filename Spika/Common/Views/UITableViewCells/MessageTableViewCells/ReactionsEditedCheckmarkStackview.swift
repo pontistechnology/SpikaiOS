@@ -14,7 +14,7 @@ class ReactionsEditedCheckmarkStackview: UIStackView {
     let messageStateView = MessageStateView()
     let reactionsView: MessageReactionsView
     init(emojis: [String], isMyMessage: Bool) {
-        self.reactionsView = MessageReactionsView(emojis: emojis)
+        self.reactionsView = MessageReactionsView(emojis: emojis, isInMyMessage: isMyMessage)
         super.init(frame: .zero)
         self.axis = .horizontal
         self.distribution = .fill

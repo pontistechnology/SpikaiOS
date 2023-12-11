@@ -11,8 +11,10 @@ import UIKit
 class MessageReactionsView: UIView {
     private var emojiLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratMedium)
     private var countLabel = CustomLabel(text: "", textSize: 8, textColor: .textPrimary, fontName: .MontserratMedium)
+    private let isInMyMessage: Bool
     
-    init(emojis: [String]) {
+    init(emojis: [String], isInMyMessage: Bool) {
+        self.isInMyMessage = isInMyMessage
         super.init(frame: .zero)
         setupView()
         show(emojis: emojis)
@@ -32,6 +34,7 @@ extension MessageReactionsView: BaseView {
     func styleSubviews() {
         backgroundColor = .additionalColor
         layer.cornerRadius = 8
+        layer.maskedCorners = isInMyMessage ? .allButBottomRight : .allButBottomLeft
     }
     
     func positionSubviews() {
