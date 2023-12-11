@@ -262,7 +262,7 @@ extension CurrentChatViewController {
             viewModel.trySendMessage(text: inputText)
             currentChatView.messageInputView.clean()
         case .camera, .microphone:
-            print(state, " in ccVC")
+            view.endEditing(true) // hiding keyboard, because otherwise it will be empty space instead of keyboard when you get back to this screen
             showUIImagePicker(source: .camera, allowsEdit: false)
         case .scrollToReply:
             guard let selectedMessageId = viewModel.selectedMessageToReplyPublisher.value?.id,

@@ -34,6 +34,7 @@ class HomeViewController: UIPageViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barStyle = .default
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationItem.backButtonTitle = " "
         viewModel.updatePush()
     }
     
@@ -92,6 +93,6 @@ extension HomeViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let count = viewModel.frc?.sections?.first?.numberOfObjects else { return }
         homeTabBar.updateUnreadChatsCount(count)
-        navigationItem.backButtonTitle = count > 0 ? String(count) : ""
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: count > 0 ? String(count) : " ", style: .plain, target: nil, action: nil)
     }
 }
