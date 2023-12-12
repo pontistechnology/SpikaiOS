@@ -308,7 +308,7 @@ extension CurrentChatViewController {
             else { return }
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .showReactions:
-            viewModel.showReactions(records: message.records ?? []) // TODO: change maybe to vm
+            viewModel.showReactions(records: message.reactionRecords)
         case .openFile:
             viewModel.openFile(message: message)
         }
