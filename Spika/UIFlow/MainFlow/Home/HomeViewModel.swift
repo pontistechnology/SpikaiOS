@@ -19,7 +19,8 @@ class HomeViewModel: BaseViewModel {
     
     func setupUnreadMessagesFrc() {
         let fetchRequest = RoomEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "unreadCount > 0 AND roomDeleted == false")
+        fetchRequest.predicate = NSPredicate(format: "unreadCount > 0 AND roomDeleted == false AND lastMessageTimestamp > 0") // last message timestamp is added because messages are local and unread is server side, so you can have unread messages in local empty room (e.g. after new installation)
+        
 //        fetchRequest.propertiesToFetch TODO: - add this for optimisation
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp),
                                                          ascending: false),
