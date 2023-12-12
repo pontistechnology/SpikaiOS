@@ -39,7 +39,14 @@ extension MessageTextView {
         textView.text = text
         textView.textColor = color
         if let areOnlyEmojis = text?.areOnlyEmojis, areOnlyEmojis {
-            textView.changeFontSize(to: 48)
+            switch text?.count {
+            case 1:
+                textView.changeFontSize(to: 56)
+            case 2, 3:
+                textView.changeFontSize(to: 32)
+            default:
+                textView.changeFontSize(to: 24)
+            }
         }
     }
     
