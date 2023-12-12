@@ -43,6 +43,7 @@ extension ReactionsView: BaseView {
         stackView.distribution = .fillEqually
         backgroundColor = .secondaryColor
         tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
     }
     
     func positionSubviews() {
