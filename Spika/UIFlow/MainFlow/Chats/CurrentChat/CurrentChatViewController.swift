@@ -380,7 +380,7 @@ extension CurrentChatViewController: UITableViewDataSource {
                                sender: isMyMessage ? .me : .friend)
         }
         
-        cell.showReactionEditedAndCheckMark(reactionRecords: message.records ?? [], isEdited: message.modifiedAt != message.createdAt, messageState: message.getMessageState(myUserId: myUserId), isForTextCell: message.type == .text, isMyMessage: message.fromUserId == myUserId)
+        cell.showReactionEditedAndCheckMark(reactionRecords: message.reactionRecords, isEdited: message.modifiedAt != message.createdAt, messageState: message.getMessageState(myUserId: myUserId), isForTextCell: message.type == .text, isMyMessage: message.fromUserId == myUserId)
         
         (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
         

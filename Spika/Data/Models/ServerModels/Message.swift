@@ -94,6 +94,10 @@ extension Message {
             return "Unknown"
         }
     }
+    
+    var reactionRecords: [MessageRecord] {
+        records?.filter({ !$0.isDeleted && $0.reaction != "Deleted reaction"}) ?? []
+    }
 }
 
 struct MessageBody: Codable {

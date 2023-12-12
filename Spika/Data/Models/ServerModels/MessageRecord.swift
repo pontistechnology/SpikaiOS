@@ -15,6 +15,7 @@ struct MessageRecord: Codable {
     let type: MessageRecordType?
     let reaction: String?
     let modifiedAt: Int64?
+    let isDeleted: Bool
 }
 
 struct SomeMessageDetails: Codable {
@@ -32,6 +33,7 @@ extension MessageRecord {
                   createdAt: messageRecordEntity.createdAt,
                   type: MessageRecordType(rawValue: messageRecordEntity.type ?? ""),
                   reaction: messageRecordEntity.reaction,
-                  modifiedAt: messageRecordEntity.modifiedAt)
+                  modifiedAt: messageRecordEntity.modifiedAt, 
+                  isDeleted: messageRecordEntity.isRemoved)
     }
 }

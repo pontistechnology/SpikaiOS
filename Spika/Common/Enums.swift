@@ -121,7 +121,7 @@ enum SSEEventType: String, Codable {
     case updateMessage = "UPDATE_MESSAGE"
     case deleteMessage = "DELETE_MESSAGE"
     case newMessageRecord = "NEW_MESSAGE_RECORD"
-    case deletedMessageRecord = "DELETED_MESSAGE_RECORD"
+    case deleteMessageRecord = "DELETE_MESSAGE_RECORD"
     case newRoom = "NEW_ROOM"
     case updateRoom = "UPDATE_ROOM"
     case deleteRoom = "DELETE_ROOM"
