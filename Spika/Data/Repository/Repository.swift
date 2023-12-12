@@ -64,7 +64,8 @@ protocol Repository {
     func sendMessage(body: RequestMessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<MessageResponse, Error>
     func sendDeliveredStatus(messageIds: [Int64]) -> Future<Bool, Never>
     func sendSeenStatus(roomId: Int64)
-    func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error>
+    func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<RecordResponseModel, Error>
+    func deleteMessageRecord(recordId: Int64) -> AnyPublisher<RecordResponseModel, Error>
     func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<MessageResponse, Error>
     func updateMessage(messageId: Int64, text: String) -> AnyPublisher<MessageResponse, Error>
     

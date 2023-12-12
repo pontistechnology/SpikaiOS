@@ -14,12 +14,14 @@ class HomeViewController: UIPageViewController {
     var homeTabBar: HomeTabBar!
     let viewModel: HomeViewModel
     let startTab: TabBarItem
+    let actionPublisher: ActionPublisher
     
     var tabViewControllers: [UIViewController]!
 
     var subscriptions = Set<AnyCancellable>()
     
-    init(viewModel:HomeViewModel, startTab: TabBarItem) {
+    init(viewModel:HomeViewModel, startTab: TabBarItem, publisher: ActionPublisher) {
+        self.actionPublisher = publisher
         self.startTab = startTab
         self.viewModel = viewModel
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -44,20 +46,27 @@ class HomeViewController: UIPageViewController {
         configurePageViewController()
         setupBinding()
         
-        self.switchToController(tab: self.startTab)
+        switchToController(tab: self.startTab)
         
         if case .chat(let roomId) = self.startTab,
            let id = roomId {
-            self.viewModel.presentChat(roomId: id)
+            viewModel.presentChat(roomId: id)
         }
     }
     
     func setupBinding() {
-        self.homeTabBar
+        homeTabBar
             .tabSelectedPublisher
             .sink { [weak self] tab in
                 self?.switchToController(tab: tab)
-            }.store(in: &self.subscriptions)
+            }.store(in: &subscriptions)
+        
+        actionPublisher.sink { [weak self] action in
+            switch action {
+            case .deleteReaction(let recordId):
+                self?.viewModel.deleteReaction(recordId: recordId)
+            }
+        }.store(in: &subscriptions)
     }
     
     func configurePageViewController() {
@@ -84,7 +93,7 @@ class HomeViewController: UIPageViewController {
         let viewController = self.tabViewControllers[newIndex]
         
         setViewControllers([viewController], direction: direction, animated: true, completion: nil)
-        self.homeTabBar.updateSelectedTab(selectedTab: tab)
+        homeTabBar.updateSelectedTab(selectedTab: tab)
     }
     
 }

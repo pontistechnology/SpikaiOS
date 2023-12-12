@@ -92,7 +92,7 @@ extension CurrentChatViewModel {
         let users = room.users.compactMap { roomUser in
             roomUser.user
         }
-        getAppCoordinator()?.presentReactionsSheet(users: users, records: records)
+        getAppCoordinator()?.presentReactionsSheet(users: users, records: records, myId: myUserId)
     }
     
     func showCustomReactionPicker(message: Message) {
@@ -206,7 +206,7 @@ extension CurrentChatViewModel {
     
     
     func sendMessage(body: RequestMessageBody, localId: String, type: MessageType, replyId: Int64?) {
-        self.repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, replyId: replyId).sink { [weak self] completion in
+        repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, replyId: replyId).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 

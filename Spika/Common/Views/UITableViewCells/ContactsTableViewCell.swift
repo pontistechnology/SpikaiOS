@@ -24,7 +24,7 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     let onRightClickAction = PassthroughSubject<UITableViewCell,Never>()
     var subscriptions = Set<AnyCancellable>()
     
-    private let horizontalStackView = CustomStackView(axis: .horizontal, spacing: 12)
+    private let horizontalStackView = CustomStackView(axis: .horizontal, alignment: .center, spacing: 12)
     private let leftImageView = RoundedImageView(image: UIImage(resource: .rDdefaultUser))
     private lazy var rightButton: UIButton = {
         let button = UIButton()
@@ -40,9 +40,10 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     } ()
     
     private let rightView = ContactsCellRightView()
-    private let verticalStackView = CustomStackView(axis: .vertical, spacing: 12)
+    private let verticalStackView = CustomStackView(axis: .vertical, spacing: 2)
     private let nameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
     private let descriptionLabel = CustomLabel(text: " ", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular)
+    private let dummyView = UIView()
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

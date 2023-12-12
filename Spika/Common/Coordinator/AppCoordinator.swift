@@ -14,6 +14,7 @@ import Contacts
 import ContactsUI
 import SwiftUI
 
+
 class AppCoordinator: Coordinator {
     
     var childCoordinators = [Coordinator]()
@@ -22,6 +23,7 @@ class AppCoordinator: Coordinator {
     let windowScene: UIWindowScene
     var subs = Set<AnyCancellable>()
     var inAppNotificationCancellable: AnyCancellable?
+    let actionsPublisher = ActionPublisher()
 
     init(navigationController: UINavigationController, windowScene: UIWindowScene) {
         self.windowScene = windowScene
@@ -93,7 +95,7 @@ class AppCoordinator: Coordinator {
     // MARK: MAIN FLOW
     func presentHomeScreen(startSyncAndSSE: Bool,
                            startTab: TabBarItem = .chat(withChatId: nil)) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startTab)!
+        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startTab, actionsPublisher)!
         if startSyncAndSSE {
             syncAndStartSSE()            
         }
@@ -204,8 +206,8 @@ class AppCoordinator: Coordinator {
         return viewControllerToPresent.publisher
     }
     
-    func presentReactionsSheet(users: [User], records: [MessageRecord]) {
-        let viewControllerToPresent = ReactionsViewController(users: users, records: records)
+    func presentReactionsSheet(users: [User], records: [MessageRecord], myId: Int64) {
+        let viewControllerToPresent = ReactionsViewController(users: users, records: records, actionPublisher: actionsPublisher, myId: myId)
         if let sheet = viewControllerToPresent.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true

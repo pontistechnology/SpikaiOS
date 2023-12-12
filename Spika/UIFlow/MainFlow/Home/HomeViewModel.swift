@@ -59,3 +59,14 @@ class HomeViewModel: BaseViewModel {
         }.store(in: &subscriptions)
     }
 }
+
+extension HomeViewModel {
+    func deleteReaction(recordId: Int64) {
+        repository.deleteMessageRecord(recordId: recordId).sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let records = response.data?.messageRecords else { return }
+            _ = self?.repository.saveMessageRecords(records)
+        }.store(in: &subscriptions)
+    }
+}

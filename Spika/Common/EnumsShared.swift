@@ -105,3 +105,7 @@ struct Emoji: Codable {
         return myString
     }
 }
+
+enum AppAction {
+    case deleteReaction(Int64)
+}
