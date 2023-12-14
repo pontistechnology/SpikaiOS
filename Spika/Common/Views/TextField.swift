@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TextField: UITextField {
+class CustomTextField: UITextField {
     
     open var inset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     private let textPlaceholder: String
@@ -23,15 +23,13 @@ class TextField: UITextField {
     }
     
     private func setupButton() {
-        backgroundColor = .secondaryBackground
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.borderColor.cgColor
+        backgroundColor = .secondaryColor
         layer.cornerRadius = 10
         
         textColor = .textPrimary
         self.font = .customFont(name: .MontserratMedium, size: 14)
         attributedPlaceholder = NSAttributedString(string: textPlaceholder,
-                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
+                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
     }
     
     func updateText(text: String?) {
@@ -50,15 +48,5 @@ class TextField: UITextField {
         return bounds.inset(by: inset)
     }
     
-}
-
-// MARK: - Changing dark/light mode for cgColors
-
-extension TextField {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        layer.borderColor = UIColor.borderColor.cgColor
-        self.setNeedsDisplay()
-    }
 }
 

@@ -56,7 +56,7 @@
 "Notes" = "Notes";
 "Favorites" = "Favorites";
 "Pin chat" = "Pin chat";
-"Mute" = "Mute";
+"Mute chat" = "Mute chat";
 "Block" = "Block";
 "Report" = "Report";
 "Are you sure you want to delete group?" = "Are you sure you want to delete group?";
@@ -64,6 +64,7 @@
 "Something went wrong trying to add new users" = "Something went wrong trying to add new users";
 "Something went wrong muting the room" = "Something went wrong muting the room";
 "Something went wrong unmuting the room" = "Something went wrong unmuting the room";
+"Something went wrong pining the room" = "Something went wrong pining the room";
 
 "Media" = "Media";
 "Links" = "Links";
@@ -72,6 +73,7 @@
 "selected" = "selected";
 "Select users" = "Select users";
 "Search for contact" = "Search for contact";
+"Search for reaction" = "Search for reaction";
 
 "Read by" = "Read by";
 "Delivered to" = "Delivered to";
@@ -116,4 +118,26 @@
 "Unsupported format" = "Unsupported format";
 "All ok." = "All ok.";
 
+"Recent" = "Recent";
+"Smileys and people" = "Smileys and people";
+"Animals and nature" = "Animals and nature";
+"Food and drink" = "Food and drink";
+"Activity" = "Activity";
+"Travel and places" = "Travel and places";
+"Objects" = "Objects";
+"Symbols" = "Symbols";
+"Flags" = "Flags";
+"Unknown section" = "Unknown section";
 
+"Me" = "Me";
+"(No messages)" = "(No messages)";
+"You: " = "You: ";
+"Photo message" = "Photo message";
+"Video message" = "Video message";
+"Audio message" = "Audio message";
+"File message" = "File message";
+"Unknown message" = "Unknown message";
+
+"apply" = "apply";
+"Private contact" = "Private contact";
+"Delete chat" = "Delete chat";

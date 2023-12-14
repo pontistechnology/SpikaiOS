@@ -98,7 +98,7 @@ private extension SSE {
                 guard let message = sseNewMessage.message else { return }
                 self.saveMessage(message)
                 self.repository.refreshUnreadCounts()
-            case .newMessageRecord:
+            case .newMessageRecord, .deleteMessageRecord:
                 guard let record = sseNewMessage.messageRecord else { return }
                 _ = self.repository.saveMessageRecords([record]) // this will update cc
                 guard let seenCount = sseNewMessage.seenCount,

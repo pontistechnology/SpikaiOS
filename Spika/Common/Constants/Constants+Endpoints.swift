@@ -21,7 +21,7 @@ public extension Constants {
         static let createRoom = "api/messenger/rooms"
         static let checkRoomForUserId = "api/messenger/rooms/users"
         static let checkRoomForRoomId = "api/messenger/rooms"
-        static let sendMessage = "api/messenger/messages"
+        static let messages = "api/messenger/messages"
         static let getAllRooms = "api/messenger/rooms"
         static let updatePush = "api/messenger/device"
         static let deliveredStatus = "api/messenger/messages/delivered"

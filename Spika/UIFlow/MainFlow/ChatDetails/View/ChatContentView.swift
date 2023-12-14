@@ -10,11 +10,11 @@ import Combine
 
 class ChatContentView: UIView, BaseView {
     
-    let chatImage = ImageViewWithIcon(image:  UIImage(safeImage: .userImage),size: CGSize(width: 120, height: 120))
+    let chatImage = ImageViewWithIcon(image:  UIImage(resource: .rDdefaultUser),size: CGSize(width: 120, height: 120))
     
-    let chatName = CustomLabel(text: .getStringFor(.group), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
-    let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
-    let chatNameTextField = TextField()
+    let chatName = CustomLabel(text: .getStringFor(.group), textColor: .textPrimary, fontName: .MontserratSemiBold)
+    let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: .textPrimary, fontName: .MontserratSemiBold)
+    let chatNameTextField = CustomTextField()
     
     let sharedMediaOptionButton = NavView(text: .getStringFor(.sharedMediaLinksDocs))
     let chatSearchOptionButton = NavView(text: .getStringFor(.chatSearch))
@@ -28,9 +28,9 @@ class ChatContentView: UIView, BaseView {
     
     let chatMembersView = ChatMembersView(canAddNewMore: true)
     
-    let blockButton = CustomButton(text: .getStringFor(.block), textSize: 14, textColor: .appRed, alignment: .left)
-    let deleteButton = CustomButton(text: .getStringFor(.delete), textSize: 14, textColor: .appRed, alignment: .left)
-    let leaveButton = CustomButton(text: .getStringFor(.exitGroup), textSize: 14, textColor: .appRed, alignment: .left)
+    let blockButton = CustomButton(text: .getStringFor(.block), textSize: 14, textColor: .warningColor, alignment: .left)
+    let deleteButton = CustomButton(text: .getStringFor(.delete), textSize: 14, textColor: .warningColor, alignment: .left)
+    let leaveButton = CustomButton(text: .getStringFor(.exitGroup), textSize: 14, textColor: .warningColor, alignment: .left)
     
     let chatNameChanged = PassthroughSubject<String,Never>()
     

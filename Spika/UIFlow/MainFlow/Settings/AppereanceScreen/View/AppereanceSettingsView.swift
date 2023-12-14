@@ -1,54 +1,31 @@
 //
-//  AppereanceSettingsView.swift
+//  AppereanceSettings2View.swift
 //  Spika
 //
-//  Created by Nikola Barbarić on 07.02.2023..
+//  Created by Nikola Barbarić on 12.11.2023..
 //
 
-import Foundation
-import UIKit
+import SwiftUI
 
-class AppereanceSettingsView: BaseSettingsView {
+struct AppereanceSettingsView: View {
+    @StateObject var viewModel: AppereanceSettingsViewModel
     
-    let darkModeSwitch = CheckmarkView(text: .getStringFor(.dark))
-    let lightModeSwitch = CheckmarkView(text: .getStringFor(.light))
-    let systemModeSwitch = CheckmarkView(text: .getStringFor(.system))
-    
-    override func styleSubviews() {
-        super.styleSubviews()
-    }
-    
-    override func addSubviews() {
-        super.addSubviews()
-        self.mainStackView.addArrangedSubview(darkModeSwitch)
-        self.mainStackView.addArrangedSubview(lightModeSwitch)
-        self.mainStackView.addArrangedSubview(systemModeSwitch)
-    }
-    
-    override func positionSubviews() {
-        super.positionSubviews()
-        darkModeSwitch.constrainHeight(50)
-        lightModeSwitch.constrainHeight(50)
-        systemModeSwitch.constrainHeight(50)
-    }
-    
-}
-
-extension AppereanceSettingsView {
-    func changeCurrentLabel(to value: Int) {
-        darkModeSwitch.updateIsSelected(isSelected: false)
-        lightModeSwitch.updateIsSelected(isSelected: false)
-        systemModeSwitch.updateIsSelected(isSelected: false)
-        
-        switch value {
-        case 0:
-            systemModeSwitch.updateIsSelected(isSelected: true)
-        case 1:
-            lightModeSwitch.updateIsSelected(isSelected: true)
-        case 2:
-            darkModeSwitch.updateIsSelected(isSelected: true)
-        default:
-            systemModeSwitch.updateIsSelected(isSelected: true)
+    var body: some View {
+        VStack {
+            ForEach(SpikaTheme.allCases, id: \.rawValue) { theme in
+                let isSelected = viewModel.savedThemeRawValue() == theme.rawValue
+                PrimaryButton(text: theme.title, corners: theme.corners,
+                              usage: isSelected ? .withCheckmark : .onlyTitle) {
+                    viewModel.changeAppereanceMode(to: theme)
+                    viewModel.returnToHomeScreen()
+                }
+            }
+            PrimaryButton(text: .getStringFor(.cancel), corners: .bottomCorners, backgroundColor: .secondaryColor) {
+                viewModel.returnToHomeScreen()
+            }
         }
+        .padding(.horizontal, 16)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .modifier(SpikaBackgroundGradient())
     }
 }

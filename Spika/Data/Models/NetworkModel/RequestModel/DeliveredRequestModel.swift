@@ -8,5 +8,5 @@
 import Foundation
 
 struct DeliveredRequestModel: Codable {
-    let messagesIds: [Int64]
+    let messageIds: [Int64]
 }

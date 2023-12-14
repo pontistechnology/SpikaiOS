@@ -9,14 +9,14 @@ import UIKit
 import Combine
 
 class InputTextAndControlsView: UIStackView {
-    private let plusButton = CustomButton(assetName: .plus)
-    private let sendButton = CustomButton(assetName: .send)
-    private let cameraButton = CustomButton(assetName: .camera)
-    private let microphoneButton = CustomButton(assetName: .microphone)
-    private let emojiButton = CustomButton(assetName: .smile)
-    private let closeEditModeButton = CustomButton(assetName: .close)
-    private let saveButton = CustomButton(text: "Save", textSize: 16, textColor: .primaryColor, fontName: .MontserratBold)
-    private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .textPrimary)
+    private let plusButton = CustomButton(imageResource: .plus, imageResourceTintColor: .tertiaryColor)
+    private let sendButton = CustomButton(imageResource: .rDsend, imageResourceTintColor: .tertiaryColor)
+    private let cameraButton = CustomButton(imageResource: .rDcamera, imageResourceTintColor: .tertiaryColor)
+//    private let microphoneButton = CustomButton(imageResource: .microphone, imageResourceTintColor: .tertiaryColor)
+//    private let emojiButton = CustomButton(imageResource: .smile)
+    private let closeEditModeButton = CustomButton(imageResource: .rDx, imageResourceTintColor: .tertiaryColor)
+    private let saveButton = CustomButton(text: "Save", imageResourceTintColor: .tertiaryColor, textSize: 16, textColor: .tertiaryColor, fontName: .MontserratBold)
+    private let editingModeLabel = CustomLabel(text: "Editing mode", textSize: 10, textColor: .tertiaryColor)
     private let messageTextView = ExpandableTextView()
     
     let keyboardAccessoryView = KeyboardObserverAccessoryView()
@@ -43,8 +43,8 @@ extension InputTextAndControlsView: BaseView {
         addArrangedSubview(plusButton)
         addArrangedSubview(closeEditModeButton)
         addArrangedSubview(messageTextView)
-        addArrangedSubview(emojiButton)
-        addArrangedSubview(microphoneButton)
+//        addArrangedSubview(emojiButton)
+//        addArrangedSubview(microphoneButton)
         addArrangedSubview(cameraButton)
         addArrangedSubview(saveButton)
         addArrangedSubview(sendButton)
@@ -60,18 +60,15 @@ extension InputTextAndControlsView: BaseView {
     }
     
     func positionSubviews() {
-        alignment = .bottom
+        alignment = .center
         spacing = 10
-        directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 11, bottom: 12, trailing: 11)
-        isLayoutMarginsRelativeArrangement = true
         
-        [plusButton, closeEditModeButton, microphoneButton, cameraButton, sendButton, emojiButton].forEach {
-            $0.constrainWidth(34)
-            $0.constrainHeight(34)
+        [plusButton, closeEditModeButton, cameraButton, sendButton].forEach {
+            $0.constrainWidth(48)
+            $0.heightAnchor.constraint(equalTo: messageTextView.heightAnchor).isActive = true
         }
         
-        setCustomSpacing(-40, after: messageTextView)
-        setCustomSpacing(0, after: microphoneButton)
+//        setCustomSpacing(0, after: messageTextView)
         
         editingModeLabel.centerXToSuperview()
         editingModeLabel.anchor(top: messageTextView.bottomAnchor, padding: UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 0))
@@ -85,8 +82,6 @@ extension InputTextAndControlsView {
         DispatchQueue.main.async { [weak self] in
             UIView.animate(withDuration: 0.3) { [weak self] in
                 .empty == state ? self?.cameraButton.unhide() : self?.cameraButton.hide()
-                
-                (.empty == state) ? self?.microphoneButton.unhide() : self?.microphoneButton.hide()
                 
                 (.writing == state) ? self?.sendButton.unhide() : self?.sendButton.hide()
                 
@@ -126,9 +121,9 @@ extension InputTextAndControlsView {
             self?.publisher.send(.cancelEditing)
         }.store(in: &subscriptions)
 
-        emojiButton.tap().sink { [weak self] _ in
-            self?.publisher.send(.emoji)
-        }.store(in: &subscriptions)
+//        emojiButton.tap().sink { [weak self] _ in
+//            self?.publisher.send(.emoji)
+//        }.store(in: &subscriptions)
         
         saveButton.tap().sink { [weak self] _ in
             guard let self else { return }
@@ -146,10 +141,10 @@ extension InputTextAndControlsView {
             self.messageTextView.clearTextField()
         }.store(in: &subscriptions)
 
-        microphoneButton.tap().sink { [weak self] _ in
-            guard let self else { return }
-            self.publisher.send(.microphone)
-        }.store(in: &subscriptions)
+//        microphoneButton.tap().sink { [weak self] _ in
+//            guard let self else { return }
+//            self.publisher.send(.microphone)
+//        }.store(in: &subscriptions)
 
         cameraButton.tap().sink { [weak self] _ in
             guard let self else { return }

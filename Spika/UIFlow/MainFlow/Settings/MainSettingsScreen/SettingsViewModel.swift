@@ -20,7 +20,7 @@ class SettingsViewModel: BaseSettingsViewModel {
         guard let imageFileData = imageFileData,
               let fileUrl = repository.saveDataToFile(imageFileData, name: "newAvatar")
         else {
-            self.updateInfo(username: self.user.value?.getDisplayName() ?? "", avatarFileId: 0)
+            updateInfo(username: user.value?.getDisplayName() ?? "", avatarFileId: 0)
             return
         }
         
@@ -78,7 +78,6 @@ class SettingsViewModel: BaseSettingsViewModel {
         repository.deleteMyAccount().sink { [weak self] _ in
             self?.networkRequestState.send(.finished)
         } receiveValue: { [weak self] response in
-            print("stjepan kaze: ", response)
             guard let isDeleted = response.data?.deleted, isDeleted
             else { return }
             self?.repository.deleteAllFiles()

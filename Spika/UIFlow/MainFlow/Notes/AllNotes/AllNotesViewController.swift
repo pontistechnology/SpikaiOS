@@ -27,7 +27,7 @@ class AllNotesViewController: BaseViewController {
     }
     
     func setupNavigationItems() {
-        let modeButton = UIBarButtonItem(image: .init(safeImage: .plus), style: .plain, target: self, action: #selector(createNewNote))
+        let modeButton = UIBarButtonItem(image: .init(resource: .plus), style: .plain, target: self, action: #selector(createNewNote))
         navigationItem.rightBarButtonItems = [modeButton]
     }
     
@@ -50,7 +50,15 @@ class AllNotesViewController: BaseViewController {
 extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.reuseIdentifier, for: indexPath)
-        (cell as? NoteTableViewCell)?.configureCell(title: viewModel.notesPublisher.value[indexPath.row].title)
+        let note = viewModel.notesPublisher.value[indexPath.row]
+        let timeText: String
+        if let edited = note.modifiedAt, note.createdAt != edited {
+            timeText = "Edited: " + "\(edited.convert(to: .notesTimeFormat))"
+        } else {
+            timeText = "Created: " + "\(note.createdAt.convert(to: .notesTimeFormat))"
+        }
+        
+        (cell as? NoteTableViewCell)?.configureCell(title: note.title, timeText: timeText)
         return cell
     }
     
@@ -75,7 +83,7 @@ extension AllNotesViewController {
             self?.viewModel.askToDelete(note: note)
             completionHandler(true)
         }
-        detailsAction.image = UIImage(safeImage: .slideDelete)
+        detailsAction.image = UIImage(resource: .slideDelete)
         return UISwipeActionsConfiguration(actions: [detailsAction])
     }
 }

@@ -11,16 +11,17 @@ import Combine
 import CoreData
 
 class HomeViewController: UIPageViewController {
-    
     var homeTabBar: HomeTabBar!
     let viewModel: HomeViewModel
     let startTab: TabBarItem
+    let actionPublisher: ActionPublisher
     
     var tabViewControllers: [UIViewController]!
 
     var subscriptions = Set<AnyCancellable>()
     
-    init(viewModel:HomeViewModel, startTab: TabBarItem) {
+    init(viewModel:HomeViewModel, startTab: TabBarItem, publisher: ActionPublisher) {
+        self.actionPublisher = publisher
         self.startTab = startTab
         self.viewModel = viewModel
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -35,28 +36,37 @@ class HomeViewController: UIPageViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barStyle = .default
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationItem.backButtonTitle = " "
         viewModel.updatePush()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
         configurePageViewController()
         setupBinding()
         
-        self.switchToController(tab: self.startTab)
+        switchToController(tab: self.startTab)
         
         if case .chat(let roomId) = self.startTab,
            let id = roomId {
-            self.viewModel.presentChat(roomId: id)
+            viewModel.presentChat(roomId: id)
         }
     }
     
     func setupBinding() {
-        self.homeTabBar
+        homeTabBar
             .tabSelectedPublisher
             .sink { [weak self] tab in
                 self?.switchToController(tab: tab)
-            }.store(in: &self.subscriptions)
+            }.store(in: &subscriptions)
+        
+        actionPublisher.sink { [weak self] action in
+            switch action {
+            case .deleteReaction(let recordId):
+                self?.viewModel.deleteReaction(recordId: recordId)
+            }
+        }.store(in: &subscriptions)
     }
     
     func configurePageViewController() {
@@ -83,7 +93,7 @@ class HomeViewController: UIPageViewController {
         let viewController = self.tabViewControllers[newIndex]
         
         setViewControllers([viewController], direction: direction, animated: true, completion: nil)
-        self.homeTabBar.updateSelectedTab(selectedTab: tab)
+        homeTabBar.updateSelectedTab(selectedTab: tab)
     }
     
 }
@@ -92,6 +102,6 @@ extension HomeViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let count = viewModel.frc?.sections?.first?.numberOfObjects else { return }
         homeTabBar.updateUnreadChatsCount(count)
-        navigationItem.backButtonTitle = count > 0 ? String(count) : ""
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: count > 0 ? String(count) : " ", style: .plain, target: nil, action: nil)
     }
 }

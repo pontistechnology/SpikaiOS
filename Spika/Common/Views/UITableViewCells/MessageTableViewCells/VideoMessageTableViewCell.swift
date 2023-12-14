@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class VideoMessageTableViewCell: BaseMessageTableViewCell {
+final class VideoMessageTableViewCell: BaseMessageTableViewCell2 {
     
     private let videoView = MessageVideoView()
     

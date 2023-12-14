@@ -67,7 +67,7 @@ public extension Constants {
         case notes = "Notes"
         case favorites = "Favorites"
         case pinchat = "Pin chat"
-        case mute = "Mute"
+        case mute = "Mute chat"
         case block = "Block"
         case report = "Report"
         case admin = "Admin"
@@ -76,6 +76,7 @@ public extension Constants {
         case somethingWentWrongDeletingTheRoom = "Something went wrong deleting the room"
         case somethingWentWrongAddingUsers = "Something went wrong trying to add new users"
         case somethingWentWrongMutingRoom = "Something went wrong muting the room"
+        case somethingWentWrongPiningRoom = "Something went wrong pining the room"
         case somethingWentWrongUnmutingRoom = "Something went wrong unmuting the room"
         
 
@@ -120,6 +121,9 @@ public extension Constants {
         case unknown = "Unknown"
         case today = "Today"
         
+        // MARK: - CustomReactionsViewController
+        case searchForReaction = "Search for reaction"
+        
         case youAreNoLongerMember = "You are no longer a member of this group"
         
         // MARK: - SelectUsersViewController
@@ -131,6 +135,7 @@ public extension Constants {
         case exitGroup = "Exit group"
         case nameAndSurname = "Name and Surname"
         case favoriteMessages = "Favorite messages"
+        case deleteChat = "Delete chat"
         
         // MARK: - Reactions
         case reactions = "Reactions"
@@ -160,6 +165,32 @@ public extension Constants {
         case selectedImageIsTooBig = "Selected image is too big"
         case unsupportedFormat = "Unsupported format"
         case allOk = "All ok."
-
+        
+        // MARK: - Emoji Sections
+        
+        case recent = "Recent"
+        case smileysAndPeople = "Smileys and people"
+        case peopleAndBody = "People and body"
+        case animalsAndNature = "Animals and nature"
+        case foodAndDrink = "Food and drink"
+        case activity = "Activity"
+        case travelAndPlaces = "Travel and places"
+        case objects = "Objects"
+        case symbols = "Symbols"
+        case flags = "Flags"
+        case unknownSection = "Unknown section"
+        
+        case me = "Me"
+        case noMessages = "(No messages)"
+        case youWithDots = "You: "
+        case photoMessage = "Photo message"
+        case videoMessage = "Video message"
+        case audioMessage = "Audio message"
+        case fileMessage = "File message"
+        case unknownMessage = "Unknown message"
+        
+        case apply = "apply"
+        
+        case privateContact = "Private contact"
     }
 }

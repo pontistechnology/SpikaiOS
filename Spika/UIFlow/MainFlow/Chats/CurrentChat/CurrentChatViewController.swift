@@ -26,7 +26,9 @@ class CurrentChatViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView(currentChatView)
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
+        view.addSubview(currentChatView)
+        currentChatView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: .zero)
         setupBindings()
         self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
@@ -65,7 +67,7 @@ extension CurrentChatViewController {
             self?.handleInput(state)
         }.store(in: &subscriptions)
         
-        viewModel.selectedMessageToReplyPublisher.sink { [weak self] selectedMessage in
+        viewModel.selectedMessageToReplyPublisher.receive(on: DispatchQueue.main).sink { [weak self] selectedMessage in
             guard let selectedMessage
             else {
                 self?.currentChatView.messageInputView.hideReplyView()
@@ -117,7 +119,7 @@ extension CurrentChatViewController {
                 switch frcChange {
                 case .insert(indexPath: let indexPath):
                     guard let message = self.viewModel.getMessage(for: indexPath) else { return }
-                    let isMyMessage = message.fromUserId == self.viewModel.getMyUserId()
+                    let isMyMessage = message.fromUserId == self.viewModel.myUserId
                     self.handleScroll(isMyMessage: isMyMessage)
                     if self.viewModel.room.type == .groupRoom && !isMyMessage {
                         if self.viewModel.isPreviousCellSameSender(for: indexPath) {
@@ -139,10 +141,10 @@ extension CurrentChatViewController {
                       let indexPath = self?.viewModel.getIndexPathFor(localId: uuid),
                       let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
                 else { return }
-                (cell as? BaseMessageTableViewCell)?.showUploadProgress(at: percentUploaded)
+                (cell as? BaseMessageTableViewCell2)?.showUploadProgress(at: percentUploaded)
                     
                 if percentUploaded == 1.0 {
-                    (cell as? BaseMessageTableViewCell)?.hideUploadProgress()
+                    (cell as? BaseMessageTableViewCell2)?.hideUploadProgress()
                 }
         }.store(in: &subscriptions)
         
@@ -260,10 +262,8 @@ extension CurrentChatViewController {
             viewModel.trySendMessage(text: inputText)
             currentChatView.messageInputView.clean()
         case .camera, .microphone:
-            print(state, " in ccVC")
+            view.endEditing(true) // hiding keyboard, because otherwise it will be empty space instead of keyboard when you get back to this screen
             showUIImagePicker(source: .camera, allowsEdit: false)
-        case .emoji:
-            print("emoji in ccvc")
         case .scrollToReply:
             guard let selectedMessageId = viewModel.selectedMessageToReplyPublisher.value?.id,
                   let indexPath = viewModel.getIndexPathFor(messageId: selectedMessageId)
@@ -308,7 +308,7 @@ extension CurrentChatViewController {
             else { return }
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .showReactions:
-            viewModel.showReactions(records: message.records ?? []) // TODO: change maybe to vm
+            viewModel.showReactions(records: message.reactionRecords)
         case .openFile:
             viewModel.openFile(message: message)
         }
@@ -320,9 +320,11 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell else { return }
-        (tableView.visibleCells as? [BaseMessageTableViewCell])?.forEach{ $0.setTimeLabelVisible(false)}
+        guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell2 else { return }
+        (tableView.visibleCells as? [BaseMessageTableViewCell2])?.forEach{ $0.setTimeLabelVisible(false)}
+        tableView.beginUpdates()
         cell.tapHandler()
+        tableView.endUpdates()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -341,22 +343,23 @@ extension CurrentChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let message = viewModel.getMessage(for: indexPath)
         else { return EmptyTableViewCell()}
-        let roomType = viewModel.room.type
-
-        let myUserId = viewModel.getMyUserId()
+        let myUserId = viewModel.myUserId
+        let isMyMessage = message.fromUserId == myUserId
         
-        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
-              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell,
-              let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
+        guard let identifier = message.getReuseIdentifier2(),
+              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2
         else { return EmptyTableViewCell() }
+        cell.setupContainer(sender: viewModel.getSenderTypeFor(message: message))
         
         if let user = viewModel.getUser(for: message.fromUserId),
             viewModel.room.type == .groupRoom {
             if !viewModel.isPreviousCellSameSender(for: indexPath) {
-                cell.updateSender(name: user.getDisplayName())
+                cell.updateSender(name: user.getDisplayName(),
+                                  isMyMessage: isMyMessage)
             }
             if !viewModel.isNextCellSameSender(for: indexPath) {
-                cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
+                cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId(),
+                                  isMyMessage: isMyMessage)
             }
         }
         
@@ -374,16 +377,10 @@ extension CurrentChatViewController: UITableViewDataSource {
             let senderName = viewModel.room.getDisplayNameFor(userId: repliedMessage.fromUserId)
             cell.showReplyView(senderName: senderName,
                                message: repliedMessage,
-                               sender: senderType)
+                               sender: isMyMessage ? .me : .friend)
         }
         
-        if let reactionsRecords = message.records {
-            cell.showReactions(reactionRecords: reactionsRecords)
-        }
-        
-        if message.modifiedAt != message.createdAt {
-            cell.showEditedIcon()
-        }
+        cell.showReactionEditedAndCheckMark(reactionRecords: message.reactionRecords, isEdited: message.modifiedAt != message.createdAt, messageState: message.getMessageState(myUserId: myUserId), isForTextCell: message.type == .text, isMyMessage: message.fromUserId == myUserId)
         
         (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
         
@@ -399,9 +396,6 @@ extension CurrentChatViewController: UITableViewDataSource {
             self?.handleCellTap(state, message: message)
         }).store(in: &cell.subs)
         
-        if message.fromUserId == myUserId {
-            cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
-        }
         cell.updateTime(to: message.createdAt)
         
         return cell
@@ -419,10 +413,10 @@ extension CurrentChatViewController: UITableViewDataSource {
 
 extension CurrentChatViewController {
     func setupNavigationItems() {
-        let videoCallButton = UIBarButtonItem(image: UIImage(safeImage: .videoCall), style: .plain, target: self, action: #selector(videoCallActionHandler))
-        let audioCallButton = UIBarButtonItem(image: UIImage(safeImage: .phoneCall), style: .plain, target: self, action: #selector(phoneCallActionHandler))
-        
-        navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
+//        let videoCallButton = UIBarButtonItem(image: UIImage(resource: .videoCall), style: .plain, target: self, action: #selector(videoCallActionHandler))
+//        let audioCallButton = UIBarButtonItem(image: UIImage(resource: .phoneCall), style: .plain, target: self, action: #selector(phoneCallActionHandler))
+//        
+//        navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room.type == .privateRoom {
@@ -443,9 +437,14 @@ extension CurrentChatViewController {
         let publisher = CurrentValueSubject<Room, Never>(viewModel.room)
         publisher.sink { [weak self] newRoom in
             self?.viewModel.room = newRoom
-        }.store(in: &self.subscriptions)
+        }.store(in: &subscriptions)
         
-        self.viewModel.getAppCoordinator()?.presentChatDetailsScreen(room: publisher)
+        if viewModel.room.type == .privateRoom,
+            let friendUser = viewModel.friendUser {
+            viewModel.getAppCoordinator()?.presentChatDetailsScreen(detailsMode: .contact(friendUser))
+        } else {
+            viewModel.getAppCoordinator()?.presentChatDetailsScreen(detailsMode: .roomDetails(publisher))            
+        }
     }
     
     @objc func videoCallActionHandler() {
@@ -468,8 +467,8 @@ extension CurrentChatViewController {
             self?.viewModel.presentMessageDetails(for: indexPath)
             completionHandler(true)
         }
-        detailsAction.backgroundColor = .primaryBackground
-        detailsAction.image = UIImage(safeImage: .slideDetails)
+//        detailsAction.backgroundColor = ._primaryColor // TODO: -check
+        detailsAction.image = UIImage(resource: .slideDetails)
         return UISwipeActionsConfiguration(actions: [detailsAction])
     }
     
@@ -484,8 +483,8 @@ extension CurrentChatViewController {
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
             completionHandler(true)
         }
-        firstLeft.backgroundColor = .primaryBackground
-        firstLeft.image = UIImage(safeImage: .slideReply)
+//        firstLeft.backgroundColor = ._primaryColor // TODO: - check
+        firstLeft.image = UIImage(resource: .slideReply)
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }
     

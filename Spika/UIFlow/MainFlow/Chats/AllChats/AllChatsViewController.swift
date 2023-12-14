@@ -33,14 +33,8 @@ class AllChatsViewController: BaseViewController {
         allChatsView.searchBar.delegate = self
         
         allChatsView.newChatButton.tap().sink { [weak self] _ in
-            self?.viewModel.presentSelectUserScreen()
+            self?.viewModel.presentStartNewPrivateChatScreen()
         }.store(in: &subscriptions)
-        
-        allChatsView.newChatButton
-            .tap()
-            .sink { [weak self] _ in
-                self?.viewModel.onCreateNewRoom()
-            }.store(in: &subscriptions)
         
         viewModel.setupBinding()
         viewModel.setRoomsFetch()
@@ -83,12 +77,15 @@ extension AllChatsViewController: UITableViewDataSource {
         : viewModel.getNumberOfRowsForRooms()
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        tableView == allChatsView.searchedMessagesTableView
-        ? viewModel.titleForSectionForMessages(section: section)
-        : nil
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard tableView == allChatsView.searchedMessagesTableView else { return nil }
+        return CustomTableViewHeader(text: viewModel.titleForSectionForMessages(section: section), fontName: .MontserratSemiBold)
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard tableView == allChatsView.searchedMessagesTableView else { return 0 }
+        return tableView.estimatedSectionHeaderHeight
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == allChatsView.searchedMessagesTableView {

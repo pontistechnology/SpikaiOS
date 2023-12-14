@@ -30,19 +30,14 @@ extension MessageImageView: BaseView {
     
     func styleSubviews() {
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 10
-        imageView.clipsToBounds = true
-        layer.cornerRadius = 10
-        clipsToBounds = true
     }
     
     func positionSubviews() {
-        imageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
+        imageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 246)
         imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 246)
         imageWidthConstraint?.isActive = true
         imageHeightConstraint?.isActive = true
-        // TODO: constraint priority warning bug
     }
 }
 

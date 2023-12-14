@@ -23,16 +23,17 @@ final class ChatDetailsViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
         setupView(chatDetailView)
         setupBindings()
     }
     
     private func setupBindings() {
-        chatDetailView.contentView.chatMembersView.ownId = viewModel.getMyUserId()
+        chatDetailView.contentView.chatMembersView.ownId = viewModel.myUserId
         
         let isAdmin = self.viewModel.room.map { [weak self] room in
             guard let self, room.type == .groupRoom else { return false }
-            return room.users.filter { $0.userId == self.viewModel.getMyUserId() }.first?.isAdmin ?? false
+            return room.users.filter { $0.userId == self.viewModel.myUserId }.first?.isAdmin ?? false
         }
         
         if viewModel.room.value.type == .privateRoom {
@@ -49,7 +50,7 @@ final class ChatDetailsViewController: BaseViewController {
                 if room.type == .groupRoom {
                     return room.avatarFileId?.fullFilePathFromId()
                 } else {
-                    guard let ownId = self?.viewModel.getMyUserId(),
+                    guard let ownId = self?.viewModel.myUserId,
                           let contact = self?.viewModel.room.value.users.first(where: { roomUser in
                         roomUser.userId != ownId
                     }) else { return nil }
@@ -57,13 +58,13 @@ final class ChatDetailsViewController: BaseViewController {
                 }
             }
             .sink { [weak self] url in
-                self?.chatDetailView.contentView.chatImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
+                self?.chatDetailView.contentView.chatImage.showImage(url, placeholder: UIImage(resource: .rDdefaultUser))
             }.store(in: &self.viewModel.subscriptions)
 
         viewModel.room
             .map { [weak self] room in
                 if room.type == .privateRoom {
-                    guard let ownId = self?.viewModel.getMyUserId(),
+                    guard let ownId = self?.viewModel.myUserId,
                           let contact = self?.viewModel.room.value.users.first(where: { roomUser in
                         roomUser.userId != ownId
                           }) else { return nil as String? }
@@ -110,7 +111,7 @@ final class ChatDetailsViewController: BaseViewController {
             .sink(receiveValue: { [weak self] isAdmin in
                 self?.chatDetailView.contentView.chatMembersView.addContactButton.isHidden = !isAdmin
                 self?.chatDetailView.contentView.deleteButton.isHidden = !isAdmin
-                self?.chatDetailView.contentView.chatImage.updateCameraIsHidden(isHidden: !isAdmin)
+//                self?.chatDetailView.contentView.chatImage.updateCameraIsHidden(isHidden: !isAdmin)
                 self?.chatDetailView.contentView.chatName.isUserInteractionEnabled = isAdmin
             })
             .store(in: &self.viewModel.subscriptions)
@@ -137,7 +138,7 @@ final class ChatDetailsViewController: BaseViewController {
             .room
             .map { $0.users.map{ $0.userId } }
             .filter { [weak self] userIds in
-                guard let ownId = self?.viewModel.getMyUserId() else { return false }
+                guard let ownId = self?.viewModel.myUserId else { return false }
                 return !userIds.contains(ownId)
             }.sink { [weak self] string in
                 self?.viewModel.getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: nil))

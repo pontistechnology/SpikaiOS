@@ -23,7 +23,7 @@ class CurrentChatViewModel: BaseViewModel {
     var room: Room
     
     var friendUser: User? {
-        room.getFriendUserInPrivateRoom(myUserId: getMyUserId())
+        room.getFriendUserInPrivateRoom(myUserId: myUserId)
     }
     
     let uploadProgressPublisher = PassthroughSubject<String, Never>()
@@ -41,6 +41,14 @@ class CurrentChatViewModel: BaseViewModel {
         self.scrollToMessageId = scrollToMessageId
         self.room = room
         super.init(repository: repository, coordinator: coordinator)
+    }
+    
+    func getSenderTypeFor(message: Message) -> MessageSender {
+        if message.fromUserId == myUserId {
+            return .me
+        } else {
+            return room.type == .groupRoom ? .group : .friend
+        }
     }
 }
 
@@ -84,14 +92,29 @@ extension CurrentChatViewModel {
         let users = room.users.compactMap { roomUser in
             roomUser.user
         }
-        getAppCoordinator()?.presentReactionsSheet(users: users, records: records)
+        getAppCoordinator()?.presentReactionsSheet(users: users, records: records, myId: myUserId)
+    }
+    
+    func showCustomReactionPicker(message: Message) {
+        getAppCoordinator()?.presentCustomReactionPicker()
+            .sink(receiveValue: { [weak self] emoji in
+                guard let id = message.id else { return }
+                self?.sendReaction(reaction: emoji, messageId: id)
+            }).store(in: &subscriptions)
     }
     
     // TODO: add indexpath
     func showMessageActions(_ message: Message) {
         guard !message.deleted else { return }
+        let actions: [MessageAction] =
+        if message.fromUserId == myUserId && message.type == .text {
+            [.reply, .forward, .copy, .edit, .details, .favorite, .delete]
+        } else {
+            [.reply, .forward, .copy, .details, .favorite, .delete]
+        }
+        
         getAppCoordinator()?
-            .presentMessageActionsSheet(isMyMessage: message.fromUserId == getMyUserId())
+            .presentMessageActionsSheet(actions: actions)
             .sink(receiveValue: { [weak self] action in
                 guard let self else { return }
                 self.getAppCoordinator()?.dismissViewController()
@@ -111,6 +134,8 @@ extension CurrentChatViewModel {
                     self.showDeleteConfirmDialog(message: message)
                 case .edit:
                     self.selectedMessageToEditPublisher.send(message)
+                case .showCustomReactions:
+                    self.showCustomReactionPicker(message: message)
                 default:
                     break
                 }
@@ -130,7 +155,7 @@ extension CurrentChatViewModel {
     func showDeleteConfirmDialog(message: Message) {
         guard let id = message.id else { return }
         var actions: [AlertViewButton] = [.destructive(title: .getStringFor(.deleteForMe))]
-        if message.fromUserId == getMyUserId() {
+        if message.fromUserId == myUserId {
             actions.append(.destructive(title: .getStringFor(.deleteForEveryone)))
         }
         getAppCoordinator()?
@@ -161,7 +186,7 @@ extension CurrentChatViewModel {
     func trySendMessage(text: String) {
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: getMyUserId(),
+                              fromUserId: myUserId,
                               roomId: room.id,
                               type: .text,
                               body: MessageBody(text: text, file: nil, thumb: nil),
@@ -181,7 +206,7 @@ extension CurrentChatViewModel {
     
     
     func sendMessage(body: RequestMessageBody, localId: String, type: MessageType, replyId: Int64?) {
-        self.repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, replyId: replyId).sink { [weak self] completion in
+        repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, replyId: replyId).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 
@@ -237,7 +262,7 @@ extension CurrentChatViewModel {
 extension CurrentChatViewModel {
     func saveTempVideoMessage(uuid: String, width: CGFloat, height: CGFloat) {
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: getMyUserId(), roomId: room.id, type: .video,
+                              fromUserId: myUserId, roomId: room.id, type: .video,
                               body: MessageBody(text: nil, file: nil,
                                                 thumb: FileData(id: nil, fileName: nil,
                                                                 mimeType: nil, size: nil,
@@ -305,8 +330,9 @@ extension CurrentChatViewModel {
                 } receiveValue: { [weak self] filea, percent in
                     guard let filea = filea else { return }
                     guard let self else { return }
+                    let fileName = file.mimeType == "image/*" ? file.name?.appending(".jpg") : nil
                     self.repository
-                        .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData, specificFileName: nil)
+                        .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData, specificFileName: fileName)
                         .sink { _ in
                             
                         } receiveValue: { [weak self] fileb, percent in
@@ -340,7 +366,7 @@ extension CurrentChatViewModel {
         let uuid = file.localId
         
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: getMyUserId(),
+                              fromUserId: myUserId,
                               roomId: room.id,
                               type: file.fileType,
                               body: MessageBody(text: nil,

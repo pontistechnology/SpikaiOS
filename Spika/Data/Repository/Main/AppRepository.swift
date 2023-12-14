@@ -47,8 +47,8 @@ class AppRepository: Repository {
         return databaseService.coreDataStack.mainMOC
     }
     
-    func getCurrentAppereance() -> Int {
-        return userDefaults.integer(forKey: Constants.Database.selectedAppereanceMode)
+    func getSelectedTheme() -> String {
+        userDefaults.string(forKey: Constants.Database.selectedTheme) ?? "none"
     }
     
     func getAppModeIsTeamChat() -> Future<Bool?, Error> {

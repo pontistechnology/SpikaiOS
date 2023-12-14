@@ -15,6 +15,8 @@ class BaseViewModel: NSObject {
     var subscriptions = Set<AnyCancellable>()
     let networkRequestState = CurrentValueSubject<RequestState, Never>(.finished)
     
+    lazy var myUserId = getMyUserId() // use this, because there is no need to look in user defaults every time
+    
     init(repository: Repository, coordinator: Coordinator) {
         self.repository = repository
         self.coordinator = coordinator
@@ -25,7 +27,7 @@ class BaseViewModel: NSObject {
         return coordinator as? AppCoordinator
     }
     
-    func getMyUserId() -> Int64 {
+    private func getMyUserId() -> Int64 {
         return repository.getMyUserId()
     }
     

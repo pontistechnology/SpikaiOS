@@ -32,7 +32,7 @@ extension ContextMenuActionView: BaseView {
     
     func styleSubviews() {
         label.text = action.textForLabel
-        imageView.image = UIImage(safeImage: action.assetNameForIcon)
+        imageView.image = UIImage(resource: action.assetNameForIcon)
     }
     
     func positionSubviews() {

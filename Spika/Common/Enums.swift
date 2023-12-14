@@ -51,16 +51,7 @@ enum PopUpType {
 enum AlertViewButton {
     case regular(title: String)
     case destructive(title: String)
-    
-    var color: UIColor {
-        switch self {
-        case .regular:
-            return .primaryColor
-        case .destructive:
-            return .appRed
-        }
-    }
-    
+        
     var title: String {
         switch self {
         case .regular(let title):
@@ -99,9 +90,18 @@ enum MessageSender {
     var backgroundColor: UIColor {
         switch self {
         case .me:
-            return .myChatBackground
+            return .primaryColor
         case .friend, .group:
-            return .chatBackground
+            return .secondaryColor
+        }
+    }
+    
+    var replyBackgroundColor: UIColor {
+        switch self {
+        case .me:
+            return .secondaryColor
+        case .friend, .group:
+            return .primaryColor
         }
     }
 }
@@ -121,7 +121,7 @@ enum SSEEventType: String, Codable {
     case updateMessage = "UPDATE_MESSAGE"
     case deleteMessage = "DELETE_MESSAGE"
     case newMessageRecord = "NEW_MESSAGE_RECORD"
-    case deletedMessageRecord = "DELETED_MESSAGE_RECORD"
+    case deleteMessageRecord = "DELETE_MESSAGE_RECORD"
     case newRoom = "NEW_ROOM"
     case updateRoom = "UPDATE_ROOM"
     case deleteRoom = "DELETE_ROOM"
@@ -152,6 +152,7 @@ enum MessageCellTaps {
 
 enum MessageAction {
     case reaction(emoji: String)
+    case showCustomReactions
     case reply
     case forward
     case copy
@@ -162,7 +163,7 @@ enum MessageAction {
     
     var textForLabel: String {
         switch self {
-        case .reaction(_):
+        case .reaction, .showCustomReactions:
             return ""
         case .reply:
             return .getStringFor(.reply)
@@ -181,9 +182,9 @@ enum MessageAction {
         }
     }
     
-    var assetNameForIcon: AssetName {
+    var assetNameForIcon: ImageResource {
         switch self {
-        case .reaction(_):
+        case .reaction, .showCustomReactions:
             return .unknownFileThumbnail
         case .reply:
             return .replyMessage
@@ -202,3 +203,171 @@ enum MessageAction {
         }
     }
 }
+
+enum EmojiSection: CaseIterable {
+    case recent
+    case smileysAndPeople
+    case animalsAndNature
+    case foodAndDrink
+    case travelAndPlaces
+    case activity
+    case objects
+    case symbols
+    case flags
+    
+    var title: String {
+        switch self {
+        case .recent:
+            return .getStringFor(.recent)
+        case .smileysAndPeople:
+            return .getStringFor(.smileysAndPeople)
+        case .animalsAndNature:
+            return .getStringFor(.animalsAndNature)
+        case .foodAndDrink:
+            return .getStringFor(.foodAndDrink)
+        case .activity:
+            return .getStringFor(.activity)
+        case .travelAndPlaces:
+            return .getStringFor(.travelAndPlaces)
+        case .objects:
+            return .getStringFor(.objects)
+        case .symbols:
+            return .getStringFor(.symbols)
+        case .flags:
+            return .getStringFor(.flags)
+        }
+    }
+    
+    var icon: UIImage {
+        switch self {
+        case .recent:
+            return UIImage(resource: .emojiSectionClock)
+        case .smileysAndPeople:
+            return UIImage(resource: .emojiSectionSmiley)
+        case .animalsAndNature:
+            return UIImage(resource: .emojiSectionPaw)
+        case .foodAndDrink:
+            return UIImage(resource: .emojiSectionBurger)
+        case .activity:
+            return UIImage(resource: .emojiSectionBall)
+        case .travelAndPlaces:
+            return UIImage(resource: .emojiSectionCar)
+        case .objects:
+            return UIImage(resource: .emojiSectionLightbulb)
+        case .symbols:
+            return UIImage(resource: .emojiSectionHeart)
+        case .flags:
+            return UIImage(resource: .emojiSectionFlag)
+        }
+    }
+}
+
+
+enum SpikaTheme: String, CaseIterable {
+    
+    case darkMarine, neon, lightMarine, lightGreen
+    
+    // TODO: - localize?
+    var title: String {
+        return switch self {
+        case .neon: "Neon"
+        case .darkMarine: "Dark Marine"
+        case .lightMarine: "Light Marine"
+        case .lightGreen: "Light Green"
+        }
+    }
+    
+    // first one should be rounded on top corners, others without rounding
+    var corners: UIRectCorner? {
+        self == SpikaTheme.allCases.first ? .topCorners : nil
+    }
+        
+    
+    struct SpikaColors {
+        let _backgroundGradientColors: [ColorResource] // gradient in order
+        let _primaryColor: ColorResource
+        let _secondaryColor: ColorResource
+        let _tertiaryColor: ColorResource
+        let _textPrimary: ColorResource
+        let _textSecondary: ColorResource
+        let _textTertiary: ColorResource
+        let _additionalColor: ColorResource
+        let _secondAdditionalColor: ColorResource
+        let _thirdAdditionalColor: ColorResource
+        let _fourthAdditionalColor: ColorResource
+        let _warningColor: ColorResource
+        let _secondWarningColor: ColorResource
+    }
+    
+    
+    func colors() -> SpikaColors {
+        return switch self {
+        case .darkMarine:
+            SpikaColors(_backgroundGradientColors: [.DarkMarine.BackgroundGradient.gradient1,
+                                                    .DarkMarine.BackgroundGradient.gradient2],
+                        _primaryColor: .DarkMarine.primary,
+                        _secondaryColor: .DarkMarine.secondary,
+                        _tertiaryColor: .DarkMarine.tertiary,
+                        _textPrimary: .DarkMarine.textPrimary,
+                        _textSecondary: .DarkMarine.textSecondary,
+                        _textTertiary: .DarkMarine.textTertiary,
+                        _additionalColor: .DarkMarine.additional1,
+                        _secondAdditionalColor: .DarkMarine.additional2,
+                        _thirdAdditionalColor: .DarkMarine.additional3,
+                        _fourthAdditionalColor: .DarkMarine.additional4,
+                        _warningColor: .DarkMarine.warning1,
+                        _secondWarningColor: .DarkMarine.warning2)
+        case .neon:
+            SpikaColors(_backgroundGradientColors: [.Neon.BackgroundGradient.gradient1,
+                                                    .Neon.BackgroundGradient.gradient2,
+                                                    .Neon.BackgroundGradient.gradient3,
+                                                    .Neon.BackgroundGradient.gradient4],
+                        _primaryColor: .Neon.primary,
+                        _secondaryColor: .Neon.secondary,
+                        _tertiaryColor: .Neon.tertiary,
+                        _textPrimary: .Neon.textPrimary,
+                        _textSecondary: .Neon.textSecondary,
+                        _textTertiary: .Neon.textTertiary,
+                        _additionalColor: .Neon.additional1,
+                        _secondAdditionalColor: .Neon.additional2,
+                        _thirdAdditionalColor: .Neon.additional3,
+                        _fourthAdditionalColor: .Neon.additional4,
+                        _warningColor: .Neon.warning1,
+                        _secondWarningColor: .Neon.warning2)
+        case .lightMarine:
+            SpikaColors(_backgroundGradientColors: [.LightMarine.BackgroundGradient.gradient1,
+                                                    .LightMarine.BackgroundGradient.gradient2],
+                        _primaryColor: .LightMarine.primary,
+                        _secondaryColor: .LightMarine.secondary,
+                        _tertiaryColor: .LightMarine.tertiary,
+                        _textPrimary: .LightMarine.textPrimary,
+                        _textSecondary: .LightMarine.textSecondary, 
+                        _textTertiary: .LightMarine.textTertiary,
+                        _additionalColor: .LightMarine.additional1,
+                        _secondAdditionalColor: .LightMarine.additional2,
+                        _thirdAdditionalColor: .LightMarine.additional3,
+                        _fourthAdditionalColor: .LightMarine.additional4,
+                        _warningColor: .LightMarine.warning1,
+                        _secondWarningColor: .LightMarine.warning2)
+        case .lightGreen:
+            SpikaColors(_backgroundGradientColors: [.LightGreen.BackgroundGradient.gradient1,
+                                                    .LightGreen.BackgroundGradient.gradient2],
+                        _primaryColor: .LightGreen.primary,
+                        _secondaryColor: .LightGreen.secondary,
+                        _tertiaryColor: .LightGreen.tertiary,
+                        _textPrimary: .LightGreen.textPrimary,
+                        _textSecondary: .LightGreen.textSecondary, 
+                        _textTertiary: .LightGreen.textTertiary,
+                        _additionalColor: .LightGreen.additional1,
+                        _secondAdditionalColor: .LightGreen.additional2,
+                        _thirdAdditionalColor: .LightGreen.additional3,
+                        _fourthAdditionalColor: .LightGreen.additional4,
+                        _warningColor: .LightGreen.warning1,
+                        _secondWarningColor: .LightGreen.warning2)
+        }
+    }
+}
+
+
+
+

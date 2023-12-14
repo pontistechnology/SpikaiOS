@@ -9,7 +9,7 @@ import UIKit
 
 class NavView: UIView, BaseView {
     
-    let label = CustomLabel(text: "text")
+    let label = CustomLabel(text: "text", textColor: .textPrimary)
     let arrowImageView = UIImageView()
     let text: String
     
@@ -31,7 +31,7 @@ class NavView: UIView, BaseView {
     
     func styleSubviews() {
         label.text = text
-        arrowImageView.image = UIImage(safeImage: .rightArrow)
+        arrowImageView.image = UIImage(resource: .rDrightArrow)
     }
     
     func positionSubviews() {

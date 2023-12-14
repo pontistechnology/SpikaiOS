@@ -27,7 +27,7 @@ class MessageActionsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(mainView)
-        view.backgroundColor = .secondaryBackground
+        view.backgroundColor = .secondaryColor // TODO: - check
         setupBindings()
     }
     
@@ -35,7 +35,11 @@ class MessageActionsViewController: BaseViewController {
         mainView.reactionsStackview.arrangedSubviews.enumerated().forEach { (index, view) in
             view.tap().sink { [weak self] _ in
                 guard let self else { return }
-                self.tapPublisher.send(.reaction(emoji: self.viewModel.reactions[index]))
+                if index < self.viewModel.reactions.count {
+                    self.tapPublisher.send(.reaction(emoji: self.viewModel.reactions[index]))
+                } else {
+                    self.tapPublisher.send(.showCustomReactions)
+                }
                 self.dismiss(animated: true)
             }.store(in: &subscriptions)
         }

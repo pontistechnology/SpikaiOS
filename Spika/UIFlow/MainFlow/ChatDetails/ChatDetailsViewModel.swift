@@ -122,7 +122,7 @@ class ChatDetailsViewModel: BaseViewModel {
     }
     
     func blockUser() {
-        let ownId = self.repository.getMyUserId()
+        let ownId = myUserId
         guard let contact = self.room.value.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
@@ -139,7 +139,7 @@ class ChatDetailsViewModel: BaseViewModel {
     }
     
     func unblockUser() {
-        let ownId = self.repository.getMyUserId()
+        let ownId = myUserId
         guard let contact = self.room.value.users.first(where: { roomUser in
             roomUser.userId != ownId
         }) else { return }
@@ -345,7 +345,7 @@ class ChatDetailsViewModel: BaseViewModel {
 extension ChatDetailsViewModel {
     func getPhoneNumberText() -> String {
         if room.value.type == .privateRoom {
-            return room.value.getFriendUserInPrivateRoom(myUserId: getMyUserId())?.telephoneNumber ?? ""
+            return room.value.getFriendUserInPrivateRoom(myUserId: myUserId)?.telephoneNumber ?? ""
         } else {
             return ""
         }

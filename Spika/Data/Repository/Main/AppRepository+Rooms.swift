@@ -16,14 +16,12 @@ extension AppRepository {
     
     // MARK: Network
     
-    func createOnlineRoom(name: String, avatarId: Int64?, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error> {
+    func createOnlineRoom(name: String, avatarId: Int64?, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        
-        let userIds = users.map{$0.id}
         
         let resources = Resources<CreateRoomResponseModel, CreateRoomRequestModel>(
             path: Constants.Endpoints.createRoom,

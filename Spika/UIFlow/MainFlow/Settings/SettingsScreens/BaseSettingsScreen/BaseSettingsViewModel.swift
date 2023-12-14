@@ -19,7 +19,7 @@ class BaseSettingsViewModel: BaseViewModel {
     }
     
     private func loadLocalUser() {
-        let ownId = self.repository.getMyUserId()
+        let ownId = myUserId
         self.repository.getLocalUser(withId: ownId)
             .sink { _ in
             } receiveValue: { [weak self] user in

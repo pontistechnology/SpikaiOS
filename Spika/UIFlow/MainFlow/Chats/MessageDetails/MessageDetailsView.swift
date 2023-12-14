@@ -32,8 +32,9 @@ extension MessageDetailsView: BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .secondaryBackground
-        recordsTableView.backgroundColor = .secondaryBackground
+        backgroundColor = .secondaryColor
+        recordsTableView.backgroundColor = .clear
+        recordsTableView.separatorStyle = .none
     }
     
     func positionSubviews() {

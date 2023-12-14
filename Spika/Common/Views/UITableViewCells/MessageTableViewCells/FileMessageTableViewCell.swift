@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FileMessageTableViewCell: BaseMessageTableViewCell {
+final class FileMessageTableViewCell: BaseMessageTableViewCell2 {
     
     private let fileView = MessageFileView()
     

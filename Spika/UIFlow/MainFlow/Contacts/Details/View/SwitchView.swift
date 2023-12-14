@@ -9,7 +9,7 @@ import UIKit
 
 class SwitchView: UIView, BaseView {
     
-    let label = CustomLabel(text: "text")
+    let label = CustomLabel(text: "text", textColor: .textPrimary)
     let stateSwitch = UISwitch()
     let text: String
     
@@ -30,7 +30,7 @@ class SwitchView: UIView, BaseView {
     
     func styleSubviews() {
         label.text = text
-        stateSwitch.onTintColor = .primaryColor
+        stateSwitch.onTintColor = .checkWithDesign
     }
     
     func positionSubviews() {

@@ -10,23 +10,8 @@ import Swinject
 
 class ChatsAssembly: Assembly {
     func assemble(container: Container) {
-        assembleSelectUserViewController(container)
         assembleCurrentChatViewController(container)
-        assembleNewGroupChatViewController(container)
-    }
-    
-    
-    private func assembleSelectUserViewController(_ container: Container) {
-        container.register(SelectUsersViewModel.self) { (resolver, coordinator: AppCoordinator) in
-            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return SelectUsersViewModel(repository: repository, coordinator: coordinator)
-        }.inObjectScope(.transient)
-        
-//        container.register(SelectUsersViewController.self) { (resolver, coordinator: AppCoordinator) in
-//            let controller = SelectUsersViewController()
-//            controller.viewModel = container.resolve(SelectUsersViewModel.self, argument: coordinator)
-//            return controller
-//        }.inObjectScope(.transient)
+        assembleNewGroup2ChatViewController(container)
     }
     
     private func assembleCurrentChatViewController(_ container: Container) {        
@@ -54,4 +39,29 @@ class ChatsAssembly: Assembly {
             return controller
         }.inObjectScope(.transient)
     }
+    
+    private func assembleNewGroup2ChatViewController(_ container: Container) {
+        container.register(NewGroup2ChatViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return NewGroup2ChatViewModel(repository: repository, coordinator: coordinator)
+        }.inObjectScope(.transient)
+
+        container.register(NewGroup2ChatViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let viewModel = container.resolve(NewGroup2ChatViewModel.self, argument: coordinator)!
+            let controller = NewGroup2ChatViewController(rootView: NewGroup2ChatView(viewModel: viewModel))
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+//    private func assembleSelectUsersView(_ container: Container) {
+//        container.register(SelectUsersViewModel.self) { (resolver, coordinator: AppCoordinator) in
+//            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+//            return SelectUsersViewModel(repository: repository, coordinator: coordinator)
+//        }.inObjectScope(.transient)
+//
+//        container.register(SelectUsersView.self) { (resolver, coordinator: AppCoordinator) in
+//            let viewModel = container.resolve(SelectUsersViewModel.self, argument: coordinator)!
+//            return SelectUsersView(viewModel: viewModel)
+//        }.inObjectScope(.transient)
+//    }
 }

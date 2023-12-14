@@ -12,7 +12,7 @@ import Combine
 class ReactionsView: UIView {
     let tableView = UITableView()
     private let label = CustomLabel(text: .getStringFor(.reactions), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
-    let closeImageView = UIImageView(image: UIImage(safeImage: .closeActionsSheet))
+    let closeImageView = UIImageView(image: UIImage(resource: .rDx).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal))
     private let stackView = UIStackView()
     
     let stackviewTapPublisher = CurrentValueSubject<Int, Never>(0)
@@ -41,8 +41,9 @@ extension ReactionsView: BaseView {
     func styleSubviews() {
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        backgroundColor = .secondaryBackground
-        tableView.backgroundColor = .secondaryBackground
+        backgroundColor = .secondaryColor
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
     }
     
     func positionSubviews() {
@@ -60,14 +61,14 @@ extension ReactionsView: BaseView {
 private extension ReactionsView {
     func setupStackView(_ elements: [String]) {
         for (index, element) in elements.enumerated() {
-            let label = CustomLabel(text: element, textSize: 16, alignment: .center)
+            let label = CustomLabel(text: element, textSize: 16, textColor: .textPrimary, alignment: .center)
             label.tap().sink { [weak self] _ in
                 self?.deleteBackgroundOfAllStackSubviews()
-                label.backgroundColor = .chatBackground
+                label.backgroundColor = .primaryColor
                 self?.stackviewTapPublisher.send(index)
             }.store(in: &subs)
             if index == 0 {
-                label.backgroundColor = .chatBackground
+                label.backgroundColor = .primaryColor
             }
             stackView.addArrangedSubview(label)
         }

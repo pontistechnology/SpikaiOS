@@ -27,13 +27,15 @@ enum MessageDetailsSectionType {
     func sectionIcon() -> UIImage {
         switch self {
         case .senderActions:
-            return UIImage(safeImage: .senderAction)
+            return UIImage(resource: .senderAction)
         case .readBy:
-            return UIImage(safeImage: .seen)
+            return UIImage(resource: .rDtwoTicks).withTintColor(.textTertiary, renderingMode: .alwaysOriginal)
         case .deliveredTo:
-            return UIImage(safeImage: .delivered)
+            return UIImage(resource: .rDtwoTicks)
+                .withTintColor(.textSecondary, renderingMode: .alwaysOriginal)
         case .sentTo :
-            return UIImage(safeImage: .sent)
+            return UIImage(resource: .rDtick)
+                .withTintColor(.textSecondary, renderingMode: .alwaysOriginal)
         }
     }
 }

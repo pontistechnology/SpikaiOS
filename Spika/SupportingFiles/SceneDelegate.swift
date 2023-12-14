@@ -59,10 +59,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func setDefaultAppereance() {
-        let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)
-        let rawValue = userDefaults?.integer(forKey: Constants.Database.selectedAppereanceMode) ?? 0
-        let mode = UIUserInterfaceStyle(rawValue: rawValue) ?? .unspecified
-        window?.overrideUserInterfaceStyle = mode
+//        let userDefaults = UserDefaults(suiteName: Constants.Networking.appGroupName)
+        // TODO: - check
+//        let rawValue = userDefaults?.integer(forKey: Constants.Database.selectedAppereanceMode) ?? 0
+//        let mode = UIUserInterfaceStyle(rawValue: rawValue) ?? .unspecified
+//        window?.overrideUserInterfaceStyle = mode
     }
 }
 

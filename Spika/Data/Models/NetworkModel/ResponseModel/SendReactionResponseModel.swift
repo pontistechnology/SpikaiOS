@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct SendReactionResponseModel: Codable {
+struct RecordResponseModel: Codable {
     let status: String?
-    let data: SendReactionData?
+    let data: RecordData?
     let error: String?
     let message: String?
 }
 
-struct SendReactionData: Codable {
+struct RecordData: Codable {
     let messageRecords: [MessageRecord]?
 }

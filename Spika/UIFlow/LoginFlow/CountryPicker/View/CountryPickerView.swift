@@ -8,15 +8,11 @@
 import UIKit
 import Combine
 
-enum Section {
-    case main
-}
-
 class CountryPickerView: UIView, BaseView {
     
     let cancelButton = ActionButton()
     let searchBar = SearchBar(placeholder: .getStringFor(.search))
-    let allCountriesLabel = CustomLabel(text: .getStringFor(.allCountries), textSize: 9, textColor: .textTertiary, fontName: .MontserratRegular)
+    let allCountriesLabel = CustomLabel(text: .getStringFor(.allCountries), textSize: 9, textColor: .textSecondary, fontName: .MontserratRegular)
     let countriesTableView = UITableView()
     
     private let countries: [Country] = CountryHelper.shared.getCountries()

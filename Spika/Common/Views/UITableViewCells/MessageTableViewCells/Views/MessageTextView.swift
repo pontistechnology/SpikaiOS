@@ -38,9 +38,20 @@ extension MessageTextView {
     func setup(text: String?, color: UIColor = .textPrimary) {
         textView.text = text
         textView.textColor = color
+        if let areOnlyEmojis = text?.areOnlyEmojis, areOnlyEmojis {
+            switch text?.count {
+            case 1:
+                textView.changeFontSize(to: 56)
+            case 2, 3:
+                textView.changeFontSize(to: 32)
+            default:
+                textView.changeFontSize(to: 24)
+            }
+        }
     }
     
     func reset() {
         textView.text = nil
+        textView.changeFontSize(to: 14)
     }
 }

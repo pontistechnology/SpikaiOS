@@ -52,7 +52,7 @@ protocol Repository {
     func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>
     
         // Room
-    func createOnlineRoom(name: String, avatarId: Int64?, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error>
+    func createOnlineRoom(name: String, avatarId: Int64?, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel, Error>
     func createOnlineRoom(userId: Int64) -> AnyPublisher<CreateRoomResponseModel, Error>
     func checkOnlineRoom(forUserId userId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func checkOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
@@ -64,7 +64,8 @@ protocol Repository {
     func sendMessage(body: RequestMessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<MessageResponse, Error>
     func sendDeliveredStatus(messageIds: [Int64]) -> Future<Bool, Never>
     func sendSeenStatus(roomId: Int64)
-    func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error>
+    func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<RecordResponseModel, Error>
+    func deleteMessageRecord(recordId: Int64) -> AnyPublisher<RecordResponseModel, Error>
     func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<MessageResponse, Error>
     func updateMessage(messageId: Int64, text: String) -> AnyPublisher<MessageResponse, Error>
     
@@ -153,11 +154,18 @@ protocol Repository {
     func saveUserInfo(user: User, device: Device?, telephoneNumber: TelephoneNumber?)
     func getMyUserId() -> Int64
     func getMyTelephoneNumber() -> TelephoneNumber?
-    func getCurrentAppereance() -> Int
 
         // Device
     func getAccessToken() -> String?
     func getMyDeviceId() -> String?
+    
+        // Reactions
+    func getEmojis() -> [[Emoji]]
+    func addToRecentEmojis(emoji: Emoji)
+    
+        // Theme
+    func saveSelectedTheme(_ theme: String)
+    func getSelectedTheme() -> String
     
     // MARK: - FILES
     func saveDataToFile(_ data: Data, name: String) -> URL?

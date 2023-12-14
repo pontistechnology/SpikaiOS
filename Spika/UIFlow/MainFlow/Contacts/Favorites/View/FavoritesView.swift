@@ -10,7 +10,7 @@ import UIKit
 
 class FavoritesView: UIView, BaseView {
     
-    let testLabel = CustomLabel(text: .getStringFor(.favorites))
+    let testLabel = CustomLabel(text: .getStringFor(.favorites), textColor: .checkWithDesign)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

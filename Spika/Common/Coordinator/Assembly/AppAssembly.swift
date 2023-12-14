@@ -7,29 +7,31 @@
 
 import Combine
 import Swinject
+import SwiftUI
 
 final class AppAssembly: Assembly {
     
     func assemble(container: Container) {
-        self.assembleCoreDataStack(container)
-        self.assemblePublishers(container)
-        self.assembleMainRepository(container)
-        self.assembleSSE(container)
-        self.assembleWindowManager(container)
-        self.assembleHomeViewController(container)
-        self.assembleContactsViewController(container)
-        self.assembleCallHistoryViewController(container)
-        self.assembleAllChatsViewController(container)
-        self.assembleChatDetailsViewController(container)
-        self.assembleSettingsViewController(container)
-        self.assemblePrivacySettingsViewController(container)
-        self.assembleAppereanceSettingsViewController(container)
-        self.assembleBlockedUsersSettingsViewController(container)
-        self.assembleImageViewerViewController(container)
-        self.assemblePdfViewerViewController(container)
-        self.assembleUserSelectionViewController(container)
-        self.assembleMessageActionsViewController(container)
-        self.assembleMessageDetailsViewController(container)
+        assembleCoreDataStack(container)
+        assemblePublishers(container)
+        assembleMainRepository(container)
+        assembleSSE(container)
+        assembleWindowManager(container)
+        assembleHomeViewController(container)
+        assembleContactsViewController(container)
+        assembleCallHistoryViewController(container)
+        assembleAllChatsViewController(container)
+        assembleChatDetailsViewController(container)
+        assembleSettingsViewController(container)
+        assemblePrivacySettingsViewController(container)
+        assembleAppereanceSettingsViewController(container)
+        assembleBlockedUsersSettingsViewController(container)
+        assembleImageViewerViewController(container)
+        assemblePdfViewerViewController(container)
+        assembleUserSelectionViewController(container)
+        assembleMessageActionsViewController(container)
+        assembleMessageDetailsViewController(container)
+        assembleCustomReactionsViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
@@ -97,9 +99,9 @@ final class AppAssembly: Assembly {
             return HomeViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
-        container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator, startTab: TabBarItem) in
+        container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator, startTab: TabBarItem, publisher: ActionPublisher) in
             let controller = HomeViewController(viewModel: container.resolve(HomeViewModel.self, argument: coordinator)!,
-                                                startTab: startTab)
+                                                startTab: startTab, publisher: publisher)
             return controller
         }.inObjectScope(.transient)
     }
@@ -144,13 +146,13 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleChatDetailsViewController(_ container: Container) {
-        container.register(ChatDetailsViewModel.self) { (resolver, coordinator: AppCoordinator, room: CurrentValueSubject<Room,Never>) in
+        container.register(ChatDetails2ViewModel.self) { (resolver, coordinator: AppCoordinator, detailsMode: ChatDetailsMode) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return ChatDetailsViewModel(repository: repository, coordinator: coordinator, room: room)
+            return ChatDetails2ViewModel(repository: repository, coordinator: coordinator, detailsMode: detailsMode)
         }.inObjectScope(.transient)
         
-        container.register(ChatDetailsViewController.self) { (resolver, coordinator: AppCoordinator, room: CurrentValueSubject<Room,Never>) in
-            let controller = ChatDetailsViewController(viewModel: resolver.resolve(ChatDetailsViewModel.self, arguments: coordinator, room)!)
+        container.register(ChatDetails2ViewController.self) { (resolver, coordinator: AppCoordinator, detailsMode: ChatDetailsMode) in
+            let controller = ChatDetails2ViewController(rootView: ChatDetails2View(viewModel: resolver.resolve(ChatDetails2ViewModel.self, arguments: coordinator, detailsMode)!))
             return controller
         }.inObjectScope(.transient)
     }
@@ -177,14 +179,13 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleSettingsViewController(_ container: Container) {
-        container.register(SettingsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+        container.register(Settings2ViewModel.self) { (resolver, coordinator: AppCoordinator) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return SettingsViewModel(repository: repository, coordinator: coordinator)
+            return Settings2ViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
         
-        container.register(SettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let controller = SettingsViewController()
-            controller.viewModel = container.resolve(SettingsViewModel.self, argument: coordinator)
+        container.register(Settings2ViewController.self) { (resolver, coordinator: AppCoordinator) in
+            let controller = Settings2ViewController(rootView: Settings2View(viewModel: container.resolve(Settings2ViewModel.self, argument: coordinator)!))
             return controller
         }.inObjectScope(.transient)
     }
@@ -209,8 +210,7 @@ final class AppAssembly: Assembly {
         }.inObjectScope(.transient)
         
         container.register(AppereanceSettingsViewController.self) { (resolver, coordinator: AppCoordinator) in
-            let controller = AppereanceSettingsViewController()
-            controller.viewModel = container.resolve(AppereanceSettingsViewModel.self, argument: coordinator)
+            let controller = AppereanceSettingsViewController(rootView: AppereanceSettingsView(viewModel: container.resolve(AppereanceSettingsViewModel.self, argument: coordinator)!))
             return controller
         }.inObjectScope(.transient)
     }
@@ -251,14 +251,14 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleMessageActionsViewController(_ container: Container) {
-        container.register(MessageActionsViewModel.self) { (resolver, coordinator: AppCoordinator, isMyMessage: Bool) in
+        container.register(MessageActionsViewModel.self) { (resolver, coordinator: AppCoordinator, actions: [MessageAction]) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            let viewModel = MessageActionsViewModel(repository: repository, coordinator: coordinator, isMyMessage: isMyMessage)
+            let viewModel = MessageActionsViewModel(repository: repository, coordinator: coordinator, actions: actions)
             return viewModel
         }.inObjectScope(.transient)
         
-        container.register(MessageActionsViewController.self) { (resolver, coordinator: AppCoordinator, isMyMessage: Bool) in
-            let viewModel = container.resolve(MessageActionsViewModel.self, arguments: coordinator, isMyMessage)!
+        container.register(MessageActionsViewController.self) { (resolver, coordinator: AppCoordinator, actions: [MessageAction]) in
+            let viewModel = container.resolve(MessageActionsViewModel.self, arguments: coordinator, actions)!
             let controller = MessageActionsViewController(viewModel: viewModel)
             return controller
         }.inObjectScope(.transient)
@@ -276,6 +276,18 @@ final class AppAssembly: Assembly {
             let controller = MessageDetailsViewController()
             controller.viewModel = viewModel
             return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleCustomReactionsViewController(_ container: Container) {
+        container.register(CustomReactionsViewModel.self) { (resolver, coordinator: AppCoordinator) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            let viewModel = CustomReactionsViewModel(repository: repository, coordinator: coordinator)
+            return viewModel
+        }.inObjectScope(.transient)
+        
+        container.register(CustomReactionsViewController.self) { (resolver, coordinator: AppCoordinator) in
+            return CustomReactionsViewController(viewModel: container.resolve(CustomReactionsViewModel.self, argument: coordinator)!)
         }.inObjectScope(.transient)
     }
 }

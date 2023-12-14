@@ -14,6 +14,7 @@ class PrivacySettingsViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
         setupView(settingsView)
         setupBinding()
         self.title = .getStringFor(.privacy)

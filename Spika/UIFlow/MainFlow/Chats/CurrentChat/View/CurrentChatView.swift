@@ -12,7 +12,7 @@ class CurrentChatView: UIView, BaseView {
     let messagesTableView = UITableView(frame: .zero, style: .grouped)
     let messageInputView = MessageInputView()
     private let newMessagesLabel = CustomLabel(text: "You have new messages.", textSize: 16, textColor: .textPrimary, fontName: .MontserratMedium)
-    private let downArrowImageView = UIImageView(image: UIImage(safeImage: .downArrow))
+    private let downArrowImageView = UIImageView(image: UIImage(resource: .downArrow).withTintColor(.textPrimary))
     let scrollToBottomStackView = UIStackView()
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
@@ -43,18 +43,18 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.backgroundColor = .clear
         messagesTableView.showsHorizontalScrollIndicator = false
         
-        scrollToBottomStackView.backgroundColor = .chatBackground
+        scrollToBottomStackView.backgroundColor = .thirdAdditionalColor
         scrollToBottomStackView.layer.cornerRadius = 10
         scrollToBottomStackView.layer.shadowOpacity = 0.25
         scrollToBottomStackView.layer.shadowRadius = 4
         scrollToBottomStackView.layer.shadowOffset = CGSize(width: 0, height: 4)
         downArrowImageView.contentMode = .scaleAspectFit
         
-        backgroundColor = .primaryBackground
+//        backgroundColor = ._primaryColor // TODO: - check
     }
     
     func positionSubviews() {        
-        messagesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: messageInputView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left:0, bottom: 0, right: 0))
+        messagesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: messageInputView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left:0, bottom: 14, right: 0))
         
         scrollToBottomStackView.anchor(bottom: messagesTableView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0))
         scrollToBottomStackView.centerXToSuperview()
@@ -79,9 +79,7 @@ class CurrentChatView: UIView, BaseView {
                      DeletedMessageTableViewCell.self]
         
         cells.forEach { cell in
-            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.me.reuseIdentifierPrefix + String(describing: cell))
-            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.friend.reuseIdentifierPrefix + String(describing: cell))
-            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.group.reuseIdentifierPrefix + String(describing: cell))
+            messagesTableView.register(cell, forCellReuseIdentifier:  String(describing: cell))
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -111,11 +109,9 @@ class CurrentChatView: UIView, BaseView {
     }
     
     func moveInputFromBottom(for n: CGFloat) {
-        messageInputViewBottomConstraint.constant = -(n > 30 ? n - 30 : 0)
+        messageInputViewBottomConstraint.constant = -(n < 0 ? 0 : n)
         DispatchQueue.main.async { [weak self] in
             self?.layoutIfNeeded()
         }
     }
 }
-
-

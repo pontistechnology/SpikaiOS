@@ -12,19 +12,19 @@ class SettingsView: BaseSettingsView {
     
     let userInfoStackView = CustomStackView(axis: .vertical, distribution: .equalSpacing, alignment: .center, spacing: 15)
     
-    let userImage = ImageViewWithIcon(image:  UIImage(safeImage: .userImage),size: CGSize(width: 120, height: 120))
+    let userImage = ImageViewWithIcon(image:  UIImage(resource: .rDdefaultUser))
     
-    let userName = CustomButton(text: "", textSize: 18, textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
-    let userNameTextField = TextField()
+    let userName = CustomButton(text: "", textSize: 18, textColor: .textPrimary, fontName: .MontserratSemiBold)
+    let userNameTextField = CustomTextField()
     
-    let userPhoneNumber = CustomLabel(text: .getStringFor(.group), textSize: 16, textColor: .textTertiary, fontName: .MontserratSemiBold)
+    let userPhoneNumber = CustomLabel(text: .getStringFor(.group), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
     
     let appereanceOptionButton = NavView(text: .getStringFor(.appereance))
     let privacyOptionButton = NavView(text: .getStringFor(.privacy))
     
     let deleteMyAccountButton = NavView(text: .getStringFor(.deleteMyAccount), isArrowHidden: true)
     
-    let appVersion = CustomLabel(text: "", textSize: 16, textColor: .textTertiary, fontName: .MontserratLight, alignment: .center)
+    let appVersion = CustomLabel(text: "", textSize: 16, textColor: .textSecondary, fontName: .MontserratLight, alignment: .center)
 //    let accessToken = UITextField() // delete later
     
     let userNameChanged = PassthroughSubject<String,Never>()
@@ -38,7 +38,7 @@ class SettingsView: BaseSettingsView {
         userNameTextField.delegate = self
         userNameTextField.hide()
         
-        deleteMyAccountButton.label.textColor = .appRed
+        deleteMyAccountButton.label.textColor = .warningColor
     }
     
     override func addSubviews() {
@@ -54,7 +54,6 @@ class SettingsView: BaseSettingsView {
         mainStackView.addArrangedSubview(deleteMyAccountButton)
         
         mainStackView.addArrangedSubview(appVersion)
-//        mainStackView.addArrangedSubview(accessToken)
         
         self.contentView.addSubview(self.userNameTextField)
     }
@@ -70,6 +69,8 @@ class SettingsView: BaseSettingsView {
         userNameTextField.constraintLeading(to: self.mainStackView, constant: 22)
         userNameTextField.constraintTrailing(to: self.mainStackView, constant: -22)
         userNameTextField.constrainHeight(50)
+        userImage.constrainHeight(400)
+        userImage.constrainWidth(400)
     }
     
 }
