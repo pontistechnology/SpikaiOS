@@ -86,9 +86,6 @@ struct SelectUsersView: View {
     @State var isUsersSelected = true
     @StateObject var viewModel: SelectUsersViewModel
     
-    
-    
-    
     var body: some View {
         VStack(spacing: 0) {
             titleAndClose()

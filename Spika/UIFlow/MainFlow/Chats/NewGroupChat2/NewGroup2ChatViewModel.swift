@@ -19,8 +19,26 @@ class NewGroup2ChatViewModel: BaseViewModel, ObservableObject {
             newImageChosen()
         }
     }
+    let actionPublisher: ActionPublisher
     var avatarId: Int64? = nil
     var selectedSource: UIImagePickerController.SourceType = .photoLibrary
+    
+    init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher) {
+        self.actionPublisher = actionPublisher
+        super.init(repository: repository, coordinator: coordinator)
+        setupBindings()
+    }
+    
+    func setupBindings() {
+        actionPublisher.sink { [weak self] action in
+            switch action {
+            case .newGroupFlowSelectUsers(let users):
+                self?.selectedMembers = users
+            default:
+                break
+            }
+        }.store(in: &subscriptions)
+    }
     
     func showChangeImageActionSheet() {
         getAppCoordinator()?

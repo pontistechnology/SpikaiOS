@@ -42,12 +42,12 @@ class ChatsAssembly: Assembly {
     }
     
     private func assembleNewGroup2ChatViewController(_ container: Container) {
-        container.register(NewGroup2ChatViewModel.self) { (resolver, coordinator: AppCoordinator) in
+        container.register(NewGroup2ChatViewModel.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             return NewGroup2ChatViewModel(repository: repository, coordinator: coordinator)
         }.inObjectScope(.transient)
 
-        container.register(NewGroup2ChatViewController.self) { (resolver, coordinator: AppCoordinator) in
+        container.register(NewGroup2ChatViewController.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher) in
             let viewModel = container.resolve(NewGroup2ChatViewModel.self, argument: coordinator)!
             let controller = NewGroup2ChatViewController(rootView: NewGroup2ChatView(viewModel: viewModel))
             return controller
