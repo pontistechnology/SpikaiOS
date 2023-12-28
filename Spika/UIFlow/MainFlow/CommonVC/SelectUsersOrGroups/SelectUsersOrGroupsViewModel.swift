@@ -47,11 +47,11 @@ class SelectUsersOrGroupsViewModel: BaseViewModel, ObservableObject {
     func endButtonTap() {
         switch purpose {
         case .forwardMessages(let messageIds):
-            actionPublisher.send(.forwardMessages(messageIds: messageIds, userIds: selectedUsersAndGroups.onlyUserIds, roomIds: selectedUsersAndGroups.onlyRoomIds))
+            actionPublisher.send(.forwardMessages(messageIds: messageIds, userIds: selectedUsersAndGroups.onlyUsers.compactMap({ $0.id }), roomIds: selectedUsersAndGroups.onlyRoomIds))
         case .addToExistingGroup:
             break
         case .addToNewGroupCreationFlow:
-            break
+            actionPublisher.send(.newGroupFlowSelectUsers(selectedUsersAndGroups.onlyUsers))
         }
     }
 }

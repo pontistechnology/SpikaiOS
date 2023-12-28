@@ -437,7 +437,7 @@ enum SelectedUserOrGroup: Identifiable, Hashable {
 }
 
 extension [SelectedUserOrGroup] {
-    var onlyUserIds: [Int64] {self.compactMap { $0.user?.id }}
+    var onlyUsers: [User] {self.compactMap { $0.user }.compactMap { User(entity: $0)}}
     var onlyRoomIds: [Int64] {self.compactMap { $0.room?.id }}
 }
 
