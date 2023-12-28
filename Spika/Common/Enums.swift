@@ -368,6 +368,79 @@ enum SpikaTheme: String, CaseIterable {
     }
 }
 
+enum SelectedUserOrGroup: Identifiable, Hashable {
+    case user(UserEntity)
+    case room(RoomEntity)
+    
+    var id: String {
+        return switch self {
+        case .user(let userEntity):
+            "user\(userEntity.id)" //prefix is needed because room and user can have same number for id
+        case .room(let roomEntity):
+            "room\(roomEntity.id)"
+        }
+    }
+    
+    var user: UserEntity? {
+        switch self {
+        case .user(let userEntity):
+            userEntity
+        case .room:
+            nil
+        }
+    }
+    
+    var room: RoomEntity? {
+        switch self {
+        case .user:
+            nil
+        case .room(let roomEntity):
+            roomEntity
+        }
+    }
+    
+    var avatarURL: URL? {
+        switch self {
+        case .user(let userEntity):
+            userEntity.avatarFileId.fullFilePathFromId()
+        case .room(let roomEntity):
+            roomEntity.avatarFileId.fullFilePathFromId()
+        }
+    }
+    
+    var displayName: String {
+        switch self {
+        case .user(let userEntity):
+            User(entity: userEntity).getDisplayName()
+        case .room(let roomEntity):
+            roomEntity.name ?? "no name"
+        }
+    }
+    
+    var description: String? {
+        switch self {
+        case .user(let userEntity):
+            user?.telephoneNumber
+        case .room(let roomEntity):
+            room?.type
+        }
+    }
+    
+    var placeholderImage: ImageResource {
+        switch self {
+        case .user:
+            .rDdefaultUser
+        case .room:
+            .rdDefaultGroup
+        }
+    }
+}
+
+extension [SelectedUserOrGroup] {
+    var onlyUsers: [UserEntity] {self.compactMap { $0.user }}
+    var onlyRooms: [RoomEntity] {self.compactMap { $0.room }}
+}
+
 
 
 

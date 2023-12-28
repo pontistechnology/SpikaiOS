@@ -65,6 +65,8 @@ class HomeViewController: UIPageViewController {
             switch action {
             case .deleteReaction(let recordId):
                 self?.viewModel.deleteReaction(recordId: recordId)
+            case .forwardMessages(let messageIds, let userIds, let roomIds):
+                self?.viewModel.forwardMessages(messageIds: messageIds, userIds: userIds, roomIds: roomIds)
             default:
                 break
             }

@@ -68,6 +68,7 @@ protocol Repository {
     func deleteMessageRecord(recordId: Int64) -> AnyPublisher<RecordResponseModel, Error>
     func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<MessageResponse, Error>
     func updateMessage(messageId: Int64, text: String) -> AnyPublisher<MessageResponse, Error>
+    func forwardMessages(messageIds: [Int64], roomIds: [Int64], userIds: [Int64]) -> AnyPublisher<ForwardMessagesResponseModel, Error>
     
         // Notes
     

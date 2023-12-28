@@ -1017,6 +1017,12 @@
 		938B361E2B3D59F8008359C5 /* ForwardMessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B361D2B3D59F8008359C5 /* ForwardMessagesResponse.swift */; };
 		938B361F2B3D59F8008359C5 /* ForwardMessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B361D2B3D59F8008359C5 /* ForwardMessagesResponse.swift */; };
 		938B36202B3D59F8008359C5 /* ForwardMessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B361D2B3D59F8008359C5 /* ForwardMessagesResponse.swift */; };
+		938B36212B3D5F72008359C5 /* ForwardMessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B361D2B3D59F8008359C5 /* ForwardMessagesResponse.swift */; };
+		938B36222B3D5F73008359C5 /* ForwardMessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B361D2B3D59F8008359C5 /* ForwardMessagesResponse.swift */; };
+		938B36232B3D5F74008359C5 /* ForwardMessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B361D2B3D59F8008359C5 /* ForwardMessagesResponse.swift */; };
+		938B36242B3D5F83008359C5 /* ForwardMessagesRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */; };
+		938B36252B3D5F84008359C5 /* ForwardMessagesRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */; };
+		938B36262B3D5F85008359C5 /* ForwardMessagesRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */; };
 		938B477D27E29C9F004B36FD /* ChatNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */; };
 		938B56992A52EEAC0036440E /* AllChatsSearchedMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939549F32A4B8133006B6139 /* AllChatsSearchedMessageCell.swift */; };
 		938B569F2A5381960036440E /* RoundedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B569E2A5381950036440E /* RoundedLabel.swift */; };
@@ -3670,6 +3676,7 @@
 				6C753DB32A4C128800697AA6 /* FetchedContact.swift in Sources */,
 				6C753DB52A4C128800697AA6 /* DatabaseService.swift in Sources */,
 				6C753DB62A4C128800697AA6 /* NetworkService.swift in Sources */,
+				938B36242B3D5F83008359C5 /* ForwardMessagesRequestModel.swift in Sources */,
 				6C753DB72A4C128800697AA6 /* NSManagedObjectContext+Extensions.swift in Sources */,
 				6C753DB82A4C128800697AA6 /* SendMessageRequest.swift in Sources */,
 				6C753DB92A4C128800697AA6 /* SendReactionRequestModel.swift in Sources */,
@@ -3710,6 +3717,7 @@
 				6C753DDB2A4C128800697AA6 /* Date+Extensions.swift in Sources */,
 				6C753DDC2A4C128800697AA6 /* MessageResponse.swift in Sources */,
 				6C753DDD2A4C128800697AA6 /* VerifyFileResponseModel.swift in Sources */,
+				938B36222B3D5F73008359C5 /* ForwardMessagesResponse.swift in Sources */,
 				6C753DDE2A4C128800697AA6 /* VerifyCodeRequestModel.swift in Sources */,
 				93BCDFF52A819ABF00CEE826 /* OneNoteRequestModel.swift in Sources */,
 				6C753DDF2A4C128800697AA6 /* User.swift in Sources */,
@@ -4078,6 +4086,7 @@
 				6C78B8DA29AF5D89004BF881 /* UploadChunkResponseModel.swift in Sources */,
 				6C78B8DB29AF5D89004BF881 /* EnumsShared.swift in Sources */,
 				6C78B8DC29AF5D89004BF881 /* DeliveredRequestModel.swift in Sources */,
+				938B36252B3D5F84008359C5 /* ForwardMessagesRequestModel.swift in Sources */,
 				6C78B8DD29AF5D89004BF881 /* AppRepository+File.swift in Sources */,
 				9383879329D5253D0057714A /* FileData.swift in Sources */,
 				932BADDE29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
@@ -4100,6 +4109,7 @@
 				6C2F972929AF67BD001F170B /* ConstantsDev.swift in Sources */,
 				6C78B8EA29AF5D89004BF881 /* DatabaseService.swift in Sources */,
 				6C78B8EB29AF5D89004BF881 /* NetworkService.swift in Sources */,
+				938B36212B3D5F72008359C5 /* ForwardMessagesResponse.swift in Sources */,
 				93D0CFA82A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */,
 				6C78B8EC29AF5D89004BF881 /* SendMessageRequest.swift in Sources */,
 				6C78B8ED29AF5D89004BF881 /* SendReactionRequestModel.swift in Sources */,
@@ -4508,6 +4518,7 @@
 				931B150528211AC600A0CD35 /* UploadChunkResponseModel.swift in Sources */,
 				93BF627628EB9B7900B48BBF /* EnumsShared.swift in Sources */,
 				931B15162821291400A0CD35 /* DeliveredRequestModel.swift in Sources */,
+				938B36262B3D5F85008359C5 /* ForwardMessagesRequestModel.swift in Sources */,
 				93CF47412963287A00213DBE /* AppRepository+File.swift in Sources */,
 				9383879129D5253D0057714A /* FileData.swift in Sources */,
 				932BADDC29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
@@ -4530,6 +4541,7 @@
 				931B14DD2821182D00A0CD35 /* DatabaseService.swift in Sources */,
 				931B14DC2821182800A0CD35 /* NetworkService.swift in Sources */,
 				931B14F728211AC100A0CD35 /* SendMessageRequest.swift in Sources */,
+				938B36232B3D5F74008359C5 /* ForwardMessagesResponse.swift in Sources */,
 				93D0CFA62A051AC7003C84B1 /* NSManagedObjectContext+Extensions.swift in Sources */,
 				934FF17329778E09002C76F7 /* SendReactionRequestModel.swift in Sources */,
 				9324B254281BDFD700E7D76D /* MessageEntity+CoreDataClass.swift in Sources */,

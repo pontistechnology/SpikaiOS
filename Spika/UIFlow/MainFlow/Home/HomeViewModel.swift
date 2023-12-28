@@ -71,3 +71,13 @@ extension HomeViewModel {
         }.store(in: &subscriptions)
     }
 }
+
+extension HomeViewModel {
+    func forwardMessages(messageIds: [Int64], userIds: [Int64], roomIds: [Int64]) {
+        repository.forwardMessages(messageIds: messageIds, roomIds: roomIds, userIds: userIds).sink { c in
+            
+        } receiveValue: { [weak self] response in
+            print("responsee forward: ", response)
+        }.store(in: &subscriptions)
+    }
+}

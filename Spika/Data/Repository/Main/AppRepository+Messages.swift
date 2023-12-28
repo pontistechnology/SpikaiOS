@@ -62,6 +62,18 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
+    func forwardMessages(messageIds: [Int64], roomIds: [Int64], userIds: [Int64]) -> AnyPublisher<ForwardMessagesResponseModel, Error> {
+        guard let accessToken = getAccessToken() else {
+            return Fail<ForwardMessagesResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<ForwardMessagesResponseModel, ForwardMessagesRequestModel>(path: Constants.Endpoints.forwardMessages, requestType: .POST, bodyParameters: ForwardMessagesRequestModel(messageIds: messageIds, roomIds: roomIds, userIds: userIds), httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
     private func sendDeliveredIds(_ messageIds: [Int64]) -> AnyPublisher<DeliveredResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else { return Fail<DeliveredResponseModel, Error>(error: NetworkError.noAccessToken)

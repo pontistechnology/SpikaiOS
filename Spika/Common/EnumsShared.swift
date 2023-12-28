@@ -109,4 +109,5 @@ struct Emoji: Codable {
 enum AppAction {
     case deleteReaction(Int64)
     case newGroupFlowSelectUsers([User])
+    case forwardMessages(messageIds: [Int64], userIds: [Int64], roomIds: [Int64])
 }
