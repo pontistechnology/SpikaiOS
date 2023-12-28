@@ -141,7 +141,7 @@ class AppCoordinator: Coordinator {
     }
     
     func presentCreateNewGroup2ChatScreen() {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroup2ChatViewController.self, argument: self)!
+        let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroup2ChatViewController.self, arguments: self, actionsPublisher)!
         navigationController.pushViewController(viewController, animated: true)
     }
     

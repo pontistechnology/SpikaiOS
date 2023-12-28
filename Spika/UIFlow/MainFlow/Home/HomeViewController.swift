@@ -65,6 +65,8 @@ class HomeViewController: UIPageViewController {
             switch action {
             case .deleteReaction(let recordId):
                 self?.viewModel.deleteReaction(recordId: recordId)
+            default:
+                break
             }
         }.store(in: &subscriptions)
     }
