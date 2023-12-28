@@ -136,6 +136,8 @@ extension CurrentChatViewModel {
                     self.selectedMessageToEditPublisher.send(message)
                 case .showCustomReactions:
                     self.showCustomReactionPicker(message: message)
+                case .forward:
+                    break
                 default:
                     break
                 }

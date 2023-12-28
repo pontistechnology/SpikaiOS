@@ -56,7 +56,7 @@ struct ChatDetails2View: View {
         .ignoresSafeArea()
         .modifier(SpikaBackgroundGradient())
         .sheet(isPresented: $viewModel.showAddMembersScreen, content: {
-            viewModel.getAppCoordinator()?.getSelectUserView(hiddenUserIds: viewModel.room?.users.compactMap({ $0.userId }) ?? [])
+            viewModel.getAppCoordinator()?.getSelectUsersOrGroupsView(hiddenUserIds: viewModel.room?.users.compactMap({ $0.userId }) ?? [], purpose: .addToExistingGroup)
                 .environment(\.managedObjectContext, viewModel.repository.getMainContext())
         })
     }

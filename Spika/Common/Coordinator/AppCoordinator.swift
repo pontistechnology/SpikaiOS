@@ -145,8 +145,8 @@ class AppCoordinator: Coordinator {
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func getSelectUserView(hiddenUserIds: [Int64]) -> SelectUsersView {
-        return Assembler.sharedAssembler.resolver.resolve(SelectUsersView.self, arguments: self, actionsPublisher, hiddenUserIds)!
+    func getSelectUsersOrGroupsView(hiddenUserIds: [Int64], purpose: SelectUsersOrGroupsPurpose) -> SelectUsersOrGroupsView {
+        return Assembler.sharedAssembler.resolver.resolve(SelectUsersOrGroupsView.self, arguments: self, actionsPublisher, hiddenUserIds, purpose)!
     }
     
     func presentUserSelection(preselectedUsers: [User], usersSelectedPublisher: PassthroughSubject<[User],Never>) {

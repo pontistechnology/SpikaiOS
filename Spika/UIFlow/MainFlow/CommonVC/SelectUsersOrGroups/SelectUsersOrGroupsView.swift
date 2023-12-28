@@ -1,5 +1,5 @@
 //
-//  SelectUsersView.swift
+//  SelectUsersOrGroupsView.swift
 //  Spika
 //
 //  Created by Nikola Barbarić on 23.11.2023..
@@ -8,10 +8,26 @@ import Kingfisher
 import SwiftUI
 import CoreData
 
-struct SelectUsersView: View {
-    @State var selectedUsersAndGroups: [SelectedUserOrGroup] = []
-    @State var isUsersSelected = true
-    @StateObject var viewModel: SelectUsersViewModel
+
+enum SelectUsersOrGroupsPurpose {
+    case forwardMessages([Int64])
+    case addToExistingGroup
+    case addToNewGroupCreationFlow
+    
+    var title: String {
+        switch self {
+        case .forwardMessages(let array):
+            array.count <= 1 ? "Forward message" : "Forward messages"
+        case .addToExistingGroup:
+            "Add to group"
+        case .addToNewGroupCreationFlow:
+            "Add to new group flow"
+        }
+    }
+}
+
+struct SelectUsersOrGroupsView: View {
+    @StateObject var viewModel: SelectUsersOrGroupsViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -29,7 +45,7 @@ struct SelectUsersView: View {
             
             selectedMembersView()
             
-            if isUsersSelected {
+            if viewModel.isUsersSelected {
                 ListWithPredicate(sI: \.sectionName, sD: viewModel.usersSortDescriptor, p: viewModel.usersPredicate) { (userEntity: UserEntity) in
                     memberRow(.user(userEntity))
                         .listRowBackground(Color(.secondaryColor))
@@ -49,10 +65,10 @@ struct SelectUsersView: View {
     
     private func titleAndClose() -> some View {
         HStack {
-            Text("Forward message") // TODO: - change
+            Text(viewModel.purpose.title) // TODO: - change
             Spacer()
             Button {
-                
+                viewModel.endButtonTap()
             } label: {
                 Image(.rDx)
             }
@@ -62,26 +78,26 @@ struct SelectUsersView: View {
     private func contactsOrGroupToggle() -> some View {
         HStack(spacing: 5) {
             Button {
-                isUsersSelected = true
+                viewModel.isUsersSelected = true
             } label: {
                 Text(verbatim: .getStringFor(.users))
                     .frame(maxWidth: .infinity)
                     .frame(height: 48)
                     .foregroundStyle(Color.fromUIColor(.textPrimary))
-                    .background(isUsersSelected
+                    .background(viewModel.isUsersSelected
                                 ? Color.fromUIColor(.primaryColor)
                                 : .fromUIColor(.fourthAdditionalColor))
                     .modifier(RoundedCorners(corners: .leftCorners, radius: 15))
             }
             
             Button {
-                isUsersSelected = false
+                viewModel.isUsersSelected = false
             } label: {
                 Text(verbatim: .getStringFor(.groups))
                     .frame(maxWidth: .infinity)
                     .frame(height: 48)
                     .foregroundStyle(Color.fromUIColor(.textPrimary))
-                    .background(isUsersSelected
+                    .background(viewModel.isUsersSelected
                                 ? .fromUIColor(.fourthAdditionalColor)
                                 : Color.fromUIColor(.primaryColor))
                     .modifier(RoundedCorners(corners: .rightCorners, radius: 15))
@@ -91,11 +107,11 @@ struct SelectUsersView: View {
     
     private func selectedMembersView() -> some View {
         VStack(spacing: 0) {
-            Text("\(selectedUsersAndGroups.count) selected")
+            Text("\(viewModel.selectedUsersAndGroups.count) selected")
                 .frame(maxWidth: .infinity, alignment: .leading)
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 8) {
-                    ForEach(selectedUsersAndGroups) { selectedThing in
+                    ForEach(viewModel.selectedUsersAndGroups) { selectedThing in
                         VStack(spacing: 0)  {
                             KFImage(selectedThing.avatarURL)
                                 .placeholder { _ in
@@ -108,7 +124,7 @@ struct SelectUsersView: View {
                                 .frame(width: 84, height: 84)
                                 .overlay(alignment: .topTrailing) {
                                     Button(action: {
-                                        selectedUsersAndGroups.removeFirstIfExist(selectedThing)
+                                        viewModel.selectedUsersAndGroups.removeFirstIfExist(selectedThing)
                                     }, label: {
                                         Image(.rDx)
                                             .tint(Color(.textPrimary))
@@ -130,7 +146,7 @@ struct SelectUsersView: View {
     
     private func memberRow(_ thing: SelectedUserOrGroup) -> some View {
         Button {
-            selectedUsersAndGroups.toggle(thing)
+            viewModel.selectedUsersAndGroups.toggle(thing)
         } label: {
             HStack(spacing: 16) {
                 KFImage(thing.avatarURL)
@@ -150,7 +166,7 @@ struct SelectUsersView: View {
                 }.foregroundStyle(Color(.textPrimary))
                 
                 Spacer()
-                if selectedUsersAndGroups.contains(thing) {
+                if viewModel.selectedUsersAndGroups.contains(thing) {
                     Image(.rDcheckmark)
                         .tint(Color(.textPrimary))
                 }

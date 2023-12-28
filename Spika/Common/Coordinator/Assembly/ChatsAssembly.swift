@@ -12,7 +12,7 @@ class ChatsAssembly: Assembly {
     func assemble(container: Container) {
         assembleCurrentChatViewController(container)
         assembleNewGroup2ChatViewController(container)
-        assembleSelectUsersView(container)
+        assembleSelectUsersOrGroupsView(container)
     }
     
     private func assembleCurrentChatViewController(_ container: Container) {        
@@ -54,15 +54,15 @@ class ChatsAssembly: Assembly {
         }.inObjectScope(.transient)
     }
     
-    private func assembleSelectUsersView(_ container: Container) {
-        container.register(SelectUsersViewModel.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, hiddenUserIds: [Int64]) in
+    private func assembleSelectUsersOrGroupsView(_ container: Container) {
+        container.register(SelectUsersOrGroupsViewModel.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, hiddenUserIds: [Int64], purpose: SelectUsersOrGroupsPurpose) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return SelectUsersViewModel(repository: repository, coordinator: coordinator, actionPublisher: p, hiddenUserIds: hiddenUserIds)
+            return SelectUsersOrGroupsViewModel(repository: repository, coordinator: coordinator, actionPublisher: p, hiddenUserIds: hiddenUserIds, purpose: purpose)
         }.inObjectScope(.transient)
 
-        container.register(SelectUsersView.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, hiddenUserIds: [Int64]) in
-            let viewModel = container.resolve(SelectUsersViewModel.self, arguments: coordinator, p, hiddenUserIds)!
-            return SelectUsersView(viewModel: viewModel)
+        container.register(SelectUsersOrGroupsView.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, hiddenUserIds: [Int64], purpose: SelectUsersOrGroupsPurpose) in
+            let viewModel = container.resolve(SelectUsersOrGroupsViewModel.self, arguments: coordinator, p, hiddenUserIds, purpose)!
+            return SelectUsersOrGroupsView(viewModel: viewModel)
         }.inObjectScope(.transient)
     }
 }

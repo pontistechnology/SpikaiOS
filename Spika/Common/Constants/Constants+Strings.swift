@@ -128,7 +128,7 @@ public extension Constants {
         
         case youAreNoLongerMember = "You are no longer a member of this group"
         
-        // MARK: - SelectUsersViewController
+        // MARK: - SelectUsersOrGroupsViewController
         case newChat = "New chat"
         case newGroupChat = "New group chat"
         case newPrivateChat = "New private chat"

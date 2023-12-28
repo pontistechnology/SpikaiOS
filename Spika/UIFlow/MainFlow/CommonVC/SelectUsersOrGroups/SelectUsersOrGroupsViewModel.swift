@@ -8,11 +8,13 @@
 import Foundation
 import SwiftUI
 
-class SelectUsersViewModel: BaseViewModel, ObservableObject {
+class SelectUsersOrGroupsViewModel: BaseViewModel, ObservableObject {
     let actionPublisher: ActionPublisher
     var hideUserIds: [Int64]
+    let purpose: SelectUsersOrGroupsPurpose
     @Published var searchTerm = ""
-    
+    @Published var selectedUsersAndGroups: [SelectedUserOrGroup] = []
+    @Published var isUsersSelected = true
     
     let usersSortDescriptor = [
         NSSortDescriptor(key: "contactsName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:))),
@@ -34,10 +36,22 @@ class SelectUsersViewModel: BaseViewModel, ObservableObject {
         : NSPredicate(format: "name CONTAINS[c] '\(searchTerm)'")
     }
 
-    init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher, hiddenUserIds: [Int64]) {
+    init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher, hiddenUserIds: [Int64], purpose: SelectUsersOrGroupsPurpose) {
         self.actionPublisher = actionPublisher
         self.hideUserIds = hiddenUserIds
+        self.purpose = purpose
         super.init(repository: repository, coordinator: coordinator)
         hideUserIds.append(myUserId) // hiding my user
+    }
+    
+    func endButtonTap() {
+        switch purpose {
+        case .forwardMessages(let messageIds):
+            actionPublisher.send(.forwardMessages(messageIds: messageIds, userIds: selectedUsersAndGroups.onlyUserIds, roomIds: selectedUsersAndGroups.onlyRoomIds))
+        case .addToExistingGroup:
+            break
+        case .addToNewGroupCreationFlow:
+            break
+        }
     }
 }
