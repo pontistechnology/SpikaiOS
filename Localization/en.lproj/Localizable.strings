@@ -74,6 +74,8 @@
 "Select users" = "Select users";
 "Search for contact" = "Search for contact";
 "Search for reaction" = "Search for reaction";
+"Groups"  = "Groups";
+"Users"  = "Users";
 
 "Read by" = "Read by";
 "Delivered to" = "Delivered to";
@@ -141,3 +143,4 @@
 "apply" = "apply";
 "Private contact" = "Private contact";
 "Delete chat" = "Delete chat";
+

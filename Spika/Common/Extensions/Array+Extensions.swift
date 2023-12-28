@@ -16,7 +16,7 @@ extension Array {
 }
 
 extension Array where Element: Hashable {
-    // append to array if item is not in array, if it is already then delete it
+    // insert in array if item is not in array, if it is already then delete it
     mutating func toggle(_ el: Element) {
         if contains(el) {
             guard let index = firstIndex(where: { $0 == el })

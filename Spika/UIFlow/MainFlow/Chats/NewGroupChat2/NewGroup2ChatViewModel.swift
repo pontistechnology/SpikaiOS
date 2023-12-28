@@ -86,13 +86,13 @@ class NewGroup2ChatViewModel: BaseViewModel, ObservableObject {
     func createGroup() {
         guard !groupName.isEmpty, !selectedMembers.isEmpty else { return }
         var userIds = selectedMembers.map { $0.id }
-        userIds.append(myUserId)
-        repository.createOnlineRoom(name: groupName, avatarId: avatarId, userIds: userIds).sink { c in
-            print(c)
-        } receiveValue: { [weak self] response in
-            guard let room = response.data?.room else { return }
-            self?.saveLocalRoom(room: room)
-        }.store(in: &subscriptions)
+//        userIds.append(myUserId)
+//        repository.createOnlineRoom(name: groupName, avatarId: avatarId, userIds: userIds).sink { c in
+//            print(c)
+//        } receiveValue: { [weak self] response in
+//            guard let room = response.data?.room else { return }
+//            self?.saveLocalRoom(room: room)
+//        }.store(in: &subscriptions)
     }
     
     func saveLocalRoom(room: Room) {

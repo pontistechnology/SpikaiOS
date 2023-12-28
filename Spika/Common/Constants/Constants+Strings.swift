@@ -98,6 +98,8 @@ public extension Constants {
         // MARK: - UserSelectionViewController
         case selected = "selected"
         case selectUsers = "Select users"
+        case groups = "Groups"
+        case users = "Users"
         
         // MARK: - MessageDetailsViewController
         case readBy = "Read by"

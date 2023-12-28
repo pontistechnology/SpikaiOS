@@ -70,3 +70,11 @@ extension UIColor {
     // FIXME: change this
 //    static let errorRedLight = UIColor(named: "errorRedLight")
 }
+
+import SwiftUI
+
+extension Color {
+    static func fromUIColor(_ uicolor: UIColor) -> Color {
+        Color(uiColor: uicolor)
+    }
+}
