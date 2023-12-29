@@ -77,9 +77,9 @@ extension SharedViewController: UITableViewDataSource {
         case 2:
             cell = tableView.dequeueReusableCell(withIdentifier: DocsTableViewCell.reuseIdentifier) as? DocsTableViewCell
         default:
-            return EmptyTableViewCell()
+            return UnknownTableViewCell()
         }
-        return cell ?? EmptyTableViewCell()
+        return cell ?? UnknownTableViewCell()
     }
 }
 

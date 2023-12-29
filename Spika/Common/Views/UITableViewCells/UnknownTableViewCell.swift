@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-final class EmptyTableViewCell: UITableViewCell {
+final class UnknownTableViewCell: UITableViewCell {
     
-    let messageTextView = CustomTextView(text: "Empty Cell - report this", textSize: 14, textColor: .warningColor, fontName: .MontserratMedium)
+    let messageTextView = CustomTextView(text: "Unknown Cell - report this", textSize: 14, textColor: .warningColor, fontName: .MontserratMedium)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

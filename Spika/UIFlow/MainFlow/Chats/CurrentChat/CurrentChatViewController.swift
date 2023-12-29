@@ -342,13 +342,13 @@ extension CurrentChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let message = viewModel.getMessage(for: indexPath)
-        else { return EmptyTableViewCell()}
+        else { return UnknownTableViewCell()}
         let myUserId = viewModel.myUserId
         let isMyMessage = message.fromUserId == myUserId
         
         guard let identifier = message.getReuseIdentifier2(),
               let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2
-        else { return EmptyTableViewCell() }
+        else { return UnknownTableViewCell() }
         cell.setupContainer(sender: viewModel.getSenderTypeFor(message: message))
         
         if let user = viewModel.getUser(for: message.fromUserId),

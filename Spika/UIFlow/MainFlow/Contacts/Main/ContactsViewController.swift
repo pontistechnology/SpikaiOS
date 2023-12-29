@@ -80,14 +80,14 @@ extension ContactsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
         guard let userEntity = frc?.object(at: indexPath) else {
-            return EmptyTableViewCell()
+            return UnknownTableViewCell()
         }
         let user = User(entity: userEntity)
         cell?.configureCell(title: user.getDisplayName(),
                             description: user.telephoneNumber,
                             leftImage: user.avatarFileId?.fullFilePathFromId(),
                             type: .normal)
-        return cell ?? EmptyTableViewCell()
+        return cell ?? UnknownTableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

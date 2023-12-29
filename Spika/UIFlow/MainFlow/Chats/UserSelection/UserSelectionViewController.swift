@@ -116,7 +116,7 @@ extension UserSelectionViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell,
               let userEntity = viewModel.frc?.object(at: indexPath) else {
-            return EmptyTableViewCell()
+            return UnknownTableViewCell()
         }
         let user = User(entity: userEntity)
         
