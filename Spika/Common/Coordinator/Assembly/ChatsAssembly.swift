@@ -55,13 +55,13 @@ class ChatsAssembly: Assembly {
     }
     
     private func assembleSelectUsersOrGroupsView(_ container: Container) {
-        container.register(SelectUsersOrGroupsViewModel.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, hiddenUserIds: [Int64], purpose: SelectUsersOrGroupsPurpose) in
+        container.register(SelectUsersOrGroupsViewModel.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, purpose: SelectUsersOrGroupsPurpose) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return SelectUsersOrGroupsViewModel(repository: repository, coordinator: coordinator, actionPublisher: p, hiddenUserIds: hiddenUserIds, purpose: purpose)
+            return SelectUsersOrGroupsViewModel(repository: repository, coordinator: coordinator, actionPublisher: p, purpose: purpose)
         }.inObjectScope(.transient)
 
-        container.register(SelectUsersOrGroupsView.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, hiddenUserIds: [Int64], purpose: SelectUsersOrGroupsPurpose) in
-            let viewModel = container.resolve(SelectUsersOrGroupsViewModel.self, arguments: coordinator, p, hiddenUserIds, purpose)!
+        container.register(SelectUsersOrGroupsView.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, purpose: SelectUsersOrGroupsPurpose) in
+            let viewModel = container.resolve(SelectUsersOrGroupsViewModel.self, arguments: coordinator, p, purpose)!
             return SelectUsersOrGroupsView(viewModel: viewModel)
         }.inObjectScope(.transient)
     }

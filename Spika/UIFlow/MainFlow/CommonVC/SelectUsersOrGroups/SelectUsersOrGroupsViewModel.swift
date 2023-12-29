@@ -36,9 +36,9 @@ class SelectUsersOrGroupsViewModel: BaseViewModel, ObservableObject {
         : NSPredicate(format: "name CONTAINS[c] '\(searchTerm)'")
     }
 
-    init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher, hiddenUserIds: [Int64], purpose: SelectUsersOrGroupsPurpose) {
+    init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher, purpose: SelectUsersOrGroupsPurpose) {
         self.actionPublisher = actionPublisher
-        self.hideUserIds = hiddenUserIds
+        self.hideUserIds = purpose.hideUserIds
         self.purpose = purpose
         super.init(repository: repository, coordinator: coordinator)
         hideUserIds.append(myUserId) // hiding my user

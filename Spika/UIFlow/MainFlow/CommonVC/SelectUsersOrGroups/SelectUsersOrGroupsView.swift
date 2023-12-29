@@ -11,8 +11,8 @@ import CoreData
 
 enum SelectUsersOrGroupsPurpose {
     case forwardMessages([Int64])
-    case addToExistingGroup
-    case addToNewGroupCreationFlow
+    case addToExistingGroup(hiddenUserIds: [Int64])
+    case addToNewGroupCreationFlow(hiddenUserIds: [Int64])
     
     var title: String {
         switch self {
@@ -22,6 +22,22 @@ enum SelectUsersOrGroupsPurpose {
             "Add to group"
         case .addToNewGroupCreationFlow:
             "Add to new group flow"
+        }
+    }
+    
+    var hideUserIds: [Int64] {
+        // hide already added users (e.g. when adding to existing grups)
+        switch self {
+        case .addToExistingGroup(let hiddenUserIds): hiddenUserIds
+        case .addToNewGroupCreationFlow(let hiddenUserIds): hiddenUserIds
+        case .forwardMessages: []
+        }
+    }
+    
+    var showUsersAndGroupsToggle: Bool {
+        switch self {
+        case .forwardMessages: true
+        default: false
         }
     }
 }
@@ -40,8 +56,10 @@ struct SelectUsersOrGroupsView: View {
                 .background(Color(.thirdAdditionalColor))
                 .clipShape(Capsule())
             
-            contactsOrGroupToggle()
-                .padding(.vertical, 8)
+            if viewModel.purpose.showUsersAndGroupsToggle {
+                contactsOrGroupToggle()
+                    .padding(.vertical, 8)
+            }
             
             selectedMembersView()
             
