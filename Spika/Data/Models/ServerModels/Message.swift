@@ -113,6 +113,7 @@ enum MessageType: String, Codable {
     case video
     case file
     case audio
+    case system
     case unknown
     
     public init(from decoder: Decoder) throws {
@@ -122,17 +123,19 @@ enum MessageType: String, Codable {
     var icon: UIImage? {
         switch self {
         case .text:
-            return nil
+            nil
         case .image:
-            return UIImage(resource: .photoIcon)
+            UIImage(resource: .photoIcon)
         case .video:
-            return UIImage(resource: .videoIcon)
+            UIImage(resource: .videoIcon)
         case .file:
-            return UIImage(resource: .docIcon)
+            UIImage(resource: .docIcon)
         case .audio:
-            return UIImage(resource: .micIcon)
+            UIImage(resource: .micIcon)
         case .unknown:
-            return UIImage(resource: .unknownFileThumbnail)
+            UIImage(resource: .unknownFileThumbnail)
+        case .system:
+            nil
         }
     }
 }
