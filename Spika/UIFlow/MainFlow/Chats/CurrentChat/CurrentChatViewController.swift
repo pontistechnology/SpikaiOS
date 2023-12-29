@@ -320,12 +320,12 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell2 else { return }
         (tableView.visibleCells as? [BaseMessageTableViewCell2])?.forEach{ $0.setTimeLabelVisible(false)}
         tableView.beginUpdates()
         cell.tapHandler()
         tableView.endUpdates()
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -346,9 +346,21 @@ extension CurrentChatViewController: UITableViewDataSource {
         let myUserId = viewModel.myUserId
         let isMyMessage = message.fromUserId == myUserId
         
-        guard let identifier = message.getReuseIdentifier2(),
-              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2
-        else { return UnknownTableViewCell() }
+        guard let identifier = message.getReuseIdentifier2() else {
+            return UnknownTableViewCell()
+        }
+        
+        guard message.type != .system else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? SystemMessageTableViewCell
+            cell?.updateCell(message: message)
+            return cell ?? UnknownTableViewCell()
+        }
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2
+        else {
+            return UnknownTableViewCell()
+        }
+        
         cell.setupContainer(sender: viewModel.getSenderTypeFor(message: message))
         
         if let user = viewModel.getUser(for: message.fromUserId),

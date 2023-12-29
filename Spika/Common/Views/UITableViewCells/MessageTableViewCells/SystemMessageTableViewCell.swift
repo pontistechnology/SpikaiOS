@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-class SystemMessageTableViewCell: BaseMessageTableViewCell2 {
-    private let plainTextView = UILabel()
+class SystemMessageTableViewCell: UITableViewCell {
+    private let plainTextView = CustomTextView(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -17,14 +17,22 @@ class SystemMessageTableViewCell: BaseMessageTableViewCell2 {
     }
     
     func setupCell() {
-        containerStackView.addArrangedSubview(plainTextView)
+        contentView.addSubview(plainTextView)
+        plainTextView.fillSuperview(padding: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16))
+        backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+extension SystemMessageTableViewCell {
     func updateCell(message: Message) {
         plainTextView.text = message.body?.text
+    }
+    
+    override func prepareForReuse() {
+        plainTextView.text = nil
     }
 }

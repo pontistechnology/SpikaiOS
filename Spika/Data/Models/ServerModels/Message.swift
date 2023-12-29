@@ -57,7 +57,8 @@ extension Message {
                   deleted: messageEntity.isRemoved,
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
-                                    file: fileData, thumb: thumbData),
+                                    file: fileData, thumb: thumbData, 
+                                    type: MessageBodyType(string: messageEntity.bodyType)),
                   records: records)
     }
     
@@ -81,17 +82,19 @@ extension Message {
     var pushNotificationText: String {
         switch type {
         case .text:
-            return body?.text ?? " "
+            body?.text ?? " "
         case .image:
-            return "Photo"
+            "Photo"
         case .video:
-            return "Video"
+            "Video"
         case .file:
-            return "File"
+            "File"
         case .audio:
-            return "Audio"
+            "Audio"
         case .unknown:
-            return "Unknown"
+            "Unknown"
+        case .system:
+            body?.text ?? " "
         }
     }
     
@@ -104,6 +107,33 @@ struct MessageBody: Codable {
     let text: String?
     let file: FileData?
     let thumb: FileData?
+    let type: MessageBodyType?
+}
+
+enum MessageBodyType: String, Codable {
+    case createdGroup = "created_group"
+    case userLeftGroup = "user_left_group"
+    case updatedGroup = "updated_group"
+    case updatedGroupName = "updated_group_name"
+    case updatedGroupAvatar = "updated_group_avatar"
+    case updatedGroupAdmins = "updated_group_admins"
+    case updatedGroupMembers = "updated_group_members"
+    case addedGroupMembers = "added_group_members"
+    case removedGroupMembers = "removed_group_members"
+    case addedGroupAdmins = "added_group_admins"
+    case removedGroupAdmins = "removed_group_admins"
+    case createdNote = "created_note"
+    case updatedNote = "updated_note"
+    case deletedNote = "deleted_note"
+    
+    init?(string: String?) {
+        if let string = string,
+            let val = MessageBodyType(rawValue: string) {
+            self = val
+        } else {
+            return nil
+        }
+    }
 }
 
 enum MessageType: String, Codable {

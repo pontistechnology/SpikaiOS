@@ -67,5 +67,9 @@ public class MessageEntity: NSManagedObject {
 
         self.replyId = "\(message.replyId ?? -1)"
         
+        if let bodyType = message.body?.type?.rawValue {
+            self.bodyType = bodyType
+        }
+        
     }
 }

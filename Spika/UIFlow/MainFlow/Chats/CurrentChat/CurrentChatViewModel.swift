@@ -191,7 +191,7 @@ extension CurrentChatViewModel {
                               fromUserId: myUserId,
                               roomId: room.id,
                               type: .text,
-                              body: MessageBody(text: text, file: nil, thumb: nil),
+                              body: MessageBody(text: text, file: nil, thumb: nil, type: nil),
                               replyId: selectedMessageToReplyPublisher.value?.id,
                               localId: uuid)
         
@@ -268,7 +268,7 @@ extension CurrentChatViewModel {
                               body: MessageBody(text: nil, file: nil,
                                                 thumb: FileData(id: nil, fileName: nil,
                                                                 mimeType: nil, size: nil,
-                                                                metaData: MetaData(width: width.roundedInt64, height: height.roundedInt64, duration: 0))),
+                                                                metaData: MetaData(width: width.roundedInt64, height: height.roundedInt64, duration: 0)), type: nil),
                               replyId: nil, localId: uuid)
         saveMessage(message: message)
     }
@@ -381,7 +381,7 @@ extension CurrentChatViewModel {
                                                                 fileName: nil,
                                                                 mimeType: nil,
                                                                 size: nil,
-                                                                metaData: file.thumbMetadata)),
+                                                                metaData: file.thumbMetadata), type: nil),
                               replyId: nil,
                               localId: uuid)
         

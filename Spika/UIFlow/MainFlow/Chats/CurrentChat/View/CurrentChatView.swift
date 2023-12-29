@@ -76,7 +76,8 @@ class CurrentChatView: UIView, BaseView {
                      FileMessageTableViewCell.self,
                      AudioMessageTableViewCell.self,
                      VideoMessageTableViewCell.self,
-                     DeletedMessageTableViewCell.self]
+                     DeletedMessageTableViewCell.self,
+                     SystemMessageTableViewCell.self]
         
         cells.forEach { cell in
             messagesTableView.register(cell, forCellReuseIdentifier:  String(describing: cell))
