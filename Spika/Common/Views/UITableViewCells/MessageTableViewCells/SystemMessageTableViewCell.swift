@@ -29,7 +29,9 @@ class SystemMessageTableViewCell: UITableViewCell {
 
 extension SystemMessageTableViewCell {
     func updateCell(message: Message) {
-        plainTextView.text = message.body?.text
+        if let text = message.body?.text {
+            plainTextView.text = message.createdAt.convert(to: .HHmm) + text
+        }
     }
     
     override func prepareForReuse() {
