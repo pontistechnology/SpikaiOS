@@ -52,7 +52,8 @@ extension CurrentChatViewController {
         let tableView = currentChatView.messagesTableView
         guard sender.state == .began,
               let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
-              let message = viewModel.getMessage(for: indexPath)
+              let message = viewModel.getMessage(for: indexPath),
+              message.type != .system
         else { return }
         viewModel.showMessageActions(message)
     }
@@ -472,7 +473,7 @@ extension CurrentChatViewController {
 extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let message = viewModel.getMessage(for: indexPath) else { return nil }
+        guard let message = viewModel.getMessage(for: indexPath), message.type != .system else { return nil }
         guard !message.deleted else { return nil}
         // TODO: - refactor this to seperate view
         let detailsAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
@@ -485,7 +486,7 @@ extension CurrentChatViewController {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let message = viewModel.getMessage(for: indexPath) else { return nil }
+        guard let message = viewModel.getMessage(for: indexPath), message.type != .system else { return nil }
         guard !message.deleted else { return nil }
         //  TODO: refacotr
         let firstLeft = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
