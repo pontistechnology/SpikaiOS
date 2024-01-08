@@ -47,6 +47,7 @@ public class MessageEntity: NSManagedObject {
         }
         
         isRemoved = message.deleted
+        isForwarded = message.isForwarded
         
         roomId = message.roomId
 

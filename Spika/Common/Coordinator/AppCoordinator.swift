@@ -13,6 +13,7 @@ import AVFoundation
 import Contacts
 import ContactsUI
 import SwiftUI
+import CoreData
 
 
 class AppCoordinator: Coordinator {
@@ -276,6 +277,11 @@ class AppCoordinator: Coordinator {
         let viewController = Assembler.sharedAssembler.resolver.resolve(CustomReactionsViewController.self, argument: self)!
         navigationController.present(viewController, animated: true)
         return viewController.selectedEmojiPublisher
+    }
+    
+    func testforward(ids: [Int64], cont: NSManagedObjectContext) {
+        let vc = UIHostingController(rootView: getSelectUsersOrGroupsView(purpose: .forwardMessages(ids)).environment(\.managedObjectContext, cont))
+        navigationController.present(vc, animated: true)
     }
 }
 

@@ -107,7 +107,7 @@ extension CurrentChatViewModel {
     func showMessageActions(_ message: Message) {
         guard !message.deleted else { return }
         let actions: [MessageAction] =
-        if message.fromUserId == myUserId && message.type == .text {
+        if message.fromUserId == myUserId && message.type == .text && !message.isForwarded {
             [.reply, .forward, .copy, .edit, .details, .favorite, .delete]
         } else {
             [.reply, .forward, .copy, .details, .favorite, .delete]
@@ -137,7 +137,7 @@ extension CurrentChatViewModel {
                 case .showCustomReactions:
                     self.showCustomReactionPicker(message: message)
                 case .forward:
-                    break
+                    getAppCoordinator()?.testforward(ids: [message.id ?? 0], cont: repository.getMainContext())
                 default:
                     break
                 }

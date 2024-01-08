@@ -20,6 +20,7 @@ struct Message: Codable {
     let seenCount: Int64?
     let replyId: Int64?
     let deleted: Bool
+    let isForwarded: Bool
     let type: MessageType
     let body: MessageBody?
     let records: [MessageRecord]?
@@ -38,6 +39,7 @@ extension Message {
         self.roomId = roomId
         self.type = type
         self.deleted = false
+        self.isForwarded = false
         self.createdAt = createdAt
         self.modifiedAt = createdAt
         self.records = nil
@@ -54,7 +56,8 @@ extension Message {
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
                   replyId: Int64(messageEntity.replyId ?? "nil"),
-                  deleted: messageEntity.isRemoved,
+                  deleted: messageEntity.isRemoved, 
+                  isForwarded: messageEntity.isForwarded,
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
                                     file: fileData, thumb: thumbData, 
