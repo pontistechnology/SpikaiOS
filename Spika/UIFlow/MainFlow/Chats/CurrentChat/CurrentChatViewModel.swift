@@ -137,7 +137,8 @@ extension CurrentChatViewModel {
                 case .showCustomReactions:
                     self.showCustomReactionPicker(message: message)
                 case .forward:
-                    getAppCoordinator()?.testforward(ids: [message.id ?? 0], cont: repository.getMainContext())
+                    guard let messageId = message.id else { return }
+                    getAppCoordinator()?.presentForwardScreen(ids: [messageId], context: repository.getMainContext())
                 default:
                     break
                 }

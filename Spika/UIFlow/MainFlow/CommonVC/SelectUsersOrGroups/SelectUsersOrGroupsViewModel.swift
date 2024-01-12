@@ -44,10 +44,10 @@ class SelectUsersOrGroupsViewModel: BaseViewModel, ObservableObject {
         hideUserIds.append(myUserId) // hiding my user
     }
     
-    func endButtonTap() {
+    func doneButtonTap() {
         switch purpose {
         case .forwardMessages(let messageIds):
-            actionPublisher.send(.forwardMessages(messageIds: messageIds, userIds: selectedUsersAndGroups.onlyUsers.compactMap({ $0.id }), roomIds: selectedUsersAndGroups.onlyRoomIds))
+            actionPublisher.send(.forwardMessages(messageIds: messageIds, userIds: selectedUsersAndGroups.onlyUserIds, roomIds: selectedUsersAndGroups.onlyRoomIds))
         case .addToExistingGroup:
             break
         case .addToNewGroupCreationFlow:

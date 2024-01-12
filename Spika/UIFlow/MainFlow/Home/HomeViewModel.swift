@@ -77,7 +77,9 @@ extension HomeViewModel {
         repository.forwardMessages(messageIds: messageIds, roomIds: roomIds, userIds: userIds).sink { c in
             
         } receiveValue: { [weak self] response in
-            print("responsee forward: ", response)
+            guard let self else { return }
+            _ = repository.saveLocalRooms(rooms: response.data?.newRooms ?? [])
+            _ = repository.saveMessages(response.data?.messages ?? [])
         }.store(in: &subscriptions)
     }
 }

@@ -40,10 +40,18 @@ enum SelectUsersOrGroupsPurpose {
         default: false
         }
     }
+    
+    var doneImageResource: ImageResource {
+        return switch self {
+        case .forwardMessages: .rDsend
+        case .addToExistingGroup, .addToNewGroupCreationFlow: .rDcheckmark
+        }
+    }
 }
 
 struct SelectUsersOrGroupsView: View {
     @StateObject var viewModel: SelectUsersOrGroupsViewModel
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack(spacing: 0) {
@@ -79,14 +87,30 @@ struct SelectUsersOrGroupsView: View {
         .padding(.horizontal, 16)
         .padding(.top, 10)
         .background(Color(.secondaryColor))
+        .overlay(alignment: .bottomTrailing) {
+            if !viewModel.selectedUsersAndGroups.isEmpty {
+                Button {
+                    viewModel.doneButtonTap()
+                    dismiss()
+                } label: {
+                    Image(viewModel.purpose.doneImageResource)
+                        .padding(12)
+                }
+                .background(Color
+                    .fromUIColor(.primaryColor)
+                    .clipShape(Circle()))
+                .padding(20)
+                
+            }
+        }
     }
     
     private func titleAndClose() -> some View {
         HStack {
-            Text(viewModel.purpose.title) // TODO: - change
+            Text(viewModel.purpose.title)
             Spacer()
             Button {
-                viewModel.endButtonTap()
+                dismiss()
             } label: {
                 Image(.rDx)
             }
@@ -168,6 +192,7 @@ struct SelectUsersOrGroupsView: View {
         } label: {
             HStack(spacing: 16) {
                 KFImage(thing.avatarURL)
+                    .startLoadingBeforeViewAppear()
                     .placeholder { _ in
                         Image(thing.placeholderImage)
                             .resizable()

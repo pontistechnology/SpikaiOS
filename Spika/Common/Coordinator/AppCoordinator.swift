@@ -279,8 +279,9 @@ class AppCoordinator: Coordinator {
         return viewController.selectedEmojiPublisher
     }
     
-    func testforward(ids: [Int64], cont: NSManagedObjectContext) {
-        let vc = UIHostingController(rootView: getSelectUsersOrGroupsView(purpose: .forwardMessages(ids)).environment(\.managedObjectContext, cont))
+    func presentForwardScreen(ids: [Int64], context: NSManagedObjectContext) {
+        let vc = UIHostingController(rootView: getSelectUsersOrGroupsView(purpose: .forwardMessages(ids))
+            .environment(\.managedObjectContext, context))
         navigationController.present(vc, animated: true)
     }
 }
