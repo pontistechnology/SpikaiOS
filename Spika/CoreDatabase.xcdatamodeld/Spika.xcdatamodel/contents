@@ -27,6 +27,10 @@
     </entity>
     <entity name="MessageEntity" representedClassName="MessageEntity" syncable="YES">
         <attribute name="bodyFileId" optional="YES" attributeType="String"/>
+        <attribute name="bodyObjectIds" optional="YES" attributeType="Transformable" customClassName="[Int64]"/>
+        <attribute name="bodyObjects" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="bodySubject" optional="YES" attributeType="String"/>
+        <attribute name="bodySubjectId" optional="YES" attributeType="String"/>
         <attribute name="bodyText" optional="YES" attributeType="String"/>
         <attribute name="bodyThumbId" optional="YES" attributeType="String"/>
         <attribute name="bodyType" optional="YES" attributeType="String"/>

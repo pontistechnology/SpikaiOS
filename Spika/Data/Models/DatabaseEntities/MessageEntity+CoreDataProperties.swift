@@ -33,6 +33,10 @@ extension MessageEntity {
     @NSManaged public var totalUserCount: Int64
     @NSManaged public var type: String?
     @NSManaged public var bodyType: String?
+    @NSManaged public var bodySubject: String?
+    @NSManaged public var bodySubjectId: String?
+    @NSManaged public var bodyObjectIds: [Int64]?
+    @NSManaged public var bodyObjects: [String]?
     @NSManaged public var createdDate: Date?
     @NSManaged public var dummyValue: Int64
 

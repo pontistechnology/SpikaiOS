@@ -61,7 +61,7 @@ extension Message {
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
                                     file: fileData, thumb: thumbData, 
-                                    type: MessageBodyType(string: messageEntity.bodyType)),
+                                    type: MessageBodyType(string: messageEntity.bodyType), subject: messageEntity.bodySubject, subjectId: Int64(messageEntity.bodySubjectId ?? "failIsOk"), objects: messageEntity.bodyObjects, objectIds: messageEntity.bodyObjectIds),
                   records: records)
     }
     
@@ -107,20 +107,24 @@ extension Message {
 }
 
 struct MessageBody: Codable {
+    // used everywhere
     let text: String?
+    // used for files
     let file: FileData?
     let thumb: FileData?
+    // used for system messages
     let type: MessageBodyType?
+    let subject: String?
+    let subjectId: Int64?
+    let objects: [String]?
+    let objectIds: [Int64]?
 }
 
 enum MessageBodyType: String, Codable {
     case createdGroup = "created_group"
     case userLeftGroup = "user_left_group"
-    case updatedGroup = "updated_group"
     case updatedGroupName = "updated_group_name"
     case updatedGroupAvatar = "updated_group_avatar"
-    case updatedGroupAdmins = "updated_group_admins"
-    case updatedGroupMembers = "updated_group_members"
     case addedGroupMembers = "added_group_members"
     case removedGroupMembers = "removed_group_members"
     case addedGroupAdmins = "added_group_admins"

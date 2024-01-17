@@ -192,7 +192,7 @@ extension CurrentChatViewModel {
                               fromUserId: myUserId,
                               roomId: room.id,
                               type: .text,
-                              body: MessageBody(text: text, file: nil, thumb: nil, type: nil),
+                              body: MessageBody(text: text, file: nil, thumb: nil, type: nil, subject: nil, subjectId: nil, objects: nil, objectIds: nil),
                               replyId: selectedMessageToReplyPublisher.value?.id,
                               localId: uuid)
         
@@ -269,7 +269,7 @@ extension CurrentChatViewModel {
                               body: MessageBody(text: nil, file: nil,
                                                 thumb: FileData(id: nil, fileName: nil,
                                                                 mimeType: nil, size: nil,
-                                                                metaData: MetaData(width: width.roundedInt64, height: height.roundedInt64, duration: 0)), type: nil),
+                                                                metaData: MetaData(width: width.roundedInt64, height: height.roundedInt64, duration: 0)), type: nil, subject: nil, subjectId: nil, objects: nil, objectIds: nil),
                               replyId: nil, localId: uuid)
         saveMessage(message: message)
     }
@@ -382,7 +382,7 @@ extension CurrentChatViewModel {
                                                                 fileName: nil,
                                                                 mimeType: nil,
                                                                 size: nil,
-                                                                metaData: file.thumbMetadata), type: nil),
+                                                                metaData: file.thumbMetadata), type: nil, subject: nil, subjectId: nil, objects: nil, objectIds: nil),
                               replyId: nil,
                               localId: uuid)
         

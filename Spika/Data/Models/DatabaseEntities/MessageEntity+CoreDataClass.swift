@@ -72,5 +72,20 @@ public class MessageEntity: NSManagedObject {
             self.bodyType = bodyType
         }
         
+        if let bodySubject = message.body?.subject {
+            self.bodySubject = bodySubject
+        }
+        
+        if let bodySubjectIdInt = message.body?.subjectId {
+            self.bodySubjectId = String(bodySubjectIdInt)
+        }
+        
+        if let bodyObjects = message.body?.objects {
+            self.bodyObjects = bodyObjects
+        }
+        
+        if let bodyObjectIds = message.body?.objectIds {
+            self.bodyObjectIds = bodyObjectIds
+        }
     }
 }
