@@ -171,7 +171,7 @@ extension BaseMessageTableViewCell2 {
         if isForwarded {
             reactionsEditedStateView?.forwardedLabel.unhide()
         }
-        reactionsEditedStateView?.tap().sink { [weak self] _ in
+        reactionsEditedStateView?.reactionsView.tap().sink { [weak self] _ in
             self?.tapPublisher.send(.showReactions)
         }.store(in: &subs)
     }
