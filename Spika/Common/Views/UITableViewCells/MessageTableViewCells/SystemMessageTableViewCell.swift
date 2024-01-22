@@ -30,6 +30,8 @@ class SystemMessageTableViewCell: UITableViewCell {
 extension SystemMessageTableViewCell {
     func updateCell(message: Message) {
         
+        
+        
         if let text = message.body?.text {
             plainTextView.text = message.createdAt.convert(to: .HHmm) + " " + text
         }

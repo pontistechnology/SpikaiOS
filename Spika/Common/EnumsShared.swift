@@ -110,4 +110,31 @@ enum AppAction {
     case deleteReaction(Int64)
     case newGroupFlowSelectUsers([User])
     case forwardMessages(messageIds: [Int64], userIds: [Int64], roomIds: [Int64])
+    case addToExistingRoom([Int64])
+}
+
+enum UpdateRoomAction {
+    case addGroupUsers(userIds: [Int64])
+    case removeGroupUsers(userIds: [Int64])
+    case addGroupAdmins(userIds: [Int64])
+    case removeGroupAdmins(userIds: [Int64])
+    case changeGroupName(newName: String)
+    case changeGroupAvatar(fileId: Int64)
+    
+    var action: String {
+        switch self {
+        case .addGroupUsers:
+            "addGroupUsers"
+        case .removeGroupUsers:
+            "removeGroupUsers"
+        case .addGroupAdmins:
+            "addGroupAdmins"
+        case .removeGroupAdmins:
+            "removeGroupAdmins"
+        case .changeGroupName:
+            "changeGroupName"
+        case .changeGroupAvatar:
+            "changeGroupAvatar"
+        }
+    }
 }

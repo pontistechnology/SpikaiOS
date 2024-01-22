@@ -44,6 +44,7 @@ enum ChatDetailsMode {
 class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
     @Published var room: Room?
     let detailsMode: ChatDetailsMode
+    let actionPublisher: ActionPublisher
     @Published var showAddMembersScreen = false
     
     var isMyUserAdmin: Bool {
@@ -51,11 +52,50 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
     }
     
     init(repository: Repository, coordinator: Coordinator, 
-         detailsMode: ChatDetailsMode) {
+         detailsMode: ChatDetailsMode, actionPublisher: ActionPublisher) {
         self.detailsMode = detailsMode
         self.room = detailsMode.room
+        self.actionPublisher = actionPublisher
         super.init(repository: repository, coordinator: coordinator)
+        setupBindings()
         checkLocalPrivateRoom()
+    }
+    
+    func setupBindings() {
+        actionPublisher.sink { [weak self] action in
+            switch action {
+            case .addToExistingRoom(let userIds):
+                self?.addUsersToGroup(userIds: userIds)
+            default:
+                break
+            }
+        }.store(in: &subscriptions)
+    }
+    
+    func addUsersToGroup(userIds: [Int64]) {
+        guard let roomId = room?.id else { return }
+        repository.updateRoom(roomId: roomId, 
+                              action: .addGroupUsers(userIds: userIds))
+        .sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let room = response.data?.room else { return }
+            _ = self?.repository.updateRoomUsers(room: room)
+            self?.room = room
+        }.store(in: &subscriptions)
+    }
+    
+    func removeUsersFromGroup(userIds: [Int64]) {
+        guard let roomId = room?.id else { return }
+        repository.updateRoom(roomId: roomId,
+                              action: .removeGroupUsers(userIds: userIds))
+        .sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let room = response.data?.room else { return }
+            _ = self?.repository.updateRoomUsers(room: room)
+            self?.room = room
+        }.store(in: &subscriptions)
     }
     
     func checkLocalPrivateRoom() {

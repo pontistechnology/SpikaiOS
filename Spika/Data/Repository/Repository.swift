@@ -59,6 +59,7 @@ protocol Repository {
     func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error>
     func leaveOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CreateRoomResponseModel, Error>
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
+    func updateRoom(roomId: Int64, action: UpdateRoomAction) -> AnyPublisher<CreateRoomResponseModel, Error>
     
         // Message
     func sendMessage(body: RequestMessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<MessageResponse, Error>
@@ -134,10 +135,10 @@ protocol Repository {
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error>
     func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<EmptyResponse,Error>
     func pinUnpinRoom(roomId: Int64, pin: Bool) -> AnyPublisher<EmptyResponse,Error> 
-    func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
-    func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
-    func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error>
-    func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error>
+//    func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
+//    func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
+//    func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error>
+//    func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error>
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
     func updateUnreadCounts(unreadCounts: [UnreadCount])
     func updateUnreadCountToZeroFor(roomId: Int64)

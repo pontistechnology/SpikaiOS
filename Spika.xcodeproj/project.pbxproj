@@ -116,7 +116,6 @@
 		6C753DCD2A4C128800697AA6 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
 		6C753DCE2A4C128800697AA6 /* SeenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AE06EE290892B90009A50C /* SeenResponseModel.swift */; };
 		6C753DCF2A4C128800697AA6 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
-		6C753DD02A4C128800697AA6 /* CreateRoomRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */; };
 		6C753DD12A4C128800697AA6 /* CreateRoomResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053727D5C05F002E5CE5 /* CreateRoomResponseModel.swift */; };
 		6C753DD22A4C128800697AA6 /* MessageRecordEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F036A282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift */; };
 		6C753DD32A4C128800697AA6 /* CoreDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */; };
@@ -457,7 +456,6 @@
 		6C78B90229AF5D89004BF881 /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */; };
 		6C78B90329AF5D89004BF881 /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
 		6C78B90529AF5D89004BF881 /* SeenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AE06EE290892B90009A50C /* SeenResponseModel.swift */; };
-		6C78B90629AF5D89004BF881 /* CreateRoomRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */; };
 		6C78B90729AF5D89004BF881 /* CreateRoomResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053727D5C05F002E5CE5 /* CreateRoomResponseModel.swift */; };
 		6C78B90829AF5D89004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F036A282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift */; };
 		6C78B90929AF5D89004BF881 /* CoreDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */; };
@@ -823,7 +821,6 @@
 		931B14F228211AC100A0CD35 /* VerifyCodeRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD45272AECFA00736318 /* VerifyCodeRequestModel.swift */; };
 		931B14F328211AC100A0CD35 /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930290BB27A9FB180064BED1 /* UserRequestModel.swift */; };
 		931B14F428211AC100A0CD35 /* AuthRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9BFD43272ADBE700736318 /* AuthRequestModel.swift */; };
-		931B14F528211AC100A0CD35 /* CreateRoomRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */; };
 		931B14F628211AC100A0CD35 /* VerifyFileRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AB7227FED6FF00696757 /* VerifyFileRequestModel.swift */; };
 		931B14F728211AC100A0CD35 /* SendMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9727D6ED70002E3DED /* SendMessageRequest.swift */; };
 		931B14F828211AC100A0CD35 /* UpdatePushRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F2EE028172EEA0086C343 /* UpdatePushRequestModel.swift */; };
@@ -1212,6 +1209,9 @@
 		93E753112A4A6591000D51D6 /* AVAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */; };
 		93E753142A4A8C50000D51D6 /* PdfViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E753132A4A8C50000D51D6 /* PdfViewerViewController.swift */; };
 		93E753152A4A8C50000D51D6 /* PdfViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E753132A4A8C50000D51D6 /* PdfViewerViewController.swift */; };
+		93EA223C2B5DBF9C0060D8CD /* CreateRoomRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */; };
+		93EA223D2B5DBF9D0060D8CD /* CreateRoomRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */; };
+		93EA223E2B5DBF9E0060D8CD /* CreateRoomRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938D053527D5BFF8002E5CE5 /* CreateRoomRequestModel.swift */; };
 		93EACD062A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
 		93EACD072A0E46F7003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
 		93EACD082A0E47AB003C5E00 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
@@ -3707,7 +3707,6 @@
 				6C753DCD2A4C128800697AA6 /* UploadChunkRequestModel.swift in Sources */,
 				6C753DCE2A4C128800697AA6 /* SeenResponseModel.swift in Sources */,
 				6C753DCF2A4C128800697AA6 /* TelephoneNumber.swift in Sources */,
-				6C753DD02A4C128800697AA6 /* CreateRoomRequestModel.swift in Sources */,
 				6C753DD22A4C128800697AA6 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				6C753DD12A4C128800697AA6 /* CreateRoomResponseModel.swift in Sources */,
 				93BCDFF22A819AAE00CEE826 /* OneNoteResponseModel.swift in Sources */,
@@ -3719,6 +3718,7 @@
 				6C753DD82A4C128800697AA6 /* SendReactionResponseModel.swift in Sources */,
 				6C753DD92A4C128800697AA6 /* Constants+Strings.swift in Sources */,
 				6C753DDA2A4C128800697AA6 /* AppRepository+Device.swift in Sources */,
+				93EA223E2B5DBF9E0060D8CD /* CreateRoomRequestModel.swift in Sources */,
 				6C753DDB2A4C128800697AA6 /* Date+Extensions.swift in Sources */,
 				6C753DDC2A4C128800697AA6 /* MessageResponse.swift in Sources */,
 				6C753DDD2A4C128800697AA6 /* VerifyFileResponseModel.swift in Sources */,
@@ -4086,6 +4086,7 @@
 				932BADDA29CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */,
 				93EACD092A0E47AC003C5E00 /* UpdateMessageRequest.swift in Sources */,
 				6C78B8D629AF5D89004BF881 /* MessageRecordEntity+CoreDataClass.swift in Sources */,
+				93EA223D2B5DBF9D0060D8CD /* CreateRoomRequestModel.swift in Sources */,
 				6C78B8D729AF5D89004BF881 /* Int64+Extensions.swift in Sources */,
 				6C78B8D829AF5D89004BF881 /* AuthRequestModel.swift in Sources */,
 				6C78B8D929AF5D89004BF881 /* AppRepository+Rooms.swift in Sources */,
@@ -4141,7 +4142,6 @@
 				6C78B90329AF5D89004BF881 /* UploadChunkRequestModel.swift in Sources */,
 				6C78B90529AF5D89004BF881 /* SeenResponseModel.swift in Sources */,
 				933E20A329D8B0BE0013E798 /* TelephoneNumber.swift in Sources */,
-				6C78B90629AF5D89004BF881 /* CreateRoomRequestModel.swift in Sources */,
 				6C78B90729AF5D89004BF881 /* CreateRoomResponseModel.swift in Sources */,
 				6C78B90829AF5D89004BF881 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				93BCDFF32A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */,
@@ -4519,6 +4519,7 @@
 				932BADD829CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */,
 				93EACD082A0E47AB003C5E00 /* UpdateMessageRequest.swift in Sources */,
 				934F036C282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift in Sources */,
+				93EA223C2B5DBF9C0060D8CD /* CreateRoomRequestModel.swift in Sources */,
 				939AAE4428F6613D00DD5142 /* Int64+Extensions.swift in Sources */,
 				931B14F428211AC100A0CD35 /* AuthRequestModel.swift in Sources */,
 				931B14D8281FD91100A0CD35 /* AppRepository+Rooms.swift in Sources */,
@@ -4574,7 +4575,6 @@
 				931B14F128211AC100A0CD35 /* UploadChunkRequestModel.swift in Sources */,
 				933FD55A2908A05100C4A235 /* SeenResponseModel.swift in Sources */,
 				933E20A429D8B0BF0013E798 /* TelephoneNumber.swift in Sources */,
-				931B14F528211AC100A0CD35 /* CreateRoomRequestModel.swift in Sources */,
 				931B150628211AC600A0CD35 /* CreateRoomResponseModel.swift in Sources */,
 				934F036E282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				93BCDFF42A819AAF00CEE826 /* OneNoteResponseModel.swift in Sources */,

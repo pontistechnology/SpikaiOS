@@ -157,7 +157,7 @@ class AppCoordinator: Coordinator {
     }
     
     func presentChatDetailsScreen(detailsMode: ChatDetailsMode) {
-        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetails2ViewController.self, arguments: self, detailsMode)!
+        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetails2ViewController.self, arguments: self, detailsMode, actionsPublisher)!
         navigationController.pushViewController(roomDetailsViewController, animated: true)
     }
     

@@ -33,7 +33,7 @@ class NewGroup2ChatViewModel: BaseViewModel, ObservableObject {
         actionPublisher.sink { [weak self] action in
             switch action {
             case .newGroupFlowSelectUsers(let users):
-                self?.selectedMembers = users
+                self?.selectedMembers.append(contentsOf: users)
             default:
                 break
             }

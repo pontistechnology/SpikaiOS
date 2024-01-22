@@ -148,7 +148,11 @@ extension ChatDetails2View {
                 Text(verbatim: .getStringFor(.admin))
             }
             if showRemove {
-                Image(.rDx)
+                Button(action: {
+                    viewModel.removeUsersFromGroup(userIds: [user.id])
+                }, label: {
+                    Image(.rDx)
+                })
             }
         }.foregroundStyle(Color(.textPrimary))
     }

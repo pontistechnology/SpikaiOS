@@ -49,7 +49,7 @@ class SelectUsersOrGroupsViewModel: BaseViewModel, ObservableObject {
         case .forwardMessages(let messageIds):
             actionPublisher.send(.forwardMessages(messageIds: messageIds, userIds: selectedUsersAndGroups.onlyUserIds, roomIds: selectedUsersAndGroups.onlyRoomIds))
         case .addToExistingGroup:
-            break
+            actionPublisher.send(.addToExistingRoom(selectedUsersAndGroups.onlyUserIds))
         case .addToNewGroupCreationFlow:
             actionPublisher.send(.newGroupFlowSelectUsers(selectedUsersAndGroups.onlyUsers))
         }

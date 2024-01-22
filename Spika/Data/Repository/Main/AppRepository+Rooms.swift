@@ -133,65 +133,80 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error> {
+    func updateRoom(roomId: Int64, action: UpdateRoomAction) -> AnyPublisher<CreateRoomResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
         let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
-        let resources = Resources<CreateRoomResponseModel, EditRoomUsersRequestModel>(
+        let resources = Resources<CreateRoomResponseModel, EditRoomRequestModel>(
             path: url,
             requestType: .PUT,
-            bodyParameters: EditRoomUsersRequestModel(userIds: userIds),
+            bodyParameters: EditRoomRequestModel(action: action),
             httpHeaderFields: ["accesstoken" : accessToken])
         return networkService.performRequest(resources: resources)
     }
     
-    func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error> {
-        guard let accessToken = getAccessToken()
-        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
-        }
-        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
-        let resources = Resources<CreateRoomResponseModel, EditRoomAdminsRequestModel>(
-            path: url,
-            requestType: .PUT,
-            bodyParameters: EditRoomAdminsRequestModel(adminUserIds: adminIds),
-            httpHeaderFields: ["accesstoken" : accessToken])
-        return networkService.performRequest(resources: resources)
-    }
+//    func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error> {
+//        guard let accessToken = getAccessToken()
+//        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+//                .receive(on: DispatchQueue.main)
+//                .eraseToAnyPublisher()
+//        }
+//        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
+//        let resources = Resources<CreateRoomResponseModel, EditRoomRequestModel>(
+//            path: url,
+//            requestType: .PUT,
+//            bodyParameters: EditRoomRequestModel(userIds: userIds),
+//            httpHeaderFields: ["accesstoken" : accessToken])
+//        return networkService.performRequest(resources: resources)
+//    }
     
-    func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error> {
-        guard let accessToken = getAccessToken()
-        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
-        }
-        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
-        let resources = Resources<CreateRoomResponseModel, EditRoomAvatarRequestModel>(
-            path: url,
-            requestType: .PUT,
-            bodyParameters: EditRoomAvatarRequestModel(avatarFileId: avatarId),
-            httpHeaderFields: ["accesstoken" : accessToken])
-        return networkService.performRequest(resources: resources)
-    }
+//    func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error> {
+//        guard let accessToken = getAccessToken()
+//        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+//                .receive(on: DispatchQueue.main)
+//                .eraseToAnyPublisher()
+//        }
+//        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
+//        let resources = Resources<CreateRoomResponseModel, EditRoomAdminsRequestModel>(
+//            path: url,
+//            requestType: .PUT,
+//            bodyParameters: EditRoomAdminsRequestModel(adminUserIds: adminIds),
+//            httpHeaderFields: ["accesstoken" : accessToken])
+//        return networkService.performRequest(resources: resources)
+//    }
     
-    func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error> {
-        guard let accessToken = getAccessToken()
-        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
-                .receive(on: DispatchQueue.main)
-                .eraseToAnyPublisher()
-        }
-        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
-        let resources = Resources<CreateRoomResponseModel, EditRoomNameRequestModel>(
-            path: url,
-            requestType: .PUT,
-            bodyParameters: EditRoomNameRequestModel(name: newName),
-            httpHeaderFields: ["accesstoken" : accessToken])
-        return networkService.performRequest(resources: resources)
-    }
+//    func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error> {
+//        guard let accessToken = getAccessToken()
+//        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+//                .receive(on: DispatchQueue.main)
+//                .eraseToAnyPublisher()
+//        }
+//        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
+//        let resources = Resources<CreateRoomResponseModel, EditRoomAvatarRequestModel>(
+//            path: url,
+//            requestType: .PUT,
+//            bodyParameters: EditRoomAvatarRequestModel(avatarFileId: avatarId),
+//            httpHeaderFields: ["accesstoken" : accessToken])
+//        return networkService.performRequest(resources: resources)
+//    }
+    
+//    func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error> {
+//        guard let accessToken = getAccessToken()
+//        else {return Fail<CreateRoomResponseModel, Error>(error: NetworkError.noAccessToken)
+//                .receive(on: DispatchQueue.main)
+//                .eraseToAnyPublisher()
+//        }
+//        let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
+//        let resources = Resources<CreateRoomResponseModel, EditRoomNameRequestModel>(
+//            path: url,
+//            requestType: .PUT,
+//            bodyParameters: EditRoomNameRequestModel(name: newName),
+//            httpHeaderFields: ["accesstoken" : accessToken])
+//        return networkService.performRequest(resources: resources)
+//    }
     
     func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error> {
         guard let accessToken = getAccessToken()

@@ -534,12 +534,35 @@ extension CurrentChatViewModel {
 // FRC stuff
 
 extension CurrentChatViewModel {
+    func loadMore() {
+//        frc?.fetchRequest.fetchLimit = (frc?.fetchRequest.fetchLimit ?? 0) + 15
+//        frc?.fetchRequest.fetchOffset = (frc?.fetchRequest.fetchOffset ?? 10) - 15
+//        try? frc?.performFetch()
+        
+        // this to refresh add to VC
+        //            let oldTableViewHeight = currentChatView.messagesTableView.contentSize.height;
+        //
+        //            // Reload your table view with your new messages
+        //            viewModel.loadMore()
+        //            currentChatView.messagesTableView.reloadData()
+        //
+        //            // Put your scroll position to where it was before
+        //            let newTableViewHeight = currentChatView.messagesTableView.contentSize.height;
+        //            currentChatView.messagesTableView.contentOffset = CGPointMake(0, newTableViewHeight - oldTableViewHeight);
+    }
+    
     func setFetch() {
         let fetchRequest = MessageEntity.fetchRequest()
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "createdDate", ascending: true),
+            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true),
             NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
         fetchRequest.predicate = NSPredicate(format: "roomId == %d", room.id)
+//        let a = fetchRequest
+//        a.propertiesToFetch = [#keyPath(MessageEntity.createdAt)]
+//        let count = (try? repository.getMainContext().count(for: a)) ?? 0
+//        
+//        fetchRequest.fetchLimit = 15
+//        fetchRequest.fetchOffset = count - 15
         self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(),
                                               sectionNameKeyPath: "sectionName",
