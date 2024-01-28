@@ -323,6 +323,7 @@ extension AppCoordinator {
         getWindowManager().showPopUp(for: .errorMessage(message))
     }
     
+    // send cancel as nil if you want to hide cancel action
     func showAlert(title: String? = nil,
                    message: String? = nil,
                    style: UIAlertController.Style = .actionSheet,

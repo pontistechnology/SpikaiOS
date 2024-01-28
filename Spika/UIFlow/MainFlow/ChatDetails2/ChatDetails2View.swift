@@ -153,7 +153,7 @@ extension ChatDetails2View {
                 Text(verbatim: .getStringFor(.admin))
             } else if showRemove {
                 Button(action: {
-                    viewModel.removeUsersFromGroup(userIds: [user.id])
+                    viewModel.removeUsersFromGroup(user: user)
                 }, label: {
                     Image(.rDx)
                 })

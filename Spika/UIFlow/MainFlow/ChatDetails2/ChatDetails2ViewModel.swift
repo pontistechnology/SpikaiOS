@@ -54,17 +54,14 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
         }.store(in: &subscriptions)
     }
     
-    func removeUsersFromGroup(userIds: [Int64]) {
-        guard let roomId = room?.id else { return }
-        repository.updateRoom(roomId: roomId,
-                              action: .removeGroupUsers(userIds: userIds))
-        .sink { c in
-            
-        } receiveValue: { [weak self] response in
-            guard let room = response.data?.room else { return }
-            _ = self?.repository.updateRoomUsers(room: room)
-            self?.room = room
-        }.store(in: &subscriptions)
+    func removeUsersFromGroup(user: User) {
+        showYesNo(title: "Remove from group",
+                  message: "Are you sure you want to remove "
+            .appending(user.getDisplayName())
+            .appending(" from group?")) { [weak self] in
+                guard let self else { return }
+                updateRoomUsers(action: .removeGroupUsers(userIds: [user.id]))
+            }
     }
     
     func checkLocalPrivateRoom() {
@@ -285,11 +282,35 @@ extension ChatDetails2ViewModel {
             case 1:
                 if isMyUserAdmin {
                     if roomUser.isAdmin ?? false {
-                        updateRoomUsers(action: .removeGroupAdmins(userIds: [roomUser.userId]))
+                        showYesNo(title: "Dismiss as admin", 
+                                  message: "Are you sure you want to dismiss "
+                            .appending(roomUser.user.getDisplayName()
+                            .appending(" as group admin?"))) { [weak self] in
+                            guard let self else { return }
+                            updateRoomUsers(action: .removeGroupAdmins(userIds: [roomUser.userId]))
+                        }
                     } else {
-                        updateRoomUsers(action: .addGroupAdmins(userIds: [roomUser.userId]))
+                        showYesNo(title: "Make group admin", 
+                                  message: "Are you sure you want to make "
+                            .appending(roomUser.user.getDisplayName()
+                            .appending(" as group admin?"))) { [weak self] in
+                            guard let self else { return }
+                            updateRoomUsers(action: .addGroupAdmins(userIds: [roomUser.userId]))
+                        }
                     }
                 }
+            default:
+                break
+            }
+        }).store(in: &subscriptions)
+    }
+    
+    private func showYesNo(title: String, message: String, yes: @escaping ()->()) {
+        getAppCoordinator()?.showAlert(title: title, message: message, style: .alert, actions: [.regular(title: .getStringFor(.yes)), .regular(title: .getStringFor(.no))], cancelText: nil).sink(receiveValue: { [weak self] index in
+            guard let self else { return }
+            switch index {
+            case 0:
+                yes()
             default:
                 break
             }

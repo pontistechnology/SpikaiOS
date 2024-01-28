@@ -24,6 +24,7 @@ public extension Constants {
         case ok = "Ok"
         case you = "You"
         case yes = "Yes"
+        case no = "No"
         
         // MARK: - CountryPickerViewController
         case search = "Search"
