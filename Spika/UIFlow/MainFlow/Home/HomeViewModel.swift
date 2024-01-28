@@ -14,7 +14,8 @@ class HomeViewModel: BaseViewModel {
     
     override init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher?) {
         super.init(repository: repository, coordinator: coordinator, actionPublisher: actionPublisher)
-        self.setupUnreadMessagesFrc()
+        setupBindings()
+        setupUnreadMessagesFrc()
     }
     
     func setupBindings() {
@@ -42,14 +43,14 @@ class HomeViewModel: BaseViewModel {
         self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: self.repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
         do {
-            try self.frc?.performFetch()
+            try frc?.performFetch()
         } catch {
             fatalError("Failed to fetch entities: \(error)")
         }
     }
     
     func presentChat(roomId: Int64) {
-        self.repository.getRoomWithId(forRoomId: roomId)
+        repository.getRoomWithId(forRoomId: roomId)
             .receive(on: DispatchQueue.main)
             .sink { _ in
             } receiveValue: { [weak self] room in
@@ -94,6 +95,19 @@ extension HomeViewModel {
             guard let self else { return }
             _ = repository.saveLocalRooms(rooms: response.data?.newRooms ?? [])
             _ = repository.saveMessages(response.data?.messages ?? [])
+            
+            // if forwarded to many, show one sec alert
+            guard userIds.count + roomIds.count <= 1 else {
+                showOneSecAlert(type: .forward)
+                return
+            }
+            
+            // if forwarded to only one, user or room
+            if let roomId = response.data?.messages.first?.roomId {
+                getAppCoordinator()?.presentHomeScreen(startSyncAndSSE: true, startTab: .chat(withChatId: roomId))
+            }
         }.store(in: &subscriptions)
     }
+    
+    
 }
