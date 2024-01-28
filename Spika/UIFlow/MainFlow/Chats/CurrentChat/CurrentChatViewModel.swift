@@ -37,10 +37,22 @@ class CurrentChatViewModel: BaseViewModel {
     
     let scrollToMessageId: Int64?
     
-    init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?) {
+    init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?, actionPublisher: ActionPublisher) {
         self.scrollToMessageId = scrollToMessageId
         self.room = room
-        super.init(repository: repository, coordinator: coordinator)
+        super.init(repository: repository, coordinator: coordinator, actionPublisher: actionPublisher)
+        setupBindings()
+    }
+    
+    func setupBindings() {
+        actionPublisher?.sink(receiveValue: { [weak self] action in
+            switch action {
+            case .updateRoom(let room):
+                self?.room = room
+            default:
+                break
+            }
+        }).store(in: &subscriptions)
     }
     
     func getSenderTypeFor(message: Message) -> MessageSender {

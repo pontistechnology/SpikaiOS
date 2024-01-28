@@ -13,7 +13,6 @@ import SwiftUI
 class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
     @Published var room: Room?
     let detailsMode: ChatDetailsMode
-    let actionPublisher: ActionPublisher
     @Published var showAddMembersScreen = false
     
     var isMyUserAdmin: Bool {
@@ -24,14 +23,13 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
          detailsMode: ChatDetailsMode, actionPublisher: ActionPublisher) {
         self.detailsMode = detailsMode
         self.room = detailsMode.room
-        self.actionPublisher = actionPublisher
-        super.init(repository: repository, coordinator: coordinator)
+        super.init(repository: repository, coordinator: coordinator, actionPublisher: actionPublisher)
         setupBindings()
         checkLocalPrivateRoom()
     }
     
     func setupBindings() {
-        actionPublisher.sink { [weak self] appAction in
+        actionPublisher?.sink { [weak self] appAction in
             switch appAction {
             case .addToExistingRoom(let userIds):
                 self?.updateRoomUsers(action: .addGroupUsers(userIds: userIds))
@@ -51,6 +49,7 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
             guard let room = response.data?.room else { return }
             _ = self?.repository.updateRoomUsers(room: room)
             self?.room = room
+            self?.actionPublisher?.send(.updateRoom(room: room))
         }.store(in: &subscriptions)
     }
     

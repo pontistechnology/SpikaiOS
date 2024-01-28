@@ -12,7 +12,7 @@ class BlockedUsersViewModel: BaseSettingsViewModel {
     
     let blockedUsers = CurrentValueSubject<[User]?,Never>(nil)
     
-    override init(repository: Repository, coordinator: Coordinator) {
+    override init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher? = nil) {
         super.init(repository: repository, coordinator: coordinator)
         self.fetchBlockedUsers()
     }

@@ -94,14 +94,13 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleHomeViewController(_ container: Container) {
-        container.register(HomeViewModel.self) { (resolver, coordinator: AppCoordinator) in
+        container.register(HomeViewModel.self) { (resolver, coordinator: AppCoordinator, publisher: ActionPublisher) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return HomeViewModel(repository: repository, coordinator: coordinator)
+            return HomeViewModel(repository: repository, coordinator: coordinator, actionPublisher: publisher)
         }.inObjectScope(.transient)
         
         container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator, startTab: TabBarItem, publisher: ActionPublisher) in
-            let controller = HomeViewController(viewModel: container.resolve(HomeViewModel.self, argument: coordinator)!,
-                                                startTab: startTab, publisher: publisher)
+            let controller = HomeViewController(viewModel: container.resolve(HomeViewModel.self, arguments: coordinator, publisher)!, startTab: startTab)
             return controller
         }.inObjectScope(.transient)
     }

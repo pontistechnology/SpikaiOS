@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 class SelectUsersOrGroupsViewModel: BaseViewModel, ObservableObject {
-    let actionPublisher: ActionPublisher
     var hideUserIds: [Int64]
     let purpose: SelectUsersOrGroupsPurpose
     @Published var searchTerm = ""
@@ -37,21 +36,20 @@ class SelectUsersOrGroupsViewModel: BaseViewModel, ObservableObject {
     }
 
     init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher, purpose: SelectUsersOrGroupsPurpose) {
-        self.actionPublisher = actionPublisher
         self.hideUserIds = purpose.hideUserIds
         self.purpose = purpose
-        super.init(repository: repository, coordinator: coordinator)
+        super.init(repository: repository, coordinator: coordinator, actionPublisher: actionPublisher)
         hideUserIds.append(myUserId) // hiding my user
     }
     
     func doneButtonTap() {
         switch purpose {
         case .forwardMessages(let messageIds):
-            actionPublisher.send(.forwardMessages(messageIds: messageIds, userIds: selectedUsersAndGroups.onlyUserIds, roomIds: selectedUsersAndGroups.onlyRoomIds))
+            actionPublisher?.send(.forwardMessages(messageIds: messageIds, userIds: selectedUsersAndGroups.onlyUserIds, roomIds: selectedUsersAndGroups.onlyRoomIds))
         case .addToExistingGroup:
-            actionPublisher.send(.addToExistingRoom(selectedUsersAndGroups.onlyUserIds))
+            actionPublisher?.send(.addToExistingRoom(selectedUsersAndGroups.onlyUserIds))
         case .addToNewGroupCreationFlow:
-            actionPublisher.send(.newGroupFlowSelectUsers(selectedUsersAndGroups.onlyUsers))
+            actionPublisher?.send(.newGroupFlowSelectUsers(selectedUsersAndGroups.onlyUsers))
         }
     }
 }

@@ -112,6 +112,7 @@ enum AppAction {
     case newGroupFlowSelectUsers([User])
     case forwardMessages(messageIds: [Int64], userIds: [Int64], roomIds: [Int64])
     case addToExistingRoom([Int64])
+    case updateRoom(room: Room)
 }
 
 enum UpdateRoomAction {

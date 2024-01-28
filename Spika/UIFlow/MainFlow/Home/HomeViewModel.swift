@@ -12,9 +12,23 @@ class HomeViewModel: BaseViewModel {
     
     var frc: NSFetchedResultsController<RoomEntity>?
     
-    override init(repository: Repository, coordinator: Coordinator) {
-        super.init(repository: repository, coordinator: coordinator)
+    override init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher?) {
+        super.init(repository: repository, coordinator: coordinator, actionPublisher: actionPublisher)
         self.setupUnreadMessagesFrc()
+    }
+    
+    func setupBindings() {
+        actionPublisher?.sink { [weak self] action in
+            guard let self else { return }
+            switch action {
+            case .deleteReaction(let recordId):
+                deleteReaction(recordId: recordId)
+            case .forwardMessages(let messageIds, let userIds, let roomIds):
+                forwardMessages(messageIds: messageIds, userIds: userIds, roomIds: roomIds)
+            default:
+                break
+            }
+        }.store(in: &subscriptions)
     }
     
     func setupUnreadMessagesFrc() {

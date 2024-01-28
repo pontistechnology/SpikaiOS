@@ -171,7 +171,6 @@ extension ChatDetails2View {
                 } label: {
                     Image(.rDplus)
                 }
-
             }
         }.foregroundStyle(Color(.textPrimary))
     }

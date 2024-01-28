@@ -12,7 +12,7 @@ class BaseSettingsViewModel: BaseViewModel {
     
     let user = CurrentValueSubject<User?,Error>(nil)
     
-    override init(repository: Repository, coordinator: Coordinator) {
+    override init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher? = nil) {
         super.init(repository: repository, coordinator: coordinator)
         self.loadLocalUser()
         self.fetchUserDetails()
