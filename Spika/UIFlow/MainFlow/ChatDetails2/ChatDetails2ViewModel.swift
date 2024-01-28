@@ -10,37 +10,6 @@ import Combine
 import ContactsUI
 import SwiftUI
 
-enum ChatDetailsMode {
-    case contact(User)
-    case roomDetails(CurrentValueSubject<Room, Never>)
-    
-    var description: String {
-        return switch self {
-        case .contact:
-            .getStringFor(.privateContact)
-        case .roomDetails:
-            .getStringFor(.group)
-        }
-    }
-    
-    var isPrivate: Bool {
-        return switch self {
-        case .contact: true
-        case .roomDetails: false
-        }
-    }
-    
-    var isGroup: Bool { !isPrivate }
-    
-    var room: Room? { 
-        return if case .roomDetails(let currentValueSubject) = self {
-            currentValueSubject.value
-        } else { 
-            nil
-        }
-    }
-}
-
 class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
     @Published var room: Room?
     let detailsMode: ChatDetailsMode
@@ -62,20 +31,20 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
     }
     
     func setupBindings() {
-        actionPublisher.sink { [weak self] action in
-            switch action {
+        actionPublisher.sink { [weak self] appAction in
+            switch appAction {
             case .addToExistingRoom(let userIds):
-                self?.addUsersToGroup(userIds: userIds)
+                self?.updateRoomUsers(action: .addGroupUsers(userIds: userIds))
             default:
                 break
             }
         }.store(in: &subscriptions)
     }
     
-    func addUsersToGroup(userIds: [Int64]) {
+    func updateRoomUsers(action: UpdateRoomAction) {
         guard let roomId = room?.id else { return }
         repository.updateRoom(roomId: roomId, 
-                              action: .addGroupUsers(userIds: userIds))
+                              action: action)
         .sink { c in
             
         } receiveValue: { [weak self] response in
@@ -293,5 +262,37 @@ extension ChatDetails2ViewModel {
     func presentAllNotesScreen() {
         guard let room else { return }
         getAppCoordinator()?.presentNotesScreen(roomId: room.id)
+    }
+}
+
+extension ChatDetails2ViewModel {
+    func clickOnMemberRow(roomUser: RoomUser) {
+        var actions = [AlertViewButton.regular(title: "Info")]
+        
+        if isMyUserAdmin {
+            if roomUser.isAdmin ?? false {
+                actions.append(.regular(title: "Dismiss as admin"))
+            } else {
+                actions.append(.regular(title: "Make group admin"))
+            }
+        }
+        
+        getAppCoordinator()?.showAlert(style: .actionSheet, actions: actions).sink(receiveValue: { [weak self] index in
+            guard let self else { return }
+            switch index {
+            case 0:
+                getAppCoordinator()?.presentChatDetailsScreen(detailsMode: .contact(roomUser.user))
+            case 1:
+                if isMyUserAdmin {
+                    if roomUser.isAdmin ?? false {
+                        updateRoomUsers(action: .removeGroupAdmins(userIds: [roomUser.userId]))
+                    } else {
+                        updateRoomUsers(action: .addGroupAdmins(userIds: [roomUser.userId]))
+                    }
+                }
+            default:
+                break
+            }
+        }).store(in: &subscriptions)
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 enum RoomType: String, Codable, Comparable {
     case privateRoom = "private"
@@ -135,6 +136,37 @@ enum UpdateRoomAction {
             "changeGroupName"
         case .changeGroupAvatar:
             "changeGroupAvatar"
+        }
+    }
+}
+
+enum ChatDetailsMode {
+    case contact(User)
+    case roomDetails(CurrentValueSubject<Room, Never>)
+    
+    var description: String {
+        return switch self {
+        case .contact:
+            .getStringFor(.privateContact)
+        case .roomDetails:
+            .getStringFor(.group)
+        }
+    }
+    
+    var isPrivate: Bool {
+        return switch self {
+        case .contact: true
+        case .roomDetails: false
+        }
+    }
+    
+    var isGroup: Bool { !isPrivate }
+    
+    var room: Room? {
+        return if case .roomDetails(let currentValueSubject) = self {
+            currentValueSubject.value
+        } else {
+            nil
         }
     }
 }

@@ -41,10 +41,15 @@ struct ChatDetails2View: View {
                     memberCountAndPlus(isAdmin: viewModel.isMyUserAdmin)
                         .padding(.vertical, 12)
                     ForEach(room.users) { roomUser in
-                        memberRowView(user: roomUser.user,
-                                      isAdmin: roomUser.isAdmin ?? false,
-                                      isMyUser: roomUser.userId == viewModel.myUserId,
-                                      showRemove: viewModel.isMyUserAdmin)
+                        Button {
+                            viewModel.clickOnMemberRow(roomUser: roomUser)
+                        } label: {
+                            memberRowView(user: roomUser.user,
+                                          isAdmin: roomUser.isAdmin ?? false,
+                                          isMyUser: roomUser.userId == viewModel.myUserId,
+                                          showRemove: viewModel.isMyUserAdmin)
+                        }
+
                     }
                 }
                 
