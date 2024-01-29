@@ -50,4 +50,12 @@ class BaseViewModel: NSObject {
         else { return nil }
         return resizedImage
     }
+    
+    @objc func saveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if error == nil {
+            showOneSecAlert(type: .save)
+        } else {
+            showError("Error occured. Check permissions for photos.")
+        }
+    }
 }

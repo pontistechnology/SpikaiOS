@@ -21,6 +21,7 @@ public extension Constants {
         case shared = "shared"
         case delete = "Delete"
         case edit = "Edit"
+        case download = "Download"
         case ok = "Ok"
         case you = "You"
         case yes = "Yes"

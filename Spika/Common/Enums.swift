@@ -160,46 +160,50 @@ enum MessageAction {
     case favorite
     case delete
     case edit
+    case download
     
     var textForLabel: String {
-        switch self {
+        return switch self {
         case .reaction, .showCustomReactions:
-            return ""
+            ""
         case .reply:
-            return .getStringFor(.reply)
+            .getStringFor(.reply)
         case .forward:
-            return .getStringFor(.forward)
+            .getStringFor(.forward)
         case .copy:
-            return .getStringFor(.copy)
+            .getStringFor(.copy)
         case .details:
-            return .getStringFor(.details)
+            .getStringFor(.details)
         case .favorite:
-            return .getStringFor(.favorite)
+            .getStringFor(.favorite)
         case .delete:
-            return .getStringFor(.delete)
+            .getStringFor(.delete)
         case .edit:
-            return .getStringFor(.edit)
-        }
+            .getStringFor(.edit)
+        case .download:
+            .getStringFor(.download)        }
     }
     
     var assetNameForIcon: ImageResource {
-        switch self {
+        return switch self {
         case .reaction, .showCustomReactions:
-            return .unknownFileThumbnail
+            .unknownFileThumbnail
         case .reply:
-            return .replyMessage
+            .replyMessage
         case .forward:
-            return .forwardMessage
+            .forwardMessage
         case .copy:
-            return .copyMessage
+            .copyMessage
         case .details:
-            return .detailsMessage
+            .detailsMessage
         case .favorite:
-            return .favoriteMessage
+            .favoriteMessage
         case .delete:
-            return .deleteMessage
+            .deleteMessage
         case .edit:
-            return .editIcon
+            .editIcon
+        case .download:
+            .downloadMessage
         }
     }
 }

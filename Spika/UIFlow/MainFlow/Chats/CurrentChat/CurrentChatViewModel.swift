@@ -122,7 +122,7 @@ extension CurrentChatViewModel {
         if message.fromUserId == myUserId && message.type == .text && !message.isForwarded {
             [.reply, .forward, .copy, .edit, .details, .favorite, .delete]
         } else {
-            [.reply, .forward, .copy, .details, .favorite, .delete]
+            [.reply, .forward, (message.type == .image ? .download : .copy ), .details, .favorite, .delete]
         }
         
         getAppCoordinator()?
@@ -133,12 +133,12 @@ extension CurrentChatViewModel {
                 guard let id = message.id else { return }
                 switch action {
                 case .reaction(emoji: let emoji):
-                    self.sendReaction(reaction: emoji, messageId: id)
+                    sendReaction(reaction: emoji, messageId: id)
                 case .reply:
-                    self.selectedMessageToReplyPublisher.send(message)
+                    selectedMessageToReplyPublisher.send(message)
                 case .copy:
                     UIPasteboard.general.string = message.body?.text
-                    self.showOneSecAlert(type: .copy)
+                    showOneSecAlert(type: .copy)
                 case .details:
                     let users = self.room.users.compactMap { $0.user }
                     self.getAppCoordinator()?.presentMessageDetails(users: users, message: message)
@@ -151,6 +151,12 @@ extension CurrentChatViewModel {
                 case .forward:
                     guard let messageId = message.id else { return }
                     getAppCoordinator()?.presentForwardScreen(ids: [messageId], context: repository.getMainContext())
+                case .download:
+                    guard let url = message.body?.file?.id?.fullFilePathFromId(),
+                          let data = try? Data(contentsOf: url),
+                          let uiimage = UIImage(data: data)
+                    else { return }
+                    UIImageWriteToSavedPhotosAlbum(uiimage, self, #selector(saveCompleted), nil)
                 default:
                     break
                 }
