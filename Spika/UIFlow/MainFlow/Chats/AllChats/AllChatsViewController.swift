@@ -93,14 +93,14 @@ extension AllChatsViewController: UITableViewDataSource {
 
             let data = viewModel.dataForCellForMessages(at: indexPath)
             cell?.configureCell(senderName: data.0, time: data.1, text: data.2)
-            return cell ?? EmptyTableViewCell()
+            return cell ?? UnknownTableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
-            guard let data = viewModel.dataForCellForRooms(at: indexPath) else { return EmptyTableViewCell() }
+            guard let data = viewModel.dataForCellForRooms(at: indexPath) else { return UnknownTableViewCell() }
             cell?.configureCell(avatarUrl: data.avatarUrl, name: data.name,
                                 description: data.description, time: data.time,
                                 badgeNumber: data.badgeNumber, muted: data.muted, pinned: data.pinned)
-            return cell ?? EmptyTableViewCell()
+            return cell ?? UnknownTableViewCell()
         }
     }
 }

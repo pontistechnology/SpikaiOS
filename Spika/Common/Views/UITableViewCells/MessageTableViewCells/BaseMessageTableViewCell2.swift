@@ -145,7 +145,7 @@ extension BaseMessageTableViewCell2 {
                                         isEdited: Bool,
                                         messageState: MessageState,
                                         isForTextCell: Bool,
-                                        isMyMessage: Bool) {
+                                        isMyMessage: Bool, isForwarded: Bool) {
         reactionsEditedStateView = ReactionsEditedCheckmarkStackview(emojis: reactionRecords.compactMap { $0.reaction }, isMyMessage: isMyMessage)
         if reactionsEditedStateView?.superview == nil {
             if isForTextCell {
@@ -168,7 +168,10 @@ extension BaseMessageTableViewCell2 {
             reactionsEditedStateView?.messageStateView.unhide()
         }
         
-        reactionsEditedStateView?.tap().sink { [weak self] _ in
+        if isForwarded {
+            reactionsEditedStateView?.forwardedLabel.unhide()
+        }
+        reactionsEditedStateView?.reactionsView.tap().sink { [weak self] _ in
             self?.tapPublisher.send(.showReactions)
         }.store(in: &subs)
     }

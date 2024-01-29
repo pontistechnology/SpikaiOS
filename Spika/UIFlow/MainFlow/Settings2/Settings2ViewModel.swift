@@ -27,7 +27,7 @@ class Settings2ViewModel: BaseViewModel, ObservableObject {
     
     var selectedSource: UIImagePickerController.SourceType = .photoLibrary
     
-    override init(repository: Repository, coordinator: Coordinator) {
+    override init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher? = nil) {
         super.init(repository: repository, coordinator: coordinator)
         loadLocalUser()
     }

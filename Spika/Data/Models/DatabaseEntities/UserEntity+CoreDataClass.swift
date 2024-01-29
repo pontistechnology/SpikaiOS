@@ -64,9 +64,6 @@ public class UserEntity: NSManagedObject {
 //    }
     
     @objc public var sectionName: String {
-        guard let contactsName = contactsName else {
-            return "###"
-        }
-        return String(contactsName.first?.uppercased() ?? "#")
+        return String(contactsName?.first?.uppercased() ?? "#")
     }
 }

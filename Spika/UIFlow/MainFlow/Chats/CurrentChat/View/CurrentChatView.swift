@@ -76,11 +76,14 @@ class CurrentChatView: UIView, BaseView {
                      FileMessageTableViewCell.self,
                      AudioMessageTableViewCell.self,
                      VideoMessageTableViewCell.self,
-                     DeletedMessageTableViewCell.self]
+                     DeletedMessageTableViewCell.self,
+                     SystemMessageTableViewCell.self]
         
         cells.forEach { cell in
             messagesTableView.register(cell, forCellReuseIdentifier:  String(describing: cell))
         }
+        
+        messagesTableView.register(UnknownTableViewCell.self, forCellReuseIdentifier: "UnknownMessageTableViewCell")
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     }

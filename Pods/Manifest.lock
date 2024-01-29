@@ -113,7 +113,7 @@ PODS:
   - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
   - IKEventSource (3.0.1)
-  - Kingfisher (7.6.2)
+  - Kingfisher (7.10.1)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -135,10 +135,10 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Crashlytics
   - Firebase/Messaging
-  - IKEventSource (= 3.0.1)
-  - Kingfisher (= 7.6.2)
+  - IKEventSource
+  - Kingfisher
   - PhoneNumberKit (from `https://github.com/marmelroy/PhoneNumberKit`)
-  - Swinject (= 2.8.3)
+  - Swinject
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -168,7 +168,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   PhoneNumberKit:
-    :commit: d2886b0735a47e47fb227504666756efb2e2ac26
+    :commit: b8f4e10c33c081f5d919907a7fcd6048e7e81e8f
     :git: https://github.com/marmelroy/PhoneNumberKit
 
 SPEC CHECKSUMS:
@@ -186,13 +186,13 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   IKEventSource: ababa323587c6b0c250dd54d4a48ab68fd845e8e
-  Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
+  Kingfisher: bc5abe80a8e0144537ef1dd5a0b2621b04f7f439
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PhoneNumberKit: 3c68a822bad955ffcefc72a52df72b6596498555
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
   Swinject: 893c9a543000ac2f10ee4cbaf0933c6992c935d5
 
-PODFILE CHECKSUM: a9e33eae99e59205daad9121fc7fa70876d17887
+PODFILE CHECKSUM: e71db134c5a0edc7869bc6eba7e5edfcc9413a35
 
 COCOAPODS: 1.14.2

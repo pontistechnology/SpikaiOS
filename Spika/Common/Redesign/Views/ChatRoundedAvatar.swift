@@ -20,7 +20,7 @@ struct ChatRoundedAvatar: View {
                     Image(uiImage: imageForUpload)
                         .resizable()
                 } else {
-                    Image(isGroupRoom ? .rDDefaultGroup : .rDdefaultUser)
+                    Image(isGroupRoom ? .rdDefaultGroup : .rDdefaultUser)
                         .resizable()
                 }
             }

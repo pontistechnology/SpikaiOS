@@ -36,6 +36,7 @@ extension CustomTextView {
         text = title
         isScrollEnabled = false
         backgroundColor = .clear
+        textAlignment = alignment
         font = .customFont(name: fontName, size: titleSize)
         textColor = titleColor
         linkTextAttributes = [.foregroundColor : UIColor.textPrimary,

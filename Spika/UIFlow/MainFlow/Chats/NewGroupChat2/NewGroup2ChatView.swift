@@ -95,7 +95,7 @@ struct NewGroup2ChatView: View {
         }
         .modifier(SpikaBackgroundGradient())
         .sheet(isPresented: $viewModel.showAddMembersScreen) {
-            SelectUsersView(selectedUsers: $viewModel.selectedMembers)
+            viewModel.getAppCoordinator()?.getSelectUsersOrGroupsView(purpose: .addToNewGroupCreationFlow(hiddenUserIds: viewModel.selectedMembers.compactMap({ $0.id })))
                 .environment(\.managedObjectContext, viewModel.repository.getMainContext())
         }
         .sheet(isPresented: $viewModel.showImagePicker) {

@@ -160,46 +160,50 @@ enum MessageAction {
     case favorite
     case delete
     case edit
+    case download
     
     var textForLabel: String {
-        switch self {
+        return switch self {
         case .reaction, .showCustomReactions:
-            return ""
+            ""
         case .reply:
-            return .getStringFor(.reply)
+            .getStringFor(.reply)
         case .forward:
-            return .getStringFor(.forward)
+            .getStringFor(.forward)
         case .copy:
-            return .getStringFor(.copy)
+            .getStringFor(.copy)
         case .details:
-            return .getStringFor(.details)
+            .getStringFor(.details)
         case .favorite:
-            return .getStringFor(.favorite)
+            .getStringFor(.favorite)
         case .delete:
-            return .getStringFor(.delete)
+            .getStringFor(.delete)
         case .edit:
-            return .getStringFor(.edit)
-        }
+            .getStringFor(.edit)
+        case .download:
+            .getStringFor(.download)        }
     }
     
     var assetNameForIcon: ImageResource {
-        switch self {
+        return switch self {
         case .reaction, .showCustomReactions:
-            return .unknownFileThumbnail
+            .unknownFileThumbnail
         case .reply:
-            return .replyMessage
+            .replyMessage
         case .forward:
-            return .forwardMessage
+            .forwardMessage
         case .copy:
-            return .copyMessage
+            .copyMessage
         case .details:
-            return .detailsMessage
+            .detailsMessage
         case .favorite:
-            return .favoriteMessage
+            .favoriteMessage
         case .delete:
-            return .deleteMessage
+            .deleteMessage
         case .edit:
-            return .editIcon
+            .editIcon
+        case .download:
+            .downloadMessage
         }
     }
 }
@@ -368,6 +372,83 @@ enum SpikaTheme: String, CaseIterable {
     }
 }
 
+enum SelectedUserOrGroup: Identifiable, Hashable {
+    case user(UserEntity)
+    case room(RoomEntity)
+    
+    var id: String {
+        return switch self {
+        case .user(let userEntity):
+            "user\(userEntity.id)" //prefix is needed because room and user can have same number for id
+        case .room(let roomEntity):
+            "room\(roomEntity.id)"
+        }
+    }
+    
+    var user: UserEntity? {
+        switch self {
+        case .user(let userEntity):
+            userEntity
+        case .room:
+            nil
+        }
+    }
+    
+    var room: RoomEntity? {
+        switch self {
+        case .user:
+            nil
+        case .room(let roomEntity):
+            roomEntity
+        }
+    }
+    
+    var avatarURL: URL? {
+        switch self {
+        case .user(let userEntity):
+            userEntity.avatarFileId.fullFilePathFromId()
+        case .room(let roomEntity):
+            roomEntity.avatarFileId.fullFilePathFromId()
+        }
+    }
+    
+    var displayName: String {
+        switch self {
+        case .user(let userEntity):
+            User(entity: userEntity).getDisplayName()
+        case .room(let roomEntity):
+            roomEntity.name ?? "no name"
+        }
+    }
+    
+    var description: String? {
+        switch self {
+        case .user(let userEntity):
+            user?.telephoneNumber
+        case .room(let roomEntity):
+            room?.type
+        }
+    }
+    
+    var placeholderImage: ImageResource {
+        switch self {
+        case .user:
+            .rDdefaultUser
+        case .room:
+            .rdDefaultGroup
+        }
+    }
+}
+
+extension [SelectedUserOrGroup] {
+    var onlyUsers: [User] {self.compactMap { $0.user }.compactMap { User(entity: $0)}}
+    
+    var onlyUserIds: [Int64] {
+        onlyUsers.compactMap { $0.id }
+    }
+    
+    var onlyRoomIds: [Int64] {self.compactMap { $0.room?.id }}
+}
 
 
 

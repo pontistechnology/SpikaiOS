@@ -37,10 +37,22 @@ class CurrentChatViewModel: BaseViewModel {
     
     let scrollToMessageId: Int64?
     
-    init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?) {
+    init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?, actionPublisher: ActionPublisher) {
         self.scrollToMessageId = scrollToMessageId
         self.room = room
-        super.init(repository: repository, coordinator: coordinator)
+        super.init(repository: repository, coordinator: coordinator, actionPublisher: actionPublisher)
+        setupBindings()
+    }
+    
+    func setupBindings() {
+        actionPublisher?.sink(receiveValue: { [weak self] action in
+            switch action {
+            case .updateRoom(let room):
+                self?.room = room
+            default:
+                break
+            }
+        }).store(in: &subscriptions)
     }
     
     func getSenderTypeFor(message: Message) -> MessageSender {
@@ -107,10 +119,10 @@ extension CurrentChatViewModel {
     func showMessageActions(_ message: Message) {
         guard !message.deleted else { return }
         let actions: [MessageAction] =
-        if message.fromUserId == myUserId && message.type == .text {
+        if message.fromUserId == myUserId && message.type == .text && !message.isForwarded {
             [.reply, .forward, .copy, .edit, .details, .favorite, .delete]
         } else {
-            [.reply, .forward, .copy, .details, .favorite, .delete]
+            [.reply, .forward, (message.type == .image ? .download : .copy ), .details, .favorite, .delete]
         }
         
         getAppCoordinator()?
@@ -121,12 +133,12 @@ extension CurrentChatViewModel {
                 guard let id = message.id else { return }
                 switch action {
                 case .reaction(emoji: let emoji):
-                    self.sendReaction(reaction: emoji, messageId: id)
+                    sendReaction(reaction: emoji, messageId: id)
                 case .reply:
-                    self.selectedMessageToReplyPublisher.send(message)
+                    selectedMessageToReplyPublisher.send(message)
                 case .copy:
                     UIPasteboard.general.string = message.body?.text
-                    self.showOneSecAlert(type: .copy)
+                    showOneSecAlert(type: .copy)
                 case .details:
                     let users = self.room.users.compactMap { $0.user }
                     self.getAppCoordinator()?.presentMessageDetails(users: users, message: message)
@@ -136,6 +148,15 @@ extension CurrentChatViewModel {
                     self.selectedMessageToEditPublisher.send(message)
                 case .showCustomReactions:
                     self.showCustomReactionPicker(message: message)
+                case .forward:
+                    guard let messageId = message.id else { return }
+                    getAppCoordinator()?.presentForwardScreen(ids: [messageId], context: repository.getMainContext())
+                case .download:
+                    guard let url = message.body?.file?.id?.fullFilePathFromId(),
+                          let data = try? Data(contentsOf: url),
+                          let uiimage = UIImage(data: data)
+                    else { return }
+                    UIImageWriteToSavedPhotosAlbum(uiimage, self, #selector(saveCompleted), nil)
                 default:
                     break
                 }
@@ -189,7 +210,7 @@ extension CurrentChatViewModel {
                               fromUserId: myUserId,
                               roomId: room.id,
                               type: .text,
-                              body: MessageBody(text: text, file: nil, thumb: nil),
+                              body: MessageBody(text: text, file: nil, thumb: nil, type: nil, subject: nil, subjectId: nil, objects: nil, objectIds: nil),
                               replyId: selectedMessageToReplyPublisher.value?.id,
                               localId: uuid)
         
@@ -266,7 +287,7 @@ extension CurrentChatViewModel {
                               body: MessageBody(text: nil, file: nil,
                                                 thumb: FileData(id: nil, fileName: nil,
                                                                 mimeType: nil, size: nil,
-                                                                metaData: MetaData(width: width.roundedInt64, height: height.roundedInt64, duration: 0))),
+                                                                metaData: MetaData(width: width.roundedInt64, height: height.roundedInt64, duration: 0)), type: nil, subject: nil, subjectId: nil, objects: nil, objectIds: nil),
                               replyId: nil, localId: uuid)
         saveMessage(message: message)
     }
@@ -379,7 +400,7 @@ extension CurrentChatViewModel {
                                                                 fileName: nil,
                                                                 mimeType: nil,
                                                                 size: nil,
-                                                                metaData: file.thumbMetadata)),
+                                                                metaData: file.thumbMetadata), type: nil, subject: nil, subjectId: nil, objects: nil, objectIds: nil),
                               replyId: nil,
                               localId: uuid)
         
@@ -531,12 +552,35 @@ extension CurrentChatViewModel {
 // FRC stuff
 
 extension CurrentChatViewModel {
+    func loadMore() {
+//        frc?.fetchRequest.fetchLimit = (frc?.fetchRequest.fetchLimit ?? 0) + 15
+//        frc?.fetchRequest.fetchOffset = (frc?.fetchRequest.fetchOffset ?? 10) - 15
+//        try? frc?.performFetch()
+        
+        // this to refresh add to VC
+        //            let oldTableViewHeight = currentChatView.messagesTableView.contentSize.height;
+        //
+        //            // Reload your table view with your new messages
+        //            viewModel.loadMore()
+        //            currentChatView.messagesTableView.reloadData()
+        //
+        //            // Put your scroll position to where it was before
+        //            let newTableViewHeight = currentChatView.messagesTableView.contentSize.height;
+        //            currentChatView.messagesTableView.contentOffset = CGPointMake(0, newTableViewHeight - oldTableViewHeight);
+    }
+    
     func setFetch() {
         let fetchRequest = MessageEntity.fetchRequest()
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "createdDate", ascending: true),
+            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true),
             NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
         fetchRequest.predicate = NSPredicate(format: "roomId == %d", room.id)
+//        let a = fetchRequest
+//        a.propertiesToFetch = [#keyPath(MessageEntity.createdAt)]
+//        let count = (try? repository.getMainContext().count(for: a)) ?? 0
+//        
+//        fetchRequest.fetchLimit = 15
+//        fetchRequest.fetchOffset = count - 15
         self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(),
                                               sectionNameKeyPath: "sectionName",

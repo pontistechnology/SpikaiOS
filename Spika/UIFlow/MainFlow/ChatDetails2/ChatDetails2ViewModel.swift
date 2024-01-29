@@ -10,60 +10,57 @@ import Combine
 import ContactsUI
 import SwiftUI
 
-enum ChatDetailsMode {
-    case contact(User)
-    case roomDetails(CurrentValueSubject<Room, Never>)
-    
-    var description: String {
-        return switch self {
-        case .contact:
-            .getStringFor(.privateContact)
-        case .roomDetails:
-            .getStringFor(.group)
-        }
-    }
-    
-    var isPrivate: Bool {
-        return switch self {
-        case .contact: true
-        case .roomDetails: false
-        }
-    }
-    
-    var isGroup: Bool { !isPrivate }
-    
-    var room: Room? { 
-        return if case .roomDetails(let currentValueSubject) = self {
-            currentValueSubject.value
-        } else { 
-            nil
-        }
-    }
-}
-
 class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
     @Published var room: Room?
     let detailsMode: ChatDetailsMode
-    @Published var showAddMembersScreen = false {
-        didSet {
-            if oldValue && showAddMembersScreen == false && !selectedMembers.isEmpty {
-                print("now")
-            }
-        }
-    }
-    @Published var selectedMembers: [User]
+    @Published var showAddMembersScreen = false
     
     var isMyUserAdmin: Bool {
         room?.users.first(where: { $0.userId == myUserId })?.isAdmin ?? false
     }
     
     init(repository: Repository, coordinator: Coordinator, 
-         detailsMode: ChatDetailsMode) {
+         detailsMode: ChatDetailsMode, actionPublisher: ActionPublisher) {
         self.detailsMode = detailsMode
         self.room = detailsMode.room
-        selectedMembers = detailsMode.room?.users.map({ $0.user }) ?? []
-        super.init(repository: repository, coordinator: coordinator)
+        super.init(repository: repository, coordinator: coordinator, actionPublisher: actionPublisher)
+        setupBindings()
         checkLocalPrivateRoom()
+    }
+    
+    func setupBindings() {
+        actionPublisher?.sink { [weak self] appAction in
+            switch appAction {
+            case .addToExistingRoom(let userIds):
+                self?.updateRoomUsers(action: .addGroupUsers(userIds: userIds))
+            default:
+                break
+            }
+        }.store(in: &subscriptions)
+    }
+    
+    func updateRoomUsers(action: UpdateRoomAction) {
+        guard let roomId = room?.id else { return }
+        repository.updateRoom(roomId: roomId, 
+                              action: action)
+        .sink { c in
+            
+        } receiveValue: { [weak self] response in
+            guard let room = response.data?.room else { return }
+            _ = self?.repository.updateRoomUsers(room: room)
+            self?.room = room
+            self?.actionPublisher?.send(.updateRoom(room: room))
+        }.store(in: &subscriptions)
+    }
+    
+    func removeUsersFromGroup(user: User) {
+        showYesNo(title: "Remove from group",
+                  message: "Are you sure you want to remove "
+            .appending(user.getDisplayName())
+            .appending(" from group?")) { [weak self] in
+                guard let self else { return }
+                updateRoomUsers(action: .removeGroupUsers(userIds: [user.id]))
+            }
     }
     
     func checkLocalPrivateRoom() {
@@ -253,10 +250,6 @@ extension ChatDetails2ViewModel: CNContactViewControllerDelegate {
     func presentAddMembersScreen() {
         showAddMembersScreen = true
     }
-    
-    func getAddMembersScreen() -> some View {
-        return getAppCoordinator()!.getSelectUserView()
-    }
 }
 
 // MARK: - Notes
@@ -265,5 +258,61 @@ extension ChatDetails2ViewModel {
     func presentAllNotesScreen() {
         guard let room else { return }
         getAppCoordinator()?.presentNotesScreen(roomId: room.id)
+    }
+}
+
+extension ChatDetails2ViewModel {
+    func clickOnMemberRow(roomUser: RoomUser) {
+        var actions = [AlertViewButton.regular(title: "Info")]
+        
+        if isMyUserAdmin {
+            if roomUser.isAdmin ?? false {
+                actions.append(.regular(title: "Dismiss as admin"))
+            } else {
+                actions.append(.regular(title: "Make group admin"))
+            }
+        }
+        
+        getAppCoordinator()?.showAlert(style: .actionSheet, actions: actions).sink(receiveValue: { [weak self] index in
+            guard let self else { return }
+            switch index {
+            case 0:
+                getAppCoordinator()?.presentChatDetailsScreen(detailsMode: .contact(roomUser.user))
+            case 1:
+                if isMyUserAdmin {
+                    if roomUser.isAdmin ?? false {
+                        showYesNo(title: "Dismiss as admin", 
+                                  message: "Are you sure you want to dismiss "
+                            .appending(roomUser.user.getDisplayName()
+                            .appending(" as group admin?"))) { [weak self] in
+                            guard let self else { return }
+                            updateRoomUsers(action: .removeGroupAdmins(userIds: [roomUser.userId]))
+                        }
+                    } else {
+                        showYesNo(title: "Make group admin", 
+                                  message: "Are you sure you want to make "
+                            .appending(roomUser.user.getDisplayName()
+                            .appending(" as group admin?"))) { [weak self] in
+                            guard let self else { return }
+                            updateRoomUsers(action: .addGroupAdmins(userIds: [roomUser.userId]))
+                        }
+                    }
+                }
+            default:
+                break
+            }
+        }).store(in: &subscriptions)
+    }
+    
+    private func showYesNo(title: String, message: String, yes: @escaping ()->()) {
+        getAppCoordinator()?.showAlert(title: title, message: message, style: .alert, actions: [.regular(title: .getStringFor(.yes)), .regular(title: .getStringFor(.no))], cancelText: nil).sink(receiveValue: { [weak self] index in
+            guard let self else { return }
+            switch index {
+            case 0:
+                yes()
+            default:
+                break
+            }
+        }).store(in: &subscriptions)
     }
 }

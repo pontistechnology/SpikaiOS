@@ -30,15 +30,7 @@ class ImageViewerViewController: BaseViewController {
             guard let self,
                   let image = self.imageViewerView.imageView.image
             else { return }
-            UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.saveCompleted), nil)
+            UIImageWriteToSavedPhotosAlbum(image, self, #selector(viewModel.saveCompleted), nil)
         }.store(in: &subscriptions)
-    }
-    
-    @objc func saveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if error == nil {
-            viewModel.showOneSecAlert(type: .save)
-        } else {
-            viewModel.showError("Error occured. Check permissions for photos.")
-        }
     }
 }

@@ -31,5 +31,7 @@ extension RoomEntity {
 }
 
 extension RoomEntity : Identifiable {
-
+    @objc var sectionName: String {
+        String(name?.first?.uppercased() ?? "#")
+    }
 }

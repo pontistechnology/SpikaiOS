@@ -47,6 +47,7 @@ public class MessageEntity: NSManagedObject {
         }
         
         isRemoved = message.deleted
+        isForwarded = message.isForwarded
         
         roomId = message.roomId
 
@@ -67,5 +68,24 @@ public class MessageEntity: NSManagedObject {
 
         self.replyId = "\(message.replyId ?? -1)"
         
+        if let bodyType = message.body?.type?.rawValue {
+            self.bodyType = bodyType
+        }
+        
+        if let bodySubject = message.body?.subject {
+            self.bodySubject = bodySubject
+        }
+        
+        if let bodySubjectIdInt = message.body?.subjectId {
+            self.bodySubjectId = String(bodySubjectIdInt)
+        }
+        
+        if let bodyObjects = message.body?.objects {
+            self.bodyObjects = bodyObjects
+        }
+        
+        if let bodyObjectIds = message.body?.objectIds {
+            self.bodyObjectIds = bodyObjectIds
+        }
     }
 }

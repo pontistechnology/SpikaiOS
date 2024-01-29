@@ -20,6 +20,7 @@ struct Message: Codable {
     let seenCount: Int64?
     let replyId: Int64?
     let deleted: Bool
+    let isForwarded: Bool
     let type: MessageType
     let body: MessageBody?
     let records: [MessageRecord]?
@@ -38,6 +39,7 @@ extension Message {
         self.roomId = roomId
         self.type = type
         self.deleted = false
+        self.isForwarded = false
         self.createdAt = createdAt
         self.modifiedAt = createdAt
         self.records = nil
@@ -54,10 +56,12 @@ extension Message {
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
                   replyId: Int64(messageEntity.replyId ?? "nil"),
-                  deleted: messageEntity.isRemoved,
+                  deleted: messageEntity.isRemoved, 
+                  isForwarded: messageEntity.isForwarded,
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
-                                    file: fileData, thumb: thumbData),
+                                    file: fileData, thumb: thumbData, 
+                                    type: MessageBodyType(string: messageEntity.bodyType), subject: messageEntity.bodySubject, subjectId: Int64(messageEntity.bodySubjectId ?? "failIsOk"), objects: messageEntity.bodyObjects, objectIds: messageEntity.bodyObjectIds),
                   records: records)
     }
     
@@ -81,17 +85,19 @@ extension Message {
     var pushNotificationText: String {
         switch type {
         case .text:
-            return body?.text ?? " "
+            body?.text ?? " "
         case .image:
-            return "Photo"
+            "Photo"
         case .video:
-            return "Video"
+            "Video"
         case .file:
-            return "File"
+            "File"
         case .audio:
-            return "Audio"
+            "Audio"
         case .unknown:
-            return "Unknown"
+            "Unknown"
+        case .system:
+            body?.text ?? " "
         }
     }
     
@@ -101,9 +107,40 @@ extension Message {
 }
 
 struct MessageBody: Codable {
+    // used everywhere
     let text: String?
+    // used for files
     let file: FileData?
     let thumb: FileData?
+    // used for system messages
+    let type: MessageBodyType?
+    let subject: String?
+    let subjectId: Int64?
+    let objects: [String]?
+    let objectIds: [Int64]?
+}
+
+enum MessageBodyType: String, Codable {
+    case createdGroup = "created_group"
+    case userLeftGroup = "user_left_group"
+    case updatedGroupName = "updated_group_name"
+    case updatedGroupAvatar = "updated_group_avatar"
+    case addedGroupMembers = "added_group_members"
+    case removedGroupMembers = "removed_group_members"
+    case addedGroupAdmins = "added_group_admins"
+    case removedGroupAdmins = "removed_group_admins"
+    case createdNote = "created_note"
+    case updatedNote = "updated_note"
+    case deletedNote = "deleted_note"
+    
+    init?(string: String?) {
+        if let string = string,
+            let val = MessageBodyType(rawValue: string) {
+            self = val
+        } else {
+            return nil
+        }
+    }
 }
 
 enum MessageType: String, Codable {
@@ -113,6 +150,7 @@ enum MessageType: String, Codable {
     case video
     case file
     case audio
+    case system
     case unknown
     
     public init(from decoder: Decoder) throws {
@@ -122,17 +160,19 @@ enum MessageType: String, Codable {
     var icon: UIImage? {
         switch self {
         case .text:
-            return nil
+            nil
         case .image:
-            return UIImage(resource: .photoIcon)
+            UIImage(resource: .photoIcon)
         case .video:
-            return UIImage(resource: .videoIcon)
+            UIImage(resource: .videoIcon)
         case .file:
-            return UIImage(resource: .docIcon)
+            UIImage(resource: .docIcon)
         case .audio:
-            return UIImage(resource: .micIcon)
+            UIImage(resource: .micIcon)
         case .unknown:
-            return UIImage(resource: .unknownFileThumbnail)
+            UIImage(resource: .unknownFileThumbnail)
+        case .system:
+            nil
         }
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23B81" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ContactEntity" representedClassName="ContactEntity" syncable="YES">
         <attribute name="familyName" optional="YES" attributeType="String"/>
         <attribute name="givenName" optional="YES" attributeType="String"/>
@@ -27,14 +27,20 @@
     </entity>
     <entity name="MessageEntity" representedClassName="MessageEntity" syncable="YES">
         <attribute name="bodyFileId" optional="YES" attributeType="String"/>
+        <attribute name="bodyObjectIds" optional="YES" attributeType="Transformable" customClassName="[Int64]"/>
+        <attribute name="bodyObjects" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="bodySubject" optional="YES" attributeType="String"/>
+        <attribute name="bodySubjectId" optional="YES" attributeType="String"/>
         <attribute name="bodyText" optional="YES" attributeType="String"/>
         <attribute name="bodyThumbId" optional="YES" attributeType="String"/>
+        <attribute name="bodyType" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="deliveredCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dummyValue" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="fromUserId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isForwarded" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isRemoved" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="localId" optional="YES" attributeType="String"/>
         <attribute name="modifiedAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>

@@ -13,6 +13,7 @@ import AVFoundation
 import Contacts
 import ContactsUI
 import SwiftUI
+import CoreData
 
 
 class AppCoordinator: Coordinator {
@@ -141,13 +142,12 @@ class AppCoordinator: Coordinator {
     }
     
     func presentCreateNewGroup2ChatScreen() {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroup2ChatViewController.self, argument: self)!
+        let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroup2ChatViewController.self, arguments: self, actionsPublisher)!
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func getSelectUserView() -> SelectUsersView {
-        let view = Assembler.sharedAssembler.resolver.resolve(SelectUsersView.self, argument: self)!
-        return view
+    func getSelectUsersOrGroupsView(purpose: SelectUsersOrGroupsPurpose) -> SelectUsersOrGroupsView {
+        return Assembler.sharedAssembler.resolver.resolve(SelectUsersOrGroupsView.self, arguments: self, actionsPublisher, purpose)!
     }
     
     func presentUserSelection(preselectedUsers: [User], usersSelectedPublisher: PassthroughSubject<[User],Never>) {
@@ -157,12 +157,12 @@ class AppCoordinator: Coordinator {
     }
     
     func presentChatDetailsScreen(detailsMode: ChatDetailsMode) {
-        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetails2ViewController.self, arguments: self, detailsMode)!
+        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetails2ViewController.self, arguments: self, detailsMode, actionsPublisher)!
         navigationController.pushViewController(roomDetailsViewController, animated: true)
     }
     
     func presentCurrentChatScreen(room: Room, scrollToMessageId: Int64? = nil) {
-        let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, room, scrollToMessageId)!
+        let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, room, scrollToMessageId, actionsPublisher)!
         
         navigationController.pushViewController(currentChatViewController, animated: true)
     }
@@ -278,6 +278,12 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewController, animated: true)
         return viewController.selectedEmojiPublisher
     }
+    
+    func presentForwardScreen(ids: [Int64], context: NSManagedObjectContext) {
+        let vc = UIHostingController(rootView: getSelectUsersOrGroupsView(purpose: .forwardMessages(ids))
+            .environment(\.managedObjectContext, context))
+        navigationController.present(vc, animated: true)
+    }
 }
 
 // MARK: - Window manager
@@ -317,6 +323,7 @@ extension AppCoordinator {
         getWindowManager().showPopUp(for: .errorMessage(message))
     }
     
+    // send cancel as nil if you want to hide cancel action
     func showAlert(title: String? = nil,
                    message: String? = nil,
                    style: UIAlertController.Style = .actionSheet,

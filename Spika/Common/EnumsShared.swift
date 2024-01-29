@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 enum RoomType: String, Codable, Comparable {
     case privateRoom = "private"
@@ -108,4 +109,65 @@ struct Emoji: Codable {
 
 enum AppAction {
     case deleteReaction(Int64)
+    case newGroupFlowSelectUsers([User])
+    case forwardMessages(messageIds: [Int64], userIds: [Int64], roomIds: [Int64])
+    case addToExistingRoom([Int64])
+    case updateRoom(room: Room)
+}
+
+enum UpdateRoomAction {
+    case addGroupUsers(userIds: [Int64])
+    case removeGroupUsers(userIds: [Int64])
+    case addGroupAdmins(userIds: [Int64])
+    case removeGroupAdmins(userIds: [Int64])
+    case changeGroupName(newName: String)
+    case changeGroupAvatar(fileId: Int64)
+    
+    var action: String {
+        switch self {
+        case .addGroupUsers:
+            "addGroupUsers"
+        case .removeGroupUsers:
+            "removeGroupUsers"
+        case .addGroupAdmins:
+            "addGroupAdmins"
+        case .removeGroupAdmins:
+            "removeGroupAdmins"
+        case .changeGroupName:
+            "changeGroupName"
+        case .changeGroupAvatar:
+            "changeGroupAvatar"
+        }
+    }
+}
+
+enum ChatDetailsMode {
+    case contact(User)
+    case roomDetails(CurrentValueSubject<Room, Never>)
+    
+    var description: String {
+        return switch self {
+        case .contact:
+            .getStringFor(.privateContact)
+        case .roomDetails:
+            .getStringFor(.group)
+        }
+    }
+    
+    var isPrivate: Bool {
+        return switch self {
+        case .contact: true
+        case .roomDetails: false
+        }
+    }
+    
+    var isGroup: Bool { !isPrivate }
+    
+    var room: Room? {
+        return if case .roomDetails(let currentValueSubject) = self {
+            currentValueSubject.value
+        } else {
+            nil
+        }
+    }
 }

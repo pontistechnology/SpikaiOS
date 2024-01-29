@@ -22,6 +22,7 @@ extension MessageEntity {
     @NSManaged public var createdAt: Int64
     @NSManaged public var modifiedAt: Int64
     @NSManaged public var isRemoved: Bool
+    @NSManaged public var isForwarded: Bool
     @NSManaged public var deliveredCount: Int64
     @NSManaged public var fromUserId: Int64
     @NSManaged public var id: String?
@@ -31,6 +32,11 @@ extension MessageEntity {
     @NSManaged public var seenCount: Int64
     @NSManaged public var totalUserCount: Int64
     @NSManaged public var type: String?
+    @NSManaged public var bodyType: String?
+    @NSManaged public var bodySubject: String?
+    @NSManaged public var bodySubjectId: String?
+    @NSManaged public var bodyObjectIds: [Int64]?
+    @NSManaged public var bodyObjects: [String]?
     @NSManaged public var createdDate: Date?
     @NSManaged public var dummyValue: Int64
 

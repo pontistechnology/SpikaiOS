@@ -14,6 +14,8 @@
 "Members" = "Members";
 "Details" = "Details";
 "shared" = "shared";
+"Yes" = "Yes";
+"No" = "No";
 
 "Terms & Conditions" = "Terms & Conditions";
 "Agree & Continue" = "Agree & Continue";
@@ -74,6 +76,8 @@
 "Select users" = "Select users";
 "Search for contact" = "Search for contact";
 "Search for reaction" = "Search for reaction";
+"Groups"  = "Groups";
+"Users"  = "Users";
 
 "Read by" = "Read by";
 "Delivered to" = "Delivered to";
@@ -107,6 +111,7 @@
 "Favorite" = "Favorite";
 "Delete" = "Delete";
 "Edit" = "Edit";
+"Download" = "Download";
 "Save" = "Save";
 
 "Delete for me" = "Delete for me";
@@ -141,3 +146,4 @@
 "apply" = "apply";
 "Private contact" = "Private contact";
 "Delete chat" = "Delete chat";
+

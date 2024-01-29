@@ -94,14 +94,13 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleHomeViewController(_ container: Container) {
-        container.register(HomeViewModel.self) { (resolver, coordinator: AppCoordinator) in
+        container.register(HomeViewModel.self) { (resolver, coordinator: AppCoordinator, publisher: ActionPublisher) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return HomeViewModel(repository: repository, coordinator: coordinator)
+            return HomeViewModel(repository: repository, coordinator: coordinator, actionPublisher: publisher)
         }.inObjectScope(.transient)
         
         container.register(HomeViewController.self) { (resolver, coordinator: AppCoordinator, startTab: TabBarItem, publisher: ActionPublisher) in
-            let controller = HomeViewController(viewModel: container.resolve(HomeViewModel.self, argument: coordinator)!,
-                                                startTab: startTab, publisher: publisher)
+            let controller = HomeViewController(viewModel: container.resolve(HomeViewModel.self, arguments: coordinator, publisher)!, startTab: startTab)
             return controller
         }.inObjectScope(.transient)
     }
@@ -146,13 +145,13 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleChatDetailsViewController(_ container: Container) {
-        container.register(ChatDetails2ViewModel.self) { (resolver, coordinator: AppCoordinator, detailsMode: ChatDetailsMode) in
+        container.register(ChatDetails2ViewModel.self) { (resolver, coordinator: AppCoordinator, detailsMode: ChatDetailsMode, actionPublisher: ActionPublisher) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return ChatDetails2ViewModel(repository: repository, coordinator: coordinator, detailsMode: detailsMode)
+            return ChatDetails2ViewModel(repository: repository, coordinator: coordinator, detailsMode: detailsMode, actionPublisher: actionPublisher)
         }.inObjectScope(.transient)
         
-        container.register(ChatDetails2ViewController.self) { (resolver, coordinator: AppCoordinator, detailsMode: ChatDetailsMode) in
-            let controller = ChatDetails2ViewController(rootView: ChatDetails2View(viewModel: resolver.resolve(ChatDetails2ViewModel.self, arguments: coordinator, detailsMode)!))
+        container.register(ChatDetails2ViewController.self) { (resolver, coordinator: AppCoordinator, detailsMode: ChatDetailsMode, actionPublisher: ActionPublisher) in
+            let controller = ChatDetails2ViewController(rootView: ChatDetails2View(viewModel: resolver.resolve(ChatDetails2ViewModel.self, arguments: coordinator, detailsMode, actionPublisher)!))
             return controller
         }.inObjectScope(.transient)
     }

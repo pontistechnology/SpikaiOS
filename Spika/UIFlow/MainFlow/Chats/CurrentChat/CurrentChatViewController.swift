@@ -52,7 +52,8 @@ extension CurrentChatViewController {
         let tableView = currentChatView.messagesTableView
         guard sender.state == .began,
               let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
-              let message = viewModel.getMessage(for: indexPath)
+              let message = viewModel.getMessage(for: indexPath),
+              message.type != .system
         else { return }
         viewModel.showMessageActions(message)
     }
@@ -320,12 +321,12 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell2 else { return }
         (tableView.visibleCells as? [BaseMessageTableViewCell2])?.forEach{ $0.setTimeLabelVisible(false)}
         tableView.beginUpdates()
         cell.tapHandler()
         tableView.endUpdates()
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -342,13 +343,25 @@ extension CurrentChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let message = viewModel.getMessage(for: indexPath)
-        else { return EmptyTableViewCell()}
+        else { return UnknownTableViewCell()}
         let myUserId = viewModel.myUserId
         let isMyMessage = message.fromUserId == myUserId
         
-        guard let identifier = message.getReuseIdentifier2(),
-              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2
-        else { return EmptyTableViewCell() }
+        guard let identifier = message.getReuseIdentifier2() else {
+            return UnknownTableViewCell()
+        }
+        
+        guard message.type != .system else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? SystemMessageTableViewCell
+            cell?.updateCell(message: message)
+            return cell ?? UnknownTableViewCell()
+        }
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2
+        else {
+            return UnknownTableViewCell()
+        }
+        
         cell.setupContainer(sender: viewModel.getSenderTypeFor(message: message))
         
         if let user = viewModel.getUser(for: message.fromUserId),
@@ -380,7 +393,7 @@ extension CurrentChatViewController: UITableViewDataSource {
                                sender: isMyMessage ? .me : .friend)
         }
         
-        cell.showReactionEditedAndCheckMark(reactionRecords: message.reactionRecords, isEdited: message.modifiedAt != message.createdAt, messageState: message.getMessageState(myUserId: myUserId), isForTextCell: message.type == .text, isMyMessage: message.fromUserId == myUserId)
+        cell.showReactionEditedAndCheckMark(reactionRecords: message.reactionRecords, isEdited: message.modifiedAt != message.createdAt, messageState: message.getMessageState(myUserId: myUserId), isForTextCell: message.type == .text, isMyMessage: message.fromUserId == myUserId, isForwarded: message.isForwarded)
         
         (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
         
@@ -460,7 +473,7 @@ extension CurrentChatViewController {
 extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let message = viewModel.getMessage(for: indexPath) else { return nil }
+        guard let message = viewModel.getMessage(for: indexPath), message.type != .system else { return nil }
         guard !message.deleted else { return nil}
         // TODO: - refactor this to seperate view
         let detailsAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
@@ -473,7 +486,7 @@ extension CurrentChatViewController {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let message = viewModel.getMessage(for: indexPath) else { return nil }
+        guard let message = viewModel.getMessage(for: indexPath), message.type != .system else { return nil }
         guard !message.deleted else { return nil }
         //  TODO: refacotr
         let firstLeft = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in

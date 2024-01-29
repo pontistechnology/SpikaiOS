@@ -46,7 +46,7 @@ extension MessageDetailsViewController: UITableViewDataSource, UITableViewDelega
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell,
               let data = viewModel.getDataForCell(at: indexPath)
         else {
-            return EmptyTableViewCell()
+            return UnknownTableViewCell()
         }
 
         if indexPath.section == 0 && data.editedTime != nil {

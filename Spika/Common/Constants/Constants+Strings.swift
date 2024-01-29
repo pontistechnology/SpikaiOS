@@ -21,9 +21,11 @@ public extension Constants {
         case shared = "shared"
         case delete = "Delete"
         case edit = "Edit"
+        case download = "Download"
         case ok = "Ok"
         case you = "You"
         case yes = "Yes"
+        case no = "No"
         
         // MARK: - CountryPickerViewController
         case search = "Search"
@@ -98,6 +100,8 @@ public extension Constants {
         // MARK: - UserSelectionViewController
         case selected = "selected"
         case selectUsers = "Select users"
+        case groups = "Groups"
+        case users = "Users"
         
         // MARK: - MessageDetailsViewController
         case readBy = "Read by"
@@ -126,7 +130,7 @@ public extension Constants {
         
         case youAreNoLongerMember = "You are no longer a member of this group"
         
-        // MARK: - SelectUsersViewController
+        // MARK: - SelectUsersOrGroupsViewController
         case newChat = "New chat"
         case newGroupChat = "New group chat"
         case newPrivateChat = "New private chat"

@@ -41,10 +41,15 @@ struct ChatDetails2View: View {
                     memberCountAndPlus(isAdmin: viewModel.isMyUserAdmin)
                         .padding(.vertical, 12)
                     ForEach(room.users) { roomUser in
-                        memberRowView(user: roomUser.user,
-                                      isAdmin: roomUser.isAdmin ?? false,
-                                      isMyUser: roomUser.userId == viewModel.myUserId,
-                                      showRemove: viewModel.isMyUserAdmin)
+                        Button {
+                            viewModel.clickOnMemberRow(roomUser: roomUser)
+                        } label: {
+                            memberRowView(user: roomUser.user,
+                                          isAdmin: roomUser.isAdmin ?? false,
+                                          isMyUser: roomUser.userId == viewModel.myUserId,
+                                          showRemove: viewModel.isMyUserAdmin)
+                        }
+
                     }
                 }
                 
@@ -56,7 +61,7 @@ struct ChatDetails2View: View {
         .ignoresSafeArea()
         .modifier(SpikaBackgroundGradient())
         .sheet(isPresented: $viewModel.showAddMembersScreen, content: {
-            SelectUsersView(selectedUsers: $viewModel.selectedMembers)
+            viewModel.getAppCoordinator()?.getSelectUsersOrGroupsView(purpose: .addToExistingGroup(hiddenUserIds: viewModel.room?.users.compactMap({ $0.userId }) ?? []))
                 .environment(\.managedObjectContext, viewModel.repository.getMainContext())
         })
     }
@@ -146,9 +151,12 @@ extension ChatDetails2View {
             Spacer()
             if isAdmin {
                 Text(verbatim: .getStringFor(.admin))
-            }
-            if showRemove {
-                Image(.rDx)
+            } else if showRemove {
+                Button(action: {
+                    viewModel.removeUsersFromGroup(user: user)
+                }, label: {
+                    Image(.rDx)
+                })
             }
         }.foregroundStyle(Color(.textPrimary))
     }
@@ -163,7 +171,6 @@ extension ChatDetails2View {
                 } label: {
                     Image(.rDplus)
                 }
-
             }
         }.foregroundStyle(Color(.textPrimary))
     }

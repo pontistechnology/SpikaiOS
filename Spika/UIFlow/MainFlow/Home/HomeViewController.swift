@@ -14,14 +14,12 @@ class HomeViewController: UIPageViewController {
     var homeTabBar: HomeTabBar!
     let viewModel: HomeViewModel
     let startTab: TabBarItem
-    let actionPublisher: ActionPublisher
     
     var tabViewControllers: [UIViewController]!
 
     var subscriptions = Set<AnyCancellable>()
     
-    init(viewModel:HomeViewModel, startTab: TabBarItem, publisher: ActionPublisher) {
-        self.actionPublisher = publisher
+    init(viewModel:HomeViewModel, startTab: TabBarItem) {
         self.startTab = startTab
         self.viewModel = viewModel
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -60,13 +58,6 @@ class HomeViewController: UIPageViewController {
             .sink { [weak self] tab in
                 self?.switchToController(tab: tab)
             }.store(in: &subscriptions)
-        
-        actionPublisher.sink { [weak self] action in
-            switch action {
-            case .deleteReaction(let recordId):
-                self?.viewModel.deleteReaction(recordId: recordId)
-            }
-        }.store(in: &subscriptions)
     }
     
     func configurePageViewController() {

@@ -11,6 +11,7 @@ import UIKit
 class ReactionsEditedCheckmarkStackview: UIStackView {
     private let emptyView = UIView()
     let editedLabel = CustomLabel(text: "edited", textSize: 10, textColor: .textSecondary)
+    let forwardedLabel = CustomLabel(text: "forwarded", textSize: 10, textColor: .textSecondary)
     let messageStateView = MessageStateView()
     let reactionsView: MessageReactionsView
     init(emojis: [String], isMyMessage: Bool) {
@@ -24,9 +25,11 @@ class ReactionsEditedCheckmarkStackview: UIStackView {
             addArrangedSubview(emptyView)
             addArrangedSubview(reactionsView)
             addArrangedSubview(editedLabel)
+            addArrangedSubview(forwardedLabel)
             addArrangedSubview(messageStateView)
         } else {
             addArrangedSubview(editedLabel)
+            addArrangedSubview(forwardedLabel)
             addArrangedSubview(reactionsView)
             addArrangedSubview(emptyView)
         }
@@ -35,6 +38,7 @@ class ReactionsEditedCheckmarkStackview: UIStackView {
         
         editedLabel.hide()
         reactionsView.hide()
+        forwardedLabel.hide()
         messageStateView.hide()
     }
     
