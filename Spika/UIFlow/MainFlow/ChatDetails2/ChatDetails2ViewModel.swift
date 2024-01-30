@@ -266,7 +266,7 @@ extension ChatDetails2ViewModel {
         var actions = [AlertViewButton.regular(title: "Info")]
         
         if isMyUserAdmin {
-            if roomUser.isAdmin ?? false {
+            if (roomUser.isAdmin ?? false) && (room?.numberOfAdmins() ?? 0 > 1) {
                 actions.append(.regular(title: "Dismiss as admin"))
             } else {
                 actions.append(.regular(title: "Make group admin"))
