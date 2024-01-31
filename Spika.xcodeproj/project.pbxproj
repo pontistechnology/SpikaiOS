@@ -5063,6 +5063,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					/usr/lib/swift,
+				);
 				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEVELOPMENT";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaDev;
@@ -5100,6 +5105,11 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					/usr/lib/swift,
 				);
 				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEVELOPMENT";
@@ -5197,6 +5207,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					/usr/lib/swift,
+				);
 				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DMESSENGER";
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.SpikaMessenger;
@@ -5234,6 +5249,11 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					/usr/lib/swift,
 				);
 				MARKETING_VERSION = $APP_VERSION;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DMESSENGER";
@@ -5459,6 +5479,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					/usr/lib/swift,
+				);
 				MARKETING_VERSION = $APP_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5495,6 +5520,11 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					/usr/lib/swift,
 				);
 				MARKETING_VERSION = $APP_VERSION;
 				PRODUCT_BUNDLE_IDENTIFIER = studio.clover.Spika;
