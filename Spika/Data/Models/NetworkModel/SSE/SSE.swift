@@ -47,7 +47,8 @@ class SSE {
         
         repository.syncMessages(page: 1, startingTimestamp: repository.getSyncTimestamp(for: .messages))
         repository.syncBlockedList()
-        repository.syncMessageRecords(page: 1, startingTimestamp: repository.getSyncTimestamp(for: .messageRecords))
+        // this is moved after sync messages, because records are not priority
+//        repository.syncMessageRecords(page: 1, startingTimestamp: repository.getSyncTimestamp(for: .messageRecords))
     }
 }
 

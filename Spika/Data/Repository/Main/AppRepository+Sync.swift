@@ -227,13 +227,16 @@ extension AppRepository {
         syncAllMessages(timestamp: startingTimestamp, page: page).sink { c in
             
         } receiveValue: { [weak self] response in
+            guard let self else { return }
             guard let messages = response.data?.list else { return }
             if let hasNext = response.data?.hasNext, hasNext {
-                self?.syncMessages(page: page+1, startingTimestamp: startingTimestamp)
+                syncMessages(page: page+1, startingTimestamp: startingTimestamp)
+            } else {
+                syncMessageRecords(page: 1, startingTimestamp: getSyncTimestamp(for: .messageRecords))
             }
             let maxTimestamp = messages.max { $0.modifiedAt < $1.modifiedAt
             }?.modifiedAt
-            self?.saveMessages(messages, syncTimestamp: maxTimestamp)
+            saveMessages(messages, syncTimestamp: maxTimestamp)
         }.store(in: &subs)
     }
     
