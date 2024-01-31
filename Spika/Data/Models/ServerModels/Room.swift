@@ -74,4 +74,8 @@ extension Room {
             name ?? "no name"
         }
     }
+    
+    func numberOfAdmins() -> Int {
+        users.map({ $0.isAdmin }).count
+    }
 }

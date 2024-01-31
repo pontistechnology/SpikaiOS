@@ -151,7 +151,7 @@ extension ChatDetails2View {
             Spacer()
             if isAdmin {
                 Text(verbatim: .getStringFor(.admin))
-            } else if showRemove {
+            } else if showRemove && !isMyUser {
                 Button(action: {
                     viewModel.removeUsersFromGroup(user: user)
                 }, label: {

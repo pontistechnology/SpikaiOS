@@ -61,7 +61,7 @@ extension Message {
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
                                     file: fileData, thumb: thumbData, 
-                                    type: MessageBodyType(string: messageEntity.bodyType), subject: messageEntity.bodySubject, subjectId: Int64(messageEntity.bodySubjectId ?? "failIsOk"), objects: messageEntity.bodyObjects, objectIds: messageEntity.bodyObjectIds),
+                                    type: MessageBodyType(rawValue: messageEntity.bodyType), subject: messageEntity.bodySubject, subjectId: Int64(messageEntity.bodySubjectId ?? "failIsOk"), objects: messageEntity.bodyObjects, objectIds: messageEntity.bodyObjectIds),
                   records: records)
     }
     
@@ -120,6 +120,27 @@ struct MessageBody: Codable {
     let objectIds: [Int64]?
 }
 
+extension MessageBody {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.text = try container.decodeIfPresent(String.self, forKey: .text)
+        self.file = try container.decodeIfPresent(FileData.self, forKey: .file)
+        self.thumb = try container.decodeIfPresent(FileData.self, forKey: .thumb)
+        self.subject = try container.decodeIfPresent(String.self, forKey: .subject)
+        self.subjectId = try container.decodeIfPresent(Int64.self, forKey: .subjectId)
+        self.objects = try container.decodeIfPresent([String].self, forKey: .objects)
+        self.objectIds = try container.decodeIfPresent([Int64].self, forKey: .objectIds)
+
+        // Decode the raw string for the enum, and use the failable initializer
+        if let typeString = try container.decodeIfPresent(String.self, forKey: .type) {
+            self.type = MessageBodyType(rawValue: typeString)
+        } else {
+            self.type = nil
+        }
+    }
+}
+
 enum MessageBodyType: String, Codable {
     case createdGroup = "created_group"
     case userLeftGroup = "user_left_group"
@@ -133,8 +154,8 @@ enum MessageBodyType: String, Codable {
     case updatedNote = "updated_note"
     case deletedNote = "deleted_note"
     
-    init?(string: String?) {
-        if let string = string,
+    init?(rawValue: String?) {
+        if let string = rawValue,
             let val = MessageBodyType(rawValue: string) {
             self = val
         } else {
