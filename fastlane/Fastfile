@@ -32,8 +32,9 @@ platform :ios do
         use_bundle_exec: false
     )
 
-    build_app(workspace: "Spika.xcworkspace", 
-	clean:true,
+    build_app(workspace: "Spika.xcworkspace",
+	xcargs: "-allowProvisioningUpdates",
+	clean: true,
 	scheme: "Spika", 
 	include_bitcode:false,
         export_options:{ 
@@ -59,7 +60,8 @@ platform :ios do
     )
 
     build_app(workspace: "Spika.xcworkspace", 
-	clean:true,
+	xcargs: "-allowProvisioningUpdates",
+	clean: true,
 	scheme: "Spika Messenger", 
 	include_bitcode:false,
         export_options:{ 
