@@ -79,9 +79,3 @@ struct PrimaryButton: View {
         })
     }
 }
-
-#Preview {
-    PrimaryButton(imageResource: .rDprivacyEye, text: "Privacy", corners: .bottomCorners, usage: .withCheckmark) {
-        
-    }
-}
