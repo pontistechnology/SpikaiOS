@@ -353,7 +353,7 @@ extension CurrentChatViewController: UITableViewDataSource {
         
         guard message.type != .system else {
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? SystemMessageTableViewCell
-            cell?.updateCell(message: message)
+            cell?.updateCell(attributedString: viewModel.room.getAttributedStringForSystemMessage(message: message))
             return cell ?? UnknownTableViewCell()
         }
         

@@ -29,15 +29,24 @@ class SystemMessageTableViewCell: UITableViewCell {
 
 extension SystemMessageTableViewCell {
     func updateCell(message: Message) {
-        
-        
-        
         if let text = message.body?.text {
             plainTextView.text = message.createdAt.convert(to: .HHmm) + " " + text
         }
     }
     
+    func updateCell(attributedString: NSMutableAttributedString) {
+        let pS = NSMutableParagraphStyle()
+        pS.alignment = .center
+        attributedString.addAttributes(
+            [.foregroundColor: UIColor.textPrimary,
+             .paragraphStyle: pS
+            ],
+            range: NSRange(location: 0, length: attributedString.length)
+        )
+        plainTextView.attributedText = attributedString
+    }
+    
     override func prepareForReuse() {
-        plainTextView.text = nil
+        plainTextView.attributedText = nil
     }
 }

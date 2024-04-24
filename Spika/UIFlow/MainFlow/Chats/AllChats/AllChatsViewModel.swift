@@ -116,13 +116,18 @@ extension AllChatsViewModel {
         // TODO: - add strings to loc. strings?, this func is needed somewhere else too, move it
         guard let message = message else { return (.getStringFor(.noMessages), .text, nil)}
         let senderName: String
+        if message.type == .system {
+            return ("", message.type, room.getStringForSystemMessage(message: message))
+        }
         if room.type == .privateRoom {
             senderName = message.fromUserId == myUserId ? .getStringFor(.youWithDots) : ""
+            return (senderName, message.type, message.pushNotificationText)
         } else {
             senderName = message.fromUserId == myUserId ? .getStringFor(.youWithDots) : ((room.users.first(where: { $0.userId == message.fromUserId })?.user.getDisplayName() ?? "_")
                     + ": ")
+            return (senderName, message.type, message.pushNotificationText)
         }
-        return (senderName, message.type, message.pushNotificationText)
+        
     }
 }
 

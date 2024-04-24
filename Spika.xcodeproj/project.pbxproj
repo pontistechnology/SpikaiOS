@@ -61,7 +61,6 @@
 		6C753D952A4C128800697AA6 /* GetAllRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */; };
 		6C753D962A4C128800697AA6 /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DB270DD6DC009D50CB /* AppRepository.swift */; };
 		6C753D972A4C128800697AA6 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9355BED928056D1A00B9EC85 /* CoreDataStack.swift */; };
-		6C753D982A4C128800697AA6 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68152739024B00BDC439 /* String+Extension.swift */; };
 		6C753D992A4C128800697AA6 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
 		6C753D9A2A4C128800697AA6 /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */; };
 		6C753D9B2A4C128800697AA6 /* UpdateMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EACD052A0E46F7003C5E00 /* UpdateMessageRequest.swift */; };
@@ -410,7 +409,6 @@
 		6C78B8D129AF5D89004BF881 /* GetAllRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */; };
 		6C78B8D229AF5D89004BF881 /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503DB270DD6DC009D50CB /* AppRepository.swift */; };
 		6C78B8D329AF5D89004BF881 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9355BED928056D1A00B9EC85 /* CoreDataStack.swift */; };
-		6C78B8D429AF5D89004BF881 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68152739024B00BDC439 /* String+Extension.swift */; };
 		6C78B8D529AF5D89004BF881 /* AppRepository+Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD81923F271E8E9100D5BE48 /* AppRepository+Messages.swift */; };
 		6C78B8D629AF5D89004BF881 /* MessageRecordEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F0369282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift */; };
 		6C78B8D729AF5D89004BF881 /* Int64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int64+Extensions.swift */; };
@@ -842,7 +840,6 @@
 		931B151028211ACB00A0CD35 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */; };
 		931B151128211ACB00A0CD35 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93980E03280A10F30015351F /* UserEntity+CoreDataProperties.swift */; };
 		931B151228211B1300A0CD35 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503D9270DD6AD009D50CB /* Repository.swift */; };
-		931B151328211B3F00A0CD35 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68152739024B00BDC439 /* String+Extension.swift */; };
 		931B15152821291400A0CD35 /* DeliveredRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15142821291400A0CD35 /* DeliveredRequestModel.swift */; };
 		931B15162821291400A0CD35 /* DeliveredRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15142821291400A0CD35 /* DeliveredRequestModel.swift */; };
 		931B15182821295600A0CD35 /* DeliveredResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B15172821295600A0CD35 /* DeliveredResponseModel.swift */; };
@@ -956,6 +953,18 @@
 		9362B48F28623A44009F617D /* RoomEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9362B48D28623A44009F617D /* RoomEntity+CoreDataProperties.swift */; };
 		9364873528B8E5D00069D538 /* FileMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9364873428B8E5D00069D538 /* FileMessageTableViewCell.swift */; };
 		9365A79127E184FA0038CA7F /* GetAllRoomsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */; };
+		936924B02B6C43EF00EC5B06 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68152739024B00BDC439 /* String+Extension.swift */; };
+		936924B12B6C43F000EC5B06 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68152739024B00BDC439 /* String+Extension.swift */; };
+		936924B22B6C43F000EC5B06 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68152739024B00BDC439 /* String+Extension.swift */; };
+		936924B42B6C440C00EC5B06 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936924B32B6C440C00EC5B06 /* NSAttributedString+Extensions.swift */; };
+		936924B52B6C440C00EC5B06 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936924B32B6C440C00EC5B06 /* NSAttributedString+Extensions.swift */; };
+		936924B62B6C440C00EC5B06 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936924B32B6C440C00EC5B06 /* NSAttributedString+Extensions.swift */; };
+		936924BA2B6D24FF00EC5B06 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932462D728FCB9B100E8C1B9 /* UIFont+Extensions.swift */; };
+		936924BB2B6D24FF00EC5B06 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932462D728FCB9B100E8C1B9 /* UIFont+Extensions.swift */; };
+		936924BC2B6D250000EC5B06 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932462D728FCB9B100E8C1B9 /* UIFont+Extensions.swift */; };
+		936924BD2B6D253B00EC5B06 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936924B32B6C440C00EC5B06 /* NSAttributedString+Extensions.swift */; };
+		936924BE2B6D253B00EC5B06 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936924B32B6C440C00EC5B06 /* NSAttributedString+Extensions.swift */; };
+		936924BF2B6D253C00EC5B06 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936924B32B6C440C00EC5B06 /* NSAttributedString+Extensions.swift */; };
 		936A28EC2926C4C900E7333D /* DebugUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EB2926C4C900E7333D /* DebugUtils.swift */; };
 		936A28ED2926C8C100E7333D /* DebugUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EB2926C4C900E7333D /* DebugUtils.swift */; };
 		936A28F02926E96100E7333D /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EF2926E96100E7333D /* ImageViewerViewController.swift */; };
@@ -1535,6 +1544,7 @@
 		9362B48D28623A44009F617D /* RoomEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		9364873428B8E5D00069D538 /* FileMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMessageTableViewCell.swift; sourceTree = "<group>"; };
 		9365A79027E184FA0038CA7F /* GetAllRoomsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllRoomsResponseModel.swift; sourceTree = "<group>"; };
+		936924B32B6C440C00EC5B06 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		936A28EB2926C4C900E7333D /* DebugUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugUtils.swift; sourceTree = "<group>"; };
 		936A28EF2926E96100E7333D /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
 		936A28F12926E98600E7333D /* ImageViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewModel.swift; sourceTree = "<group>"; };
@@ -2991,6 +3001,7 @@
 				93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */,
 				93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */,
 				9376A8CB2AFE94B10035687F /* UIRectCorner+Extensions.swift */,
+				936924B32B6C440C00EC5B06 /* NSAttributedString+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3650,7 +3661,6 @@
 				6C753D952A4C128800697AA6 /* GetAllRoomsResponseModel.swift in Sources */,
 				6C753D962A4C128800697AA6 /* AppRepository.swift in Sources */,
 				6C753D972A4C128800697AA6 /* CoreDataStack.swift in Sources */,
-				6C753D982A4C128800697AA6 /* String+Extension.swift in Sources */,
 				6C753D992A4C128800697AA6 /* AppRepository+Messages.swift in Sources */,
 				6C753D9A2A4C128800697AA6 /* FileEntity+CoreDataClass.swift in Sources */,
 				6C753D9B2A4C128800697AA6 /* UpdateMessageRequest.swift in Sources */,
@@ -3702,6 +3712,7 @@
 				6C753DC62A4C128800697AA6 /* Message.swift in Sources */,
 				6C753DC72A4C128800697AA6 /* UserResponseModel.swift in Sources */,
 				6C753DC82A4C128800697AA6 /* CheckRoomResponseModel.swift in Sources */,
+				936924BF2B6D253C00EC5B06 /* NSAttributedString+Extensions.swift in Sources */,
 				6C753DC92A4C128800697AA6 /* Constants+Endpoints.swift in Sources */,
 				6C753DCA2A4C128800697AA6 /* SyncUsersResponseModel.swift in Sources */,
 				6C753DCB2A4C128800697AA6 /* RoomUserEntity+CoreDataProperties.swift in Sources */,
@@ -3709,6 +3720,7 @@
 				6C753DCD2A4C128800697AA6 /* UploadChunkRequestModel.swift in Sources */,
 				6C753DCE2A4C128800697AA6 /* SeenResponseModel.swift in Sources */,
 				6C753DCF2A4C128800697AA6 /* TelephoneNumber.swift in Sources */,
+				936924B22B6C43F000EC5B06 /* String+Extension.swift in Sources */,
 				6C753DD22A4C128800697AA6 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				6C753DD12A4C128800697AA6 /* CreateRoomResponseModel.swift in Sources */,
 				93BCDFF22A819AAE00CEE826 /* OneNoteResponseModel.swift in Sources */,
@@ -3727,6 +3739,7 @@
 				938B36222B3D5F73008359C5 /* ForwardMessagesResponse.swift in Sources */,
 				6C753DDE2A4C128800697AA6 /* VerifyCodeRequestModel.swift in Sources */,
 				93BCDFF52A819ABF00CEE826 /* OneNoteRequestModel.swift in Sources */,
+				936924BA2B6D24FF00EC5B06 /* UIFont+Extensions.swift in Sources */,
 				6C753DDF2A4C128800697AA6 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3997,6 +4010,7 @@
 				6C78B87729AF5ADB004BF881 /* Enums.swift in Sources */,
 				933A84B82B3BA3E200C99DA3 /* ListWithPredicate.swift in Sources */,
 				6C78B87829AF5ADB004BF881 /* Date+Extensions.swift in Sources */,
+				936924B52B6C440C00EC5B06 /* NSAttributedString+Extensions.swift in Sources */,
 				6C78B87929AF5ADB004BF881 /* ContactsViewModel.swift in Sources */,
 				6C78B87B29AF5ADB004BF881 /* AllNotesViewModel.swift in Sources */,
 				6C78B87C29AF5ADB004BF881 /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -4083,7 +4097,6 @@
 				6C78B8D129AF5D89004BF881 /* GetAllRoomsResponseModel.swift in Sources */,
 				6C78B8D229AF5D89004BF881 /* AppRepository.swift in Sources */,
 				6C78B8D329AF5D89004BF881 /* CoreDataStack.swift in Sources */,
-				6C78B8D429AF5D89004BF881 /* String+Extension.swift in Sources */,
 				6C78B8D529AF5D89004BF881 /* AppRepository+Messages.swift in Sources */,
 				932BADDA29CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */,
 				93EACD092A0E47AC003C5E00 /* UpdateMessageRequest.swift in Sources */,
@@ -4135,6 +4148,7 @@
 				6C78B8F929AF5D89004BF881 /* RoomEntity+CoreDataProperties.swift in Sources */,
 				6C78B8FA29AF5D89004BF881 /* BlockedUsersResponseModel.swift in Sources */,
 				6C78B8FB29AF5D89004BF881 /* Message.swift in Sources */,
+				936924BE2B6D253B00EC5B06 /* NSAttributedString+Extensions.swift in Sources */,
 				6C78B8FC29AF5D89004BF881 /* UserResponseModel.swift in Sources */,
 				6C78B8FD29AF5D89004BF881 /* CheckRoomResponseModel.swift in Sources */,
 				6C78B8FE29AF5D89004BF881 /* Constants+Endpoints.swift in Sources */,
@@ -4142,6 +4156,7 @@
 				6C78B90229AF5D89004BF881 /* RoomUserEntity+CoreDataProperties.swift in Sources */,
 				931BDBA229D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C78B90329AF5D89004BF881 /* UploadChunkRequestModel.swift in Sources */,
+				936924B12B6C43F000EC5B06 /* String+Extension.swift in Sources */,
 				6C78B90529AF5D89004BF881 /* SeenResponseModel.swift in Sources */,
 				933E20A329D8B0BE0013E798 /* TelephoneNumber.swift in Sources */,
 				6C78B90729AF5D89004BF881 /* CreateRoomResponseModel.swift in Sources */,
@@ -4160,6 +4175,7 @@
 				6C78B91529AF5D89004BF881 /* VerifyFileResponseModel.swift in Sources */,
 				6C78B91629AF5D89004BF881 /* VerifyCodeRequestModel.swift in Sources */,
 				93BCDFF62A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */,
+				936924BB2B6D24FF00EC5B06 /* UIFont+Extensions.swift in Sources */,
 				6C78B91729AF5D89004BF881 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4430,6 +4446,7 @@
 				6CF649732A459FE100E0DE0B /* Enums.swift in Sources */,
 				933A84B92B3BA3E200C99DA3 /* ListWithPredicate.swift in Sources */,
 				6CF649742A459FE100E0DE0B /* Date+Extensions.swift in Sources */,
+				936924B62B6C440C00EC5B06 /* NSAttributedString+Extensions.swift in Sources */,
 				6CF649752A459FE100E0DE0B /* ContactsViewModel.swift in Sources */,
 				6CF649762A459FE100E0DE0B /* AllNotesViewModel.swift in Sources */,
 				6CF649772A459FE100E0DE0B /* MessageEntity+CoreDataProperties.swift in Sources */,
@@ -4516,7 +4533,6 @@
 				931B150828211AC600A0CD35 /* GetAllRoomsResponseModel.swift in Sources */,
 				93CF47402963286B00213DBE /* AppRepository.swift in Sources */,
 				9324B252281BDEFD00E7D76D /* CoreDataStack.swift in Sources */,
-				931B151328211B3F00A0CD35 /* String+Extension.swift in Sources */,
 				931B14DA281FD91100A0CD35 /* AppRepository+Messages.swift in Sources */,
 				932BADD829CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */,
 				93EACD082A0E47AB003C5E00 /* UpdateMessageRequest.swift in Sources */,
@@ -4568,6 +4584,7 @@
 				6C056C76297009D600198EC1 /* BlockedUsersResponseModel.swift in Sources */,
 				9324B256281BE03800E7D76D /* Message.swift in Sources */,
 				931B150228211AC600A0CD35 /* UserResponseModel.swift in Sources */,
+				936924BD2B6D253B00EC5B06 /* NSAttributedString+Extensions.swift in Sources */,
 				931B150128211AC600A0CD35 /* CheckRoomResponseModel.swift in Sources */,
 				6C153BF329486F2B00D400A7 /* Constants+Endpoints.swift in Sources */,
 				939B304D2850E01800FFA537 /* SyncUsersResponseModel.swift in Sources */,
@@ -4575,6 +4592,7 @@
 				93BFA3732857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift in Sources */,
 				931BDBA029D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				931B14F128211AC100A0CD35 /* UploadChunkRequestModel.swift in Sources */,
+				936924B02B6C43EF00EC5B06 /* String+Extension.swift in Sources */,
 				933FD55A2908A05100C4A235 /* SeenResponseModel.swift in Sources */,
 				933E20A429D8B0BF0013E798 /* TelephoneNumber.swift in Sources */,
 				931B150628211AC600A0CD35 /* CreateRoomResponseModel.swift in Sources */,
@@ -4593,6 +4611,7 @@
 				931B150928211AC600A0CD35 /* VerifyFileResponseModel.swift in Sources */,
 				931B14F228211AC100A0CD35 /* VerifyCodeRequestModel.swift in Sources */,
 				93BCDFF72A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */,
+				936924BC2B6D250000EC5B06 /* UIFont+Extensions.swift in Sources */,
 				931B14E528211A5100A0CD35 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4863,6 +4882,7 @@
 				ADD503F3270DE39A009D50CB /* NetworkService.swift in Sources */,
 				933A84B72B3BA3E200C99DA3 /* ListWithPredicate.swift in Sources */,
 				938D053827D5C05F002E5CE5 /* CreateRoomResponseModel.swift in Sources */,
+				936924B42B6C440C00EC5B06 /* NSAttributedString+Extensions.swift in Sources */,
 				937055E02914C21E0052EC77 /* Enums.swift in Sources */,
 				9347CCE328644E1300018AEB /* Date+Extensions.swift in Sources */,
 				AD8192592721D42700D5BE48 /* ContactsViewModel.swift in Sources */,

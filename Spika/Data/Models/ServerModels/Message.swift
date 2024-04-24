@@ -162,6 +162,33 @@ enum MessageBodyType: String, Codable {
             return nil
         }
     }
+    
+    func getString(time: String, subject: String, objects: [String]) -> String {
+        switch self {
+        case .createdGroup: "bla bla bla"
+        case .userLeftGroup: "bla bla bla"
+        case .updatedGroupName: "bla bla bla"
+        case .updatedGroupAvatar: "bla bla bla"
+        case .addedGroupMembers: "bla bla bla"
+        case .removedGroupMembers: "bla bla bla"
+        case .addedGroupAdmins: "bla bla bla"
+        case .removedGroupAdmins: "bla bla bla"
+        case .createdNote: "bla bla bla"
+        case .updatedNote: "bla bla bla"
+        case .deletedNote: "bla bla bla"
+        }
+    }
+    
+    var isObjectContextUsers: Bool {
+        switch self {
+        case .createdGroup, .userLeftGroup, .updatedGroupName, .updatedGroupAvatar:
+            false
+        case .addedGroupMembers, .removedGroupMembers, .addedGroupAdmins, .removedGroupAdmins:
+            true
+        case .createdNote, .updatedNote, .deletedNote:
+            false
+        }
+    }
 }
 
 enum MessageType: String, Codable {

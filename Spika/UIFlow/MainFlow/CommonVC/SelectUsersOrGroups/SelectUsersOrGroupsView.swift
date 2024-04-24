@@ -42,7 +42,7 @@ enum SelectUsersOrGroupsPurpose {
     }
     
     var doneImageResource: ImageResource {
-        return switch self {
+        switch self {
         case .forwardMessages: .rDsend
         case .addToExistingGroup, .addToNewGroupCreationFlow: .rDcheckmark
         }
