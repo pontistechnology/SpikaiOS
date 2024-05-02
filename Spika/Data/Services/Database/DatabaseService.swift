@@ -500,15 +500,15 @@ extension DatabaseService {
     
     func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]? {
         var records: [MessageRecord]?
-        context.performAndWait {
-            guard let id = Int64(messageId ?? "failIsOk") else { return }
-            let recordsFR = MessageRecordEntity.fetchRequest()
-            recordsFR.predicate = NSPredicate(format: "messageId == %d AND type == %@", id, MessageRecordType.reaction.rawValue)
-            guard let entities = try? context.fetch(recordsFR),
-                  !entities.isEmpty
-            else { return }
-            records = entities.map { MessageRecord(messageRecordEntity: $0) }
-        }
+//        context.performAndWait {
+//            guard let id = Int64(messageId ?? "failIsOk") else { return }
+//            let recordsFR = MessageRecordEntity.fetchRequest()
+//            recordsFR.predicate = NSPredicate(format: "messageId == %d AND type == %@", id, MessageRecordType.reaction.rawValue)
+//            guard let entities = try? context.fetch(recordsFR),
+//                  !entities.isEmpty
+//            else { return }
+//            records = entities.map { MessageRecord(messageRecordEntity: $0) }
+//        }
         return records
     }
     

@@ -92,7 +92,6 @@ extension Room {
     }
     
     private func makeAttributedString(message: Message) -> NSMutableAttributedString {
-        print("joaata: ", message)
         guard let subjectId = message.body?.subjectId,
               let subject = message.body?.subject,
               let typeOfSystemMessage = message.body?.type,
