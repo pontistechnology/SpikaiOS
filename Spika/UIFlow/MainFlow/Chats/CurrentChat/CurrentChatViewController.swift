@@ -156,7 +156,7 @@ extension CurrentChatViewController {
         
         // TODO: fetch isBlocked and delete input field
         
-        viewModel.paginationPublisher.sink { [weak self] direction in
+        viewModel.paginationPublisher.receive(on: DispatchQueue.main).sink { [weak self] direction in
             guard let self else { return }
             let messageId: String? = switch direction {
             case .up:
@@ -166,10 +166,6 @@ extension CurrentChatViewController {
             case .initial:
                 nil
             }
-            guard let messageId else { return }
-            
-            
-            
             
             // Reload your table view with your new messages
             viewModel.setFetch(direction)
