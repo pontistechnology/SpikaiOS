@@ -41,17 +41,17 @@ class CurrentChatViewModel: BaseViewModel {
     
     let scrollToMessageId: Int64?
     
-    let paginationPublisher = CurrentValueSubject<PagionationDirection, Never>(.initial)
-    var currentOffset = -1 // this should never happen
-    var countOfAllMessages = 0
-    let fetchLimit = 50
+//    let paginationPublisher = CurrentValueSubject<PagionationDirection, Never>(.initial)
+//    var currentOffset = -1 // this should never happen
+//    var countOfAllMessages = 0
+//    let fetchLimit = 50
     
     init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?, actionPublisher: ActionPublisher) {
         self.scrollToMessageId = scrollToMessageId
         self.room = room
         super.init(repository: repository, coordinator: coordinator, actionPublisher: actionPublisher)
         setupBindings()
-        getCountOfAllMessages()
+//        getCountOfAllMessages()
     }
     
     func setupBindings() {
@@ -590,35 +590,37 @@ extension CurrentChatViewModel {
     
     
     // TODO: - check if this can be more optimized
-    private func getCountOfAllMessages() {
-        let fetchRequest = MessageEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "roomId == %d", room.id)
-        fetchRequest.propertiesToFetch = [#keyPath(MessageEntity.createdAt)]
-        countOfAllMessages = (try? repository.getMainContext().count(for: fetchRequest)) ?? 0
-    }
+//    private func getCountOfAllMessages() {
+//        let fetchRequest = MessageEntity.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(format: "roomId == %d", room.id)
+//        fetchRequest.propertiesToFetch = [#keyPath(MessageEntity.createdAt)]
+//        countOfAllMessages = (try? repository.getMainContext().count(for: fetchRequest)) ?? 0
+//    }
 
-    func getFetchOffset(_ direction: PagionationDirection) -> Int {
-        switch direction {
-        case .up:
-            let newOff = currentOffset - fetchLimit
-            self.currentOffset = newOff < 0 ? 0 : newOff
-            return currentOffset
-        case .down:
-            let newOf = currentOffset + fetchLimit
-            self.currentOffset = newOf >= countOfAllMessages ? currentOffset : newOf
-            return currentOffset
-        case .initial:
-            let newOffset = countOfAllMessages - fetchLimit * 2
-            self.currentOffset = newOffset < 0 ? 0 : newOffset
-            return currentOffset
-        }
-    }
+//    func getFetchOffset(_ direction: PagionationDirection) -> Int {
+//        switch direction {
+//        case .up:
+//            let newOff = currentOffset - fetchLimit
+//            self.currentOffset = newOff < 0 ? 0 : newOff
+//            return currentOffset
+//        case .down:
+//            let newOf = currentOffset + fetchLimit
+//            self.currentOffset = newOf >= countOfAllMessages ? currentOffset : newOf
+//            return currentOffset
+//        case .initial:
+//            let newOffset = countOfAllMessages - fetchLimit
+//            self.currentOffset = newOffset < 0 ? 0 : newOffset
+//            return currentOffset
+//        }
+//    }
     
     
     func setFetch(_ direction: PagionationDirection) {
         let fetchRequest = fetchRequest()
-        fetchRequest.fetchLimit = fetchLimit * 2
-        fetchRequest.fetchOffset = getFetchOffset(direction)
+//        fetchRequest.fetchLimit = fetchLimit * 2
+//        fetchRequest.fetchOffset = getFetchOffset(direction)
+        fetchRequest.fetchLimit = 0
+        fetchRequest.fetchOffset = 0
         self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(),
                                               sectionNameKeyPath: "sectionName",

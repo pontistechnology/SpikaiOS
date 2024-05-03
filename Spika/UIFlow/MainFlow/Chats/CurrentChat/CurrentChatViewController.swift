@@ -156,47 +156,51 @@ extension CurrentChatViewController {
         
         // TODO: fetch isBlocked and delete input field
         
-        viewModel.paginationPublisher.receive(on: DispatchQueue.main).sink { [weak self] direction in
-            guard let self else { return }
-            let messageId: String? = switch direction {
-            case .up:
-                viewModel.frc?.fetchedObjects?.first?.id
-            case .down:
-                viewModel.frc?.fetchedObjects?.last?.id
-            case .initial:
-                nil
-            }
-            
-            // Reload your table view with your new messages
-            viewModel.setFetch(direction)
-            currentChatView.messagesTableView.reloadData()
-            
-            switch direction {
-            case .up:
-                guard let sameMessage = viewModel.frc?.fetchedObjects?.first(where: { mE in
-                    mE.id == messageId
-                }),
-                      let iP = viewModel.frc?.indexPath(forObject: sameMessage)
-                else { return }
-                currentChatView.messagesTableView.scrollToRow(at: iP, at: .top, animated: false)
-            case .down:
-                guard let sameMessage = viewModel.frc?.fetchedObjects?.first(where: { mE in
-                    mE.id == messageId
-                }),
-                      let iP = viewModel.frc?.indexPath(forObject: sameMessage)
-                else { return }
-                currentChatView.messagesTableView.scrollToRow(at: iP, at: .bottom, animated: false)
-            case .initial:
-                currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
-            }
-            
-            
-        }.store(in: &subscriptions)
+//        viewModel.paginationPublisher.receive(on: DispatchQueue.main).sink { [weak self] direction in
+//            guard let self else { return }
+//            let messageId: String? = switch direction {
+//            case .up:
+//                viewModel.frc?.fetchedObjects?.first?.id
+//            case .down:
+//                viewModel.frc?.fetchedObjects?.last?.id
+//            case .initial:
+//                nil
+//            }
+//            
+//            // Reload your table view with your new messages
+//            viewModel.setFetch(direction)
+//            currentChatView.messagesTableView.reloadData()
+//            
+//            switch direction {
+//            case .up:
+//                guard let sameMessage = viewModel.frc?.fetchedObjects?.first(where: { mE in
+//                    mE.id == messageId
+//                }),
+//                      let iP = viewModel.frc?.indexPath(forObject: sameMessage)
+//                else { return }
+//                currentChatView.messagesTableView.scrollToRow(at: iP, at: .top, animated: false)
+//            case .down:
+//                guard let sameMessage = viewModel.frc?.fetchedObjects?.first(where: { mE in
+//                    mE.id == messageId
+//                }),
+//                      let iP = viewModel.frc?.indexPath(forObject: sameMessage)
+//                else { return }
+//                currentChatView.messagesTableView.scrollToRow(at: iP, at: .bottom, animated: false)
+//            case .initial:
+//                currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
+//            }
+//            
+//            
+//        }.store(in: &subscriptions)
+        
+        viewModel.setFetch(.initial)
         
         viewModel.frc?.delegate = self
         if let messageId = viewModel.scrollToMessageId,
            let indexPath = viewModel.getIndexPathFor(messageId: messageId) {
             currentChatView.messagesTableView.blinkRow(at: indexPath)
+        } else {
+            currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
         }
     }
     
@@ -206,19 +210,19 @@ extension CurrentChatViewController {
 }
 
 extension CurrentChatViewController {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        checkIfUserIsOnTopOfScrollView(scrollView)
-    }
-    
-    func checkIfUserIsOnTopOfScrollView(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < 70 {
-            viewModel.paginationPublisher.send(.up)
-        }
-        
-        if scrollView.distanceFromBottom() < 100 {
-            viewModel.paginationPublisher.send(.down)
-        }
-    }
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        checkIfUserIsOnTopOfScrollView(scrollView)
+//    }
+//    
+//    func checkIfUserIsOnTopOfScrollView(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y < 70 {
+//            viewModel.paginationPublisher.send(.up)
+//        }
+//        
+//        if scrollView.distanceFromBottom() < 100 {
+//            viewModel.paginationPublisher.send(.down)
+//        }
+//    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if currentChatView.messagesTableView.distanceFromBottom() < 50 {
@@ -466,22 +470,22 @@ extension CurrentChatViewController: UITableViewDataSource {
         guard let nameOfSection = viewModel.getNameForSection(section: section) else {
             return nil
         }
-        let text: String
-        if section == 0 && viewModel.currentOffset != 0 {
-            text = "Loading older messages..."
-        } else {
-            text = nameOfSection
-        }
-        return CustomLabel(text: text, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
+//        let text: String
+//        if section == 0 && viewModel.currentOffset != 0 {
+//            text = "Loading older messages..."
+//        } else {
+//            text = nameOfSection
+//        }
+        return CustomLabel(text: nameOfSection, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section == (viewModel.frc?.sections?.count ?? 0) - 1
-            && (viewModel.currentOffset + 2*viewModel.fetchLimit < viewModel.countOfAllMessages) {
-            return CustomLabel(text: "Loading newer messages...", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
-        }
-        return nil
-    }
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        if section == (viewModel.frc?.sections?.count ?? 0) - 1
+//            && (viewModel.currentOffset + 2*viewModel.fetchLimit < viewModel.countOfAllMessages) {
+//            return CustomLabel(text: "Loading newer messages...", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
+//        }
+//        return nil
+//    }
 }
 
 // MARK: - Navigation items setup
