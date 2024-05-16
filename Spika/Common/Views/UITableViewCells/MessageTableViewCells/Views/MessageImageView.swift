@@ -58,7 +58,7 @@ extension MessageImageView {
     
     func setImage(url: URL?, as ratio: ImageRatio) {
         setRatio(to: ratio)
-        imageView.kf.setImage(with: url, placeholder: UIImage(systemName: "arrow.counterclockwise")?.withTintColor(.gray, renderingMode: .alwaysOriginal)) // TODO: change image
+        imageView.kf.setImage(with: url, placeholder: UIImage(resource: .rDloadingPlaceholder))
     }
     
     func setImage(path: String, as ratio: ImageRatio) {
