@@ -143,8 +143,8 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]? {
-        databaseService.getReactionRecords(messageId: messageId, context: context)
+    func getReactionRecords(messageIds: [Int64]) async -> [MessageRecord] {
+        await databaseService.getReactionRecords(messageIds: messageIds)
     }
     
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {

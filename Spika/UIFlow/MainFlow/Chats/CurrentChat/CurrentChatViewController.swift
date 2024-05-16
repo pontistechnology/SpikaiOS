@@ -202,10 +202,45 @@ extension CurrentChatViewController {
         } else {
             currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
         }
+        var ids: [Int64] = []
+        var localIds: [String] = []
+        
+        viewModel.frc?.fetchedObjects?
+            .forEach({ messageEntity in
+                if let id = messageEntity.id,
+                   let number = Int64(id) {
+                    ids.append(number)
+                }
+                
+                if let localId = messageEntity.localId {
+                    localIds.append(localId)
+                    localIds.append(localId.appending("thumb"))
+                }
+            })
+        
+        Task {
+            // TODO: - this is not parallel
+            await viewModel.loadFilesData(localIds: localIds)
+            await viewModel.loadReactions(messageIds: ids)
+           
+            test()
+        }
     }
     
     func handleScroll(isMyMessage: Bool) {
         currentChatView.messagesTableView.scrollToBottom(isMyMessage ? .force(animated: true) : .ifLastCellVisible)
+    }
+}
+
+extension CurrentChatViewController {
+    func test() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            // TODO: - not always correctly reloaded, maybe if not fully visible?
+            if let a = currentChatView.messagesTableView.indexPathsForVisibleRows {
+                currentChatView.messagesTableView.reloadRows(at: a, with: .none)
+            }
+        }
     }
 }
 
@@ -394,6 +429,7 @@ extension CurrentChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        print("DEBUGPRINT: fetcham cell za indexpath: ", indexPath)
         guard let message = viewModel.getMessage(for: indexPath)
         else { return UnknownTableViewCell()}
         let myUserId = viewModel.myUserId

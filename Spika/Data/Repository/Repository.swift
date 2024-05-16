@@ -125,7 +125,7 @@ protocol Repository {
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64)
     
         // Message Records
-    func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]?
+    func getReactionRecords(messageIds: [Int64]) async -> [MessageRecord]
     
         // Room
     func checkLocalPrivateRoom(forUserId id: Int64) -> Future<Room, Error>
@@ -145,8 +145,7 @@ protocol Repository {
     func generateRoomModelsWithUsers(context: NSManagedObjectContext, roomEntities: [RoomEntity]) -> Future<[Room], Error>
     
         // File
-    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData?
-    func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData?
+    func getFilesData(localIds: [String]) async -> [String: FileData]
 
     // MARK: - USERDEFAULTS:
     

@@ -158,11 +158,7 @@ extension AppRepository {
         return targetURL
     }
     
-    func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData? {
-        databaseService.getFileData(localId: localId, context: context)
-    }
-    
-    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
-        databaseService.getFileData(id: id, context: context)
+    func getFilesData(localIds: [String]) async -> [String: FileData] {
+        await databaseService.getFilesData(localIds: localIds)
     }
 }

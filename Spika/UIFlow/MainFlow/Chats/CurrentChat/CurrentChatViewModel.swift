@@ -45,6 +45,8 @@ class CurrentChatViewModel: BaseViewModel {
 //    var currentOffset = -1 // this should never happen
 //    var countOfAllMessages = 0
 //    let fetchLimit = 50
+    private var allReactions: [MessageRecord] = []
+    private var allFileData: [String: FileData] = [:]
     
     init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?, actionPublisher: ActionPublisher) {
         self.scrollToMessageId = scrollToMessageId
@@ -71,6 +73,16 @@ class CurrentChatViewModel: BaseViewModel {
         } else {
             return room.type == .groupRoom ? .group : .friend
         }
+    }
+}
+
+extension CurrentChatViewModel {
+    func loadReactions(messageIds: [Int64]) async {
+        allReactions = await repository.getReactionRecords(messageIds: messageIds)
+    }
+    
+    func loadFilesData(localIds: [String]) async {
+        allFileData = await repository.getFilesData(localIds: localIds)
     }
 }
 
@@ -519,31 +531,30 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-    
     func getMessage(for indexPath: IndexPath) -> Message? {
-        guard let entity = frc?.object(at: indexPath),
-              let context = entity.managedObjectContext
-        else { return nil }
-        let fileData: FileData?
-        let thumbData: FileData?
-        if let fileId = entity.bodyFileId {
-            fileData = repository.getFileData(id: fileId, context: context)
-        } else {
-            fileData = repository.getFileData(localId: entity.localId, context: context)
+        guard let entity = frc?.object(at: indexPath) else { return nil }
+        var fileData: FileData?
+        var thumbData: FileData?
+        
+        if let localId = entity.localId {
+            fileData = allFileData[localId]
         }
         
-        if let thumbId = entity.bodyThumbId {
-            thumbData = repository.getFileData(id: thumbId, context: context)
-        } else {
-            thumbData = repository.getFileData(localId: entity.localId?.appending("thumb"), context: context)
+        if let localId = entity.localId?.appending("thumb") {
+            thumbData = allFileData[localId]
         }
         
-        let reactionRecords = repository.getReactionRecords(messageId: entity.id, context: context)
+        let reactionRecords = getReactionRecords(messageId: entity.id)
 
         return Message(messageEntity: entity,
                        fileData: fileData,
                        thumbData: thumbData,
                        records: reactionRecords)
+    }
+    
+    func getReactionRecords(messageId: String?) -> [MessageRecord] {
+        guard let messageId, let number = Int64(messageId) else { return []}
+        return allReactions.filter { $0.messageId == number }
     }
     
     func getIndexPathFor(localId: String) -> IndexPath? {

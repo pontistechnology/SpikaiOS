@@ -498,18 +498,12 @@ extension DatabaseService {
         }
     }
     
-    func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]? {
-        var records: [MessageRecord]?
-//        context.performAndWait {
-//            guard let id = Int64(messageId ?? "failIsOk") else { return }
-//            let recordsFR = MessageRecordEntity.fetchRequest()
-//            recordsFR.predicate = NSPredicate(format: "messageId == %d AND type == %@", id, MessageRecordType.reaction.rawValue)
-//            guard let entities = try? context.fetch(recordsFR),
-//                  !entities.isEmpty
-//            else { return }
-//            records = entities.map { MessageRecord(messageRecordEntity: $0) }
-//        }
-        return records
+    func getReactionRecords(messageIds: [Int64]) async -> [MessageRecord] {
+        await coreDataStack.persistentContainer.performBackgroundTask { context in
+            let recordsFR = MessageRecordEntity.fetchRequest()
+            recordsFR.predicate = NSPredicate(format: "type == %@ AND messageId IN %@", MessageRecordType.reaction.rawValue, messageIds)
+            return (try? context.fetch(recordsFR))?.compactMap({ MessageRecord(messageRecordEntity: $0) }) ?? []
+        }
     }
     
     func updateUnreadCounts(_ counts: [UnreadCount]) {
@@ -543,6 +537,7 @@ extension DatabaseService {
         }
     }
     
+    // TODO: - change to messages and keep it with only one fetch
     func getLastMessage(roomId: Int64, context: NSManagedObjectContext) -> Message? {
         var message: Message?
         context.performAndWait {
@@ -552,36 +547,31 @@ extension DatabaseService {
             fr.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
             guard let entity = try? context.fetch(fr).first else { return }
             
+            // TODO: - check this
+//            message = Message(messageEntity: entity,
+//                              fileData: getFileData(localId: entity.localId, context: context),
+//                              thumbData: getFileData(localId: entity.localId?.appending("thumb"), context: context),
+//                           records: [])
             message = Message(messageEntity: entity,
-                              fileData: getFileData(localId: entity.localId, context: context),
-                              thumbData: getFileData(localId: entity.localId?.appending("thumb"), context: context),
-                           records: [])
+                              fileData: nil,
+                              thumbData: nil,
+                              records: [])
         }
         return message
     }
-    
-    func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData? {
-        var fileData: FileData?
-        context.performAndWait {
-            guard let localId = localId else { return }
+        
+    func getFilesData(localIds: [String]) async -> [String: FileData] {
+        await coreDataStack.persistentContainer.performBackgroundTask { context in
             let fr = FileEntity.fetchRequest()
-            fr.predicate = NSPredicate(format: "localId == %@", localId)
-            guard let entity = try? context.fetch(fr).first else { return }
-            fileData = FileData(entity: entity)
+            fr.predicate = NSPredicate(format: "localId IN %@", localIds)
+            let array = (try? context.fetch(fr)) ?? []
+            var dict: [String: FileData] = [:]
+            array.forEach {
+                guard let localId = $0.localId else { return }
+                dict[localId] = FileData(entity: $0)
+            }
+            return dict
         }
-        return fileData
-    }
-    
-    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
-        var fileData: FileData?
-        context.performAndWait {
-            guard let id = id else { return }
-            let fr = FileEntity.fetchRequest()
-            fr.predicate = NSPredicate(format: "id == %@", id)
-            guard let entity = try? context.fetch(fr).first else { return }
-            fileData = FileData(entity: entity)
-        }
-        return fileData
     }
 }
 
