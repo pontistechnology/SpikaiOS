@@ -206,18 +206,12 @@ extension CurrentChatViewController {
         currentChatView.messagesTableView.unhide()
         
         var ids: [Int64] = []
-        var localIds: [String] = []
         
         viewModel.messagesFRC?.fetchedObjects?
             .forEach({ messageEntity in
                 if let id = messageEntity.id,
                    let number = Int64(id) {
                     ids.append(number)
-                }
-                
-                if let localId = messageEntity.localId {
-                    localIds.append(localId)
-                    localIds.append(localId.appending("thumb"))
                 }
             })
         
