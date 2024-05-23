@@ -192,7 +192,7 @@ extension CurrentChatViewController {
 //            
 //            
 //        }.store(in: &subscriptions)
-        
+        currentChatView.messagesTableView.hide()
         viewModel.setFetch(.initial)
         
         viewModel.messagesFRC?.delegate = self
@@ -202,6 +202,9 @@ extension CurrentChatViewController {
         } else {
             currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
         }
+        
+        currentChatView.messagesTableView.unhide()
+        
         var ids: [Int64] = []
         var localIds: [String] = []
         
