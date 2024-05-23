@@ -25,6 +25,7 @@ class CurrentChatViewModel: BaseViewModel {
     
     var messagesFRC: NSFetchedResultsController<MessageEntity>?
     var reactionsFRC: NSFetchedResultsController<MessageRecordEntity>?
+    var filesFRC: NSFetchedResultsController<FileEntity>?
     var room: Room
     
     var friendUser: User? {
@@ -46,8 +47,6 @@ class CurrentChatViewModel: BaseViewModel {
 //    var currentOffset = -1 // this should never happen
 //    var countOfAllMessages = 0
 //    let fetchLimit = 50
-//    private var allReactions: [MessageRecord] = []
-    private var allFileData: [String: FileData] = [:]
     
     init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?, actionPublisher: ActionPublisher) {
         self.scrollToMessageId = scrollToMessageId
@@ -97,8 +96,19 @@ extension CurrentChatViewModel {
         }
     }
     
-    func loadFilesData(localIds: [String]) async {
-        allFileData = await repository.getFilesData(localIds: localIds)
+    func loadFilesData() {
+        let fetchRequest = FileEntity.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(FileEntity.localId), ascending: true)]
+        self.filesFRC = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                              managedObjectContext: repository.getMainContext(),
+                                              sectionNameKeyPath: nil,
+                                              cacheName: nil)
+        self.filesFRC?.delegate = self
+        do {
+            try self.filesFRC?.performFetch()
+        } catch {
+            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
+        }
     }
 }
 
@@ -555,12 +565,15 @@ extension CurrentChatViewModel {
         var fileData: FileData?
         var thumbData: FileData?
         
-        if let localId = entity.localId {
-            fileData = allFileData[localId]
+        if let localId = entity.localId,
+        let b = filesFRC?.fetchedObjects?.first(where: { $0.localId == localId }){
+            fileData = FileData(entity: b)
         }
         
-        if let localId = entity.localId?.appending("thumb") {
-            thumbData = allFileData[localId]
+        if let localId = entity.localId?.appending("thumb"),
+           let b = filesFRC?.fetchedObjects?.first(where: { $0.localId == localId })
+        {
+            thumbData = FileData(entity: b)
         }
         
         let reactionRecords = getReactionRecords(messageId: entity.id)

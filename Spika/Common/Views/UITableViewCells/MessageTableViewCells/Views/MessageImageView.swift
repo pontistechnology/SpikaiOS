@@ -58,6 +58,7 @@ extension MessageImageView {
     
     func setImage(url: URL?, as ratio: ImageRatio) {
         setRatio(to: ratio)
+        imageView.kf.indicatorType = .activity
         imageView.kf.setImage(with: url, placeholder: UIImage(resource: .rDloadingPlaceholder))
     }
     

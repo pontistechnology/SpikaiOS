@@ -222,12 +222,9 @@ extension CurrentChatViewController {
             })
         
         viewModel.loadReactions(messageIds: ids)
+        viewModel.loadFilesData()
         
         test()
-        Task {
-            // TODO: - this is not parallel
-            await viewModel.loadFilesData(localIds: localIds)
-        }
     }
     
     func handleScroll(isMyMessage: Bool) {
