@@ -23,7 +23,8 @@ enum PagionationDirection {
 
 class CurrentChatViewModel: BaseViewModel {
     
-    var frc: NSFetchedResultsController<MessageEntity>?
+    var messagesFRC: NSFetchedResultsController<MessageEntity>?
+    var reactionsFRC: NSFetchedResultsController<MessageRecordEntity>?
     var room: Room
     
     var friendUser: User? {
@@ -45,7 +46,7 @@ class CurrentChatViewModel: BaseViewModel {
 //    var currentOffset = -1 // this should never happen
 //    var countOfAllMessages = 0
 //    let fetchLimit = 50
-    private var allReactions: [MessageRecord] = []
+//    private var allReactions: [MessageRecord] = []
     private var allFileData: [String: FileData] = [:]
     
     init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?, actionPublisher: ActionPublisher) {
@@ -77,13 +78,31 @@ class CurrentChatViewModel: BaseViewModel {
 }
 
 extension CurrentChatViewModel {
-    func loadReactions(messageIds: [Int64]) async {
-        allReactions = await repository.getReactionRecords(messageIds: messageIds)
+    func loadReactions(messageIds: [Int64]) {
+        let fetchRequest = MessageRecordEntity.fetchRequest()
+        let currentTimestamp = Date().currentTimeMillis()
+        // fetch all reactions for all messages in this room, and continue fetching all reactions (we dont have roomId in MessageRecord, so for live update it will fetch some unnecessary reaction, but only when in chat)
+        fetchRequest.predicate = NSPredicate(format: "type == %@ AND (messageId IN %@ OR modifiedAt > %ld )", MessageRecordType.reaction.rawValue, messageIds, currentTimestamp)
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(MessageRecordEntity.type), ascending: true)]
+        self.reactionsFRC = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                              managedObjectContext: repository.getMainContext(),
+                                              sectionNameKeyPath: nil,
+                                              cacheName: nil)
+        self.reactionsFRC?.delegate = self
+        do {
+            try self.reactionsFRC?.performFetch()
+        } catch {
+            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
+        }
     }
     
     func loadFilesData(localIds: [String]) async {
         allFileData = await repository.getFilesData(localIds: localIds)
     }
+}
+
+extension CurrentChatViewModel: NSFetchedResultsControllerDelegate {
 }
 
 // MARK: - Navigation
@@ -532,7 +551,7 @@ extension CurrentChatViewModel {
 
 extension CurrentChatViewModel {
     func getMessage(for indexPath: IndexPath) -> Message? {
-        guard let entity = frc?.object(at: indexPath) else { return nil }
+        guard let entity = messagesFRC?.object(at: indexPath) else { return nil }
         var fileData: FileData?
         var thumbData: FileData?
         
@@ -554,19 +573,20 @@ extension CurrentChatViewModel {
     
     func getReactionRecords(messageId: String?) -> [MessageRecord] {
         guard let messageId, let number = Int64(messageId) else { return []}
-        return allReactions.filter { $0.messageId == number }
+        return reactionsFRC?.fetchedObjects?.filter({ $0.messageId == number }).compactMap({ MessageRecord(messageRecordEntity: $0)
+        }) ?? []
     }
     
     func getIndexPathFor(localId: String) -> IndexPath? {
-        guard let entity = frc?.fetchedObjects?.first(where: { $0.localId == localId })
+        guard let entity = messagesFRC?.fetchedObjects?.first(where: { $0.localId == localId })
         else { return nil }
-        return frc?.indexPath(forObject: entity)
+        return messagesFRC?.indexPath(forObject: entity)
     }
     
     func getIndexPathFor(messageId id: Int64) -> IndexPath? {
-        guard let entity = frc?.fetchedObjects?.first(where: { $0.id == "\(id)" })
+        guard let entity = messagesFRC?.fetchedObjects?.first(where: { $0.id == "\(id)" })
         else { return nil }
-        return frc?.indexPath(forObject: entity)
+        return messagesFRC?.indexPath(forObject: entity)
     }
 }
 
@@ -632,19 +652,19 @@ extension CurrentChatViewModel {
 //        fetchRequest.fetchOffset = getFetchOffset(direction)
         fetchRequest.fetchLimit = 0
         fetchRequest.fetchOffset = 0
-        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+        self.messagesFRC = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(),
                                               sectionNameKeyPath: "sectionName",
                                               cacheName: nil)
         do {
-            try self.frc?.performFetch()
+            try self.messagesFRC?.performFetch()
         } catch {
             fatalError("Failed to fetch entities: \(error)") // TODO: handle error
         }
     }
     
     func getNameForSection(section: Int) -> String? {
-        guard let sections = frc?.sections else { return nil }
+        guard let sections = messagesFRC?.sections else { return nil }
         var name = sections[section].name
         if let time = (sections[section].objects?.first as? MessageEntity)?.createdAt {
             name.append(", ")
@@ -656,8 +676,8 @@ extension CurrentChatViewModel {
     func isPreviousCellSameSender(for indexPath: IndexPath) -> Bool {
         let previousRow = indexPath.row - 1
         if previousRow >= 0 {
-            let currentMessageEntity  = frc?.object(at: indexPath)
-            let previousMessageEntity = frc?.object(at: IndexPath(row: previousRow,
+            let currentMessageEntity  = messagesFRC?.object(at: indexPath)
+            let previousMessageEntity = messagesFRC?.object(at: IndexPath(row: previousRow,
                                                                   section: indexPath.section))
             return currentMessageEntity?.fromUserId == previousMessageEntity?.fromUserId
         }
@@ -665,12 +685,12 @@ extension CurrentChatViewModel {
     }
     
     func isNextCellSameSender(for indexPath: IndexPath) -> Bool {
-        guard let sections = frc?.sections else { return true }
+        guard let sections = messagesFRC?.sections else { return true }
         let maxRowsIndex = sections[indexPath.section].numberOfObjects - 1
         let nextRow = indexPath.row + 1
         if nextRow <= maxRowsIndex {
-            let currentMessageEntity  = frc?.object(at: indexPath)
-            let nextMessageEntity = frc?.object(at: IndexPath(row: nextRow,
+            let currentMessageEntity  = messagesFRC?.object(at: indexPath)
+            let nextMessageEntity = messagesFRC?.object(at: IndexPath(row: nextRow,
                                                               section: indexPath.section))
             return currentMessageEntity?.fromUserId == nextMessageEntity?.fromUserId
         }

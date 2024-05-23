@@ -195,7 +195,7 @@ extension CurrentChatViewController {
         
         viewModel.setFetch(.initial)
         
-        viewModel.frc?.delegate = self
+        viewModel.messagesFRC?.delegate = self
         if let messageId = viewModel.scrollToMessageId,
            let indexPath = viewModel.getIndexPathFor(messageId: messageId) {
             currentChatView.messagesTableView.blinkRow(at: indexPath)
@@ -205,7 +205,7 @@ extension CurrentChatViewController {
         var ids: [Int64] = []
         var localIds: [String] = []
         
-        viewModel.frc?.fetchedObjects?
+        viewModel.messagesFRC?.fetchedObjects?
             .forEach({ messageEntity in
                 if let id = messageEntity.id,
                    let number = Int64(id) {
@@ -218,12 +218,12 @@ extension CurrentChatViewController {
                 }
             })
         
+        viewModel.loadReactions(messageIds: ids)
+        
+        test()
         Task {
             // TODO: - this is not parallel
             await viewModel.loadFilesData(localIds: localIds)
-            await viewModel.loadReactions(messageIds: ids)
-           
-            test()
         }
     }
     
@@ -420,11 +420,11 @@ extension CurrentChatViewController: UITableViewDelegate {
 extension CurrentChatViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.frc?.sections?.count ?? 0
+        return viewModel.messagesFRC?.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = viewModel.frc?.sections else { return 0 }
+        guard let sections = viewModel.messagesFRC?.sections else { return 0 }
         return sections[section].numberOfObjects
     }
     
