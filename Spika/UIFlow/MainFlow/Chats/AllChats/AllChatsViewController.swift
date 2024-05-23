@@ -36,6 +36,11 @@ class AllChatsViewController: BaseViewController {
             self?.viewModel.presentStartNewPrivateChatScreen()
         }.store(in: &subscriptions)
         
+        SyncService.shared.c.sink { [weak self] s in
+            guard let self else { return }
+            allChatsView.infoLabel.text = s.text
+        }.store(in: &subscriptions)
+        
         viewModel.setupBinding()
         viewModel.setRoomsFetch()
         

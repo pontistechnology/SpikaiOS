@@ -1014,6 +1014,12 @@
 		937F48E827D3D66A005E19FB /* TextMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937F48E727D3D66A005E19FB /* TextMessageTableViewCell.swift */; };
 		937FBE6728B52D8D00C3A888 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FBE6628B52D8D00C3A888 /* URL+Extensions.swift */; };
 		937FBE6928B5309E00C3A888 /* AVURLAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FBE6828B5309E00C3A888 /* AVURLAsset+Extensions.swift */; };
+		938341E72BFFE30500A5CD95 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938341E62BFFE30500A5CD95 /* SyncService.swift */; };
+		938341E82BFFE30500A5CD95 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938341E62BFFE30500A5CD95 /* SyncService.swift */; };
+		938341E92BFFE30500A5CD95 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938341E62BFFE30500A5CD95 /* SyncService.swift */; };
+		938341EA2BFFE5E900A5CD95 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938341E62BFFE30500A5CD95 /* SyncService.swift */; };
+		938341EB2BFFE5EA00A5CD95 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938341E62BFFE30500A5CD95 /* SyncService.swift */; };
+		938341EC2BFFE5EB00A5CD95 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938341E62BFFE30500A5CD95 /* SyncService.swift */; };
 		9383879029D5253D0057714A /* FileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383878F29D5253D0057714A /* FileData.swift */; };
 		9383879129D5253D0057714A /* FileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383878F29D5253D0057714A /* FileData.swift */; };
 		9383879229D5253D0057714A /* FileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383878F29D5253D0057714A /* FileData.swift */; };
@@ -1574,6 +1580,7 @@
 		937F48E727D3D66A005E19FB /* TextMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageTableViewCell.swift; sourceTree = "<group>"; };
 		937FBE6628B52D8D00C3A888 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		937FBE6828B5309E00C3A888 /* AVURLAsset+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVURLAsset+Extensions.swift"; sourceTree = "<group>"; };
+		938341E62BFFE30500A5CD95 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
 		9383878F29D5253D0057714A /* FileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileData.swift; sourceTree = "<group>"; };
 		9383879429D596E40057714A /* MessageDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewModel.swift; sourceTree = "<group>"; };
 		938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardMessagesRequestModel.swift; sourceTree = "<group>"; };
@@ -2308,6 +2315,14 @@
 			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
+		938341E52BFFE2E200A5CD95 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				938341E62BFFE30500A5CD95 /* SyncService.swift */,
+			);
+			path = Singletons;
+			sourceTree = "<group>";
+		};
 		938D052B27D59A4D002E5CE5 /* NewGroupChat */ = {
 			isa = PBXGroup;
 			children = (
@@ -2968,6 +2983,7 @@
 		ADD503CB270DD2EF009D50CB /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				938341E52BFFE2E200A5CD95 /* Singletons */,
 				ADD503D8270DD69C009D50CB /* Repository */,
 				ADD503F1270DE35F009D50CB /* Services */,
 				ADD503F4270DF958009D50CB /* Models */,
@@ -3734,6 +3750,7 @@
 				6C753DDA2A4C128800697AA6 /* AppRepository+Device.swift in Sources */,
 				93EA223E2B5DBF9E0060D8CD /* CreateRoomRequestModel.swift in Sources */,
 				6C753DDB2A4C128800697AA6 /* Date+Extensions.swift in Sources */,
+				938341EC2BFFE5EB00A5CD95 /* SyncService.swift in Sources */,
 				6C753DDC2A4C128800697AA6 /* MessageResponse.swift in Sources */,
 				6C753DDD2A4C128800697AA6 /* VerifyFileResponseModel.swift in Sources */,
 				938B36222B3D5F73008359C5 /* ForwardMessagesResponse.swift in Sources */,
@@ -4043,6 +4060,7 @@
 				6C1777862A1CE2B700273FEE /* AppRepository+DeviceContacts.swift in Sources */,
 				6C78B89329AF5ADB004BF881 /* AppRepository.swift in Sources */,
 				6C78B89429AF5ADB004BF881 /* Constants+Database.swift in Sources */,
+				938341E82BFFE30500A5CD95 /* SyncService.swift in Sources */,
 				936E21122B01D95E00333B43 /* ChatDetails2ViewController.swift in Sources */,
 				6C78B89529AF5ADB004BF881 /* EnterNumberViewModel.swift in Sources */,
 				6C78B89629AF5ADB004BF881 /* ContactsRequestModel.swift in Sources */,
@@ -4170,6 +4188,7 @@
 				6C78B90F29AF5D89004BF881 /* SendReactionResponseModel.swift in Sources */,
 				6C78B91029AF5D89004BF881 /* Constants+Strings.swift in Sources */,
 				934F6DF429E699070010FED9 /* AppRepository+Device.swift in Sources */,
+				938341EB2BFFE5EA00A5CD95 /* SyncService.swift in Sources */,
 				6C78B91129AF5D89004BF881 /* Date+Extensions.swift in Sources */,
 				6C78B91229AF5D89004BF881 /* MessageResponse.swift in Sources */,
 				6C78B91529AF5D89004BF881 /* VerifyFileResponseModel.swift in Sources */,
@@ -4479,6 +4498,7 @@
 				6CF649902A459FE100E0DE0B /* AppRepository+DeviceContacts.swift in Sources */,
 				6CF649912A459FE100E0DE0B /* AppRepository.swift in Sources */,
 				6CF649922A459FE100E0DE0B /* Constants+Database.swift in Sources */,
+				938341E92BFFE30500A5CD95 /* SyncService.swift in Sources */,
 				936E21132B01D95E00333B43 /* ChatDetails2ViewController.swift in Sources */,
 				6CF649932A459FE100E0DE0B /* EnterNumberViewModel.swift in Sources */,
 				6CF649942A459FE100E0DE0B /* ContactsRequestModel.swift in Sources */,
@@ -4606,6 +4626,7 @@
 				934FF17229778E02002C76F7 /* SendReactionResponseModel.swift in Sources */,
 				6C153BF129486F2B00D400A7 /* Constants+Strings.swift in Sources */,
 				934F6DF329E699070010FED9 /* AppRepository+Device.swift in Sources */,
+				938341EA2BFFE5E900A5CD95 /* SyncService.swift in Sources */,
 				9347CCE4286457C900018AEB /* Date+Extensions.swift in Sources */,
 				931B150028211AC600A0CD35 /* MessageResponse.swift in Sources */,
 				931B150928211AC600A0CD35 /* VerifyFileResponseModel.swift in Sources */,
@@ -4915,6 +4936,7 @@
 				ADD503DF270DD733009D50CB /* BaseView.swift in Sources */,
 				93E48EB027CEA6C3003B4188 /* Message.swift in Sources */,
 				6C1777852A1CE2B700273FEE /* AppRepository+DeviceContacts.swift in Sources */,
+				938341E72BFFE30500A5CD95 /* SyncService.swift in Sources */,
 				934F036D282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
 				ADD503DC270DD6DC009D50CB /* AppRepository.swift in Sources */,
 				6C153BEE2948693B00D400A7 /* Constants+Database.swift in Sources */,
