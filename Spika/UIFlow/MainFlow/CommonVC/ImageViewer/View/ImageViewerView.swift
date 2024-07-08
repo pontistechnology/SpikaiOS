@@ -11,7 +11,8 @@ class ImageViewerView: UIView, UIScrollViewDelegate {
     
     private let scrollView = UIScrollView()
     let imageView = UIImageView()
-    let saveLabel = RoundedLabel("Save to photos", cornerRadius: 10)
+    let optionsLabel = RoundedLabel("Options", cornerRadius: 10)
+    let infoLabel = CustomLabel(text: "Sender info", textColor: .textPrimary, alignment: .center)
     
     init() {
         super.init(frame: .zero)
@@ -30,12 +31,17 @@ class ImageViewerView: UIView, UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         imageView
     }
+    
+    func setInfoLabel(text: String) {
+        infoLabel.setText(text: text)
+    }
 }
 
 extension ImageViewerView: BaseView {
     func addSubviews() {
         addSubview(scrollView)
-        addSubview(saveLabel)
+        addSubview(optionsLabel)
+        addSubview(infoLabel)
         scrollView.addSubview(imageView)
     }
     
@@ -43,12 +49,16 @@ extension ImageViewerView: BaseView {
         scrollView.minimumZoomScale = 1
         scrollView.maximumZoomScale = 5
         imageView.contentMode = .scaleAspectFit
+        infoLabel.numberOfLines = 0
     }
     
     func positionSubviews() {
-        scrollView.fillSuperview()
-        saveLabel.anchor(bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
-        saveLabel.centerXToSuperview()
+        infoLabel.centerXToSuperview()
+        infoLabel.anchor(top: topAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+
+        scrollView.anchor(top: infoLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 6, left: 0, bottom: 0, right: 0))
+        optionsLabel.anchor(bottom: bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
+        optionsLabel.centerXToSuperview()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         imageView.heightAnchor.constraint(equalTo: scrollView.heightAnchor).isActive = true

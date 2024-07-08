@@ -94,6 +94,29 @@ class NetworkService {
                     .eraseToAnyPublisher()
     }
     
+    func downloadFileTemporary(from: URL, to: URL) async throws -> URL? {
+        // Download the video asynchronously
+        let (tempLocalUrl, response) = try await URLSession.shared.download(from: from)
+        
+        // Check the response status code
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            throw URLError(.badServerResponse)
+        }
+        
+        // Create a destination URL in the temporary directory
+        let tempDirectory = FileManager.default.temporaryDirectory
+        let destinationUrl = tempDirectory.appendingPathComponent(from.lastPathComponent)
+        
+        // Move the downloaded file to the destination URL
+        if FileManager.default.fileExists(atPath: destinationUrl.path) {
+            try FileManager.default.removeItem(at: destinationUrl)
+        }
+        
+        try FileManager.default.moveItem(at: tempLocalUrl, to: destinationUrl)
+                
+        return destinationUrl
+    }
+    
     private func getUrl(path: String, queryParameters: [String : Codable]?) -> URL? {
         let pathWithQueryParameters = addQueryParametersToPath(path: path, queryParameters: queryParameters)
         

@@ -114,7 +114,7 @@ extension AllChatsViewModel {
     
     func description(message: Message?, room: Room) -> (String?, MessageType, String?) {
         // TODO: - add strings to loc. strings?, this func is needed somewhere else too, move it
-        guard let message = message else { return (.getStringFor(.noMessages), .text, nil)}
+        guard let message = message else { return (" ", .text, nil)}
         let senderName: String
         if message.type == .system {
             return ("", message.type, room.getStringForSystemMessage(message: message))

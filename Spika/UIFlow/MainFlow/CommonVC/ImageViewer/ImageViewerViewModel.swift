@@ -6,9 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
 class ImageViewerViewModel: BaseViewModel {
     var message: Message!
+    var senderName: String!
+    
+    var info: String {
+        senderName.appending("\n").appending(message.createdAt.convert(to: .ddMMyyyyHHmm))
+    }
     
     func getLocalURL() -> URL? {
         guard message.fromUserId == myUserId,
@@ -28,5 +34,19 @@ class ImageViewerViewModel: BaseViewModel {
         guard let url = message.body?.thumb?.id?.fullFilePathFromId()
         else { return nil }
         return url
+    }
+    
+    func presentShareSheet(image: UIImage) {
+        let temporaryFolder = FileManager.default.temporaryDirectory
+        let fileName = message.body?.file?.fileName ?? "unknown.jpg"
+        let temporaryFileURL = temporaryFolder.appendingPathComponent(fileName)
+        
+        guard (try? image.jpgOrPngData(fileName: fileName)?.write(to: temporaryFileURL)) != nil
+        else {
+            showError("Something went wrong.")
+            return
+        }
+        let c = ShareSourceProvider(shareType: .sharePhoto(url: temporaryFileURL))
+        getAppCoordinator()?.presentShareScreen(source: c)
     }
 }

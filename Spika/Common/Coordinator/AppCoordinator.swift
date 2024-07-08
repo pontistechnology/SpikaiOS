@@ -228,28 +228,26 @@ class AppCoordinator: Coordinator {
     }
     
     func presentAVVideoController(asset: AVAsset) {
-        let avPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
-        let avPlayerVC = AVPlayerViewController()
-        avPlayerVC.player = avPlayer
-        try? AVAudioSession.sharedInstance()
-            .setCategory(AVAudioSession.Category.playback,
-                         mode: AVAudioSession.Mode.default,
-                         options: [])
-        navigationController.present(avPlayerVC, animated: true) {
-            avPlayer.play()
-        }
+        let videoPlayerVC = Assembler.sharedAssembler.resolver
+            .resolve(VideoPlayerViewController.self, arguments: self, asset)!
+        navigationController.present(videoPlayerVC, animated: true)
     }
     
-    func presentImageViewer(message: Message) {
+    func presentImageViewer(message: Message, senderName: String) {
         let imageViewerViewController = Assembler.sharedAssembler.resolver
-            .resolve(ImageViewerViewController.self, arguments: self, message)!
+            .resolve(ImageViewerViewController.self, arguments: self, message, senderName)!
         navigationController.pushViewController(imageViewerViewController, animated: true)
     }
     
-    func presentPdfViewer(url: URL) {
+    func presentPdfViewer(shareType: ShareActivityType) {
         let pdfViewerViewController = Assembler.sharedAssembler.resolver
-            .resolve(PdfViewerViewController.self, arguments: self, url)!
+            .resolve(PdfViewerViewController.self, arguments: self, shareType)!
         navigationController.pushViewController(pdfViewerViewController, animated: true)
+    }
+    
+    func presentShareScreen(source: ShareSourceProvider) {
+        let activityVC = UIActivityViewController(activityItems: [source], applicationActivities: nil)
+        navigationController.present(activityVC, animated: true)
     }
     
     func presentPrivacySettingsScreen() {

@@ -228,11 +228,11 @@ extension CurrentChatViewController {
 
 extension CurrentChatViewController {
     func test() {
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let self else { return }
             // TODO: - not always correctly reloaded, maybe if not fully visible?
-            if let a = currentChatView.messagesTableView.indexPathsForVisibleRows {
-                currentChatView.messagesTableView.reloadRows(at: a, with: .none)
+            if let visibleRows = currentChatView.messagesTableView.indexPathsForVisibleRows {
+                currentChatView.messagesTableView.reloadRows(at: visibleRows, with: .none)
             }
         }
     }
@@ -328,6 +328,10 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         currentChatView.messagesTableView.endUpdates()
         frcDidChangePublisher.send(true)
+        
+        if controller == viewModel.reactionsFRC {
+            test()
+        }
     }
 }
 

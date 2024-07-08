@@ -81,7 +81,7 @@ extension CurrentChatViewModel {
         let fetchRequest = MessageRecordEntity.fetchRequest()
         let currentTimestamp = Date().currentTimeMillis()
         // fetch all reactions for all messages in this room, and continue fetching all reactions (we dont have roomId in MessageRecord, so for live update it will fetch some unnecessary reaction, but only when in chat)
-        fetchRequest.predicate = NSPredicate(format: "type == %@ AND (messageId IN %@ OR modifiedAt > %ld )", MessageRecordType.reaction.rawValue, messageIds, currentTimestamp)
+        fetchRequest.predicate = NSPredicate(format: "type == %@ AND (messageId IN %@ OR modifiedAt > %ld OR createdAt > %ld)", MessageRecordType.reaction.rawValue, messageIds, currentTimestamp, currentTimestamp)
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(MessageRecordEntity.type), ascending: true)]
         self.reactionsFRC = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -113,6 +113,9 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<any NSFetchRequestResult>) {
+        
+    }
 }
 
 // MARK: - Navigation
@@ -148,7 +151,9 @@ extension CurrentChatViewModel {
     }
     
     func showImage(message: Message) {
-        getAppCoordinator()?.presentImageViewer(message: message)
+        getAppCoordinator()?
+            .presentImageViewer(message: message,
+                                senderName: room.getDisplayNameFor(userId: message.fromUserId))
     }
     
     func showReactions(records: [MessageRecord]) {
@@ -375,9 +380,10 @@ extension CurrentChatViewModel {
 // MARK: - files handling
 extension CurrentChatViewModel {
     func openFile(message: Message) {
-        guard let url = message.body?.file?.id?.fullFilePathFromId() else { return }
+        guard let file = message.body?.file,
+                let url = file.id?.fullFilePathFromId() else { return }
         if message.body?.file?.mimeType == "application/pdf" {
-            getAppCoordinator()?.presentPdfViewer(url: url)
+            getAppCoordinator()?.presentPdfViewer(shareType: .sharePdf(temporaryURL: url, file: file))
         } else if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }

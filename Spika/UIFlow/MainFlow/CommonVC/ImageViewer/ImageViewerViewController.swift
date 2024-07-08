@@ -17,28 +17,24 @@ class ImageViewerViewController: BaseViewController {
         super.viewDidLoad()
         setupView(imageViewerView)
         setupBindings()
+        imageViewerView.setInfoLabel(text: viewModel.info)
+        imageViewerView.optionsLabel.hide()
         if let localURL = viewModel.getLocalURL() {
             imageViewerView.setImage(path: localURL.path)
         } else {
             imageViewerView.setImage(link: viewModel.getOnlineURL(),
                                      thumbLink: viewModel.getThumbOnlineURL())
         }
+        imageViewerView.optionsLabel.unhide()
+        
     }
     
     func setupBindings() {
-        imageViewerView.saveLabel.tap().sink { [weak self] _ in
+        imageViewerView.optionsLabel.tap().receive(on: DispatchQueue.main).sink { [weak self] _ in
             guard let self,
-                  let image = self.imageViewerView.imageView.image
+                  let image = imageViewerView.imageView.image
             else { return }
-            UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveCompleted), nil)
+            viewModel.presentShareSheet(image: image)
         }.store(in: &subscriptions)
-    }
-    
-    @objc func saveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if error == nil {
-            viewModel.showOneSecAlert(type: .save)
-        } else {
-            viewModel.showError("Error occured. Check permissions for photos.")
-        }
     }
 }

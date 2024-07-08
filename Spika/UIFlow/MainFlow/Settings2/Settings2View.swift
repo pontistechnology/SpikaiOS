@@ -52,6 +52,8 @@ struct Settings2View: View {
             
             Spacer()
             
+            Text("Build number: " + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown"))
+            
             
         }
         .ignoresSafeArea()

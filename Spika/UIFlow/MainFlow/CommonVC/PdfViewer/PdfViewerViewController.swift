@@ -10,12 +10,23 @@ import PDFKit
 
 class PdfViewerViewController: BaseViewController {
     private let pdfView = PDFView()
-    private let saveLabel = RoundedLabel("Download with Safari", cornerRadius: 10)
+    private let optionsLabel = RoundedLabel("Options", cornerRadius: 10)
     let url: URL
+    let shareType: ShareActivityType
+    private let fileName: String
     
-    init(url: URL) {
-        self.url = url
+    init(shareType: ShareActivityType) {
+        self.shareType = shareType
+        switch shareType {
+        case .sharePdf(let temporaryURL, let file):
+            self.url = temporaryURL
+            self.fileName = file.fileName ?? ""
+        case .sharePhoto(let image):
+            self.url = URL(string: "")!
+            self.fileName = ""
+        }
         super.init()
+        title = fileName
     }
     
     required init?(coder: NSCoder) {
@@ -25,10 +36,11 @@ class PdfViewerViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(pdfView)
-        view.addSubview(saveLabel)
+        view.addSubview(optionsLabel)
         pdfView.fillSuperview()
-        saveLabel.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
-        saveLabel.centerXToSuperview()
+        optionsLabel.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+        optionsLabel.centerXToSuperview()
+        optionsLabel.hide()
         setupBindings()
 //        pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
@@ -38,20 +50,23 @@ class PdfViewerViewController: BaseViewController {
             if let document = PDFDocument(url: url) {
                 DispatchQueue.main.async { [weak self] in
                     self?.pdfView.document = document
-                    self?.pdfView.autoScales = true    
+                    self?.pdfView.autoScales = true
+                    self?.optionsLabel.unhide()
                 }
             }
         }
     }
     
     func setupBindings() {
-        saveLabel.tap().sink { [weak self] _ in
-            print("joj")
+        optionsLabel.tap().sink { [weak self] _ in
             guard let self else { return }
-            if UIApplication.shared.canOpenURL(self.url) {
-                UIApplication.shared.open(self.url)
-            }
+            let temporaryFolder = FileManager.default.temporaryDirectory
+            let fileName = shareType.fileName
+            let temporaryFileURL = temporaryFolder.appendingPathComponent(fileName)
+            
+            try? pdfView.document?.dataRepresentation()?.write(to: temporaryFileURL)
+            let activityViewController = UIActivityViewController(activityItems: [temporaryFileURL], applicationActivities: nil)
+            navigationController?.present(activityViewController, animated: true)
         }.store(in: &subscriptions)
     }
 }
-

@@ -8,6 +8,7 @@
 import Combine
 import Swinject
 import SwiftUI
+import AVKit
 
 final class AppAssembly: Assembly {
     
@@ -32,6 +33,7 @@ final class AppAssembly: Assembly {
         assembleMessageActionsViewController(container)
         assembleMessageDetailsViewController(container)
         assembleCustomReactionsViewController(container)
+        assembleVideoPlayerViewController(container)
     }
     
     private func assembleMainRepository(_ container: Container) {
@@ -228,23 +230,38 @@ final class AppAssembly: Assembly {
     }
     
     private func assembleImageViewerViewController(_ container: Container) {
-        container.register(ImageViewerViewModel.self) { (resolver, coordinator: AppCoordinator, message: Message) in
+        container.register(ImageViewerViewModel.self) { (resolver, coordinator: AppCoordinator, message: Message, senderName: String) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
             let viewModel = ImageViewerViewModel(repository: repository, coordinator: coordinator)
             viewModel.message = message
+            viewModel.senderName = senderName
             return viewModel
         }.inObjectScope(.transient)
         
-        container.register(ImageViewerViewController.self) { (resolver, coordinator: AppCoordinator, message: Message) in
+        container.register(ImageViewerViewController.self) { (resolver, coordinator: AppCoordinator, message: Message, senderName: String) in
             let controller = ImageViewerViewController()
-            controller.viewModel = container.resolve(ImageViewerViewModel.self, arguments: coordinator, message)
+            controller.viewModel = container.resolve(ImageViewerViewModel.self, arguments: coordinator, message, senderName)
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleVideoPlayerViewController(_ container: Container) {
+        container.register(VideoPlayerViewModel.self) { (resolver, coordinator: AppCoordinator, asset: AVAsset) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            let viewModel = VideoPlayerViewModel(repository: repository, coordinator: coordinator)
+            viewModel.asset = asset
+            return viewModel
+        }.inObjectScope(.transient)
+        
+        container.register(VideoPlayerViewController.self) { (resolver, coordinator: AppCoordinator, asset: AVAsset) in
+            let controller = VideoPlayerViewController(viewModel: container.resolve(VideoPlayerViewModel.self, arguments: coordinator, asset)!)
             return controller
         }.inObjectScope(.transient)
     }
     
     private func assemblePdfViewerViewController(_ container: Container) {
-        container.register(PdfViewerViewController.self) { (resolver, coordinator: AppCoordinator, url: URL) in
-            let controller = PdfViewerViewController(url: url)
+        container.register(PdfViewerViewController.self) { (resolver, coordinator: AppCoordinator, shareType: ShareActivityType) in
+            let controller = PdfViewerViewController(shareType: shareType)
             return controller
         }.inObjectScope(.transient)
     }

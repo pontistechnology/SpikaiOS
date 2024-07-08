@@ -20,6 +20,14 @@ extension UIImage {
             return UIImage(resource: .unknownFileThumbnail)
         }
     }
+    
+    func jpgOrPngData(fileName: String) -> Data? {
+        if fileName.lowercased().hasSuffix(".png") {
+            return self.pngData()
+        } else {
+            return self.jpegData(compressionQuality: 1)
+        }
+    }
 }
 
 extension UIImage {
