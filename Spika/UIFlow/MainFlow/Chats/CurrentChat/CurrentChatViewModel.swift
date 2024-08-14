@@ -171,9 +171,9 @@ extension CurrentChatViewModel {
         guard !message.deleted else { return }
         let actions: [MessageAction] =
         if message.fromUserId == myUserId && message.type == .text && !message.isForwarded {
-            [.reply, .forward, .copy, .edit, .details, .favorite, .delete]
+            [.reply, .forward, .copy, .edit, .details, .favorite, .delete].shuffled()
         } else {
-            [.reply, .forward, (message.type == .image ? .download : .copy ), .details, .favorite, .delete]
+            [.reply, .forward, (message.type == .image ? .download : .copy ), .details, .favorite, .delete].shuffled()
         }
         
         getAppCoordinator()?

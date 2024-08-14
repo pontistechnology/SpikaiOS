@@ -20,7 +20,6 @@ class MainButton: UIButton {
 
     private func setupButton() {
         backgroundColor = .primaryColor
-        layer.cornerRadius = 10
         titleLabel?.font = .customFont(name: .MontserratSemiBold, size: 16)
     }
 
