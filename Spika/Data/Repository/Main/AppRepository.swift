@@ -77,7 +77,7 @@ class AppRepository: Repository {
     }
     
     func getServerSettings() -> AnyPublisher<ServerSettingsResponseModel, Error> {
-        let resources = Resources<ServerSettingsResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.messengerSettings,
             requestType: .GET,
             bodyParameters: nil,

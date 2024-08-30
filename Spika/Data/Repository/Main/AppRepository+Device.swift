@@ -21,7 +21,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<UpdatePushResponseModel, UpdatePushRequestModel>(
+        let resources = Resources<UpdatePushRequestModel>(
             path: Constants.Endpoints.updatePush,
             requestType: .PUT,
             bodyParameters: UpdatePushRequestModel(pushToken: token),

@@ -66,13 +66,12 @@ extension URL {
 extension URL {
     func compressAsMP4(name: String) async -> URL? {
         let allowedExtensions = ["mov", "mp4"]
-        guard allowedExtensions.contains(self.pathExtension),
+        guard allowedExtensions.contains(self.pathExtension.lowercased()),
               let exportSession = AVAssetExportSession(asset: AVAsset(url: self),
                                             presetName: AVAssetExportPreset960x540),
               let documentsDirectory = FileManager.default.urls(for: .documentDirectory,
                                                                 in: .userDomainMask).first
         else { return nil }
-        
         // TODO: - move to constants
         let newFileUrl = documentsDirectory.appendingPathComponent("\(name).mp4")
         if FileManager.default.fileExists(atPath: newFileUrl.path) {
@@ -104,7 +103,7 @@ extension URL {
         case .completed:
             return newFileUrl
         case .failed:
-            print("evo errora: ", exportSession.error)
+            print("here is error: ", exportSession.error)
             print("failed")
         case .cancelled:
             print("cancelled")

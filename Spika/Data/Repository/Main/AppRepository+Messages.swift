@@ -17,7 +17,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<MessageResponse, SendMessageRequest>(
+        let resources = Resources<SendMessageRequest>(
             path: Constants.Endpoints.messages,
             requestType: .POST,
             bodyParameters: SendMessageRequest(roomId: roomId,
@@ -37,7 +37,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<MessageResponse, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.messages + "/\(messageId)",
             requestType: .DELETE,
             bodyParameters: nil,
@@ -54,7 +54,7 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let resources = Resources<MessageResponse, UpdateMessageRequest>(
+        let resources = Resources<UpdateMessageRequest>(
             path: Constants.Endpoints.messages + "/\(messageId)",
             requestType: .PUT,
             bodyParameters: UpdateMessageRequest(text: text),
@@ -69,7 +69,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<ForwardMessagesResponseModel, ForwardMessagesRequestModel>(path: Constants.Endpoints.forwardMessages, requestType: .POST, bodyParameters: ForwardMessagesRequestModel(messageIds: messageIds, roomIds: roomIds, userIds: userIds), httpHeaderFields: ["accesstoken" : accessToken])
+        let resources = Resources<ForwardMessagesRequestModel>(path: Constants.Endpoints.forwardMessages, requestType: .POST, bodyParameters: ForwardMessagesRequestModel(messageIds: messageIds, roomIds: roomIds, userIds: userIds), httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
     }
@@ -81,7 +81,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<DeliveredResponseModel, DeliveredRequestModel>(
+        let resources = Resources<DeliveredRequestModel>(
             path: Constants.Endpoints.deliveredStatus,
             requestType: .POST,
             bodyParameters: DeliveredRequestModel(messageIds: messageIds),
@@ -98,7 +98,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<SeenResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.seenStatus.replacingOccurrences(of: "roomId", with: "\(roomId)"),
             requestType: .POST,
             bodyParameters: nil,
@@ -115,7 +115,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<RecordResponseModel, SendReactionRequestModel>(
+        let resources = Resources<SendReactionRequestModel>(
             path: Constants.Endpoints.messageRecords,
             requestType: .POST,
             bodyParameters: SendReactionRequestModel(messageId: messageId,
@@ -134,7 +134,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<RecordResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.messageRecords + "/\(recordId)",
             requestType: .DELETE,
             bodyParameters: nil,

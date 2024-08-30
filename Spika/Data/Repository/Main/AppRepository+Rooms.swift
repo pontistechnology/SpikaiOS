@@ -23,7 +23,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<CreateRoomResponseModel, CreateRoomRequestModel>(
+        let resources = Resources<CreateRoomRequestModel>(
             path: Constants.Endpoints.createRoom,
             requestType: .POST,
             bodyParameters: CreateRoomRequestModel(name: name,
@@ -42,7 +42,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<CheckRoomResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.checkRoomForUserId + "/" + String(userId),
             requestType: .GET,
             bodyParameters: nil,
@@ -58,7 +58,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<CheckRoomResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.checkRoomForRoomId + "/" + String(roomId),
             requestType: .GET,
             bodyParameters: nil,
@@ -74,7 +74,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<CreateRoomResponseModel, CreateRoomRequestModel>(
+        let resources = Resources<CreateRoomRequestModel>(
             path: Constants.Endpoints.createRoom,
             requestType: .POST,
             bodyParameters: CreateRoomRequestModel(userIds: [userId]),
@@ -90,7 +90,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<GetAllRoomsResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.getAllRooms,
             requestType: .GET,
             bodyParameters: nil,
@@ -108,7 +108,7 @@ extension AppRepository {
         
         let url = Constants.Endpoints.getAllRooms + "/\(roomId)" + (mute ? "/mute" : "/unmute")
         
-        let resources = Resources<EmptyResponse, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: url,
             requestType: .POST,
             bodyParameters: nil,
@@ -125,7 +125,7 @@ extension AppRepository {
         
         let url = Constants.Endpoints.getAllRooms + "/\(roomId)" + (pin ? "/pin" : "/unpin")
         
-        let resources = Resources<EmptyResponse, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: url,
             requestType: .POST,
             bodyParameters: nil,
@@ -140,7 +140,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         let url = Constants.Endpoints.getAllRooms + "/\(roomId)"
-        let resources = Resources<CreateRoomResponseModel, EditRoomRequestModel>(
+        let resources = Resources<EditRoomRequestModel>(
             path: url,
             requestType: .PUT,
             bodyParameters: EditRoomRequestModel(action: action),
@@ -215,7 +215,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<EmptyResponse, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.checkRoomForRoomId + "/" + String(roomId),
             requestType: .DELETE,
             bodyParameters: nil,
@@ -231,7 +231,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<CreateRoomResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.checkRoomForRoomId + "/" + String(roomId) + "/leave",
             requestType: .POST,
             bodyParameters: nil,
@@ -246,7 +246,7 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let resources = Resources<EmptyResponse, BlockModel>(
+        let resources = Resources<BlockModel>(
             path: Constants.Endpoints.blocks,
             requestType: .POST,
             bodyParameters: BlockModel(blockedId: userId),
@@ -261,7 +261,7 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let resources = Resources<EmptyResponse, BlockModel>(
+        let resources = Resources<BlockModel>(
             path: Constants.Endpoints.blocks + "/userId/\(userId)",
             requestType: .DELETE,
             bodyParameters: BlockModel(blockedId: userId),
@@ -277,7 +277,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<BlockedUsersResponseModel, BlockModel>(
+        let resources = Resources<BlockModel>(
             path: Constants.Endpoints.blocks,
             requestType: .GET,
             bodyParameters: nil,

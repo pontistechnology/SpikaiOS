@@ -783,6 +783,7 @@
 		6CF916BD2A1B719F002AD09B /* PhoneNumberParserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF916B92A1B7034002AD09B /* PhoneNumberParserNotification.swift */; };
 		6CFB46C02948C1D7000D26BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6CFB46C22948C1D7000D26BB /* Localizable.strings */; };
 		7145C7E72AC563DFF7D86888 /* Pods_Spika_Messenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D6374C2BF896E3A6838A8D7 /* Pods_Spika_Messenger.framework */; };
+		7E3EF1843E5A5823BF7083B7 /* Pods_Share_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E84A6FC724DC7E47C59B7227 /* Pods_Share_Extension.framework */; };
 		9300D9CE2A4C540900B7B695 /* PdfViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E753132A4A8C50000D51D6 /* PdfViewerViewController.swift */; };
 		9300D9CF2A4C541900B7B695 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7F08A2A320B8F0098FDF9 /* CGFloat+Extensions.swift */; };
 		9300D9D02A4C542000B7B695 /* AVAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E7530F2A4A6591000D51D6 /* AVAsset+Extensions.swift */; };
@@ -867,6 +868,52 @@
 		9324B256281BE03800E7D76D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E48EAF27CEA6C3003B4188 /* Message.swift */; };
 		9324B257281BE0D900E7D76D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E7270DD87A009D50CB /* Constants.swift */; };
 		9325720A28B8F0140078D489 /* UTType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325720928B8F0140078D489 /* UTType+Extensions.swift */; };
+		932633212C77D9AD003FDA24 /* NetworkStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932633202C77D9AD003FDA24 /* NetworkStuff.swift */; };
+		932633222C77D9AD003FDA24 /* NetworkStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932633202C77D9AD003FDA24 /* NetworkStuff.swift */; };
+		932633232C77D9AD003FDA24 /* NetworkStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932633202C77D9AD003FDA24 /* NetworkStuff.swift */; };
+		932633242C77D9AD003FDA24 /* NetworkStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932633202C77D9AD003FDA24 /* NetworkStuff.swift */; };
+		932633252C77D9AD003FDA24 /* NetworkStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932633202C77D9AD003FDA24 /* NetworkStuff.swift */; };
+		932633262C77D9AD003FDA24 /* NetworkStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932633202C77D9AD003FDA24 /* NetworkStuff.swift */; };
+		932633272C77D9AD003FDA24 /* NetworkStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932633202C77D9AD003FDA24 /* NetworkStuff.swift */; };
+		932633282C77EF3A003FDA24 /* VerifyFileResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AB7027FED6F000696757 /* VerifyFileResponseModel.swift */; };
+		932633322C77F526003FDA24 /* NetworkManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932633312C77F526003FDA24 /* NetworkManager2.swift */; };
+		932633332C77F912003FDA24 /* MessageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9927D6EE47002E3DED /* MessageResponse.swift */; };
+		932633342C77FA49003FDA24 /* DebugUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936A28EB2926C4C900E7333D /* DebugUtils.swift */; };
+		932633352C77FB18003FDA24 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E48EAF27CEA6C3003B4188 /* Message.swift */; };
+		932633362C77FB26003FDA24 /* MessageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D521271E83F3000793E2 /* MessageEntity+CoreDataClass.swift */; };
+		932633372C77FB31003FDA24 /* FileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383878F29D5253D0057714A /* FileData.swift */; };
+		932633382C77FB35003FDA24 /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */; };
+		932633392C77FB46003FDA24 /* MessageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE4128F6308100DD5142 /* MessageRecord.swift */; };
+		9326333A2C77FB49003FDA24 /* MessageRecordEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F0369282B24F700E0E12B /* MessageRecordEntity+CoreDataClass.swift */; };
+		9326333B2C77FB62003FDA24 /* EnumsShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BF627428EB9B7900B48BBF /* EnumsShared.swift */; };
+		9326333C2C77FDEA003FDA24 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B93280EFFD200F9B321 /* User.swift */; };
+		9326333D2C77FDEF003FDA24 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9D51B271E83F3000793E2 /* UserEntity+CoreDataClass.swift */; };
+		9326333E2C77FE07003FDA24 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE3B28F62F6600DD5142 /* Room.swift */; };
+		9326333F2C77FE10003FDA24 /* RoomUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939AAE3E28F62FFF00DD5142 /* RoomUser.swift */; };
+		932633402C77FE13003FDA24 /* RoomUserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF8FD27FD844E0038B7A9 /* RoomUserEntity+CoreDataClass.swift */; };
+		932633412C77FE61003FDA24 /* FileEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD629CD2250003BA70E /* FileEntity+CoreDataProperties.swift */; };
+		932633422C77FE67003FDA24 /* ContactEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B97280F05BE00F9B321 /* ContactEntity+CoreDataProperties.swift */; };
+		932633432C77FE67003FDA24 /* RoomEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */; };
+		932633442C77FE67003FDA24 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93980E03280A10F30015351F /* UserEntity+CoreDataProperties.swift */; };
+		932633452C77FE67003FDA24 /* MessageRecordEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934F036A282B24F700E0E12B /* MessageRecordEntity+CoreDataProperties.swift */; };
+		932633462C77FE67003FDA24 /* RoomEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9362B48D28623A44009F617D /* RoomEntity+CoreDataProperties.swift */; };
+		932633472C77FE67003FDA24 /* RoomUserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BFA3712857FBB700584E6F /* RoomUserEntity+CoreDataProperties.swift */; };
+		932633482C77FE67003FDA24 /* ContactEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFA8B95280F05B000F9B321 /* ContactEntity+CoreDataClass.swift */; };
+		932633492C77FE67003FDA24 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93711DFA28E475A30074A50B /* MessageEntity+CoreDataProperties.swift */; };
+		9326334A2C77FE74003FDA24 /* Int64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C714A02815F888008BBA33 /* Int64+Extensions.swift */; };
+		9326334B2C77FE79003FDA24 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936924B32B6C440C00EC5B06 /* NSAttributedString+Extensions.swift */; };
+		9326334C2C77FE88003FDA24 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9347CCE228644E1300018AEB /* Date+Extensions.swift */; };
+		9326334D2C77FE92003FDA24 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932462D728FCB9B100E8C1B9 /* UIFont+Extensions.swift */; };
+		9326334E2C77FE9F003FDA24 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9A68152739024B00BDC439 /* String+Extension.swift */; };
+		9326334F2C77FFA2003FDA24 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
+		932633502C77FFB7003FDA24 /* Shared Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD503BD270DC3CA009D50CB /* Shared Assets.xcassets */; };
+		932633542C7818B2003FDA24 /* SelectUsersOrGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932633532C7818B2003FDA24 /* SelectUsersOrGroupView.swift */; };
+		932633562C781919003FDA24 /* SelectUsersOrGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932633552C781919003FDA24 /* SelectUsersOrGroupViewModel.swift */; };
+		932633572C78199F003FDA24 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937055DF2914C21E0052EC77 /* Enums.swift */; };
+		932633582C7819D3003FDA24 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8192542721C00D00D5BE48 /* UIColor+Extensions.swift */; };
+		932633592C7819DD003FDA24 /* UIRectCorner+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9376A8CB2AFE94B10035687F /* UIRectCorner+Extensions.swift */; };
+		9326335A2C781AB0003FDA24 /* ListWithPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933A84B62B3BA3E200C99DA3 /* ListWithPredicate.swift */; };
+		9326335B2C781B3A003FDA24 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9376A8D12AFE96EF0035687F /* RoundedCorners.swift */; };
 		932BADD729CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */; };
 		932BADD829CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */; };
 		932BADD929CD2250003BA70E /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */; };
@@ -889,6 +936,10 @@
 		933BE87127B677DF0099BA9E /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87027B677DF0099BA9E /* FavoritesViewModel.swift */; };
 		933BE87327B677F10099BA9E /* AllNotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87227B677F10099BA9E /* AllNotesViewModel.swift */; };
 		933BE87727B6796B0099BA9E /* AllNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933BE87627B6796A0099BA9E /* AllNotesViewController.swift */; };
+		933DA14E2C77197200DF6D58 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933DA14D2C77197200DF6D58 /* ShareViewController.swift */; };
+		933DA1512C77197200DF6D58 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 933DA1502C77197200DF6D58 /* Base */; };
+		933DA1552C77197200DF6D58 /* Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 933DA14B2C77197200DF6D58 /* Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		933DA15A2C772B2B00DF6D58 /* SendMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93227E9727D6ED70002E3DED /* SendMessageRequest.swift */; };
 		933E209F29D8AB030013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
 		933E20A129D8AB030013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
 		933E20A329D8B0BE0013E798 /* TelephoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933E209E29D8AB030013E798 /* TelephoneNumber.swift */; };
@@ -1072,6 +1123,21 @@
 		9396AE1327CBAC410041B4A6 /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AE1227CBAC410041B4A6 /* MessageInputView.swift */; };
 		9396AE1527CBBABE0041B4A6 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */; };
 		93980E09280A10F30015351F /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93980E03280A10F30015351F /* UserEntity+CoreDataProperties.swift */; };
+		93985F0A2C7757EC00884D4D /* Constants+Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEB2948693200D400A7 /* Constants+Endpoints.swift */; };
+		93985F0B2C7757EC00884D4D /* Constants+MagicNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939054932AE29B4A00049987 /* Constants+MagicNumbers.swift */; };
+		93985F0D2C7757EC00884D4D /* Constants+Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BED2948693B00D400A7 /* Constants+Database.swift */; };
+		93985F0E2C7757EC00884D4D /* Constants+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C153BEF2948696A00D400A7 /* Constants+Strings.swift */; };
+		93985F102C77580400884D4D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD503E7270DD87A009D50CB /* Constants.swift */; };
+		93985F112C77635E00884D4D /* UploadChunkRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59A27A937ED00143B48 /* UploadChunkRequestModel.swift */; };
+		93985F122C7768A400884D4D /* UploadChunkResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930EE59C27A938B800143B48 /* UploadChunkResponseModel.swift */; };
+		93985F132C77698E00884D4D /* VerifyFileRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9396AB7227FED6FF00696757 /* VerifyFileRequestModel.swift */; };
+		93985F152C7769B400884D4D /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93985F142C7769B400884D4D /* MetaData.swift */; };
+		93985F162C7769B400884D4D /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93985F142C7769B400884D4D /* MetaData.swift */; };
+		93985F172C7769B400884D4D /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93985F142C7769B400884D4D /* MetaData.swift */; };
+		93985F182C7769B400884D4D /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93985F142C7769B400884D4D /* MetaData.swift */; };
+		93985F192C7769B400884D4D /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93985F142C7769B400884D4D /* MetaData.swift */; };
+		93985F1A2C7769B400884D4D /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93985F142C7769B400884D4D /* MetaData.swift */; };
+		93985F1B2C7769B400884D4D /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93985F142C7769B400884D4D /* MetaData.swift */; };
 		93988D5F27D8701500DF6BF8 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */; };
 		9398B6EC2AFD94210010B277 /* Settings2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398B6EB2AFD94210010B277 /* Settings2View.swift */; };
 		9398B6ED2AFD94210010B277 /* Settings2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398B6EB2AFD94210010B277 /* Settings2View.swift */; };
@@ -1111,6 +1177,10 @@
 		93A14D812A5FF7D800A557CB /* AppRepository+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A14D7F2A5FF7D800A557CB /* AppRepository+Shared.swift */; };
 		93A14D822A5FF7D800A557CB /* AppRepository+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A14D7F2A5FF7D800A557CB /* AppRepository+Shared.swift */; };
 		93A76B2C27F6789500B6A03E /* NotificationAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A76B2B27F6789500B6A03E /* NotificationAlertView.swift */; };
+		93A85F832C78232B004D125D /* CoreDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADD503BA270DC3C7009D50CB /* CoreDatabase.xcdatamodeld */; };
+		93A85F852C7834BB004D125D /* ShareMessageRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A85F842C7834BB004D125D /* ShareMessageRequestModel.swift */; };
+		93A85F872C7837A4004D125D /* ShareMessageResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A85F862C7837A4004D125D /* ShareMessageResponseModel.swift */; };
+		93A85F882C78451E004D125D /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FBE6628B52D8D00C3A888 /* URL+Extensions.swift */; };
 		93AE06EF290892B90009A50C /* SeenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AE06EE290892B90009A50C /* SeenResponseModel.swift */; };
 		93B4A9EE27DB3AB000DC52F6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */; };
 		93B7546E2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B7546D2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift */; };
@@ -1118,6 +1188,8 @@
 		93B754702A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B7546D2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift */; };
 		93B8916F27CD578F000F94B0 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8916E27CD578F000F94B0 /* Data+Extension.swift */; };
 		93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B9D01127FA202500FEC5EA /* UITableView+Extensions.swift */; };
+		93BB146E2C781DBF00AF6EEA /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDE3F872A20DC3700A29DDE /* Array+Extensions.swift */; };
+		93BB146F2C78211600AF6EEA /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9355BED928056D1A00B9EC85 /* CoreDataStack.swift */; };
 		93BCDFDE2A81598D00CEE826 /* OneNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFDD2A81598D00CEE826 /* OneNoteViewController.swift */; };
 		93BCDFDF2A81598D00CEE826 /* OneNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFDD2A81598D00CEE826 /* OneNoteViewController.swift */; };
 		93BCDFE02A81598D00CEE826 /* OneNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDFDD2A81598D00CEE826 /* OneNoteViewController.swift */; };
@@ -1370,6 +1442,13 @@
 			remoteGlobalIDString = 931941672819CB510067566C;
 			remoteInfo = SpikaNotificationService;
 		};
+		933DA1532C77197200DF6D58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADD503A6270DC3C7009D50CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 933DA14A2C77197200DF6D58;
+			remoteInfo = "Share Extension";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1402,6 +1481,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				9319416F2819CB510067566C /* SpikaNotificationService.appex in Embed App Extensions */,
+				933DA1552C77197200DF6D58 /* Share Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1512,6 +1592,11 @@
 		932462D928FCBF0400E8C1B9 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		9324B251281BD6C200E7D76D /* SpikaNotificationService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpikaNotificationService.entitlements; sourceTree = "<group>"; };
 		9325720928B8F0140078D489 /* UTType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UTType+Extensions.swift"; sourceTree = "<group>"; };
+		932633202C77D9AD003FDA24 /* NetworkStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStuff.swift; sourceTree = "<group>"; };
+		932633312C77F526003FDA24 /* NetworkManager2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager2.swift; sourceTree = "<group>"; };
+		932633512C78007F003FDA24 /* Share Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Share Extension.entitlements"; sourceTree = "<group>"; };
+		932633532C7818B2003FDA24 /* SelectUsersOrGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUsersOrGroupView.swift; sourceTree = "<group>"; };
+		932633552C781919003FDA24 /* SelectUsersOrGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUsersOrGroupViewModel.swift; sourceTree = "<group>"; };
 		932BADD529CD2250003BA70E /* FileEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		932BADD629CD2250003BA70E /* FileEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9335E3F4297F4CD0005CDBA0 /* DeletedMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedMessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -1526,6 +1611,10 @@
 		933BE87027B677DF0099BA9E /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		933BE87227B677F10099BA9E /* AllNotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesViewModel.swift; sourceTree = "<group>"; };
 		933BE87627B6796A0099BA9E /* AllNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesViewController.swift; sourceTree = "<group>"; };
+		933DA14B2C77197200DF6D58 /* Share Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Share Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		933DA14D2C77197200DF6D58 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		933DA1502C77197200DF6D58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		933DA1522C77197200DF6D58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		933E209E29D8AB030013E798 /* TelephoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneNumber.swift; sourceTree = "<group>"; };
 		934078632C3BCD4700715BD4 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		934087B727EBAD7100209571 /* AppRepository+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Tests.swift"; sourceTree = "<group>"; };
@@ -1615,6 +1704,7 @@
 		9396AE1227CBAC410041B4A6 /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
 		9396AE1427CBBABE0041B4A6 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		93980E03280A10F30015351F /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserEntity+CoreDataProperties.swift"; path = "Spika/Data/Models/DatabaseEntities/UserEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		93985F142C7769B400884D4D /* MetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaData.swift; sourceTree = "<group>"; };
 		93988D5E27D8701500DF6BF8 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9398B6EB2AFD94210010B277 /* Settings2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings2View.swift; sourceTree = "<group>"; };
 		9398B6EF2AFD9DBC0010B277 /* Settings2ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings2ViewModel.swift; sourceTree = "<group>"; };
@@ -1632,6 +1722,8 @@
 		93A14D7A2A5FDCC300A557CB /* TermsAndConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionView.swift; sourceTree = "<group>"; };
 		93A14D7F2A5FF7D800A557CB /* AppRepository+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+Shared.swift"; sourceTree = "<group>"; };
 		93A76B2B27F6789500B6A03E /* NotificationAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertView.swift; sourceTree = "<group>"; };
+		93A85F842C7834BB004D125D /* ShareMessageRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMessageRequestModel.swift; sourceTree = "<group>"; };
+		93A85F862C7837A4004D125D /* ShareMessageResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMessageResponseModel.swift; sourceTree = "<group>"; };
 		93AE06EE290892B90009A50C /* SeenResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeenResponseModel.swift; sourceTree = "<group>"; };
 		93B4A9ED27DB3AB000DC52F6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		93B7546D2A7A8FD000283C57 /* KeyboardObserverAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObserverAccessoryView.swift; sourceTree = "<group>"; };
@@ -1781,8 +1873,11 @@
 		ADD5040027101B69009D50CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		ADD5040F27173FD9009D50CB /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		ADD5041927174B82009D50CB /* AppRepository+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRepository+User.swift"; sourceTree = "<group>"; };
+		CFE18DA5486BB6CF80755270 /* Pods-Share Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Extension.debug.xcconfig"; path = "Target Support Files/Pods-Share Extension/Pods-Share Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		D40AECC7C3C05473B6EC089F /* Pods_Spika_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92B13B268231CE2DDECD884 /* Pods-Spika Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spika Dev.debug.xcconfig"; path = "Target Support Files/Pods-Spika Dev/Pods-Spika Dev.debug.xcconfig"; sourceTree = "<group>"; };
+		DEEA82545A0FB41D65E08A1E /* Pods-Share Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share Extension.release.xcconfig"; path = "Target Support Files/Pods-Share Extension/Pods-Share Extension.release.xcconfig"; sourceTree = "<group>"; };
+		E84A6FC724DC7E47C59B7227 /* Pods_Share_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Share_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA9D14DC27BD0F8E0070BE2B /* ContactsRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsRequestModel.swift; sourceTree = "<group>"; };
 		EA9D14DE27BD0FD10070BE2B /* ContactsResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsResponseModel.swift; sourceTree = "<group>"; };
 		EAA6A39E27CCF30C00B7E01F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1829,6 +1924,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		933DA1482C77197200DF6D58 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E3EF1843E5A5823BF7083B7 /* Pods_Share_Extension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2084,6 +2187,24 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		9326331F2C77D97C003FDA24 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				ADD503F2270DE39A009D50CB /* NetworkService.swift */,
+				932633202C77D9AD003FDA24 /* NetworkStuff.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		932633522C78189D003FDA24 /* SelectUsersOrGroups */ = {
+			isa = PBXGroup;
+			children = (
+				932633532C7818B2003FDA24 /* SelectUsersOrGroupView.swift */,
+				932633552C781919003FDA24 /* SelectUsersOrGroupViewModel.swift */,
+			);
+			path = SelectUsersOrGroups;
+			sourceTree = "<group>";
+		};
 		933BE85727B6595F0099BA9E /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -2150,6 +2271,19 @@
 				933BE86B27B677920099BA9E /* FavoritesView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		933DA14C2C77197200DF6D58 /* Share Extension */ = {
+			isa = PBXGroup;
+			children = (
+				932633522C78189D003FDA24 /* SelectUsersOrGroups */,
+				932633512C78007F003FDA24 /* Share Extension.entitlements */,
+				933DA14D2C77197200DF6D58 /* ShareViewController.swift */,
+				933DA14F2C77197200DF6D58 /* MainInterface.storyboard */,
+				933DA1522C77197200DF6D58 /* Info.plist */,
+				932633312C77F526003FDA24 /* NetworkManager2.swift */,
+			);
+			path = "Share Extension";
 			sourceTree = "<group>";
 		};
 		933E209D29D8AAE80013E798 /* OnlyForAppModels */ = {
@@ -2849,6 +2983,7 @@
 				6C056C7729700D6E00198EC1 /* BlockModel.swift */,
 				93BCDFEE2A8197EE00CEE826 /* OneNoteRequestModel.swift */,
 				938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */,
+				93A85F842C7834BB004D125D /* ShareMessageRequestModel.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -2881,6 +3016,7 @@
 				93C8A4562A8111B4005E23DD /* AllNotesResponseModel.swift */,
 				93BCDFEA2A81964700CEE826 /* OneNoteResponseModel.swift */,
 				938B361D2B3D59F8008359C5 /* ForwardMessagesResponse.swift */,
+				93A85F862C7837A4004D125D /* ShareMessageResponseModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -2916,6 +3052,7 @@
 			children = (
 				ADD503B0270DC3C7009D50CB /* Spika */,
 				931941692819CB510067566C /* SpikaNotificationService */,
+				933DA14C2C77197200DF6D58 /* Share Extension */,
 				6CFB46BD2948C1B0000D26BB /* Localization */,
 				ADD503AF270DC3C7009D50CB /* Products */,
 				CC12D1B198A94B9651C98AB6 /* Pods */,
@@ -2932,6 +3069,7 @@
 				6C78B91D29AF5D89004BF881 /* SpikaNotificationServiceDev.appex */,
 				6CF649C62A459FE100E0DE0B /* Spika Messenger.app */,
 				6C753DE52A4C128800697AA6 /* SpikaMessengerNotificationService.appex */,
+				933DA14B2C77197200DF6D58 /* Share Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3129,8 +3267,8 @@
 		ADD503F1270DE35F009D50CB /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9326331F2C77D97C003FDA24 /* NetworkService */,
 				ADD5040E27173FC2009D50CB /* Database */,
-				ADD503F2270DE39A009D50CB /* NetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -3206,6 +3344,7 @@
 				2FA4906D94AD1211ADAFA65A /* Pods_Spika.framework */,
 				5D6374C2BF896E3A6838A8D7 /* Pods_Spika_Messenger.framework */,
 				D40AECC7C3C05473B6EC089F /* Pods_Spika_Dev.framework */,
+				E84A6FC724DC7E47C59B7227 /* Pods_Share_Extension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3219,6 +3358,8 @@
 				87CA01291235DC0D0B724D7D /* Pods-Spika Dev.release.xcconfig */,
 				2F4B5085DBB84F5A0087FFE6 /* Pods-Spika Messenger.debug.xcconfig */,
 				18C44B0252383B5211252C4E /* Pods-Spika Messenger.release.xcconfig */,
+				CFE18DA5486BB6CF80755270 /* Pods-Share Extension.debug.xcconfig */,
+				DEEA82545A0FB41D65E08A1E /* Pods-Share Extension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -3234,6 +3375,7 @@
 				939AAE4128F6308100DD5142 /* MessageRecord.swift */,
 				93C07A9B290139B5003DFD61 /* Message+Extensions.swift */,
 				9383878F29D5253D0057714A /* FileData.swift */,
+				93985F142C7769B400884D4D /* MetaData.swift */,
 			);
 			path = ServerModels;
 			sourceTree = "<group>";
@@ -3336,6 +3478,24 @@
 			productReference = 931941682819CB510067566C /* SpikaNotificationService.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		933DA14A2C77197200DF6D58 /* Share Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 933DA1582C77197200DF6D58 /* Build configuration list for PBXNativeTarget "Share Extension" */;
+			buildPhases = (
+				4C917E7DC0684815F34A7E9B /* [CP] Check Pods Manifest.lock */,
+				933DA1472C77197200DF6D58 /* Sources */,
+				933DA1482C77197200DF6D58 /* Frameworks */,
+				933DA1492C77197200DF6D58 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Share Extension";
+			productName = "Share Extension";
+			productReference = 933DA14B2C77197200DF6D58 /* Share Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		ADD503AD270DC3C7009D50CB /* Spika */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADD503C5270DC3CA009D50CB /* Build configuration list for PBXNativeTarget "Spika" */;
@@ -3352,6 +3512,7 @@
 			);
 			dependencies = (
 				9319416E2819CB510067566C /* PBXTargetDependency */,
+				933DA1542C77197200DF6D58 /* PBXTargetDependency */,
 			);
 			name = Spika;
 			productName = Spika;
@@ -3365,11 +3526,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1330;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
 					931941672819CB510067566C = {
 						CreatedOnToolsVersion = 13.3;
+					};
+					933DA14A2C77197200DF6D58 = {
+						CreatedOnToolsVersion = 15.3;
 					};
 					ADD503AD270DC3C7009D50CB = {
 						CreatedOnToolsVersion = 13.0;
@@ -3392,6 +3556,7 @@
 			targets = (
 				ADD503AD270DC3C7009D50CB /* Spika */,
 				931941672819CB510067566C /* SpikaNotificationService */,
+				933DA14A2C77197200DF6D58 /* Share Extension */,
 				6C78B78D29AF5ADB004BF881 /* Spika Dev */,
 				6C78B8C829AF5D89004BF881 /* SpikaNotificationServiceDev */,
 				6CF648892A459FE100E0DE0B /* Spika Messenger */,
@@ -3473,6 +3638,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		933DA1492C77197200DF6D58 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				932633502C77FFB7003FDA24 /* Shared Assets.xcassets in Resources */,
+				933DA1512C77197200DF6D58 /* Base in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADD503AC270DC3C7009D50CB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3516,6 +3690,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Spika Dev-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4C917E7DC0684815F34A7E9B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Share Extension-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3686,6 +3882,7 @@
 				6C753D8E2A4C128800697AA6 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				93C8A4632A81147F005E23DD /* AllNotesResponseModel.swift in Sources */,
 				6C753D8F2A4C128800697AA6 /* AppRepository+Blocked_Notification.swift in Sources */,
+				93985F1B2C7769B400884D4D /* MetaData.swift in Sources */,
 				6C753D902A4C128800697AA6 /* NotificationService.swift in Sources */,
 				6C753D912A4C128800697AA6 /* UserEntity+CoreDataClass.swift in Sources */,
 				6C753D922A4C128800697AA6 /* ContactsRequestModel.swift in Sources */,
@@ -3712,6 +3909,7 @@
 				6C753DA62A4C128800697AA6 /* SyncMessagesResponseModel.swift in Sources */,
 				6C753DA72A4C128800697AA6 /* AppRepository+Sync.swift in Sources */,
 				6C753DA82A4C128800697AA6 /* UserEntity+CoreDataProperties.swift in Sources */,
+				932633272C77D9AD003FDA24 /* NetworkStuff.swift in Sources */,
 				6C753DA92A4C128800697AA6 /* Repository.swift in Sources */,
 				6C753DAA2A4C128800697AA6 /* PhoneNumberParserNotification.swift in Sources */,
 				6C753DAB2A4C128800697AA6 /* AppRepository+User.swift in Sources */,
@@ -3892,6 +4090,7 @@
 				6C78B7EE29AF5ADB004BF881 /* MessageRecordEntity+CoreDataClass.swift in Sources */,
 				6C78B7EF29AF5ADB004BF881 /* AppCoordinator.swift in Sources */,
 				6C78B7F029AF5ADB004BF881 /* InputTextAndControlsView.swift in Sources */,
+				932633242C77D9AD003FDA24 /* NetworkStuff.swift in Sources */,
 				6C78B7F129AF5ADB004BF881 /* MoreActionsViewModel.swift in Sources */,
 				6C78B7F229AF5ADB004BF881 /* CallHistoryViewModel.swift in Sources */,
 				6C78B7F329AF5ADB004BF881 /* CircularProgressBar.swift in Sources */,
@@ -4067,6 +4266,7 @@
 				931BDBA129D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C78B88B29AF5ADB004BF881 /* AppCoordinator+PushNotifications.swift in Sources */,
 				6C78B88C29AF5ADB004BF881 /* UserEntity+CoreDataClass.swift in Sources */,
+				93985F182C7769B400884D4D /* MetaData.swift in Sources */,
 				936155572A16619A0089536D /* UIScrollView+Extensions.swift in Sources */,
 				6C78B88D29AF5ADB004BF881 /* ContactsResponseModel.swift in Sources */,
 				6C78B88E29AF5ADB004BF881 /* BaseMessageTableViewCell.swift in Sources */,
@@ -4126,6 +4326,7 @@
 				6C78B8CA29AF5D89004BF881 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				93C8A4622A81147F005E23DD /* AllNotesResponseModel.swift in Sources */,
 				6C78B8CB29AF5D89004BF881 /* AppRepository+Blocked_Notification.swift in Sources */,
+				93985F192C7769B400884D4D /* MetaData.swift in Sources */,
 				6C78B8CC29AF5D89004BF881 /* NotificationService.swift in Sources */,
 				6C78B8CD29AF5D89004BF881 /* UserEntity+CoreDataClass.swift in Sources */,
 				6C78B8CE29AF5D89004BF881 /* ContactsRequestModel.swift in Sources */,
@@ -4152,6 +4353,7 @@
 				932BADDE29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
 				6C78B8DE29AF5D89004BF881 /* SyncMessagesResponseModel.swift in Sources */,
 				6C78B8DF29AF5D89004BF881 /* AppRepository+Sync.swift in Sources */,
+				932633252C77D9AD003FDA24 /* NetworkStuff.swift in Sources */,
 				6C78B8E029AF5D89004BF881 /* UserEntity+CoreDataProperties.swift in Sources */,
 				6C78B8E129AF5D89004BF881 /* Repository.swift in Sources */,
 				6CF916BD2A1B719F002AD09B /* PhoneNumberParserNotification.swift in Sources */,
@@ -4332,6 +4534,7 @@
 				6CF648E72A459FE100E0DE0B /* MessageRecordEntity+CoreDataClass.swift in Sources */,
 				6CF648E82A459FE100E0DE0B /* AppCoordinator.swift in Sources */,
 				9300D9D12A4C542900B7B695 /* Double+Extensions.swift in Sources */,
+				932633262C77D9AD003FDA24 /* NetworkStuff.swift in Sources */,
 				6CF648E92A459FE100E0DE0B /* InputTextAndControlsView.swift in Sources */,
 				6CF648EA2A459FE100E0DE0B /* MoreActionsViewModel.swift in Sources */,
 				6CF648EB2A459FE100E0DE0B /* CallHistoryViewModel.swift in Sources */,
@@ -4507,6 +4710,7 @@
 				6CF649852A459FE100E0DE0B /* UnreadCountResponseModel.swift in Sources */,
 				6CF649862A459FE100E0DE0B /* AppCoordinator+PushNotifications.swift in Sources */,
 				6CF649872A459FE100E0DE0B /* UserEntity+CoreDataClass.swift in Sources */,
+				93985F1A2C7769B400884D4D /* MetaData.swift in Sources */,
 				6CF649882A459FE100E0DE0B /* UIScrollView+Extensions.swift in Sources */,
 				6CF649892A459FE100E0DE0B /* ContactsResponseModel.swift in Sources */,
 				6CF6498A2A459FE100E0DE0B /* BaseMessageTableViewCell.swift in Sources */,
@@ -4566,6 +4770,7 @@
 				931B150F28211ACB00A0CD35 /* RoomUserEntity+CoreDataClass.swift in Sources */,
 				93C8A4612A81147E005E23DD /* AllNotesResponseModel.swift in Sources */,
 				6CBD43A9298282F100A1059E /* AppRepository+Blocked_Notification.swift in Sources */,
+				93985F162C7769B400884D4D /* MetaData.swift in Sources */,
 				9319416B2819CB510067566C /* NotificationService.swift in Sources */,
 				931B151028211ACB00A0CD35 /* UserEntity+CoreDataClass.swift in Sources */,
 				931B14F928211AC100A0CD35 /* ContactsRequestModel.swift in Sources */,
@@ -4592,6 +4797,7 @@
 				932BADDC29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
 				939B304B2850E01800FFA537 /* SyncMessagesResponseModel.swift in Sources */,
 				93D4034D29245B5400DC77D3 /* AppRepository+Sync.swift in Sources */,
+				932633222C77D9AD003FDA24 /* NetworkStuff.swift in Sources */,
 				931B151128211ACB00A0CD35 /* UserEntity+CoreDataProperties.swift in Sources */,
 				931B151228211B1300A0CD35 /* Repository.swift in Sources */,
 				6CF916BC2A1B719E002AD09B /* PhoneNumberParserNotification.swift in Sources */,
@@ -4656,6 +4862,69 @@
 				93BCDFF72A819AC000CEE826 /* OneNoteRequestModel.swift in Sources */,
 				936924BC2B6D250000EC5B06 /* UIFont+Extensions.swift in Sources */,
 				931B14E528211A5100A0CD35 /* User.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		933DA1472C77197200DF6D58 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				932633542C7818B2003FDA24 /* SelectUsersOrGroupView.swift in Sources */,
+				932633392C77FB46003FDA24 /* MessageRecord.swift in Sources */,
+				9326333F2C77FE10003FDA24 /* RoomUser.swift in Sources */,
+				93985F112C77635E00884D4D /* UploadChunkRequestModel.swift in Sources */,
+				9326333C2C77FDEA003FDA24 /* User.swift in Sources */,
+				9326333B2C77FB62003FDA24 /* EnumsShared.swift in Sources */,
+				932633412C77FE61003FDA24 /* FileEntity+CoreDataProperties.swift in Sources */,
+				932633342C77FA49003FDA24 /* DebugUtils.swift in Sources */,
+				932633352C77FB18003FDA24 /* Message.swift in Sources */,
+				932633422C77FE67003FDA24 /* ContactEntity+CoreDataProperties.swift in Sources */,
+				932633432C77FE67003FDA24 /* RoomEntity+CoreDataClass.swift in Sources */,
+				932633442C77FE67003FDA24 /* UserEntity+CoreDataProperties.swift in Sources */,
+				932633452C77FE67003FDA24 /* MessageRecordEntity+CoreDataProperties.swift in Sources */,
+				932633462C77FE67003FDA24 /* RoomEntity+CoreDataProperties.swift in Sources */,
+				93BB146F2C78211600AF6EEA /* CoreDataStack.swift in Sources */,
+				932633472C77FE67003FDA24 /* RoomUserEntity+CoreDataProperties.swift in Sources */,
+				9326334F2C77FFA2003FDA24 /* UIImage+Extensions.swift in Sources */,
+				932633482C77FE67003FDA24 /* ContactEntity+CoreDataClass.swift in Sources */,
+				932633492C77FE67003FDA24 /* MessageEntity+CoreDataProperties.swift in Sources */,
+				932633322C77F526003FDA24 /* NetworkManager2.swift in Sources */,
+				932633572C78199F003FDA24 /* Enums.swift in Sources */,
+				9326335A2C781AB0003FDA24 /* ListWithPredicate.swift in Sources */,
+				932633592C7819DD003FDA24 /* UIRectCorner+Extensions.swift in Sources */,
+				932633362C77FB26003FDA24 /* MessageEntity+CoreDataClass.swift in Sources */,
+				93985F172C7769B400884D4D /* MetaData.swift in Sources */,
+				932633332C77F912003FDA24 /* MessageResponse.swift in Sources */,
+				9326333D2C77FDEF003FDA24 /* UserEntity+CoreDataClass.swift in Sources */,
+				932633382C77FB35003FDA24 /* FileEntity+CoreDataClass.swift in Sources */,
+				93A85F832C78232B004D125D /* CoreDatabase.xcdatamodeld in Sources */,
+				93A85F882C78451E004D125D /* URL+Extensions.swift in Sources */,
+				932633402C77FE13003FDA24 /* RoomUserEntity+CoreDataClass.swift in Sources */,
+				932633562C781919003FDA24 /* SelectUsersOrGroupViewModel.swift in Sources */,
+				93985F0A2C7757EC00884D4D /* Constants+Endpoints.swift in Sources */,
+				93985F0B2C7757EC00884D4D /* Constants+MagicNumbers.swift in Sources */,
+				93985F0D2C7757EC00884D4D /* Constants+Database.swift in Sources */,
+				9326334C2C77FE88003FDA24 /* Date+Extensions.swift in Sources */,
+				93985F132C77698E00884D4D /* VerifyFileRequestModel.swift in Sources */,
+				93BB146E2C781DBF00AF6EEA /* Array+Extensions.swift in Sources */,
+				93985F0E2C7757EC00884D4D /* Constants+Strings.swift in Sources */,
+				9326334A2C77FE74003FDA24 /* Int64+Extensions.swift in Sources */,
+				932633232C77D9AD003FDA24 /* NetworkStuff.swift in Sources */,
+				9326333A2C77FB49003FDA24 /* MessageRecordEntity+CoreDataClass.swift in Sources */,
+				933DA14E2C77197200DF6D58 /* ShareViewController.swift in Sources */,
+				9326334D2C77FE92003FDA24 /* UIFont+Extensions.swift in Sources */,
+				93A85F852C7834BB004D125D /* ShareMessageRequestModel.swift in Sources */,
+				93A85F872C7837A4004D125D /* ShareMessageResponseModel.swift in Sources */,
+				9326334B2C77FE79003FDA24 /* NSAttributedString+Extensions.swift in Sources */,
+				933DA15A2C772B2B00DF6D58 /* SendMessageRequest.swift in Sources */,
+				9326335B2C781B3A003FDA24 /* RoundedCorners.swift in Sources */,
+				93985F122C7768A400884D4D /* UploadChunkResponseModel.swift in Sources */,
+				9326333E2C77FE07003FDA24 /* Room.swift in Sources */,
+				932633582C7819D3003FDA24 /* UIColor+Extensions.swift in Sources */,
+				932633282C77EF3A003FDA24 /* VerifyFileResponseModel.swift in Sources */,
+				93985F102C77580400884D4D /* Constants.swift in Sources */,
+				932633372C77FB31003FDA24 /* FileData.swift in Sources */,
+				9326334E2C77FE9F003FDA24 /* String+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4772,6 +5041,7 @@
 				938CC7C9293BB9F600606DA8 /* InputTextAndControlsView.swift in Sources */,
 				931F8AC2295493D300856C09 /* MoreActionsViewModel.swift in Sources */,
 				AD8192672721D5A300D5BE48 /* CallHistoryViewModel.swift in Sources */,
+				932633212C77D9AD003FDA24 /* NetworkStuff.swift in Sources */,
 				93B4A9EE27DB3AB000DC52F6 /* CircularProgressBar.swift in Sources */,
 				ADD503B2270DC3C7009D50CB /* AppDelegate.swift in Sources */,
 				9335E3F5297F4CD0005CDBA0 /* DeletedMessageTableViewCell.swift in Sources */,
@@ -4947,6 +5217,7 @@
 				93A14D772A5FDCC000A557CB /* TermsAndConditionViewModel.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
 				AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */,
+				93985F152C7769B400884D4D /* MetaData.swift in Sources */,
 				6C175EBD297ECC5200804275 /* PrivacySettingsViewController.swift in Sources */,
 				931BDB9F29D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C75CE1E291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift in Sources */,
@@ -5016,6 +5287,11 @@
 			target = 931941672819CB510067566C /* SpikaNotificationService */;
 			targetProxy = 9319416D2819CB510067566C /* PBXContainerItemProxy */;
 		};
+		933DA1542C77197200DF6D58 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 933DA14A2C77197200DF6D58 /* Share Extension */;
+			targetProxy = 933DA1532C77197200DF6D58 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -5033,6 +5309,14 @@
 				6CFB46C12948C1D7000D26BB /* en */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		933DA14F2C77197200DF6D58 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				933DA1502C77197200DF6D58 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		ADD503BF270DC3CA009D50CB /* LaunchScreen.storyboard */ = {
@@ -5371,6 +5655,83 @@
 			};
 			name = Release;
 		};
+		933DA1562C77197200DF6D58 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CFE18DA5486BB6CF80755270 /* Pods-Share Extension.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "Share Extension/Share Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YU755VYJCP;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Share Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Share Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "studio.clover.Spika.Share-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		933DA1572C77197200DF6D58 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DEEA82545A0FB41D65E08A1E /* Pods-Share Extension.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "Share Extension/Share Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YU755VYJCP;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Share Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Share Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "studio.clover.Spika.Share-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		ADD503C3270DC3CA009D50CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -5512,7 +5873,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = 156;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -5549,7 +5910,7 @@
 				CODE_SIGN_ENTITLEMENTS = Spika/Spika.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = $APP_BUILD_VERSION;
+				CURRENT_PROJECT_VERSION = 156;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YU755VYJCP;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -5619,6 +5980,15 @@
 			buildConfigurations = (
 				931941712819CB510067566C /* Debug */,
 				931941722819CB510067566C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		933DA1582C77197200DF6D58 /* Build configuration list for PBXNativeTarget "Share Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				933DA1562C77197200DF6D58 /* Debug */,
+				933DA1572C77197200DF6D58 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

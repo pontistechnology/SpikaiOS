@@ -16,7 +16,7 @@ extension AppRepository {
                     .eraseToAnyPublisher()
         }
         
-        let resources = Resources<AllNotesResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.allRoomNotes.appending("/\(roomId)"),
             requestType: .GET,
             bodyParameters: nil,
@@ -33,7 +33,7 @@ extension AppRepository {
                     .eraseToAnyPublisher()
         }
         
-        let resources = Resources<OneNoteResponseModel, OneNoteRequestModel>(
+        let resources = Resources<OneNoteRequestModel>(
             path: Constants.Endpoints.oneNote.appending("/\(id)"),
             requestType: .PUT,
             bodyParameters: OneNoteRequestModel(title: title,
@@ -51,7 +51,7 @@ extension AppRepository {
                     .eraseToAnyPublisher()
         }
         
-        let resources = Resources<OneNoteResponseModel, OneNoteRequestModel>(
+        let resources = Resources<OneNoteRequestModel>(
             path: Constants.Endpoints.allRoomNotes.appending("/\(roomId)"),
             requestType: .POST,
             bodyParameters: OneNoteRequestModel(title: title,
@@ -68,7 +68,7 @@ extension AppRepository {
                     .receive(on: DispatchQueue.main)
                     .eraseToAnyPublisher()
         }
-        let resources = Resources<EmptyResponse, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.oneNote.appending("/\(id)"),
             requestType: .DELETE,
             bodyParameters: nil,

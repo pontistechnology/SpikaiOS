@@ -37,3 +37,7 @@ end
 target 'Spika Messenger' do
   shared_pods
 end
+
+target 'Share Extension' do
+  shared_pods
+end
