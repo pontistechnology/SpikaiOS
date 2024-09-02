@@ -17,7 +17,7 @@ end
 def shared_pods
   pod 'Swinject'
   source 'https://github.com/CocoaPods/Specs.git'
-  pod 'PhoneNumberKit', :git => 'https://github.com/marmelroy/PhoneNumberKit'
+  pod 'PhoneNumberKit'
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Messaging'

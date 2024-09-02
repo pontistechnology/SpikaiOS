@@ -131,11 +131,11 @@ PODS:
     - nanopb/encode (= 2.30910.0)
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
-  - PhoneNumberKit (3.7.10):
-    - PhoneNumberKit/PhoneNumberKitCore (= 3.7.10)
-    - PhoneNumberKit/UIKit (= 3.7.10)
-  - PhoneNumberKit/PhoneNumberKitCore (3.7.10)
-  - PhoneNumberKit/UIKit (3.7.10):
+  - PhoneNumberKit (4.0.0):
+    - PhoneNumberKit/PhoneNumberKitCore (= 4.0.0)
+    - PhoneNumberKit/UIKit (= 4.0.0)
+  - PhoneNumberKit/PhoneNumberKitCore (4.0.0)
+  - PhoneNumberKit/UIKit (4.0.0):
     - PhoneNumberKit/PhoneNumberKitCore
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
@@ -149,7 +149,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - IKEventSource
   - Kingfisher
-  - PhoneNumberKit (from `https://github.com/marmelroy/PhoneNumberKit`)
+  - PhoneNumberKit
   - Swinject
 
 SPEC REPOS:
@@ -171,18 +171,10 @@ SPEC REPOS:
     - IKEventSource
     - Kingfisher
     - nanopb
+    - PhoneNumberKit
     - PromisesObjC
     - PromisesSwift
     - Swinject
-
-EXTERNAL SOURCES:
-  PhoneNumberKit:
-    :git: https://github.com/marmelroy/PhoneNumberKit
-
-CHECKOUT OPTIONS:
-  PhoneNumberKit:
-    :commit: fc7f52e680e2e00ccd263c9fa032ca5aa2d6f594
-    :git: https://github.com/marmelroy/PhoneNumberKit
 
 SPEC CHECKSUMS:
   ContactsChangeNotifier: f414cb68fa0cc894deb8d3f9caea27d2ea2bc12e
@@ -202,11 +194,11 @@ SPEC CHECKSUMS:
   IKEventSource: ababa323587c6b0c250dd54d4a48ab68fd845e8e
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
-  PhoneNumberKit: 3d9a20cfe8ee68f35c2a3ae9474093133f72a8a1
+  PhoneNumberKit: fca23e22dcd17f602577f177bdd502512190e52e
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
   Swinject: 2943463cdd58b49f114213bf1ce4a09f374828e7
 
-PODFILE CHECKSUM: e71db134c5a0edc7869bc6eba7e5edfcc9413a35
+PODFILE CHECKSUM: 1c2bad9f24c0860218d72fdd58cb134812c64490
 
 COCOAPODS: 1.14.2

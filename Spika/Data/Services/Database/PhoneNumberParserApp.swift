@@ -13,7 +13,7 @@ import ContactsChangeNotifier
 
 class PhoneNumberParser {
     
-    private let phoneNumberKit = PhoneNumberKit()
+    private let phoneNumberKit = PhoneNumberUtility()
     
     private let contactStore = CNContactStore()
     
