@@ -41,7 +41,7 @@ public extension Constants {
         case couldNotAuthUser = "Could not auth user"
         case enterYourPhoneToUserSpika = "Enter your phone number to start using Spika"
         case eg98726 = "Eg. 98726123"
-        case phoneNumber = "email address"
+        case phoneNumber = "Phone number"
         case weSentYou6DigitOn = "We sent you 6 digit verification code on";
         
         // MARK: - EnterUsernameViewController
