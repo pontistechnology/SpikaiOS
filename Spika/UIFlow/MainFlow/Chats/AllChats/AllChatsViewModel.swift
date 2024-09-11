@@ -168,7 +168,11 @@ extension AllChatsViewModel {
     func setRoomsFetch() {
         let fetchRequest = RoomEntity.fetchRequest()
         fetchRequest.predicate = searchPredicate()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(RoomEntity.name), ascending: true)]
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: #keyPath(RoomEntity.pinned), ascending: false),
+            NSSortDescriptor(key: #keyPath(RoomEntity.lastMessageTimestamp), ascending: false),
+            NSSortDescriptor(key: #keyPath(RoomEntity.createdAt), ascending: true)]
+
         roomsFRC = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(), sectionNameKeyPath: nil, cacheName: nil)
         roomsFRC?.delegate = self
