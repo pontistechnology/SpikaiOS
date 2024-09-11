@@ -55,6 +55,6 @@ class ChatNavigationBarView: UIView, BaseView {
     func change(avatarUrl: URL?, name: String?, lastSeen status: String) {
         avatarImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(resource: .rDdefaultUser))
         nameLabel.text = name
-        statusLabel.text = " "
+        statusLabel.text = status
     }
 }
