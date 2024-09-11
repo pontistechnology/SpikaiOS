@@ -1011,6 +1011,9 @@
 		9376A8D22AFE96EF0035687F /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9376A8D12AFE96EF0035687F /* RoundedCorners.swift */; };
 		9376A8D32AFE96EF0035687F /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9376A8D12AFE96EF0035687F /* RoundedCorners.swift */; };
 		9376A8D42AFE96EF0035687F /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9376A8D12AFE96EF0035687F /* RoundedCorners.swift */; };
+		9377632B2C92036500545A83 /* LittleIconInTransparentBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9377632A2C92036500545A83 /* LittleIconInTransparentBubble.swift */; };
+		9377632C2C92036500545A83 /* LittleIconInTransparentBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9377632A2C92036500545A83 /* LittleIconInTransparentBubble.swift */; };
+		9377632D2C92036500545A83 /* LittleIconInTransparentBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9377632A2C92036500545A83 /* LittleIconInTransparentBubble.swift */; };
 		937F48E827D3D66A005E19FB /* TextMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937F48E727D3D66A005E19FB /* TextMessageTableViewCell.swift */; };
 		937FBE6728B52D8D00C3A888 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FBE6628B52D8D00C3A888 /* URL+Extensions.swift */; };
 		937FBE6928B5309E00C3A888 /* AVURLAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FBE6828B5309E00C3A888 /* AVURLAsset+Extensions.swift */; };
@@ -1577,6 +1580,7 @@
 		9376A8C62AFE7BA90035687F /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		9376A8CB2AFE94B10035687F /* UIRectCorner+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRectCorner+Extensions.swift"; sourceTree = "<group>"; };
 		9376A8D12AFE96EF0035687F /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
+		9377632A2C92036500545A83 /* LittleIconInTransparentBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LittleIconInTransparentBubble.swift; sourceTree = "<group>"; };
 		937F48E727D3D66A005E19FB /* TextMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageTableViewCell.swift; sourceTree = "<group>"; };
 		937FBE6628B52D8D00C3A888 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		937FBE6828B5309E00C3A888 /* AVURLAsset+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVURLAsset+Extensions.swift"; sourceTree = "<group>"; };
@@ -2301,6 +2305,7 @@
 				936E211E2B01FAA600333B43 /* ChatRoundedAvatar.swift */,
 				936D5AE72B0B11ED0048B125 /* EditableText.swift */,
 				933A84B62B3BA3E200C99DA3 /* ListWithPredicate.swift */,
+				9377632A2C92036500545A83 /* LittleIconInTransparentBubble.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4048,6 +4053,7 @@
 				931BDBA129D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C78B88B29AF5ADB004BF881 /* AppCoordinator+PushNotifications.swift in Sources */,
 				6C78B88C29AF5ADB004BF881 /* UserEntity+CoreDataClass.swift in Sources */,
+				9377632C2C92036500545A83 /* LittleIconInTransparentBubble.swift in Sources */,
 				936155572A16619A0089536D /* UIScrollView+Extensions.swift in Sources */,
 				6C78B88D29AF5ADB004BF881 /* ContactsResponseModel.swift in Sources */,
 				6C78B88E29AF5ADB004BF881 /* BaseMessageTableViewCell.swift in Sources */,
@@ -4486,6 +4492,7 @@
 				6CF649852A459FE100E0DE0B /* UnreadCountResponseModel.swift in Sources */,
 				6CF649862A459FE100E0DE0B /* AppCoordinator+PushNotifications.swift in Sources */,
 				6CF649872A459FE100E0DE0B /* UserEntity+CoreDataClass.swift in Sources */,
+				9377632D2C92036500545A83 /* LittleIconInTransparentBubble.swift in Sources */,
 				6CF649882A459FE100E0DE0B /* UIScrollView+Extensions.swift in Sources */,
 				6CF649892A459FE100E0DE0B /* ContactsResponseModel.swift in Sources */,
 				6CF6498A2A459FE100E0DE0B /* BaseMessageTableViewCell.swift in Sources */,
@@ -4924,6 +4931,7 @@
 				93A14D772A5FDCC000A557CB /* TermsAndConditionViewModel.swift in Sources */,
 				ADD503DA270DD6AD009D50CB /* Repository.swift in Sources */,
 				AD9BFD322729ACAB00736318 /* CountryPickerView.swift in Sources */,
+				9377632B2C92036500545A83 /* LittleIconInTransparentBubble.swift in Sources */,
 				6C175EBD297ECC5200804275 /* PrivacySettingsViewController.swift in Sources */,
 				931BDB9F29D255D80047C145 /* UnreadCountResponseModel.swift in Sources */,
 				6C75CE1E291A4B3B00D7649A /* AppCoordinator+PushNotifications.swift in Sources */,

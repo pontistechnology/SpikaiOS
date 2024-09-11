@@ -21,8 +21,8 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     
     let messagesStackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .fill, spacing: 8)
     let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .center)
-    let pinnedIcon = UIImageView(image: UIImage(resource: .rDpin).withTintColor(.textPrimary, renderingMode: .alwaysOriginal))
-    let mutedIcon = UIImageView(image: UIImage(resource: .rDmute).withTintColor(.textPrimary, renderingMode: .alwaysOriginal))
+    let pinnedIcon = LittleIconInTransparentBubble(resource: .rDpin)
+    let mutedIcon = LittleIconInTransparentBubble(resource: .rDmute)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -56,9 +56,6 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         descriptionStackView.distribution = .fill
         descriptionIcon.contentMode = .scaleAspectFit
         
-        pinnedIcon.backgroundColor = .additionalColor
-        mutedIcon.backgroundColor = .additionalColor
-        
         
         leftImageView.clipsToBounds = true
         leftImageView.layer.cornerRadius = 27
@@ -72,9 +69,6 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.clipsToBounds = true
         messagesNumberLabel.hide()
         backgroundColor = .clear
-        
-        mutedIcon.layer.cornerRadius = 6
-        pinnedIcon.layer.cornerRadius = 6
     }
     
     func positionSubviews() {
@@ -83,6 +77,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         
         mutedIcon.anchor(top: leftImageView.topAnchor, trailing: leftImageView.trailingAnchor)
         pinnedIcon.anchor(leading: leftImageView.leadingAnchor, bottom: leftImageView.bottomAnchor)
+        
         
         nameLabel.anchor(top: contentView.topAnchor, leading: leftImageView.trailingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 14, left: 12, bottom: 0, right: 100))
         
