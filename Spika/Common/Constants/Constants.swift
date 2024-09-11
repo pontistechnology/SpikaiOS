@@ -10,7 +10,7 @@ import Foundation
 public class Constants {
     
     public class Networking {
-        static let baseUrl = "https://clover.spika.chat/"
+        static let baseUrl = "https://qainternship2024.pontistechnology.com/"
         static let appGroupName = "group.studio.clover.Spika.groupSpika"
         static let userIds = "userIds"
     }
