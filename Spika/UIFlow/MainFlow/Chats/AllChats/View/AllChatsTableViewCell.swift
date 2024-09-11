@@ -109,7 +109,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         descriptionIcon.image = description.1.icon
         descriptionIcon.isHidden = description.1 == .text
         descriptionTextLabel.text = description.2
-//        timeLabel.text = time
+        timeLabel.text = time
         messagesNumberLabel.text = "\(badgeNumber)"
         messagesNumberLabel.isHidden = badgeNumber == 0
         
