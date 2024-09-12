@@ -16,7 +16,7 @@ class ChatContentView: UIView, BaseView {
     let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: .textPrimary, fontName: .MontserratSemiBold)
     let chatNameTextField = CustomTextField()
     
-    let sharedMediaOptionButton = NavView(text: .getStringFor(.sharedMediaLinksDocs))
+    let sharedMediaOptionButton = NavView(text: .getStringFor(.mediaLinksDocs))
     let chatSearchOptionButton = NavView(text: .getStringFor(.chatSearch))
     let callHistoryOptionButton = NavView(text: .getStringFor(.callHistory))
     

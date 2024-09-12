@@ -51,8 +51,6 @@ struct Settings2View: View {
             }.padding(.horizontal, 16)
             
             Spacer()
-            
-            
         }
         .ignoresSafeArea()
         .sheet(isPresented: $viewModel.showImagePicker) {

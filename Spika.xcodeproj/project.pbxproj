@@ -1029,6 +1029,9 @@
 		9383879329D5253D0057714A /* FileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383878F29D5253D0057714A /* FileData.swift */; };
 		9383879529D596E40057714A /* MessageDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383879429D596E40057714A /* MessageDetailsViewModel.swift */; };
 		9383879729D596E40057714A /* MessageDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9383879429D596E40057714A /* MessageDetailsViewModel.swift */; };
+		9388A61E2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9388A61D2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
+		9388A61F2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9388A61D2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
+		9388A6202C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9388A61D2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
 		938B361A2B3D59A2008359C5 /* ForwardMessagesRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */; };
 		938B361B2B3D59A2008359C5 /* ForwardMessagesRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */; };
 		938B361C2B3D59A2008359C5 /* ForwardMessagesRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */; };
@@ -1587,6 +1590,7 @@
 		938341E62BFFE30500A5CD95 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
 		9383878F29D5253D0057714A /* FileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileData.swift; sourceTree = "<group>"; };
 		9383879429D596E40057714A /* MessageDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewModel.swift; sourceTree = "<group>"; };
+		9388A61D2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf"; sourceTree = "<group>"; };
 		938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardMessagesRequestModel.swift; sourceTree = "<group>"; };
 		938B361D2B3D59F8008359C5 /* ForwardMessagesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardMessagesResponse.swift; sourceTree = "<group>"; };
 		938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNavigationBarView.swift; sourceTree = "<group>"; };
@@ -2328,6 +2332,14 @@
 			path = Singletons;
 			sourceTree = "<group>";
 		};
+		9388A61C2C9379AA00DD049F /* RobotoFlex */ = {
+			isa = PBXGroup;
+			children = (
+				9388A61D2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */,
+			);
+			path = RobotoFlex;
+			sourceTree = "<group>";
+		};
 		938D052B27D59A4D002E5CE5 /* NewGroupChat */ = {
 			isa = PBXGroup;
 			children = (
@@ -2674,6 +2686,7 @@
 		AD8192722722D55100D5BE48 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				9388A61C2C9379AA00DD049F /* RobotoFlex */,
 				AD8192732722D55E00D5BE48 /* Montserrat */,
 			);
 			path = Fonts;
@@ -3415,6 +3428,7 @@
 				6C78B8BB29AF5ADB004BF881 /* Montserrat-Thin.ttf in Resources */,
 				6C78B8BC29AF5ADB004BF881 /* Montserrat-Medium.ttf in Resources */,
 				6C78B8BD29AF5ADB004BF881 /* Montserrat-SemiBold.ttf in Resources */,
+				9388A61F2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */,
 				9300D9D32A4C57E700B7B695 /* Shared Assets.xcassets in Resources */,
 				6C78B8BE29AF5ADB004BF881 /* CountryCodes.json in Resources */,
 			);
@@ -3447,6 +3461,7 @@
 				6CF649BB2A459FE100E0DE0B /* Montserrat-Thin.ttf in Resources */,
 				6CF649BC2A459FE100E0DE0B /* Montserrat-Medium.ttf in Resources */,
 				6CF649BD2A459FE100E0DE0B /* Montserrat-SemiBold.ttf in Resources */,
+				9388A6202C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */,
 				9300D9D92A4C58C700B7B695 /* Assets.xcassets in Resources */,
 				6CF649BE2A459FE100E0DE0B /* CountryCodes.json in Resources */,
 			);
@@ -3479,6 +3494,7 @@
 				AD8192822722D5AF00D5BE48 /* Montserrat-Thin.ttf in Resources */,
 				AD8192852722D5AF00D5BE48 /* Montserrat-Medium.ttf in Resources */,
 				AD81927F2722D5AF00D5BE48 /* Montserrat-SemiBold.ttf in Resources */,
+				9388A61E2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */,
 				9300D9DD2A4C58E700B7B695 /* Assets.xcassets in Resources */,
 				AD9BFD2E2729AB8F00736318 /* CountryCodes.json in Resources */,
 			);

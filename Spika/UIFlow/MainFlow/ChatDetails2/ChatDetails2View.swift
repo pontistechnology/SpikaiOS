@@ -18,18 +18,22 @@ struct ChatDetails2View: View {
                 // TODO: - add change image
             }
             
-            VStack {
+            VStack(spacing: 0) {
+                Spacer().frame(height: 24)
                 
                 nameTelephoneAndDescription()
                 
                 if viewModel.detailsMode.isPrivate {
+                    Spacer().frame(height: 16)
                     chatAndContactIcons()
                 }
                 
+                Spacer().frame(height: 24)
                 menuButtons()
                     .modifier(RoundedCorners(corners: .allCorners, radius: 15))
                 
                 if viewModel.detailsMode.isPrivate {
+                    Spacer().frame(height: 16)
                     Button(action: {
                         
                     }, label: {
@@ -39,18 +43,21 @@ struct ChatDetails2View: View {
                         }.foregroundStyle(Color(.warningColor))
                     })
                 } else if let room = viewModel.room {
+                    Spacer().frame(height: 16)
                     memberCountAndPlus(isAdmin: viewModel.isMyUserAdmin)
-                        .padding(.vertical, 12)
-                    ForEach(room.users) { roomUser in
-                        Button {
-                            viewModel.clickOnMemberRow(roomUser: roomUser)
-                        } label: {
-                            memberRowView(user: roomUser.user,
-                                          isAdmin: roomUser.isAdmin ?? false,
-                                          isMyUser: roomUser.userId == viewModel.myUserId,
-                                          showRemove: viewModel.isMyUserAdmin)
+                        .padding(.vertical, 19)
+                    VStack(spacing: 26) {
+                        ForEach(room.users) { roomUser in
+                            Button {
+                                viewModel.clickOnMemberRow(roomUser: roomUser)
+                            } label: {
+                                memberRowView(user: roomUser.user,
+                                              isAdmin: roomUser.isAdmin ?? false,
+                                              isMyUser: roomUser.userId == viewModel.myUserId,
+                                              showRemove: viewModel.isMyUserAdmin)
+                            }
+                            
                         }
-
                     }
                 }
                 
@@ -87,18 +94,25 @@ extension ChatDetails2View {
     private func nameTelephoneAndDescription() -> some View {
         return Group {
             Text(viewModel.roomName)
+                .font(.customFont(.RobotoFlexSemiBold, size: 24))
             
             if let secondLine = viewModel.bellowNameText {
                 Text(secondLine)
+                    .font(.customFont(.RobotoFlexMedium, size: 12))
             }
             
             Text(viewModel.detailsMode.description)
+                .font(.customFont(.RobotoFlexMedium, size: 12))
         }
         .foregroundStyle(Color(.textPrimary))
     }
     
     private func menuButtons() -> some View {
-        VStack {
+        VStack(spacing: 8) {
+            PrimaryButton(imageResource: .rDMediaLinksDocs, text: .getStringFor(.mediaLinksDocs), usage: .withRightArrow) {
+                // TODO: - implement shared media links docs
+            }
+            
             PrimaryButton(imageResource: .rDnotes, text: .getStringFor(.notes), usage: .withRightArrow) {
                 viewModel.presentAllNotesScreen()
             }
@@ -147,13 +161,16 @@ extension ChatDetails2View {
             .frame(width: 42, height: 42)
             .clipShape(Circle())
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(isMyUser ? .getStringFor(.you) : user.getDisplayName())
+                    .font(.customFont(.RobotoFlexSemiBold, size: 14))
                 Text(user.telephoneNumber ?? "")
+                    .font(.customFont(.RobotoFlexMedium, size: 10))
             }
             Spacer()
             if isAdmin {
                 Text(verbatim: .getStringFor(.admin))
+                    .font(.customFont(.RobotoFlexSemiBold, size: 14))
             } else if showRemove && !isMyUser {
                 Button(action: {
                     viewModel.removeUsersFromGroup(user: user)
@@ -167,6 +184,7 @@ extension ChatDetails2View {
     private func memberCountAndPlus(isAdmin: Bool) -> some View {
         return HStack {
             Text("\(viewModel.room?.users.count ?? 0)" + " " +  .getStringFor(.members))
+                .font(.customFont(.RobotoFlexSemiBold, size: 20))
             Spacer()
             if isAdmin {
                 Button {

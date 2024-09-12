@@ -66,6 +66,27 @@ enum CustomFontName: String {
     case MontserratMedium = "Montserrat-Medium"
     case MontserratSemiBold = "Montserrat-SemiBold"
     case MontserratThin = "Montserrat-Thin"
+    
+    case RobotoFlexRegular = "RobotoFlex-Regular"
+    case RobotoFlexItalic = "RobotoFlex-Regular_Italic"
+    case RobotoFlexThin = "RobotoFlex-Regular_Thin"
+    case RobotoFlexThinItalic = "RobotoFlex-Regular_Thin-Italic"
+    case RobotoFlexExtraLight = "RobotoFlex-Regular_ExtraLight"
+    case RobotoFlexExtraLightItalic = "RobotoFlex-Regular_ExtraLight-Italic"
+    case RobotoFlexLight = "RobotoFlex-Regular_Light"
+    case RobotoFlexLightItalic = "RobotoFlex-Regular_Light-Italic"
+    case RobotoFlexMedium = "RobotoFlex-Regular_Medium"
+    case RobotoFlexMediumItalic = "RobotoFlex-Regular_Medium-Italic"
+    case RobotoFlexSemiBold = "RobotoFlex-Regular_SemiBold"
+    case RobotoFlexSemiBoldItalic = "RobotoFlex-Regular_SemiBold-Italic"
+    case RobotoFlexBold = "RobotoFlex-Regular_Bold"
+    case RobotoFlexBoldItalic = "RobotoFlex-Regular_Bold-Italic"
+    case RobotoFlexExtraBold = "RobotoFlex-Regular_ExtraBold"
+    case RobotoFlexExtraBoldItalic = "RobotoFlex-Regular_ExtraBold-Italic"
+    case RobotoFlexBlack = "RobotoFlex-Regular_Black"
+    case RobotoFlexBlackItalic = "RobotoFlex-Regular_Black-Italic"
+    case RobotoFlexExtraBlack = "RobotoFlex-Regular_ExtraBlack"
+    case RobotoFlexExtraBlackItalic = "RobotoFlex-Regular_ExtraBlack-Italic"
 }
 
 enum DeleteMessageTarget: String, Codable {
