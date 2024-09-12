@@ -26,6 +26,8 @@ class HomeViewModel: BaseViewModel {
                 deleteReaction(recordId: recordId)
             case .forwardMessages(let messageIds, let userIds, let roomIds):
                 forwardMessages(messageIds: messageIds, userIds: userIds, roomIds: roomIds)
+            case .openRoomWithUser(let userId):
+                checkLocalPrivateRoom(id: userId)
             default:
                 break
             }
@@ -72,6 +74,61 @@ class HomeViewModel: BaseViewModel {
                 print("GUARD UPDATE PUSH RESPONSE")
                 return
             }
+        }.store(in: &subscriptions)
+    }
+    
+    // TODO: - this code is duplicated
+    func checkLocalPrivateRoom(id: Int64) {
+        repository.checkLocalPrivateRoom(forUserId: id).receive(on: DispatchQueue.main).sink { [weak self] completion in
+            guard let self else { return }
+            switch completion {
+            case .finished:
+                break
+            case .failure(_):
+                print("no local room")
+                checkOnlineRoom(userId: id)
+            }
+        } receiveValue: { [weak self] room in
+            guard let self else { return }
+            getAppCoordinator()?.presentCurrentChatScreen(room: room)
+        }.store(in: &subscriptions)
+    }
+    
+    func checkOnlineRoom(userId: Int64)  {
+        repository.checkOnlineRoom(forUserId: userId).receive(on: DispatchQueue.main).sink { [weak self] completion in
+            guard let self else { return }
+            switch completion {
+            case .finished:
+                print("online check finished")
+            case .failure(let error):
+                self.showError(error.localizedDescription)
+            }
+        } receiveValue: { [weak self] response in
+            guard let self else { return }
+            if let room = response.data?.room {
+                _ = repository.saveLocalRooms(rooms: [room])
+                getAppCoordinator()?.presentCurrentChatScreen(room: room)
+            } else {
+                print("There is no online room, creating started...")
+                createRoom(userId: userId)
+            }
+        }.store(in: &subscriptions)
+    }
+    
+    func createRoom(userId: Int64) {
+        repository.createOnlineRoom(userId: userId).receive(on: DispatchQueue.main).sink { [weak self] completion in
+            guard let self else { return }
+            switch completion {
+            case .finished:
+                print("private room created")
+            case .failure(let error):
+                showError(error.localizedDescription)
+            }
+        } receiveValue: { [weak self] response in
+            guard let self else { return }
+            guard let room = response.data?.room else { return }
+            _ = repository.saveLocalRooms(rooms: [room])
+            getAppCoordinator()?.presentCurrentChatScreen(room: room)
         }.store(in: &subscriptions)
     }
 }

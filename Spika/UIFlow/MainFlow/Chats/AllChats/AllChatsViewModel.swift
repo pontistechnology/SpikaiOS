@@ -25,7 +25,7 @@ class AllChatsViewModel: BaseViewModel {
 extension AllChatsViewModel {
     func presentStartNewPrivateChatScreen() {
         // TODO: - change to ggrouup private
-        getAppCoordinator()?.presentCreateNewGroup2ChatScreen()
+        getAppCoordinator()?.presentStartNewPrivateChatScreen()
     }
     
     func presentCurrentChatScreen(for indexPath: IndexPath, scrollToMessage: Bool) {

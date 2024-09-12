@@ -14,6 +14,7 @@ class TermsAndConditionViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
         setupView(mainView)
         setupBindings()
     }

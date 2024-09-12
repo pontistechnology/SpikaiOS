@@ -1032,6 +1032,15 @@
 		9388A61E2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9388A61D2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
 		9388A61F2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9388A61D2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
 		9388A6202C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9388A61D2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
+		9388A6232C93997B00DD049F /* NewPrivateChatViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9388A6222C93997B00DD049F /* NewPrivateChatViewController2.swift */; };
+		9388A6242C93997B00DD049F /* NewPrivateChatViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9388A6222C93997B00DD049F /* NewPrivateChatViewController2.swift */; };
+		9388A6252C93997B00DD049F /* NewPrivateChatViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9388A6222C93997B00DD049F /* NewPrivateChatViewController2.swift */; };
+		9388A6272C9399A700DD049F /* NewPrivateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9388A6262C9399A700DD049F /* NewPrivateChatView.swift */; };
+		9388A6282C9399A700DD049F /* NewPrivateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9388A6262C9399A700DD049F /* NewPrivateChatView.swift */; };
+		9388A6292C9399A700DD049F /* NewPrivateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9388A6262C9399A700DD049F /* NewPrivateChatView.swift */; };
+		9388A62B2C9399BA00DD049F /* NewPrivateChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9388A62A2C9399BA00DD049F /* NewPrivateChatViewModel.swift */; };
+		9388A62C2C9399BA00DD049F /* NewPrivateChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9388A62A2C9399BA00DD049F /* NewPrivateChatViewModel.swift */; };
+		9388A62D2C9399BA00DD049F /* NewPrivateChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9388A62A2C9399BA00DD049F /* NewPrivateChatViewModel.swift */; };
 		938B361A2B3D59A2008359C5 /* ForwardMessagesRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */; };
 		938B361B2B3D59A2008359C5 /* ForwardMessagesRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */; };
 		938B361C2B3D59A2008359C5 /* ForwardMessagesRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */; };
@@ -1591,6 +1600,9 @@
 		9383878F29D5253D0057714A /* FileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileData.swift; sourceTree = "<group>"; };
 		9383879429D596E40057714A /* MessageDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewModel.swift; sourceTree = "<group>"; };
 		9388A61D2C937A2C00DD049F /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf"; sourceTree = "<group>"; };
+		9388A6222C93997B00DD049F /* NewPrivateChatViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPrivateChatViewController2.swift; sourceTree = "<group>"; };
+		9388A6262C9399A700DD049F /* NewPrivateChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPrivateChatView.swift; sourceTree = "<group>"; };
+		9388A62A2C9399BA00DD049F /* NewPrivateChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPrivateChatViewModel.swift; sourceTree = "<group>"; };
 		938B36192B3D59A2008359C5 /* ForwardMessagesRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardMessagesRequestModel.swift; sourceTree = "<group>"; };
 		938B361D2B3D59F8008359C5 /* ForwardMessagesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardMessagesResponse.swift; sourceTree = "<group>"; };
 		938B477C27E29C9F004B36FD /* ChatNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNavigationBarView.swift; sourceTree = "<group>"; };
@@ -2340,6 +2352,16 @@
 			path = RobotoFlex;
 			sourceTree = "<group>";
 		};
+		9388A6212C93995E00DD049F /* NewPrivateChat */ = {
+			isa = PBXGroup;
+			children = (
+				9388A6222C93997B00DD049F /* NewPrivateChatViewController2.swift */,
+				9388A6262C9399A700DD049F /* NewPrivateChatView.swift */,
+				9388A62A2C9399BA00DD049F /* NewPrivateChatViewModel.swift */,
+			);
+			path = NewPrivateChat;
+			sourceTree = "<group>";
+		};
 		938D052B27D59A4D002E5CE5 /* NewGroupChat */ = {
 			isa = PBXGroup;
 			children = (
@@ -2615,6 +2637,7 @@
 		AD819243272173A300D5BE48 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				9388A6212C93995E00DD049F /* NewPrivateChat */,
 				934D43B22B0FB066006A88D7 /* NewGroupChat2 */,
 				93D6BFE92A8262020092DDF5 /* CustomReactione */,
 				9352A56B2977667900E0D90E /* MessageActions */,
@@ -3793,6 +3816,7 @@
 				6C78B79529AF5ADB004BF881 /* FileMessageTableViewCell.swift in Sources */,
 				6C78B79629AF5ADB004BF881 /* DetailsView.swift in Sources */,
 				6C78B79729AF5ADB004BF881 /* Publisher+Extensions.swift in Sources */,
+				9388A6282C9399A700DD049F /* NewPrivateChatView.swift in Sources */,
 				932BADDD29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
 				6C78B79829AF5ADB004BF881 /* CustomLabel.swift in Sources */,
 				6C78B79929AF5ADB004BF881 /* SendMessageRequest.swift in Sources */,
@@ -3878,6 +3902,8 @@
 				6C78B7DE29AF5ADB004BF881 /* AudioMessageTableViewCell.swift in Sources */,
 				6C78B7E029AF5ADB004BF881 /* AudioPlayer.swift in Sources */,
 				6C78B7E129AF5ADB004BF881 /* RequestState.swift in Sources */,
+				9388A62C2C9399BA00DD049F /* NewPrivateChatViewModel.swift in Sources */,
+				9388A6242C93997B00DD049F /* NewPrivateChatViewController2.swift in Sources */,
 				6C78B7E229AF5ADB004BF881 /* UITableView+Extensions.swift in Sources */,
 				936E21242B01FAD700333B43 /* SpikaBackgroundGradient.swift in Sources */,
 				6C78B7E329AF5ADB004BF881 /* LinksTableViewCell.swift in Sources */,
@@ -4232,6 +4258,7 @@
 				6CF648912A459FE100E0DE0B /* FileMessageTableViewCell.swift in Sources */,
 				6CF648922A459FE100E0DE0B /* DetailsView.swift in Sources */,
 				6CF648932A459FE100E0DE0B /* Publisher+Extensions.swift in Sources */,
+				9388A6292C9399A700DD049F /* NewPrivateChatView.swift in Sources */,
 				6CF648942A459FE100E0DE0B /* FileEntity+CoreDataProperties.swift in Sources */,
 				6CF648952A459FE100E0DE0B /* CustomLabel.swift in Sources */,
 				6CF648962A459FE100E0DE0B /* SendMessageRequest.swift in Sources */,
@@ -4317,6 +4344,8 @@
 				6CF648D82A459FE100E0DE0B /* AudioMessageTableViewCell.swift in Sources */,
 				6CF648DA2A459FE100E0DE0B /* AudioPlayer.swift in Sources */,
 				6CF648DB2A459FE100E0DE0B /* RequestState.swift in Sources */,
+				9388A62D2C9399BA00DD049F /* NewPrivateChatViewModel.swift in Sources */,
+				9388A6252C93997B00DD049F /* NewPrivateChatViewController2.swift in Sources */,
 				6CF648DC2A459FE100E0DE0B /* UITableView+Extensions.swift in Sources */,
 				936E21252B01FAD700333B43 /* SpikaBackgroundGradient.swift in Sources */,
 				6CF648DD2A459FE100E0DE0B /* LinksTableViewCell.swift in Sources */,
@@ -4671,6 +4700,7 @@
 				9364873528B8E5D00069D538 /* FileMessageTableViewCell.swift in Sources */,
 				9323EC6927B3702000FA0EB1 /* DetailsView.swift in Sources */,
 				6C0AA21E2966D55D00E87304 /* Publisher+Extensions.swift in Sources */,
+				9388A6272C9399A700DD049F /* NewPrivateChatView.swift in Sources */,
 				932BADDB29CD2250003BA70E /* FileEntity+CoreDataProperties.swift in Sources */,
 				93708E1B279F95DB00F81095 /* CustomLabel.swift in Sources */,
 				93227E9827D6ED70002E3DED /* SendMessageRequest.swift in Sources */,
@@ -4756,6 +4786,8 @@
 				ADD503E5270DD823009D50CB /* RequestState.swift in Sources */,
 				93B9D01227FA202500FEC5EA /* UITableView+Extensions.swift in Sources */,
 				93D86DC227BAD1D800F275B0 /* LinksTableViewCell.swift in Sources */,
+				9388A62B2C9399BA00DD049F /* NewPrivateChatViewModel.swift in Sources */,
+				9388A6232C93997B00DD049F /* NewPrivateChatViewController2.swift in Sources */,
 				93DE585827BC7B6600C45EB4 /* VideoCallViewController.swift in Sources */,
 				936E21232B01FAD700333B43 /* SpikaBackgroundGradient.swift in Sources */,
 				93980E09280A10F30015351F /* UserEntity+CoreDataProperties.swift in Sources */,
