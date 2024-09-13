@@ -23,8 +23,12 @@ struct NewGroup2ChatView: View {
             
             Group {
                 TextField("", text: $viewModel.groupName,
-                          prompt: Text(verbatim: .getStringFor(.groupName))
-                .foregroundColor(Color(.textSecondary)))
+                          prompt: 
+                            Text(verbatim: .getStringFor(.groupName))
+                                .foregroundColor(Color(.textSecondary))
+                )
+                .font(.customFont(.RobotoFlexMedium, size: 12))
+                .foregroundStyle(Color.fromUIColor(.textPrimary))
                 .frame(height: 50)
                 .padding(.horizontal, 24)
                 .background(Color(.secondaryColor))
@@ -32,17 +36,25 @@ struct NewGroup2ChatView: View {
                 
                 HStack {
                     Text("\(viewModel.selectedMembers.count) members selected")
+                        .font(.customFont(.RobotoFlexSemiBold, size: 16))
+                        .foregroundStyle(Color.fromUIColor(.textPrimary))
                     Spacer()
                     
                     Button {
                         viewModel.showAddMembersScreen = true
                     } label: {
                         Image(.rDplus)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(Color.fromUIColor(.primaryColor))
                     }
                 }
                 
+                Spacer().frame(height: 16)
+                
                 ScrollView {
-                    VStack {
+                    VStack(spacing: 22) {
                         ForEach(viewModel.selectedMembers) { user in
                             HStack(spacing: 16) {
                                 KFImage(user.avatarFileId?.fullFilePathFromId())
@@ -56,9 +68,11 @@ struct NewGroup2ChatView: View {
                                 
                                 VStack(spacing: 0) {
                                     Text(user.getDisplayName())
+                                        .font(.customFont(.RobotoFlexSemiBold, size: 14))
                                         .foregroundStyle(Color(.textPrimary))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text(user.telephoneNumber ?? "")
+                                        .font(.customFont(.RobotoFlexMedium, size: 10))
                                         .foregroundStyle(Color(.textPrimary))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
@@ -68,6 +82,7 @@ struct NewGroup2ChatView: View {
                                 } label: {
                                     Image(.rDx)
                                         .tint(Color(.textPrimary))
+                                        .frame(width: 24, height: 24)
                                 }
                             }
                             
