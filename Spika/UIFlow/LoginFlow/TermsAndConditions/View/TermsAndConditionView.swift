@@ -44,7 +44,7 @@ extension TermsAndConditionView: BaseView {
     }
     
     func positionSubviews() {
-        logo.centerXToSuperview()
+        logo.centerXToSuperview(offset: -16)
         logo.constrainWidth(200)
         logo.constrainHeight(200)
         logo.anchor(top: topAnchor, padding: UIEdgeInsets(top: 80, left: 0, bottom: 0, right: 0))

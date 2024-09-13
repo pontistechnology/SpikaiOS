@@ -41,8 +41,8 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     
     private let rightView = ContactsCellRightView()
     private let verticalStackView = CustomStackView(axis: .vertical, spacing: 2)
-    private let nameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .RobotoFlexMedium)
-    private let descriptionLabel = CustomLabel(text: " ", textSize: 12, textColor: .textPrimary, fontName: .RobotoFlexRegular)
+    private let nameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
+    private let descriptionLabel = CustomLabel(text: " ", textSize: 10, textColor: .textPrimary, fontName: .RobotoFlexMedium)
     private let dummyView = UIView()
     
     

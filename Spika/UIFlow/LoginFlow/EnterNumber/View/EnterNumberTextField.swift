@@ -14,8 +14,8 @@ protocol EnterNumberTextFieldDelegate: AnyObject {
 
 class EnterNumberTextField: UIView, BaseView {
     
-    let titleLabel = CustomLabel(text: "", textColor: .textPrimary,
-                                 fontName: .RobotoFlexMedium)
+    let titleLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary,
+                                 fontName: .RobotoFlexMedium, alignment: .center)
     private var textField = UITextField()
     let numberView = UIView()
     let countryNumberLabel = CustomLabel(text: "", textColor: .primaryColor, fontName: .RobotoFlexMedium, alignment: .center)
@@ -60,12 +60,12 @@ class EnterNumberTextField: UIView, BaseView {
         textField.keyboardType = .phonePad
         textField.placeholder = placeholder
         textField.textColor = .textPrimary
-        textField.font = .customFont(name: .RobotoFlexSemiBold, size: 24)
+        textField.font = .customFont(name: .RobotoFlexMedium, size: 14)
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
         
         numberView.backgroundColor = .secondaryColor
-        numberView.layer.cornerRadius = 30
+        numberView.layer.cornerRadius = 25
     }
     
     func positionSubviews() {
