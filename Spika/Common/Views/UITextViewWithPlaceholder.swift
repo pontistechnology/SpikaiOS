@@ -16,8 +16,10 @@ class UITextViewWithPlaceholder: UITextView {
         addSubview(placeholderLabel)
         placeholderLabel.text = placeholder
         placeholderLabel.font = font
-        placeholderLabel.textColor = .textSecondary
+        placeholderLabel.textColor = .textPrimary
+        backgroundColor = .clear
         self.font = font
+        textColor = .textPrimary
         placeholderLabel.anchor(top: topAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 10, left: 6, bottom: 0, right: 0))
         delegate = self
     }

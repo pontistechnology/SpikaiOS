@@ -11,8 +11,10 @@ import UIKit
 class NoteTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "NoteTableViewCell"
     
-    private let titleLabel = CustomLabel(text: "(no name)", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
-    private let timeLabel = CustomLabel(text: "time", textSize: 12, textColor: .textSecondary, fontName: .MontserratMedium)
+    private let titleLabel = CustomLabel(text: "(no name)", textSize: 14, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
+    private let noteIW = UIImageView(image: UIImage(resource: .rDnotes).withTintColor(.textPrimary, renderingMode: .alwaysOriginal))
+    private let rightArrowIW = UIImageView(image: UIImage(resource: .rDrightArrow).withTintColor(.textPrimary, renderingMode: .alwaysOriginal))
+    private let emptyView = UIView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,27 +28,38 @@ class NoteTableViewCell: UITableViewCell, BaseView {
 
 extension NoteTableViewCell {
     func addSubviews() {
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(timeLabel)
+        contentView.addSubview(emptyView)
+        emptyView.addSubview(noteIW)
+        emptyView.addSubview(titleLabel)
+        emptyView.addSubview(rightArrowIW)
     }
     
     func styleSubviews() {
+        emptyView.backgroundColor = .primaryColor
+        backgroundColor = .clear
+        noteIW.contentMode = .scaleAspectFit
     }
     
     func positionSubviews() {
-        titleLabel.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 14, left: 20, bottom: 0, right: 52))
+        emptyView.fillSuperview(padding: .init(top: 4, left: 4, bottom: 4, right: 4))
+        noteIW.centerYToSuperview()
+        noteIW.anchor(leading: emptyView.leadingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 0), size: CGSizeMake(24, 24))
+
+        rightArrowIW.centerYToSuperview()
+        rightArrowIW.anchor(trailing: emptyView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 16))
         
-        timeLabel.anchor(top: titleLabel.bottomAnchor, leading: titleLabel.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        titleLabel.anchor(leading: noteIW.trailingAnchor, trailing: emptyView.trailingAnchor, padding: .init(top: 0, left: 11, bottom: 0, right: 40))
+        titleLabel.centerYToSuperview()
+        
     }
     
-    func configureCell(title: String, timeText: String) {
+    func configureCell(title: String) {
         titleLabel.text = title
-        timeLabel.text  = timeText
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         titleLabel.text = nil
-        timeLabel.text = nil
+        roundCorners(corners: .allCorners, radius: 15)
     }
 }

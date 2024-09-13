@@ -15,10 +15,13 @@ class AllNotesViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
         setupView(notesView)
         setupBindings()
         setupNavigationItems()
         navigationItem.title = .getStringFor(.notes)
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.textPrimary]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,7 +30,7 @@ class AllNotesViewController: BaseViewController {
     }
     
     func setupNavigationItems() {
-        let modeButton = UIBarButtonItem(image: .init(resource: .plus), style: .plain, target: self, action: #selector(createNewNote))
+        let modeButton = UIBarButtonItem(image: .init(resource: .plus).withTintColor(.textPrimary, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(createNewNote))
         navigationItem.rightBarButtonItems = [modeButton]
     }
     
@@ -51,14 +54,22 @@ extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.reuseIdentifier, for: indexPath)
         let note = viewModel.notesPublisher.value[indexPath.row]
-        let timeText: String
-        if let edited = note.modifiedAt, note.createdAt != edited {
-            timeText = "Edited: " + "\(edited.convert(to: .notesTimeFormat))"
-        } else {
-            timeText = "Created: " + "\(note.createdAt.convert(to: .notesTimeFormat))"
+//        let timeText: String
+//        if let edited = note.modifiedAt, note.createdAt != edited {
+//            timeText = "Edited: " + "\(edited.convert(to: .notesTimeFormat))"
+//        } else {
+//            timeText = "Created: " + "\(note.createdAt.convert(to: .notesTimeFormat))"
+//        }
+        
+        (cell as? NoteTableViewCell)?.configureCell(title: note.title)
+        if indexPath.row == 0 && indexPath.row == viewModel.notesPublisher.value.count - 1 {
+            cell.roundCorners(corners: .allCorners, radius: 25)
+        } else if indexPath.row == 0 {
+            cell.roundCorners(corners: .topCorners, radius: 25)
+        } else if indexPath.row == viewModel.notesPublisher.value.count - 1 {
+            cell.roundCorners(corners: .bottomCorners, radius: 25)
         }
         
-        (cell as? NoteTableViewCell)?.configureCell(title: note.title, timeText: timeText)
         return cell
     }
     
@@ -67,7 +78,7 @@ extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        58
+        56
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

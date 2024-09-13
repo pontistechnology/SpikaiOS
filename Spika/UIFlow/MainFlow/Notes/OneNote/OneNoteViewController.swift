@@ -14,6 +14,7 @@ class OneNoteViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
         setupView(mainView)
         mainView.configureView(note: viewModel.noteStatePublisher.value.note)
         setupBindings()
