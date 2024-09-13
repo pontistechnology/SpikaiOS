@@ -9,12 +9,12 @@ import Foundation
 import UIKit.UIFont
 
 extension String {
-    func bold(_ font: UIFont = .customFont(name: .MontserratSemiBold, size: 14)) -> NSAttributedString {
+    func bold(_ font: UIFont = .customFont(name: .RobotoFlexSemiBold, size: 14)) -> NSAttributedString {
         NSAttributedString(string: self, attributes: [.font: font])
     }
     
     var attributedString: NSMutableAttributedString {
-        NSMutableAttributedString(string: self, attributes: [.font: UIFont.customFont(name: .MontserratMedium, size: 14)])
+        NSMutableAttributedString(string: self, attributes: [.font: UIFont.customFont(name: .RobotoFlexMedium, size: 14)])
     }
 }
 

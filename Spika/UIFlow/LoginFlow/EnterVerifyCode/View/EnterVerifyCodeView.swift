@@ -11,10 +11,10 @@ import Combine
 class EnterVerifyCodeView: UIView, BaseView {
     
     let logoImageView = LogoImageView()
-    let titleLabel = CustomLabel(text: .getStringFor(.weSentYou6DigitCode), textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
+    let titleLabel = CustomLabel(text: .getStringFor(.weSentYou6DigitCode), textColor: .textPrimary, fontName: .RobotoFlexMedium, alignment: .center)
     let otpTextField = OTPCodeTextField(otpLength: 6)
     let nextButton = MainButton()
-    let timeLabel = CustomLabel(text: "02:00", textColor: .textPrimary, fontName: .MontserratMedium)
+    let timeLabel = CustomLabel(text: "02:00", textColor: .textPrimary, fontName: .RobotoFlexMedium)
     let resendCodeButton = ActionButton()
     
     var otpCodePublisher = PassthroughSubject<String,Never>()

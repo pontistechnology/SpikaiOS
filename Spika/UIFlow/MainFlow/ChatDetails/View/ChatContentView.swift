@@ -12,8 +12,8 @@ class ChatContentView: UIView, BaseView {
     
     let chatImage = ImageViewWithIcon(image:  UIImage(resource: .rDdefaultUser),size: CGSize(width: 120, height: 120))
     
-    let chatName = CustomLabel(text: .getStringFor(.group), textColor: .textPrimary, fontName: .MontserratSemiBold)
-    let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: .textPrimary, fontName: .MontserratSemiBold)
+    let chatName = CustomLabel(text: .getStringFor(.group), textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
+    let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
     let chatNameTextField = CustomTextField()
     
     let sharedMediaOptionButton = NavView(text: .getStringFor(.mediaLinksDocs))

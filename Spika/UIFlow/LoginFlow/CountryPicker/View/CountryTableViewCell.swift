@@ -11,7 +11,7 @@ class CountryTableViewCell: UITableViewCell, BaseView {
     
     let countryImage = UIImageView()
     let countryNameLabel = CustomLabel(text: "", textColor: .textPrimary)
-    let countryCodeLabel = CustomLabel(text: "", textSize: 12, textColor: .textSecondary, fontName: .MontserratRegular, alignment: .right)
+    let countryCodeLabel = CustomLabel(text: "", textSize: 12, textColor: .textSecondary, fontName: .RobotoFlexRegular, alignment: .right)
     
     static let cellIdentifier = "CountryTableViewCell"
     static let rowHeight: CGFloat = 50.0

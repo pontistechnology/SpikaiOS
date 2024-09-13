@@ -9,7 +9,7 @@ import UIKit
 
 class MessageAudioView: UIView {
     let playButton = UIImageView(image: UIImage(resource: .play))
-    private let durationLabel = CustomLabel(text: " ", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular)
+    private let durationLabel = CustomLabel(text: " ", textSize: 12, textColor: .textPrimary, fontName: .RobotoFlexRegular)
     let slider = UISlider()
     
     init() {

@@ -15,7 +15,7 @@
 //class SelectedFileImageView: UIImageView {
 //    
 //    let deleteImageView = UIImageView(image: UIImage(resource: .deleteCell))
-//    let fileNameLabel = CustomLabel(text: "fileName", textSize: 10, textColor: ._textPrimary, fontName: .MontserratRegular)
+//    let fileNameLabel = CustomLabel(text: "fileName", textSize: 10, textColor: ._textPrimary, fontName: .RobotoFlexRegular)
 //    private let progressView = CircularProgressBar(spinnerWidth: 20)
 //    
 //    init(image: UIImage?, fileName: String? = nil) {

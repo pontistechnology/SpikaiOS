@@ -506,13 +506,13 @@ extension CurrentChatViewController: UITableViewDataSource {
 //        } else {
 //            text = nameOfSection
 //        }
-        return CustomLabel(text: nameOfSection, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
+        return CustomLabel(text: nameOfSection, textSize: 11, textColor: .textPrimary, fontName: .RobotoFlexMedium, alignment: .center)
     }
     
 //    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
 //        if section == (viewModel.frc?.sections?.count ?? 0) - 1
 //            && (viewModel.currentOffset + 2*viewModel.fetchLimit < viewModel.countOfAllMessages) {
-//            return CustomLabel(text: "Loading newer messages...", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
+//            return CustomLabel(text: "Loading newer messages...", textSize: 11, textColor: .textPrimary, fontName: .RobotoFlexMedium, alignment: .center)
 //        }
 //        return nil
 //    }

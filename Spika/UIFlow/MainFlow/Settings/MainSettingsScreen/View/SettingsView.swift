@@ -14,17 +14,17 @@ class SettingsView: BaseSettingsView {
     
     let userImage = ImageViewWithIcon(image:  UIImage(resource: .rDdefaultUser))
     
-    let userName = CustomButton(text: "", textSize: 18, textColor: .textPrimary, fontName: .MontserratSemiBold)
+    let userName = CustomButton(text: "", textSize: 18, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
     let userNameTextField = CustomTextField()
     
-    let userPhoneNumber = CustomLabel(text: .getStringFor(.group), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
+    let userPhoneNumber = CustomLabel(text: .getStringFor(.group), textSize: 16, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
     
     let appereanceOptionButton = NavView(text: .getStringFor(.appereance))
     let privacyOptionButton = NavView(text: .getStringFor(.privacy))
     
     let deleteMyAccountButton = NavView(text: .getStringFor(.deleteMyAccount), isArrowHidden: true)
     
-    let appVersion = CustomLabel(text: "", textSize: 16, textColor: .textSecondary, fontName: .MontserratLight, alignment: .center)
+    let appVersion = CustomLabel(text: "", textSize: 16, textColor: .textSecondary, fontName: .RobotoFlexLight, alignment: .center)
 //    let accessToken = UITextField() // delete later
     
     let userNameChanged = PassthroughSubject<String,Never>()

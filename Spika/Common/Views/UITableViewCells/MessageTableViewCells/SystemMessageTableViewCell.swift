@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class SystemMessageTableViewCell: UITableViewCell {
-    private let plainTextView = CustomTextView(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
+    private let plainTextView = CustomTextView(text: "", textSize: 14, textColor: .textPrimary, fontName: .RobotoFlexMedium, alignment: .center)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

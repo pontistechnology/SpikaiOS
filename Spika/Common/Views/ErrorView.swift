@@ -13,7 +13,7 @@ class ErrorView: UIView, BaseView {
     private let errorImage: UIImage
     
     private let errorImageView = UIImageView()
-    private let errorLabel = CustomLabel(text: "", textSize: 13, textColor: .warningColor, fontName: .MontserratMedium)
+    private let errorLabel = CustomLabel(text: "", textSize: 13, textColor: .warningColor, fontName: .RobotoFlexMedium)
     
     init(message: String, errorImage: UIImage = UIImage(resource: .error)) {
         self.message = message

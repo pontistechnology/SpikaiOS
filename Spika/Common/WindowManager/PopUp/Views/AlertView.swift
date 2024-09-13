@@ -17,8 +17,8 @@
 //    let tapPublisher = PassthroughSubject<Int, Never>()
 //    
 //    init(title: String, message: String, buttons: [AlertViewButton]) {
-//        titleLabel = CustomLabel(text: message, textSize: 14, textColor: ._textPrimary, fontName: .MontserratMedium, alignment: .center)
-//        messageLabel = CustomLabel(text: message, textSize: 12, textColor: ._textSecondary, fontName: .MontserratMedium, alignment: .center)
+//        titleLabel = CustomLabel(text: message, textSize: 14, textColor: ._textPrimary, fontName: .RobotoFlexMedium, alignment: .center)
+//        messageLabel = CustomLabel(text: message, textSize: 12, textColor: ._textSecondary, fontName: .RobotoFlexMedium, alignment: .center)
 //        super.init(frame: .zero)
 //        setupButtonsStackView(buttons)
 //        setupView()
@@ -38,7 +38,7 @@
 //            button.constrainHeight(40)
 //            button.setTitle(item.title, for: .normal)
 //            button.setTitleColor(item.color, for: .normal)
-//            button.titleLabel?.font = .customFont(name: .MontserratSemiBold)
+//            button.titleLabel?.font = .customFont(name: .RobotoFlexSemiBold)
 //            button.backgroundColor = ._primaryColor
 //            button.tap().sink { [weak self] _ in
 //                self?.tapPublisher.send(index)

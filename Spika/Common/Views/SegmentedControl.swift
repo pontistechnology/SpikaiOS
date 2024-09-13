@@ -30,9 +30,9 @@ class SegmentedControl: UISegmentedControl {
         selectedSegmentTintColor = .checkWithDesign // TODO: - check
          
         // TODO: - Check color
-        SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.checkWithDesign,  NSAttributedString.Key.font: UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14)!], for: .selected)
+        SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.checkWithDesign,  NSAttributedString.Key.font: UIFont(name: CustomFontName.RobotoFlexSemiBold.rawValue, size: 14)!], for: .selected)
          
-        SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14)!], for: .normal)
+        SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontName.RobotoFlexSemiBold.rawValue, size: 14)!], for: .normal)
         
         addTarget(self, action: #selector(segmentControl(_:)), for: .valueChanged)
     }

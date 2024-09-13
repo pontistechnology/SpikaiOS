@@ -50,7 +50,7 @@ class ChatMembersView: UIView, BaseView {
     
     let titleLabel = CustomLabel(text: .getStringFor(.members), textSize: 22,
                                  textColor: .textPrimary,
-                                 fontName: .MontserratSemiBold)
+                                 fontName: .RobotoFlexSemiBold)
     
     lazy var addContactButton: UIButton = {
         let button = UIButton()

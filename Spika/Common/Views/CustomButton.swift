@@ -15,7 +15,7 @@ class CustomButton: UIButton {
          textSize: CGFloat = 14,
          textColor: UIColor = .textPrimary,
          disabledTextColor: UIColor = .textSecondary,
-         fontName: CustomFontName = .MontserratRegular,
+         fontName: CustomFontName = .RobotoFlexRegular,
          alignment: UIControl.ContentHorizontalAlignment = .center) {
         super.init(frame: CGRectZero)
         self.setTitle(text, for: .normal)

@@ -10,7 +10,7 @@ import UIKit
 class AllChatsTableViewCell: UITableViewCell, BaseView {
     static let reuseIdentifier: String = "AllChatsTableViewCell"
     
-    let nameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratSemiBold)
+    let nameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
     private let descriptionStackView = UIStackView()
     let descriptionNameLabel = CustomLabel(text: " ", textSize: 14, textColor: .textPrimary)
     let descriptionIcon = UIImageView()
@@ -20,7 +20,7 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     let timeLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary)
     
     let messagesStackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .fill, spacing: 8)
-    let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .center)
+    let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .textPrimary, fontName: .RobotoFlexSemiBold, alignment: .center)
     let pinnedIcon = LittleIconInTransparentBubble(resource: .rDpin)
     let mutedIcon = LittleIconInTransparentBubble(resource: .rDmute)
     

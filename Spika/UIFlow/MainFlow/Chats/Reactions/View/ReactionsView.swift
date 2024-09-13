@@ -11,7 +11,7 @@ import Combine
 
 class ReactionsView: UIView {
     let tableView = UITableView()
-    private let label = CustomLabel(text: .getStringFor(.reactions), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
+    private let label = CustomLabel(text: .getStringFor(.reactions), textSize: 16, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
     let closeImageView = UIImageView(image: UIImage(resource: .rDx).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal))
     private let stackView = UIStackView()
     

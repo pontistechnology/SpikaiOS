@@ -15,9 +15,9 @@ protocol BaseMessageTableViewCellProtocol {
 //
 //class BaseMessageTableViewCell: UITableViewCell {
 //    
-//    private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular, alignment: .left)
+//    private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .RobotoFlexRegular, alignment: .left)
 //    private let senderPhotoImageview = UIImageView(image: UIImage(resource: .rDdefaultUser))
-//    private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium)
+//    private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .RobotoFlexMedium)
 //    private let messageStateView = MessageStateView()
 //    let containerStackView = UIStackView()
 //    private var replyView: MessageReplyView?

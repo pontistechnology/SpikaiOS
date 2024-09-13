@@ -41,8 +41,8 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
     
     private let rightView = ContactsCellRightView()
     private let verticalStackView = CustomStackView(axis: .vertical, spacing: 2)
-    private let nameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
-    private let descriptionLabel = CustomLabel(text: " ", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular)
+    private let nameLabel = CustomLabel(text: "", textSize: 14, textColor: .textPrimary, fontName: .RobotoFlexMedium)
+    private let descriptionLabel = CustomLabel(text: " ", textSize: 12, textColor: .textPrimary, fontName: .RobotoFlexRegular)
     private let dummyView = UIView()
     
     
@@ -101,14 +101,14 @@ class ContactsTableViewCell: UITableViewCell, BaseView {
         case .text(let text):
             rightButton.unhide()
             rightButton.setTitle(text, for: .normal)
-            rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratLight.rawValue, size: 14)
+            rightButton.titleLabel?.font = UIFont(name: CustomFontName.RobotoFlexLight.rawValue, size: 14)
             rightButton.setTitleColor(.textPrimary, for: .normal)
         case .remove:
             rightButton.unhide()
             rightButton.setImage(UIImage(resource: .rDx).withTintColor(.tertiaryColor, renderingMode: .alwaysOriginal), for: .normal)
         case .emoji(let emoji, let size):
             rightButton.unhide()
-            rightButton.titleLabel?.font = UIFont(name: CustomFontName.MontserratRegular.rawValue, size: size)
+            rightButton.titleLabel?.font = UIFont(name: CustomFontName.RobotoFlexRegular.rawValue, size: size)
             rightButton.setTitle(emoji, for: .normal)
         case .doubleEntry(let firstText,let firstImage,let secondText,let secondImage):
             rightView.unhide()
