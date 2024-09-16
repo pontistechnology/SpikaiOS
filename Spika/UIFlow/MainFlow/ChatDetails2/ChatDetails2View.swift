@@ -101,8 +101,15 @@ extension ChatDetails2View {
     
     private func nameTelephoneAndDescription() -> some View {
         return Group {
-            Text(viewModel.roomName)
-                .font(.customFont(.RobotoFlexSemiBold, size: 24))
+            if viewModel.detailsMode.isGroup && viewModel.isMyUserAdmin {
+                EditableText(placeholder: .getStringFor(.enterUsername),
+                             isEditingMode: $viewModel.isEditingUsername,
+                             string: $viewModel.groupName,
+                             isEditingPossible: viewModel.isMyUserAdmin && viewModel.detailsMode.isGroup)
+            } else {
+                Text(viewModel.roomName)
+                    .font(.customFont(.RobotoFlexSemiBold, size: 24))
+            }
             
             if let secondLine = viewModel.bellowNameText {
                 Text(secondLine)

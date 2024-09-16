@@ -30,7 +30,7 @@ class CurrentChatViewController: BaseViewController {
         view.addSubview(currentChatView)
         currentChatView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: .zero)
         setupBindings()
-        self.navigationItem.backButtonTitle = self.viewModel.room.name
+//        self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
     
     override func viewWillAppear(_ animated: Bool) {
