@@ -10,7 +10,7 @@ import UIKit
 
 class EnterUsernameView: UIView, BaseView {
     
-    let profilePictureView = ImageViewWithIcon(image: UIImage(resource: .logo), size: CGSize(width: 100, height: 100))
+    let profilePictureView = ImageViewWithIcon(image: UIImage(resource: .rDdefaultUser), size: CGSize(width: 100, height: 100))
     private let usernameLabel = CustomLabel(text: .getStringFor(.username), textColor: .textPrimary, fontName: .MontserratMedium)
     let usernameTextfield = CustomTextField(textPlaceholder: .getStringFor(.enterUsername))
     let nextButton = MainButton()
@@ -37,10 +37,11 @@ class EnterUsernameView: UIView, BaseView {
         nextButton.setEnabled(false)
         
         usernameTextfield.autocorrectionType = .no
+        profilePictureView.contentMode = .scaleAspectFit
     }
     
     func positionSubviews() {
-        profilePictureView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 45, left: 0, bottom: 0, right: 0))
+        profilePictureView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 45, left: 0, bottom: 0, right: 0), size: CGSize(width: 120, height: 120))
         profilePictureView.centerXToSuperview()
         
         usernameLabel.anchor(top: profilePictureView.bottomAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 30, left: 30, bottom: 0, right: 0))
