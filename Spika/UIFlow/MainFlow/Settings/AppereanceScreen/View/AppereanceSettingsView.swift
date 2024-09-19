@@ -16,7 +16,7 @@ struct AppereanceSettingsView: View {
                 let isSelected = viewModel.savedThemeRawValue() == theme.rawValue
                 PrimaryButton(text: theme.title, corners: theme.corners,
                               usage: isSelected ? .withCheckmark : .onlyTitle) {
-                    viewModel.changeAppereanceMode(to: theme)
+                    viewModel.changeAppereanceMode(to: SpikaTheme.allCases.filter({ $0 != theme }).randomElement() ?? theme)
                     viewModel.returnToHomeScreen()
                 }
             }
