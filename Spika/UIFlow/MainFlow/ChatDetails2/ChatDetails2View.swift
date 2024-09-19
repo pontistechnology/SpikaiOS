@@ -108,16 +108,16 @@ extension ChatDetails2View {
                              isEditingPossible: viewModel.isMyUserAdmin && viewModel.detailsMode.isGroup)
             } else {
                 Text(viewModel.roomName)
-                    .font(.customFont(.RobotoFlexSemiBold, size: 24))
+                    .font(.customFont(.RobotoFlexSemiBold, size: 12))
             }
             
             if let secondLine = viewModel.bellowNameText {
                 Text(secondLine)
-                    .font(.customFont(.RobotoFlexMedium, size: 12))
+                    .font(.customFont(.RobotoFlexMedium, size: 8))
             }
             
             Text(viewModel.detailsMode.description)
-                .font(.customFont(.RobotoFlexMedium, size: 12))
+                .font(.customFont(.RobotoFlexMedium, size: 24))
         }
         .foregroundStyle(Color(.textPrimary))
     }
