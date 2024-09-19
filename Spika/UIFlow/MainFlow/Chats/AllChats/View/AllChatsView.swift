@@ -46,7 +46,7 @@ class AllChatsView: UIView, BaseView {
         roomsTableView.rowHeight = 70
         roomsTableView.backgroundColor = .clear
         
-        searchBar.scopeButtonTitles = ["Chats", "Messages"]
+        searchBar.scopeButtonTitles = ["Messages", "Chats"]
         searchBar.showsScopeBar = false
         searchBar.searchBarStyle = .minimal
         searchBar.searchTextField.textColor = .textSecondary
