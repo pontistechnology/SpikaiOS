@@ -12,7 +12,7 @@ class EnterNumberView: UIView, BaseView {
     let logoImage = LogoImageView()
     let titleLabel = CustomLabel(text: .getStringFor(.enterYourPhoneToUserSpika), textSize: 24,
                                  textColor: .textPrimary, fontName: .RobotoFlexSemiBold, alignment: .center)
-    let enterNumberTextField = EnterNumberTextField(placeholder: .getStringFor(.eg98726), title: .getStringFor(.phoneNumber))
+    let enterNumberTextField = EnterNumberTextField(placeholder: .getStringFor(.eg98726), title: "Email address")
     let nextButton = MainButton()
     
     override init(frame: CGRect) {
