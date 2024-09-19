@@ -50,7 +50,7 @@ struct ChatDetails2View: View {
                     Spacer().frame(height: 16)
                     memberCountAndPlus(isAdmin: viewModel.isMyUserAdmin)
                         .padding(.vertical, 19)
-                    VStack(spacing: 26) {
+                    VStack(spacing: 8) {
                         ForEach(room.users) { roomUser in
                             Button {
                                 viewModel.clickOnMemberRow(roomUser: roomUser)
