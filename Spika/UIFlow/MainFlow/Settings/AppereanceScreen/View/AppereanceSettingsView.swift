@@ -20,9 +20,17 @@ struct AppereanceSettingsView: View {
                     viewModel.returnToHomeScreen()
                 }
             }
-            PrimaryButton(text: .getStringFor(.cancel), corners: .bottomCorners, backgroundColor: .secondaryColor) {
+            Button {
                 viewModel.returnToHomeScreen()
+            } label: {
+                Text("Cancel")
+                    .foregroundStyle(Color(uiColor: .textPrimary))
+                    .font(.customFont(.RobotoFlexSemiBold, size: 14))
             }
+            .frame(maxWidth: .infinity)
+            .frame(height: 56)
+            .background(Color.fromUIColor(.secondaryColor))
+            .modifier(RoundedCorners(corners: .bottomCorners, radius: 15))
         }
         .padding(.horizontal, 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
