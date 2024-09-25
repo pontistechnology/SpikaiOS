@@ -19,7 +19,7 @@ class SettingsView: BaseSettingsView {
     
     let userPhoneNumber = CustomLabel(text: .getStringFor(.group), textSize: 16, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
     
-    let appereanceOptionButton = NavView(text: .getStringFor(.appereance))
+    let appereanceOptionButton = NavView(text: .getStringFor(.appearance))
     let privacyOptionButton = NavView(text: .getStringFor(.privacy))
     
     let deleteMyAccountButton = NavView(text: .getStringFor(.deleteMyAccount), isArrowHidden: true)
