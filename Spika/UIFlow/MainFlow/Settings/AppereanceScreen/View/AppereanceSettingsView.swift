@@ -12,6 +12,13 @@ struct AppereanceSettingsView: View {
     
     var body: some View {
         VStack {
+            Text("Appearance")
+                .font(.customFont(.RobotoFlexSemiBold, size: 32))
+                .foregroundStyle(Color.fromUIColor(.textPrimary))
+                .frame(maxWidth: .infinity, alignment: .center)
+            
+            Spacer()
+            
             ForEach(SpikaTheme.allCases, id: \.rawValue) { theme in
                 let isSelected = viewModel.savedThemeRawValue() == theme.rawValue
                 PrimaryButton(text: theme.title, corners: theme.corners,
@@ -31,6 +38,8 @@ struct AppereanceSettingsView: View {
             .frame(height: 56)
             .background(Color.fromUIColor(.secondaryColor))
             .modifier(RoundedCorners(corners: .bottomCorners, radius: 15))
+            
+            Spacer()
         }
         .padding(.horizontal, 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
