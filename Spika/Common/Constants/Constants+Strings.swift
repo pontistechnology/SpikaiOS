@@ -114,7 +114,7 @@ public extension Constants {
         case create = "Create"
         case peopleSelected = "people selected"
         case newGroup = "New Group"
-        case groupName = "Group name..."
+        case enterGroupName = "Enter group name"
         
         // MARK: - AllChatsViewController
         case title = "Title"
