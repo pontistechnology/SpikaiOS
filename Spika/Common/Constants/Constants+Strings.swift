@@ -154,7 +154,7 @@ public extension Constants {
 
         // MARK: - Settings
         case privacy = "Privacy"
-        case appereance = "Appereance"
+        case appearance = "Appearance"
         case dark = "Dark"
         case light = "Light"
         case system = "System"
