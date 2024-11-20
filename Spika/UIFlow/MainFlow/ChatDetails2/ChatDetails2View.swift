@@ -27,6 +27,7 @@ struct ChatDetails2View: View {
                 }
                 
                 menuButtons()
+                    .modifier(RoundedCorners(corners: .allCorners, radius: 15))
                 
                 if viewModel.detailsMode.isPrivate {
                     Button(action: {
@@ -97,8 +98,8 @@ extension ChatDetails2View {
     }
     
     private func menuButtons() -> some View {
-        Group {
-            PrimaryButton(imageResource: .rDnotes, text: .getStringFor(.notes), corners: .topCorners, usage: .withRightArrow) {
+        VStack {
+            PrimaryButton(imageResource: .rDnotes, text: .getStringFor(.notes), usage: .withRightArrow) {
                 viewModel.presentAllNotesScreen()
             }
             
@@ -120,9 +121,10 @@ extension ChatDetails2View {
                 }
             }
             
-            PrimaryButton(imageResource: .rDdeleteBin, text: .getStringFor(.deleteChat), corners: .bottomCorners, backgroundColor: .warningColor, usage: .onlyTitle) {
-                
-            }
+            // TODO: - add delete chat logic
+//            PrimaryButton(imageResource: .rDdeleteBin, text: .getStringFor(.deleteChat), corners: .bottomCorners, backgroundColor: .warningColor, usage: .onlyTitle) {
+//                
+//            }
         }
     }
     
