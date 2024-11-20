@@ -17,7 +17,7 @@ class SharedViewController: BaseViewController {
         super.viewDidLoad()
         setupView(sharedView)
         setupBindings()
-        navigationItem.title = .getStringFor(.sharedMediaLinksDocs)
+        navigationItem.title = .getStringFor(.mediaLinksDocs)
     }
     
     func setupBindings() {

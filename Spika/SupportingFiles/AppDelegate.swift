@@ -22,6 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureNotifications(app: application)
         customization()
 //        test()
+//        for family in UIFont.familyNames {
+//            print("family:", family)
+//            for font in UIFont.fontNames(forFamilyName: family) {
+//                print("font:", font)
+//            }
+//        }
         return true
     }
     

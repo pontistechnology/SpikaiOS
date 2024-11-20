@@ -18,7 +18,7 @@ class ContentView: UIView, BaseView {
     let optionButtonsStackView = UIStackView()
     let switchStackView = UIStackView()
     let labelsStackView = UIStackView()
-    let sharedMediaOptionButton = NavView(text: .getStringFor(.sharedMediaLinksDocs))
+    let sharedMediaOptionButton = NavView(text: .getStringFor(.mediaLinksDocs))
     let chatSearchOptionButton = NavView(text: .getStringFor(.chatSearch))
     let callHistoryOptionButton = NavView(text: .getStringFor(.callHistory))
     let notesOptionButton = NavView(text: .getStringFor(.notes))

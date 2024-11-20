@@ -14,3 +14,9 @@ extension UIFont {
         return UIFontMetrics.default.scaledFont(for: customFont)
     }
 }
+
+extension Font {
+    static func customFont(_ fontName: CustomFontName, size: CGFloat) -> Font {
+        .custom(fontName.rawValue, size: size)
+    }
+}

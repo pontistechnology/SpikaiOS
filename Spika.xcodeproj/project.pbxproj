@@ -1321,6 +1321,12 @@
 		93F771E42CEEA35D00C3CA95 /* LittleIconInTransparentBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F771E32CEEA35D00C3CA95 /* LittleIconInTransparentBubble.swift */; };
 		93F771E52CEEA35D00C3CA95 /* LittleIconInTransparentBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F771E32CEEA35D00C3CA95 /* LittleIconInTransparentBubble.swift */; };
 		93F771E62CEEA35D00C3CA95 /* LittleIconInTransparentBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F771E32CEEA35D00C3CA95 /* LittleIconInTransparentBubble.swift */; };
+		93F771E92CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93F771E82CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
+		93F771EA2CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93F771E82CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
+		93F771EB2CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93F771E82CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
+		93F771EC2CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93F771E82CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
+		93F771ED2CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93F771E82CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
+		93F771EE2CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93F771E82CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */; };
 		93FC0DA427FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */; };
 		93FD38322A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD38312A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift */; };
 		93FD38332A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FD38312A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift */; };
@@ -1789,6 +1795,7 @@
 		93F4A89D282DE9C400CEA637 /* MessageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsView.swift; sourceTree = "<group>"; };
 		93F54A0A2B28BC9F002A2B89 /* TypeAlliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAlliases.swift; sourceTree = "<group>"; };
 		93F771E32CEEA35D00C3CA95 /* LittleIconInTransparentBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LittleIconInTransparentBubble.swift; sourceTree = "<group>"; };
+		93F771E82CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf"; sourceTree = "<group>"; };
 		93FC0DA227FCD5D4005C18D6 /* RoomEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		93FD38312A880CD900FE9C3B /* CustomReactionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomReactionCollectionViewCell.swift; sourceTree = "<group>"; };
 		93FD38362A881EA000FE9C3B /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
@@ -2721,6 +2728,14 @@
 			path = MessageDetails;
 			sourceTree = "<group>";
 		};
+		93F771E72CEEA80900C3CA95 /* RobotoFlex */ = {
+			isa = PBXGroup;
+			children = (
+				93F771E82CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf */,
+			);
+			path = RobotoFlex;
+			sourceTree = "<group>";
+		};
 		93FD38352A881E7000FE9C3B /* UICollectionViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2825,6 +2840,7 @@
 		AD8192722722D55100D5BE48 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				93F771E72CEEA80900C3CA95 /* RobotoFlex */,
 				AD8192732722D55E00D5BE48 /* Montserrat */,
 			);
 			path = Fonts;
@@ -3576,6 +3592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93CB3E332B005E190082D4F2 /* Shared Assets.xcassets in Resources */,
+				93F771EB2CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3598,6 +3615,7 @@
 				6C78B8BB29AF5ADB004BF881 /* Montserrat-Thin.ttf in Resources */,
 				6C78B8BC29AF5ADB004BF881 /* Montserrat-Medium.ttf in Resources */,
 				6C78B8BD29AF5ADB004BF881 /* Montserrat-SemiBold.ttf in Resources */,
+				93F771E92CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */,
 				9300D9D32A4C57E700B7B695 /* Shared Assets.xcassets in Resources */,
 				6C78B8BE29AF5ADB004BF881 /* CountryCodes.json in Resources */,
 			);
@@ -3608,6 +3626,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93CB3E322B005E180082D4F2 /* Shared Assets.xcassets in Resources */,
+				93F771EE2CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3630,6 +3649,7 @@
 				6CF649BB2A459FE100E0DE0B /* Montserrat-Thin.ttf in Resources */,
 				6CF649BC2A459FE100E0DE0B /* Montserrat-Medium.ttf in Resources */,
 				6CF649BD2A459FE100E0DE0B /* Montserrat-SemiBold.ttf in Resources */,
+				93F771EA2CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */,
 				9300D9D92A4C58C700B7B695 /* Assets.xcassets in Resources */,
 				6CF649BE2A459FE100E0DE0B /* CountryCodes.json in Resources */,
 			);
@@ -3640,6 +3660,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93CB3E312B005E180082D4F2 /* Shared Assets.xcassets in Resources */,
+				93F771ED2CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3671,6 +3692,7 @@
 				AD8192822722D5AF00D5BE48 /* Montserrat-Thin.ttf in Resources */,
 				AD8192852722D5AF00D5BE48 /* Montserrat-Medium.ttf in Resources */,
 				AD81927F2722D5AF00D5BE48 /* Montserrat-SemiBold.ttf in Resources */,
+				93F771EC2CEEA84900C3CA95 /* RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf in Resources */,
 				9300D9DD2A4C58E700B7B695 /* Assets.xcassets in Resources */,
 				AD9BFD2E2729AB8F00736318 /* CountryCodes.json in Resources */,
 			);

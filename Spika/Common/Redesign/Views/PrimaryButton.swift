@@ -45,15 +45,17 @@ struct PrimaryButton: View {
                label: {
             HStack(spacing: 0) {
                 if let leftImageResource {
+                    Spacer().frame(width: 16)
                     Image(leftImageResource)
-                        .padding(.leading, 16)
+                        .resizable()
+                        .scaledToFit()
                         .frame(width: 24, height: 24)
                         .foregroundStyle(Color(uiColor: .textPrimary))
                 }
+                Spacer().frame(width: 11)
                 Text(text)
-                    .padding(.leading, 12)
                     .foregroundStyle(Color(uiColor: .textPrimary))
-                    .font(Font(UIFont.customFont(name: .MontserratSemiBold, size: 14)))
+                    .font(.customFont(.RobotoFlexSemiBold, size: 14))
                 Spacer()
                 
                 if let rightImageResource = usage.imageResource {
