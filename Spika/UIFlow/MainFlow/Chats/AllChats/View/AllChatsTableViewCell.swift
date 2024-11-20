@@ -21,8 +21,8 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
     
     let messagesStackView = CustomStackView(axis: .horizontal, distribution: .fill, alignment: .fill, spacing: 8)
     let messagesNumberLabel = CustomLabel(text: "", textSize: 10, textColor: .textPrimary, fontName: .MontserratSemiBold, alignment: .center)
-    let pinnedIcon = UIImageView(image: UIImage(resource: .rDpin).withTintColor(.textPrimary, renderingMode: .alwaysOriginal))
-    let mutedIcon = UIImageView(image: UIImage(resource: .rDmute).withTintColor(.textPrimary, renderingMode: .alwaysOriginal))
+    let pinnedIcon = LittleIconInTransparentBubble(resource: .rDpin)
+    let mutedIcon = LittleIconInTransparentBubble(resource: .rDmute)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -56,9 +56,6 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         descriptionStackView.distribution = .fill
         descriptionIcon.contentMode = .scaleAspectFit
         
-        pinnedIcon.backgroundColor = .additionalColor
-        mutedIcon.backgroundColor = .additionalColor
-        
         
         leftImageView.clipsToBounds = true
         leftImageView.layer.cornerRadius = 27
@@ -72,9 +69,6 @@ class AllChatsTableViewCell: UITableViewCell, BaseView {
         messagesNumberLabel.clipsToBounds = true
         messagesNumberLabel.hide()
         backgroundColor = .clear
-        
-        mutedIcon.layer.cornerRadius = 6
-        pinnedIcon.layer.cornerRadius = 6
     }
     
     func positionSubviews() {
