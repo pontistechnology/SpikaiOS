@@ -146,6 +146,7 @@ enum AppAction {
     case forwardMessages(messageIds: [Int64], userIds: [Int64], roomIds: [Int64])
     case addToExistingRoom([Int64])
     case updateRoom(room: Room)
+    case openRoomWithUser(userId: Int64)
 }
 
 enum UpdateRoomAction {

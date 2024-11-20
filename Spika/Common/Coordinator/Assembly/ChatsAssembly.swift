@@ -13,6 +13,7 @@ class ChatsAssembly: Assembly {
         assembleCurrentChatViewController(container)
         assembleNewGroup2ChatViewController(container)
         assembleSelectUsersOrGroupsView(container)
+        assembleNewPrivate2ChatViewController(container)
     }
     
     private func assembleCurrentChatViewController(_ container: Container) {        
@@ -53,6 +54,21 @@ class ChatsAssembly: Assembly {
             return controller
         }.inObjectScope(.transient)
     }
+    
+    private func assembleNewPrivate2ChatViewController(_ container: Container) {
+        container.register(NewPrivateChatViewModel.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return NewPrivateChatViewModel(repository: repository, coordinator: coordinator, actionPublisher: p)
+        }.inObjectScope(.transient)
+
+        container.register(NewPrivateChatViewController2.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher) in
+            let viewModel = container.resolve(NewPrivateChatViewModel.self, arguments: coordinator, p)!
+            let controller = NewPrivateChatViewController2(rootView: NewPrivateChatView(viewModel: viewModel), context: viewModel.repository.getMainContext())
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+
     
     private func assembleSelectUsersOrGroupsView(_ container: Container) {
         container.register(SelectUsersOrGroupsViewModel.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, purpose: SelectUsersOrGroupsPurpose) in

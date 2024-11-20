@@ -138,7 +138,8 @@ class AppCoordinator: Coordinator {
     }
     
     func presentStartNewPrivateChatScreen() {
-        
+        let viewController = Assembler.sharedAssembler.resolver.resolve(NewPrivateChatViewController2.self, arguments: self, actionsPublisher)!
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     func presentCreateNewGroup2ChatScreen() {
