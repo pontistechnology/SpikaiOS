@@ -24,7 +24,7 @@ class CountryTableViewCell: UITableViewCell, BaseView {
     
     func styleSubviews() {
         selectionStyle = .none
-//        backgroundColor = ._secondaryColor // TODO: - check
+        backgroundColor = .clear // TODO: - check
     }
     
     func positionSubviews() {

@@ -238,7 +238,10 @@ extension UIView {
         self.insertSubview(imageView, at: 0)
         imageView.contentMode = .scaleAspectFill
         imageView.fillSuperview()
-        
+        setGradientWithoutLetterS(colors: colors)
+    }
+    
+    func setGradientWithoutLetterS(colors: [UIColor]) {        
         // gradient background
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = colors.map({ $0.cgColor })

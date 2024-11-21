@@ -19,6 +19,7 @@ class CountryPickerViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.setGradientWithoutLetterS(colors: UIColor._backgroundGradientColors)
         setupView(countryPickerView)
         setupBindings()
     }
