@@ -10,8 +10,8 @@ import UIKit
 
 class OneNoteView: UIView {
     
-    let titleTextView = UITextViewWithPlaceholder(placeholder: "Enter title", font: .customFont(name: .MontserratSemiBold, size: 18))
-    let contentTextView = UITextViewWithPlaceholder(placeholder: "Enter description", font: .customFont(name: .MontserratSemiBold, size: 14))
+    let titleTextView = UITextViewWithPlaceholder(placeholder: "Enter title", font: .customFont(name: .RobotoFlexSemiBold, size: 16))
+    let contentTextView = UITextViewWithPlaceholder(placeholder: "Enter description", font: .customFont(name: .RobotoFlexMedium, size: 12))
     private var bottomConstraint: NSLayoutConstraint?
     let keyboardAccessoryView = KeyboardObserverAccessoryView()
     
