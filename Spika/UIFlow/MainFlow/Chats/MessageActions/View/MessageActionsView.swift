@@ -33,7 +33,7 @@ extension MessageActionsView: BaseView {
         addSubview(actionsStackview)
         
         reactionsEmojis.forEach { emoji in
-            let emojiLabel = CustomLabel(text: emoji, textSize: 32, textColor: .checkWithDesign, fontName: .MontserratSemiBold, alignment: .center)
+            let emojiLabel = CustomLabel(text: emoji, textSize: 32, textColor: .checkWithDesign, fontName: .RobotoFlexSemiBold, alignment: .center)
             reactionsStackview.addArrangedSubview(emojiLabel)
         }
         

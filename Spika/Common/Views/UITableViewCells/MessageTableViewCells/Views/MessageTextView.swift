@@ -8,7 +8,7 @@
 import UIKit
 
 class MessageTextView: UIView {
-    let textView = CustomTextView(text: "", textSize: 14, textColor: .textPrimary, fontName: .MontserratMedium)
+    let textView = CustomTextView(text: "", textSize: 14, textColor: .textPrimary, fontName: .RobotoFlexMedium)
     
     init() {
         super.init(frame: .zero)

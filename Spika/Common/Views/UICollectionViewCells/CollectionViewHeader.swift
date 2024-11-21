@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class CollectionViewHeader: UICollectionReusableView {
-    private let titleLabel = CustomLabel(text: "s", textSize: 12, textColor: .textSecondary, fontName: .MontserratMedium)
+    private let titleLabel = CustomLabel(text: "s", textSize: 12, textColor: .textSecondary, fontName: .RobotoFlexMedium)
     static let reuseIdentifier = "CollectionViewHeader"
     
     override init(frame: CGRect) {

@@ -84,7 +84,7 @@ extension AllChatsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard tableView == allChatsView.searchedMessagesTableView else { return nil }
-        return CustomTableViewHeader(text: viewModel.titleForSectionForMessages(section: section), fontName: .MontserratSemiBold)
+        return CustomTableViewHeader(text: viewModel.titleForSectionForMessages(section: section), fontName: .RobotoFlexSemiBold)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

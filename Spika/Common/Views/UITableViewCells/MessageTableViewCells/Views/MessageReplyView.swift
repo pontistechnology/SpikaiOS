@@ -20,7 +20,7 @@ class MessageReplyView2: UIView {
     
     init(senderName: String, message: Message, isInMyMessage: Bool, showCloseButton: Bool) {
         self.showCloseButton = showCloseButton
-        senderNameLabel = CustomLabel(text: senderName, textSize: 14, textColor: .textPrimary, fontName: .MontserratSemiBold)
+        senderNameLabel = CustomLabel(text: senderName, textSize: 14, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
         photoAndText = IconAndLabelView2(messageType: message.type,
                                          text: message.body?.text)
         super.init(frame: .zero)

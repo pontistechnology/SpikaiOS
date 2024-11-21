@@ -88,7 +88,7 @@ extension UserSelectionViewController: UITableViewDelegate {
         return CustomTableViewHeader(text: viewModel.frc?.sections?[section].name ?? "-",
                                      textSize: 18,
                                      textColor: .textPrimary,
-                                     fontName: .MontserratSemiBold,
+                                     fontName: .RobotoFlexSemiBold,
                                      alignment: .left,
                                      labelMargins: UIEdgeInsets(top: 8, left: 18, bottom: 8, right: 14))
     }

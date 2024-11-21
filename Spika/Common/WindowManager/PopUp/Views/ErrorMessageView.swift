@@ -12,7 +12,7 @@ class ErrorMessageView: UIView {
     private let errorImageView = UIImageView(image: UIImage(resource: .error))
     
     init(message: String) {
-        errorLabel = CustomLabel(text: message, textSize: 13, textColor: .warningColor, fontName: .MontserratMedium, alignment: .natural)
+        errorLabel = CustomLabel(text: message, textSize: 13, textColor: .warningColor, fontName: .RobotoFlexMedium, alignment: .natural)
         super.init(frame: .zero)
         setupView()
     }

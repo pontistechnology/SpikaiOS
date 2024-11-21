@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("TOKEN: ", token)
         }
         
-        guard let font =  UIFont(name: CustomFontName.MontserratSemiBold.rawValue, size: 14) else { return }
+        guard let font =  UIFont(name: CustomFontName.RobotoFlexSemiBold.rawValue, size: 14) else { return }
         // this is for our custom back button
         UIBarButtonItem.appearance().setTitleTextAttributes(
             [   NSAttributedString.Key.font : font,

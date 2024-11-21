@@ -55,7 +55,7 @@ class SearchBar: UIView, BaseView {
         
         searchTextField.autocorrectionType = .no
         searchTextField.textColor = .textPrimary
-        searchTextField.font = .customFont(name: .MontserratMedium, size: 14)
+        searchTextField.font = .customFont(name: .RobotoFlexMedium, size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
         
@@ -65,7 +65,7 @@ class SearchBar: UIView, BaseView {
         
         cancelButton.setTitle(.getStringFor(.cancel), for: .normal)
         cancelButton.setTitleColor(.primaryColor, for: .normal)
-        cancelButton.titleLabel?.font = .customFont(name: .MontserratMedium, size: 14)
+        cancelButton.titleLabel?.font = .customFont(name: .RobotoFlexMedium, size: 14)
     }
     
     func positionSubviews() {

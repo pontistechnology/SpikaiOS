@@ -57,16 +57,6 @@ enum SyncType {
 }
 
 enum CustomFontName: String {
-    case MontserratRegular = "Montserrat-Regular"
-    case MontserratBold = "Montserrat-Bold"
-    case MontserratBlack = "Montserrat-Black"
-    case MontserratExtraBold = "Montserrat-ExtraBold"
-    case MontserratExtraLight = "Montserrat-ExtraLight"
-    case MontserratLight = "Montserrat-Light"
-    case MontserratMedium = "Montserrat-Medium"
-    case MontserratSemiBold = "Montserrat-SemiBold"
-    case MontserratThin = "Montserrat-Thin"
-    
     case RobotoFlexRegular = "RobotoFlex-Regular"
     case RobotoFlexItalic = "RobotoFlex-Regular_Italic"
     case RobotoFlexThin = "RobotoFlex-Regular_Thin"

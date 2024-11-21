@@ -11,9 +11,9 @@ import Combine
 
 class BaseMessageTableViewCell2: UITableViewCell {
     
-    private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular, alignment: .left)
+    private let senderNameLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .RobotoFlexRegular, alignment: .left)
     private let senderPhotoImageview = UIImageView()
-    private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium)
+    private let timeLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .RobotoFlexMedium)
     
     let hSTack = UIStackView()
     let vStack = UIStackView()

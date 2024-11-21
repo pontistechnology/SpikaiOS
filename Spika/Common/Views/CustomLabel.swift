@@ -17,7 +17,7 @@ class CustomLabel: UILabel {
     private var alignment: NSTextAlignment
     
     init(text: String, textSize: CGFloat = 14, textColor: UIColor,
-         fontName: CustomFontName = .MontserratRegular, alignment: NSTextAlignment = .natural) {
+         fontName: CustomFontName = .RobotoFlexRegular, alignment: NSTextAlignment = .natural) {
         self.title = text
         self.titleSize = textSize
         self.titleColor = textColor

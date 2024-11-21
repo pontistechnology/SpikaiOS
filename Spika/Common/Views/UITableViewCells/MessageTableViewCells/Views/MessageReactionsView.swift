@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 class MessageReactionsView: UIView {
-    private var emojiLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratMedium)
-    private var countLabel = CustomLabel(text: "", textSize: 8, textColor: .textPrimary, fontName: .MontserratMedium)
+    private var emojiLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .RobotoFlexMedium)
+    private var countLabel = CustomLabel(text: "", textSize: 8, textColor: .textPrimary, fontName: .RobotoFlexMedium)
     private let isInMyMessage: Bool
     
     init(emojis: [String], isInMyMessage: Bool) {

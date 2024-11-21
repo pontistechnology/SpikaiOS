@@ -40,7 +40,7 @@ extension OTPCodeTextField: BaseView {
         layer.borderWidth = 1
         layer.masksToBounds = false
         layer.cornerRadius = 10
-        font = .customFont(name: .MontserratMedium, size: 26)
+        font = .customFont(name: .RobotoFlexMedium, size: 26)
         textColor = .textPrimary
     }
     

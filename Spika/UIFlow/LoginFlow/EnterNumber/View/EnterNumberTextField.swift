@@ -15,10 +15,10 @@ protocol EnterNumberTextFieldDelegate: AnyObject {
 class EnterNumberTextField: UIView, BaseView {
     
     let titleLabel = CustomLabel(text: "", textColor: .textPrimary,
-                                 fontName: .MontserratMedium)
+                                 fontName: .RobotoFlexMedium)
     private var textField = UITextField()
     let numberView = UIView()
-    let countryNumberLabel = CustomLabel(text: "", textColor: .primaryColor, fontName: .MontserratMedium, alignment: .center)
+    let countryNumberLabel = CustomLabel(text: "", textColor: .primaryColor, fontName: .RobotoFlexMedium, alignment: .center)
     private let lineBreakView = UIView()
     
     private let placeholder: String
@@ -60,7 +60,7 @@ class EnterNumberTextField: UIView, BaseView {
         textField.keyboardType = .phonePad
         textField.placeholder = placeholder
         textField.textColor = .textPrimary
-        textField.font = .customFont(name: .MontserratMedium)
+        textField.font = .customFont(name: .RobotoFlexSemiBold, size: 24)
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
         
