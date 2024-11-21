@@ -33,7 +33,7 @@ struct Settings2View: View {
                 })
                 
                 // appereance
-                PrimaryButton(imageResource: .rDeditPen, text: .getStringFor(.appereance), corners: .topCorners, usage: .withRightArrow) {
+                PrimaryButton(imageResource: .rDeditPen, text: .getStringFor(.appearance), corners: .topCorners, usage: .withRightArrow) {
                     viewModel.onAppereanceClick()
                 }
 
