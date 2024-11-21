@@ -13,9 +13,13 @@ struct ChatDetails2View: View {
     var body: some View {
         ScrollView {
             ChatRoundedAvatar(url: viewModel.profilePictureUrl,
-                              isGroupRoom: viewModel.detailsMode.isGroup, imageForUpload: .constant(nil))
+                              isGroupRoom: viewModel.detailsMode.isGroup, imageForUpload: $viewModel.selectedImage)
+            .modifier(UploadProgressModifier(isShowing: viewModel.selectedImage != nil))
+            .allowsHitTesting(viewModel.selectedImage == nil)
             .onTapGesture {
-                // TODO: - add change image
+                if viewModel.detailsMode.isGroup && viewModel.isMyUserAdmin {
+                    viewModel.showChangeImageActionSheet()
+                }
             }
             
             VStack(spacing: 0) {
@@ -73,6 +77,11 @@ struct ChatDetails2View: View {
             viewModel.getAppCoordinator()?.getSelectUsersOrGroupsView(purpose: .addToExistingGroup(hiddenUserIds: viewModel.room?.users.compactMap({ $0.userId }) ?? []))
                 .environment(\.managedObjectContext, viewModel.repository.getMainContext())
         })
+        .sheet(isPresented: $viewModel.showImagePicker) {
+            ImagePicker(sourceType: viewModel.selectedSource,
+                        selectedImage: $viewModel.selectedImage)
+        }
+
     }
 }
 

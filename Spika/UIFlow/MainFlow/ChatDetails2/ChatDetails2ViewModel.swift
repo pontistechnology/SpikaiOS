@@ -14,6 +14,89 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
     @Published var room: Room?
     let detailsMode: ChatDetailsMode
     @Published var showAddMembersScreen = false
+    @Published var showImagePicker = false
+    @Published var selectedImage: UIImage? {
+        didSet {
+            newImageChosen()
+        }
+    }
+    
+    var selectedSource: UIImagePickerController.SourceType = .photoLibrary
+    
+    func showChangeImageActionSheet() {
+        getAppCoordinator()?
+            .showAlert(actions: [.regular(title: .getStringFor(.takeAPhoto)),
+                                 .regular(title: .getStringFor(.chooseFromGallery)),
+                                 .destructive(title: .getStringFor(.removePhoto))])
+            .sink(receiveValue: { [weak self] tappedIndex in
+                switch tappedIndex {
+                case 0:
+                    self?.selectedSource = .camera
+                    self?.showImagePicker = true
+                case 1:
+                    self?.selectedSource = .photoLibrary
+                    self?.showImagePicker = true
+                case 2:
+                    self?.onChangeRoomAvatar(imageFileData: nil)
+                    self?.updateRoom(fileId: nil)
+                default:
+                    break
+                }
+            }).store(in: &subscriptions)
+    }
+    
+    
+    
+    private func newImageChosen() {
+        guard let selectedImage else { return }
+        let statusOfPhoto = selectedImage.statusOfPhoto(for: .avatar)
+        switch statusOfPhoto {
+        case .allOk:
+            guard let resizedImage = resizeImage(selectedImage),
+                  let data = resizedImage.jpegData(compressionQuality: 1)
+            else { return }
+            onChangeRoomAvatar(imageFileData: data)
+        default:
+            showError(statusOfPhoto.description)
+            self.selectedImage = nil
+        }
+    }
+    
+    private func onChangeRoomAvatar(imageFileData: Data?) {
+        guard let imageFileData = imageFileData,
+              let fileUrl = repository.saveDataToFile(imageFileData, name: "newAvatar")
+        else {
+            selectedImage = nil
+            return
+        }
+        let tuple = repository.uploadWholeFile(fromUrl: fileUrl, mimeType: "image/*", metaData: MetaData(width: 512, height: 512, duration: 0), specificFileName: nil)
+        tuple.sink { [weak self] completion in
+            guard let self else { return }
+            switch completion {
+            case .finished:
+                break
+            case let .failure(error):
+                self.showError("Error with file upload: \(error)")
+            }
+        } receiveValue: { [weak self] (file, percent) in
+            guard let self else { return }
+            guard let file = file else { return }
+//            url = file.id?.fullFilePathFromId()
+            guard let fileId = file.id else { return }
+            updateRoom(fileId: fileId)
+        }.store(in: &subscriptions)
+    }
+    
+    func updateRoom(fileId: Int64?) {
+        guard let roomId = room?.id else { return }
+        repository.updateRoom(roomId: roomId, action: .changeGroupAvatar(fileId: fileId ?? 0)).sink { c in
+            
+        } receiveValue: { [weak self] response in
+            self?.room = response.data?.room
+            self?.selectedImage = nil
+        }.store(in: &subscriptions)
+    }
+
     
     var isMyUserAdmin: Bool {
         room?.users.first(where: { $0.userId == myUserId })?.isAdmin ?? false
@@ -126,7 +209,7 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
         case .contact(let user):
             user.avatarFileId?.fullFilePathFromId()
         case .roomDetails(let currentValueSubject):
-            currentValueSubject.value.avatarFileId?.fullFilePathFromId()
+            room?.avatarFileId?.fullFilePathFromId()
         }
     }
     
