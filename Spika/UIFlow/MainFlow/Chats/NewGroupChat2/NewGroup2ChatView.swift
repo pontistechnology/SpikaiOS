@@ -20,11 +20,17 @@ struct NewGroup2ChatView: View {
             .onTapGesture {
                 viewModel.showChangeImageActionSheet()
             }
+            .overlay(alignment: .top) {
+                Text("Name the group")
+                    .font(.customFont(.RobotoFlexSemiBold, size: 16))
+                    .foregroundStyle(Color.fromUIColor(.textPrimary))
+                    .padding(.top, 70)
+            }
             
             Group {
                 TextField("", text: $viewModel.groupName,
                           prompt:
-                            Text(verbatim: .getStringFor(.groupName))
+                            Text(verbatim: .getStringFor(.enterGroupName))
                                 .foregroundColor(Color(.textSecondary))
                 )
                 .font(.customFont(.RobotoFlexMedium, size: 12))

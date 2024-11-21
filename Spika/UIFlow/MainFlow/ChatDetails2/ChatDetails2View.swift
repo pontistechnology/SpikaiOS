@@ -39,7 +39,7 @@ struct ChatDetails2View: View {
                 if viewModel.detailsMode.isPrivate {
                     Spacer().frame(height: 16)
                     Button(action: {
-                        
+                        viewModel.showError("Feature coming soon...")
                     }, label: {
                         HStack {
                             Image(.rDblock)

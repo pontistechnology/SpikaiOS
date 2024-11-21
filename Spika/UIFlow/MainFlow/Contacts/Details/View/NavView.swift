@@ -9,9 +9,10 @@ import UIKit
 
 class NavView: UIView, BaseView {
     
-    let label = CustomLabel(text: "text", textColor: .textPrimary)
+    let label = CustomLabel(text: "text", textSize: 14, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
     let arrowImageView = UIImageView()
     let text: String
+    let emptyview = UIView()
     
     init(text: String, isArrowHidden: Bool = false) {
         self.text = text
@@ -25,20 +26,24 @@ class NavView: UIView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(label)
-        addSubview(arrowImageView)
+        addSubview(emptyview)
+        emptyview.addSubview(label)
+        emptyview.addSubview(arrowImageView)
     }
     
     func styleSubviews() {
         label.text = text
-        arrowImageView.image = UIImage(resource: .rDrightArrow)
+        arrowImageView.image = UIImage(resource: .rDrightArrow).withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
+        emptyview.backgroundColor = .primaryColor
+        emptyview.layer.cornerRadius = 16
     }
     
     func positionSubviews() {
-        label.anchor(leading: leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
+        emptyview.fillSuperview(padding: .init(top: 2, left: 16, bottom: 2, right: 16))
+        label.anchor(leading: emptyview.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
         label.centerYToSuperview()
         
-        arrowImageView.anchor(trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
+        arrowImageView.anchor(trailing: emptyview.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
         arrowImageView.centerYToSuperview()
         
         self.constrainHeight(58)
