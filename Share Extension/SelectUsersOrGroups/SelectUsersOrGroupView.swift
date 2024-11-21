@@ -17,8 +17,12 @@ struct SelectUsersOrGroupView: View {
             titleAndClose()
                 .padding(.vertical, 10)
             
-            TextField("", text: $viewModel.searchTerm, prompt: Text(verbatim: .getStringFor(.search)))
+            TextField("", text: $viewModel.searchTerm,
+                      prompt: Text(verbatim: .getStringFor(.search))
+                .foregroundColor(Color.fromUIColor(.textSecondary)))
                 .frame(height: 38)
+                .font(.customFont(.RobotoFlexMedium, size: 12))
+                .foregroundStyle(Color.fromUIColor(.textPrimary))
                 .padding(.horizontal, 12)
                 .background(Color(.thirdAdditionalColor))
                 .clipShape(Capsule())
@@ -77,11 +81,14 @@ struct SelectUsersOrGroupView: View {
     private func titleAndClose() -> some View {
         HStack {
             Text("Share")
+                .font(.customFont(.RobotoFlexSemiBold, size: 16))
+                .foregroundStyle(Color.fromUIColor(.textPrimary))
             Spacer()
             Button {
                 dismiss()
             } label: {
                 Image(.rDx)
+                    .tint(Color.fromUIColor(.textPrimary))
             }
         }
     }
@@ -120,6 +127,8 @@ struct SelectUsersOrGroupView: View {
         VStack(spacing: 0) {
             Text("\(viewModel.selectedUsersAndGroups.count) selected")
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.customFont(.RobotoFlexMedium, size: 12))
+                .foregroundStyle(Color.fromUIColor(.textPrimary))
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 8) {
                     ForEach(viewModel.selectedUsersAndGroups) { selectedThing in
@@ -146,6 +155,8 @@ struct SelectUsersOrGroupView: View {
                                 }
                             Text(selectedThing.displayName)
                                 .frame(maxWidth: 84)
+                                .font(.customFont(.RobotoFlexMedium, size: 10))
+                                .foregroundStyle(Color.fromUIColor(.textPrimary))
                         }
                     }
                 }
@@ -175,8 +186,10 @@ struct SelectUsersOrGroupView: View {
                 VStack {
                     Text(thing.displayName)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.customFont(.RobotoFlexSemiBold, size: 14))
                     Text(thing.description ?? "-")
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.customFont(.RobotoFlexMedium, size: 10))
                 }.foregroundStyle(Color(.textPrimary))
                 
                 Spacer()

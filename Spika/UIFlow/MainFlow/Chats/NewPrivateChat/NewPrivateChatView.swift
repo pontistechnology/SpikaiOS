@@ -25,11 +25,14 @@ struct NewPrivateChatView: View {
             .frame(maxWidth: .infinity, alignment: .trailing)
             .padding(.vertical, 12)
 
-            TextField("", text: $viewModel.searchTerm, prompt: Text(verbatim: .getStringFor(.search)))
+            TextField("", text: $viewModel.searchTerm,
+                      prompt: Text(verbatim: .getStringFor(.search))
+                .foregroundColor(Color.fromUIColor(.textSecondary)))
                 .frame(height: 38)
                 .padding(.horizontal, 12)
                 .background(Color(.thirdAdditionalColor))
                 .clipShape(Capsule())
+                .foregroundStyle(Color(UIColor.textPrimary))
             
             ListWithPredicate(sI: \.sectionName,
                               sD: viewModel.usersSortDescriptor,
