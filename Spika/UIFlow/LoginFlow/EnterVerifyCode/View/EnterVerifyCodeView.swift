@@ -11,10 +11,10 @@ import Combine
 class EnterVerifyCodeView: UIView, BaseView {
     
     let logoImageView = LogoImageView()
-    let titleLabel = CustomLabel(text: .getStringFor(.weSentYou6DigitCode), textColor: .textPrimary, fontName: .RobotoFlexMedium, alignment: .center)
+    let titleLabel = CustomLabel(text: .getStringFor(.weSentYou6DigitCode), textSize: 24, textColor: .textPrimary, fontName: .RobotoFlexSemiBold, alignment: .center)
     let otpTextField = OTPCodeTextField(otpLength: 6)
     let nextButton = MainButton()
-    let timeLabel = CustomLabel(text: "02:00", textColor: .textPrimary, fontName: .RobotoFlexMedium)
+    let timeLabel = CustomLabel(text: "02:00", textSize: 12, textColor: .textPrimary, fontName: .RobotoFlexMedium)
     let resendCodeButton = ActionButton()
     
     var otpCodePublisher = PassthroughSubject<String,Never>()
@@ -50,7 +50,7 @@ class EnterVerifyCodeView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        titleLabel.numberOfLines = 2
+        titleLabel.numberOfLines = 0
         
         nextButton.setTitle(.getStringFor(.next), for: .normal)
         nextButton.setEnabled(false)
@@ -60,10 +60,10 @@ class EnterVerifyCodeView: UIView, BaseView {
     
     func positionSubviews() {
         
-        logoImageView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 40, left: 0, bottom: 24, right: 0), size: CGSize(width: 72, height: 72))
-        logoImageView.centerX(inView: self)
+        logoImageView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 40, left: 0, bottom: 24, right: 0), size: CGSize(width: 98, height: 98))
+        logoImageView.centerXToSuperview(offset: -12)
         
-        titleLabel.anchor(top: logoImageView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 24, left: 70, bottom: 50, right: 70))
+        titleLabel.anchor(top: logoImageView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 24, left: 22, bottom: 50, right: 22))
                 
         timeLabel.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 50, left: 30, bottom: 16, right: 30))
         timeLabel.constrainWidth(100)

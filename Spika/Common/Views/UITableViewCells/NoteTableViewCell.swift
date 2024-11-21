@@ -38,6 +38,7 @@ extension NoteTableViewCell {
         emptyView.backgroundColor = .primaryColor
         backgroundColor = .clear
         noteIW.contentMode = .scaleAspectFit
+        emptyView.layer.cornerRadius = 15
     }
     
     func positionSubviews() {

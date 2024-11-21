@@ -21,7 +21,7 @@ class EnterVerifyCodeViewController: BaseViewController {
     }
     
     func setupUI() {
-        enterVerifyCodeView.titleLabel.text = .getStringFor(.weSentYou6DigitOn) + " \(viewModel.phoneNumber.getFullNumber())."
+        enterVerifyCodeView.titleLabel.text = .getStringFor(.weSentYou6DigitOn) + " \(viewModel.phoneNumber.getFullNumber())!"
     }
     
     override func viewWillDisappear(_ animated: Bool) {

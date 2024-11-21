@@ -63,13 +63,6 @@ extension AllNotesViewController: UITableViewDelegate, UITableViewDataSource {
         //        }
                 
         (cell as? NoteTableViewCell)?.configureCell(title: note.title)
-        if indexPath.row == 0 && indexPath.row == viewModel.notesPublisher.value.count - 1 {
-            cell.roundCorners(corners: .allCorners, radius: 25)
-        } else if indexPath.row == 0 {
-            cell.roundCorners(corners: .topCorners, radius: 25)
-        } else if indexPath.row == viewModel.notesPublisher.value.count - 1 {
-            cell.roundCorners(corners: .bottomCorners, radius: 25)
-        }
         
         return cell
     }
