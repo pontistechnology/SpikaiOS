@@ -10,7 +10,7 @@ import UIKit
 
 class EnterUsernameView: UIView, BaseView {
     
-    let profilePictureView = ImageViewWithIcon(image: UIImage(resource: .logo), size: CGSize(width: 100, height: 100))
+    let profilePictureView = ImageViewWithIcon(image: UIImage(resource: .rDdefaultUser), size: CGSize(width: 100, height: 100))
     private let usernameLabel = CustomLabel(text: .getStringFor(.username), textColor: .textPrimary, fontName: .RobotoFlexMedium)
     let usernameTextfield = CustomTextField(textPlaceholder: .getStringFor(.enterUsername))
     let nextButton = MainButton()
@@ -37,15 +37,17 @@ class EnterUsernameView: UIView, BaseView {
         nextButton.setEnabled(false)
         
         usernameTextfield.autocorrectionType = .no
+        profilePictureView.contentMode = .scaleAspectFill
     }
     
     func positionSubviews() {
-        profilePictureView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 45, left: 0, bottom: 0, right: 0))
-        profilePictureView.centerXToSuperview()
+        profilePictureView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        profilePictureView.constrainHeight(350)
         
-        usernameLabel.anchor(top: profilePictureView.bottomAnchor, leading: leadingAnchor, padding: UIEdgeInsets(top: 30, left: 30, bottom: 0, right: 0))
+        usernameLabel.anchor(top: profilePictureView.bottomAnchor, padding: UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0))
+        usernameLabel.centerXToSuperview()
         
-        usernameTextfield.anchor(top: usernameLabel.bottomAnchor, leading: usernameLabel.leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 30))
+        usernameTextfield.anchor(top: usernameLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 12, left: 30, bottom: 0, right: 30))
         usernameTextfield.constrainHeight(50)
         
         nextButton.anchor(top: usernameTextfield.bottomAnchor, leading: usernameTextfield.leadingAnchor, trailing: usernameTextfield.trailingAnchor, padding: UIEdgeInsets(top: 14, left: 0, bottom: 0, right: 0))
