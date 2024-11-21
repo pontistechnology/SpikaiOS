@@ -146,7 +146,7 @@ extension ChatDetails2View {
             
             if viewModel.detailsMode.isGroup {
                 PrimaryButton(imageResource: .rDxInCircle, text: .getStringFor(.exitGroup), backgroundColor: .warningColor, usage: .onlyTitle) {
-                    
+                    viewModel.showError("Feature coming soon...")
                 }
             }
             
