@@ -21,6 +21,29 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
         }
     }
     
+    @Published var groupName = ""
+    
+    @Published var isEditingUsername = false {
+        didSet {
+            if !isEditingUsername && groupName != room?.name {
+                changeName()
+            }
+        }
+    }
+    
+    func changeName() {
+        guard let roomId = room?.id else { return }
+        repository.updateRoom(roomId: roomId, action: .changeGroupName(newName: groupName)).sink { c in
+            
+        } receiveValue: { [weak self] response in
+            self?.room = response.data?.room
+            guard let rooom = response.data?.room else { return }
+            self?.repository.saveLocalRooms(rooms: [rooom])
+            self?.actionPublisher?.send(.updateRoom(room: rooom))
+        }.store(in: &subscriptions)
+
+    }
+    
     var selectedSource: UIImagePickerController.SourceType = .photoLibrary
     
     func showChangeImageActionSheet() {
@@ -94,6 +117,9 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
         } receiveValue: { [weak self] response in
             self?.room = response.data?.room
             self?.selectedImage = nil
+            guard let rooom = response.data?.room else { return }
+            self?.repository.saveLocalRooms(rooms: [rooom])
+            self?.actionPublisher?.send(.updateRoom(room: rooom))
         }.store(in: &subscriptions)
     }
 
@@ -109,6 +135,9 @@ class ChatDetails2ViewModel: BaseViewModel, ObservableObject {
         super.init(repository: repository, coordinator: coordinator, actionPublisher: actionPublisher)
         setupBindings()
         checkLocalPrivateRoom()
+        if detailsMode.isGroup {
+            groupName = room?.name ?? ""
+        }
     }
     
     func setupBindings() {

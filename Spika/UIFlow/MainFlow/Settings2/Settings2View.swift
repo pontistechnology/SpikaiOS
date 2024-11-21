@@ -24,7 +24,8 @@ struct Settings2View: View {
             Group {
                 EditableText(placeholder: .getStringFor(.enterUsername),
                              isEditingMode: $viewModel.isEditingUsername,
-                             string: $viewModel.username)
+                             string: $viewModel.username,
+                             isEditingPossible: true)
                 
                 Button(action: {}, label: {
                     Text(viewModel.user?.telephoneNumber ?? "")
