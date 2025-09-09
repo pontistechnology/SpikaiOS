@@ -37,11 +37,12 @@ class EnterUsernameView: UIView, BaseView {
         nextButton.setEnabled(false)
         
         usernameTextfield.autocorrectionType = .no
-        profilePictureView.contentMode = .scaleAspectFill
+        profilePictureView.contentMode = .scaleAspectFit
     }
     
     func positionSubviews() {
-        profilePictureView.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        profilePictureView.anchor(top: topAnchor, padding: UIEdgeInsets(top: 45, left: 0, bottom: 0, right: 0), size: CGSize(width: 120, height: 120))
+
         profilePictureView.constrainHeight(350)
         
         
