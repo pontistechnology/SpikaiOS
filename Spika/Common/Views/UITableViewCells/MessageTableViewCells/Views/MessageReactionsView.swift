@@ -9,10 +9,12 @@ import Foundation
 import UIKit
 
 class MessageReactionsView: UIView {
-    private var emojiLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .MontserratMedium)
-    private var countLabel = CustomLabel(text: "", textSize: 8, textColor: .textPrimary, fontName: .MontserratMedium)
+    private var emojiLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .RobotoFlexMedium)
+    private var countLabel = CustomLabel(text: "", textSize: 8, textColor: .textPrimary, fontName: .RobotoFlexMedium)
+    private let isInMyMessage: Bool
     
-    init(emojis: [String]) {
+    init(emojis: [String], isInMyMessage: Bool) {
+        self.isInMyMessage = isInMyMessage
         super.init(frame: .zero)
         setupView()
         show(emojis: emojis)
@@ -30,10 +32,9 @@ extension MessageReactionsView: BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .blue
+        backgroundColor = .additionalColor
         layer.cornerRadius = 8
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.primaryBackground.cgColor
+        layer.maskedCorners = isInMyMessage ? .allButBottomRight : .allButBottomLeft
     }
     
     func positionSubviews() {

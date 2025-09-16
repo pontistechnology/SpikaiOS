@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 import Combine
 
-final class AudioMessageTableViewCell: BaseMessageTableViewCell {
+final class AudioMessageTableViewCell: BaseMessageTableViewCell2 {
     private let audioView = MessageAudioView()
     private let timePublisher = PassthroughSubject<Float, Never>()
     
@@ -23,7 +23,7 @@ final class AudioMessageTableViewCell: BaseMessageTableViewCell {
     }
     
     private func setupAudioCell() {
-        containerStackView.addArrangedSubview(audioView)
+        hSTack.addArrangedSubview(audioView)
     }
 }
 // MARK: Public Functions

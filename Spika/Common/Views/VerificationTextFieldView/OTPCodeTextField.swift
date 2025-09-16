@@ -33,14 +33,14 @@ extension OTPCodeTextField: BaseView {
     func styleSubviews() {
         keyboardType = .numberPad
         textContentType = .oneTimeCode
-        backgroundColor = .secondaryBackground
+        backgroundColor = .secondaryColor
         textAlignment = .center
         autocapitalizationType = .none
-        layer.borderColor = UIColor.borderColor.cgColor
+        layer.borderColor = UIColor.clear.cgColor
         layer.borderWidth = 1
         layer.masksToBounds = false
         layer.cornerRadius = 10
-        font = .customFont(name: .MontserratMedium, size: 26)
+        font = .customFont(name: .RobotoFlexSemiBold, size: 24)
         textColor = .textPrimary
     }
     
@@ -62,7 +62,7 @@ extension OTPCodeTextField {
             inputText = String(inputText.prefix(self.otpLength))
             self.text = inputText
             let entryGood = inputText.count == self.otpLength
-            self.layer.borderColor = entryGood ? UIColor.borderColor.cgColor : UIColor.appRed.cgColor
+            self.layer.borderColor = entryGood ? UIColor.clear.cgColor : UIColor.warningColor.cgColor
             self.isEntryGood.send(entryGood)
         }.store(in: &subs)
     }

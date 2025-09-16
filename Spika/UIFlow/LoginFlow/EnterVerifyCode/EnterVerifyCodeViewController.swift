@@ -14,13 +14,14 @@ class EnterVerifyCodeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
         setupView(enterVerifyCodeView)
         setupUI()
         setupBindings()
     }
     
     func setupUI() {
-        enterVerifyCodeView.titleLabel.text = .getStringFor(.weSentYou6DigitOn) + " \(viewModel.phoneNumber.getFullNumber())."
+        enterVerifyCodeView.titleLabel.text = .getStringFor(.weSentYou6DigitOn) + " \(viewModel.phoneNumber.getFullNumber())!"
     }
     
     override func viewWillDisappear(_ animated: Bool) {

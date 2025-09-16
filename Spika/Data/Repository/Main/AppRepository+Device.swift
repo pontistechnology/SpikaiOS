@@ -21,7 +21,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<UpdatePushResponseModel, UpdatePushRequestModel>(
+        let resources = Resources<UpdatePushRequestModel>(
             path: Constants.Endpoints.updatePush,
             requestType: .PUT,
             bodyParameters: UpdatePushRequestModel(pushToken: token),
@@ -34,5 +34,11 @@ extension AppRepository {
     
     func removeNotificationsWith(roomId: Int64) {
         notificationHelpers.removeNotifications(withRoomId: roomId)
+    }
+    
+    // MARK: - Themes
+    
+    func saveSelectedTheme(_ theme: String) {
+        userDefaults.set(theme, forKey: Constants.Database.selectedTheme)
     }
 }

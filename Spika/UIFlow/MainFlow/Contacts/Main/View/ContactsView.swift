@@ -9,9 +9,9 @@ import UIKit
 
 class ContactsView: UIView, BaseView {
     
-    let titleLabel = CustomLabel(text: .getStringFor(.contacts), textSize: 28, textColor: .textPrimary, fontName: .MontserratSemiBold)
+    let titleLabel = CustomLabel(text: .getStringFor(.contacts), textSize: 28, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
     let detailsButton = UIButton()
-    let searchBar = SearchBar(placeholder: .getStringFor(.searchForContactsMessages))
+    let searchBar = SearchBar(placeholder: .getStringFor(.searchForContact))
     let tableView = ContactsTableView()
     
     let refreshControl = UIRefreshControl()

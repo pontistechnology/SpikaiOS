@@ -10,8 +10,8 @@ import UIKit
 class EnterNumberView: UIView, BaseView {
     
     let logoImage = LogoImageView()
-    let titleLabel = CustomLabel(text: .getStringFor(.enterYourPhoneToUserSpika),
-                                 fontName: .MontserratMedium, alignment: .center)
+    let titleLabel = CustomLabel(text: .getStringFor(.enterYourPhoneToUserSpika), textSize: 24,
+                                 textColor: .textPrimary, fontName: .RobotoFlexSemiBold, alignment: .center)
     let enterNumberTextField = EnterNumberTextField(placeholder: .getStringFor(.eg98726), title: .getStringFor(.phoneNumber))
     let nextButton = MainButton()
     
@@ -33,7 +33,6 @@ class EnterNumberView: UIView, BaseView {
     
     func styleSubviews() {
         titleLabel.numberOfLines = 0
-        titleLabel.textAlignment = .justified
         
         nextButton.setTitle(.getStringFor(.next), for: .normal)
         nextButton.setEnabled(false)
@@ -42,10 +41,10 @@ class EnterNumberView: UIView, BaseView {
     }
     
     func positionSubviews() {
-        logoImage.anchor(top: topAnchor, padding: UIEdgeInsets(top: 40, left: 0, bottom: 24, right: 0), size: CGSize(width: 72, height: 72))
-        logoImage.centerX(inView: self)
+        logoImage.anchor(top: topAnchor, padding: UIEdgeInsets(top: 40, left: 0, bottom: 24, right: 0), size: CGSize(width: 98, height: 98))
+        logoImage.centerXToSuperview(offset: -10)
         
-        titleLabel.anchor(top: logoImage.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 24, left: 70, bottom: 50, right: 70))
+        titleLabel.anchor(top: logoImage.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 17, left: 27, bottom: 50, right: 27))
         
         enterNumberTextField.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 50, left: 30, bottom: 14, right: 30))
         

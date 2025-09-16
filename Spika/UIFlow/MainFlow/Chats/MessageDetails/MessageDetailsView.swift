@@ -10,7 +10,7 @@ import UIKit
 
 class MessageDetailsView: UIView {
     
-    private let detailsLabel = CustomLabel(text: .getStringFor(.details), textSize: 16, textColor: .textPrimary, fontName: .MontserratSemiBold)
+    private let detailsLabel = CustomLabel(text: .getStringFor(.details), textSize: 16, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
     let recordsTableView = UITableView()
     
     init() {
@@ -32,8 +32,9 @@ extension MessageDetailsView: BaseView {
     }
     
     func styleSubviews() {
-        backgroundColor = .secondaryBackground
-        recordsTableView.backgroundColor = .secondaryBackground
+        backgroundColor = .secondaryColor
+        recordsTableView.backgroundColor = .clear
+        recordsTableView.separatorStyle = .none
     }
     
     func positionSubviews() {

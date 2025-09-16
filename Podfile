@@ -15,14 +15,14 @@ end
 
 # Pods for Spika
 def shared_pods
-  pod 'Swinject', '2.8.3'
+  pod 'Swinject'
   source 'https://github.com/CocoaPods/Specs.git'
   pod 'PhoneNumberKit', :git => 'https://github.com/marmelroy/PhoneNumberKit'
-  pod 'Firebase/Analytics', '10.8.0'
-  pod 'Firebase/Crashlytics', '10.8.0'
-  pod 'Firebase/Messaging', '10.8.0'
-  pod 'Kingfisher', '7.6.2'
-  pod 'IKEventSource', '3.0.1'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
+  pod 'Firebase/Messaging'
+  pod 'Kingfisher'
+  pod 'IKEventSource'
   pod 'ContactsChangeNotifier'
 end
 
@@ -35,5 +35,9 @@ target 'Spika Dev' do
 end
 
 target 'Spika Messenger' do
+  shared_pods
+end
+
+target 'Share Extension' do
   shared_pods
 end

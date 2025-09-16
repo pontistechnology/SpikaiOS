@@ -11,8 +11,8 @@ class CurrentChatView: UIView, BaseView {
     
     let messagesTableView = UITableView(frame: .zero, style: .grouped)
     let messageInputView = MessageInputView()
-    private let newMessagesLabel = CustomLabel(text: "You have new messages.", textSize: 16, textColor: .textPrimary, fontName: .MontserratMedium)
-    private let downArrowImageView = UIImageView(image: UIImage(safeImage: .downArrow))
+    private let newMessagesLabel = CustomLabel(text: "You have new messages.", textSize: 16, textColor: .textPrimary, fontName: .RobotoFlexMedium)
+    private let downArrowImageView = UIImageView(image: UIImage(resource: .downArrow).withTintColor(.textPrimary))
     let scrollToBottomStackView = UIStackView()
     
     private var messageInputViewBottomConstraint = NSLayoutConstraint()
@@ -43,18 +43,18 @@ class CurrentChatView: UIView, BaseView {
         messagesTableView.backgroundColor = .clear
         messagesTableView.showsHorizontalScrollIndicator = false
         
-        scrollToBottomStackView.backgroundColor = .chatBackground
+        scrollToBottomStackView.backgroundColor = .thirdAdditionalColor
         scrollToBottomStackView.layer.cornerRadius = 10
         scrollToBottomStackView.layer.shadowOpacity = 0.25
         scrollToBottomStackView.layer.shadowRadius = 4
         scrollToBottomStackView.layer.shadowOffset = CGSize(width: 0, height: 4)
         downArrowImageView.contentMode = .scaleAspectFit
         
-        backgroundColor = .primaryBackground
+//        backgroundColor = ._primaryColor // TODO: - check
     }
     
     func positionSubviews() {        
-        messagesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: messageInputView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left:0, bottom: 0, right: 0))
+        messagesTableView.anchor(top: topAnchor, leading: leadingAnchor, bottom: messageInputView.topAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left:0, bottom: 14, right: 0))
         
         scrollToBottomStackView.anchor(bottom: messagesTableView.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0))
         scrollToBottomStackView.centerXToSuperview()
@@ -76,43 +76,33 @@ class CurrentChatView: UIView, BaseView {
                      FileMessageTableViewCell.self,
                      AudioMessageTableViewCell.self,
                      VideoMessageTableViewCell.self,
-                     DeletedMessageTableViewCell.self]
+                     DeletedMessageTableViewCell.self,
+                     SystemMessageTableViewCell.self]
         
         cells.forEach { cell in
-            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.me.reuseIdentifierPrefix + String(describing: cell))
-            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.friend.reuseIdentifierPrefix + String(describing: cell))
-            messagesTableView.register(cell, forCellReuseIdentifier: MessageSender.group.reuseIdentifierPrefix + String(describing: cell))
+            messagesTableView.register(cell, forCellReuseIdentifier:  String(describing: cell))
         }
         
+        messagesTableView.register(UnknownTableViewCell.self, forCellReuseIdentifier: "UnknownMessageTableViewCell")
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            messageInputViewBottomConstraint.constant = -keyboardSize.height + 30
             var indexPath: IndexPath?
             if let lastCell = messagesTableView.visibleCells.last {
                 indexPath = messagesTableView.indexPath(for: lastCell)
             }
             DispatchQueue.main.async { [weak self] in
-                self?.layoutIfNeeded()
                 guard let indexPath else { return }
                 self?.messagesTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             }
         }
     }
     
-    @objc func keyboardWillHide(notification: Notification) {
-        messageInputViewBottomConstraint.constant = 0
-        DispatchQueue.main.async { [weak self] in
-            self?.layoutIfNeeded()
-        }
-    }
-    
     deinit {
         NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
-        NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
     }
     
     func handleScrollToBottomButton(show: Bool, number: Int) {
@@ -120,6 +110,11 @@ class CurrentChatView: UIView, BaseView {
         newMessagesLabel.isHidden = number == 0
         newMessagesLabel.text = "You have \(number) new message" + (number > 1 ? "s" : "") // todo: - localization
     }
+    
+    func moveInputFromBottom(for n: CGFloat) {
+        messageInputViewBottomConstraint.constant = -(n < 0 ? 0 : n)
+        DispatchQueue.main.async { [weak self] in
+            self?.layoutIfNeeded()
+        }
+    }
 }
-
-

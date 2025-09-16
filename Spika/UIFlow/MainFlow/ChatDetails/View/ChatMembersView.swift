@@ -50,12 +50,12 @@ class ChatMembersView: UIView, BaseView {
     
     let titleLabel = CustomLabel(text: .getStringFor(.members), textSize: 22,
                                  textColor: .textPrimary,
-                                 fontName: .MontserratSemiBold)
+                                 fontName: .RobotoFlexSemiBold)
     
     lazy var addContactButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(safeImage: .plus), for: .normal)
+        button.setImage(UIImage(resource: .plus), for: .normal)
         return button
     } ()
     
@@ -63,7 +63,7 @@ class ChatMembersView: UIView, BaseView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(.getStringFor(.showMore), for: .normal)
-        button.setTitleColor(UIColor.primaryColor, for: .normal)
+        button.setTitleColor(.textPrimary, for: .normal)
         button.addTarget(self, action: #selector(onShowMore), for: .touchUpInside)
         return button
     } ()

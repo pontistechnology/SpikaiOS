@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 import Swinject
+import SwiftUI
 
 enum TabBarItem: Equatable {
     case chat(withChatId: Int64?)
@@ -31,26 +32,34 @@ enum TabBarItem: Equatable {
     var imageNormal: UIImage {
         switch self {
         case .chat:
-            return UIImage(safeImage: .chatsTab)
+            return UIImage(resource: .rDchatBubble)
+                .withTintColor(.primaryColor, renderingMode: .alwaysOriginal)
         case .phoneCalls:
-            return UIImage(safeImage: .callHistoryTab)
+            return UIImage(resource: .rDcallsCellphone)
+                .withTintColor(.primaryColor, renderingMode: .alwaysOriginal)
         case .contacts:
-            return UIImage(safeImage: .contactsTab)
+            return UIImage(resource: .rDpersonContact)
+                .withTintColor(.primaryColor, renderingMode: .alwaysOriginal)
         case .settings:
-            return UIImage(safeImage: .settingsTab)
+            return UIImage(resource: .rDsettingsGear)
+                .withTintColor(.primaryColor, renderingMode: .alwaysOriginal)
         }
     }
     
     var imageSelected: UIImage {
         switch self {
         case .chat:
-            return UIImage(safeImage: .chatsTabFull)
+            return UIImage(resource: .rDchatBubble)
+                .withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
         case .phoneCalls:
-            return UIImage(safeImage: .callHistoryTabFull)
+            return UIImage(resource: .rDcallsCellphone)
+                .withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
         case .contacts:
-            return UIImage(safeImage: .contactsTabFull)
+            return UIImage(resource: .rDpersonContact)
+                .withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
         case .settings:
-            return UIImage(safeImage: .settingsTabFull)
+            return UIImage(resource: .rDsettingsGear)
+                .withTintColor(.textPrimary, renderingMode: .alwaysOriginal)
         }
     }
     
@@ -67,7 +76,9 @@ enum TabBarItem: Equatable {
         case .contacts:
             return assembler.resolver.resolve(ContactsViewController.self, argument: appCoordinator)!
         case .settings:
-            return assembler.resolver.resolve(SettingsViewController.self, argument: appCoordinator)!
+//            return assembler.resolver.resolve(SettingsViewController.self, argument: appCoordinator)!
+            return assembler.resolver.resolve(Settings2ViewController.self, argument: appCoordinator)!
+            
         }
     }
     

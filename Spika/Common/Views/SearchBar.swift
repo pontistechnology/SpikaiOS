@@ -16,9 +16,9 @@ protocol SearchBarDelegate: AnyObject {
 class SearchBar: UIView, BaseView {
     
     let searchView = UIView()
-    let searchImage = UIImageView(image: UIImage(safeImage: .search))
+    let searchImage = UIImageView(image: UIImage(resource: .search))
     let searchTextField = UITextField()
-    let deleteImage = UIImageView(image: UIImage(safeImage: .delete))
+    let deleteImage = UIImageView(image: UIImage(resource: .delete))
     let cancelButton = UIButton()
     
     weak var delegate: SearchBarDelegate?
@@ -55,17 +55,17 @@ class SearchBar: UIView, BaseView {
         
         searchTextField.autocorrectionType = .no
         searchTextField.textColor = .textPrimary
-        searchTextField.font = .customFont(name: .MontserratMedium, size: 14)
+        searchTextField.font = .customFont(name: .RobotoFlexMedium, size: 14)
         searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
+                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
         
-        searchView.backgroundColor = .chatBackground
+        searchView.backgroundColor = .thirdAdditionalColor
         searchView.layer.cornerRadius = 10
         searchView.clipsToBounds = true
         
         cancelButton.setTitle(.getStringFor(.cancel), for: .normal)
         cancelButton.setTitleColor(.primaryColor, for: .normal)
-        cancelButton.titleLabel?.font = .customFont(name: .MontserratMedium, size: 14)
+        cancelButton.titleLabel?.font = .customFont(name: .RobotoFlexMedium, size: 14)
     }
     
     func positionSubviews() {

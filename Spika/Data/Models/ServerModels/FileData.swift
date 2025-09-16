@@ -26,9 +26,3 @@ extension FileData {
                                      duration: entity.metaDataDuration))
     }
 }
-
-struct MetaData: Codable {
-    let width: Int64
-    let height: Int64
-    let duration: Int64
-}

@@ -17,13 +17,19 @@ struct UploadProgess: Hashable {
     let percentUploaded: CGFloat
 }
 
+enum PagionationDirection {
+    case up, down, initial
+}
+
 class CurrentChatViewModel: BaseViewModel {
     
-    var frc: NSFetchedResultsController<MessageEntity>?
+    var messagesFRC: NSFetchedResultsController<MessageEntity>?
+    var reactionsFRC: NSFetchedResultsController<MessageRecordEntity>?
+    var filesFRC: NSFetchedResultsController<FileEntity>?
     var room: Room
     
     var friendUser: User? {
-        room.getFriendUserInPrivateRoom(myUserId: getMyUserId())
+        room.getFriendUserInPrivateRoom(myUserId: myUserId)
     }
     
     let uploadProgressPublisher = PassthroughSubject<String, Never>()
@@ -37,10 +43,78 @@ class CurrentChatViewModel: BaseViewModel {
     
     let scrollToMessageId: Int64?
     
-    init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?) {
+//    let paginationPublisher = CurrentValueSubject<PagionationDirection, Never>(.initial)
+//    var currentOffset = -1 // this should never happen
+//    var countOfAllMessages = 0
+//    let fetchLimit = 50
+    
+    init(repository: Repository, coordinator: Coordinator, room: Room, scrollToMessageId: Int64?, actionPublisher: ActionPublisher) {
         self.scrollToMessageId = scrollToMessageId
         self.room = room
-        super.init(repository: repository, coordinator: coordinator)
+        super.init(repository: repository, coordinator: coordinator, actionPublisher: actionPublisher)
+        setupBindings()
+//        getCountOfAllMessages()
+    }
+    
+    func setupBindings() {
+        actionPublisher?.sink(receiveValue: { [weak self] action in
+            switch action {
+            case .updateRoom(let room):
+                self?.room = room
+            default:
+                break
+            }
+        }).store(in: &subscriptions)
+    }
+    
+    func getSenderTypeFor(message: Message) -> MessageSender {
+        if message.fromUserId == myUserId {
+            return .me
+        } else {
+            return room.type == .groupRoom ? .group : .friend
+        }
+    }
+}
+
+extension CurrentChatViewModel {
+    func loadReactions(messageIds: [Int64]) {
+        let fetchRequest = MessageRecordEntity.fetchRequest()
+        let currentTimestamp = Date().currentTimeMillis()
+        // fetch all reactions for all messages in this room, and continue fetching all reactions (we dont have roomId in MessageRecord, so for live update it will fetch some unnecessary reaction, but only when in chat)
+        fetchRequest.predicate = NSPredicate(format: "type == %@ AND (messageId IN %@ OR modifiedAt > %ld OR createdAt > %ld)", MessageRecordType.reaction.rawValue, messageIds, currentTimestamp, currentTimestamp)
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(MessageRecordEntity.type), ascending: true)]
+        self.reactionsFRC = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                              managedObjectContext: repository.getMainContext(),
+                                              sectionNameKeyPath: nil,
+                                              cacheName: nil)
+        self.reactionsFRC?.delegate = self
+        do {
+            try self.reactionsFRC?.performFetch()
+        } catch {
+            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
+        }
+    }
+    
+    func loadFilesData() {
+        let fetchRequest = FileEntity.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(FileEntity.localId), ascending: true)]
+        self.filesFRC = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                              managedObjectContext: repository.getMainContext(),
+                                              sectionNameKeyPath: nil,
+                                              cacheName: nil)
+        self.filesFRC?.delegate = self
+        do {
+            try self.filesFRC?.performFetch()
+        } catch {
+            fatalError("Failed to fetch entities: \(error)") // TODO: handle error
+        }
+    }
+}
+
+extension CurrentChatViewModel: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<any NSFetchRequestResult>) {
+        
     }
 }
 
@@ -77,33 +151,50 @@ extension CurrentChatViewModel {
     }
     
     func showImage(message: Message) {
-        getAppCoordinator()?.presentImageViewer(message: message)
+        getAppCoordinator()?
+            .presentImageViewer(message: message,
+                                senderName: room.getDisplayNameFor(userId: message.fromUserId))
     }
     
     func showReactions(records: [MessageRecord]) {
         let users = room.users.compactMap { roomUser in
             roomUser.user
         }
-        getAppCoordinator()?.presentReactionsSheet(users: users, records: records)
+        getAppCoordinator()?.presentReactionsSheet(users: users, records: records, myId: myUserId)
+    }
+    
+    func showCustomReactionPicker(message: Message) {
+        getAppCoordinator()?.presentCustomReactionPicker()
+            .sink(receiveValue: { [weak self] emoji in
+                guard let id = message.id else { return }
+                self?.sendReaction(reaction: emoji, messageId: id)
+            }).store(in: &subscriptions)
     }
     
     // TODO: add indexpath
     func showMessageActions(_ message: Message) {
         guard !message.deleted else { return }
+        let actions: [MessageAction] =
+        if message.fromUserId == myUserId && message.type == .text && !message.isForwarded {
+            [.reply, .forward, .copy, .edit, .details, .favorite, .delete]
+        } else {
+            [.reply, .forward, (message.type == .image ? .download : .copy ), .details, .favorite, .delete]
+        }
+        
         getAppCoordinator()?
-            .presentMessageActionsSheet(isMyMessage: message.fromUserId == getMyUserId())
+            .presentMessageActionsSheet(actions: actions)
             .sink(receiveValue: { [weak self] action in
                 guard let self else { return }
                 self.getAppCoordinator()?.dismissViewController()
                 guard let id = message.id else { return }
                 switch action {
                 case .reaction(emoji: let emoji):
-                    self.sendReaction(reaction: emoji, messageId: id)
+                    sendReaction(reaction: emoji, messageId: id)
                 case .reply:
-                    self.selectedMessageToReplyPublisher.send(message)
+                    selectedMessageToReplyPublisher.send(message)
                 case .copy:
                     UIPasteboard.general.string = message.body?.text
-                    self.showOneSecAlert(type: .copy)
+                    showOneSecAlert(type: .copy)
                 case .details:
                     let users = self.room.users.compactMap { $0.user }
                     self.getAppCoordinator()?.presentMessageDetails(users: users, message: message)
@@ -111,6 +202,17 @@ extension CurrentChatViewModel {
                     self.showDeleteConfirmDialog(message: message)
                 case .edit:
                     self.selectedMessageToEditPublisher.send(message)
+                case .showCustomReactions:
+                    self.showCustomReactionPicker(message: message)
+                case .forward:
+                    guard let messageId = message.id else { return }
+                    getAppCoordinator()?.presentForwardScreen(ids: [messageId], context: repository.getMainContext())
+                case .download:
+                    guard let url = message.body?.file?.id?.fullFilePathFromId(),
+                          let data = try? Data(contentsOf: url),
+                          let uiimage = UIImage(data: data)
+                    else { return }
+                    UIImageWriteToSavedPhotosAlbum(uiimage, self, #selector(saveCompleted), nil)
                 default:
                     break
                 }
@@ -130,7 +232,7 @@ extension CurrentChatViewModel {
     func showDeleteConfirmDialog(message: Message) {
         guard let id = message.id else { return }
         var actions: [AlertViewButton] = [.destructive(title: .getStringFor(.deleteForMe))]
-        if message.fromUserId == getMyUserId() {
+        if message.fromUserId == myUserId {
             actions.append(.destructive(title: .getStringFor(.deleteForEveryone)))
         }
         getAppCoordinator()?
@@ -161,10 +263,10 @@ extension CurrentChatViewModel {
     func trySendMessage(text: String) {
         let uuid = UUID().uuidString
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: getMyUserId(),
+                              fromUserId: myUserId,
                               roomId: room.id,
                               type: .text,
-                              body: MessageBody(text: text, file: nil, thumb: nil),
+                              body: MessageBody(text: text, file: nil, thumb: nil, type: nil, subject: nil, subjectId: nil, objects: nil, objectIds: nil),
                               replyId: selectedMessageToReplyPublisher.value?.id,
                               localId: uuid)
         
@@ -181,7 +283,7 @@ extension CurrentChatViewModel {
     
     
     func sendMessage(body: RequestMessageBody, localId: String, type: MessageType, replyId: Int64?) {
-        self.repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, replyId: replyId).sink { [weak self] completion in
+        repository.sendMessage(body: body, type: type, roomId: room.id, localId: localId, replyId: replyId).sink { [weak self] completion in
             guard let _ = self else { return }
             switch completion {
                 
@@ -237,11 +339,11 @@ extension CurrentChatViewModel {
 extension CurrentChatViewModel {
     func saveTempVideoMessage(uuid: String, width: CGFloat, height: CGFloat) {
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: getMyUserId(), roomId: room.id, type: .video,
+                              fromUserId: myUserId, roomId: room.id, type: .video,
                               body: MessageBody(text: nil, file: nil,
                                                 thumb: FileData(id: nil, fileName: nil,
                                                                 mimeType: nil, size: nil,
-                                                                metaData: MetaData(width: width.roundedInt64, height: height.roundedInt64, duration: 0))),
+                                                                metaData: MetaData(width: width.roundedInt64, height: height.roundedInt64, duration: 0)), type: nil, subject: nil, subjectId: nil, objects: nil, objectIds: nil),
                               replyId: nil, localId: uuid)
         saveMessage(message: message)
     }
@@ -278,9 +380,10 @@ extension CurrentChatViewModel {
 // MARK: - files handling
 extension CurrentChatViewModel {
     func openFile(message: Message) {
-        guard let url = message.body?.file?.id?.fullFilePathFromId() else { return }
+        guard let file = message.body?.file,
+                let url = file.id?.fullFilePathFromId() else { return }
         if message.body?.file?.mimeType == "application/pdf" {
-            getAppCoordinator()?.presentPdfViewer(url: url)
+            getAppCoordinator()?.presentPdfViewer(shareType: .sharePdf(temporaryURL: url, file: file))
         } else if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
@@ -305,8 +408,9 @@ extension CurrentChatViewModel {
                 } receiveValue: { [weak self] filea, percent in
                     guard let filea = filea else { return }
                     guard let self else { return }
+                    let fileName = file.mimeType == "image/*" ? file.name?.appending(".jpg") : nil
                     self.repository
-                        .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData, specificFileName: nil)
+                        .uploadWholeFile(fromUrl: file.fileUrl, mimeType: file.mimeType, metaData: file.metaData, specificFileName: fileName)
                         .sink { _ in
                             
                         } receiveValue: { [weak self] fileb, percent in
@@ -340,7 +444,7 @@ extension CurrentChatViewModel {
         let uuid = file.localId
         
         let message = Message(createdAt: Date().currentTimeMillis(),
-                              fromUserId: getMyUserId(),
+                              fromUserId: myUserId,
                               roomId: room.id,
                               type: file.fileType,
                               body: MessageBody(text: nil,
@@ -353,7 +457,7 @@ extension CurrentChatViewModel {
                                                                 fileName: nil,
                                                                 mimeType: nil,
                                                                 size: nil,
-                                                                metaData: file.thumbMetadata)),
+                                                                metaData: file.thumbMetadata), type: nil, subject: nil, subjectId: nil, objects: nil, objectIds: nil),
                               replyId: nil,
                               localId: uuid)
         
@@ -462,26 +566,23 @@ extension CurrentChatViewModel {
 }
 
 extension CurrentChatViewModel {
-    
     func getMessage(for indexPath: IndexPath) -> Message? {
-        guard let entity = frc?.object(at: indexPath),
-              let context = entity.managedObjectContext
-        else { return nil }
-        let fileData: FileData?
-        let thumbData: FileData?
-        if let fileId = entity.bodyFileId {
-            fileData = repository.getFileData(id: fileId, context: context)
-        } else {
-            fileData = repository.getFileData(localId: entity.localId, context: context)
+        guard let entity = messagesFRC?.object(at: indexPath) else { return nil }
+        var fileData: FileData?
+        var thumbData: FileData?
+        
+        if let localId = entity.localId,
+        let b = filesFRC?.fetchedObjects?.first(where: { $0.localId == localId }){
+            fileData = FileData(entity: b)
         }
         
-        if let thumbId = entity.bodyThumbId {
-            thumbData = repository.getFileData(id: thumbId, context: context)
-        } else {
-            thumbData = repository.getFileData(localId: entity.localId?.appending("thumb"), context: context)
+        if let localId = entity.localId?.appending("thumb"),
+           let b = filesFRC?.fetchedObjects?.first(where: { $0.localId == localId })
+        {
+            thumbData = FileData(entity: b)
         }
         
-        let reactionRecords = repository.getReactionRecords(messageId: entity.id, context: context)
+        let reactionRecords = getReactionRecords(messageId: entity.id)
 
         return Message(messageEntity: entity,
                        fileData: fileData,
@@ -489,41 +590,100 @@ extension CurrentChatViewModel {
                        records: reactionRecords)
     }
     
+    func getReactionRecords(messageId: String?) -> [MessageRecord] {
+        guard let messageId, let number = Int64(messageId) else { return []}
+        return reactionsFRC?.fetchedObjects?.filter({ $0.messageId == number }).compactMap({ MessageRecord(messageRecordEntity: $0)
+        }) ?? []
+    }
+    
     func getIndexPathFor(localId: String) -> IndexPath? {
-        guard let entity = frc?.fetchedObjects?.first(where: { $0.localId == localId })
+        guard let entity = messagesFRC?.fetchedObjects?.first(where: { $0.localId == localId })
         else { return nil }
-        return frc?.indexPath(forObject: entity)
+        return messagesFRC?.indexPath(forObject: entity)
     }
     
     func getIndexPathFor(messageId id: Int64) -> IndexPath? {
-        guard let entity = frc?.fetchedObjects?.first(where: { $0.id == "\(id)" })
+        guard let entity = messagesFRC?.fetchedObjects?.first(where: { $0.id == "\(id)" })
         else { return nil }
-        return frc?.indexPath(forObject: entity)
+        return messagesFRC?.indexPath(forObject: entity)
     }
 }
 
 // FRC stuff
 
 extension CurrentChatViewModel {
-    func setFetch() {
+    func loadMore() {
+//        frc?.fetchRequest.fetchLimit = (frc?.fetchRequest.fetchLimit ?? 0) + 15
+//        frc?.fetchRequest.fetchOffset = (frc?.fetchRequest.fetchOffset ?? 10) - 15
+//        try? frc?.performFetch()
+        
+        // this to refresh add to VC
+        //            let oldTableViewHeight = currentChatView.messagesTableView.contentSize.height;
+        //
+        //            // Reload your table view with your new messages
+        //            viewModel.loadMore()
+        //            currentChatView.messagesTableView.reloadData()
+        //
+        //            // Put your scroll position to where it was before
+        //            let newTableViewHeight = currentChatView.messagesTableView.contentSize.height;
+        //            currentChatView.messagesTableView.contentOffset = CGPointMake(0, newTableViewHeight - oldTableViewHeight);
+    }
+    
+    private func fetchRequest() -> NSFetchRequest<MessageEntity> {
         let fetchRequest = MessageEntity.fetchRequest()
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "createdDate", ascending: true),
+            NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true),
             NSSortDescriptor(key: #keyPath(MessageEntity.createdAt), ascending: true)]
         fetchRequest.predicate = NSPredicate(format: "roomId == %d", room.id)
-        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+        return fetchRequest
+    }
+    
+    
+    // TODO: - check if this can be more optimized
+//    private func getCountOfAllMessages() {
+//        let fetchRequest = MessageEntity.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(format: "roomId == %d", room.id)
+//        fetchRequest.propertiesToFetch = [#keyPath(MessageEntity.createdAt)]
+//        countOfAllMessages = (try? repository.getMainContext().count(for: fetchRequest)) ?? 0
+//    }
+
+//    func getFetchOffset(_ direction: PagionationDirection) -> Int {
+//        switch direction {
+//        case .up:
+//            let newOff = currentOffset - fetchLimit
+//            self.currentOffset = newOff < 0 ? 0 : newOff
+//            return currentOffset
+//        case .down:
+//            let newOf = currentOffset + fetchLimit
+//            self.currentOffset = newOf >= countOfAllMessages ? currentOffset : newOf
+//            return currentOffset
+//        case .initial:
+//            let newOffset = countOfAllMessages - fetchLimit
+//            self.currentOffset = newOffset < 0 ? 0 : newOffset
+//            return currentOffset
+//        }
+//    }
+    
+    
+    func setFetch(_ direction: PagionationDirection) {
+        let fetchRequest = fetchRequest()
+//        fetchRequest.fetchLimit = fetchLimit * 2
+//        fetchRequest.fetchOffset = getFetchOffset(direction)
+        fetchRequest.fetchLimit = 0
+        fetchRequest.fetchOffset = 0
+        self.messagesFRC = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: repository.getMainContext(),
                                               sectionNameKeyPath: "sectionName",
                                               cacheName: nil)
         do {
-            try self.frc?.performFetch()
+            try self.messagesFRC?.performFetch()
         } catch {
             fatalError("Failed to fetch entities: \(error)") // TODO: handle error
         }
     }
     
     func getNameForSection(section: Int) -> String? {
-        guard let sections = frc?.sections else { return nil }
+        guard let sections = messagesFRC?.sections else { return nil }
         var name = sections[section].name
         if let time = (sections[section].objects?.first as? MessageEntity)?.createdAt {
             name.append(", ")
@@ -535,8 +695,8 @@ extension CurrentChatViewModel {
     func isPreviousCellSameSender(for indexPath: IndexPath) -> Bool {
         let previousRow = indexPath.row - 1
         if previousRow >= 0 {
-            let currentMessageEntity  = frc?.object(at: indexPath)
-            let previousMessageEntity = frc?.object(at: IndexPath(row: previousRow,
+            let currentMessageEntity  = messagesFRC?.object(at: indexPath)
+            let previousMessageEntity = messagesFRC?.object(at: IndexPath(row: previousRow,
                                                                   section: indexPath.section))
             return currentMessageEntity?.fromUserId == previousMessageEntity?.fromUserId
         }
@@ -544,12 +704,12 @@ extension CurrentChatViewModel {
     }
     
     func isNextCellSameSender(for indexPath: IndexPath) -> Bool {
-        guard let sections = frc?.sections else { return true }
+        guard let sections = messagesFRC?.sections else { return true }
         let maxRowsIndex = sections[indexPath.section].numberOfObjects - 1
         let nextRow = indexPath.row + 1
         if nextRow <= maxRowsIndex {
-            let currentMessageEntity  = frc?.object(at: indexPath)
-            let nextMessageEntity = frc?.object(at: IndexPath(row: nextRow,
+            let currentMessageEntity  = messagesFRC?.object(at: indexPath)
+            let nextMessageEntity = messagesFRC?.object(at: IndexPath(row: nextRow,
                                                               section: indexPath.section))
             return currentMessageEntity?.fromUserId == nextMessageEntity?.fromUserId
         }

@@ -12,8 +12,8 @@ class MessageVideoView: UIView {
     private var imageWidthConstraint: NSLayoutConstraint?
     private var imageHeightConstraint: NSLayoutConstraint?
     
-    private let playVideoIconImageView = UIImageView(image: UIImage(safeImage: .playVideo))
-    private let durationLabel = CustomLabel(text: "", textColor: .primaryBackground)
+    private let playVideoIconImageView = UIImageView(image: UIImage(resource: .playVideo))
+    private let durationLabel = CustomLabel(text: "", textColor: .textPrimary) // TODO: - check add shadow
     
     init() {
         super.init(frame: .zero)
@@ -34,13 +34,10 @@ extension MessageVideoView: BaseView {
     
     func styleSubviews() {
         thumbnailImageView.contentMode = .scaleAspectFill
-        thumbnailImageView.layer.cornerRadius = 10
-        thumbnailImageView.clipsToBounds = true
-        thumbnailImageView.backgroundColor = .black
     }
     
     func positionSubviews() {
-        thumbnailImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
+        thumbnailImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         imageWidthConstraint = thumbnailImageView.widthAnchor.constraint(equalToConstant: 246)
         imageHeightConstraint = thumbnailImageView.heightAnchor.constraint(equalToConstant: 246)
         imageWidthConstraint?.isActive = true

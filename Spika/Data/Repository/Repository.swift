@@ -52,21 +52,31 @@ protocol Repository {
     func getContacts(page: Int) -> AnyPublisher<ContactsResponseModel, Error>
     
         // Room
-    func createOnlineRoom(name: String, avatarId: Int64?, users: [User]) -> AnyPublisher<CreateRoomResponseModel, Error>
+    func createOnlineRoom(name: String, avatarId: Int64?, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel, Error>
     func createOnlineRoom(userId: Int64) -> AnyPublisher<CreateRoomResponseModel, Error>
     func checkOnlineRoom(forUserId userId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func checkOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CheckRoomResponseModel, Error>
     func deleteOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<EmptyResponse, Error>
     func leaveOnlineRoom(forRoomId roomId: Int64) -> AnyPublisher<CreateRoomResponseModel, Error>
     func getAllRooms() -> AnyPublisher<GetAllRoomsResponseModel, Error>
+    func updateRoom(roomId: Int64, action: UpdateRoomAction) -> AnyPublisher<CreateRoomResponseModel, Error>
     
         // Message
     func sendMessage(body: RequestMessageBody, type: MessageType, roomId: Int64, localId: String, replyId: Int64?) -> AnyPublisher<MessageResponse, Error>
     func sendDeliveredStatus(messageIds: [Int64]) -> Future<Bool, Never>
     func sendSeenStatus(roomId: Int64)
-    func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error>
+    func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<RecordResponseModel, Error>
+    func deleteMessageRecord(recordId: Int64) -> AnyPublisher<RecordResponseModel, Error>
     func deleteMessage(messageId: Int64, target: DeleteMessageTarget) -> AnyPublisher<MessageResponse, Error>
     func updateMessage(messageId: Int64, text: String) -> AnyPublisher<MessageResponse, Error>
+    func forwardMessages(messageIds: [Int64], roomIds: [Int64], userIds: [Int64]) -> AnyPublisher<ForwardMessagesResponseModel, Error>
+    
+        // Notes
+    
+    func getAllNotes(roomId: Int64) -> AnyPublisher<AllNotesResponseModel, Error>
+    func updateNote(title: String, content: String, id: Int64) -> AnyPublisher<OneNoteResponseModel, Error>
+    func createNote(title: String, content: String, roomId: Int64) -> AnyPublisher<OneNoteResponseModel, Error>
+    func deleteNote(id: Int64) -> AnyPublisher<EmptyResponse, Error>
     
         // Sync
     func syncRooms(page: Int, startingTimestamp: Int64)
@@ -115,7 +125,7 @@ protocol Repository {
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64)
     
         // Message Records
-    func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]?
+    func getReactionRecords(messageIds: [Int64]) async -> [MessageRecord]
     
         // Room
     func checkLocalPrivateRoom(forUserId id: Int64) -> Future<Room, Error>
@@ -125,18 +135,17 @@ protocol Repository {
     func checkLocalRoom(withId roomId: Int64) -> Future<Room, Error>
     func muteUnmuteRoom(roomId: Int64, mute: Bool) -> AnyPublisher<EmptyResponse,Error>
     func pinUnpinRoom(roomId: Int64, pin: Bool) -> AnyPublisher<EmptyResponse,Error> 
-    func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
-    func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
-    func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error>
-    func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error>
+//    func updateRoomUsers(roomId: Int64, userIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
+//    func updateRoomAdmins(roomId: Int64, adminIds: [Int64]) -> AnyPublisher<CreateRoomResponseModel,Error>
+//    func updateRoomAvatar(roomId: Int64, avatarId: Int64) -> AnyPublisher<CreateRoomResponseModel,Error>
+//    func updateRoomName(roomId: Int64, newName: String) -> AnyPublisher<CreateRoomResponseModel,Error>
     func deleteLocalRoom(roomId: Int64) -> Future<Bool, Error>
     func updateUnreadCounts(unreadCounts: [UnreadCount])
     func updateUnreadCountToZeroFor(roomId: Int64)
     func generateRoomModelsWithUsers(context: NSManagedObjectContext, roomEntities: [RoomEntity]) -> Future<[Room], Error>
     
         // File
-    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData?
-    func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData?
+    func getFilesData(localIds: [String]) async -> [String: FileData]
 
     // MARK: - USERDEFAULTS:
     
@@ -146,11 +155,18 @@ protocol Repository {
     func saveUserInfo(user: User, device: Device?, telephoneNumber: TelephoneNumber?)
     func getMyUserId() -> Int64
     func getMyTelephoneNumber() -> TelephoneNumber?
-    func getCurrentAppereance() -> Int
 
         // Device
     func getAccessToken() -> String?
     func getMyDeviceId() -> String?
+    
+        // Reactions
+    func getEmojis() -> [[Emoji]]
+    func addToRecentEmojis(emoji: Emoji)
+    
+        // Theme
+    func saveSelectedTheme(_ theme: String)
+    func getSelectedTheme() -> String
     
     // MARK: - FILES
     func saveDataToFile(_ data: Data, name: String) -> URL?

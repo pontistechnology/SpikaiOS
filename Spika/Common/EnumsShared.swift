@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 enum RoomType: String, Codable, Comparable {
     case privateRoom = "private"
@@ -15,7 +16,6 @@ enum RoomType: String, Codable, Comparable {
         if lhs == rhs { return false }
         return lhs == .groupRoom
     }
-
 }
 
 enum MessageRecordType: String, Codable {
@@ -32,7 +32,7 @@ enum MessageRecordType: String, Codable {
 // TODO: - move structs
 struct SelectedFile {
     let fileType: MessageType
-    let name: String?
+    var name: String?
     let fileUrl: URL
     let thumbUrl: URL?
     let thumbMetadata: MetaData?
@@ -56,6 +56,29 @@ enum SyncType {
     case messageRecords
 }
 
+enum CustomFontName: String {
+    case RobotoFlexRegular = "RobotoFlex-Regular"
+    case RobotoFlexItalic = "RobotoFlex-Regular_Italic"
+    case RobotoFlexThin = "RobotoFlex-Regular_Thin"
+    case RobotoFlexThinItalic = "RobotoFlex-Regular_Thin-Italic"
+    case RobotoFlexExtraLight = "RobotoFlex-Regular_ExtraLight"
+    case RobotoFlexExtraLightItalic = "RobotoFlex-Regular_ExtraLight-Italic"
+    case RobotoFlexLight = "RobotoFlex-Regular_Light"
+    case RobotoFlexLightItalic = "RobotoFlex-Regular_Light-Italic"
+    case RobotoFlexMedium = "RobotoFlex-Regular_Medium"
+    case RobotoFlexMediumItalic = "RobotoFlex-Regular_Medium-Italic"
+    case RobotoFlexSemiBold = "RobotoFlex-Regular_SemiBold"
+    case RobotoFlexSemiBoldItalic = "RobotoFlex-Regular_SemiBold-Italic"
+    case RobotoFlexBold = "RobotoFlex-Regular_Bold"
+    case RobotoFlexBoldItalic = "RobotoFlex-Regular_Bold-Italic"
+    case RobotoFlexExtraBold = "RobotoFlex-Regular_ExtraBold"
+    case RobotoFlexExtraBoldItalic = "RobotoFlex-Regular_ExtraBold-Italic"
+    case RobotoFlexBlack = "RobotoFlex-Regular_Black"
+    case RobotoFlexBlackItalic = "RobotoFlex-Regular_Black-Italic"
+    case RobotoFlexExtraBlack = "RobotoFlex-Regular_ExtraBlack"
+    case RobotoFlexExtraBlackItalic = "RobotoFlex-Regular_ExtraBlack-Italic"
+}
+
 enum DeleteMessageTarget: String, Codable {
     case all
     case user
@@ -77,4 +100,98 @@ enum ImagePickerError: Error {
 enum WarningOrResult<Success> {
     case warning(String)
     case result(Success)
+}
+
+struct Emoji: Codable {
+    let hexCodes: [Int]
+    let desc: String
+    let variations: [[Int]]
+    
+    var display: String {
+        return combineScalars(hexCodes: hexCodes)
+    }
+    
+    var variationsToShow: [String]? {
+        guard !variations.isEmpty else { return nil }
+        var aa: [String] = []
+        variations.forEach { variation in
+            aa.append(combineScalars(hexCodes: variation))
+        }
+        return aa
+    }
+    
+    func combineScalars(hexCodes: [Int]) -> String {
+        var myString = ""
+        for hexCode in hexCodes {
+            guard let scalar = UnicodeScalar(hexCode) else { return "" }
+            myString = myString + String(scalar)
+        }
+        return myString
+    }
+}
+
+enum AppAction {
+    case deleteReaction(Int64)
+    case newGroupFlowSelectUsers([User])
+    case forwardMessages(messageIds: [Int64], userIds: [Int64], roomIds: [Int64])
+    case addToExistingRoom([Int64])
+    case updateRoom(room: Room)
+    case openRoomWithUser(userId: Int64)
+}
+
+enum UpdateRoomAction {
+    case addGroupUsers(userIds: [Int64])
+    case removeGroupUsers(userIds: [Int64])
+    case addGroupAdmins(userIds: [Int64])
+    case removeGroupAdmins(userIds: [Int64])
+    case changeGroupName(newName: String)
+    case changeGroupAvatar(fileId: Int64)
+    
+    var action: String {
+        switch self {
+        case .addGroupUsers:
+            "addGroupUsers"
+        case .removeGroupUsers:
+            "removeGroupUsers"
+        case .addGroupAdmins:
+            "addGroupAdmins"
+        case .removeGroupAdmins:
+            "removeGroupAdmins"
+        case .changeGroupName:
+            "changeGroupName"
+        case .changeGroupAvatar:
+            "changeGroupAvatar"
+        }
+    }
+}
+
+enum ChatDetailsMode {
+    case contact(User)
+    case roomDetails(CurrentValueSubject<Room, Never>)
+    
+    var description: String {
+        return switch self {
+        case .contact:
+            .getStringFor(.privateContact)
+        case .roomDetails:
+            .getStringFor(.group)
+        }
+    }
+    
+    var isPrivate: Bool {
+        return switch self {
+        case .contact: true
+        case .roomDetails: false
+        }
+    }
+    
+    var isGroup: Bool { !isPrivate }
+    
+    var room: Room? {
+        return if case .roomDetails(let currentValueSubject) = self {
+            currentValueSubject.value
+        } else {
+            nil
+        }
+    }
 }

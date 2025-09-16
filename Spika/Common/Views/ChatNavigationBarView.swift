@@ -11,8 +11,8 @@ import UIKit
 class ChatNavigationBarView: UIView, BaseView {
     
     private let avatarImageView = UIImageView()
-    private let nameLabel = CustomLabel(text: " ", textSize: 14, textColor: .textPrimary, fontName: .MontserratSemiBold)
-    private let statusLabel = CustomLabel(text: " ", textSize: 12, textColor: .textPrimary, fontName: .MontserratRegular)
+    private let nameLabel = CustomLabel(text: " ", textSize: 14, textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
+    private let statusLabel = CustomLabel(text: " ", textSize: 12, textColor: .textPrimary, fontName: .RobotoFlexRegular)
     
     init() {
         super.init(frame: .zero)
@@ -31,7 +31,7 @@ class ChatNavigationBarView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        avatarImageView.image = UIImage(safeImage: .userImage)
+        avatarImageView.image = UIImage(resource: .rDdefaultUser)
         avatarImageView.layer.cornerRadius = 19
         avatarImageView.layer.masksToBounds = true
     }
@@ -53,7 +53,7 @@ class ChatNavigationBarView: UIView, BaseView {
     }
     
     func change(avatarUrl: URL?, name: String?, lastSeen status: String) {
-        avatarImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(safeImage: .userImage))
+        avatarImageView.kf.setImage(with: avatarUrl, placeholder: UIImage(resource: .rDdefaultUser))
         nameLabel.text = name
         statusLabel.text = status
     }

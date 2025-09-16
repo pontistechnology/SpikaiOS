@@ -16,5 +16,4 @@ struct ChunksDataToVerify: Codable {
     let fileName: String
     let clientId: String
     let fileHash: String
-    
 }

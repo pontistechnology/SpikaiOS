@@ -60,7 +60,7 @@ extension ContactsViewController: UITableViewDelegate {
         return CustomTableViewHeader(text: self.frc?.sections?[section].name ?? "-",
                                      textSize: 18,
                                      textColor: .textPrimary,
-                                     fontName: .MontserratSemiBold,
+                                     fontName: .RobotoFlexSemiBold,
                                      alignment: .left,
                                      labelMargins: UIEdgeInsets(top: 8, left: 18, bottom: 8, right: 14))
     }
@@ -80,18 +80,17 @@ extension ContactsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
         guard let userEntity = frc?.object(at: indexPath) else {
-            return EmptyTableViewCell()
+            return UnknownTableViewCell()
         }
         let user = User(entity: userEntity)
         cell?.configureCell(title: user.getDisplayName(),
                             description: user.telephoneNumber,
                             leftImage: user.avatarFileId?.fullFilePathFromId(),
                             type: .normal)
-        return cell ?? EmptyTableViewCell()
+        return cell ?? UnknownTableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("t: ", indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
         guard let userEntity = frc?.object(at: indexPath) else { return }
         let user = User(entity: userEntity)
@@ -112,9 +111,8 @@ extension ContactsViewController: SearchBarDelegate {
     }
     
     func changePredicate(to newString: String) {
-        self.frc?.fetchRequest.predicate = newString.isEmpty
-        ? nil : NSPredicate(format: "contactsName CONTAINS[c] '\(newString)' OR telephoneNumber CONTAINS[c] '\(newString)'")
-        // TODO: better search, begins or something like that
+        // TODO: - add check for deleted users
+        self.frc?.fetchRequest.predicate = NSPredicate(format: newString.isEmpty ? "id != '\(viewModel.myUserId)'" :"(contactsName CONTAINS[c] '\(newString)' OR telephoneNumber CONTAINS[c] '\(newString)') AND id != '\(viewModel.myUserId)'")
         try? self.frc?.performFetch()
         self.contactsView.tableView.reloadData()
     }
@@ -128,6 +126,7 @@ extension ContactsViewController: NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             let fetchRequest = UserEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id != '\(viewModel.myUserId)'")
             fetchRequest.sortDescriptors = [
                 NSSortDescriptor(key: "contactsName", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:))),
                 NSSortDescriptor(key: #keyPath(UserEntity.displayName), ascending: true)]

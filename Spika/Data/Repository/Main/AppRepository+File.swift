@@ -19,7 +19,7 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let resources = Resources<UploadChunkResponseModel, UploadChunkRequestModel>(
+        let resources = Resources<UploadChunkRequestModel>(
             path: Constants.Endpoints.uploadFiles,
             requestType: .POST,
             bodyParameters: UploadChunkRequestModel(chunk: chunk, offset: offset, clientId: clientId),
@@ -34,7 +34,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<VerifyFileResponseModel, VerifyFileRequestModel>(
+        let resources = Resources<VerifyFileRequestModel>(
             path: Constants.Endpoints.verifyFile,
             requestType: .POST,
             bodyParameters: VerifyFileRequestModel(total: total, size: size, mimeType: mimeType, fileName: fileName, type: type, fileHash: fileHash, relationId: relationId, clientId: clientId, metaData: metaData),
@@ -158,11 +158,7 @@ extension AppRepository {
         return targetURL
     }
     
-    func getFileData(localId: String?, context: NSManagedObjectContext) -> FileData? {
-        databaseService.getFileData(localId: localId, context: context)
-    }
-    
-    func getFileData(id: String?, context: NSManagedObjectContext) -> FileData? {
-        databaseService.getFileData(id: id, context: context)
+    func getFilesData(localIds: [String]) async -> [String: FileData] {
+        await databaseService.getFilesData(localIds: localIds)
     }
 }

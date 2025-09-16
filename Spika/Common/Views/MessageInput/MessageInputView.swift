@@ -13,7 +13,7 @@ enum MessageInputViewButtonAction {
     case send(message: String)
     case camera
     case microphone
-    case emoji
+//    case emoji
     case scrollToReply
     case plus
     case save(input: String)
@@ -33,10 +33,9 @@ class MessageInputView: UIStackView, BaseView {
     let inputViewTapPublisher = PassthroughSubject<MessageInputViewButtonAction, Never>()
     let currentStatePublisher = CurrentValueSubject<MessageInputViewState, Never>(.empty)
     private var subscriptions = Set<AnyCancellable>()
-
-    private let dividerLine = UIView()
-    private lazy var inputTextAndControlsView = InputTextAndControlsView(publisher: inputViewTapPublisher)
-    var replyView: MessageReplyView?
+    
+    lazy var inputTextAndControlsView = InputTextAndControlsView(publisher: inputViewTapPublisher)
+    var replyView: MessageReplyView2?
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,18 +48,18 @@ class MessageInputView: UIStackView, BaseView {
     }
     
     func addSubviews() {
-        addSubview(dividerLine)
         addArrangedSubview(inputTextAndControlsView)
     }
     
     func styleSubviews() {
         axis = .vertical
-        dividerLine.backgroundColor = .textTertiary
+        backgroundColor = .clear
+        directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 14, trailing: 16)
+        spacing = 14
+        isLayoutMarginsRelativeArrangement = true
     }
     
     func positionSubviews() {
-        dividerLine.constrainHeight(0.5)
-        dividerLine.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
     }
     
     func setupBindings() {
@@ -96,10 +95,11 @@ extension MessageInputView {
     func showReplyView(senderName: String, message: Message) {
         hideReplyView()
         if replyView == nil {
-            self.replyView = MessageReplyView(senderName: senderName, message: message,
-                                              backgroundColor: .chatBackground, showCloseButton: true)
+            self.replyView = MessageReplyView2(senderName: senderName, message: message,
+                                              isInMyMessage: true, showCloseButton: true)
             replyBindings()
             guard let replyView = replyView else { return }
+            backgroundColor = .secondAdditionalColor
             insertArrangedSubview(replyView, at: 0)
         }
     }
@@ -107,6 +107,7 @@ extension MessageInputView {
     func hideReplyView() {
         replyView?.removeFromSuperview()
         replyView = nil
+        backgroundColor = .clear
     }
     
     func replyBindings() {
@@ -114,7 +115,7 @@ extension MessageInputView {
             self?.inputViewTapPublisher.send(.hideReply)
         }).store(in: &subscriptions)
         
-        replyView?.containerView.tap().sink(receiveValue: { [weak self] _ in
+        replyView?.outSideView.tap().sink(receiveValue: { [weak self] _ in
             self?.inputViewTapPublisher.send(.scrollToReply)
         }).store(in: &subscriptions)
     }

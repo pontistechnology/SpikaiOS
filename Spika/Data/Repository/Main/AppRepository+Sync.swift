@@ -20,7 +20,7 @@ private extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<SyncRoomsResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.syncRooms + "/\(timestamp)",
             requestType: .GET,
             bodyParameters: nil,
@@ -37,7 +37,7 @@ private extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<SyncUsersResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.syncUsers + "/\(timestamp)",
             requestType: .GET,
             bodyParameters: nil,
@@ -55,7 +55,7 @@ private extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<SyncMessagesResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.syncAllMessages + "/\(timestamp)",
             requestType: .GET,
             bodyParameters: nil,
@@ -72,7 +72,7 @@ private extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<SyncMessageRecordsResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.syncMessageRecords + "/\(timestamp)",
             requestType: .GET,
             bodyParameters: nil,
@@ -103,7 +103,7 @@ extension AppRepository {
                     .eraseToAnyPublisher()
         }
         
-        let resources = Resources<UnreadCountResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.getUnreadCount,
             requestType: .GET,
             bodyParameters: nil,
@@ -227,13 +227,16 @@ extension AppRepository {
         syncAllMessages(timestamp: startingTimestamp, page: page).sink { c in
             
         } receiveValue: { [weak self] response in
+            guard let self else { return }
             guard let messages = response.data?.list else { return }
             if let hasNext = response.data?.hasNext, hasNext {
-                self?.syncMessages(page: page+1, startingTimestamp: startingTimestamp)
+                syncMessages(page: page+1, startingTimestamp: startingTimestamp)
+            } else {
+                syncMessageRecords(page: 1, startingTimestamp: getSyncTimestamp(for: .messageRecords))
             }
             let maxTimestamp = messages.max { $0.modifiedAt < $1.modifiedAt
             }?.modifiedAt
-            self?.saveMessages(messages, syncTimestamp: maxTimestamp)
+            saveMessages(messages, syncTimestamp: maxTimestamp)
         }.store(in: &subs)
     }
     

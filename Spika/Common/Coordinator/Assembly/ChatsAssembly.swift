@@ -10,34 +10,21 @@ import Swinject
 
 class ChatsAssembly: Assembly {
     func assemble(container: Container) {
-        assembleSelectUserViewController(container)
         assembleCurrentChatViewController(container)
-        assembleNewGroupChatViewController(container)
-    }
-    
-    
-    private func assembleSelectUserViewController(_ container: Container) {
-        container.register(SelectUsersViewModel.self) { (resolver, coordinator: AppCoordinator) in
-            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return SelectUsersViewModel(repository: repository, coordinator: coordinator)
-        }.inObjectScope(.transient)
-        
-//        container.register(SelectUsersViewController.self) { (resolver, coordinator: AppCoordinator) in
-//            let controller = SelectUsersViewController()
-//            controller.viewModel = container.resolve(SelectUsersViewModel.self, argument: coordinator)
-//            return controller
-//        }.inObjectScope(.transient)
+        assembleNewGroup2ChatViewController(container)
+        assembleSelectUsersOrGroupsView(container)
+        assembleNewPrivate2ChatViewController(container)
     }
     
     private func assembleCurrentChatViewController(_ container: Container) {        
-        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
+        container.register(CurrentChatViewModel.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?, actionPublisher: ActionPublisher) in
             let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
-            return CurrentChatViewModel(repository: repository, coordinator: coordinator, room: room, scrollToMessageId: messageId)
+            return CurrentChatViewModel(repository: repository, coordinator: coordinator, room: room, scrollToMessageId: messageId, actionPublisher: actionPublisher)
         }.inObjectScope(.transient)
 
-        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?) in
+        container.register(CurrentChatViewController.self) { (resolver, coordinator: AppCoordinator, room: Room, messageId: Int64?, actionPublisher: ActionPublisher) in
             let controller = CurrentChatViewController()
-            controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, room, messageId)
+            controller.viewModel = container.resolve(CurrentChatViewModel.self, arguments: coordinator, room, messageId, actionPublisher)
             return controller
         }.inObjectScope(.transient)
     }
@@ -52,6 +39,46 @@ class ChatsAssembly: Assembly {
             let controller = NewGroupChatViewController()
             controller.viewModel = container.resolve(NewGroupChatViewModel.self, arguments: coordinator, selectedUsers)
             return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleNewGroup2ChatViewController(_ container: Container) {
+        container.register(NewGroup2ChatViewModel.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return NewGroup2ChatViewModel(repository: repository, coordinator: coordinator, actionPublisher: p)
+        }.inObjectScope(.transient)
+
+        container.register(NewGroup2ChatViewController.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher) in
+            let viewModel = container.resolve(NewGroup2ChatViewModel.self, arguments: coordinator, p)!
+            let controller = NewGroup2ChatViewController(rootView: NewGroup2ChatView(viewModel: viewModel))
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+    private func assembleNewPrivate2ChatViewController(_ container: Container) {
+        container.register(NewPrivateChatViewModel.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return NewPrivateChatViewModel(repository: repository, coordinator: coordinator, actionPublisher: p)
+        }.inObjectScope(.transient)
+
+        container.register(NewPrivateChatViewController2.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher) in
+            let viewModel = container.resolve(NewPrivateChatViewModel.self, arguments: coordinator, p)!
+            let controller = NewPrivateChatViewController2(rootView: NewPrivateChatView(viewModel: viewModel), context: viewModel.repository.getMainContext())
+            return controller
+        }.inObjectScope(.transient)
+    }
+    
+
+    
+    private func assembleSelectUsersOrGroupsView(_ container: Container) {
+        container.register(SelectUsersOrGroupsViewModel.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, purpose: SelectUsersOrGroupsPurpose) in
+            let repository = container.resolve(Repository.self, name: RepositoryType.production.name)!
+            return SelectUsersOrGroupsViewModel(repository: repository, coordinator: coordinator, actionPublisher: p, purpose: purpose)
+        }.inObjectScope(.transient)
+
+        container.register(SelectUsersOrGroupsView.self) { (resolver, coordinator: AppCoordinator, p: ActionPublisher, purpose: SelectUsersOrGroupsPurpose) in
+            let viewModel = container.resolve(SelectUsersOrGroupsViewModel.self, arguments: coordinator, p, purpose)!
+            return SelectUsersOrGroupsView(viewModel: viewModel)
         }.inObjectScope(.transient)
     }
 }

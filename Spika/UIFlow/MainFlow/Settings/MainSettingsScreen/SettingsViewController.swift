@@ -6,6 +6,15 @@
 //
 
 import UIKit
+import SwiftUI
+
+// TODO: - change 2
+class Settings2ViewController: UIHostingController<Settings2View> {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .clear
+    }
+}
 
 class SettingsViewController: BaseViewController {
     
@@ -16,7 +25,9 @@ class SettingsViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView(settingsView)
+//        setupView(settingsView)
+        view.addSubview(settingsView)
+        settingsView.fillSuperview()
         setupBinding()
         settingsView.appVersion.text = "Build number: " + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown")
 //        settingsView.accessToken.text = "Only for development: " +  (viewModel.repository.getAccessToken() ?? "")
@@ -31,7 +42,7 @@ class SettingsViewController: BaseViewController {
             .compactMap { $0?.avatarFileId?.fullFilePathFromId() }
             .sink { _ in
             } receiveValue: { [weak self] url in
-                self?.settingsView.userImage.showImage(url, placeholder: UIImage(safeImage: .userImage))
+                self?.settingsView.userImage.showImage(url, placeholder: UIImage(resource: .rDdefaultUser))
             }.store(in: &self.subscriptions)
         
         self.viewModel

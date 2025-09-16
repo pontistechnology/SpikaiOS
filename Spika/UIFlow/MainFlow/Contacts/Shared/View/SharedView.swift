@@ -10,7 +10,7 @@ import UIKit
 
 class SharedView: UIView, BaseView {
     
-    let testLabel = CustomLabel(text: .getStringFor(.shared))
+    let testLabel = CustomLabel(text: .getStringFor(.shared), textColor: .checkWithDesign)
     let segmentedControl = SegmentedControl(items: [String.getStringFor(.members), String.getStringFor(.links), String.getStringFor(.docs)])
     let mediaCollectionView = MediaCollectionView()
     let docsTableView = DocsTableView()
@@ -35,10 +35,10 @@ class SharedView: UIView, BaseView {
     }
     
     func styleSubviews() {
-        segmentedControl.selectedSegmentTintColor = .appBlueLight
-        segmentedControl.tintColor = .chatBackground
+        segmentedControl.selectedSegmentTintColor = .checkWithDesign // TODO: - change check
+        segmentedControl.tintColor = .checkWithDesign
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textPrimary], for: .normal)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.primaryColor], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.checkWithDesign], for: .selected)
         
         mediaCollectionView.isHidden = segmentedControl.selectedSegmentIndex != 0
         linksTableView.isHidden = segmentedControl.selectedSegmentIndex != 1

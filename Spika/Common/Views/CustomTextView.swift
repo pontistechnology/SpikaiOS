@@ -16,7 +16,7 @@ class CustomTextView: UITextView {
     private var fontName: CustomFontName
     private var alignment: NSTextAlignment
     
-    init(text: String, textSize: CGFloat = 14, textColor: UIColor = .textPrimary, fontName: CustomFontName = .MontserratRegular, alignment: NSTextAlignment = .natural) {
+    init(text: String, textSize: CGFloat = 14, textColor: UIColor = .textPrimary, fontName: CustomFontName = .RobotoFlexRegular, alignment: NSTextAlignment = .natural) {
         self.title = text
         self.titleSize = textSize
         self.titleColor = textColor
@@ -36,6 +36,7 @@ extension CustomTextView {
         text = title
         isScrollEnabled = false
         backgroundColor = .clear
+        textAlignment = alignment
         font = .customFont(name: fontName, size: titleSize)
         textColor = titleColor
         linkTextAttributes = [.foregroundColor : UIColor.textPrimary,
@@ -45,5 +46,9 @@ extension CustomTextView {
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0
         dataDetectorTypes = [.link, .phoneNumber]
+    }
+    
+    func changeFontSize(to newSize: CGFloat) {
+        font = .customFont(name: fontName, size: newSize)
     }
 }

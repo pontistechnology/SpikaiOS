@@ -7,9 +7,52 @@
 
 import UIKit
 
+class IconAndLabelView2: UIStackView {
+    private let iconImageView = UIImageView()
+    private let textLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary, fontName: .RobotoFlexMedium)
+    
+    init(messageType: MessageType, text: String?) {
+        super.init(frame: .zero)
+        axis = .horizontal
+        distribution = .fill
+        alignment = .center
+        spacing = 4
+        
+        addArrangedSubview(iconImageView)
+        addArrangedSubview(textLabel)
+        
+        
+        switch messageType {
+        case .text:
+            textLabel.text = text
+            textLabel.numberOfLines = 3
+            iconImageView.image = nil
+            iconImageView.isHidden = true
+        case .image:
+            textLabel.text = .getStringFor(.photoMessage)
+        case .video:
+            textLabel.text = .getStringFor(.videoMessage)
+        case .audio:
+            textLabel.text = .getStringFor(.audioMessage)
+        case .file:
+            textLabel.text = .getStringFor(.fileMessage)
+        default:
+            textLabel.text = .getStringFor(.unknownMessage)
+        }
+        iconImageView.image = messageType.icon
+        
+        iconImageView.constrainWidth(20)
+        iconImageView.constrainHeight(20)
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 final class IconAndLabelView: UIView {
     private let iconImageView = UIImageView()
-    private let textLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium)
+    private let textLabel = CustomLabel(text: "", textSize: 11, textColor: .textPrimary, fontName: .RobotoFlexMedium)
     private let messageType: MessageType
     private let text: String?
     
@@ -38,21 +81,17 @@ extension IconAndLabelView: BaseView {
             textLabel.numberOfLines = 3
             iconImageView.image = nil
         case .image:
-            textLabel.text = "Photo message"
-            iconImageView.image = .init(safeImage: .photoIcon)
+            textLabel.text = .getStringFor(.photoMessage)
         case .video:
-            textLabel.text = "Video message"
-            iconImageView.image = .init(safeImage: .videoIcon)
+            textLabel.text = .getStringFor(.videoMessage)
         case .audio:
-            textLabel.text = "Audio message"
-            iconImageView.image = .init(safeImage: .micIcon)
+            textLabel.text = .getStringFor(.audioMessage)
         case .file:
-            textLabel.text = "File message"
-            iconImageView.image = .init(safeImage: .unknownFileThumbnail)
+            textLabel.text = .getStringFor(.fileMessage)
         default:
-            textLabel.text = "Unknown message"
-            iconImageView.image = .imageFor(mimeType: "unknown")
+            textLabel.text = .getStringFor(.unknownMessage)
         }
+        iconImageView.image = messageType.icon
     }
     
     func positionSubviews() {

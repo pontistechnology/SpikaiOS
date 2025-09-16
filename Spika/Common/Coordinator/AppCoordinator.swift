@@ -12,6 +12,9 @@ import AVKit
 import AVFoundation
 import Contacts
 import ContactsUI
+import SwiftUI
+import CoreData
+
 
 class AppCoordinator: Coordinator {
     
@@ -21,6 +24,7 @@ class AppCoordinator: Coordinator {
     let windowScene: UIWindowScene
     var subs = Set<AnyCancellable>()
     var inAppNotificationCancellable: AnyCancellable?
+    let actionsPublisher = ActionPublisher()
 
     init(navigationController: UINavigationController, windowScene: UIWindowScene) {
         self.windowScene = windowScene
@@ -92,16 +96,11 @@ class AppCoordinator: Coordinator {
     // MARK: MAIN FLOW
     func presentHomeScreen(startSyncAndSSE: Bool,
                            startTab: TabBarItem = .chat(withChatId: nil)) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startTab)!
+        let viewController = Assembler.sharedAssembler.resolver.resolve(HomeViewController.self, arguments: self, startTab, actionsPublisher)!
         if startSyncAndSSE {
             syncAndStartSSE()            
         }
         self.navigationController.setViewControllers([viewController], animated: false)
-    }
-    
-    func presentDetailsScreen(user: User) {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(DetailsViewController.self, arguments: self, user)!
-        self.navigationController.pushViewController(viewController, animated: true)
     }
     
     func presentSharedScreen() {
@@ -114,13 +113,13 @@ class AppCoordinator: Coordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func presentNotesScreen() {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(NotesViewController.self, argument: self)!
+    func presentNotesScreen(roomId: Int64) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(AllNotesViewController.self, arguments: self, roomId)!
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
-    func presentChatSearchScreen() {
-        let viewController = Assembler.sharedAssembler.resolver.resolve(ChatSearchViewController.self, argument: self)!
+    func presentOneNoteScreen(noteState: NoteState) {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(OneNoteViewController.self, arguments: self, noteState)!
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -130,7 +129,7 @@ class AppCoordinator: Coordinator {
     }
     
     func popTopViewController(animated: Bool = true) {
-        self.navigationController.popViewController(animated: animated)
+        navigationController.popViewController(animated: animated)
     }
     
     func presentVideoCallScreen(url: URL) {
@@ -138,10 +137,18 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewController, animated: true, completion: nil)
     }
     
-    func presentSelectUserScreen() {
-//        let viewController = Assembler.sharedAssembler.resolver.resolve(SelectUsersViewController.self, argument: self)!
-//        let navC = UINavigationController(rootViewController: viewController)
-//        navigationController.present(navC, animated: true, completion: nil)
+    func presentStartNewPrivateChatScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(NewPrivateChatViewController2.self, arguments: self, actionsPublisher)!
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentCreateNewGroup2ChatScreen() {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(NewGroup2ChatViewController.self, arguments: self, actionsPublisher)!
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func getSelectUsersOrGroupsView(purpose: SelectUsersOrGroupsPurpose) -> SelectUsersOrGroupsView {
+        return Assembler.sharedAssembler.resolver.resolve(SelectUsersOrGroupsView.self, arguments: self, actionsPublisher, purpose)!
     }
     
     func presentUserSelection(preselectedUsers: [User], usersSelectedPublisher: PassthroughSubject<[User],Never>) {
@@ -150,14 +157,13 @@ class AppCoordinator: Coordinator {
         navigationController.present(navC, animated: true, completion: nil)
     }
     
-    func presentChatDetailsScreen(room: CurrentValueSubject<Room,Never>) {
-        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetailsViewController.self, arguments: self, room)!
-        
+    func presentChatDetailsScreen(detailsMode: ChatDetailsMode) {
+        let roomDetailsViewController = Assembler.sharedAssembler.resolver.resolve(ChatDetails2ViewController.self, arguments: self, detailsMode, actionsPublisher)!
         navigationController.pushViewController(roomDetailsViewController, animated: true)
     }
     
     func presentCurrentChatScreen(room: Room, scrollToMessageId: Int64? = nil) {
-        let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, room, scrollToMessageId)!
+        let currentChatViewController = Assembler.sharedAssembler.resolver.resolve(CurrentChatViewController.self, arguments: self, room, scrollToMessageId, actionsPublisher)!
         
         navigationController.pushViewController(currentChatViewController, animated: true)
     }
@@ -201,8 +207,8 @@ class AppCoordinator: Coordinator {
         return viewControllerToPresent.publisher
     }
     
-    func presentReactionsSheet(users: [User], records: [MessageRecord]) {
-        let viewControllerToPresent = ReactionsViewController(users: users, records: records)
+    func presentReactionsSheet(users: [User], records: [MessageRecord], myId: Int64) {
+        let viewControllerToPresent = ReactionsViewController(users: users, records: records, actionPublisher: actionsPublisher, myId: myId)
         if let sheet = viewControllerToPresent.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
@@ -211,8 +217,8 @@ class AppCoordinator: Coordinator {
         navigationController.present(viewControllerToPresent, animated: true)
     }
     
-    func presentMessageActionsSheet(isMyMessage: Bool) -> PassthroughSubject<MessageAction, Never> {
-        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageActionsViewController.self, arguments: self, isMyMessage)!
+    func presentMessageActionsSheet(actions: [MessageAction]) -> PassthroughSubject<MessageAction, Never> {
+        let viewControllerToPresent = Assembler.sharedAssembler.resolver.resolve(MessageActionsViewController.self, arguments: self, actions)!
         if let sheet = viewControllerToPresent.sheetPresentationController {
             sheet.detents = [.medium()] // can be changed to custom height when iOS 16
             sheet.prefersGrabberVisible = false
@@ -223,28 +229,26 @@ class AppCoordinator: Coordinator {
     }
     
     func presentAVVideoController(asset: AVAsset) {
-        let avPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
-        let avPlayerVC = AVPlayerViewController()
-        avPlayerVC.player = avPlayer
-        try? AVAudioSession.sharedInstance()
-            .setCategory(AVAudioSession.Category.playback,
-                         mode: AVAudioSession.Mode.default,
-                         options: [])
-        navigationController.present(avPlayerVC, animated: true) {
-            avPlayer.play()
-        }
+        let videoPlayerVC = Assembler.sharedAssembler.resolver
+            .resolve(VideoPlayerViewController.self, arguments: self, asset)!
+        navigationController.present(videoPlayerVC, animated: true)
     }
     
-    func presentImageViewer(message: Message) {
+    func presentImageViewer(message: Message, senderName: String) {
         let imageViewerViewController = Assembler.sharedAssembler.resolver
-            .resolve(ImageViewerViewController.self, arguments: self, message)!
+            .resolve(ImageViewerViewController.self, arguments: self, message, senderName)!
         navigationController.pushViewController(imageViewerViewController, animated: true)
     }
     
-    func presentPdfViewer(url: URL) {
+    func presentPdfViewer(shareType: ShareActivityType) {
         let pdfViewerViewController = Assembler.sharedAssembler.resolver
-            .resolve(PdfViewerViewController.self, arguments: self, url)!
+            .resolve(PdfViewerViewController.self, arguments: self, shareType)!
         navigationController.pushViewController(pdfViewerViewController, animated: true)
+    }
+    
+    func presentShareScreen(source: ShareSourceProvider) {
+        let activityVC = UIActivityViewController(activityItems: [source], applicationActivities: nil)
+        navigationController.present(activityVC, animated: true)
     }
     
     func presentPrivacySettingsScreen() {
@@ -260,12 +264,24 @@ class AppCoordinator: Coordinator {
     
     func presentAppereanceSettingsScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(AppereanceSettingsViewController.self, argument: self)!
-        self.navigationController.pushViewController(viewController, animated: true)
+        self.navigationController.setViewControllers([viewController], animated: true)
     }
     
     func presentBlockedUsersSettingsScreen() {
         let viewController = Assembler.sharedAssembler.resolver.resolve(BlockedUsersViewController.self, argument: self)!
         self.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func presentCustomReactionPicker() -> PassthroughSubject<String, Never> {
+        let viewController = Assembler.sharedAssembler.resolver.resolve(CustomReactionsViewController.self, argument: self)!
+        navigationController.present(viewController, animated: true)
+        return viewController.selectedEmojiPublisher
+    }
+    
+    func presentForwardScreen(ids: [Int64], context: NSManagedObjectContext) {
+        let vc = UIHostingController(rootView: getSelectUsersOrGroupsView(purpose: .forwardMessages(ids))
+            .environment(\.managedObjectContext, context))
+        navigationController.present(vc, animated: true)
     }
 }
 
@@ -306,6 +322,7 @@ extension AppCoordinator {
         getWindowManager().showPopUp(for: .errorMessage(message))
     }
     
+    // send cancel as nil if you want to hide cancel action
     func showAlert(title: String? = nil,
                    message: String? = nil,
                    style: UIAlertController.Style = .actionSheet,
@@ -348,12 +365,5 @@ extension AppCoordinator {
         DispatchQueue.main.async { [weak self] in
             self?.navigationController.dismiss(animated: true)
         }
-    }
-}
-
-extension AppCoordinator {
-    func changeAppereance(to mode: UIUserInterfaceStyle) {
-        userDefaults.set(mode.rawValue, forKey: Constants.Database.selectedAppereanceMode)
-        getWindowManager().changeAppereance(to: mode)
     }
 }

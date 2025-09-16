@@ -12,14 +12,14 @@ class BaseSettingsViewModel: BaseViewModel {
     
     let user = CurrentValueSubject<User?,Error>(nil)
     
-    override init(repository: Repository, coordinator: Coordinator) {
+    override init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher? = nil) {
         super.init(repository: repository, coordinator: coordinator)
         self.loadLocalUser()
         self.fetchUserDetails()
     }
     
     private func loadLocalUser() {
-        let ownId = self.repository.getMyUserId()
+        let ownId = myUserId
         self.repository.getLocalUser(withId: ownId)
             .sink { _ in
             } receiveValue: { [weak self] user in

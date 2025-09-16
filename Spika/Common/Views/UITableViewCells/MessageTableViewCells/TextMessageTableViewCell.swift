@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class TextMessageTableViewCell: BaseMessageTableViewCell {
+final class TextMessageTableViewCell: BaseMessageTableViewCell2 {
     
     private let plainTextView = MessageTextView()
     

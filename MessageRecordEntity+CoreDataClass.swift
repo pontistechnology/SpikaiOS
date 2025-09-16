@@ -22,6 +22,7 @@ public class MessageRecordEntity: NSManagedObject {
         self.createdAt = record.createdAt
         self.messageId = record.messageId
         self.userId = record.userId
+        self.isRemoved = record.isDeleted
         
         if let type = record.type {
             self.type = type.rawValue

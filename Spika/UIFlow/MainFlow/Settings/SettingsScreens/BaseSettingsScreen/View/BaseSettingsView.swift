@@ -39,7 +39,7 @@ class BaseSettingsView: UIView, BaseView {
     func positionSubviews() {
         self.scrollView.fillSuperview()
         
-        self.contentView.anchor(top: self.scrollView.contentLayoutGuide.topAnchor,
+        self.contentView.anchor(top: self.scrollView.topAnchor,
                                 leading: self.scrollView.contentLayoutGuide.leadingAnchor,
                                 bottom: self.scrollView.contentLayoutGuide.bottomAnchor,
                                 trailing: self.scrollView.contentLayoutGuide.trailingAnchor)
@@ -47,7 +47,7 @@ class BaseSettingsView: UIView, BaseView {
         
         self.mainStackView.constraintLeading()
         self.mainStackView.constraintTrailing()
-        self.mainStackView.constraintTop(to: nil, constant: 24)
+        self.mainStackView.constraintTop(to: nil, constant: 0)
         self.mainStackView.constraintBottom()
     }
     

@@ -8,15 +8,8 @@ import UIKit
 import Combine
 
 class ContactsViewModel: BaseViewModel {
-        
-    var subs = Set<AnyCancellable>()
-    
-    override init(repository: Repository, coordinator: Coordinator) {
-        super.init(repository: repository, coordinator: coordinator)
-    }
-    
     func showDetailsScreen(user: User) {
-        getAppCoordinator()?.presentDetailsScreen(user: user)
+        getAppCoordinator()?.presentChatDetailsScreen(detailsMode: .contact(user))
     }
     
     func refreshContacts() {
@@ -27,7 +20,6 @@ class ContactsViewModel: BaseViewModel {
                 self?.repository.syncUsers(page: 1, startingTimestamp: Date().currentTimeMillis())
                 guard let isTeamMode, !isTeamMode else { return }
                 self?.repository.syncContacts(force: true)
-            }.store(in: &subs)
+            }.store(in: &subscriptions)
     }
-    
 }

@@ -15,7 +15,10 @@ class EnterUsernameViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView(enterUsernameView)
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
+        view.addSubview(enterUsernameView)
+        enterUsernameView.fillSuperview()
+        hideKeyboardWhenTappedAround()
         setupBindings()
     }
     

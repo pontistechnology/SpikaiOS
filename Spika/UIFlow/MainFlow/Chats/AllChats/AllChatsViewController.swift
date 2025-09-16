@@ -33,14 +33,13 @@ class AllChatsViewController: BaseViewController {
         allChatsView.searchBar.delegate = self
         
         allChatsView.newChatButton.tap().sink { [weak self] _ in
-            self?.viewModel.presentSelectUserScreen()
+            self?.viewModel.presentStartNewPrivateChatScreen()
         }.store(in: &subscriptions)
         
-        allChatsView.newChatButton
-            .tap()
-            .sink { [weak self] _ in
-                self?.viewModel.onCreateNewRoom()
-            }.store(in: &subscriptions)
+        SyncService.shared.c.sink { [weak self] s in
+            guard let self else { return }
+            allChatsView.infoLabel.text = s.text
+        }.store(in: &subscriptions)
         
         viewModel.setupBinding()
         viewModel.setRoomsFetch()
@@ -83,12 +82,15 @@ extension AllChatsViewController: UITableViewDataSource {
         : viewModel.getNumberOfRowsForRooms()
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        tableView == allChatsView.searchedMessagesTableView
-        ? viewModel.titleForSectionForMessages(section: section)
-        : nil
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard tableView == allChatsView.searchedMessagesTableView else { return nil }
+        return CustomTableViewHeader(text: viewModel.titleForSectionForMessages(section: section), fontName: .RobotoFlexSemiBold)
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard tableView == allChatsView.searchedMessagesTableView else { return 0 }
+        return tableView.estimatedSectionHeaderHeight
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == allChatsView.searchedMessagesTableView {
@@ -96,14 +98,14 @@ extension AllChatsViewController: UITableViewDataSource {
 
             let data = viewModel.dataForCellForMessages(at: indexPath)
             cell?.configureCell(senderName: data.0, time: data.1, text: data.2)
-            return cell ?? EmptyTableViewCell()
+            return cell ?? UnknownTableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: AllChatsTableViewCell.reuseIdentifier, for: indexPath) as? AllChatsTableViewCell
-            guard let data = viewModel.dataForCellForRooms(at: indexPath) else { return EmptyTableViewCell() }
+            guard let data = viewModel.dataForCellForRooms(at: indexPath) else { return UnknownTableViewCell() }
             cell?.configureCell(avatarUrl: data.avatarUrl, name: data.name,
                                 description: data.description, time: data.time,
                                 badgeNumber: data.badgeNumber, muted: data.muted, pinned: data.pinned)
-            return cell ?? EmptyTableViewCell()
+            return cell ?? UnknownTableViewCell()
         }
     }
 }

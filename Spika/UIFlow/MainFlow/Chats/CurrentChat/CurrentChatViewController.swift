@@ -26,15 +26,17 @@ class CurrentChatViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView(currentChatView)
-        setupNavigationItems()
+        view.setGradientBackground(colors: UIColor._backgroundGradientColors)
+        view.addSubview(currentChatView)
+        currentChatView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: .zero)
         setupBindings()
-        self.navigationItem.backButtonTitle = self.viewModel.room.name
+        //        self.navigationItem.backButtonTitle = self.viewModel.room.name
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+        setupNavigationItems()
         viewModel.sendSeenStatus()
     }
     
@@ -50,7 +52,8 @@ extension CurrentChatViewController {
         let tableView = currentChatView.messagesTableView
         guard sender.state == .began,
               let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)),
-              let message = viewModel.getMessage(for: indexPath)
+              let message = viewModel.getMessage(for: indexPath),
+              message.type != .system
         else { return }
         viewModel.showMessageActions(message)
     }
@@ -65,7 +68,7 @@ extension CurrentChatViewController {
             self?.handleInput(state)
         }.store(in: &subscriptions)
         
-        viewModel.selectedMessageToReplyPublisher.sink { [weak self] selectedMessage in
+        viewModel.selectedMessageToReplyPublisher.receive(on: DispatchQueue.main).sink { [weak self] selectedMessage in
             guard let selectedMessage
             else {
                 self?.currentChatView.messageInputView.hideReplyView()
@@ -88,6 +91,7 @@ extension CurrentChatViewController {
         }.store(in: &subscriptions)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        longPress.minimumPressDuration = 0.15
         currentChatView.messagesTableView.addGestureRecognizer(longPress)
         
         currentChatView.scrollToBottomStackView.tap().sink { [weak self] _ in
@@ -100,6 +104,12 @@ extension CurrentChatViewController {
             self?.currentChatView.handleScrollToBottomButton(show: number > 0, number: number)
         }.store(in: &subscriptions)
         
+        currentChatView.messageInputView.inputTextAndControlsView.keyboardAccessoryView.publisher.sink { _ in
+            
+        } receiveValue: { [weak self] distance in
+            self?.currentChatView.moveInputFromBottom(for: distance)
+        }.store(in: &subscriptions)
+        
         Publishers
             .Zip(frcIsChangingPublisher, frcDidChangePublisher)
             .receive(on: DispatchQueue.main)
@@ -110,7 +120,7 @@ extension CurrentChatViewController {
                 switch frcChange {
                 case .insert(indexPath: let indexPath):
                     guard let message = self.viewModel.getMessage(for: indexPath) else { return }
-                    let isMyMessage = message.fromUserId == self.viewModel.getMyUserId()
+                    let isMyMessage = message.fromUserId == self.viewModel.myUserId
                     self.handleScroll(isMyMessage: isMyMessage)
                     if self.viewModel.room.type == .groupRoom && !isMyMessage {
                         if self.viewModel.isPreviousCellSameSender(for: indexPath) {
@@ -132,10 +142,10 @@ extension CurrentChatViewController {
                       let indexPath = self?.viewModel.getIndexPathFor(localId: uuid),
                       let cell = self?.currentChatView.messagesTableView.cellForRow(at: indexPath)
                 else { return }
-                (cell as? BaseMessageTableViewCell)?.showUploadProgress(at: percentUploaded)
+                (cell as? BaseMessageTableViewCell2)?.showUploadProgress(at: percentUploaded)
                     
                 if percentUploaded == 1.0 {
-                    (cell as? BaseMessageTableViewCell)?.hideUploadProgress()
+                    (cell as? BaseMessageTableViewCell2)?.hideUploadProgress()
                 }
         }.store(in: &subscriptions)
         
@@ -146,14 +156,69 @@ extension CurrentChatViewController {
         
         // TODO: fetch isBlocked and delete input field
         
-        viewModel.setFetch()
-        viewModel.frc?.delegate = self
+//        viewModel.paginationPublisher.receive(on: DispatchQueue.main).sink { [weak self] direction in
+//            guard let self else { return }
+//            let messageId: String? = switch direction {
+//            case .up:
+//                viewModel.frc?.fetchedObjects?.first?.id
+//            case .down:
+//                viewModel.frc?.fetchedObjects?.last?.id
+//            case .initial:
+//                nil
+//            }
+//            
+//            // Reload your table view with your new messages
+//            viewModel.setFetch(direction)
+//            currentChatView.messagesTableView.reloadData()
+//            
+//            switch direction {
+//            case .up:
+//                guard let sameMessage = viewModel.frc?.fetchedObjects?.first(where: { mE in
+//                    mE.id == messageId
+//                }),
+//                      let iP = viewModel.frc?.indexPath(forObject: sameMessage)
+//                else { return }
+//                currentChatView.messagesTableView.scrollToRow(at: iP, at: .top, animated: false)
+//            case .down:
+//                guard let sameMessage = viewModel.frc?.fetchedObjects?.first(where: { mE in
+//                    mE.id == messageId
+//                }),
+//                      let iP = viewModel.frc?.indexPath(forObject: sameMessage)
+//                else { return }
+//                currentChatView.messagesTableView.scrollToRow(at: iP, at: .bottom, animated: false)
+//            case .initial:
+//                currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
+//            }
+//            
+//            
+//        }.store(in: &subscriptions)
+        currentChatView.messagesTableView.hide()
+        viewModel.setFetch(.initial)
+        
+        viewModel.messagesFRC?.delegate = self
         if let messageId = viewModel.scrollToMessageId,
            let indexPath = viewModel.getIndexPathFor(messageId: messageId) {
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         } else {
             currentChatView.messagesTableView.scrollToBottom(.force(animated: false))
         }
+        
+        currentChatView.messagesTableView.unhide()
+        
+        var ids: [Int64] = []
+        
+        viewModel.messagesFRC?.fetchedObjects?
+            .forEach({ messageEntity in
+                if let id = messageEntity.id,
+                   let number = Int64(id) {
+                    ids.append(number)
+                }
+            })
+        
+        viewModel.loadReactions(messageIds: ids)
+        viewModel.loadFilesData()
+        
+        test()
     }
     
     func handleScroll(isMyMessage: Bool) {
@@ -162,6 +227,32 @@ extension CurrentChatViewController {
 }
 
 extension CurrentChatViewController {
+    func test() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self else { return }
+            // TODO: - not always correctly reloaded, maybe if not fully visible?
+            if let visibleRows = currentChatView.messagesTableView.indexPathsForVisibleRows {
+                currentChatView.messagesTableView.reloadRows(at: visibleRows, with: .none)
+            }
+        }
+    }
+}
+
+extension CurrentChatViewController {
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        checkIfUserIsOnTopOfScrollView(scrollView)
+//    }
+//    
+//    func checkIfUserIsOnTopOfScrollView(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y < 70 {
+//            viewModel.paginationPublisher.send(.up)
+//        }
+//        
+//        if scrollView.distanceFromBottom() < 100 {
+//            viewModel.paginationPublisher.send(.down)
+//        }
+//    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if currentChatView.messagesTableView.distanceFromBottom() < 50 {
             viewModel.numberOfUnreadMessages.send(0)
@@ -237,6 +328,10 @@ extension CurrentChatViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         currentChatView.messagesTableView.endUpdates()
         frcDidChangePublisher.send(true)
+        
+        if controller == viewModel.reactionsFRC {
+            test()
+        }
     }
 }
 
@@ -253,10 +348,8 @@ extension CurrentChatViewController {
             viewModel.trySendMessage(text: inputText)
             currentChatView.messageInputView.clean()
         case .camera, .microphone:
-            print(state, " in ccVC")
+            view.endEditing(true) // hiding keyboard, because otherwise it will be empty space instead of keyboard when you get back to this screen
             showUIImagePicker(source: .camera, allowsEdit: false)
-        case .emoji:
-            print("emoji in ccvc")
         case .scrollToReply:
             guard let selectedMessageId = viewModel.selectedMessageToReplyPublisher.value?.id,
                   let indexPath = viewModel.getIndexPathFor(messageId: selectedMessageId)
@@ -301,7 +394,7 @@ extension CurrentChatViewController {
             else { return }
             currentChatView.messagesTableView.blinkRow(at: indexPath)
         case .showReactions:
-            viewModel.showReactions(records: message.records ?? []) // TODO: change maybe to vm
+            viewModel.showReactions(records: message.reactionRecords)
         case .openFile:
             viewModel.openFile(message: message)
         }
@@ -313,43 +406,59 @@ extension CurrentChatViewController {
 extension CurrentChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell else { return }
-        (tableView.visibleCells as? [BaseMessageTableViewCell])?.forEach{ $0.setTimeLabelVisible(false)}
-        cell.tapHandler()
         tableView.deselectRow(at: indexPath, animated: true)
+        guard let cell = tableView.cellForRow(at: indexPath) as? BaseMessageTableViewCell2 else { return }
+        (tableView.visibleCells as? [BaseMessageTableViewCell2])?.forEach{ $0.setTimeLabelVisible(false)}
+        tableView.beginUpdates()
+        cell.tapHandler()
+        tableView.endUpdates()
     }
 }
 
 extension CurrentChatViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.frc?.sections?.count ?? 0
+        return viewModel.messagesFRC?.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = viewModel.frc?.sections else { return 0 }
+        guard let sections = viewModel.messagesFRC?.sections else { return 0 }
         return sections[section].numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        print("DEBUGPRINT: fetcham cell za indexpath: ", indexPath)
         guard let message = viewModel.getMessage(for: indexPath)
-        else { return EmptyTableViewCell()}
-        let roomType = viewModel.room.type
-
-        let myUserId = viewModel.getMyUserId()
+        else { return UnknownTableViewCell()}
+        let myUserId = viewModel.myUserId
+        let isMyMessage = message.fromUserId == myUserId
         
-        guard let identifier = message.getReuseIdentifier(myUserId: myUserId, roomType: roomType),
-              let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell,
-              let senderType = cell.getMessageSenderType(reuseIdentifier: identifier)
-        else { return EmptyTableViewCell() }
+        guard let identifier = message.getReuseIdentifier2() else {
+            return UnknownTableViewCell()
+        }
+        
+        guard message.type != .system else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? SystemMessageTableViewCell
+            cell?.updateCell(attributedString: viewModel.room.getAttributedStringForSystemMessage(message: message))
+            return cell ?? UnknownTableViewCell()
+        }
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? BaseMessageTableViewCell2
+        else {
+            return UnknownTableViewCell()
+        }
+        
+        cell.setupContainer(sender: viewModel.getSenderTypeFor(message: message))
         
         if let user = viewModel.getUser(for: message.fromUserId),
             viewModel.room.type == .groupRoom {
             if !viewModel.isPreviousCellSameSender(for: indexPath) {
-                cell.updateSender(name: user.getDisplayName())
+                cell.updateSender(name: user.getDisplayName(),
+                                  isMyMessage: isMyMessage)
             }
             if !viewModel.isNextCellSameSender(for: indexPath) {
-                cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId())
+                cell.updateSender(photoUrl: user.avatarFileId?.fullFilePathFromId(),
+                                  isMyMessage: isMyMessage)
             }
         }
         
@@ -367,16 +476,10 @@ extension CurrentChatViewController: UITableViewDataSource {
             let senderName = viewModel.room.getDisplayNameFor(userId: repliedMessage.fromUserId)
             cell.showReplyView(senderName: senderName,
                                message: repliedMessage,
-                               sender: senderType)
+                               sender: isMyMessage ? .me : .friend)
         }
         
-        if let reactionsRecords = message.records {
-            cell.showReactions(reactionRecords: reactionsRecords)
-        }
-        
-        if message.modifiedAt != message.createdAt {
-            cell.showEditedIcon()
-        }
+        cell.showReactionEditedAndCheckMark(reactionRecords: message.reactionRecords, isEdited: message.modifiedAt != message.createdAt, messageState: message.getMessageState(myUserId: myUserId), isForTextCell: message.type == .text, isMyMessage: message.fromUserId == myUserId, isForwarded: message.isForwarded)
         
         (cell as? BaseMessageTableViewCellProtocol)?.updateCell(message: message)
         
@@ -392,9 +495,6 @@ extension CurrentChatViewController: UITableViewDataSource {
             self?.handleCellTap(state, message: message)
         }).store(in: &cell.subs)
         
-        if message.fromUserId == myUserId {
-            cell.updateCellState(to: message.getMessageState(myUserId: myUserId))
-        }
         cell.updateTime(to: message.createdAt)
         
         return cell
@@ -404,18 +504,31 @@ extension CurrentChatViewController: UITableViewDataSource {
         guard let nameOfSection = viewModel.getNameForSection(section: section) else {
             return nil
         }
-        return CustomLabel(text: nameOfSection, textSize: 11, textColor: .textPrimary, fontName: .MontserratMedium, alignment: .center)
+//        let text: String
+//        if section == 0 && viewModel.currentOffset != 0 {
+//            text = "Loading older messages..."
+//        } else {
+//            text = nameOfSection
+//        }
+        return CustomLabel(text: nameOfSection, textSize: 11, textColor: .textPrimary, fontName: .RobotoFlexMedium, alignment: .center)
     }
+    
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        if section == (viewModel.frc?.sections?.count ?? 0) - 1
+//            && (viewModel.currentOffset + 2*viewModel.fetchLimit < viewModel.countOfAllMessages) {
+    //            return CustomLabel(text: "Loading newer messages...", textSize: 11, textColor: .textPrimary, fontName: .RobotoFlexMedium, alignment: .center)
+//        return nil
+//    }
 }
 
 // MARK: - Navigation items setup
 
 extension CurrentChatViewController {
     func setupNavigationItems() {
-        let videoCallButton = UIBarButtonItem(image: UIImage(safeImage: .videoCall), style: .plain, target: self, action: #selector(videoCallActionHandler))
-        let audioCallButton = UIBarButtonItem(image: UIImage(safeImage: .phoneCall), style: .plain, target: self, action: #selector(phoneCallActionHandler))
-        
-        navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
+//        let videoCallButton = UIBarButtonItem(image: UIImage(resource: .videoCall), style: .plain, target: self, action: #selector(videoCallActionHandler))
+//        let audioCallButton = UIBarButtonItem(image: UIImage(resource: .phoneCall), style: .plain, target: self, action: #selector(phoneCallActionHandler))
+//        
+//        navigationItem.rightBarButtonItems = [audioCallButton, videoCallButton]
         navigationItem.leftItemsSupplementBackButton = true
         
         if viewModel.room.type == .privateRoom {
@@ -436,9 +549,14 @@ extension CurrentChatViewController {
         let publisher = CurrentValueSubject<Room, Never>(viewModel.room)
         publisher.sink { [weak self] newRoom in
             self?.viewModel.room = newRoom
-        }.store(in: &self.subscriptions)
+        }.store(in: &subscriptions)
         
-        self.viewModel.getAppCoordinator()?.presentChatDetailsScreen(room: publisher)
+        if viewModel.room.type == .privateRoom,
+            let friendUser = viewModel.friendUser {
+            viewModel.getAppCoordinator()?.presentChatDetailsScreen(detailsMode: .contact(friendUser))
+        } else {
+            viewModel.getAppCoordinator()?.presentChatDetailsScreen(detailsMode: .roomDetails(publisher))            
+        }
     }
     
     @objc func videoCallActionHandler() {
@@ -454,27 +572,20 @@ extension CurrentChatViewController {
 extension CurrentChatViewController {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let message = viewModel.getMessage(for: indexPath) else { return nil }
+        guard let message = viewModel.getMessage(for: indexPath), message.type != .system else { return nil }
         guard !message.deleted else { return nil}
         // TODO: - refactor this to seperate view
         let detailsAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
             self?.viewModel.presentMessageDetails(for: indexPath)
             completionHandler(true)
         }
-        detailsAction.backgroundColor = .primaryBackground
-        detailsAction.image = UIImage(safeImage: .slideDetails)
-        
-        let deleteAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
-            self?.viewModel.showDeleteConfirmDialog(message: message)
-            completionHandler(true)
-        }
-        deleteAction.backgroundColor = .primaryBackground
-        deleteAction.image = UIImage(safeImage: .slideDelete)
-        return UISwipeActionsConfiguration(actions: [detailsAction, deleteAction])
+//        detailsAction.backgroundColor = ._primaryColor // TODO: -check
+        detailsAction.image = UIImage(resource: .slideDetails)
+        return UISwipeActionsConfiguration(actions: [detailsAction])
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let message = viewModel.getMessage(for: indexPath) else { return nil }
+        guard let message = viewModel.getMessage(for: indexPath), message.type != .system else { return nil }
         guard !message.deleted else { return nil }
         //  TODO: refacotr
         let firstLeft = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
@@ -484,8 +595,8 @@ extension CurrentChatViewController {
             self?.currentChatView.messageInputView.showReplyView(senderName: senderName ?? .getStringFor(.unknown), message: message)
             completionHandler(true)
         }
-        firstLeft.backgroundColor = .primaryBackground
-        firstLeft.image = UIImage(safeImage: .slideReply)
+//        firstLeft.backgroundColor = ._primaryColor // TODO: - check
+        firstLeft.image = UIImage(resource: .slideReply)
         return UISwipeActionsConfiguration(actions: [firstLeft])
     }
     

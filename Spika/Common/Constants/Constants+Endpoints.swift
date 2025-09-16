@@ -21,7 +21,8 @@ public extension Constants {
         static let createRoom = "api/messenger/rooms"
         static let checkRoomForUserId = "api/messenger/rooms/users"
         static let checkRoomForRoomId = "api/messenger/rooms"
-        static let sendMessage = "api/messenger/messages"
+        static let messages = "api/messenger/messages"
+        static let forwardMessages = "api/messenger/messages/forward"
         static let getAllRooms = "api/messenger/rooms"
         static let updatePush = "api/messenger/device"
         static let deliveredStatus = "api/messenger/messages/delivered"
@@ -33,5 +34,8 @@ public extension Constants {
         static let messageRecords = "api/messenger/message-records"
         static let blocks = "api/messenger/blocks"
         static let getUnreadCount = "api/messenger/rooms/unread-count"
+        static let allRoomNotes = "api/messenger/notes/roomId"
+        static let oneNote = "api/messenger/notes"
+        static let share = "api/messenger/messages/share"
     }
 }

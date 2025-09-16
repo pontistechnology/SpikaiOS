@@ -11,7 +11,7 @@ class MediaCollectionViewCell: UICollectionViewCell, BaseView {
     
     static let reuseIdentifier: String = "MediaCollectionViewCell"
 
-    let testLabel = CustomLabel(text: "collection")
+    let testLabel = CustomLabel(text: "collection", textColor: .checkWithDesign)
     let imageView = UIImageView()
 
     
@@ -32,7 +32,6 @@ class MediaCollectionViewCell: UICollectionViewCell, BaseView {
     
     func styleSubviews() {
         backgroundColor = .red
-        imageView.image = UIImage(safeImage: .testImage)
     }
     
     func positionSubviews() {

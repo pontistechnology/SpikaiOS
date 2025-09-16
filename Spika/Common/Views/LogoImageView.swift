@@ -19,7 +19,7 @@ class LogoImageView: UIImageView {
     }
     
     private func setupImage() {
-        self.image = UIImage(safeImage: .logo)
+        self.image = UIImage(resource: .logo)
     }
 
 }

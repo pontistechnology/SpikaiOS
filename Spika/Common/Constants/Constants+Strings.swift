@@ -21,9 +21,11 @@ public extension Constants {
         case shared = "shared"
         case delete = "Delete"
         case edit = "Edit"
+        case download = "Download"
         case ok = "Ok"
         case you = "You"
         case yes = "Yes"
+        case no = "No"
         
         // MARK: - CountryPickerViewController
         case search = "Search"
@@ -62,12 +64,12 @@ public extension Constants {
         // MARK: - ChatDetailsViewController
         case group = "Group"
         case addToContacts = "Add to contacts"
-        case sharedMediaLinksDocs = "Shared Media, Links and Docs"
+        case mediaLinksDocs = "Media, Links and Docs"
         case chatSearch = "Chat search"
         case notes = "Notes"
         case favorites = "Favorites"
         case pinchat = "Pin chat"
-        case mute = "Mute"
+        case mute = "Mute chat"
         case block = "Block"
         case report = "Report"
         case admin = "Admin"
@@ -76,6 +78,7 @@ public extension Constants {
         case somethingWentWrongDeletingTheRoom = "Something went wrong deleting the room"
         case somethingWentWrongAddingUsers = "Something went wrong trying to add new users"
         case somethingWentWrongMutingRoom = "Something went wrong muting the room"
+        case somethingWentWrongPiningRoom = "Something went wrong pining the room"
         case somethingWentWrongUnmutingRoom = "Something went wrong unmuting the room"
         
 
@@ -84,17 +87,21 @@ public extension Constants {
         case youBlockedTheContact = "You blocked the contact"
         case newContact = "New contact, do you wish to continue the conversation"
         case unblock = "Unblock"
-        case searchForContactsMessages = "Search for contact,message, file..."
+        case searchForContact = "Search for contact"
         
         // MARK: - SharedViewController
         case media = "Media"
         case links = "Links"
         case docs = "Docs"
         
+        // MARK: - OneNoteViewController
+        case save = "Save"
+        
         // MARK: - UserSelectionViewController
         case selected = "selected"
         case selectUsers = "Select users"
-        case searchForContact = "Search for contact"
+        case groups = "Groups"
+        case users = "Users"
         
         // MARK: - MessageDetailsViewController
         case readBy = "Read by"
@@ -107,7 +114,7 @@ public extension Constants {
         case create = "Create"
         case peopleSelected = "people selected"
         case newGroup = "New Group"
-        case groupName = "Group name..."
+        case enterGroupName = "Enter group name"
         
         // MARK: - AllChatsViewController
         case title = "Title"
@@ -118,9 +125,12 @@ public extension Constants {
         case unknown = "Unknown"
         case today = "Today"
         
+        // MARK: - CustomReactionsViewController
+        case searchForReaction = "Search for reaction"
+        
         case youAreNoLongerMember = "You are no longer a member of this group"
         
-        // MARK: - SelectUsersViewController
+        // MARK: - SelectUsersOrGroupsViewController
         case newChat = "New chat"
         case newGroupChat = "New group chat"
         case newPrivateChat = "New private chat"
@@ -129,6 +139,7 @@ public extension Constants {
         case exitGroup = "Exit group"
         case nameAndSurname = "Name and Surname"
         case favoriteMessages = "Favorite messages"
+        case deleteChat = "Delete chat"
         
         // MARK: - Reactions
         case reactions = "Reactions"
@@ -143,10 +154,10 @@ public extension Constants {
 
         // MARK: - Settings
         case privacy = "Privacy"
-        case appereance = "Appereance"
-        case darkMode = "Force Dark mode"
-        case lightMode = "Force Light mode"
-        case systemMode = "Use System mode"
+        case appearance = "Appearance"
+        case dark = "Dark"
+        case light = "Light"
+        case system = "System"
         case blockedUsers = "Blocked users"
         case somethingWentWrongFetchingBlockedUsers = "Something went wrong fetching blocked users"
         case somethingWentWrongUnblockingUser = "Something went wrong unblocking the contact"
@@ -158,6 +169,32 @@ public extension Constants {
         case selectedImageIsTooBig = "Selected image is too big"
         case unsupportedFormat = "Unsupported format"
         case allOk = "All ok."
-
+        
+        // MARK: - Emoji Sections
+        
+        case recent = "Recent"
+        case smileysAndPeople = "Smileys and people"
+        case peopleAndBody = "People and body"
+        case animalsAndNature = "Animals and nature"
+        case foodAndDrink = "Food and drink"
+        case activity = "Activity"
+        case travelAndPlaces = "Travel and places"
+        case objects = "Objects"
+        case symbols = "Symbols"
+        case flags = "Flags"
+        case unknownSection = "Unknown section"
+        
+        case me = "Me"
+        case noMessages = "(No messages)"
+        case youWithDots = "You: "
+        case photoMessage = "Photo message"
+        case videoMessage = "Video message"
+        case audioMessage = "Audio message"
+        case fileMessage = "File message"
+        case unknownMessage = "Unknown message"
+        
+        case apply = "apply"
+        
+        case privateContact = "Private contact"
     }
 }

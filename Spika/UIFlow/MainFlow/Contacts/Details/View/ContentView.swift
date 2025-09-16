@@ -10,23 +10,23 @@ import UIKit
 class ContentView: UIView, BaseView {
     
     let profilePhoto = UIImageView()
-    let nameLabel = CustomLabel(text: .getStringFor(.nameAndSurname), fontName: .MontserratSemiBold)
-    let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: UIColor.primaryColor, fontName: .MontserratSemiBold)
-    let messageButton = ImageButton(image: UIImage(safeImage: .chatBubble))
-    let phoneCallButton = ImageButton(image: UIImage(safeImage: .phoneCall))
-    let videoCallButton = ImageButton(image: UIImage(safeImage: .videoCall))
+    let nameLabel = CustomLabel(text: .getStringFor(.nameAndSurname), textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
+    let phoneNumberLabel = CustomLabel(text: .getStringFor(.phoneNumber), textColor: .textPrimary, fontName: .RobotoFlexSemiBold)
+    let messageButton = ImageButton(image: UIImage(resource: .rDchatBubble))
+    let phoneCallButton = ImageButton(image: UIImage(resource: .phoneCall))
+    let videoCallButton = ImageButton(image: UIImage(resource: .videoCall))
     let optionButtonsStackView = UIStackView()
     let switchStackView = UIStackView()
     let labelsStackView = UIStackView()
-    let sharedMediaOptionButton = NavView(text: .getStringFor(.sharedMediaLinksDocs))
+    let sharedMediaOptionButton = NavView(text: .getStringFor(.mediaLinksDocs))
     let chatSearchOptionButton = NavView(text: .getStringFor(.chatSearch))
     let callHistoryOptionButton = NavView(text: .getStringFor(.callHistory))
     let notesOptionButton = NavView(text: .getStringFor(.notes))
     let favoriteMessagesOptionButton = NavView(text: .getStringFor(.favoriteMessages))
     let pinChatSwitchView = SwitchView(text: .getStringFor(.pinchat))
     let muteSwitchView = SwitchView(text: .getStringFor(.mute))
-    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: .appRed)
-    let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .appRed)
+    let blockLabel = CustomLabel(text: .getStringFor(.block), textSize: 14, textColor: .warningColor)
+    let reportLabel = CustomLabel(text: .getStringFor(.report), textSize: 14, textColor: .warningColor)
     
 
     override init(frame: CGRect) {
@@ -63,7 +63,7 @@ class ContentView: UIView, BaseView {
     
     func styleSubviews() {
         
-        profilePhoto.image = UIImage(safeImage: .testImage)
+        profilePhoto.image = UIImage(resource: .rDdefaultUser)
         profilePhoto.layer.cornerRadius = 50
         profilePhoto.contentMode = .scaleAspectFill
         profilePhoto.clipsToBounds = true

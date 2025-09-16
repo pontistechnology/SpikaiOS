@@ -19,7 +19,7 @@ class MessageDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(messageDetailsView)
-        view.backgroundColor = .secondaryBackground
+        view.backgroundColor = .secondaryColor
         setupBindings()
     }
 }
@@ -46,13 +46,17 @@ extension MessageDetailsViewController: UITableViewDataSource, UITableViewDelega
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell,
               let data = viewModel.getDataForCell(at: indexPath)
         else {
-            return EmptyTableViewCell()
+            return UnknownTableViewCell()
         }
-        cell.backgroundColor = .secondaryBackground // TODO: - move to cell
-        if indexPath.section == 0 {
-            cell.configureCell(title: data.name, description: data.telephoneNumber, leftImage: data.avatarUrl,
-                               type: .doubleEntry(firstText: data.time, firstImage: .done,
-                                                  secondText: data.editedTime, secondImage: .editIcon))
+
+        if indexPath.section == 0 && data.editedTime != nil {
+            cell.configureCell(title: data.name,
+                               description: data.telephoneNumber,
+                               leftImage: data.avatarUrl,
+                               type: .doubleEntry(firstText: data.time,
+                                                  firstImage: .done,
+                                                  secondText: data.editedTime,
+                                                  secondImage: .editIcon))
         } else {
             cell.configureCell(title: data.name, description: data.telephoneNumber, leftImage: data.avatarUrl, type: .text(text: data.time))
         }

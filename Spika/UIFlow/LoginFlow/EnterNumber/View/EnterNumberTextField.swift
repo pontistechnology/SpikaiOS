@@ -14,11 +14,11 @@ protocol EnterNumberTextFieldDelegate: AnyObject {
 
 class EnterNumberTextField: UIView, BaseView {
     
-    let titleLabel = CustomLabel(text: "", textColor: .textTertiary,
-                                 fontName: .MontserratMedium)
+    let titleLabel = CustomLabel(text: "", textSize: 12, textColor: .textPrimary,
+                                 fontName: .RobotoFlexMedium, alignment: .center)
     private var textField = UITextField()
     let numberView = UIView()
-    let countryNumberLabel = CustomLabel(text: "", textColor: .primaryColor, fontName: .MontserratMedium, alignment: .center)
+    let countryNumberLabel = CustomLabel(text: "", textColor: .primaryColor, fontName: .RobotoFlexMedium, alignment: .center)
     private let lineBreakView = UIView()
     
     private let placeholder: String
@@ -55,19 +55,17 @@ class EnterNumberTextField: UIView, BaseView {
             
         countryNumberLabel.text = countryNumber
         
-        lineBreakView.backgroundColor = .textTertiary
+        lineBreakView.backgroundColor = .textSecondary
         
         textField.keyboardType = .phonePad
         textField.placeholder = placeholder
         textField.textColor = .textPrimary
-        textField.font = .customFont(name: .MontserratMedium)
+        textField.font = .customFont(name: .RobotoFlexMedium, size: 14)
         textField.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.textTertiary])
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.textSecondary])
         
-        numberView.backgroundColor = .secondaryBackground
-        numberView.layer.borderWidth = 1
-        numberView.layer.borderColor = UIColor.borderColor.cgColor
-        numberView.layer.cornerRadius = 10
+        numberView.backgroundColor = .secondaryColor
+        numberView.layer.cornerRadius = 25
     }
     
     func positionSubviews() {
@@ -108,5 +106,4 @@ class EnterNumberTextField: UIView, BaseView {
     func setRestOfNumber(_ string: String) {
         textField.text = string
     }
-    
 }

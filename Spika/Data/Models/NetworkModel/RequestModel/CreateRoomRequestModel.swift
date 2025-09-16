@@ -14,18 +14,27 @@ struct CreateRoomRequestModel: Codable {
     var adminUserIds: [String]?
 }
 
-struct EditRoomUsersRequestModel: Codable {
+struct EditRoomRequestModel: Encodable {
+    var action: String
     var userIds: [Int64]?
-}
-
-struct EditRoomAdminsRequestModel: Codable {
-    var adminUserIds: [Int64]?
-}
-
-struct EditRoomAvatarRequestModel: Codable {
     var avatarFileId: Int64?
-}
-
-struct EditRoomNameRequestModel: Codable {
-    var name: String
+    var name: String?
+    
+    init(action: UpdateRoomAction) {
+        self.action = action.action
+        switch action {
+        case .addGroupUsers(let userIds):
+            self.userIds = userIds
+        case .removeGroupUsers(let userIds):
+            self.userIds = userIds
+        case .addGroupAdmins(let userIds):
+            self.userIds = userIds
+        case .removeGroupAdmins(let userIds):
+            self.userIds = userIds
+        case .changeGroupName(let newName):
+            self.name = newName
+        case .changeGroupAvatar(let fileId):
+            self.avatarFileId = fileId
+        }
+    }
 }

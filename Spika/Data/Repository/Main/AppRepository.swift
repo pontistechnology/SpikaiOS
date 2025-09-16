@@ -47,8 +47,8 @@ class AppRepository: Repository {
         return databaseService.coreDataStack.mainMOC
     }
     
-    func getCurrentAppereance() -> Int {
-        return userDefaults.integer(forKey: Constants.Database.selectedAppereanceMode)
+    func getSelectedTheme() -> String {
+        userDefaults.string(forKey: Constants.Database.selectedTheme) ?? "none"
     }
     
     func getAppModeIsTeamChat() -> Future<Bool?, Error> {
@@ -77,7 +77,7 @@ class AppRepository: Repository {
     }
     
     func getServerSettings() -> AnyPublisher<ServerSettingsResponseModel, Error> {
-        let resources = Resources<ServerSettingsResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.messengerSettings,
             requestType: .GET,
             bodyParameters: nil,

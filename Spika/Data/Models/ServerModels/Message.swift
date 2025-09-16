@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Message: Codable {
     let createdAt: Int64
@@ -19,6 +20,7 @@ struct Message: Codable {
     let seenCount: Int64?
     let replyId: Int64?
     let deleted: Bool
+    let isForwarded: Bool
     let type: MessageType
     let body: MessageBody?
     let records: [MessageRecord]?
@@ -37,6 +39,7 @@ extension Message {
         self.roomId = roomId
         self.type = type
         self.deleted = false
+        self.isForwarded = false
         self.createdAt = createdAt
         self.modifiedAt = createdAt
         self.records = nil
@@ -53,10 +56,12 @@ extension Message {
                   deliveredCount: messageEntity.deliveredCount,
                   seenCount: messageEntity.seenCount,
                   replyId: Int64(messageEntity.replyId ?? "nil"),
-                  deleted: messageEntity.isRemoved,
+                  deleted: messageEntity.isRemoved, 
+                  isForwarded: messageEntity.isForwarded,
                   type: MessageType(rawValue: messageEntity.type ?? "") ?? .unknown, // check
                   body: MessageBody(text: messageEntity.bodyText ?? "",
-                                    file: fileData, thumb: thumbData),
+                                    file: fileData, thumb: thumbData, 
+                                    type: MessageBodyType(rawValue: messageEntity.bodyType), subject: messageEntity.bodySubject, subjectId: Int64(messageEntity.bodySubjectId ?? "failIsOk"), objects: messageEntity.bodyObjects, objectIds: messageEntity.bodyObjectIds),
                   records: records)
     }
     
@@ -80,25 +85,110 @@ extension Message {
     var pushNotificationText: String {
         switch type {
         case .text:
-            return body?.text ?? " "
+            body?.text ?? " "
         case .image:
-            return "[Photo message]"
+            "Photo"
         case .video:
-            return "[Video message]"
+            "Video"
         case .file:
-            return "[File message]"
+            "File"
         case .audio:
-            return "[Audio message]"
+            "Audio"
         case .unknown:
-            return "[Unknown message]"
+            "Unknown"
+        case .system:
+            body?.text ?? " "
         }
+    }
+    
+    var reactionRecords: [MessageRecord] {
+        records?.filter({ !$0.isDeleted && $0.reaction != "Deleted reaction"}) ?? []
     }
 }
 
 struct MessageBody: Codable {
+    // used everywhere
     let text: String?
+    // used for files
     let file: FileData?
     let thumb: FileData?
+    // used for system messages
+    let type: MessageBodyType?
+    let subject: String?
+    let subjectId: Int64?
+    let objects: [String]?
+    let objectIds: [Int64]?
+}
+
+extension MessageBody {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.text = try container.decodeIfPresent(String.self, forKey: .text)
+        self.file = try container.decodeIfPresent(FileData.self, forKey: .file)
+        self.thumb = try container.decodeIfPresent(FileData.self, forKey: .thumb)
+        self.subject = try container.decodeIfPresent(String.self, forKey: .subject)
+        self.subjectId = try container.decodeIfPresent(Int64.self, forKey: .subjectId)
+        self.objects = try container.decodeIfPresent([String].self, forKey: .objects)
+        self.objectIds = try container.decodeIfPresent([Int64].self, forKey: .objectIds)
+
+        // Decode the raw string for the enum, and use the failable initializer
+        if let typeString = try container.decodeIfPresent(String.self, forKey: .type) {
+            self.type = MessageBodyType(rawValue: typeString)
+        } else {
+            self.type = nil
+        }
+    }
+}
+
+enum MessageBodyType: String, Codable {
+    case createdGroup = "created_group"
+    case userLeftGroup = "user_left_group"
+    case updatedGroupName = "updated_group_name"
+    case updatedGroupAvatar = "updated_group_avatar"
+    case addedGroupMembers = "added_group_members"
+    case removedGroupMembers = "removed_group_members"
+    case addedGroupAdmins = "added_group_admins"
+    case removedGroupAdmins = "removed_group_admins"
+    case createdNote = "created_note"
+    case updatedNote = "updated_note"
+    case deletedNote = "deleted_note"
+    
+    init?(rawValue: String?) {
+        if let string = rawValue,
+            let val = MessageBodyType(rawValue: string) {
+            self = val
+        } else {
+            return nil
+        }
+    }
+    
+    func getString(time: String, subject: String, objects: [String]) -> String {
+        switch self {
+        case .createdGroup: "bla bla bla"
+        case .userLeftGroup: "bla bla bla"
+        case .updatedGroupName: "bla bla bla"
+        case .updatedGroupAvatar: "bla bla bla"
+        case .addedGroupMembers: "bla bla bla"
+        case .removedGroupMembers: "bla bla bla"
+        case .addedGroupAdmins: "bla bla bla"
+        case .removedGroupAdmins: "bla bla bla"
+        case .createdNote: "bla bla bla"
+        case .updatedNote: "bla bla bla"
+        case .deletedNote: "bla bla bla"
+        }
+    }
+    
+    var isObjectContextUsers: Bool {
+        switch self {
+        case .createdGroup, .userLeftGroup, .updatedGroupName, .updatedGroupAvatar:
+            false
+        case .addedGroupMembers, .removedGroupMembers, .addedGroupAdmins, .removedGroupAdmins:
+            true
+        case .createdNote, .updatedNote, .deletedNote:
+            false
+        }
+    }
 }
 
 enum MessageType: String, Codable {
@@ -108,10 +198,30 @@ enum MessageType: String, Codable {
     case video
     case file
     case audio
+    case system
     case unknown
     
     public init(from decoder: Decoder) throws {
         self = try MessageType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
+    }
+    
+    var icon: UIImage? {
+        switch self {
+        case .text:
+            nil
+        case .image:
+            UIImage(resource: .photoIcon)
+        case .video:
+            UIImage(resource: .videoIcon)
+        case .file:
+            UIImage(resource: .docIcon)
+        case .audio:
+            UIImage(resource: .micIcon)
+        case .unknown:
+            UIImage(resource: .unknownFileThumbnail)
+        case .system:
+            nil
+        }
     }
 }
 

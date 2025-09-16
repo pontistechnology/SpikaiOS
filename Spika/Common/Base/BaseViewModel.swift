@@ -14,10 +14,14 @@ class BaseViewModel: NSObject {
     let repository: Repository
     var subscriptions = Set<AnyCancellable>()
     let networkRequestState = CurrentValueSubject<RequestState, Never>(.finished)
+    let actionPublisher: ActionPublisher?
     
-    init(repository: Repository, coordinator: Coordinator) {
+    lazy var myUserId = getMyUserId() // use this, because there is no need to look in user defaults every time
+    
+    init(repository: Repository, coordinator: Coordinator, actionPublisher: ActionPublisher? = nil) {
         self.repository = repository
         self.coordinator = coordinator
+        self.actionPublisher = actionPublisher
         super.init()
     }
     
@@ -25,7 +29,7 @@ class BaseViewModel: NSObject {
         return coordinator as? AppCoordinator
     }
     
-    func getMyUserId() -> Int64 {
+    private func getMyUserId() -> Int64 {
         return repository.getMyUserId()
     }
     
@@ -45,5 +49,13 @@ class BaseViewModel: NSObject {
               let resizedImage = tempUrl.downsample(isForThumbnail: true)
         else { return nil }
         return resizedImage
+    }
+    
+    @objc func saveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if error == nil {
+            showOneSecAlert(type: .save)
+        } else {
+            showError("Error occured. Check permissions for photos.")
+        }
     }
 }

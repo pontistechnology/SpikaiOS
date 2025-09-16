@@ -10,7 +10,7 @@ import Combine
 
 class ExpandableTextView: UITextView, BaseView {
     
-    private let placeholderLabel = CustomLabel(text: "Type here...", textSize: 14, textColor: .textTertiary, fontName: .MontserratMedium)
+    private let placeholderLabel = CustomLabel(text: "message...", textSize: 14, textColor: .textSecondary, fontName: .RobotoFlexMedium)
     private var messageTextViewHeightConstraint = NSLayoutConstraint()
     private var wasMessageTextViewEmpty = true
     
@@ -38,12 +38,11 @@ extension ExpandableTextView {
         textContainerInset.right = 36
         layer.cornerRadius = 10
         clipsToBounds = true
-        layer.borderColor = UIColor.borderColor.cgColor
-        layer.borderWidth = 1
-        customFont(name: .MontserratMedium)
-        backgroundColor = .secondaryBackground
+        customFont(name: .RobotoFlexMedium)
+        backgroundColor = .thirdAdditionalColor
+        textColor = .textPrimary
     }
-    
+  
     func positionSubviews() {
         placeholderLabel.anchor(leading: leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
         placeholderLabel.centerYToSuperview()

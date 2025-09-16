@@ -47,7 +47,7 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let resources = Resources<AuthResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.getUserDetails,
             requestType: .GET,
             bodyParameters: nil,
@@ -58,7 +58,7 @@ extension AppRepository {
     }
     
     func authenticateUser(telephoneNumber: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
-        let resources = Resources<AuthResponseModel, AuthRequestModel>(
+        let resources = Resources<AuthRequestModel>(
             path: Constants.Endpoints.authenticateUser,
             requestType: .POST,
             bodyParameters: AuthRequestModel(
@@ -72,7 +72,7 @@ extension AppRepository {
     }
     
     func verifyCode(code: String, deviceId: String) -> AnyPublisher<AuthResponseModel, Error> {
-        let resources = Resources<AuthResponseModel, VerifyCodeRequestModel>(
+        let resources = Resources<VerifyCodeRequestModel>(
             path: Constants.Endpoints.verifyCode,
             requestType: .POST,
             bodyParameters: VerifyCodeRequestModel(code: code, deviceId: deviceId),
@@ -90,7 +90,7 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let resources = Resources<UserResponseModel, UserRequestModel>(
+        let resources = Resources<UserRequestModel>(
             path: Constants.Endpoints.userInfo,
             requestType: .PUT,
             bodyParameters: UserRequestModel(telephoneNumber: telephoneNumber, emailAddress: email, displayName: username, avatarFileId: avatarFileId),
@@ -104,7 +104,7 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let resources = Resources<DeleteAccountResponseModel, EmptyRequestBody>(path: Constants.Endpoints.userInfo, requestType: .DELETE, bodyParameters: nil, httpHeaderFields: ["accesstoken" : accessToken]
+        let resources = Resources<EmptyRequestBody>(path: Constants.Endpoints.userInfo, requestType: .DELETE, bodyParameters: nil, httpHeaderFields: ["accesstoken" : accessToken]
         )
         
         return networkService.performRequest(resources: resources)
@@ -117,7 +117,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         let contacts = ContactsRequestModel(contacts: hashes, isLastPage: lastPage)
-        let resources = Resources<ContactsResponseModel, ContactsRequestModel>(
+        let resources = Resources<ContactsRequestModel>(
             path: Constants.Endpoints.contacts,
             requestType: .POST,
             bodyParameters: contacts,
@@ -131,7 +131,7 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let resources = Resources<ContactsResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.contacts,
             requestType: .GET,
             bodyParameters: nil,

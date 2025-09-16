@@ -13,10 +13,14 @@ class ReactionsViewController: BaseViewController {
     private let records: [MessageRecord]
     private let users: [User]
     private let allCategories: [String]
+    private let actionPublisher: ActionPublisher
+    private let myId: Int64
     
-    init(users: [User], records: [MessageRecord]) {
+    init(users: [User], records: [MessageRecord], actionPublisher: ActionPublisher, myId: Int64) {
         self.records = records
         self.users = users
+        self.actionPublisher = actionPublisher
+        self.myId = myId
         
         var keysAndCounts = ["ALL"]
         var keys = ["ALL"]
@@ -40,7 +44,7 @@ class ReactionsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView(reactionsView)
-        view.backgroundColor = .secondaryBackground
+        view.backgroundColor = .secondaryColor // TODO: - check
         setupBindings()
     }
 }
@@ -55,15 +59,24 @@ extension ReactionsViewController: UITableViewDelegate, UITableViewDataSource {
         filteredRecords.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let reactionRecord = filteredRecords[indexPath.row]
+        guard reactionRecord.userId == myId else { return }
+        actionPublisher.send(.deleteReaction(reactionRecord.id))
+        dismiss(animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsTableViewCell.reuseIdentifier, for: indexPath) as? ContactsTableViewCell
-        else { return EmptyTableViewCell()}
-        let user = users.first { $0.id == filteredRecords[indexPath.row].userId }
+        else { return UnknownTableViewCell()}
+        let reactionRecord = filteredRecords[indexPath.row]
+        let user = users.first { $0.id == reactionRecord.userId }
+        
+        let description = reactionRecord.userId == myId ? "Tap to remove" : user?.telephoneNumber
         cell.configureCell(title: user?.getDisplayName() ?? "Missing User",
-                           description: user?.telephoneNumber,
+                           description: description,
                            leftImage: user?.avatarFileId?.fullFilePathFromId(),
                            type: .emoji(emoji: filteredRecords[indexPath.row].reaction ?? "#", size: 32))
-        cell.backgroundColor = .secondaryBackground
         return cell
     }
     

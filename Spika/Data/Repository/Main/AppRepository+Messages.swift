@@ -17,8 +17,8 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<MessageResponse, SendMessageRequest>(
-            path: Constants.Endpoints.sendMessage,
+        let resources = Resources<SendMessageRequest>(
+            path: Constants.Endpoints.messages,
             requestType: .POST,
             bodyParameters: SendMessageRequest(roomId: roomId,
                                                type: type.rawValue,
@@ -37,8 +37,8 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<MessageResponse, EmptyRequestBody>(
-            path: Constants.Endpoints.sendMessage + "/\(messageId)",
+        let resources = Resources<EmptyRequestBody>(
+            path: Constants.Endpoints.messages + "/\(messageId)",
             requestType: .DELETE,
             bodyParameters: nil,
             httpHeaderFields: ["accesstoken" : accessToken],
@@ -54,11 +54,23 @@ extension AppRepository {
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
-        let resources = Resources<MessageResponse, UpdateMessageRequest>(
-            path: Constants.Endpoints.sendMessage + "/\(messageId)",
+        let resources = Resources<UpdateMessageRequest>(
+            path: Constants.Endpoints.messages + "/\(messageId)",
             requestType: .PUT,
             bodyParameters: UpdateMessageRequest(text: text),
             httpHeaderFields: ["accesstoken" : accessToken])
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func forwardMessages(messageIds: [Int64], roomIds: [Int64], userIds: [Int64]) -> AnyPublisher<ForwardMessagesResponseModel, Error> {
+        guard let accessToken = getAccessToken() else {
+            return Fail<ForwardMessagesResponseModel, Error>(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<ForwardMessagesRequestModel>(path: Constants.Endpoints.forwardMessages, requestType: .POST, bodyParameters: ForwardMessagesRequestModel(messageIds: messageIds, roomIds: roomIds, userIds: userIds), httpHeaderFields: ["accesstoken" : accessToken])
+        
         return networkService.performRequest(resources: resources)
     }
     
@@ -69,10 +81,10 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<DeliveredResponseModel, DeliveredRequestModel>(
+        let resources = Resources<DeliveredRequestModel>(
             path: Constants.Endpoints.deliveredStatus,
             requestType: .POST,
-            bodyParameters: DeliveredRequestModel(messagesIds: messageIds),
+            bodyParameters: DeliveredRequestModel(messageIds: messageIds),
             httpHeaderFields: ["accesstoken" : accessToken])
         
         return networkService.performRequest(resources: resources)
@@ -86,7 +98,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<SeenResponseModel, EmptyRequestBody>(
+        let resources = Resources<EmptyRequestBody>(
             path: Constants.Endpoints.seenStatus.replacingOccurrences(of: "roomId", with: "\(roomId)"),
             requestType: .POST,
             bodyParameters: nil,
@@ -95,7 +107,7 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
         
-    func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<SendReactionResponseModel, Error> {
+    func sendReaction(messageId: Int64, reaction: String) -> AnyPublisher<RecordResponseModel, Error> {
         guard let accessToken = getAccessToken()
         else {
             return Fail(error: NetworkError.noAccessToken)
@@ -103,7 +115,7 @@ extension AppRepository {
                 .eraseToAnyPublisher()
         }
         
-        let resources = Resources<SendReactionResponseModel, SendReactionRequestModel>(
+        let resources = Resources<SendReactionRequestModel>(
             path: Constants.Endpoints.messageRecords,
             requestType: .POST,
             bodyParameters: SendReactionRequestModel(messageId: messageId,
@@ -114,8 +126,25 @@ extension AppRepository {
         return networkService.performRequest(resources: resources)
     }
     
-    func getReactionRecords(messageId: String?, context: NSManagedObjectContext) -> [MessageRecord]? {
-        databaseService.getReactionRecords(messageId: messageId, context: context)
+    func deleteMessageRecord(recordId: Int64) -> AnyPublisher<RecordResponseModel, Error> {
+        guard let accessToken = getAccessToken()
+        else {
+            return Fail(error: NetworkError.noAccessToken)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        let resources = Resources<EmptyRequestBody>(
+            path: Constants.Endpoints.messageRecords + "/\(recordId)",
+            requestType: .DELETE,
+            bodyParameters: nil,
+            httpHeaderFields: ["accesstoken" : accessToken])
+        
+        return networkService.performRequest(resources: resources)
+    }
+    
+    func getReactionRecords(messageIds: [Int64]) async -> [MessageRecord] {
+        await databaseService.getReactionRecords(messageIds: messageIds)
     }
     
     func updateMessageSeenDeliveredCount(messageId: Int64, seenCount: Int64, deliveredCount: Int64) {
@@ -198,5 +227,39 @@ extension AppRepository {
             self?.updateUnreadCountToZeroFor(roomId: roomId)
             self?.removeNotificationsWith(roomId: roomId)
         }.store(in: &subs)
+    }
+    
+    func getEmojis() -> [[Emoji]] {
+        let path = Bundle.main.path(forResource: "faces", ofType: "json")
+        guard let jsonPath = path, let jsonData = try? Data(contentsOf: URL(fileURLWithPath: jsonPath)) else {
+            return []
+        }
+        var allEmojis: [[Emoji]] = []
+        do {
+            let decodedEmojis = try JSONDecoder().decode([[Emoji]].self, from: jsonData)
+            allEmojis.append(getRecentEmojis())
+            allEmojis = allEmojis + decodedEmojis
+        } catch {
+            print("error decoding emoji json: ",  error)
+        }
+        return allEmojis
+    }
+    
+    func addToRecentEmojis(emoji: Emoji) {
+        var recentEmojis = getRecentEmojis()
+        recentEmojis.removeAll { $0.display == emoji.display }
+        var newList = [emoji] + recentEmojis
+        if newList.count > Constants.MagicNumbers.maxNumberOfRecentEmojis {
+            newList = Array(newList.prefix(Constants.MagicNumbers.maxNumberOfRecentEmojis))
+        }
+        guard let encoded = try? JSONEncoder().encode(newList) else { return }
+        userDefaults.set(encoded, forKey: Constants.Database.recentEmojis)
+    }
+    
+    func getRecentEmojis() -> [Emoji] {
+        guard let data = userDefaults.object(forKey: Constants.Database.recentEmojis) as? Data,
+              let emojis = try? JSONDecoder().decode([Emoji].self, from: data)
+        else { return []}
+        return emojis
     }
 }
