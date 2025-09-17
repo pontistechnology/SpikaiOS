@@ -22,7 +22,7 @@
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ### Getting Started
 
@@ -46,7 +46,7 @@
     
 ---
 
-## 🤝 Contributing
+## Contributing
 
 If you're open to contributions, this section provides guidelines for potential collaborators.
 
@@ -55,7 +55,7 @@ If you're open to contributions, this section provides guidelines for potential 
 
 ---
 
-## 📄 License
+## License
 
 Specify the license under which your project is released. This is important for both users and contributors.
 
